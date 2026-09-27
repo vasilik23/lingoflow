@@ -18,6 +18,7 @@ from polskiflow.lesson_bookmark_store import load_lesson_bookmarks
 from polskiflow.lesson_note_store import load_lesson_note, save_lesson_note
 from polskiflow.domain.lesson_state import InvalidLessonState, load_lesson_state, sign_lesson_state
 from polskiflow.mistake_store import set_mistake
+from polskiflow.collection_store import load_collection_summaries
 
 
 # Expansion is release-gated by a successful offline -> online recovery smoke
@@ -38,7 +39,8 @@ def lesson(request: HttpRequest, lesson_id: str) -> HttpResponse:
         request.supabase_access_token, request.supabase_user.id
     )
     note = load_lesson_note(request.supabase_access_token, request.supabase_user.id, lesson_id)
-    context = {"task": lesson_task, "lesson_id": lesson_id, "lesson_kind": lesson_kind, "resume_notice": index > 0, "is_bookmarked": lesson_id in (bookmarks or set()), "lesson_bookmarks_available": bookmarks is not None, "lesson_note": note}
+    collections = load_collection_summaries(request.supabase_access_token, request.supabase_user.id)
+    context = {"task": lesson_task, "lesson_id": lesson_id, "lesson_kind": lesson_kind, "resume_notice": index > 0, "is_bookmarked": lesson_id in (bookmarks or set()), "lesson_bookmarks_available": bookmarks is not None, "lesson_note": note, "collection_choices": collections or [], "collections_available": collections is not None}
     if lesson_kind in {"words", "review"}:
         context.update(_flashcard_context(lesson_id, lesson_kind, index, score, False))
     elif lesson_kind == "grammar":
