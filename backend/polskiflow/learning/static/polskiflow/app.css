@@ -636,6 +636,13 @@ button.secondary { background: white; color: var(--text); border: 1px solid #dcd
 .collection-items a span:last-child { display: grid; min-width: 0; }
 .collection-items strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .collection-add { margin-top: auto; }
+.collection-progress { padding: .75rem; margin-bottom: .75rem; border-radius: var(--radius-sm); background: var(--surface-soft); }
+.collection-progress div { display: flex; justify-content: space-between; gap: .5rem; margin-bottom: .35rem; font-size: .78rem; }
+.collection-progress progress { width: 100%; }
+.collection-continue { display: flex; justify-content: space-between; padding: .75rem; margin-bottom: .75rem; border-radius: var(--radius-sm); background: var(--primary-soft); color: var(--primary-dark); font-weight: 750; }
+.collection-manage { margin-top: auto; padding-top: .75rem; border-top: 1px solid var(--line); }
+.collection-manage summary { cursor: pointer; color: var(--muted); font-weight: 700; }
+.collection-rename, .collection-add { margin-top: .75rem; }
 @media (max-width: 760px) { .collections-grid { grid-template-columns: 1fr; } .collection-card header { flex-direction: column; } }
 .saved-section { margin-top: 1.5rem; }
 .saved-grid { display: grid; gap: 1rem; }

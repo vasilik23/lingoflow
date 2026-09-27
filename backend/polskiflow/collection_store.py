@@ -24,6 +24,11 @@ def delete_collection(token, user_id, collection_id):
     return _write(f"learning_collections?{query}", token, "DELETE", prefer="return=minimal")
 
 
+def rename_collection(token, user_id, collection_id, name):
+    query = urlencode({"id": f"eq.{collection_id}", "user_id": f"eq.{user_id}"})
+    return _write(f"learning_collections?{query}", token, "PATCH", {"name": name}, "return=minimal")
+
+
 def add_collection_item(token, user_id, collection_id, content_type, content_id):
     return _write("learning_collection_items", token, "POST", {"id": str(uuid.uuid4()), "collection_id": collection_id, "user_id": user_id, "content_type": content_type, "content_id": content_id}, "resolution=ignore-duplicates,return=minimal")
 
