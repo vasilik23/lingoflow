@@ -54,8 +54,18 @@ class LessonNoteViewTests(TestCase):
     @patch("polskiflow.lesson_views.load_lesson_draft", return_value=None)
     def test_lesson_shows_note_editor(self, _draft, _bookmarks, _note):
         response = self.client.get("/lesson/words/")
+        self.assertContains(response, 'class="card content-tools"')
+        self.assertContains(response, "Инструменты урока")
         self.assertContains(response, "Заметка к уроку")
         self.assertContains(response, "Moja notatka")
+
+    @patch("polskiflow.lesson_views.load_lesson_note", return_value=LessonNote(True, ""))
+    @patch("polskiflow.lesson_views.load_lesson_bookmarks", return_value=set())
+    @patch("polskiflow.lesson_views.load_lesson_draft", return_value=None)
+    def test_lesson_tools_open_after_note_action(self, _draft, _bookmarks, _note):
+        response = self.client.get("/lesson/words/?note=saved")
+        self.assertContains(response, 'class="card content-tools" open')
+        self.assertContains(response, "Заметка сохранена")
 
     @patch("polskiflow.lesson_views.save_lesson_note", return_value=True)
     def test_save_uses_authenticated_owner(self, save):
