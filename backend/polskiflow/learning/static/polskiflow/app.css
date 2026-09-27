@@ -667,6 +667,18 @@ button.secondary { background: white; color: var(--text); border: 1px solid #dcd
 .content-tool-panel h2 { margin: .15rem 0 .75rem; font-size: 1.05rem; }
 .content-tool-panel form { margin: 0; }
 @media (max-width: 700px) { .content-tools-grid { grid-template-columns: 1fr; } .content-tool-panel + .content-tool-panel { border-top: 1px solid var(--line); border-left: 0; } }
+.personal-learning-nav { display: flex; gap: .4rem; overflow-x: auto; margin: -.25rem 0 1.25rem; padding: .25rem 0 .5rem; scrollbar-width: thin; }
+.personal-learning-nav a { flex: 0 0 auto; padding: .62rem .82rem; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--muted); font-size: .78rem; font-weight: 800; text-decoration: none; }
+.personal-learning-nav a:hover, .personal-learning-nav a[aria-current="page"] { border-color: color-mix(in srgb, var(--primary) 38%, var(--line)); background: var(--primary-soft); color: var(--primary-dark); }
+.learning-space-grid { display: grid; gap: 1rem; }
+.learning-space-card { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 1rem; align-items: center; color: inherit; text-decoration: none; }
+.learning-space-card > span { display: grid; place-items: center; width: 3rem; aspect-ratio: 1; border-radius: 1rem; background: var(--primary-soft); color: var(--primary-dark); font-size: 1.35rem; font-weight: 900; }
+.learning-space-card h2, .learning-space-card p { margin: 0; }
+.learning-space-card h2 { margin: .12rem 0 .35rem; font-size: 1.08rem; }
+.learning-space-card p:last-child { color: var(--muted); font-size: .82rem; }
+.learning-space-card > strong { color: var(--primary-dark); font-size: .8rem; }
+@media (min-width: 760px) { .learning-space-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .learning-space-card { grid-template-columns: auto minmax(0, 1fr); } .learning-space-card > strong { grid-column: 2; } }
+@media (max-width: 520px) { .learning-space-card { grid-template-columns: auto minmax(0, 1fr); } .learning-space-card > strong { grid-column: 2; } }
 @media (max-width: 760px) { .collections-grid { grid-template-columns: 1fr; } .collection-card header { flex-direction: column; } }
 .saved-section { margin-top: 1.5rem; }
 .saved-grid { display: grid; gap: 1rem; }

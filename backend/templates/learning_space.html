@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Мои материалы · PolskiFlow{% endblock %}
+{% block content %}
+  <header class="content-header learning-space-header">
+    <div><p class="eyebrow">Личное пространство</p><h1>Мои материалы</h1><p class="muted">Всё, что ты сохранил, собрал или отметил во время занятий — в одном месте.</p></div>
+    <a class="compact-button" href="{% url 'global-search' %}">Найти материал</a>
+  </header>
+  {% include "partials/personal_learning_nav.html" %}
+  <section class="learning-space-grid" aria-label="Разделы личных материалов">
+    <a class="card learning-space-card" href="{% url 'saved-learning' %}"><span aria-hidden="true">★</span><div><p class="eyebrow">Быстрый доступ</p><h2>Сохранённое</h2><p>Отмеченные уроки и тексты, к которым хочется вернуться.</p></div><strong>Открыть →</strong></a>
+    <a class="card learning-space-card" href="{% url 'collections' %}"><span aria-hidden="true">▦</span><div><p class="eyebrow">Личные маршруты</p><h2>Подборки</h2><p>Тематические списки материалов с прогрессом и продолжением.</p></div><strong>Открыть →</strong></a>
+    <a class="card learning-space-card" href="{% url 'lesson-notes' %}"><span aria-hidden="true">✎</span><div><p class="eyebrow">База знаний</p><h2>Заметки</h2><p>Твои правила, примеры и вопросы, записанные внутри уроков.</p></div><strong>Открыть →</strong></a>
+    <a class="card learning-space-card" href="{% url 'mistake-notebook' %}"><span aria-hidden="true">↻</span><div><p class="eyebrow">Закрепление</p><h2>Работа над ошибками</h2><p>Задания, которые стоит повторить до уверенного ответа.</p></div><strong>Открыть →</strong></a>
+  </section>
+{% endblock %}

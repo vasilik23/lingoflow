@@ -1,5 +1,6 @@
 {% extends "base.html" %}{% block title %}Учебные подборки · PolskiFlow{% endblock %}{% block content %}
 <header class="content-header"><div><p class="eyebrow">Твой учебный маршрут</p><h1>Подборки</h1><p class="muted">Объединяй сохранённые уроки и тексты по своим целям.</p></div></header>
+{% include "partials/personal_learning_nav.html" %}
 {% if request.GET.status == "error" %}<p class="form-error" role="alert">Не удалось изменить подборку.</p>{% elif request.GET.status %}<p class="form-success" role="status">Подборки обновлены.</p>{% endif %}
 {% if not available %}<section class="card empty-state"><h2>Подборки временно недоступны</h2><p>Попробуй обновить страницу позже.</p></section>{% else %}
 <form class="card collection-create" method="post" action="{% url 'create-collection' %}">{% csrf_token %}<label for="collection-name">Новая подборка</label><div class="filter-search-row"><input id="collection-name" name="name" maxlength="60" required placeholder="Например: Польский для работы"><button type="submit">Создать</button></div></form>

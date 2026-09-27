@@ -2,6 +2,7 @@
 {% block title %}Мои заметки · PolskiFlow{% endblock %}
 {% block content %}
   <header class="content-header notes-header"><div><p class="eyebrow">Личная база знаний</p><h1>Мои заметки</h1><p class="muted">Правила, примеры и вопросы, сохранённые внутри уроков.</p></div><span class="result-count">{{ total_count }} заметок</span></header>
+  {% include "partials/personal_learning_nav.html" %}
   {% if request.GET.status == "deleted" %}<p class="form-success" role="status">Заметка удалена.</p>{% elif request.GET.status == "error" %}<p class="form-error" role="alert">Не удалось удалить заметку. Попробуй ещё раз.</p>{% endif %}
   <form class="card catalog-filter notes-filter" method="get" role="search">
     <label for="notes-search">Поиск по заметкам и урокам</label>
