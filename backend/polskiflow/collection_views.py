@@ -73,3 +73,27 @@ def remove_collection_item(request, item_id):
     except ValueError: raise Http404
     ok = delete_collection_item(request.supabase_access_token, request.supabase_user.id, item_id)
     return redirect("/collections/?status=updated" if ok else "/collections/?status=error")
+
+
+@require_POST
+@require_browser_user
+def add_material_to_collection(request, content_type, content_id):
+    if content_type not in {"lesson", "reading"}:
+        raise Http404
+    exists = Lesson.objects.filter(id=content_id, is_active=True).exists() if content_type == "lesson" else ReadingText.objects.filter(id=content_id, is_active=True).exists()
+    if not exists:
+        raise Http404
+    try:
+        collection_id = UUID(request.POST.get("collection_id", ""))
+    except ValueError:
+        return HttpResponseBadRequest("Выберите подборку")
+    loaded = load_collections(request.supabase_access_token, request.supabase_user.id)
+    if loaded is None:
+        ok = False
+    elif str(collection_id) not in {str(row.get("id")) for row in loaded[0]}:
+        raise Http404
+    else:
+        ok = add_collection_item(request.supabase_access_token, request.supabase_user.id, collection_id, content_type, content_id)
+    anchor = "#lesson-collection" if content_type == "lesson" else "#reading-collection"
+    path = f"/lesson/{content_id}/" if content_type == "lesson" else f"/reading/{content_id}/"
+    return redirect(f"{path}?collection={'added' if ok else 'error'}{anchor}")

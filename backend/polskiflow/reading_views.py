@@ -25,6 +25,7 @@ from polskiflow.domain.reading_catalog import (
 )
 from polskiflow.progress_store import load_dashboard_progress, save_lesson_completion
 from polskiflow.reading_bookmark_store import load_reading_bookmarks, set_reading_bookmark
+from polskiflow.collection_store import load_collection_summaries
 from polskiflow.news_feed import CATEGORIES, CATEGORY_IDS, latest_official_news
 
 TOKEN_PATTERN = re.compile(r"([\wąćęłńóśźżĄĆĘŁŃÓŚŹŻ-]+)", re.UNICODE)
@@ -80,6 +81,7 @@ def reading_library(request: HttpRequest) -> HttpResponse:
         duration=filters["duration"],
     )
     bookmarks = load_reading_bookmarks(request.supabase_access_token, request.supabase_user.id)
+    collections = load_collection_summaries(request.supabase_access_token, request.supabase_user.id)
     saved_only = request.GET.get("saved") == "1"
     for text in filtered_texts:
         text["saved"] = text["id"] in (bookmarks or set())
@@ -108,6 +110,8 @@ def reading_library(request: HttpRequest) -> HttpResponse:
             "reading_filters_active": any(filters.values()),
             "saved_only": saved_only,
             "bookmarks_available": bookmarks is not None,
+            "collection_choices": collections or [],
+            "collections_available": collections is not None,
         },
     )
 

@@ -28,7 +28,7 @@ from polskiflow.search_views import global_search
 from polskiflow.saved_views import saved_learning, toggle_lesson_bookmark
 from polskiflow.mistake_views import mistake_notebook, mistake_practice
 from polskiflow.note_views import delete_lesson_note, lesson_notes
-from polskiflow.collection_views import collection_action, collections, create_collection_view, remove_collection_item
+from polskiflow.collection_views import add_material_to_collection, collection_action, collections, create_collection_view, remove_collection_item
 
 
 @require_supabase_user
@@ -58,6 +58,7 @@ urlpatterns = [
     path("collections/create/", create_collection_view, name="create-collection"),
     path("collections/<uuid:collection_id>/", collection_action, name="collection-action"),
     path("collections/items/<uuid:item_id>/remove/", remove_collection_item, name="remove-collection-item"),
+    path("collections/add/<str:content_type>/<slug:content_id>/", add_material_to_collection, name="add-material-to-collection"),
     path("diagnostic/", diagnostic, name="diagnostic"),
     path("profile/", profile, name="profile"),
     path("account/security/", account_security, name="account-security"),

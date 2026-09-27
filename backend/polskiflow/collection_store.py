@@ -15,6 +15,10 @@ def load_collections(token, user_id):
     return None if collections is None or items is None else (collections, items)
 
 
+def load_collection_summaries(token, user_id):
+    return _get("learning_collections", "id,name", token, user_id, "created_at.asc")
+
+
 def create_collection(token, user_id, name):
     return _write("learning_collections", token, "POST", {"id": str(uuid.uuid4()), "user_id": user_id, "name": name}, "return=minimal")
 
