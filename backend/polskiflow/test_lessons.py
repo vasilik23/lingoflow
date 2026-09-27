@@ -421,6 +421,9 @@ class LessonViewsTests(TestCase):
         self.assertContains(response, 'class="user-menu app-user-menu"')
         self.assertContains(response, 'action="/logout/"')
         self.assertContains(response, 'href="/profile/"')
+        self.assertContains(response, 'class="user-menu-group"', count=2)
+        self.assertContains(response, "Учёба и материалы")
+        self.assertContains(response, "Настройки и помощь")
         self.assertGreater(content.index("</nav>"), content.index('class="nav-links"'))
         self.assertLess(content.index("</nav>"), content.index('class="user-menu app-user-menu"'))
 

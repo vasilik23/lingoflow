@@ -34,9 +34,9 @@
       }());
     </script>
     <title>{% block title %}PolskiFlow{% endblock %}</title>
-    <link rel="icon" href="{% static 'polskiflow/favicon.svg' %}?shell=v14" type="image/svg+xml">
+    <link rel="icon" href="{% static 'polskiflow/favicon.svg' %}?shell=v15" type="image/svg+xml">
     <link rel="manifest" href="{% url 'web-app-manifest' %}">
-    <link rel="stylesheet" href="{% static 'polskiflow/app.css' %}?shell=v14">
+    <link rel="stylesheet" href="{% static 'polskiflow/app.css' %}?shell=v15">
     <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.10/dist/htmx.min.js" integrity="sha384-H5SrcfygHmAuTDZphMHqBJLc3FhssKjG7w/CeCpFReSfwBWDTKpkzPP8c+cLsK+V" crossorigin="anonymous" defer></script>
   </head>
   <body class="{% block body_class %}{% endblock %}" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
@@ -73,17 +73,27 @@
           <span class="user-email">{{ request.supabase_user.email|default:"Пользователь" }}</span>
           <a class="user-menu-link" href="{% url 'profile' %}">Профиль</a>
           <a class="user-menu-link" href="{% url 'learning-history' %}">Прогресс и история</a>
-          <a class="user-menu-link" href="{% url 'practice-hub' %}">Практика</a>
-          <a class="user-menu-link" href="{% url 'global-search' %}">Поиск по приложению</a>
-          <a class="user-menu-link" href="{% url 'saved-learning' %}">Сохранённое</a>
-          <a class="user-menu-link" href="{% url 'collections' %}">Подборки</a>
-          <a class="user-menu-link" href="{% url 'mistake-notebook' %}">Работа над ошибками</a>
-          <a class="user-menu-link" href="{% url 'lesson-notes' %}">Мои заметки</a>
-          <a class="user-menu-link" href="{% url 'account-security' %}">Безопасность</a>
-          <a class="user-menu-link" href="{% url 'sources' %}">Источники</a>
-          <a class="user-menu-link" href="{% url 'privacy' %}">Приватность</a>
-          <a class="user-menu-link" href="{% url 'account-delete' %}">Удалить аккаунт</a>
-          <a class="user-menu-link" href="{% url 'feedback' %}">Обратная связь</a>
+          <details class="user-menu-group">
+            <summary>Учёба и материалы <span aria-hidden="true">⌄</span></summary>
+            <div>
+              <a class="user-menu-link" href="{% url 'practice-hub' %}">Практика</a>
+              <a class="user-menu-link" href="{% url 'global-search' %}">Поиск по приложению</a>
+              <a class="user-menu-link" href="{% url 'saved-learning' %}">Сохранённое</a>
+              <a class="user-menu-link" href="{% url 'collections' %}">Подборки</a>
+              <a class="user-menu-link" href="{% url 'mistake-notebook' %}">Работа над ошибками</a>
+              <a class="user-menu-link" href="{% url 'lesson-notes' %}">Мои заметки</a>
+            </div>
+          </details>
+          <details class="user-menu-group">
+            <summary>Настройки и помощь <span aria-hidden="true">⌄</span></summary>
+            <div>
+              <a class="user-menu-link" href="{% url 'account-security' %}">Безопасность</a>
+              <a class="user-menu-link" href="{% url 'sources' %}">Источники</a>
+              <a class="user-menu-link" href="{% url 'privacy' %}">Приватность</a>
+              <a class="user-menu-link" href="{% url 'feedback' %}">Обратная связь</a>
+              <a class="user-menu-link user-menu-link-danger" href="{% url 'account-delete' %}">Удалить аккаунт</a>
+            </div>
+          </details>
           <label class="theme-control">
             <span>Тема</span>
             <select data-theme-select aria-label="Цветовая тема">

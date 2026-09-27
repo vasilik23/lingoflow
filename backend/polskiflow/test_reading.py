@@ -271,12 +271,17 @@ class ReadingViewsTests(TestCase):
     @patch("polskiflow.reading_views.load_collection_summaries", return_value=[{"id": "11111111-1111-4111-8111-111111111112", "name": "Czytanie"}])
     def test_reader_exposes_owned_collection_picker(self, load_collections):
         response = self.client.get("/reading/test-story/")
+        self.assertContains(response, 'class="card content-tools reader-tools"')
+        self.assertContains(response, "Сохранить и организовать")
         self.assertContains(response, 'id="reading-collection-select"')
         self.assertContains(response, "Czytanie")
         self.assertContains(response, 'action="/collections/add/reading/test-story/"')
         load_collections.assert_called_once_with(
             "access", "00000000-0000-0000-0000-000000000123"
         )
+
+        open_response = self.client.get("/reading/test-story/?collection=added")
+        self.assertContains(open_response, 'class="card content-tools reader-tools" open')
         self.assertContains(response, 'data-lemma="kot"')
         self.assertContains(response, 'data-translation="кот"')
         self.assertContains(response, 'data-part-of-speech="существительное"')
