@@ -11,6 +11,7 @@ from polskiflow.feedback_views import feedback
 from polskiflow.history_views import learning_history
 from polskiflow.lesson_views import lesson, lesson_note, lesson_step
 from polskiflow.interaction_views import interaction_practice
+from polskiflow.learning_space_views import learning_space
 from polskiflow.operational_views import health, readiness
 from polskiflow.pwa_views import offline_shell, service_worker, web_app_manifest
 from polskiflow.reading_views import (
@@ -47,6 +48,7 @@ urlpatterns = [
     path("tasks/", daily_tasks, name="daily-tasks"),
     path("course/", course, name="course"),
     path("practice/", practice_hub, name="practice-hub"),
+    path("my-learning/", learning_space, name="learning-space"),
     path("welcome/", onboarding, name="onboarding"),
     path("search/", global_search, name="global-search"),
     path("saved/", saved_learning, name="saved-learning"),

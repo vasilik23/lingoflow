@@ -34,9 +34,9 @@
       }());
     </script>
     <title>{% block title %}PolskiFlow{% endblock %}</title>
-    <link rel="icon" href="{% static 'polskiflow/favicon.svg' %}?shell=v15" type="image/svg+xml">
+    <link rel="icon" href="{% static 'polskiflow/favicon.svg' %}?shell=v16" type="image/svg+xml">
     <link rel="manifest" href="{% url 'web-app-manifest' %}">
-    <link rel="stylesheet" href="{% static 'polskiflow/app.css' %}?shell=v15">
+    <link rel="stylesheet" href="{% static 'polskiflow/app.css' %}?shell=v16">
     <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.10/dist/htmx.min.js" integrity="sha384-H5SrcfygHmAuTDZphMHqBJLc3FhssKjG7w/CeCpFReSfwBWDTKpkzPP8c+cLsK+V" crossorigin="anonymous" defer></script>
   </head>
   <body class="{% block body_class %}{% endblock %}" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
@@ -77,11 +77,8 @@
             <summary>Учёба и материалы <span aria-hidden="true">⌄</span></summary>
             <div>
               <a class="user-menu-link" href="{% url 'practice-hub' %}">Практика</a>
+              <a class="user-menu-link" href="{% url 'learning-space' %}">Мои материалы</a>
               <a class="user-menu-link" href="{% url 'global-search' %}">Поиск по приложению</a>
-              <a class="user-menu-link" href="{% url 'saved-learning' %}">Сохранённое</a>
-              <a class="user-menu-link" href="{% url 'collections' %}">Подборки</a>
-              <a class="user-menu-link" href="{% url 'mistake-notebook' %}">Работа над ошибками</a>
-              <a class="user-menu-link" href="{% url 'lesson-notes' %}">Мои заметки</a>
             </div>
           </details>
           <details class="user-menu-group">
