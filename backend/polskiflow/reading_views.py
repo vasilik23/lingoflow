@@ -81,7 +81,6 @@ def reading_library(request: HttpRequest) -> HttpResponse:
         duration=filters["duration"],
     )
     bookmarks = load_reading_bookmarks(request.supabase_access_token, request.supabase_user.id)
-    collections = load_collection_summaries(request.supabase_access_token, request.supabase_user.id)
     saved_only = request.GET.get("saved") == "1"
     for text in filtered_texts:
         text["saved"] = text["id"] in (bookmarks or set())
@@ -110,8 +109,6 @@ def reading_library(request: HttpRequest) -> HttpResponse:
             "reading_filters_active": any(filters.values()),
             "saved_only": saved_only,
             "bookmarks_available": bookmarks is not None,
-            "collection_choices": collections or [],
-            "collections_available": collections is not None,
         },
     )
 
@@ -153,6 +150,7 @@ def reader(request: HttpRequest, text_id: str) -> HttpResponse:
         else None
     )
     bookmarks = load_reading_bookmarks(request.supabase_access_token, request.supabase_user.id)
+    collections = load_collection_summaries(request.supabase_access_token, request.supabase_user.id)
     return render(
         request,
         "reading/reader.html",
@@ -162,6 +160,8 @@ def reader(request: HttpRequest, text_id: str) -> HttpResponse:
             "comprehension_task": comprehension_task,
             "is_bookmarked": text_id in (bookmarks or set()),
             "bookmarks_available": bookmarks is not None,
+            "collection_choices": collections or [],
+            "collections_available": collections is not None,
         },
     )
 
