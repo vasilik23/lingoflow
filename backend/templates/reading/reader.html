@@ -5,6 +5,7 @@
     <article class="reader-article">
       <header class="lesson-header reader-header"><a class="back-button" href="{% url 'reading-library' %}" aria-label="Назад">←</a><strong>{{ text.title }}</strong><span class="level-badge">{{ text.level }}</span></header>
       <div class="reader-meta"><span>{{ text.emoji }} {{ text.description }}</span><span>◷ {{ text.minutes }} мин</span></div>
+      {% if request.GET.word == "saved" %}<p class="form-success" id="dictionary-status" role="status">Слово добавлено в словарь. Теперь его можно тренировать по расписанию SM-2.</p>{% elif request.GET.word == "error" %}<p class="form-error" id="dictionary-status" role="alert">Не удалось добавить слово. Попробуй ещё раз.</p>{% endif %}
       <details class="card content-tools reader-tools" {% if request.GET.collection %}open{% endif %}>
         <summary><span><strong>Сохранить и организовать</strong><small>Сохранённое и личные подборки</small></span><span class="content-tools-toggle" aria-hidden="true">⌄</span></summary>
         <div class="content-tools-grid">
@@ -53,11 +54,11 @@
       <div class="word-panel-placeholder"><span>👆</span><strong>Нажми на слово</strong><p>Здесь появится перевод, и слово можно будет сохранить.</p></div>
       <div class="word-panel-result" hidden>
         <p class="eyebrow">Перевод</p><h2 id="selected-word"></h2><p class="selected-translation" id="selected-translation"></p>
-        <form hx-post="{% url 'add-dictionary-word' text.id %}" hx-target="#dictionary-status" hx-swap="innerHTML">
+        <form method="post" action="{% url 'add-dictionary-word' text.id %}" hx-post="{% url 'add-dictionary-word' text.id %}" hx-target="#dictionary-status" hx-swap="innerHTML">
           {% csrf_token %}<input type="hidden" name="word" id="word-input"><input type="hidden" name="translation" id="translation-input"><input type="hidden" name="context" id="context-input">
           <button type="submit">＋ Добавить в словарь</button>
         </form>
-        <div id="dictionary-status" aria-live="polite"></div>
+        <div{% if request.GET.word %} id="dictionary-inline-status"{% else %} id="dictionary-status"{% endif %} aria-live="polite"></div>
       </div>
     </aside>
   </div>
