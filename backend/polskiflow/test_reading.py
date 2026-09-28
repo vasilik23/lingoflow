@@ -310,6 +310,22 @@ class ReadingViewsTests(TestCase):
         )
 
     @patch("polskiflow.reading_views.save_personal_word", return_value=True)
+    def test_glossary_save_redirects_to_full_reader_without_htmx(self, _save_word):
+        response = self.client.post(
+            "/reading/test-story/save/",
+            {"word": "kota", "translation": "кот", "context": "Ala ma kota."},
+        )
+
+        self.assertRedirects(
+            response,
+            "/reading/test-story/?word=saved#dictionary-status",
+            fetch_redirect_response=False,
+        )
+        page = self.client.get(response["Location"])
+        self.assertContains(page, "Слово добавлено в словарь")
+        self.assertContains(page, 'method="post" action="/reading/test-story/save/"')
+
+    @patch("polskiflow.reading_views.save_personal_word", return_value=True)
     def test_legacy_glossary_value_still_saves_surface_form(self, save_word):
         response = self.client.post(
             "/reading/test-story/save/",
@@ -661,6 +677,22 @@ class ReadingViewsTests(TestCase):
         self.assertContains(response, "Верно!")
         self.assertContains(response, "Насколько легко вспомнилось слово?")
         self.assertContains(response, "Трудно")
+        self.assertContains(response, "<!doctype html>")
+        self.assertContains(response, "Режим тренировки")
+
+    @patch("polskiflow.reading_views.load_personal_words")
+    def test_htmx_practice_step_still_returns_only_fragment(self, load_words):
+        load_words.return_value = self._practice_words()
+
+        response = self.client.post(
+            "/dictionary/practice/step/",
+            {"action": "answer", "index": 0, "score": 0, "choice": 0},
+            headers={"HX-Request": "true"},
+        )
+
+        self.assertContains(response, "Верно!")
+        self.assertNotContains(response, "<!doctype html>")
+        self.assertNotContains(response, "Режим тренировки")
 
     @patch("polskiflow.reading_views.load_personal_words")
     def test_context_practice_accepts_typed_lemma_case_insensitively(self, load_words):

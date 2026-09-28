@@ -365,7 +365,7 @@ def dictionary_practice_step(request: HttpRequest) -> HttpResponse:
                 len(questions),
                 next_score,
             )
-            return render(
+            return _render_practice_step(
                 request,
                 "reading/_practice_complete.html",
                 {
@@ -374,13 +374,37 @@ def dictionary_practice_step(request: HttpRequest) -> HttpResponse:
                     "saved": saved,
                     "review_saved": review_saved,
                     "repeat_url": _practice_url(source_text_id, mode),
+                    "practice_complete": True,
                 },
+                mode,
+                source_text_id,
             )
         context = _practice_context(questions, index + 1, next_score, None)
         context["review_saved"] = review_saved
     else:
         return HttpResponseBadRequest("Неизвестное действие")
-    return render(request, "reading/_practice_question.html", context)
+    return _render_practice_step(
+        request,
+        "reading/_practice_question.html",
+        context,
+        mode,
+        source_text_id,
+    )
+
+
+def _render_practice_step(request, partial_template, context, mode, source_text_id):
+    if request.headers.get("HX-Request") == "true":
+        return render(request, partial_template, context)
+    page_context = {
+        **context,
+        "mode": mode,
+        "source_text_id": source_text_id,
+        "mode_urls": {
+            item: _practice_url(source_text_id, item)
+            for item in ("translation", "lemma", "context")
+        },
+    }
+    return render(request, "reading/practice_step_page.html", page_context)
 
 
 @require_POST
@@ -408,15 +432,18 @@ def add_dictionary_word(request: HttpRequest, text_id: str) -> HttpResponse:
         context,
         text.id,
     )
-    return render(
-        request,
-        "reading/_save_status.html",
-        {
-            "saved": saved,
-            "word": word,
-            "practice_url": _practice_url(text.id, "lemma"),
-        },
-    )
+    if request.headers.get("HX-Request") == "true":
+        return render(
+            request,
+            "reading/_save_status.html",
+            {
+                "saved": saved,
+                "word": word,
+                "practice_url": _practice_url(text.id, "lemma"),
+            },
+        )
+    status = "saved" if saved else "error"
+    return redirect(f"/reading/{text.id}/?word={status}#dictionary-status")
 
 
 @require_POST

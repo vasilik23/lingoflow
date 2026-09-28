@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Тренировка слов · PolskiFlow{% endblock %}
+{% block content %}
+  <div class="lesson-shell">
+    <header class="lesson-header"><a class="back-button" href="{% url 'dictionary' %}" aria-label="Назад">←</a><strong>Тренировка слов</strong><span></span></header>
+    <nav class="level-tabs practice-mode-tabs" aria-label="Режим тренировки">
+      <a href="{{ mode_urls.translation }}"{% if mode == "translation" %} aria-current="page"{% endif %}>Перевод</a>
+      <a href="{{ mode_urls.lemma }}"{% if mode == "lemma" %} aria-current="page"{% endif %}>Лемма</a>
+      <a href="{{ mode_urls.context }}"{% if mode == "context" %} aria-current="page"{% endif %}>В контексте</a>
+    </nav>
+    <div id="practice-flow">
+      {% if practice_complete %}{% include "reading/_practice_complete.html" %}{% else %}{% include "reading/_practice_question.html" %}{% endif %}
+    </div>
+  </div>
+{% endblock %}
