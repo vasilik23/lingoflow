@@ -34,9 +34,9 @@
       }());
     </script>
     <title>{% block title %}PolskiFlow{% endblock %}</title>
-    <link rel="icon" href="{% static 'polskiflow/favicon.svg' %}?shell=v17" type="image/svg+xml">
+    <link rel="icon" href="{% static 'polskiflow/favicon.svg' %}?shell=v18" type="image/svg+xml">
     <link rel="manifest" href="{% url 'web-app-manifest' %}">
-    <link rel="stylesheet" href="{% static 'polskiflow/app.css' %}?shell=v17">
+    <link rel="stylesheet" href="{% static 'polskiflow/app.css' %}?shell=v18">
   </head>
   <body class="{% block body_class %}{% endblock %}">
     <a class="skip-link" href="#main-content">К основному содержимому</a>
@@ -86,6 +86,7 @@
               <a class="user-menu-link" href="{% url 'account-security' %}">Безопасность</a>
               <a class="user-menu-link" href="{% url 'sources' %}">Источники</a>
               <a class="user-menu-link" href="{% url 'privacy' %}">Приватность</a>
+              <a class="user-menu-link" href="{% url 'beta-center' %}">Закрытая beta</a>
               <a class="user-menu-link" href="{% url 'feedback' %}">Обратная связь</a>
               <a class="user-menu-link user-menu-link-danger" href="{% url 'account-delete' %}">Удалить аккаунт</a>
             </div>
