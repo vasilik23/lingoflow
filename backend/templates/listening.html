@@ -43,7 +43,7 @@
       {% endfor %}
       <p class="muted listening-audio-note">Звук создаёт системный польский голос браузера из оригинального текста PolskiFlow; доступность и тембр голоса зависят от устройства.</p>
     </section>
-    <section class="card listening-dialogue" aria-labelledby="b1-listening-title">
+    <section class="card listening-dialogue" id="b1-listening" aria-labelledby="b1-listening-title">
       <p class="eyebrow">Связная речь · {{ b1_listening.level }}</p>
       <h2 id="b1-listening-title">{{ b1_listening.title }}</h2>
       {{ b1_listening.lines|json_script:"b1-listening-lines" }}

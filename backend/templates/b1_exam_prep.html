@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Подготовка к экзамену B1 · PolskiFlow{% endblock %}
+{% block content %}
+  <header class="exam-hero">
+    <div class="exam-hero-copy">
+      <p class="eyebrow">Państwowy egzamin certyfikatowy</p>
+      <h1>Подготовка к B1</h1>
+      <p>Короткий ежедневный план и пять модулей в формате государственного экзамена для взрослых.</p>
+      <div class="exam-hero-meta">
+        <span>минимум {{ exam_prep.pass_percent }}% в каждом модуле</span>
+        <span>{{ exam_prep.written_minutes }} минут письменной части</span>
+      </div>
+    </div>
+    <div class="exam-countdown" role="status">
+      {% if exam_prep.countdown.available %}
+        <strong>{{ exam_prep.countdown.days_remaining }}</strong>
+        <span>{{ exam_prep.countdown.label }}</span>
+        <small>{{ exam_prep.countdown.starts_on|date:"d.m.Y" }}–{{ exam_prep.countdown.ends_on|date:"d.m.Y" }}</small>
+      {% else %}
+        <strong>B1</strong>
+        <span>{{ exam_prep.countdown.label }}</span>
+      {% endif %}
+    </div>
+  </header>
+
+  <section class="exam-today" aria-labelledby="exam-today-title">
+    <div class="section-heading exam-section-heading">
+      <div><p class="eyebrow">План на сегодня</p><h2 id="exam-today-title">{{ exam_prep.daily_minutes }} минут подготовки</h2></div>
+      <span>3 коротких шага</span>
+    </div>
+    <ol class="exam-daily-list">
+      {% for item in exam_prep.daily_plan %}
+        <li class="card exam-daily-item exam-accent-{{ item.accent }}">
+          <span class="exam-step-number">{{ forloop.counter }}</span>
+          <div><small>{{ item.module_title }} · {{ item.minutes }} минут</small><strong>{{ item.action }}</strong></div>
+          <a href="{{ item.href }}" aria-label="{{ item.action }}">Начать</a>
+        </li>
+      {% endfor %}
+    </ol>
+  </section>
+
+  <section aria-labelledby="exam-modules-title">
+    <div class="section-heading exam-section-heading">
+      <div><p class="eyebrow">Структура B1</p><h2 id="exam-modules-title">Пять модулей</h2></div>
+      <span>порог — {{ exam_prep.pass_percent }}% отдельно в каждом</span>
+    </div>
+    <div class="exam-module-grid">
+      {% for module in exam_prep.modules %}
+        <article class="card exam-module-card exam-accent-{{ module.accent }}">
+          <header><span>{{ module.duration_minutes }} мин</span><span>{{ module.points }} баллов</span></header>
+          <p class="eyebrow" lang="pl">{{ module.polish_title }}</p>
+          <h3>{{ module.title }}</h3>
+          <p class="muted">{{ module.task_count }}</p>
+          <a href="{{ module.href }}">{{ module.action }}</a>
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+
+  <aside class="card exam-source-note">
+    <div><p class="eyebrow">Официальные материалы</p><h2>Сверяйся с форматом комиссии</h2><p class="muted">PolskiFlow помогает тренироваться, но не заменяет официальный пробный тест и не подтверждает уровень CEFR.</p></div>
+    <div class="exam-source-actions">
+      <a class="compact-button secondary-link" href="https://certyfikatpolski.pl/o-egzaminie/struktura-egzaminu/" target="_blank" rel="noopener noreferrer">Структура экзамена</a>
+      <a class="compact-button secondary-link" href="https://certyfikatpolski.pl/o-egzaminie/zbiory-zadan/" target="_blank" rel="noopener noreferrer">Задания B1</a>
+    </div>
+  </aside>
+{% endblock %}

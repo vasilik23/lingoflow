@@ -29,6 +29,7 @@ from polskiflow.lesson_draft_store import load_latest_lesson_draft
 from polskiflow.lesson_bookmark_store import load_lesson_bookmarks
 from polskiflow.domain.achievements import build_achievements
 from polskiflow.domain.auth_rate_limit import consume_auth_attempt
+from polskiflow.domain.b1_exam_prep import build_b1_exam_prep
 from polskiflow.domain.daily_plan import build_daily_plan
 from polskiflow.domain.daily_goal_insights import build_daily_goal_insight
 from polskiflow.domain.password_policy import password_error
@@ -452,6 +453,9 @@ def home(request: HttpRequest) -> HttpResponse:
             "completed_count": completed_count,
             "progress_percent": progress_percent,
             "resume_lesson": resume_lesson,
+            "b1_exam_prep": build_b1_exam_prep(timezone.localdate())
+            if dashboard.level == "B1"
+            else None,
         },
     )
 
@@ -469,6 +473,16 @@ def daily_tasks(request: HttpRequest) -> HttpResponse:
 def practice_hub(request: HttpRequest) -> HttpResponse:
     """Keep optional training modes discoverable without bloating the course catalog."""
     return render(request, "practice.html")
+
+
+@require_browser_user
+def b1_exam_prep(request: HttpRequest) -> HttpResponse:
+    """Show an honest study surface aligned with the official adult B1 format."""
+    return render(
+        request,
+        "b1_exam_prep.html",
+        {"exam_prep": build_b1_exam_prep(timezone.localdate())},
+    )
 
 
 @require_browser_user
