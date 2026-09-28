@@ -820,6 +820,28 @@ class LessonViewsTests(TestCase):
         self.assertContains(response, 'href="/lesson/grammar/"', count=2)
         self.assertContains(response, "Вернуться к плану")
 
+    def test_lesson_forms_work_as_html_without_htmx(self):
+        page = self.client.get("/lesson/words/")
+        self.assertContains(page, 'method="post" action="/lesson/words/step/"')
+
+        response = self.client.post(
+            "/lesson/words/step/",
+            {"action": "reveal", "state": self.lesson_state("words")},
+        )
+        self.assertContains(response, "<!doctype html>")
+        self.assertContains(response, "привет")
+        self.assertContains(response, "Инструменты урока")
+
+    def test_htmx_lesson_step_still_returns_only_flow_fragment(self):
+        response = self.client.post(
+            "/lesson/words/step/",
+            {"action": "reveal", "state": self.lesson_state("words")},
+            headers={"HX-Request": "true"},
+        )
+        self.assertContains(response, "привет")
+        self.assertNotContains(response, "<!doctype html>")
+        self.assertNotContains(response, "Инструменты урока")
+
     def test_final_topic_lesson_returns_to_its_course_topic(self):
         response = self.client.post(
             "/lesson/quiz/step/",
@@ -841,6 +863,7 @@ class LessonViewsTests(TestCase):
         response = self.client.post(
             "/lesson/words/step/",
             {"action": "know", "state": self.lesson_state("words", 4, 4)},
+            headers={"HX-Request": "true"},
         )
 
         self.assertContains(response, "data-lesson-result-sync")
@@ -857,6 +880,7 @@ class LessonViewsTests(TestCase):
         response = self.client.post(
             "/lesson/quiz/step/",
             {"action": "next", "state": self.lesson_state("quiz", 4, 4, "answered"), "selected": 1},
+            headers={"HX-Request": "true"},
         )
 
         self.assertContains(response, "data-lesson-result-sync")
@@ -874,6 +898,7 @@ class LessonViewsTests(TestCase):
                 "state": self.lesson_state("grammar", 3, 2, "answered"),
                 "answer_order": "[0,1,2,3,4]",
             },
+            headers={"HX-Request": "true"},
         )
 
         self.assertContains(response, "data-lesson-result-sync")
@@ -890,6 +915,7 @@ class LessonViewsTests(TestCase):
         response = self.client.post(
             "/lesson/review/step/",
             {"action": "know", "state": self.lesson_state("review")},
+            headers={"HX-Request": "true"},
         )
 
         self.assertContains(response, "data-lesson-result-sync")

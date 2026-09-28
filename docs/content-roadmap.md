@@ -219,6 +219,9 @@
    self-service deletion, health/readiness, request IDs, privacy-safe logs,
    lab performance budgets, read-only production synthetic smoke и подписанное
    owner-bound состояние server-rendered уроков вместо доверия скрытым полям.
+   Основной поток урока также работает как обычные HTML-формы при блокировке
+   внешнего HTMX CDN; HTMX остаётся progressive enhancement, а не обязательной
+   частью корректности занятия.
 6. 🟡 **Продукт готов к закрытому beta-тесту, но не к широкому публичному
    запуску.** Главные пробелы теперь не в количестве уроков или API, а во
    внешней валидации контента, юридических данных, наблюдаемости и проверке
