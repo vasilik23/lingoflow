@@ -7,7 +7,7 @@
   {% if question.context %}<p class="practice-context">“{{ question.context|truncatechars:180 }}”</p>{% endif %}
 </section>
 {% if not answered %}
-  <form class="options" method="post" action="{% url 'dictionary-practice-step' %}" hx-post="{% url 'dictionary-practice-step' %}" hx-target="#practice-flow" hx-swap="innerHTML">
+  <form class="options" method="post" action="{% url 'dictionary-practice-step' %}">
     {% csrf_token %}<input type="hidden" name="action" value="answer"><input type="hidden" name="index" value="{{ index }}"><input type="hidden" name="score" value="{{ score }}">
     {% if question.typed %}<label class="typed-answer"><span>Польская лемма</span><input type="text" name="answer" autocomplete="off" autocapitalize="none" spellcheck="false" required autofocus></label><button class="button" type="submit">Проверить</button>{% else %}{% for option in question.options %}<button type="submit" name="choice" value="{{ forloop.counter0 }}">{{ option }}</button>{% endfor %}{% endif %}
   </form>
@@ -16,7 +16,7 @@
     {% for option in question.options %}<button type="button" disabled class="{% if forloop.counter0 == question.correct %}correct{% elif forloop.counter0 == selected %}wrong{% endif %}">{{ option }}</button>{% endfor %}
   </div>{% endif %}
   <div class="card feedback" aria-live="polite"><strong>{% if answer_correct or selected == question.correct %}Верно! 🎉{% else %}Правильный ответ: {{ question.correct_answer }}{% endif %}</strong>{% if question.typed and submitted_answer %}<p class="muted">Твой ответ: {{ submitted_answer }}</p>{% endif %}</div>
-  <form method="post" action="{% url 'dictionary-practice-step' %}" hx-post="{% url 'dictionary-practice-step' %}" hx-target="#practice-flow" hx-swap="innerHTML">
+  <form method="post" action="{% url 'dictionary-practice-step' %}">
     {% csrf_token %}<input type="hidden" name="action" value="next"><input type="hidden" name="index" value="{{ index }}"><input type="hidden" name="score" value="{{ score }}">{% if not question.typed %}<input type="hidden" name="selected" value="{{ selected }}">{% endif %}
     <fieldset class="review-quality"><legend>{% if answer_correct or selected == question.correct %}Насколько легко вспомнилось слово?{% else %}Это слово вернётся завтра{% endif %}</legend>
       {% if answer_correct or selected == question.correct %}

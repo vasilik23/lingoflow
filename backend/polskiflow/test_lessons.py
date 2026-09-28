@@ -445,6 +445,14 @@ class LessonViewsTests(TestCase):
         self.assertNotContains(response, "fonts.googleapis.com")
         self.assertNotContains(response, "fonts.gstatic.com")
 
+    def test_base_template_has_no_external_javascript_runtime(self):
+        response = self.client.get("/")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertNotContains(response, "cdn.jsdelivr.net")
+        self.assertNotContains(response, "unpkg.com")
+        self.assertNotContains(response, "hx-post")
+
     def test_base_template_has_keyboard_skip_link_and_main_target(self):
         response = self.client.get("/")
 

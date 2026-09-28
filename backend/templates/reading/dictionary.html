@@ -35,7 +35,7 @@
     {% for word in words %}
       <article class="dictionary-word" id="word-{{ word.id }}">
         <div><strong>{{ word.word }}</strong><span>{{ word.translation }}</span>{% if word.context %}<small>“{{ word.context|truncatechars:150 }}”</small>{% endif %}</div>
-        <form method="post" action="{% url 'remove-dictionary-word' word.id %}" hx-post="{% url 'remove-dictionary-word' word.id %}" hx-target="#word-{{ word.id }}" hx-swap="outerHTML">{% csrf_token %}<button class="word-delete" type="submit" aria-label="Удалить {{ word.word }}">×</button></form>
+        <form method="post" action="{% url 'remove-dictionary-word' word.id %}">{% csrf_token %}<button class="word-delete" type="submit" aria-label="Удалить {{ word.word }}">×</button></form>
       </article>
     {% empty %}
       <div class="card empty-state"><span>✨</span><h2>{% if filters_active %}Ничего не найдено{% else %}Словарь пока пуст{% endif %}</h2><p class="muted">{% if filters_active %}Измени запрос или сбрось фильтры.{% else %}Открой текст, нажми на незнакомое слово и сохрани перевод.{% endif %}</p>{% if filters_active %}<a class="button" href="{% url 'dictionary' %}">Сбросить фильтры</a>{% else %}<a class="button" href="{% url 'reading-library' %}">Выбрать текст</a>{% endif %}</div>

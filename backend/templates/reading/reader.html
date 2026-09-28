@@ -54,7 +54,7 @@
       <div class="word-panel-placeholder"><span>👆</span><strong>Нажми на слово</strong><p>Здесь появится перевод, и слово можно будет сохранить.</p></div>
       <div class="word-panel-result" hidden>
         <p class="eyebrow">Перевод</p><h2 id="selected-word"></h2><p class="selected-translation" id="selected-translation"></p>
-        <form method="post" action="{% url 'add-dictionary-word' text.id %}" hx-post="{% url 'add-dictionary-word' text.id %}" hx-target="#dictionary-status" hx-swap="innerHTML">
+        <form method="post" action="{% url 'add-dictionary-word' text.id %}">
           {% csrf_token %}<input type="hidden" name="word" id="word-input"><input type="hidden" name="translation" id="translation-input"><input type="hidden" name="context" id="context-input">
           <button type="submit">＋ Добавить в словарь</button>
         </form>

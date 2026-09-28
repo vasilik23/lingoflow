@@ -726,7 +726,6 @@ button.secondary { background: white; color: var(--text); border: 1px solid #dcd
 .sentence-builder-result.wrong { border-color: var(--red); background: var(--red-soft); color: #a52f46; }
 .assembled-sentence { margin: .2rem 0 0; overflow-wrap: anywhere; font-size: 1.15rem; font-weight: 800; }
 .correct-sentence { margin: .65rem 0 0; }
-.htmx-request { opacity: .58; pointer-events: none; }
 .error, .message { padding: .8rem 1rem; border-radius: .85rem; font-size: .86rem; }
 .error { color: #a52f46; background: var(--red-soft); }
 .message { color: #176b47; background: var(--green-soft); }
