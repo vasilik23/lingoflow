@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Урок завершён · PolskiFlow{% endblock %}
+{% block content %}
+  <div class="lesson-shell">
+    {% include "lessons/_complete.html" %}
+  </div>
+{% endblock %}
+{% block scripts %}
+{% load static %}
+<script src="{% static 'polskiflow/result-queue.js' %}?v=1" defer></script>
+<script src="{% static 'polskiflow/lesson-result-sync.js' %}?v=1" defer></script>
+{% endblock %}

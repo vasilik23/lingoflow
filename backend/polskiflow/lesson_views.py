@@ -35,12 +35,9 @@ def lesson(request: HttpRequest, lesson_id: str) -> HttpResponse:
     lesson_kind = lesson_task["kind"]
     draft = load_lesson_draft(request.supabase_access_token, request.supabase_user.id, lesson_id)
     index, score = _valid_draft_state(draft, lesson_id, lesson_kind)
-    bookmarks = load_lesson_bookmarks(
-        request.supabase_access_token, request.supabase_user.id
+    context = _lesson_page_context(
+        request, lesson_task, lesson_id, lesson_kind, {"resume_notice": index > 0}
     )
-    note = load_lesson_note(request.supabase_access_token, request.supabase_user.id, lesson_id)
-    collections = load_collection_summaries(request.supabase_access_token, request.supabase_user.id)
-    context = {"task": lesson_task, "lesson_id": lesson_id, "lesson_kind": lesson_kind, "resume_notice": index > 0, "is_bookmarked": lesson_id in (bookmarks or set()), "lesson_bookmarks_available": bookmarks is not None, "lesson_note": note, "collection_choices": collections or [], "collections_available": collections is not None}
     if lesson_kind in {"words", "review"}:
         context.update(_flashcard_context(lesson_id, lesson_kind, index, score, False))
     elif lesson_kind == "grammar":
@@ -181,7 +178,41 @@ def _render_step(request, template, context, lesson_id, lesson_kind):
         request.supabase_user.id, lesson_id, lesson_kind, context["index"], context["score"],
         context.get("state_phase", "ready"),
     )
-    return render(request, template, context)
+    if request.headers.get("HX-Request") == "true":
+        return render(request, template, context)
+    lesson_task = task(lesson_id)
+    page_context = _lesson_page_context(
+        request,
+        lesson_task,
+        lesson_id,
+        lesson_kind,
+        {**context, "resume_practice": lesson_kind == "grammar"},
+    )
+    return render(request, "lessons/page.html", page_context)
+
+
+def _lesson_page_context(request, lesson_task, lesson_id, lesson_kind, context):
+    """Build the full page shell for initial and non-HTMX lesson requests."""
+    bookmarks = load_lesson_bookmarks(
+        request.supabase_access_token, request.supabase_user.id
+    )
+    note = load_lesson_note(
+        request.supabase_access_token, request.supabase_user.id, lesson_id
+    )
+    collections = load_collection_summaries(
+        request.supabase_access_token, request.supabase_user.id
+    )
+    return {
+        "task": lesson_task,
+        "lesson_id": lesson_id,
+        "lesson_kind": lesson_kind,
+        "is_bookmarked": lesson_id in (bookmarks or set()),
+        "lesson_bookmarks_available": bookmarks is not None,
+        "lesson_note": note,
+        "collection_choices": collections or [],
+        "collections_available": collections is not None,
+        **context,
+    }
 
 
 def _lesson_flashcards(lesson_id: str, lesson_kind: str) -> list[dict]:
@@ -356,8 +387,9 @@ def _complete(request: HttpRequest, lesson_id: str, score: int, total: int) -> H
                 ),
             }
         )
-    return render(
-        request,
-        "lessons/_complete.html",
-        context,
+    template = (
+        "lessons/_complete.html"
+        if request.headers.get("HX-Request") == "true"
+        else "lessons/complete_page.html"
     )
+    return render(request, template, context)
