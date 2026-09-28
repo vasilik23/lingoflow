@@ -13,7 +13,7 @@
           <h1>{{ grammar.title }}</h1>
           {% for heading, body in grammar.sections %}<div class="theory-section"><h2>{{ heading }}</h2><p class="muted">{{ body }}</p></div>{% endfor %}
         </div>
-        <form method="post" action="{% url 'lesson-step' lesson_id %}" hx-post="{% url 'lesson-step' lesson_id %}" hx-target="#lesson-flow" hx-swap="innerHTML">
+        <form method="post" action="{% url 'lesson-step' lesson_id %}">
           {% csrf_token %}<input type="hidden" name="action" value="start"><input type="hidden" name="state" value="{{ lesson_state }}">
           <button type="submit">Перейти к практике →</button>
         </form>
@@ -97,7 +97,6 @@
     }
 
     initBuilder(document);
-    document.body.addEventListener("htmx:afterSwap", function (event) { initBuilder(event.target); });
   }());
 </script>
 {% endblock %}

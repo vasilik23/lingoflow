@@ -59,5 +59,4 @@
     root.querySelectorAll?.("[data-lesson-result-sync]").forEach(init);
   }
   scan(document);
-  document.body.addEventListener("htmx:afterSwap", function (event) { scan(event.target); });
 }());

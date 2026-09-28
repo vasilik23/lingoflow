@@ -7,9 +7,9 @@
 </div>
 {% if revealed %}
   <div class="actions">
-    <form method="post" action="{% url 'lesson-step' lesson_id %}" hx-post="{% url 'lesson-step' lesson_id %}" hx-target="#lesson-flow" hx-swap="innerHTML">{% csrf_token %}<input type="hidden" name="action" value="again"><input type="hidden" name="state" value="{{ lesson_state }}"><button class="secondary">Повторить</button></form>
-    <form method="post" action="{% url 'lesson-step' lesson_id %}" hx-post="{% url 'lesson-step' lesson_id %}" hx-target="#lesson-flow" hx-swap="innerHTML">{% csrf_token %}<input type="hidden" name="action" value="know"><input type="hidden" name="state" value="{{ lesson_state }}"><button>Знаю →</button></form>
+    <form method="post" action="{% url 'lesson-step' lesson_id %}">{% csrf_token %}<input type="hidden" name="action" value="again"><input type="hidden" name="state" value="{{ lesson_state }}"><button class="secondary">Повторить</button></form>
+    <form method="post" action="{% url 'lesson-step' lesson_id %}">{% csrf_token %}<input type="hidden" name="action" value="know"><input type="hidden" name="state" value="{{ lesson_state }}"><button>Знаю →</button></form>
   </div>
 {% else %}
-  <form method="post" action="{% url 'lesson-step' lesson_id %}" hx-post="{% url 'lesson-step' lesson_id %}" hx-target="#lesson-flow" hx-swap="innerHTML">{% csrf_token %}<input type="hidden" name="action" value="reveal"><input type="hidden" name="state" value="{{ lesson_state }}"><button>Показать перевод</button></form>
+  <form method="post" action="{% url 'lesson-step' lesson_id %}">{% csrf_token %}<input type="hidden" name="action" value="reveal"><input type="hidden" name="state" value="{{ lesson_state }}"><button>Показать перевод</button></form>
 {% endif %}

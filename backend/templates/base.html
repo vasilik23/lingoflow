@@ -34,12 +34,11 @@
       }());
     </script>
     <title>{% block title %}PolskiFlow{% endblock %}</title>
-    <link rel="icon" href="{% static 'polskiflow/favicon.svg' %}?shell=v16" type="image/svg+xml">
+    <link rel="icon" href="{% static 'polskiflow/favicon.svg' %}?shell=v17" type="image/svg+xml">
     <link rel="manifest" href="{% url 'web-app-manifest' %}">
-    <link rel="stylesheet" href="{% static 'polskiflow/app.css' %}?shell=v16">
-    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.10/dist/htmx.min.js" integrity="sha384-H5SrcfygHmAuTDZphMHqBJLc3FhssKjG7w/CeCpFReSfwBWDTKpkzPP8c+cLsK+V" crossorigin="anonymous" defer></script>
+    <link rel="stylesheet" href="{% static 'polskiflow/app.css' %}?shell=v17">
   </head>
-  <body class="{% block body_class %}{% endblock %}" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+  <body class="{% block body_class %}{% endblock %}">
     <a class="skip-link" href="#main-content">К основному содержимому</a>
     {% if request.supabase_user %}
       <nav class="app-nav" aria-label="Основная навигация">

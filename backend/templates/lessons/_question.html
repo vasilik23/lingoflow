@@ -3,7 +3,7 @@
 <div class="card question-card"><p class="eyebrow">{% if sentence_builder %}Составь предложение{% else %}Выбери ответ{% endif %}</p><h2>{{ question.prompt }}</h2></div>
 {% if sentence_builder %}
   {% if builder_answer == None %}
-    <form class="sentence-builder" data-sentence-builder method="post" action="{% url 'lesson-step' lesson_id %}" hx-post="{% url 'lesson-step' lesson_id %}" hx-target="#lesson-flow" hx-swap="innerHTML">
+    <form class="sentence-builder" data-sentence-builder method="post" action="{% url 'lesson-step' lesson_id %}">
       {% csrf_token %}<input type="hidden" name="action" value="answer"><input type="hidden" name="state" value="{{ lesson_state }}"><input type="hidden" name="answer_order" value="[]" data-builder-order>
       <div class="sentence-builder-answer" data-builder-answer aria-live="polite"><span class="muted">Нажимай на слова в правильном порядке</span></div>
       <div class="sentence-builder-tokens" data-builder-tokens aria-label="Доступные слова">
@@ -19,12 +19,12 @@
       {% if not builder_correct %}<p class="correct-sentence">Правильно: <strong>{{ builder_correct_sentence }}</strong></p>{% endif %}
     </div>
     <p class="card feedback">{{ question.explanation }}</p>
-    <form method="post" action="{% url 'lesson-step' lesson_id %}" hx-post="{% url 'lesson-step' lesson_id %}" hx-target="#lesson-flow" hx-swap="innerHTML">
+    <form method="post" action="{% url 'lesson-step' lesson_id %}">
       {% csrf_token %}<input type="hidden" name="action" value="next"><input type="hidden" name="state" value="{{ lesson_state }}"><input type="hidden" name="answer_order" value="{{ builder_answer_json }}"><button>{% if index|add:1 == total %}Завершить урок{% else %}Следующий вопрос →{% endif %}</button>
     </form>
   {% endif %}
 {% elif selected == None %}
-  <form class="options" method="post" action="{% url 'lesson-step' lesson_id %}" hx-post="{% url 'lesson-step' lesson_id %}" hx-target="#lesson-flow" hx-swap="innerHTML">
+  <form class="options" method="post" action="{% url 'lesson-step' lesson_id %}">
     {% csrf_token %}<input type="hidden" name="action" value="answer"><input type="hidden" name="state" value="{{ lesson_state }}">
     {% for option in question.options %}<button type="submit" name="choice" value="{{ forloop.counter0 }}"><span>{{ forloop.counter }}.</span>&nbsp; {{ option }}</button>{% endfor %}
   </form>
@@ -33,7 +33,7 @@
     {% for option in question.options %}<button disabled class="{% if forloop.counter0 == question.correct %}correct{% elif forloop.counter0 == selected %}wrong{% endif %}">{{ option }}</button>{% endfor %}
   </div>
   <p class="card feedback">{{ question.explanation }}</p>
-  <form method="post" action="{% url 'lesson-step' lesson_id %}" hx-post="{% url 'lesson-step' lesson_id %}" hx-target="#lesson-flow" hx-swap="innerHTML">
+  <form method="post" action="{% url 'lesson-step' lesson_id %}">
     {% csrf_token %}<input type="hidden" name="action" value="next"><input type="hidden" name="state" value="{{ lesson_state }}"><button>{% if index|add:1 == total %}Завершить урок{% else %}Следующий вопрос →{% endif %}</button>
   </form>
 {% endif %}
