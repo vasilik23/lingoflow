@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Закрытая beta · PolskiFlow{% endblock %}
+{% block content %}
+  <header class="beta-hero">
+    <div><p class="eyebrow">Закрытая beta</p><h1>Помоги проверить PolskiFlow в реальной учёбе</h1><p>Пройди несколько обычных сценариев. Если что-то мешает заниматься, отправь сообщение прямо с проблемной страницы.</p></div>
+    <div class="beta-progress" aria-label="Прогресс знакомства с beta"><strong>{{ milestones_done }} / {{ milestones|length }}</strong><span>учебных рубежей</span></div>
+  </header>
+  {% if not dashboard.available %}<p class="data-notice">Прогресс временно недоступен, но все сценарии можно проверить.</p>{% endif %}
+  <section aria-labelledby="beta-progress-title">
+    <div class="section-heading"><div><p class="eyebrow">Твой старт</p><h2 id="beta-progress-title">Первые рубежи</h2></div></div>
+    <ul class="beta-milestones">{% for item in milestones %}<li class="card{% if item.done %} is-done{% endif %}"><span aria-hidden="true">{% if item.done %}✓{% else %}○{% endif %}</span><div><strong>{{ item.label }}</strong><small>{{ item.detail }}</small></div></li>{% endfor %}</ul>
+  </section>
+  <section aria-labelledby="beta-scenarios-title">
+    <div class="section-heading"><div><p class="eyebrow">Проверить продукт</p><h2 id="beta-scenarios-title">Основные сценарии</h2></div><span>{{ scenarios|length }} маршрутов</span></div>
+    <div class="beta-scenario-grid">{% for scenario in scenarios %}<article class="card beta-scenario" id="{{ scenario.id }}"><span class="beta-scenario-number" aria-hidden="true">{{ forloop.counter }}</span><div><h3>{{ scenario.title }}</h3><p>{{ scenario.description }}</p></div><a class="button secondary" href="{% url scenario.url_name %}">{{ scenario.action }} →</a></article>{% endfor %}</div>
+  </section>
+  <aside class="card beta-feedback" aria-labelledby="beta-feedback-title"><div><p class="eyebrow">Нашёл проблему?</p><h2 id="beta-feedback-title">Расскажи, что ожидал и что произошло</h2><p>Мы сохраняем только категорию, текст сообщения и указанный путь страницы. Пароли и другие секреты добавлять не нужно.</p></div><a class="button" href="{% url 'feedback' %}?from=/beta/">Отправить обратную связь</a></aside>
+{% endblock %}

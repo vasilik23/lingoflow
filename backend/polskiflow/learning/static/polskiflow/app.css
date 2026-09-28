@@ -607,6 +607,28 @@ button.secondary { background: white; color: var(--text); border: 1px solid #dcd
 .feedback-history-meta { display: flex; align-items: center; justify-content: space-between; gap: .75rem; }
 .feedback-status { flex: 0 0 auto; padding: .3rem .55rem; border-radius: 999px; background: var(--primary-soft); color: var(--primary-dark); font-size: .72rem; font-weight: 800; }
 .feedback-empty { list-style: none; }
+.beta-hero { display: grid; gap: 1.25rem; align-items: end; margin-bottom: 2rem; padding: clamp(1.4rem, 4vw, 2.5rem); border: 1px solid color-mix(in srgb, var(--primary) 22%, var(--line)); border-radius: 1.6rem; background: radial-gradient(circle at 90% 15%, color-mix(in srgb, var(--primary) 22%, transparent), transparent 35%), linear-gradient(135deg, var(--surface), var(--surface-soft)); box-shadow: var(--shadow); }
+.beta-hero h1 { max-width: 18ch; }
+.beta-hero p:last-child { max-width: 44rem; margin: 0; color: var(--muted); }
+.beta-progress { display: grid; justify-items: start; gap: .15rem; min-width: 10rem; padding: 1rem; border: 1px solid color-mix(in srgb, var(--primary) 20%, var(--line)); border-radius: 1rem; background: color-mix(in srgb, var(--surface) 88%, transparent); }
+.beta-progress strong { color: var(--primary-dark); font-size: 1.55rem; }
+.beta-progress span { color: var(--muted); font-size: .76rem; font-weight: 800; }
+.beta-milestones { display: grid; gap: .75rem; margin: 0 0 2rem; padding: 0; list-style: none; }
+.beta-milestones li { display: flex; align-items: center; gap: .8rem; padding: 1rem; }
+.beta-milestones li > span { display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 50%; background: var(--surface-soft); color: var(--muted); font-weight: 900; }
+.beta-milestones li.is-done > span { background: var(--green-soft); color: var(--green); }
+.beta-milestones li div { display: grid; gap: .15rem; }
+.beta-milestones small { color: var(--muted); }
+.beta-scenario-grid { display: grid; gap: 1rem; margin-bottom: 2rem; }
+.beta-scenario { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .8rem 1rem; align-items: start; }
+.beta-scenario-number { display: grid; place-items: center; width: 2.4rem; height: 2.4rem; border-radius: .8rem; background: var(--primary-soft); color: var(--primary-dark); font-weight: 900; }
+.beta-scenario h3, .beta-scenario p { margin: 0; }
+.beta-scenario p { margin-top: .35rem; color: var(--muted); font-size: .84rem; }
+.beta-scenario .button { grid-column: 1 / -1; justify-self: start; }
+.beta-feedback { display: grid; gap: 1rem; align-items: center; border-color: color-mix(in srgb, var(--primary) 24%, var(--line)); }
+.beta-feedback h2, .beta-feedback p { margin: 0; }
+.beta-feedback p:last-child { margin-top: .45rem; color: var(--muted); }
+.beta-feedback .button { justify-self: start; }
 .task-card-row { position: relative; }
 .task-card-row .task-card { padding-right: 4.2rem; }
 .task-card-row form { position: absolute; top: 50%; right: .85rem; z-index: 2; transform: translateY(-50%); }
@@ -753,6 +775,10 @@ button.secondary { background: white; color: var(--text); border: 1px solid #dcd
 .auth-switch { margin: 1.2rem 0 0; font-size: .85rem; text-align: center; }
 
 @media (min-width: 700px) {
+  .beta-hero { grid-template-columns: minmax(0, 1fr) auto; }
+  .beta-milestones { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .beta-scenario-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .beta-feedback { grid-template-columns: minmax(0, 1fr) auto; }
   .saved-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .onboarding-form { padding: 1.75rem; }
   .level-options { grid-template-columns: repeat(3, minmax(0, 1fr)); }

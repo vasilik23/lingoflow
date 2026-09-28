@@ -30,6 +30,7 @@ from polskiflow.saved_views import saved_learning, toggle_lesson_bookmark
 from polskiflow.mistake_views import mistake_notebook, mistake_practice
 from polskiflow.note_views import delete_lesson_note, lesson_notes
 from polskiflow.collection_views import add_material_to_collection, collection_action, collections, create_collection_view, remove_collection_item
+from polskiflow.beta_views import beta_center
 
 
 @require_supabase_user
@@ -66,6 +67,7 @@ urlpatterns = [
     path("account/security/", account_security, name="account-security"),
     path("account/delete/", account_delete, name="account-delete"),
     path("feedback/", feedback, name="feedback"),
+    path("beta/", beta_center, name="beta-center"),
     path("history/", learning_history, name="learning-history"),
     path("profile/export/", profile_data_export, name="profile-data-export"),
     path("writing/", writing_practice, name="writing-practice"),
