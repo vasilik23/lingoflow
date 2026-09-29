@@ -378,6 +378,7 @@ class UserFeedback(models.Model):
     category = models.CharField(max_length=24)
     message = models.TextField()
     page_url = models.CharField(max_length=300, blank=True)
+    priority = models.CharField(max_length=16, default="normal")
     status = models.CharField(max_length=16, default="new")
     created_at = models.DateTimeField(auto_now_add=True)
 

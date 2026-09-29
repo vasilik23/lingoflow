@@ -255,7 +255,9 @@
    отслеживать feedback, ошибки, latency и прохождение Today → lesson → result;
    сформировать измеримые release thresholds. В web добавлен отдельный beta-
    центр с учебными рубежами, пятью проверяемыми сценариями и прямым переходом
-   к privacy-safe обратной связи с проблемной страницы.
+   к privacy-safe обратной связи с проблемной страницы. Обращения теперь имеют
+   явный приоритет `normal/high/blocking`, чтобы блокирующие обучение проблемы
+   не терялись среди идей и небольших неточностей.
 2. **Общий мобильный клиент iOS/Android:** 🟡 Expo/React Native foundation,
    безопасный Supabase login/token storage, bootstrap, Today и
    lesson → answer → idempotent result и stateless diagnostic реализованы в `mobile/`; typecheck и

@@ -26,13 +26,13 @@ class FeedbackApiTests(TestCase):
     @patch("polskiflow.api_views.consume_api_mutation", return_value=(True, 60))
     @patch("polskiflow.api_views.save_feedback", return_value=True)
     def test_post_validates_and_saves_under_authenticated_owner(self, save, limit):
-        payload = {"category": "technical", "message": "После завершения урока результат не обновился.", "page_url": "/lesson/quiz/"}
+        payload = {"category": "technical", "priority": "blocking", "message": "После завершения урока результат не обновился.", "page_url": "/lesson/quiz/"}
         with self.auth():
             response = self.client.post("/api/v1/me/feedback/", data=json.dumps(payload), content_type="application/json", **self.authorization)
         self.assertEqual(response.status_code, 201)
-        self.assertEqual(response.json()["data"], {"created": True, "status": "new"})
+        self.assertEqual(response.json()["data"], {"created": True, "status": "new", "priority": "blocking"})
         limit.assert_called_once_with("owner-token", "owner-1", "feedback")
-        save.assert_called_once_with("owner-token", "owner-1", payload["category"], payload["message"], payload["page_url"])
+        save.assert_called_once_with("owner-token", "owner-1", payload["category"], payload["message"], payload["page_url"], payload["priority"])
 
     @patch("polskiflow.api_views.consume_api_mutation", return_value=(True, 60))
     @patch("polskiflow.api_views.save_feedback")
@@ -42,6 +42,7 @@ class FeedbackApiTests(TestCase):
             {"category": "idea", "message": "short"},
             {"category": "idea", "message": "x" * 30, "page_url": "https://evil.example"},
             {"category": "idea", "message": "x" * 30, "user_id": "other"},
+            {"category": "idea", "message": "x" * 30, "priority": "urgent"},
         )
         with self.auth():
             for payload in cases:
@@ -49,6 +50,16 @@ class FeedbackApiTests(TestCase):
                     response = self.client.post("/api/v1/me/feedback/", data=json.dumps(payload), content_type="application/json", **self.authorization)
                     self.assertEqual(response.status_code, 400)
         save.assert_not_called()
+
+    @patch("polskiflow.api_views.consume_api_mutation", return_value=(True, 60))
+    @patch("polskiflow.api_views.save_feedback", return_value=True)
+    def test_omitted_priority_defaults_to_normal(self, save, _limit):
+        payload = {"category": "idea", "message": "Предлагаю добавить ещё один сценарий практики."}
+        with self.auth():
+            response = self.client.post("/api/v1/me/feedback/", data=json.dumps(payload), content_type="application/json", **self.authorization)
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.json()["data"]["priority"], "normal")
+        save.assert_called_once_with("owner-token", "owner-1", "idea", payload["message"], "", "normal")
 
     def test_requires_bearer_and_rejects_unsupported_method(self):
         self.assertEqual(self.client.get("/api/v1/me/feedback/").status_code, 401)
