@@ -18,9 +18,15 @@
 
     {% for prompt in writing_prompts %}
       <div class="writing-prompt" data-writing-prompt="{{ prompt.id }}" data-min-words="{{ prompt.min_words }}" data-min-paragraphs="{{ prompt.min_paragraphs }}" data-markers="{{ prompt.markers|join:'|' }}"{% if not forloop.first %} hidden{% endif %}>
-        <p class="eyebrow">Задание {{ forloop.counter }}</p>
+        <p class="eyebrow">Задание {{ forloop.counter }}{% if prompt.genre %} · <span lang="pl">{{ prompt.genre }}</span>{% endif %}</p>
         <h2>{{ prompt.title }}</h2>
         <p>{{ prompt.task }}</p>
+        {% if prompt.requirements %}
+          <section class="writing-task-points" aria-labelledby="points-{{ prompt.id }}">
+            <h3 id="points-{{ prompt.id }}">Что обязательно раскрыть</h3>
+            <ul>{% for requirement in prompt.requirements %}<li>{{ requirement }}</li>{% endfor %}</ul>
+          </section>
+        {% endif %}
         <p class="writing-hint"><strong>Ориентир:</strong> {{ prompt.hint }}</p>
         <label for="draft-{{ prompt.id }}">Твой черновик</label>
         <textarea id="draft-{{ prompt.id }}" rows="12" data-writing-draft="{{ prompt.id }}" aria-describedby="draft-help-{{ prompt.id }}"></textarea>
@@ -37,6 +43,23 @@
           <button class="secondary writing-reset" type="button" data-reset-draft>Удалить этот черновик</button>
         </div>
         <div class="writing-feedback" data-writing-feedback role="status" aria-live="polite" hidden></div>
+        {% if prompt.requirements %}
+          <section class="writing-revision" data-writing-revision hidden aria-labelledby="revision-{{ prompt.id }}">
+            <h3 id="revision-{{ prompt.id }}">Разбор после черновика</h3>
+            <p class="muted">Сначала отметь выполненные пункты, затем выбери зоны, где сам заметил ошибки. Эти отметки остаются только в этом браузере.</p>
+            <div class="writing-review-grid">
+              <fieldset>
+                <legend>Все пункты задания</legend>
+                {% for requirement in prompt.requirements %}<label><input type="checkbox" data-writing-requirement> {{ requirement }}</label>{% endfor %}
+              </fieldset>
+              <fieldset>
+                <legend>Что проверить в языке</legend>
+                {% for focus in prompt.grammar_focus %}<label><input type="checkbox" data-writing-error value="{{ focus }}"> {{ focus }}</label>{% endfor %}
+              </fieldset>
+            </div>
+            <details class="writing-sample"><summary>Показать пример ответа после своей попытки</summary><p lang="pl">{{ prompt.sample_answer }}</p><p class="muted">Это один возможный ответ. Сравни структуру и выполнение пунктов, а не копируй текст.</p></details>
+          </section>
+        {% endif %}
       </div>
     {% endfor %}
   </section>
@@ -77,6 +100,8 @@
           return "<li class=\"" + (check.passed ? "passed" : "missing") + "\">" + (check.passed ? "✓ " : "Нужно проверить: ") + check.text + "</li>";
         }).join("") + "</ul><p>Это техническая подсказка, а не оценка преподавателя: перечитай текст и отдельно проверь грамматику, смысл и стиль.</p>";
         result.hidden = false;
+        const revision = panel.querySelector("[data-writing-revision]");
+        if (revision) revision.hidden = false;
       }
 
       function showPrompt(id) {
@@ -87,6 +112,7 @@
         const textarea = panel.querySelector("[data-writing-draft]");
         const status = panel.querySelector("[data-save-status]");
         const key = storagePrefix + textarea.dataset.writingDraft;
+        const reviewKey = key + ":review";
         try { textarea.value = localStorage.getItem(key) || ""; } catch (error) { status.textContent = "Локальное сохранение недоступно"; }
         updateCount(panel, textarea.value);
         textarea.addEventListener("input", function () {
@@ -94,14 +120,29 @@
           try { localStorage.setItem(key, textarea.value); status.textContent = "Черновик сохранён в этом браузере"; }
           catch (error) { status.textContent = "Не удалось сохранить черновик локально"; }
         });
+        const reviewInputs = Array.from(panel.querySelectorAll("[data-writing-requirement], [data-writing-error]"));
+        try {
+          const savedReview = JSON.parse(localStorage.getItem(reviewKey) || "[]");
+          reviewInputs.forEach(function (input, index) { input.checked = savedReview.includes(index); });
+        } catch (error) { /* Повреждённые локальные отметки безопасно игнорируются. */ }
+        reviewInputs.forEach(function (input) {
+          input.addEventListener("change", function () {
+            const checked = reviewInputs.flatMap(function (item, index) { return item.checked ? [index] : []; });
+            try { localStorage.setItem(reviewKey, JSON.stringify(checked)); }
+            catch (error) { status.textContent = "Не удалось сохранить отметки локально"; }
+          });
+        });
         panel.querySelector("[data-check-draft]").addEventListener("click", function () { checkDraft(panel, textarea.value); });
         panel.querySelector("[data-reset-draft]").addEventListener("click", function () {
           if (!window.confirm("Удалить черновик этого задания? Восстановить его не получится.")) return;
           textarea.value = "";
           panel.querySelectorAll('input[type="checkbox"]').forEach(function (checkbox) { checkbox.checked = false; });
           try { localStorage.removeItem(key); } catch (error) { /* Поле всё равно очищено. */ }
+          try { localStorage.removeItem(reviewKey); } catch (error) { /* Отметки уже сняты в интерфейсе. */ }
           updateCount(panel, "");
           panel.querySelector("[data-writing-feedback]").hidden = true;
+          const revision = panel.querySelector("[data-writing-revision]");
+          if (revision) revision.hidden = true;
           status.textContent = "Черновик удалён";
           textarea.focus();
         });

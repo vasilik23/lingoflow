@@ -53,6 +53,10 @@ WRITING_PROMPTS = {
         "title": "Официальная просьба",
         "task": "Напиши 80–100 слов администратору курса: объясни, почему пропустишь занятие, попроси материалы и предложи новый срок сдачи задания.",
         "hint": "Начни с «Szanowna Pani / Szanowny Panie», раздели причины и просьбы на абзацы.",
+        "genre": "E-mail formalny",
+        "requirements": ("объяснить причину отсутствия", "попросить материалы", "предложить новый срок"),
+        "grammar_focus": ("вежливая просьба", "будущее время", "официальное обращение", "окончания падежей"),
+        "sample_answer": "Szanowna Pani, niestety nie mogę uczestniczyć w środowych zajęciach, ponieważ mam wtedy ważną wizytę lekarską, której nie mogę przełożyć. Czy mogłaby Pani przesłać mi materiały z lekcji oraz informację o pracy domowej? Chciałbym samodzielnie nadrobić cały temat. Nie zdążę jednak przygotować zadania do piątku, dlatego proszę o możliwość oddania go w następny poniedziałek. W weekend będę miał czas, żeby dokładnie je sprawdzić. Proszę o informację, czy taki termin będzie odpowiedni. Z góry dziękuję za pomoc i wyrozumiałość. Z poważaniem, Jan Kowalski",
         "min_words": 80, "min_paragraphs": 2, "markers": ("proszę", "termin"),
         "checklist": (
             "Я указал причину отсутствия, просьбу о материалах и новый срок.",
@@ -66,6 +70,10 @@ WRITING_PROMPTS = {
         "title": "Рекомендация места",
         "task": "Посоветуй другу польский город или место для выходных в 90–120 словах. Приведи минимум два аргумента и одно практическое предостережение.",
         "hint": "Используй связки «po pierwsze», «poza tym», «jednak» и заверши ясной рекомендацией.",
+        "genre": "E-mail prywatny z rekomendacją",
+        "requirements": ("назвать конкретное место", "привести два разных аргумента", "добавить практическое предостережение"),
+        "grammar_focus": ("местный падеж", "согласование прилагательных", "формы совета", "связки аргументации"),
+        "sample_answer": "Cześć Aniu! Polecam ci weekend w Toruniu, bo to naprawdę ciekawe miasto, które można spokojnie poznać w dwa dni. Po pierwsze, stare miasto jest piękne i większość zabytków można zwiedzić pieszo. Koniecznie zobacz ratusz i dom Kopernika. Poza tym warto odwiedzić planetarium oraz spróbować tradycyjnych pierników. Wieczorem nad Wisłą panuje spokojna atmosfera, więc można odpocząć po zwiedzaniu. Trzeba jednak wcześniej zarezerwować nocleg, bo w sezonie szybko brakuje wolnych miejsc. Najlepiej przyjechać pociągiem, ponieważ parking w centrum jest drogi. Zabierz też wygodne buty. Jestem pewien, że spodoba ci się to miasto!",
         "min_words": 90, "min_paragraphs": 2, "markers": ("po pierwsze", "polecam"),
         "checklist": (
             "Я назвал место, привёл два разных аргумента и одно предостережение.",
@@ -79,6 +87,10 @@ WRITING_PROMPTS = {
         "title": "Личное мнение",
         "task": "Ответь в 100–120 словах: лучше учиться самостоятельно или на курсах? Обозначь позицию, аргумент, контраргумент и вывод.",
         "hint": "Полезные рамки: «moim zdaniem», «z jednej strony», «z drugiej strony», «dlatego uważam, że…».",
+        "genre": "Tekst argumentacyjny",
+        "requirements": ("ясно обозначить позицию", "привести аргумент и контраргумент", "сформулировать вывод"),
+        "grammar_focus": ("управление после связок", "условные конструкции", "сравнение", "связность абзацев"),
+        "sample_answer": "Moim zdaniem kurs jest dobrym początkiem nauki języka, szczególnie dla osoby, która nie wie jeszcze, jak zaplanować regularną pracę. Z jednej strony samodzielna nauka daje dużą swobodę: można wybrać własne tempo, interesujące materiały i dogodną porę. Jest też zwykle tańsza, a w internecie łatwo znaleźć ćwiczenia. Z drugiej strony na kursie nauczyciel poprawia błędy, których uczeń sam nie zauważa, wyjaśnia trudne zasady i odpowiada na pytania. Grupa dodatkowo zachęca do rozmowy oraz systematycznej nauki. Wadą kursu jest stały plan, który nie każdemu pasuje. Najlepszym rozwiązaniem jest więc połączenie obu metod. Dlatego uważam, że warto chodzić na zajęcia, ale między spotkaniami trzeba również pracować samodzielnie.",
         "min_words": 100, "min_paragraphs": 2, "markers": ("moim zdaniem", "z drugiej strony"),
         "checklist": (
             "Моя позиция сформулирована ясно и поддержана конкретным аргументом.",
@@ -92,6 +104,10 @@ WRITING_PROMPTS = {
         "title": "Короткая история",
         "task": "Опиши в 100–130 словах ситуацию, когда планы неожиданно изменились. Покажи последовательность событий, реакцию и итог.",
         "hint": "Свяжи события словами «najpierw», «nagle», «wtedy», «w końcu» и проверь формы прошедшего времени.",
+        "genre": "Opowiadanie",
+        "requirements": ("показать исходный план", "описать неожиданное изменение и реакцию", "завершить историю итогом"),
+        "grammar_focus": ("прошедшее время", "вид глагола", "род глагольных форм", "временные связки"),
+        "sample_answer": "W sobotę planowaliśmy wycieczkę w góry. Najpierw sprawdziliśmy pogodę, przygotowaliśmy plecaki i wcześnie rano pojechaliśmy na dworzec. Nagle usłyszeliśmy komunikat, że nasz pociąg został odwołany z powodu awarii. Byliśmy bardzo rozczarowani, ponieważ od dawna czekaliśmy na ten wyjazd, ale nie chcieliśmy od razu wracać do domu. Wtedy koleżanka zaproponowała spacer po nieznanej części miasta. Wsiedliśmy do pierwszego tramwaju i wysiedliśmy przy starym parku. Znaleźliśmy tam małe muzeum, a później świetną kawiarnię z ogrodem. Po południu zaczęło padać, więc długo rozmawialiśmy przy gorącej herbacie. W końcu spędziliśmy razem bardzo udany dzień, chociaż wszystko wyglądało inaczej, niż wcześniej planowaliśmy. Ta przygoda pokazała nam, że zmiana planu nie zawsze oznacza stracony czas.",
         "min_words": 100, "min_paragraphs": 2, "markers": ("najpierw", "w końcu"),
         "checklist": (
             "История показывает исходный план, неожиданное изменение, реакцию и итог.",
