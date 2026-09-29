@@ -14,6 +14,20 @@
     </div>
   </section>
 
+  {% if b1_exam_prep %}
+    <aside class="card exam-home-card" aria-labelledby="exam-home-title">
+      <div class="exam-home-countdown" aria-hidden="true">
+        {% if b1_exam_prep.countdown.available %}<strong>{{ b1_exam_prep.countdown.days_remaining }}</strong><span>до старта</span>{% else %}<strong>B1</strong><span>экзамен</span>{% endif %}
+      </div>
+      <div>
+        <p class="eyebrow">Подготовка к государственному B1</p>
+        <h2 id="exam-home-title">{{ b1_exam_prep.countdown.label }}</h2>
+        <p class="muted">Сегодня — {{ b1_exam_prep.daily_minutes }} минут по трём экзаменационным навыкам.</p>
+      </div>
+      <a class="compact-button" href="{% url 'b1-exam-prep' %}">Открыть план</a>
+    </aside>
+  {% endif %}
+
   {% if resume_lesson %}
     <aside class="card resume-card" aria-labelledby="resume-title">
       <span class="resume-card-icon" aria-hidden="true">{{ resume_lesson.emoji }}</span>

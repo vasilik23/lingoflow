@@ -930,3 +930,58 @@ button.secondary { background: white; color: var(--text); border: 1px solid #dcd
 .resume-card h2, .resume-card p { margin: 0; }
 .resume-card-icon { display: grid; place-items: center; width: 3rem; height: 3rem; border-radius: .9rem; background: var(--primary-soft); font-size: 1.35rem; }
 @media (max-width: 560px) { .resume-card { grid-template-columns: auto minmax(0, 1fr); } .resume-card .compact-button { grid-column: 1 / -1; width: 100%; } }
+
+/* B1 exam preparation */
+.exam-home-card { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 1rem; align-items: center; margin-bottom: 1.25rem; border-color: color-mix(in srgb, var(--primary) 24%, var(--line)); background: linear-gradient(135deg, var(--surface), var(--primary-soft)); }
+.exam-home-card h2, .exam-home-card p { margin-bottom: .3rem; }
+.exam-home-card > .compact-button { grid-column: 1 / -1; justify-self: start; }
+.exam-home-countdown { display: grid; place-items: center; min-width: 5.2rem; padding: .7rem; border-radius: 1rem; background: var(--primary); color: white; text-align: center; }
+.exam-home-countdown strong { font-size: 1.7rem; line-height: 1; }
+.exam-home-countdown span { margin-top: .25rem; font-size: .75rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.exam-hero { display: grid; gap: 1rem; margin-bottom: 2rem; padding: clamp(1.4rem, 5vw, 2.5rem); border-radius: 1.5rem; background: linear-gradient(145deg, #322464, #704cff); box-shadow: var(--shadow-hover); color: white; }
+.exam-hero .eyebrow { color: #dcd3ff; }
+.exam-hero h1 { margin-bottom: .75rem; }
+.exam-hero-copy > p:not(.eyebrow) { max-width: 43rem; color: #ece8ff; }
+.exam-hero-meta { display: flex; flex-wrap: wrap; gap: .5rem; }
+.exam-hero-meta span { padding: .45rem .7rem; border: 1px solid rgba(255,255,255,.2); border-radius: 999px; background: rgba(255,255,255,.1); font-size: .76rem; font-weight: 750; }
+.exam-countdown { display: grid; align-content: center; gap: .35rem; min-height: 10rem; padding: 1.25rem; border: 1px solid rgba(255,255,255,.22); border-radius: 1.2rem; background: rgba(255,255,255,.1); backdrop-filter: blur(12px); }
+.exam-countdown strong { font-size: clamp(2.8rem, 12vw, 5rem); line-height: .9; }
+.exam-countdown span { font-weight: 800; }
+.exam-countdown small { color: #dcd3ff; }
+.exam-today { margin-bottom: 2.25rem; }
+.exam-section-heading { align-items: end; }
+.exam-section-heading > span { color: var(--muted); font-size: .78rem; }
+.exam-daily-list { display: grid; gap: .75rem; margin: 0; padding: 0; list-style: none; }
+.exam-daily-item { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .85rem; align-items: center; overflow: hidden; }
+.exam-daily-item::before, .exam-module-card::before { position: absolute; inset: 0 auto 0 0; width: .28rem; background: var(--exam-accent, var(--primary)); content: ""; }
+.exam-daily-item > div { display: grid; gap: .18rem; }
+.exam-daily-item small { color: var(--muted); }
+.exam-daily-item > a { grid-column: 2; justify-self: start; color: var(--primary-dark); font-size: .84rem; font-weight: 800; text-decoration: none; }
+.exam-step-number { display: grid; place-items: center; width: 2.3rem; aspect-ratio: 1; border-radius: .8rem; background: color-mix(in srgb, var(--exam-accent, var(--primary)) 14%, var(--surface)); color: var(--exam-accent, var(--primary)); font-weight: 900; }
+.exam-module-grid { display: grid; gap: .8rem; margin-bottom: 2rem; }
+.exam-module-card { position: relative; overflow: hidden; }
+.exam-module-card header { display: flex; flex-wrap: wrap; gap: .45rem; margin-bottom: 1rem; }
+.exam-module-card header span { padding: .35rem .55rem; border-radius: 999px; background: var(--surface-soft); color: var(--muted); font-size: .75rem; font-weight: 800; }
+.exam-module-card h3 { margin-bottom: .35rem; font-size: 1.15rem; }
+.exam-module-card > a { display: inline-block; margin-top: .5rem; color: var(--primary-dark); font-size: .84rem; font-weight: 800; text-decoration: none; }
+.exam-accent-blue { --exam-accent: #4788e8; }
+.exam-accent-green { --exam-accent: var(--green); }
+.exam-accent-violet { --exam-accent: #8a62df; }
+.exam-accent-rose { --exam-accent: var(--red); }
+.exam-accent-amber { --exam-accent: var(--amber); }
+.exam-source-note { display: grid; gap: 1rem; margin-top: 1.5rem; }
+.exam-source-note h2, .exam-source-note p { margin-bottom: .35rem; }
+.exam-source-actions { display: flex; flex-wrap: wrap; gap: .65rem; align-items: center; }
+@media (min-width: 700px) {
+  .exam-home-card { grid-template-columns: auto minmax(0, 1fr) auto; }
+  .exam-home-card > .compact-button { grid-column: auto; justify-self: end; }
+  .exam-hero { grid-template-columns: minmax(0, 1.45fr) minmax(13rem, .55fr); align-items: stretch; }
+  .exam-daily-item { grid-template-columns: auto minmax(0, 1fr) auto; }
+  .exam-daily-item > a { grid-column: auto; justify-self: end; }
+  .exam-module-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .exam-source-note { grid-template-columns: minmax(0, 1fr) auto; align-items: center; }
+  .exam-source-actions { justify-content: flex-end; }
+}
+@media (min-width: 1050px) {
+  .exam-module-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
