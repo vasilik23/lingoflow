@@ -8,6 +8,7 @@
       {% if sent %}<p class="save-success" role="status">Спасибо! Сообщение принято.</p>{% endif %}
       {% if error %}<p class="form-error" role="alert">{{ error }}</p>{% endif %}
       <label for="feedback-category">Категория<select id="feedback-category" name="category">{% for value,label in categories %}<option value="{{ value }}"{% if form.category == value %} selected{% endif %}>{{ label }}</option>{% endfor %}</select></label>
+      <fieldset class="feedback-priority"><legend>Насколько это мешает?</legend><div>{% for value,label in priorities %}<label><input type="radio" name="priority" value="{{ value }}"{% if form.priority == value %} checked{% endif %}><span>{{ label }}</span></label>{% endfor %}</div></fieldset>
       <label for="feedback-message">Что произошло?<textarea id="feedback-message" name="message" minlength="20" maxlength="2000" rows="7" required placeholder="Опиши ожидаемый и фактический результат">{{ form.message }}</textarea><small>От 20 до 2000 символов. Не добавляй пароли и другие секреты.</small></label>
       <label for="feedback-page">Страница<input id="feedback-page" name="page_url" value="{{ form.page_url }}" maxlength="300" placeholder="/lesson/.../"><small>Подставляется автоматически, но путь можно уточнить.</small></label>
       <button type="submit">Отправить сообщение</button>
@@ -19,6 +20,7 @@
           {% for item in items %}
             <li class="card feedback-history-item">
               <div class="feedback-history-meta"><strong>{{ item.category_label }}</strong><span class="feedback-status">{{ item.status_label }}</span></div>
+              <span class="feedback-priority-badge feedback-priority-{{ item.priority }}">{{ item.priority_label }}</span>
               <p>{{ item.message }}</p>
               {% if item.page_url %}<small>{{ item.page_url }}</small>{% endif %}
             </li>

@@ -25,26 +25,34 @@ class FeedbackTests(TestCase):
 
     @patch(
         "polskiflow.feedback_views.load_feedback",
-        return_value=[{"category": "interface", "status": "resolved", "message": "Кнопка перекрывала текст.", "page_url": "/course/"}],
+        return_value=[{"category": "interface", "priority": "blocking", "status": "resolved", "message": "Кнопка перекрывала текст.", "page_url": "/course/"}],
     )
     def test_history_uses_readable_category_and_status_labels(self, _load):
         response = self.client.get("/feedback/")
 
         self.assertContains(response, "Интерфейс")
         self.assertContains(response, "Исправлено")
+        self.assertContains(response, "Не могу продолжить")
         self.assertContains(response, "/course/")
 
     @patch("polskiflow.feedback_views.load_feedback", return_value=[])
     @patch("polskiflow.feedback_views.save_feedback", return_value=True)
     def test_valid_feedback_is_owner_scoped(self, save, _load):
-        response = self.client.post("/feedback/", {"category": "content", "message": "В упражнении есть неточный вариант ответа.", "page_url": "/lesson/quiz/"})
+        response = self.client.post("/feedback/", {"category": "content", "priority": "high", "message": "В упражнении есть неточный вариант ответа.", "page_url": "/lesson/quiz/"})
         self.assertRedirects(response, "/feedback/?sent=1", fetch_redirect_response=False)
-        save.assert_called_once_with("access", "user-1", category="content", message="В упражнении есть неточный вариант ответа.", page_url="/lesson/quiz/")
+        save.assert_called_once_with("access", "user-1", category="content", priority="high", message="В упражнении есть неточный вариант ответа.", page_url="/lesson/quiz/")
 
     @patch("polskiflow.feedback_views.load_feedback", return_value=[])
     @patch("polskiflow.feedback_views.save_feedback")
     def test_invalid_input_never_writes(self, save, _load):
         response = self.client.post("/feedback/", {"category": "other", "message": "short", "page_url": "https://evil.example"})
+        self.assertEqual(response.status_code, 400)
+        save.assert_not_called()
+
+    @patch("polskiflow.feedback_views.load_feedback", return_value=[])
+    @patch("polskiflow.feedback_views.save_feedback")
+    def test_invalid_priority_never_writes(self, save, _load):
+        response = self.client.post("/feedback/", {"category": "idea", "priority": "urgent", "message": "Предлагаю добавить новый тип упражнения."})
         self.assertEqual(response.status_code, 400)
         save.assert_not_called()
 

@@ -394,6 +394,7 @@ def build_openapi_v1():
                         "category": {"type": "string", "enum": ["content", "translation", "interface", "technical", "idea"]},
                         "message": {"type": "string", "minLength": 20, "maxLength": 2000},
                         "page_url": {"type": "string", "maxLength": 300},
+                        "priority": {"type": "string", "enum": ["normal", "high", "blocking"], "default": "normal"},
                     },
                 },
                 "GlossaryWordRequest": {

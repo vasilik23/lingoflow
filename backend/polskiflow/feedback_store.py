@@ -7,15 +7,15 @@ from django.conf import settings
 
 def load_feedback(token, user_id):
     if not _configured(token): return []
-    query = urlencode({"select": "id,category,message,page_url,status,created_at", "user_id": f"eq.{user_id}", "order": "created_at.desc", "limit": "50"})
+    query = urlencode({"select": "id,category,message,page_url,priority,status,created_at", "user_id": f"eq.{user_id}", "order": "created_at.desc", "limit": "50"})
     try:
         with urlopen(_request(f"user_feedback?{query}", token), timeout=settings.SUPABASE_AUTH_TIMEOUT) as response: rows = json.load(response)
         return rows if isinstance(rows, list) else None
     except (HTTPError, URLError, TimeoutError, json.JSONDecodeError): return None
 
-def save_feedback(token, user_id, category, message, page_url):
+def save_feedback(token, user_id, category, message, page_url, priority="normal"):
     if not _configured(token): return False
-    request = _request("user_feedback", token, "POST", {"user_id": user_id, "category": category, "message": message, "page_url": page_url, "status": "new"})
+    request = _request("user_feedback", token, "POST", {"user_id": user_id, "category": category, "message": message, "page_url": page_url, "priority": priority, "status": "new"})
     try:
         with urlopen(request, timeout=settings.SUPABASE_AUTH_TIMEOUT) as response: return response.status in (200, 201, 204)
     except (HTTPError, URLError, TimeoutError): return False

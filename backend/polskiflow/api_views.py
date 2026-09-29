@@ -44,6 +44,7 @@ API_VERSION = "v1"
 CATALOG_CONTRACT_VERSION = "1.0.0"
 LEARNER_CONTRACT_VERSION = "1.0.0"
 FEEDBACK_CATEGORIES = frozenset({"content", "translation", "interface", "technical", "idea"})
+FEEDBACK_PRIORITIES = frozenset({"normal", "high", "blocking"})
 
 
 def require_supabase_user(view):
@@ -554,16 +555,17 @@ def learner_feedback_v1(request):
         payload = json.loads(request.body)
     except (json.JSONDecodeError, UnicodeDecodeError):
         return _error_response("invalid_json", "Request body must be valid JSON", 400)
-    if not isinstance(payload, dict) or set(payload) not in (
-        {"category", "message"}, {"category", "message", "page_url"}
-    ):
+    if not isinstance(payload, dict) or not {"category", "message"} <= set(payload) or not set(payload) <= {"category", "message", "page_url", "priority"}:
         return _error_response(
-            "validation_error", "Use category, message, and optional page_url", 400
+            "validation_error", "Use category, message, optional page_url and priority", 400
         )
     category, message = payload.get("category"), payload.get("message")
     page_url = payload.get("page_url", "")
+    priority = payload.get("priority", "normal")
     if category not in FEEDBACK_CATEGORIES:
         return _error_response("validation_error", "Unsupported feedback category", 400)
+    if priority not in FEEDBACK_PRIORITIES:
+        return _error_response("validation_error", "Unsupported feedback priority", 400)
     if not isinstance(message, str) or not 20 <= len(message.strip()) <= 2000:
         return _error_response("validation_error", "message must contain 20..2000 characters", 400)
     if not isinstance(page_url, str) or len(page_url) > 300 or (
@@ -571,11 +573,11 @@ def learner_feedback_v1(request):
     ):
         return _error_response("validation_error", "page_url must be an internal path up to 300 characters", 400)
     if not save_feedback(
-        request.supabase_access_token, user.id, category, message.strip(), page_url
+        request.supabase_access_token, user.id, category, message.strip(), page_url, priority
     ):
         return _unavailable_response("learner-feedback")
     return _private_response(
-        "learner-feedback", {"created": True, "status": "new"}, status=201
+        "learner-feedback", {"created": True, "status": "new", "priority": priority}, status=201
     )
 
 
