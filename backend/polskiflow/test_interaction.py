@@ -5,6 +5,7 @@ from django.test import TestCase
 from polskiflow.auth import ACCESS_COOKIE, SupabaseUser
 from polskiflow.domain.interaction_scenarios import (
     FREE_PRODUCTION_SCENARIOS,
+    SPEAKING_SCENARIOS,
     SCENARIOS,
     SEQUENCE_SCENARIOS,
     validate_answer,
@@ -53,6 +54,20 @@ class InteractionScenarioTests(TestCase):
         self.assertContains(response, "Жанровая самопроверка", count=2)
         self.assertContains(response, 'data-interaction-draft="', count=2)
         self.assertNotContains(response, 'name="free_draft')
+
+    def test_page_offers_private_b1_speaking_recording_and_self_check(self):
+        response = self.client.get("/interaction/")
+
+        self.assertEqual(len(SPEAKING_SCENARIOS), 2)
+        self.assertContains(response, "Устная часть B1")
+        self.assertContains(response, "45 секунд на план")
+        self.assertContains(response, "Аудио не загружается на сервер")
+        self.assertContains(response, "data-speaking-card data-preparation", count=2)
+        self.assertContains(response, "navigator.mediaDevices.getUserMedia")
+        self.assertContains(response, "new MediaRecorder(stream)")
+        self.assertContains(response, "Самопроверка после попытки", count=2)
+        self.assertContains(response, "Показать пример ответа", count=2)
+        self.assertNotContains(response, 'name="speaking')
 
     def test_free_production_drafts_use_per_user_local_storage(self):
         response = self.client.get("/interaction/")

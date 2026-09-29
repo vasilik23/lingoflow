@@ -11,6 +11,41 @@
     <p>Здесь проверяется выбор ответа в конкретной ситуации. Это практика с прозрачными объяснениями, а не экзамен, сертификат или полная оценка языкового уровня.</p>
   </div>
 
+  <section class="speaking-practice" id="speaking-practice" aria-labelledby="speaking-title">
+    <header class="section-heading interaction-sequence-heading">
+      <div><p class="eyebrow">Устная часть B1</p><h2 id="speaking-title">Ответь вслух за 2–3 минуты</h2></div>
+      <p class="muted">45 секунд на план, затем запись и самостоятельная проверка.</p>
+    </header>
+    <div class="card speaking-privacy-note" role="note">
+      <strong>Запись остаётся на устройстве</strong>
+      <p>Браузер использует микрофон только после твоего разрешения. Аудио не загружается на сервер, не сохраняется после обновления страницы и не оценивается автоматически.</p>
+    </div>
+    <div class="interaction-list">
+      {% for scenario in speaking_scenarios %}
+        <article class="card interaction-card speaking-card" id="speaking-{{ scenario.id }}" data-speaking-card data-preparation-seconds="{{ scenario.preparation_seconds }}" data-response-seconds="{{ scenario.response_seconds }}">
+          <header><span>{{ scenario.level }}</span><span>Говорение</span><span>до 3 минут</span></header>
+          <h3>{{ scenario.title }}</h3>
+          <p lang="pl">{{ scenario.situation }}</p>
+          <p class="interaction-free-task" lang="pl"><strong>Zadanie:</strong> {{ scenario.task }}</p>
+          <div class="speaking-outline"><strong>План ответа</strong><ol>{% for item in scenario.outline %}<li>{{ item }}</li>{% endfor %}</ol></div>
+          <div class="speaking-timer" role="timer" aria-live="polite"><span data-timer-label>Подготовка</span><strong data-timer>00:45</strong></div>
+          <div class="speaking-controls">
+            <button class="compact-button" type="button" data-start-preparation>Начать подготовку</button>
+            <button class="compact-button" type="button" data-start-recording>Записать ответ</button>
+            <button class="secondary compact-button" type="button" data-stop-recording disabled>Остановить</button>
+          </div>
+          <p class="muted speaking-status" role="status" data-speaking-status>Микрофон ещё не используется.</p>
+          <audio controls data-speaking-audio hidden aria-label="Прослушать свой устный ответ"></audio>
+          <fieldset class="interaction-self-check speaking-self-check" hidden data-speaking-review>
+            <legend>Самопроверка после попытки</legend>
+            {% for criterion in scenario.checklist %}<label><input type="checkbox"> <span>{{ criterion }}</span></label>{% endfor %}
+            <details><summary>Показать пример ответа</summary><p lang="pl">{{ scenario.sample_answer }}</p><p class="muted">Это один возможный ответ, а не текст для заучивания.</p></details>
+          </fieldset>
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+
   {% if error %}<div class="card interaction-error" role="alert"><strong>Ответ не проверен</strong><p>{{ error }}</p></div>{% endif %}
 
   <div class="interaction-list">
@@ -157,6 +192,87 @@
           updateCount();
           status.textContent = "Черновик удалён";
           textarea.focus();
+        });
+      });
+
+      document.querySelectorAll("[data-speaking-card]").forEach(function (card) {
+        const timer = card.querySelector("[data-timer]");
+        const timerLabel = card.querySelector("[data-timer-label]");
+        const status = card.querySelector("[data-speaking-status]");
+        const startPreparation = card.querySelector("[data-start-preparation]");
+        const startRecording = card.querySelector("[data-start-recording]");
+        const stopRecording = card.querySelector("[data-stop-recording]");
+        const audio = card.querySelector("[data-speaking-audio]");
+        const review = card.querySelector("[data-speaking-review]");
+        let intervalId = null;
+        let recorder = null;
+        let stream = null;
+        let chunks = [];
+        let audioUrl = null;
+
+        function renderTime(seconds) {
+          const safe = Math.max(0, seconds);
+          timer.textContent = String(Math.floor(safe / 60)).padStart(2, "0") + ":" + String(safe % 60).padStart(2, "0");
+        }
+        function beginCountdown(seconds, onDone) {
+          window.clearInterval(intervalId);
+          renderTime(seconds);
+          intervalId = window.setInterval(function () {
+            seconds -= 1;
+            renderTime(seconds);
+            if (seconds <= 0) { window.clearInterval(intervalId); intervalId = null; onDone(); }
+          }, 1000);
+        }
+        startPreparation.addEventListener("click", function () {
+          timerLabel.textContent = "Подготовка";
+          startPreparation.disabled = true;
+          status.textContent = "Составь короткий план. Микрофон пока выключен.";
+          beginCountdown(Number(card.dataset.preparationSeconds), function () {
+            status.textContent = "Время подготовки закончилось. Можно записывать ответ.";
+            startRecording.focus();
+          });
+        });
+        startRecording.addEventListener("click", async function () {
+          if (!navigator.mediaDevices || !window.MediaRecorder) {
+            status.textContent = "Запись не поддерживается этим браузером. Используй таймер и диктофон устройства.";
+            review.hidden = false;
+            return;
+          }
+          try {
+            stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            chunks = [];
+            recorder = new MediaRecorder(stream);
+            recorder.addEventListener("dataavailable", function (event) { if (event.data.size) chunks.push(event.data); });
+            recorder.addEventListener("stop", function () {
+              stream.getTracks().forEach(function (track) { track.stop(); });
+              if (audioUrl) URL.revokeObjectURL(audioUrl);
+              audioUrl = URL.createObjectURL(new Blob(chunks, { type: recorder.mimeType || "audio/webm" }));
+              audio.src = audioUrl;
+              audio.hidden = false;
+              review.hidden = false;
+              stopRecording.disabled = true;
+              startRecording.disabled = false;
+              status.textContent = "Запись готова только в этой вкладке. Прослушай её и отметь чек-лист.";
+              audio.focus();
+            });
+            recorder.start();
+            startRecording.disabled = true;
+            stopRecording.disabled = false;
+            timerLabel.textContent = "Осталось на ответ";
+            status.textContent = "Идёт запись. Говори свободно, не читай готовый текст.";
+            beginCountdown(Number(card.dataset.responseSeconds), function () { if (recorder && recorder.state === "recording") recorder.stop(); });
+          } catch (error) {
+            status.textContent = "Нет доступа к микрофону. Разреши его в браузере или используй диктофон устройства.";
+            review.hidden = false;
+          }
+        });
+        stopRecording.addEventListener("click", function () {
+          window.clearInterval(intervalId);
+          if (recorder && recorder.state === "recording") recorder.stop();
+        });
+        window.addEventListener("pagehide", function () {
+          if (stream) stream.getTracks().forEach(function (track) { track.stop(); });
+          if (audioUrl) URL.revokeObjectURL(audioUrl);
         });
       });
     }());
