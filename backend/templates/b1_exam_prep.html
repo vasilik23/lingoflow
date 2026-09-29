@@ -57,6 +57,35 @@
     </div>
   </section>
 
+  <section class="exam-results" aria-labelledby="exam-results-title">
+    <div class="section-heading exam-section-heading">
+      <div><p class="eyebrow">Последние 30 дней</p><h2 id="exam-results-title">Результаты по модулям</h2></div>
+      <span>это тренировки, не прогноз экзамена</span>
+    </div>
+    {% if not results_available %}
+      <p class="card muted">Сейчас история результатов недоступна. План подготовки продолжает работать.</p>
+    {% endif %}
+    <div class="exam-result-grid">
+      {% for result in module_results %}
+        <article class="card exam-result-card exam-accent-{{ result.accent }}">
+          <div class="exam-result-heading"><h3>{{ result.title }}</h3>
+            {% if result.status == "measured" %}<strong>{{ result.percent }}%</strong>{% else %}<strong aria-hidden="true">—</strong>{% endif %}
+          </div>
+          {% if result.status == "measured" %}
+            <div class="exam-result-track" role="progressbar" aria-label="{{ result.title }}: {{ result.percent }}% в тренировках" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ result.percent }}"><span style="width: {{ result.percent }}%"></span></div>
+            <p class="muted">{{ result.detail }}</p>
+          {% elif result.status == "empty" %}
+            <p class="muted">Ещё нет сохранённых результатов B1 за 30 дней.</p>
+          {% else %}
+            <p class="muted">Пока без автоматического балла. Выполни практику и оцени себя по чек-листу.</p>
+          {% endif %}
+          <a href="{{ result.href }}">Перейти к практике</a>
+        </article>
+      {% endfor %}
+    </div>
+    <p class="exam-results-note">Процент считается только по сохранённым заданиям чтения и грамматики B1. Он не подтверждает уровень CEFR и не заменяет пробный экзамен.</p>
+  </section>
+
   <aside class="card exam-source-note">
     <div><p class="eyebrow">Официальные материалы</p><h2>Сверяйся с форматом комиссии</h2><p class="muted">PolskiFlow помогает тренироваться, но не заменяет официальный пробный тест и не подтверждает уровень CEFR.</p></div>
     <div class="exam-source-actions">

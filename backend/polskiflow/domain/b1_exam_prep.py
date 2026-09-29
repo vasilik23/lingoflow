@@ -158,6 +158,50 @@ def build_b1_exam_prep(today: date) -> dict:
     }
 
 
+def build_b1_module_results(recent_results: tuple[dict, ...], lesson_tasks: list[dict]) -> tuple[dict, ...]:
+    """Summarise measured B1 practice without presenting it as exam readiness."""
+
+    task_by_id = {task.get("id"): task for task in lesson_tasks}
+    measured = {"reading": [0, 0, 0], "grammar": [0, 0, 0]}
+    for result in recent_results or ():
+        task = task_by_id.get(result.get("lesson_id"))
+        if not task or task.get("level") != "B1":
+            continue
+        lesson_id = str(task.get("id", ""))
+        if task.get("kind") == "grammar":
+            module_id = "grammar"
+        elif lesson_id.endswith(("-reading-check", "-check")):
+            module_id = "reading"
+        else:
+            continue
+        total = result.get("cards_total")
+        known = result.get("cards_known")
+        if not isinstance(total, int) or isinstance(total, bool) or total <= 0:
+            continue
+        if not isinstance(known, int) or isinstance(known, bool) or not 0 <= known <= total:
+            continue
+        measured[module_id][0] += known
+        measured[module_id][1] += total
+        measured[module_id][2] += 1
+
+    rows = []
+    for module in B1_EXAM_MODULES:
+        known, total, attempts = measured.get(module["id"], (0, 0, 0))
+        if total:
+            rows.append({
+                **module,
+                "status": "measured",
+                "percent": round(known * 100 / total),
+                "attempts": attempts,
+                "detail": f"{known} из {total} ответов · {attempts} попыток",
+            })
+        elif module["id"] in measured:
+            rows.append({**module, "status": "empty", "percent": None, "attempts": 0})
+        else:
+            rows.append({**module, "status": "unmeasured", "percent": None, "attempts": 0})
+    return tuple(rows)
+
+
 def _countdown_label(days_remaining: int) -> str:
     if days_remaining == 0:
         return "Экзамен начинается сегодня"
