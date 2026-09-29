@@ -59,7 +59,7 @@
         {% for task in tasks %}
           <a class="task-card" href="{% if task.kind == 'dictionary-review' %}{% url 'dictionary-practice' %}{% else %}{% url 'lesson' task.id %}{% endif %}">
             <span class="task-icon">{{ task.emoji }}</span>
-            <span class="task-copy"><strong>{{ task.title }}{% if task.completed %} <span class="task-complete">✓</span>{% endif %}</strong><small>{{ task.description }} · ~{{ task.minutes }} мин</small></span>
+            <span class="task-copy"><strong>{{ task.title }}{% if task.completed %} <span class="task-complete">✓</span>{% endif %}</strong><small>{{ task.description }} · ~{{ task.minutes }} мин</small>{% if task.skill %}<small class="task-skill">{{ task.skill.label }}</small>{% endif %}</span>
             <span class="task-arrow" aria-hidden="true">→</span>
           </a>
         {% empty %}

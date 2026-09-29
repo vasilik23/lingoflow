@@ -122,8 +122,9 @@ class DailyPlanTests(SimpleTestCase):
         self.assertEqual(plan[1]["id"], "a2-one")
         self.assertEqual(plan[1]["plan_type"], "reinforcement")
         self.assertEqual(plan[1]["title"], "Закрепить: a2-one")
-        self.assertEqual(plan[1]["description"], "Результат 3 из 5 — стоит закрепить")
+        self.assertEqual(plan[1]["description"], "Лексика: a2-one: результат 3 из 5 — стоит закрепить")
         self.assertEqual(plan[1]["reinforcement_reason"]["threshold_percent"], 70)
+        self.assertEqual(plan[1]["reinforcement_reason"]["skill"]["group"], "vocabulary")
         self.assertEqual(len(plan), 4)
 
     def test_reinforcement_is_not_added_for_high_score_today_or_goal_one(self):
@@ -156,3 +157,15 @@ class DailyPlanTests(SimpleTestCase):
         self.assertEqual(len(plan), 3)
         self.assertEqual(plan[1]["plan_type"], "reinforcement")
         self.assertEqual(plan[-1]["kind"], "dictionary-review")
+
+    def test_plan_exposes_stable_privacy_safe_skill_tags(self):
+        lessons = [
+            {**self.lessons[1], "kind": "grammar", "topic_title": "Работа", "theory_title": "Tryb warunkowy"},
+            {**self.lessons[2], "id": "a2-story-reading-check", "kind": "quiz", "topic_title": "Путешествия"},
+        ]
+        plan = build_daily_plan(
+            lessons, level="A2", completed_all_time=frozenset(),
+            completed_today=frozenset(), personal_words=[], today=date(2026, 8, 28),
+        )
+        self.assertEqual(plan[0]["skill"], {"id": "grammar:a2-one", "label": "Tryb warunkowy", "group": "grammar"})
+        self.assertEqual(plan[1]["skill"]["label"], "Понимание деталей: Путешествия")

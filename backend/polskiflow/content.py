@@ -12,12 +12,13 @@ from polskiflow.learning.models import Course, Flashcard, Lesson, ReadingText, T
 def tasks() -> list[dict]:
     rows = Lesson.objects.filter(is_active=True).values(
         "id", "kind", "title", "plan_title", "subtitle", "description",
-        "minutes", "emoji", "topic__course__level",
+        "minutes", "emoji", "theory_title", "topic__title", "topic__course__level",
     )
     result = []
     for row in rows:
         level = row.pop("topic__course__level") or "A1"
-        result.append({**row, "level": level})
+        topic_title = row.pop("topic__title") or ""
+        result.append({**row, "level": level, "topic_title": topic_title})
     return result
 
 

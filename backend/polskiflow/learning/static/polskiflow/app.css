@@ -327,6 +327,7 @@ p { line-height: 1.65; }
 .task-list { display: grid; gap: .8rem; }
 .task-card { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; min-width: 0; gap: 1rem; align-items: center; padding: 1.05rem; border: 1px solid transparent; border-radius: 1.2rem; background: var(--surface); box-shadow: var(--shadow); color: inherit; text-decoration: none; transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
 .task-card:hover { transform: translateY(-2px); border-color: #dcd4ff; box-shadow: var(--shadow-hover); }
+.task-copy .task-skill { display: block; width: fit-content; margin-top: .28rem; padding: .18rem .45rem; border-radius: 999px; background: var(--primary-soft); color: var(--primary-dark); font-size: .68rem; font-weight: 800; }
 .task-icon { display: grid; place-items: center; width: 3.2rem; aspect-ratio: 1; border-radius: 1rem; background: var(--primary-soft); font-size: 1.5rem; }
 .task-card:nth-child(2) .task-icon { background: #e9f7ff; }
 .task-card:nth-child(3) .task-icon { background: var(--green-soft); }

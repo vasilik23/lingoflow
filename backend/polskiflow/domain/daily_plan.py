@@ -2,6 +2,8 @@
 
 from datetime import date
 
+from polskiflow.domain.lesson_skills import lesson_skill
+
 
 DAILY_TASK_LIMIT = 4
 
@@ -44,7 +46,7 @@ def build_daily_plan(
     due_count = _due_word_count(personal_words, today)
     can_review = personal_words is not None and len(personal_words) >= 4 and due_count > 0
     lesson_limit = max(1, min(10, daily_task_limit)) - int(can_review)
-    plan = [dict(lesson) for lesson in ordered[:lesson_limit]]
+    plan = [_with_skill(lesson) for lesson in ordered[:lesson_limit]]
 
     reinforcement = _reinforcement_task(
         candidates,
@@ -75,6 +77,12 @@ def build_daily_plan(
     for task in plan:
         task["completed"] = task["id"] in completed_today
     return plan
+
+
+def _with_skill(lesson: dict) -> dict:
+    task = dict(lesson)
+    task["skill"] = lesson_skill(task)
+    return task
 
 
 def _reinforcement_task(
@@ -112,16 +120,18 @@ def _reinforcement_task(
     if not candidates:
         return None
     _, _, _, lesson, known, total = min(candidates)
-    task = dict(lesson)
+    task = _with_skill(lesson)
+    skill = task["skill"]
     task.update(
         {
             "title": f"Закрепить: {lesson['title']}",
-            "description": f"Результат {known} из {total} — стоит закрепить",
+            "description": f"{skill['label']}: результат {known} из {total} — стоит закрепить",
             "plan_type": "reinforcement",
             "reinforcement_reason": {
                 "cards_known": known,
                 "cards_total": total,
                 "threshold_percent": 70,
+                "skill": skill,
             },
         }
     )
