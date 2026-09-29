@@ -607,6 +607,15 @@ button.secondary { background: white; color: var(--text); border: 1px solid #dcd
 .feedback-history-meta { display: flex; align-items: center; justify-content: space-between; gap: .75rem; }
 .feedback-status { flex: 0 0 auto; padding: .3rem .55rem; border-radius: 999px; background: var(--primary-soft); color: var(--primary-dark); font-size: .72rem; font-weight: 800; }
 .feedback-empty { list-style: none; }
+.feedback-priority { margin: 0; padding: 0; border: 0; }
+.feedback-priority legend { margin-bottom: .55rem; font-weight: 800; }
+.feedback-priority > div { display: grid; gap: .5rem; }
+.feedback-priority label { display: flex; align-items: center; gap: .55rem; min-height: 2.8rem; padding: .65rem .75rem; border: 1px solid var(--line); border-radius: .75rem; background: var(--surface); cursor: pointer; }
+.feedback-priority label:has(input:checked) { border-color: var(--primary); background: var(--primary-soft); }
+.feedback-priority input { width: auto; margin: 0; }
+.feedback-priority-badge { justify-self: start; padding: .28rem .5rem; border-radius: 999px; background: var(--surface-soft); color: var(--muted); font-size: .7rem; font-weight: 800; }
+.feedback-priority-high { background: #fff4df; color: #89550f; }
+.feedback-priority-blocking { background: var(--red-soft); color: var(--red); }
 .beta-hero { display: grid; gap: 1.25rem; align-items: end; margin-bottom: 2rem; padding: clamp(1.4rem, 4vw, 2.5rem); border: 1px solid color-mix(in srgb, var(--primary) 22%, var(--line)); border-radius: 1.6rem; background: radial-gradient(circle at 90% 15%, color-mix(in srgb, var(--primary) 22%, transparent), transparent 35%), linear-gradient(135deg, var(--surface), var(--surface-soft)); box-shadow: var(--shadow); }
 .beta-hero h1 { max-width: 18ch; }
 .beta-hero p:last-child { max-width: 44rem; margin: 0; color: var(--muted); }
