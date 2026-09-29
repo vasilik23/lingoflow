@@ -622,6 +622,7 @@ def _build_today_data(progress, words, draft_result):
             "completed": bool(item["completed"]),
             "plan_type": item.get("plan_type", "lesson"),
             "reinforcement_reason": item.get("reinforcement_reason"),
+            "skill": item.get("skill"),
             "path": "/dictionary/practice/" if item["kind"] == "dictionary-review" else f"/lesson/{item['id']}/",
             "api_path": "/api/v1/me/sm2/" if item["kind"] == "dictionary-review" else f"/api/v1/lessons/{item['id']}/",
         }

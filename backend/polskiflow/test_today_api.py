@@ -49,6 +49,7 @@ class TodayApiTests(TestCase):
         self.assertEqual(data["progress_percent"], 33)
         self.assertEqual([item["id"] for item in data["tasks"]], ["lesson-done", "lesson-next", "lesson-later"])
         self.assertEqual(data["tasks"][1]["api_path"], "/api/v1/lessons/lesson-next/")
+        self.assertEqual(data["tasks"][1]["skill"]["group"], "integrated")
         self.assertEqual(data["resume"]["step"], 2)
         progress.assert_called_once_with("owner-token", "owner-1", "ada")
         self.assertNotIn("owner-1", str(data))
@@ -89,7 +90,8 @@ class TodayApiTests(TestCase):
         self.assertEqual(reinforcement["id"], "lesson-done")
         self.assertEqual(reinforcement["plan_type"], "reinforcement")
         self.assertEqual(reinforcement["reinforcement_reason"]["cards_known"], 2)
-        self.assertEqual(reinforcement["description"], "Результат 2 из 5 — стоит закрепить")
+        self.assertEqual(reinforcement["description"], "Лексика: Słowa: результат 2 из 5 — стоит закрепить")
+        self.assertEqual(reinforcement["reinforcement_reason"]["skill"]["group"], "vocabulary")
 
     def test_any_owner_data_failure_returns_503_not_partial_plan(self):
         failures = (
