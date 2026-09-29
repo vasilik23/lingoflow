@@ -586,6 +586,15 @@ class LessonViewsTests(TestCase):
         self.assertContains(response, 'data-min-paragraphs="2"')
         self.assertContains(response, 'data-markers="proszę|termin"')
         self.assertContains(response, "Это техническая подсказка, а не оценка преподавателя")
+        self.assertContains(response, "Что обязательно раскрыть", count=4)
+        self.assertContains(response, "Разбор после черновика", count=4)
+        self.assertContains(response, "Показать пример ответа после своей попытки", count=4)
+        self.assertContains(response, "E-mail formalny")
+        self.assertContains(response, "Opowiadanie")
+        self.assertContains(response, "data-writing-requirement>", count=12)
+        self.assertContains(response, "data-writing-error value=", count=16)
+        self.assertContains(response, 'localStorage.setItem(reviewKey, JSON.stringify(checked))')
+        self.assertContains(response, "Это один возможный ответ")
 
     def test_writing_practice_supports_b2_and_separates_local_storage(self):
         response = self.client.get("/writing/?level=B2")
@@ -599,6 +608,14 @@ class LessonViewsTests(TestCase):
         self.assertContains(response, 'data-writing-draft="source-comparison"')
         self.assertContains(response, "polskiflow-writing-b2:")
         self.assertContains(response, 'href="?level=B2" aria-current="page"')
+
+    def test_b1_writing_examples_respect_their_own_word_limits(self):
+        from polskiflow.auth_views import WRITING_PROMPTS
+
+        for prompt in WRITING_PROMPTS["B1"]:
+            word_count = len(prompt["sample_answer"].split())
+            self.assertGreaterEqual(word_count, prompt["min_words"], prompt["id"])
+            self.assertLessEqual(word_count, int(prompt["task"].split("–", 1)[1].split()[0]), prompt["id"])
 
     def test_writing_practice_falls_back_to_b1_for_unknown_level(self):
         response = self.client.get("/writing/?level=C1")

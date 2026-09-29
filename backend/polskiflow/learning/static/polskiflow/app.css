@@ -462,6 +462,18 @@ p { line-height: 1.65; }
 .writing-feedback .missing { color: var(--text); }
 .writing-feedback p { margin: 0; color: var(--muted); font-size: .8rem; }
 .writing-reset { width: auto; }
+.writing-task-points { margin: .9rem 0; padding: .85rem 1rem; border-radius: .85rem; background: var(--surface-soft); }
+.writing-task-points h3, .writing-revision h3 { margin: 0 0 .5rem; font-size: 1rem; }
+.writing-task-points ul { margin: 0; padding-left: 1.2rem; }
+.writing-revision { margin-top: 1rem; padding: 1rem; border: 1px solid var(--line); border-radius: 1rem; }
+.writing-review-grid { display: grid; gap: 1rem; margin-top: 1rem; }
+.writing-review-grid fieldset { display: grid; gap: .6rem; min-width: 0; margin: 0; padding: .9rem; border: 1px solid var(--line); border-radius: .85rem; }
+.writing-review-grid legend { padding: 0 .3rem; font-weight: 800; }
+.writing-review-grid label { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .55rem; align-items: start; font-weight: 600; }
+.writing-review-grid input { margin-top: .2rem; accent-color: var(--primary); }
+.writing-sample { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+.writing-sample summary { cursor: pointer; color: var(--primary-dark); font-weight: 800; }
+@media (min-width: 760px) { .writing-review-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .interaction-note { margin-bottom: 1rem; border-left: 4px solid var(--primary); }
 .interaction-note :where(strong, p), .interaction-error :where(strong, p) { margin: 0; }
 .interaction-note p, .interaction-error p { margin-top: .35rem; color: var(--muted); }
