@@ -67,7 +67,7 @@ B1_EXAM_MODULES = (
         "duration_minutes": 15,
         "task_count": "3 задания",
         "points": 40,
-        "href": "/interaction/#free-production",
+        "href": "/interaction/#speaking-practice",
         "action": "Подготовить ответ",
         "accent": "amber",
     },

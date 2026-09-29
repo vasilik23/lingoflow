@@ -52,6 +52,20 @@ class FreeProductionScenario:
     checklist: tuple[str, ...]
 
 
+@dataclass(frozen=True)
+class SpeakingScenario:
+    id: str
+    level: str
+    title: str
+    situation: str
+    task: str
+    preparation_seconds: int
+    response_seconds: int
+    outline: tuple[str, ...]
+    checklist: tuple[str, ...]
+    sample_answer: str
+
+
 SCENARIOS = (
     InteractionScenario(
         id="weekend-plan",
@@ -213,6 +227,56 @@ FREE_PRODUCTION_SCENARIOS = (
             "Я сохранил причину переноса, новое время и прежнее место.",
             "Я упомянул новый срок регистрации и не добавил своих догадок.",
             "Текст понятен человеку, который не видел исходного объявления.",
+        ),
+    ),
+)
+
+
+SPEAKING_SCENARIOS = (
+    SpeakingScenario(
+        id="neighbourhood-change",
+        level="B1",
+        title="Zmiana w twojej okolicy",
+        situation="W twojej okolicy otwarto nowe miejsce, które wpłynęło na życie mieszkańców.",
+        task="Opowiedz, co się zmieniło, podaj dwie korzyści albo trudności i wyraź swoją opinię.",
+        preparation_seconds=45,
+        response_seconds=180,
+        outline=("назови место и изменение", "приведи два конкретных последствия", "заверши своим мнением"),
+        checklist=(
+            "Я выполнил все три пункта задания, а не только описал место.",
+            "Ответ имеет понятное начало, развитие и завершение.",
+            "Я использовал связки и не повторял постоянно одни слова.",
+            "Я заметил ошибки в формах, но они не разрушили смысл.",
+            "Речь в основном понятна без чтения текста перед глазами.",
+        ),
+        sample_answer=(
+            "Niedawno w mojej okolicy otwarto małą bibliotekę z kawiarnią. Wcześniej brakowało nam spokojnego "
+            "miejsca do nauki i spotkań. Teraz uczniowie mogą tam pracować po lekcjach, a starsi mieszkańcy "
+            "uczestniczą w bezpłatnych zajęciach. Z drugiej strony wieczorem trudno znaleźć miejsce do parkowania. "
+            "Moim zdaniem zmiana jest korzystna, ale miasto powinno lepiej zorganizować ruch w tej części dzielnicy."
+        ),
+    ),
+    SpeakingScenario(
+        id="group-decision",
+        level="B1",
+        title="Wspólna decyzja",
+        situation="Grupa znajomych planuje wolny weekend. Część chce odpocząć, a część aktywnie spędzić czas.",
+        task="Przedstaw oba stanowiska, zaproponuj kompromis i uzasadnij, dlaczego może zadziałać.",
+        preparation_seconds=45,
+        response_seconds=180,
+        outline=("przedstaw obie potrzeby", "zaproponuj konkretny plan", "wyjaśnij zaletę kompromisu"),
+        checklist=(
+            "Я ясно представил обе позиции без оценки людей.",
+            "Я предложил конкретный, выполнимый компромисс.",
+            "Аргумент объясняет, почему решение подходит обеим сторонам.",
+            "Связки помогают слушателю следить за ходом ответа.",
+            "Темп и произношение позволяют понять ключевые мысли.",
+        ),
+        sample_answer=(
+            "Jedna część grupy chce odpocząć po trudnym tygodniu, a druga woli wycieczkę rowerową. Proponuję, "
+            "żebyśmy w sobotę rano pojechali na krótką trasę, a po południu odpoczęli nad jeziorem. Osoby, które "
+            "nie chcą jechać rowerem, mogłyby spotkać się z nami dopiero nad wodą. Dzięki temu każdy wybierze "
+            "odpowiedni poziom aktywności, a mimo to spędzimy część dnia razem."
         ),
     ),
 )

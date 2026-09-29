@@ -500,6 +500,22 @@ p { line-height: 1.65; }
 .interaction-free-task { padding: .8rem; border-radius: .75rem; background: var(--surface-soft); color: var(--text) !important; }
 .interaction-free-practice textarea { width: 100%; min-height: 10rem; margin-top: .45rem; resize: vertical; padding: .9rem; border: 1px solid var(--line); border-radius: .8rem; background: var(--surface); color: var(--text); font: inherit; line-height: 1.55; }
 .interaction-free-practice textarea:focus-visible { outline: 3px solid var(--primary-soft); border-color: var(--primary); }
+.speaking-practice { margin: 2rem 0 2.5rem; }
+.speaking-privacy-note { margin-bottom: 1rem; border-color: color-mix(in srgb, var(--green) 30%, var(--line)); }
+.speaking-privacy-note p { margin: .35rem 0 0; color: var(--muted); }
+.speaking-card h3 { margin: .65rem 0 .45rem; font-size: 1.2rem; }
+.speaking-outline { margin: 1rem 0; padding: .85rem; border-radius: .8rem; background: var(--surface-soft); }
+.speaking-outline ol { margin: .45rem 0 0; padding-left: 1.25rem; }
+.speaking-timer { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin: 1rem 0; padding: .8rem 1rem; border: 1px solid var(--line); border-radius: .9rem; }
+.speaking-timer span { color: var(--muted); font-weight: 750; }
+.speaking-timer strong { font-size: 1.55rem; font-variant-numeric: tabular-nums; }
+.speaking-controls { display: flex; flex-wrap: wrap; gap: .55rem; }
+.speaking-controls .compact-button { border: 0; }
+.speaking-status { margin: .75rem 0; min-height: 1.4em; }
+.speaking-card audio { width: 100%; margin: .35rem 0 1rem; }
+.speaking-self-check details { margin-top: .85rem; padding-top: .85rem; border-top: 1px solid var(--line); }
+.speaking-self-check summary { cursor: pointer; color: var(--primary-dark); font-weight: 800; }
+@media (max-width: 560px) { .speaking-controls .compact-button { flex: 1 1 100%; width: 100%; } }
 .interaction-draft-reset { width: auto; margin-top: .8rem; }
 .compact-empty { padding: 1.2rem; }
 .level-badge { display: inline-grid; place-items: center; min-width: 2.2rem; padding: .28rem .48rem; border-radius: .55rem; background: var(--primary-soft); color: var(--primary-dark); font-size: .7rem; font-weight: 800; }
