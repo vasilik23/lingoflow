@@ -8,6 +8,11 @@ from datetime import date
 B1_EXAM_SESSIONS = (
     {"starts_on": date(2026, 10, 17), "ends_on": date(2026, 10, 18)},
     {"starts_on": date(2026, 12, 5), "ends_on": date(2026, 12, 6)},
+    {"starts_on": date(2027, 2, 6), "ends_on": date(2027, 2, 7)},
+    {"starts_on": date(2027, 4, 10), "ends_on": date(2027, 4, 11)},
+    {"starts_on": date(2027, 6, 12), "ends_on": date(2027, 6, 13)},
+    {"starts_on": date(2027, 10, 2), "ends_on": date(2027, 10, 3)},
+    {"starts_on": date(2027, 11, 27), "ends_on": date(2027, 11, 28)},
 )
 
 B1_EXAM_MODULES = (

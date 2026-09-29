@@ -25,10 +25,13 @@ class B1ExamPrepDomainTests(SimpleTestCase):
 
     def test_countdown_handles_exam_day_and_published_sessions(self):
         exam_day = build_b1_exam_prep(date(2026, 10, 17))["countdown"]
-        after_schedule = build_b1_exam_prep(date(2026, 12, 7))["countdown"]
+        next_year = build_b1_exam_prep(date(2026, 12, 7))["countdown"]
+        after_schedule = build_b1_exam_prep(date(2027, 11, 29))["countdown"]
 
         self.assertEqual(exam_day["days_remaining"], 0)
         self.assertEqual(exam_day["label"], "Экзамен начинается сегодня")
+        self.assertTrue(next_year["available"])
+        self.assertEqual(next_year["starts_on"], date(2027, 2, 6))
         self.assertFalse(after_schedule["available"])
 
 
@@ -54,6 +57,7 @@ class B1ExamPrepViewTests(TestCase):
         self.assertContains(response, "Poprawność gramatyczna")
         self.assertContains(response, "минимум 50% в каждом модуле")
         self.assertContains(response, "certyfikatpolski.pl")
+        self.assertContains(response, "Официальные даты")
 
     def test_guest_is_redirected_to_login_with_return_path(self):
         self.client.cookies.clear()
