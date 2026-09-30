@@ -26,13 +26,13 @@
   <section class="exam-today" aria-labelledby="exam-today-title">
     <div class="section-heading exam-section-heading">
       <div><p class="eyebrow">План на сегодня</p><h2 id="exam-today-title">{{ exam_prep.daily_minutes }} минут подготовки</h2></div>
-      <span>3 коротких шага</span>
+      <span>3 коротких шага · все 5 модулей в недельной ротации</span>
     </div>
     <ol class="exam-daily-list">
       {% for item in exam_prep.daily_plan %}
         <li class="card exam-daily-item exam-accent-{{ item.accent }}">
           <span class="exam-step-number">{{ forloop.counter }}</span>
-          <div><small>{{ item.module_title }} · {{ item.minutes }} минут</small><strong>{{ item.action }}</strong></div>
+          <div><small>{{ item.module_title }} · {{ item.minutes }} минут{% if item.is_focus %} · фокус дня{% endif %}</small><strong>{{ item.action }}</strong>{% if item.focus_reason %}<span class="exam-focus-reason">{{ item.focus_reason }}</span>{% endif %}</div>
           <a href="{{ item.href }}" aria-label="{{ item.action }}">Начать</a>
         </li>
       {% endfor %}
