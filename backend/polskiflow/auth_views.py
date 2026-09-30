@@ -449,6 +449,9 @@ def logout_view(request: HttpRequest) -> HttpResponse:
 @require_browser_user
 def home(request: HttpRequest) -> HttpResponse:
     dashboard, lesson_tasks, completed_count, progress_percent, plan_minutes = _daily_plan(request)
+    b1_module_results = build_b1_module_results(
+        dashboard.recent_completion_results, tasks()
+    ) if dashboard.level == "B1" and dashboard.available else ()
     draft = load_latest_lesson_draft(request.supabase_access_token, request.supabase_user.id)
     lesson_map = {item["id"]: item for item in tasks()}
     draft_lesson = lesson_map.get(draft.get("lesson_id")) if isinstance(draft, dict) else None
@@ -472,7 +475,9 @@ def home(request: HttpRequest) -> HttpResponse:
             "plan_estimated_minutes": sum(task.get("minutes") or 5 for task in lesson_tasks),
             "plan_time_modes": DAILY_TIME_MODES,
             "resume_lesson": resume_lesson,
-            "b1_exam_prep": build_b1_exam_prep(timezone.localdate())
+            "b1_exam_prep": build_b1_exam_prep(
+                timezone.localdate(), b1_module_results
+            )
             if dashboard.level == "B1"
             else None,
         },
@@ -501,14 +506,15 @@ def b1_exam_prep(request: HttpRequest) -> HttpResponse:
     dashboard = load_dashboard_progress(
         request.supabase_access_token, request.supabase_user.id, fallback_name
     )
+    module_results = build_b1_module_results(
+        dashboard.recent_completion_results if dashboard.available else (), tasks()
+    )
     return render(
         request,
         "b1_exam_prep.html",
         {
-            "exam_prep": build_b1_exam_prep(timezone.localdate()),
-            "module_results": build_b1_module_results(
-                dashboard.recent_completion_results if dashboard.available else (), tasks()
-            ),
+            "exam_prep": build_b1_exam_prep(timezone.localdate(), module_results),
+            "module_results": module_results,
             "results_available": dashboard.available,
         },
     )

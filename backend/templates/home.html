@@ -22,7 +22,7 @@
       <div>
         <p class="eyebrow">Подготовка к государственному B1</p>
         <h2 id="exam-home-title">{{ b1_exam_prep.countdown.label }}</h2>
-        <p class="muted">Сегодня — {{ b1_exam_prep.daily_minutes }} минут по трём экзаменационным навыкам.</p>
+        <p class="muted">Сегодня — {{ b1_exam_prep.daily_minutes }} минут по трём экзаменационным навыкам.{% if b1_exam_prep.focus %} Фокус: {{ b1_exam_prep.focus.title }} — последние тренировки {{ b1_exam_prep.focus.percent }}%.{% endif %}</p>
       </div>
       <a class="compact-button" href="{% url 'b1-exam-prep' %}">Открыть план</a>
     </aside>

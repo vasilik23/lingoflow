@@ -43,6 +43,41 @@ class B1ExamPrepDomainTests(SimpleTestCase):
             [25, 45, 45, 75, 15],
         )
 
+    def test_plan_prioritises_only_a_measured_module_below_seventy_percent(self):
+        results = build_b1_module_results(
+            (
+                {"lesson_id": "b1-grammar", "cards_known": 8, "cards_total": 10},
+                {"lesson_id": "b1-reading-check", "cards_known": 3, "cards_total": 5},
+            ),
+            [
+                {"id": "b1-grammar", "kind": "grammar", "level": "B1"},
+                {"id": "b1-reading-check", "kind": "quiz", "level": "B1"},
+            ],
+        )
+
+        plan = build_b1_exam_prep(date(2026, 9, 28), results)
+
+        self.assertEqual(plan["focus"]["id"], "reading")
+        self.assertEqual(plan["daily_plan"][0]["module_id"], "reading")
+        self.assertEqual(
+            plan["daily_plan"][0]["focus_reason"],
+            "Последние тренировки: 60% — стоит закрепить",
+        )
+        self.assertEqual(len(plan["daily_plan"]), 3)
+        self.assertEqual(plan["daily_minutes"], 15)
+
+    def test_plan_does_not_invent_focus_for_unmeasured_or_strong_modules(self):
+        plan = build_b1_exam_prep(
+            date(2026, 9, 28),
+            (
+                {"id": "grammar", "status": "measured", "percent": 80},
+                {"id": "writing", "status": "unmeasured", "percent": None},
+            ),
+        )
+
+        self.assertIsNone(plan["focus"])
+        self.assertFalse(any(item.get("is_focus") for item in plan["daily_plan"]))
+
     def test_countdown_handles_exam_day_and_published_sessions(self):
         exam_day = build_b1_exam_prep(date(2026, 10, 17))["countdown"]
         next_year = build_b1_exam_prep(date(2026, 12, 7))["countdown"]
@@ -92,6 +127,25 @@ class B1ExamPrepViewTests(TestCase):
         self.assertContains(response, "Пока без автоматического балла")
         self.assertContains(response, "не прогноз экзамена")
 
+    @patch("polskiflow.auth_views.tasks", return_value=[
+        {"id": "b1-topic-reading-check", "kind": "quiz", "level": "B1"},
+    ])
+    @patch("polskiflow.auth_views.load_dashboard_progress")
+    def test_exam_page_explains_measured_weak_module_focus(self, progress, _tasks):
+        progress.return_value = DashboardProgress(
+            display_name="Anna", level="B1", streak_days=2,
+            completed_lesson_ids=frozenset(), available=True,
+            recent_completion_results=(
+                {"lesson_id": "b1-topic-reading-check", "cards_known": 3, "cards_total": 5},
+            ),
+        )
+
+        response = self.client.get("/exam/b1/")
+
+        self.assertContains(response, "фокус дня")
+        self.assertContains(response, "Последние тренировки: 60% — стоит закрепить")
+        self.assertContains(response, "все 5 модулей в недельной ротации")
+
     def test_guest_is_redirected_to_login_with_return_path(self):
         self.client.cookies.clear()
 
@@ -133,3 +187,25 @@ class B1ExamPrepViewTests(TestCase):
         self.assertContains(b1_response, "Подготовка к государственному B1")
         self.assertContains(b1_response, 'href="/exam/b1/"')
         self.assertNotContains(a2_response, "Подготовка к государственному B1")
+
+    @patch("polskiflow.auth_views.tasks", return_value=[
+        {"id": "b1-reading-check", "kind": "quiz", "level": "B1", "minutes": 5},
+    ])
+    @patch("polskiflow.auth_views.load_latest_lesson_draft", return_value=None)
+    @patch("polskiflow.auth_views.load_personal_words", return_value=[])
+    @patch("polskiflow.auth_views.load_dashboard_progress")
+    def test_home_explains_b1_focus_without_calling_it_exam_readiness(
+        self, progress, _words, _draft, _tasks
+    ):
+        progress.return_value = DashboardProgress(
+            display_name="Anna", level="B1", streak_days=2,
+            completed_lesson_ids=frozenset(), available=True,
+            recent_completion_results=(
+                {"lesson_id": "b1-reading-check", "cards_known": 3, "cards_total": 5},
+            ),
+        )
+
+        response = self.client.get("/")
+
+        self.assertContains(response, "Фокус: Чтение — последние тренировки 60%")
+        self.assertNotContains(response, "готовность 60%")

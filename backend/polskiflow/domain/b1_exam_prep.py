@@ -112,8 +112,8 @@ _DAILY_PLANS = (
 )
 
 
-def build_b1_exam_prep(today: date) -> dict:
-    """Build a bounded countdown and a rotating 15-minute practice plan."""
+def build_b1_exam_prep(today: date, module_results: tuple[dict, ...] = ()) -> dict:
+    """Build a bounded plan, prioritising only honestly measured weak modules."""
 
     session = next(
         (item for item in B1_EXAM_SESSIONS if item["ends_on"] >= today),
@@ -148,14 +148,52 @@ def build_b1_exam_prep(today: date) -> dict:
         }
         for module_id, action, minutes in _DAILY_PLANS[today.weekday()]
     )
+    focus = _weak_measured_module(module_results)
+    if focus is not None:
+        focus_id = focus["id"]
+        focus_task = next(
+            (item for item in daily_plan if item["module_id"] == focus_id),
+            {
+                "module_id": focus_id,
+                "module_title": modules_by_id[focus_id]["title"],
+                "action": modules_by_id[focus_id]["action"],
+                "minutes": 5,
+                "href": modules_by_id[focus_id]["href"],
+                "accent": modules_by_id[focus_id]["accent"],
+            },
+        )
+        focus_task = {
+            **focus_task,
+            "is_focus": True,
+            "focus_reason": f"Последние тренировки: {focus['percent']}% — стоит закрепить",
+        }
+        daily_plan = (
+            focus_task,
+            *(item for item in daily_plan if item["module_id"] != focus_id),
+        )[:3]
     return {
         "countdown": countdown,
         "modules": modules,
         "daily_plan": daily_plan,
         "daily_minutes": sum(item["minutes"] for item in daily_plan),
+        "focus": focus,
         "pass_percent": 50,
         "written_minutes": 190,
     }
+
+
+def _weak_measured_module(module_results: tuple[dict, ...]) -> dict | None:
+    weak = [
+        item
+        for item in module_results
+        if item.get("status") == "measured"
+        and isinstance(item.get("percent"), int)
+        and item["percent"] < 70
+    ]
+    if not weak:
+        return None
+    order = {module["id"]: index for index, module in enumerate(B1_EXAM_MODULES)}
+    return min(weak, key=lambda item: (item["percent"], order.get(item.get("id"), 99)))
 
 
 def build_b1_module_results(recent_results: tuple[dict, ...], lesson_tasks: list[dict]) -> tuple[dict, ...]:
