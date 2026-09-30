@@ -6,6 +6,7 @@ from polskiflow.domain.lesson_skills import lesson_skill
 
 
 DAILY_TASK_LIMIT = 4
+DAILY_TIME_MODES = (10, 15, 30)
 
 
 def build_daily_plan(
@@ -18,6 +19,7 @@ def build_daily_plan(
     today: date,
     daily_task_limit: int = DAILY_TASK_LIMIT,
     recent_completion_results: tuple[dict, ...] = (),
+    time_budget_minutes: int | None = None,
 ) -> list[dict]:
     """Choose the next lessons and, when useful, an SM-2 review."""
 
@@ -76,7 +78,40 @@ def build_daily_plan(
 
     for task in plan:
         task["completed"] = task["id"] in completed_today
+    if time_budget_minutes in DAILY_TIME_MODES:
+        plan = _fit_time_budget(plan, time_budget_minutes)
     return plan
+
+
+def _fit_time_budget(plan: list[dict], budget: int) -> list[dict]:
+    """Fit pending work to a budget without hiding today's completed tasks."""
+    mandatory = [
+        task
+        for task in plan
+        if task.get("completed") is True or task.get("kind") == "dictionary-review"
+    ]
+    selected_ids = {task["id"] for task in mandatory}
+    total = sum(_task_minutes(task) for task in mandatory)
+    for task in plan:
+        if task["id"] in selected_ids:
+            continue
+        minutes = _task_minutes(task)
+        if selected_ids and total + minutes > budget:
+            continue
+        selected_ids.add(task["id"])
+        total += minutes
+    return [task for task in plan if task["id"] in selected_ids] or plan[:1]
+
+
+def _task_minutes(task: dict) -> int:
+    raw_minutes = task.get("minutes")
+    if (
+        isinstance(raw_minutes, int)
+        and not isinstance(raw_minutes, bool)
+        and raw_minutes > 0
+    ):
+        return raw_minutes
+    return 5
 
 
 def _with_skill(lesson: dict) -> dict:

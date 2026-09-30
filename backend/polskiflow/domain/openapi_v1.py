@@ -236,6 +236,7 @@ def build_openapi_v1():
                     "operationId": "getLearnerToday",
                     "summary": "Get the authenticated learner's canonical daily plan",
                     "security": [{"supabaseBearer": []}],
+                    "parameters": [{"name": "minutes", "in": "query", "required": False, "schema": {"type": "integer", "enum": [10, 15, 30], "default": 15}}],
                     "responses": {"200": _json_response("Owner-scoped daily goal, tasks, progress, and resume point"), **private_errors},
                 }
             },

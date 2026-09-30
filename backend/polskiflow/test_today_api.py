@@ -40,11 +40,13 @@ class TodayApiTests(TestCase):
         ), patch("polskiflow.api_views.load_latest_lesson_draft_result", return_value=LessonDraftLoadResult(True, draft)), patch(
             "polskiflow.api_views.tasks", return_value=lessons
         ), patch("polskiflow.api_views.timezone.localdate", return_value=date(2026, 9, 16)):
-            response = self.client.get("/api/v1/me/today/", **self.authorization)
+            response = self.client.get("/api/v1/me/today/?minutes=30", **self.authorization)
         self.assertEqual(response.status_code, 200)
         data = response.json()["data"]
         self.assertEqual(data["date"], "2026-09-16")
         self.assertEqual(data["daily_goal_lessons"], 3)
+        self.assertEqual(data["time_budget_minutes"], 30)
+        self.assertEqual(data["estimated_minutes"], 23)
         self.assertEqual(data["completed_count"], 1)
         self.assertEqual(data["progress_percent"], 33)
         self.assertEqual([item["id"] for item in data["tasks"]], ["lesson-done", "lesson-next", "lesson-later"])
@@ -66,6 +68,22 @@ class TodayApiTests(TestCase):
         self.assertEqual(review["kind"], "dictionary-review")
         self.assertEqual(review["path"], "/dictionary/practice/")
         self.assertEqual(review["api_path"], "/api/v1/me/sm2/")
+
+    def test_time_budget_is_validated_and_bounds_plan_by_minutes(self):
+        lessons = [
+            {"id": "one", "kind": "words", "title": "One", "minutes": 7, "level": "A2"},
+            {"id": "two", "kind": "quiz", "title": "Two", "minutes": 8, "level": "A2"},
+        ]
+        with self._auth(), patch("polskiflow.api_views.load_dashboard_progress", return_value=self._progress()), patch(
+            "polskiflow.api_views.load_personal_words", return_value=[]
+        ), patch("polskiflow.api_views.load_latest_lesson_draft_result", return_value=LessonDraftLoadResult(True)), patch(
+            "polskiflow.api_views.tasks", return_value=lessons
+        ):
+            short = self.client.get("/api/v1/me/today/?minutes=10", **self.authorization)
+            invalid = self.client.get("/api/v1/me/today/?minutes=20", **self.authorization)
+        self.assertEqual([item["id"] for item in short.json()["data"]["tasks"]], ["one"])
+        self.assertEqual(short.json()["data"]["estimated_minutes"], 7)
+        self.assertEqual(invalid.status_code, 400)
 
     def test_low_recent_result_is_identical_transparent_reinforcement(self):
         progress = DashboardProgress(

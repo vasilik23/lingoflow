@@ -82,7 +82,7 @@ class LessonViewsTests(TestCase):
     def lesson_state(self, lesson_id, index=0, score=0, phase="ready"):
         return sign_lesson_state("user-123", lesson_id, lesson_id, index, score, phase)
 
-    def test_home_combines_daily_goal_and_all_tasks(self):
+    def test_home_combines_daily_goal_with_default_fifteen_minute_plan(self):
         response = self.client.get("/")
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Цель на сегодня")
@@ -91,10 +91,13 @@ class LessonViewsTests(TestCase):
         self.assertContains(response, 'aria-label="Выполнение цели на сегодня"')
         self.assertContains(response, 'aria-valuenow="0"')
         self.assertContains(response, "Задания на сегодня")
+        self.assertContains(response, 'aria-label="Длительность плана"')
+        self.assertContains(response, 'href="?minutes=15#daily-plan" aria-current="page"')
         self.assertContains(response, "Słówka dnia")
         self.assertContains(response, "Gramatyka")
         self.assertContains(response, "Powtórka")
-        self.assertContains(response, "Quiz")
+        self.assertNotContains(response, "Quiz")
+        self.assertEqual(len(response.context["tasks"]), 3)
 
     @patch("polskiflow.auth_views.load_latest_lesson_draft", return_value={"lesson_id": "quiz", "step_index": 2})
     def test_home_discovers_latest_unfinished_lesson(self, _draft):
@@ -227,7 +230,7 @@ class LessonViewsTests(TestCase):
         topic = Topic.objects.create(id="catalog-topic", course=course, title="Новая тема")
         extra = Lesson.objects.create(id="extra-lesson", topic=topic, title="Extra", plan_title="Extra", subtitle="A1", description="Каталог", position=5)
 
-        response = self.client.get("/")
+        response = self.client.get("/?minutes=30")
 
         self.assertContains(response, "0 из 4")
         self.assertNotContains(response, "Новая тема")
@@ -739,7 +742,7 @@ class LessonViewsTests(TestCase):
             available=True,
         )
 
-        response = self.client.get("/")
+        response = self.client.get("/?minutes=30")
 
         self.assertContains(response, "Cześć, Василий!")
         self.assertContains(response, "Уровень A2")
@@ -762,7 +765,7 @@ class LessonViewsTests(TestCase):
             all_completed_lesson_ids=frozenset({"words"}),
         )
 
-        home = self.client.get("/")
+        home = self.client.get("/?minutes=30")
         self.assertContains(home, "1 из 4")
         self.assertContains(home, "25%")
         self.assertContains(home, "1 из 4 выполнено")
@@ -795,7 +798,8 @@ class LessonViewsTests(TestCase):
         self.assertContains(response, "Повторение словаря")
         self.assertContains(response, "1 слово по расписанию SM-2")
         self.assertContains(response, 'href="/dictionary/practice/"')
-        self.assertEqual(len(response.context["tasks"]), 4)
+        self.assertEqual(len(response.context["tasks"]), 3)
+        self.assertLessEqual(response.context["plan_estimated_minutes"], 15)
 
     def test_unknown_lesson_returns_404(self):
         self.assertEqual(self.client.get("/lesson/unknown/").status_code, 404)
