@@ -228,7 +228,9 @@ class ReadingViewsTests(TestCase):
         self.assertContains(response, "Wiadomość dnia")
         self.assertContains(response, "Przykład")
         self.assertContains(response, 'target="_blank" rel="noopener noreferrer"')
-        self.assertContains(response, 'href="/news/" class="nav-link active"')
+        self.assertContains(response, 'href="/reading/" class="nav-link active"')
+        self.assertNotContains(response, '<span>Новости</span>')
+        self.assertContains(response, 'href="/reading/">Учебные тексты</a>')
 
     def test_news_tab_preserves_unavailable_feed_behavior(self):
         response = self.client.get("/news/")

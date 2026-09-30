@@ -351,6 +351,7 @@ p { line-height: 1.65; }
 .reading-promo span span { color: #e5fff2; font-size: .74rem; line-height: 1.4; }
 
 .content-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 1rem; margin-bottom: 1.5rem; }
+.content-header-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .55rem; }
 .content-header h1 { margin-bottom: .55rem; }
 .content-header p:last-child { max-width: 42rem; margin: 0; }
 .compact-button { display: inline-flex; align-items: center; min-height: 2.7rem; padding: .7rem 1rem; border-radius: .85rem; background: var(--action); color: white; font-size: .82rem; font-weight: 800; text-decoration: none; }

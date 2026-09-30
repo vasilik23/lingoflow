@@ -3,7 +3,7 @@
 {% block content %}
   <header class="content-header">
     <div><p class="eyebrow">Żywy polski</p><h1>Новости на польском</h1><p class="muted">Свежие заголовки из польских RSS по разным темам.</p></div>
-    <a class="compact-button" href="{% url 'dictionary' %}">Мой словарь →</a>
+    <div class="content-header-actions"><a class="compact-button secondary-link" href="{% url 'reading-library' %}">Учебные тексты</a><a class="compact-button" href="{% url 'dictionary' %}">Мой словарь →</a></div>
   </header>
   <section aria-labelledby="news-title">
     <div class="section-heading"><div><p class="eyebrow">Живой польский</p><h2 id="news-title">Свежие новости</h2></div><span>Польские RSS</span></div>
