@@ -597,6 +597,11 @@ class LessonViewsTests(TestCase):
         self.assertContains(response, "data-writing-requirement>", count=12)
         self.assertContains(response, "data-writing-error value=", count=16)
         self.assertContains(response, 'localStorage.setItem(reviewKey, JSON.stringify(checked))')
+        self.assertContains(response, "Персональное закрепление")
+        self.assertContains(response, "data-writing-focus-list")
+        self.assertContains(response, "updateFocusSummary();", count=3)
+        self.assertContains(response, "исправь два места в черновике")
+        self.assertContains(response, 'href="/course/?level=B1&kind=grammar"')
         self.assertContains(response, "Это один возможный ответ")
 
     def test_writing_practice_supports_b2_and_separates_local_storage(self):

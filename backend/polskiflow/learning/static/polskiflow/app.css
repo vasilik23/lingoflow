@@ -446,6 +446,13 @@ p { line-height: 1.65; }
 .profile-note { margin: .8rem .2rem 0; color: var(--muted); font-size: .74rem; }
 .writing-header { align-items: end; }
 .writing-workspace { display: grid; gap: .8rem; }
+.writing-focus-summary { display: grid; gap: 1rem; margin-bottom: 1rem; }
+.writing-focus-summary h2 { margin: .1rem 0 .35rem; font-size: 1.15rem; }
+.writing-focus-summary p { margin: 0; }
+.writing-focus-summary ol { display: grid; gap: .65rem; margin: .8rem 0 0; padding-left: 1.35rem; }
+.writing-focus-summary li { padding-left: .2rem; }
+.writing-focus-summary li strong, .writing-focus-summary li span { display: block; }
+.writing-focus-summary li span { margin-top: .15rem; color: var(--muted); font-size: .82rem; line-height: 1.45; }
 .writing-prompt-select { width: 100%; padding: .8rem .9rem; border: 1px solid var(--line); border-radius: .8rem; background: var(--surface); color: var(--text); font: inherit; }
 .writing-prompt { min-width: 0; padding-top: .6rem; }
 .writing-prompt[hidden] { display: none; }
@@ -478,6 +485,7 @@ p { line-height: 1.65; }
 .writing-sample { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--line); }
 .writing-sample summary { cursor: pointer; color: var(--primary-dark); font-weight: 800; }
 @media (min-width: 760px) { .writing-review-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 760px) { .writing-focus-summary { grid-template-columns: minmax(0, 1fr) auto; align-items: center; } }
 .interaction-note { margin-bottom: 1rem; border-left: 4px solid var(--primary); }
 .interaction-note :where(strong, p), .interaction-error :where(strong, p) { margin: 0; }
 .interaction-note p, .interaction-error p { margin-top: .35rem; color: var(--muted); }
