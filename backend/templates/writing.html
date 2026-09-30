@@ -10,6 +10,16 @@
     {% for level in writing_levels %}<a href="?level={{ level }}"{% if level == selected_writing_level %} aria-current="page"{% endif %}><strong>{{ level }}</strong><small>4 задания</small></a>{% endfor %}
   </nav>
 
+  <section class="card writing-focus-summary" aria-labelledby="writing-focus-title" data-writing-focus-summary>
+    <div>
+      <p class="eyebrow">Персональное закрепление</p>
+      <h2 id="writing-focus-title">Что повторить после самопроверки</h2>
+      <p class="muted" data-writing-focus-empty>Отметь замеченные языковые ошибки после черновика — здесь появится короткий план без отправки текста на сервер.</p>
+      <ol data-writing-focus-list hidden></ol>
+    </div>
+    <a class="compact-button" href="{% url 'course' %}?level={{ selected_writing_level }}&kind=grammar">Открыть грамматику {{ selected_writing_level }}</a>
+  </section>
+
   <section class="card writing-workspace" aria-label="Редактор письменного ответа">
     <label for="writing-prompt">Выбери задание</label>
     <select id="writing-prompt" class="writing-prompt-select">
@@ -70,6 +80,33 @@
       const select = document.querySelector("#writing-prompt");
       const panels = Array.from(document.querySelectorAll("[data-writing-prompt]"));
       const storagePrefix = "polskiflow-writing-{{ selected_writing_level|lower }}:{{ request.supabase_user.id|escapejs }}:";
+      const focusSummary = document.querySelector("[data-writing-focus-summary]");
+
+      function updateFocusSummary() {
+        const counts = new Map();
+        panels.forEach(function (panel) {
+          panel.querySelectorAll("[data-writing-error]:checked").forEach(function (input) {
+            counts.set(input.value, (counts.get(input.value) || 0) + 1);
+          });
+        });
+        const priorities = Array.from(counts.entries()).sort(function (left, right) {
+          return right[1] - left[1] || left[0].localeCompare(right[0], "ru");
+        }).slice(0, 3);
+        const list = focusSummary.querySelector("[data-writing-focus-list]");
+        const empty = focusSummary.querySelector("[data-writing-focus-empty]");
+        list.replaceChildren();
+        priorities.forEach(function (priority) {
+          const item = document.createElement("li");
+          const title = document.createElement("strong");
+          const action = document.createElement("span");
+          title.textContent = priority[0];
+          action.textContent = "5 минут: вспомни правило, исправь два места в черновике и перечитай их вслух.";
+          item.append(title, action);
+          list.append(item);
+        });
+        empty.hidden = priorities.length > 0;
+        list.hidden = priorities.length === 0;
+      }
 
       function words(value) {
         const trimmed = value.trim();
@@ -130,6 +167,7 @@
             const checked = reviewInputs.flatMap(function (item, index) { return item.checked ? [index] : []; });
             try { localStorage.setItem(reviewKey, JSON.stringify(checked)); }
             catch (error) { status.textContent = "Не удалось сохранить отметки локально"; }
+            updateFocusSummary();
           });
         });
         panel.querySelector("[data-check-draft]").addEventListener("click", function () { checkDraft(panel, textarea.value); });
@@ -144,9 +182,11 @@
           const revision = panel.querySelector("[data-writing-revision]");
           if (revision) revision.hidden = true;
           status.textContent = "Черновик удалён";
+          updateFocusSummary();
           textarea.focus();
         });
       });
+      updateFocusSummary();
       select.addEventListener("change", function () { showPrompt(select.value); });
     }());
   </script>
