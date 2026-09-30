@@ -30,7 +30,7 @@ from polskiflow.lesson_bookmark_store import load_lesson_bookmarks
 from polskiflow.domain.achievements import build_achievements
 from polskiflow.domain.auth_rate_limit import consume_auth_attempt
 from polskiflow.domain.b1_exam_prep import build_b1_exam_prep, build_b1_module_results
-from polskiflow.domain.daily_plan import build_daily_plan
+from polskiflow.domain.daily_plan import DAILY_TIME_MODES, build_daily_plan
 from polskiflow.domain.daily_goal_insights import build_daily_goal_insight
 from polskiflow.domain.password_policy import password_error
 from polskiflow.domain.course_catalog import (
@@ -448,7 +448,7 @@ def logout_view(request: HttpRequest) -> HttpResponse:
 
 @require_browser_user
 def home(request: HttpRequest) -> HttpResponse:
-    dashboard, lesson_tasks, completed_count, progress_percent = _daily_plan(request)
+    dashboard, lesson_tasks, completed_count, progress_percent, plan_minutes = _daily_plan(request)
     draft = load_latest_lesson_draft(request.supabase_access_token, request.supabase_user.id)
     lesson_map = {item["id"]: item for item in tasks()}
     draft_lesson = lesson_map.get(draft.get("lesson_id")) if isinstance(draft, dict) else None
@@ -468,6 +468,9 @@ def home(request: HttpRequest) -> HttpResponse:
             "tasks": lesson_tasks,
             "completed_count": completed_count,
             "progress_percent": progress_percent,
+            "plan_minutes": plan_minutes,
+            "plan_estimated_minutes": sum(task.get("minutes") or 5 for task in lesson_tasks),
+            "plan_time_modes": DAILY_TIME_MODES,
             "resume_lesson": resume_lesson,
             "b1_exam_prep": build_b1_exam_prep(timezone.localdate())
             if dashboard.level == "B1"
@@ -833,6 +836,12 @@ def listening_practice(request: HttpRequest) -> HttpResponse:
 
 
 def _daily_plan(request: HttpRequest):
+    try:
+        plan_minutes = int(request.GET.get("minutes", "15"))
+    except (TypeError, ValueError):
+        plan_minutes = 15
+    if plan_minutes not in DAILY_TIME_MODES:
+        plan_minutes = 15
     fallback_name = (request.supabase_user.email or "ученик").split("@", 1)[0]
     dashboard = load_dashboard_progress(
         request.supabase_access_token,
@@ -851,12 +860,13 @@ def _daily_plan(request: HttpRequest):
         today=timezone.localdate(),
         daily_task_limit=dashboard.daily_goal_lessons,
         recent_completion_results=dashboard.recent_completion_results,
+        time_budget_minutes=plan_minutes,
     )
     completed_count = sum(task["completed"] for task in lesson_tasks)
     progress_percent = (
         round(completed_count / len(lesson_tasks) * 100) if lesson_tasks else 0
     )
-    return dashboard, lesson_tasks, completed_count, progress_percent
+    return dashboard, lesson_tasks, completed_count, progress_percent, plan_minutes
 
 
 def _no_store(response: HttpResponse) -> HttpResponse:

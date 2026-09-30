@@ -20,7 +20,7 @@ from polskiflow.domain.lesson_results import (
     LessonResultValidationError,
     validate_lesson_result,
 )
-from polskiflow.domain.daily_plan import build_daily_plan
+from polskiflow.domain.daily_plan import DAILY_TIME_MODES, build_daily_plan
 from polskiflow.domain.achievements import build_achievements
 from polskiflow.domain.api_rate_limit import consume_api_mutation
 from polskiflow.domain.openapi_v1 import build_openapi_v1
@@ -587,19 +587,23 @@ def learner_today_v1(request):
     """Return one canonical daily plan for browser and separate clients."""
     if not _valid_bearer(request):
         return _error_response("bearer_required", "A valid Bearer token is required", 401)
+    raw_minutes = request.GET.get("minutes", "15")
+    if raw_minutes not in {str(value) for value in DAILY_TIME_MODES}:
+        return _error_response("validation_error", "minutes must be one of 10, 15, 30", 400)
+    plan_minutes = int(raw_minutes)
     user = request.supabase_user
     progress = load_dashboard_progress(
         request.supabase_access_token, user.id, (user.email or "learner").split("@", 1)[0]
     )
     words = load_personal_words(request.supabase_access_token, user.id)
     draft_result = load_latest_lesson_draft_result(request.supabase_access_token, user.id)
-    data = _build_today_data(progress, words, draft_result)
+    data = _build_today_data(progress, words, draft_result, time_budget_minutes=plan_minutes)
     if data is None:
         return _unavailable_response("learner-today")
     return _private_response("learner-today", data)
 
 
-def _build_today_data(progress, words, draft_result):
+def _build_today_data(progress, words, draft_result, *, time_budget_minutes=15):
     """Build the canonical plan from already loaded owner-scoped state."""
     if not progress.available or words is None or not draft_result.available:
         return None
@@ -613,6 +617,7 @@ def _build_today_data(progress, words, draft_result):
         today=timezone.localdate(),
         daily_task_limit=progress.daily_goal_lessons,
         recent_completion_results=progress.recent_completion_results,
+        time_budget_minutes=time_budget_minutes,
     )
     serialized_tasks = [
         {
@@ -634,6 +639,8 @@ def _build_today_data(progress, words, draft_result):
         "date": timezone.localdate().isoformat(),
         "level": progress.level,
         "daily_goal_lessons": progress.daily_goal_lessons,
+        "time_budget_minutes": time_budget_minutes,
+        "estimated_minutes": sum(item.get("minutes") or 5 for item in serialized_tasks),
         "completed_count": completed_count,
         "task_count": len(serialized_tasks),
         "progress_percent": round(completed_count / len(serialized_tasks) * 100) if serialized_tasks else 0,

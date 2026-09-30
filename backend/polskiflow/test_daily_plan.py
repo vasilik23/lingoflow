@@ -106,6 +106,46 @@ class DailyPlanTests(SimpleTestCase):
         )
         self.assertEqual(len(plan), 2)
 
+    def test_time_modes_use_real_task_minutes_and_keep_at_least_one(self):
+        lessons = [
+            {**self.lessons[1], "minutes": 7},
+            {**self.lessons[2], "minutes": 8},
+            {**self.lessons[3], "minutes": 12},
+        ]
+        ten = build_daily_plan(
+            lessons, level="A2", completed_all_time=frozenset(), completed_today=frozenset(),
+            personal_words=[], today=date(2026, 8, 28), time_budget_minutes=10,
+        )
+        fifteen = build_daily_plan(
+            lessons, level="A2", completed_all_time=frozenset(), completed_today=frozenset(),
+            personal_words=[], today=date(2026, 8, 28), time_budget_minutes=15,
+        )
+        thirty = build_daily_plan(
+            lessons, level="A2", completed_all_time=frozenset(), completed_today=frozenset(),
+            personal_words=[], today=date(2026, 8, 28), time_budget_minutes=30,
+        )
+        self.assertEqual([item["id"] for item in ten], ["a2-one"])
+        self.assertEqual([item["id"] for item in fifteen], ["a2-one", "a2-two"])
+        self.assertEqual(len(thirty), 3)
+
+    def test_time_mode_keeps_lessons_completed_today_visible(self):
+        lessons = [
+            {**self.lessons[1], "minutes": 7},
+            {**self.lessons[2], "minutes": 8},
+            {**self.lessons[3], "minutes": 12},
+        ]
+        plan = build_daily_plan(
+            lessons,
+            level="A2",
+            completed_all_time=frozenset({"a2-one", "a2-two"}),
+            completed_today=frozenset({"a2-one", "a2-two"}),
+            personal_words=[],
+            today=date(2026, 8, 28),
+            time_budget_minutes=10,
+        )
+        self.assertEqual([item["id"] for item in plan], ["a2-one", "a2-two"])
+        self.assertTrue(all(item["completed"] for item in plan))
+
     def test_low_recent_result_adds_one_transparent_reinforcement(self):
         plan = build_daily_plan(
             self.lessons,
