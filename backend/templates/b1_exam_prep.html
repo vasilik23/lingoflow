@@ -23,6 +23,11 @@
     </div>
   </header>
 
+  <section class="card exam-mock-callout" aria-labelledby="exam-mock-title">
+    <div><p class="eyebrow">Раз в неделю</p><h2 id="exam-mock-title">Пробный мини‑модуль</h2><p class="muted">15 минут: аудирование, чтение, грамматика и задания для самопроверки письма и речи.</p></div>
+    <a class="compact-button" href="{% url 'b1-weekly-mock' %}">Начать тренировку</a>
+  </section>
+
   <section class="exam-today" aria-labelledby="exam-today-title">
     <div class="section-heading exam-section-heading">
       <div><p class="eyebrow">План на сегодня</p><h2 id="exam-today-title">{{ exam_prep.daily_minutes }} минут подготовки</h2></div>

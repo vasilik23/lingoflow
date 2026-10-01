@@ -1,0 +1,5 @@
+<fieldset class="mock-question">
+  <legend>{{ question.prompt }}</legend>
+  {% for option in question.options %}<label><input type="radio" name="answer_{{ question.id }}" value="{{ forloop.counter0 }}" {% if not result %}required{% else %}disabled{% endif %}> <span lang="pl">{{ option }}</span></label>{% endfor %}
+  {% if result %}{% for detail in result.details %}{% if detail.question.id == question.id %}<div class="mock-feedback {% if detail.is_correct %}correct{% else %}wrong{% endif %}"><strong>{% if detail.is_correct %}Верно: {{ detail.correct_text }}{% else %}Твой ответ: {{ detail.selected_text }} · верно: {{ detail.correct_text }}{% endif %}</strong><span>{{ question.explanation }}</span></div>{% endif %}{% endfor %}{% endif %}
+</fieldset>
