@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Недельный пробный модуль B1 · PolskiFlow{% endblock %}
+{% block content %}
+<main class="mock-shell">
+  <header class="mock-header">
+    <div><p class="eyebrow">B1 · недельная тренировка</p><h1>Пробный мини‑модуль</h1><p>15 минут, пять экзаменационных навыков. Это тренировка PolskiFlow, не официальный тест и не прогноз результата.</p></div>
+    {% if not result %}<div class="mock-timer" role="timer" aria-live="polite"><strong id="mock-timer">15:00</strong><span>осталось</span></div>{% endif %}
+  </header>
+
+  {% if error %}<div class="form-message error" role="alert">{{ error }} <a href="{% url 'b1-weekly-mock' %}">Начать заново</a></div>{% endif %}
+
+  {% if result %}
+    <section class="card mock-summary" aria-labelledby="mock-result-title">
+      <div><p class="eyebrow">Проверяемая часть</p><h2 id="mock-result-title">{{ result.correct }} из {{ result.total }}</h2><p class="muted">Баллы относятся только к заданиям ниже и не равны результату государственного экзамена.</p></div>
+      <div class="mock-module-results">
+        {% for module in result.modules %}<div><strong>{{ module.percent }}%</strong><span>{{ module.label }} · {{ module.correct }}/{{ module.total }}</span></div>{% endfor %}
+      </div>
+    </section>
+  {% endif %}
+
+  <form method="post" class="mock-form" id="mock-form">
+    {% csrf_token %}<input type="hidden" name="attempt_token" value="{{ attempt_token }}">
+
+    <section class="card mock-section" aria-labelledby="mock-listening-title">
+      <div class="mock-section-heading"><span>1</span><div><p class="eyebrow">Rozumienie ze słuchu</p><h2 id="mock-listening-title">Аудирование</h2></div></div>
+      {% if not result %}<button class="compact-button" type="button" id="mock-play">▶ Прослушать сообщение</button><p class="muted" id="mock-audio-status" aria-live="polite">Системный польский голос устройства; можно прослушать повторно.</p>{% else %}<p lang="pl" class="mock-source-text">{{ listening_transcript }}</p>{% endif %}
+      {% for question in questions %}{% if question.module == "listening" %}{% include "partials/b1_mock_question.html" %}{% endif %}{% endfor %}
+    </section>
+
+    <section class="card mock-section" aria-labelledby="mock-reading-title">
+      <div class="mock-section-heading"><span>2</span><div><p class="eyebrow">Rozumienie tekstów pisanych</p><h2 id="mock-reading-title">Чтение</h2></div></div>
+      <p lang="pl" class="mock-source-text">{{ reading_text }}</p>
+      {% for question in questions %}{% if question.module == "reading" %}{% include "partials/b1_mock_question.html" %}{% endif %}{% endfor %}
+    </section>
+
+    <section class="card mock-section" aria-labelledby="mock-grammar-title">
+      <div class="mock-section-heading"><span>3</span><div><p class="eyebrow">Poprawność gramatyczna</p><h2 id="mock-grammar-title">Грамматика</h2></div></div>
+      {% for question in questions %}{% if question.module == "grammar" %}{% include "partials/b1_mock_question.html" %}{% endif %}{% endfor %}
+    </section>
+
+    <section class="mock-self-grid">
+      <article class="card mock-section"><div class="mock-section-heading"><span>4</span><div><p class="eyebrow">Pisanie</p><h2>Письмо</h2></div></div><p lang="pl"><strong>Napisz krótką wiadomość do kolegi.</strong> Wyjaśnij, dlaczego nie możesz przyjść na spotkanie, zaproponuj inny termin i zapytaj o jego plany. 50–80 słów.</p><p class="muted">Напиши отдельно или в тренажёре письма. Эта попытка не сохраняет и не оценивает текст.</p></article>
+      <article class="card mock-section"><div class="mock-section-heading"><span>5</span><div><p class="eyebrow">Mówienie</p><h2>Говорение</h2></div></div><p lang="pl"><strong>Opowiedz o zmianie, która ułatwiła twoje codzienne życie.</strong> Podaj przyczynę, przykład i rezultat. Mów przez 1–2 minuty.</p><p class="muted">Ответь вслух и проверь: задача выполнена, есть связки, пример и понятный итог. Автоматического балла нет.</p></article>
+    </section>
+
+    {% if not result and not error %}<button class="primary-button mock-submit" type="submit">Завершить и проверить</button>{% endif %}
+  </form>
+  {% if result %}<a class="compact-button" href="{% url 'b1-weekly-mock' %}">Новая попытка</a>{% endif %}
+</main>
+{{ listening_transcript|json_script:"mock-listening-transcript" }}
+{% if not result %}<script>
+(() => {
+  const timer = document.getElementById('mock-timer');
+  const form = document.getElementById('mock-form');
+  let left = {{ duration_seconds }};
+  const tick = () => {
+    const minutes = String(Math.floor(left / 60)).padStart(2, '0');
+    const seconds = String(left % 60).padStart(2, '0');
+    timer.textContent = `${minutes}:${seconds}`;
+    if (left <= 0) { form.querySelectorAll('input, button').forEach(el => el.disabled = true); timer.parentElement.classList.add('expired'); return; }
+    left -= 1; window.setTimeout(tick, 1000);
+  }; tick();
+  document.getElementById('mock-play')?.addEventListener('click', () => {
+    const status = document.getElementById('mock-audio-status');
+    if (!('speechSynthesis' in window)) { status.textContent = 'На этом устройстве системное воспроизведение недоступно.'; return; }
+    speechSynthesis.cancel(); const utterance = new SpeechSynthesisUtterance(JSON.parse(document.getElementById('mock-listening-transcript').textContent));
+    utterance.lang = 'pl-PL'; utterance.rate = .9; utterance.onstart = () => status.textContent = 'Воспроизводится…'; utterance.onend = () => status.textContent = 'Сообщение завершено. Можно прослушать ещё раз.'; speechSynthesis.speak(utterance);
+  });
+})();
+</script>{% endif %}
+{% endblock %}
