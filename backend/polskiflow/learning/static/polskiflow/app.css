@@ -538,6 +538,13 @@ p { line-height: 1.65; }
 .speaking-controls .compact-button { border: 0; }
 .speaking-status { margin: .75rem 0; min-height: 1.4em; }
 .speaking-card audio { width: 100%; margin: .35rem 0 1rem; }
+.speaking-history { display: grid; gap: .8rem; margin-top: 1rem; }
+.speaking-history h3 { margin: .1rem 0 .3rem; }
+.speaking-history [data-speaking-history-list] { display: grid; gap: .7rem; }
+.speaking-history article { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .35rem .7rem; align-items: center; padding: .8rem; border: 1px solid var(--line); border-radius: .85rem; background: var(--surface-soft); }
+.speaking-history article small { color: var(--muted); }
+.speaking-history article audio { grid-column: 1 / -1; width: 100%; }
+.speaking-history article button { margin: 0; }
 .speaking-self-check details { margin-top: .85rem; padding-top: .85rem; border-top: 1px solid var(--line); }
 .speaking-self-check summary { cursor: pointer; color: var(--primary-dark); font-weight: 800; }
 @media (max-width: 560px) { .speaking-controls .compact-button { flex: 1 1 100%; width: 100%; } }
