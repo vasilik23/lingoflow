@@ -26,7 +26,7 @@ class B1MockStoreTests(SimpleTestCase):
         response = MagicMock(status=201)
         response.__enter__.return_value = response
         mocked_urlopen.return_value = response
-        result = {"modules": (
+        result = {"attempt_version": "b1-weekly-v2", "modules": (
             {"id": "listening", "correct": 2},
             {"id": "reading", "correct": 1},
             {"id": "grammar", "correct": 2},
@@ -38,7 +38,7 @@ class B1MockStoreTests(SimpleTestCase):
         payload = json.loads(request.data)
         self.assertEqual(request.headers["Authorization"], "Bearer access")
         self.assertEqual(payload, {
-            "user_id": "user-123", "attempt_version": "b1-weekly-v1",
+            "user_id": "user-123", "attempt_version": "b1-weekly-v2",
             "listening_correct": 2, "reading_correct": 1, "grammar_correct": 2,
         })
         self.assertNotIn("answers", payload)
@@ -47,12 +47,13 @@ class B1MockStoreTests(SimpleTestCase):
     def test_load_is_owner_scoped_bounded_and_newest_first(self, mocked_urlopen):
         response = MagicMock()
         response.__enter__.return_value = response
-        response.read.return_value = b'[{"listening_correct":2,"reading_correct":1,"grammar_correct":2}]'
+        response.read.return_value = b'[{"listening_correct":2,"reading_correct":1,"grammar_correct":2,"attempt_version":"b1-weekly-v2"}]'
         mocked_urlopen.return_value = response
 
         rows = load_b1_mock_attempts("access", "user-123", 999)
 
         self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["variant_label"], "Вариант 2")
         url = mocked_urlopen.call_args.args[0].full_url
         self.assertIn("user_id=eq.user-123", url)
         self.assertIn("limit=12", url)

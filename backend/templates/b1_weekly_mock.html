@@ -3,7 +3,7 @@
 {% block content %}
 <main class="mock-shell">
   <header class="mock-header">
-    <div><p class="eyebrow">B1 · недельная тренировка</p><h1>Пробный мини‑модуль</h1><p>15 минут, пять экзаменационных навыков. Это тренировка PolskiFlow, не официальный тест и не прогноз результата.</p></div>
+    <div><p class="eyebrow">B1 · недельная тренировка · {{ variant.label }}</p><h1>Пробный мини‑модуль</h1><p>15 минут, пять экзаменационных навыков. Вариант меняется раз в неделю. Это тренировка PolskiFlow, не официальный тест и не прогноз результата.</p></div>
     {% if not result %}<div class="mock-timer" role="timer" aria-live="polite"><strong id="mock-timer">15:00</strong><span>осталось</span></div>{% endif %}
   </header>
 
@@ -40,8 +40,8 @@
     </section>
 
     <section class="mock-self-grid">
-      <article class="card mock-section"><div class="mock-section-heading"><span>4</span><div><p class="eyebrow">Pisanie</p><h2>Письмо</h2></div></div><p lang="pl"><strong>Napisz krótką wiadomość do kolegi.</strong> Wyjaśnij, dlaczego nie możesz przyjść na spotkanie, zaproponuj inny termin i zapytaj o jego plany. 50–80 słów.</p><p class="muted">Напиши отдельно или в тренажёре письма. Эта попытка не сохраняет и не оценивает текст.</p></article>
-      <article class="card mock-section"><div class="mock-section-heading"><span>5</span><div><p class="eyebrow">Mówienie</p><h2>Говорение</h2></div></div><p lang="pl"><strong>Opowiedz o zmianie, która ułatwiła twoje codzienne życie.</strong> Podaj przyczynę, przykład i rezultat. Mów przez 1–2 minuty.</p><p class="muted">Ответь вслух и проверь: задача выполнена, есть связки, пример и понятный итог. Автоматического балла нет.</p></article>
+      <article class="card mock-section"><div class="mock-section-heading"><span>4</span><div><p class="eyebrow">Pisanie</p><h2>Письмо</h2></div></div><p lang="pl"><strong>{{ variant.writing_prompt }}</strong></p><p class="muted">Напиши отдельно или в тренажёре письма. Эта попытка не сохраняет и не оценивает текст.</p></article>
+      <article class="card mock-section"><div class="mock-section-heading"><span>5</span><div><p class="eyebrow">Mówienie</p><h2>Говорение</h2></div></div><p lang="pl"><strong>{{ variant.speaking_prompt }}</strong></p><p class="muted">Ответь вслух и проверь: задача выполнена, есть связки, пример и понятный итог. Автоматического балла нет.</p></article>
     </section>
 
     {% if not result and not error %}<button class="primary-button mock-submit" type="submit">Завершить и проверить</button>{% endif %}
@@ -51,7 +51,7 @@
   <section class="mock-history" aria-labelledby="mock-history-title">
     <div class="section-heading"><div><p class="eyebrow">Последние попытки</p><h2 id="mock-history-title">Динамика мини‑модуля</h2></div><span>хранятся только три агрегированных балла</span></div>
     {% if history is None %}<p class="card muted">История временно недоступна. Текущую попытку всё равно можно пройти.</p>
-    {% elif history %}<div class="mock-history-list">{% for attempt in history %}<article class="card"><time datetime="{{ attempt.attempted_at }}">{{ attempt.attempted_at|slice:":10" }}</time><div><span>Аудирование <strong>{{ attempt.listening_correct }}/2</strong></span><span>Чтение <strong>{{ attempt.reading_correct }}/2</strong></span><span>Грамматика <strong>{{ attempt.grammar_correct }}/3</strong></span></div></article>{% endfor %}</div>
+    {% elif history %}<div class="mock-history-list">{% for attempt in history %}<article class="card"><time datetime="{{ attempt.attempted_at }}">{{ attempt.attempted_at|slice:":10" }} · {{ attempt.variant_label }}</time><div><span>Аудирование <strong>{{ attempt.listening_correct }}/2</strong></span><span>Чтение <strong>{{ attempt.reading_correct }}/2</strong></span><span>Грамматика <strong>{{ attempt.grammar_correct }}/3</strong></span></div></article>{% endfor %}</div>
     {% else %}<p class="card muted">Завершённые попытки появятся здесь. Выбранные ответы и свободные тексты не сохраняются.</p>{% endif %}
   </section>
 </main>

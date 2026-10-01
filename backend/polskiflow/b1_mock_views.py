@@ -2,18 +2,19 @@ from django.core import signing
 from django.core.signing import BadSignature, SignatureExpired
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
+from django.utils import timezone
 from django.views.decorators.http import require_http_methods
 
 from polskiflow.auth_views import require_browser_user
 from polskiflow.b1_mock_store import load_b1_mock_attempts, save_b1_mock_attempt
-from polskiflow.domain.b1_weekly_mock import LISTENING_TRANSCRIPT, QUESTIONS, READING_TEXT, score_mock_answers
+from polskiflow.domain.b1_weekly_mock import get_mock_variant, score_mock_answers, weekly_mock_variant
 
 ATTEMPT_SALT = "polskiflow.b1-weekly-mock"
 ATTEMPT_MAX_AGE_SECONDS = 20 * 60
 
 
-def _attempt_token(user_id: str) -> str:
-    return signing.dumps({"user_id": user_id}, salt=ATTEMPT_SALT)
+def _attempt_token(user_id: str, variant_id: str) -> str:
+    return signing.dumps({"user_id": user_id, "variant_id": variant_id}, salt=ATTEMPT_SALT)
 
 
 @require_browser_user
@@ -23,33 +24,38 @@ def b1_weekly_mock(request: HttpRequest) -> HttpResponse:
     error = None
     status = 200
     saved = None
-    token = _attempt_token(request.supabase_user.id)
+    variant = weekly_mock_variant(timezone.localdate())
+    token = _attempt_token(request.supabase_user.id, variant.id)
     if request.method == "POST":
         token = request.POST.get("attempt_token", "")
-        allowed = {"csrfmiddlewaretoken", "attempt_token", *(f"answer_{item.id}" for item in QUESTIONS)}
-        if set(request.POST) - allowed:
-            error, status = "Форма содержит неизвестные поля. Начни попытку заново.", 400
-        else:
-            try:
-                payload = signing.loads(token, salt=ATTEMPT_SALT, max_age=ATTEMPT_MAX_AGE_SECONDS)
-                if payload != {"user_id": request.supabase_user.id}:
-                    raise BadSignature
-                answers = {item.id: int(request.POST[f"answer_{item.id}"]) for item in QUESTIONS}
-                result = score_mock_answers(answers)
+        try:
+            payload = signing.loads(token, salt=ATTEMPT_SALT, max_age=ATTEMPT_MAX_AGE_SECONDS)
+            if not isinstance(payload, dict) or payload.get("user_id") != request.supabase_user.id:
+                raise BadSignature
+            variant = get_mock_variant(payload.get("variant_id", ""))
+            if variant is None:
+                raise BadSignature
+            allowed = {"csrfmiddlewaretoken", "attempt_token", *(f"answer_{item.id}" for item in variant.questions)}
+            if set(request.POST) - allowed:
+                error, status = "Форма содержит неизвестные поля. Начни попытку заново.", 400
+            else:
+                answers = {item.id: int(request.POST[f"answer_{item.id}"]) for item in variant.questions}
+                result = score_mock_answers(answers, variant)
                 saved = save_b1_mock_attempt(
                     request.supabase_access_token, request.supabase_user.id, result
                 )
-            except SignatureExpired:
-                error, status = "Время попытки истекло. Начни новый модуль.", 400
-            except (BadSignature, KeyError, TypeError, ValueError):
-                error, status = "Ответь на все проверяемые вопросы и попробуй снова.", 400
+        except SignatureExpired:
+            error, status = "Время попытки истекло. Начни новый модуль.", 400
+        except (BadSignature, KeyError, TypeError, ValueError):
+            error, status = "Ответь на все проверяемые вопросы и попробуй снова.", 400
     history = load_b1_mock_attempts(
         request.supabase_access_token, request.supabase_user.id
     )
     return render(request, "b1_weekly_mock.html", {
-        "questions": QUESTIONS,
-        "listening_transcript": LISTENING_TRANSCRIPT,
-        "reading_text": READING_TEXT,
+        "variant": variant,
+        "questions": variant.questions,
+        "listening_transcript": variant.listening_transcript,
+        "reading_text": variant.reading_text,
         "attempt_token": token,
         "duration_seconds": 15 * 60,
         "result": result,

@@ -1,10 +1,11 @@
+from datetime import date
 from unittest.mock import patch
 
 from django.core import signing
 from django.test import SimpleTestCase, TestCase
 
 from polskiflow.auth import ACCESS_COOKIE, SupabaseUser
-from polskiflow.domain.b1_weekly_mock import QUESTIONS, score_mock_answers
+from polskiflow.domain.b1_weekly_mock import QUESTIONS, VARIANTS, score_mock_answers, weekly_mock_variant
 
 
 class B1WeeklyMockDomainTests(SimpleTestCase):
@@ -28,6 +29,24 @@ class B1WeeklyMockDomainTests(SimpleTestCase):
         answers["l1"] = 99
         with self.assertRaises(ValueError):
             score_mock_answers(answers)
+
+    def test_three_original_variants_rotate_by_iso_week_and_keep_structure(self):
+        self.assertEqual(len(VARIANTS), 3)
+        self.assertEqual([weekly_mock_variant(date(2026, 1, day)).id for day in (1, 5, 12)], [
+            "b1-weekly-v1", "b1-weekly-v2", "b1-weekly-v3",
+        ])
+        for variant in VARIANTS:
+            self.assertEqual((variant.origin, variant.created_for), ("original", "PolskiFlow"))
+            self.assertEqual(variant.verified_at, date(2026, 10, 1))
+            self.assertEqual(len(variant.questions), 7)
+            self.assertEqual(
+                [sum(question.module == module for question in variant.questions) for module in ("listening", "reading", "grammar")],
+                [2, 2, 3],
+            )
+            self.assertTrue(all(len(set(question.options)) == 3 for question in variant.questions))
+            self.assertTrue(all(0 <= question.correct < 3 for question in variant.questions))
+            counts = [sum(question.correct == index for question in variant.questions) for index in range(3)]
+            self.assertTrue(all(count >= 2 for count in counts), counts)
 
 
 class B1WeeklyMockViewTests(TestCase):
@@ -60,7 +79,8 @@ class B1WeeklyMockViewTests(TestCase):
     def test_post_scores_answers_saves_aggregates_and_reveals_explanations(self, save_attempt, _history):
         get_response = self.client.get("/exam/b1/mock/")
         payload = {"attempt_token": get_response.context["attempt_token"]}
-        payload.update({f"answer_{question.id}": str(question.correct) for question in QUESTIONS})
+        questions = get_response.context["questions"]
+        payload.update({f"answer_{question.id}": str(question.correct) for question in questions})
 
         response = self.client.post("/exam/b1/mock/", payload)
 
@@ -74,6 +94,23 @@ class B1WeeklyMockViewTests(TestCase):
         save_attempt.assert_called_once()
         saved_result = save_attempt.call_args.args[2]
         self.assertNotIn("answers", saved_result)
+        self.assertEqual(saved_result["attempt_version"], get_response.context["variant"].id)
+
+    @patch("polskiflow.b1_mock_views.load_b1_mock_attempts", return_value=[])
+    @patch("polskiflow.b1_mock_views.save_b1_mock_attempt", return_value=True)
+    def test_signed_variant_survives_week_change(self, _save, _history):
+        with patch("polskiflow.b1_mock_views.timezone.localdate", return_value=date(2026, 1, 5)):
+            opened = self.client.get("/exam/b1/mock/")
+        self.assertEqual(opened.context["variant"].id, "b1-weekly-v2")
+        payload = {"attempt_token": opened.context["attempt_token"]}
+        payload.update({f"answer_{question.id}": question.correct for question in opened.context["questions"]})
+
+        with patch("polskiflow.b1_mock_views.timezone.localdate", return_value=date(2026, 1, 12)):
+            submitted = self.client.post("/exam/b1/mock/", payload)
+
+        self.assertEqual(submitted.status_code, 200)
+        self.assertEqual(submitted.context["variant"].id, "b1-weekly-v2")
+        self.assertContains(submitted, "7 из 7")
 
     def test_post_rejects_incomplete_unknown_and_cross_user_payloads(self):
         token = self.client.get("/exam/b1/mock/").context["attempt_token"]

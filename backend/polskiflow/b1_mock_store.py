@@ -7,6 +7,12 @@ from urllib.request import Request, urlopen
 
 from django.conf import settings
 
+ATTEMPT_LABELS = {
+    "b1-weekly-v1": "Вариант 1",
+    "b1-weekly-v2": "Вариант 2",
+    "b1-weekly-v3": "Вариант 3",
+}
+
 
 def save_b1_mock_attempt(access_token: str | None, user_id: str, result: dict) -> bool:
     """Persist scores only; selected answers and free production never leave the page."""
@@ -15,7 +21,7 @@ def save_b1_mock_attempt(access_token: str | None, user_id: str, result: dict) -
     by_id = {item["id"]: item for item in result["modules"]}
     payload = {
         "user_id": user_id,
-        "attempt_version": "b1-weekly-v1",
+        "attempt_version": result.get("attempt_version", "b1-weekly-v1"),
         "listening_correct": by_id["listening"]["correct"],
         "reading_correct": by_id["reading"]["correct"],
         "grammar_correct": by_id["grammar"]["correct"],
@@ -45,7 +51,10 @@ def load_b1_mock_attempts(access_token: str | None, user_id: str, limit: int = 8
         return None
     if not isinstance(rows, list):
         return None
-    return [row for row in rows if isinstance(row, dict)]
+    return [
+        {**row, "variant_label": ATTEMPT_LABELS.get(row.get("attempt_version"), "Версия задания")}
+        for row in rows if isinstance(row, dict)
+    ]
 
 
 def _request(path, token, method="GET", payload=None):
