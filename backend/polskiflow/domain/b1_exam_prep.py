@@ -165,7 +165,7 @@ def build_b1_exam_prep(today: date, module_results: tuple[dict, ...] = ()) -> di
         focus_task = {
             **focus_task,
             "is_focus": True,
-            "focus_reason": f"Последние тренировки: {focus['percent']}% — стоит закрепить",
+            "focus_reason": f"{focus.get('reason_label', 'Последние тренировки')}: {focus['percent']}% — стоит закрепить",
         }
         daily_plan = (
             focus_task,
@@ -238,6 +238,37 @@ def build_b1_module_results(recent_results: tuple[dict, ...], lesson_tasks: list
         else:
             rows.append({**module, "status": "unmeasured", "percent": None, "attempts": 0})
     return tuple(rows)
+
+
+def overlay_latest_b1_mock(
+    module_results: tuple[dict, ...], attempt: dict | None
+) -> tuple[dict, ...]:
+    """Prefer the latest exam-shaped aggregate for the three checked modules."""
+
+    if not isinstance(attempt, dict):
+        return module_results
+    specs = {
+        "listening": ("listening_correct", 2),
+        "reading": ("reading_correct", 2),
+        "grammar": ("grammar_correct", 3),
+    }
+    measured = {}
+    for module_id, (field, total) in specs.items():
+        correct = attempt.get(field)
+        if isinstance(correct, bool) or not isinstance(correct, int) or not 0 <= correct <= total:
+            return module_results
+        measured[module_id] = {
+            "status": "measured",
+            "percent": round(correct * 100 / total),
+            "attempts": 1,
+            "detail": f"Последний мини‑модуль · {correct} из {total}",
+            "reason_label": "Последний мини‑модуль",
+            "source": "mock",
+        }
+    return tuple(
+        {**item, **measured[item["id"]]} if item["id"] in measured else item
+        for item in module_results
+    )
 
 
 def _countdown_label(days_remaining: int) -> str:

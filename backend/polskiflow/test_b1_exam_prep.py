@@ -4,7 +4,7 @@ from unittest.mock import patch
 from django.test import SimpleTestCase, TestCase
 
 from polskiflow.auth import ACCESS_COOKIE, SupabaseUser
-from polskiflow.domain.b1_exam_prep import build_b1_exam_prep, build_b1_module_results
+from polskiflow.domain.b1_exam_prep import build_b1_exam_prep, build_b1_module_results, overlay_latest_b1_mock
 from polskiflow.progress_store import DashboardProgress
 
 
@@ -89,6 +89,31 @@ class B1ExamPrepDomainTests(SimpleTestCase):
         self.assertEqual(next_year["starts_on"], date(2027, 2, 6))
         self.assertFalse(after_schedule["available"])
 
+    def test_latest_mock_replaces_only_three_objective_modules(self):
+        base = build_b1_module_results((), [])
+        results = overlay_latest_b1_mock(base, {
+            "listening_correct": 1, "reading_correct": 2, "grammar_correct": 1,
+        })
+        by_id = {item["id"]: item for item in results}
+
+        self.assertEqual(by_id["listening"]["percent"], 50)
+        self.assertEqual(by_id["reading"]["percent"], 100)
+        self.assertEqual(by_id["grammar"]["percent"], 33)
+        self.assertEqual(by_id["grammar"]["source"], "mock")
+        self.assertEqual(by_id["writing"]["status"], "unmeasured")
+        plan = build_b1_exam_prep(date(2026, 9, 28), results)
+        self.assertEqual(plan["focus"]["id"], "grammar")
+        self.assertEqual(
+            plan["daily_plan"][0]["focus_reason"],
+            "Последний мини‑модуль: 33% — стоит закрепить",
+        )
+
+    def test_invalid_mock_does_not_replace_lesson_results(self):
+        base = build_b1_module_results((), [])
+        self.assertEqual(
+            overlay_latest_b1_mock(base, {"listening_correct": 9}), base
+        )
+
 
 class B1ExamPrepViewTests(TestCase):
     def setUp(self):
@@ -100,12 +125,13 @@ class B1ExamPrepViewTests(TestCase):
         auth.start()
         self.addCleanup(auth.stop)
 
+    @patch("polskiflow.auth_views.load_b1_mock_attempts", return_value=[])
     @patch("polskiflow.auth_views.tasks", return_value=[
         {"id": "b1-topic-grammar", "kind": "grammar", "level": "B1"},
     ])
     @patch("polskiflow.auth_views.load_dashboard_progress")
     @patch("polskiflow.auth_views.timezone.localdate", return_value=date(2026, 9, 28))
-    def test_exam_page_presents_modules_plan_and_measured_results(self, _localdate, progress, _tasks):
+    def test_exam_page_presents_modules_plan_and_measured_results(self, _localdate, progress, _tasks, _mock_attempts):
         progress.return_value = DashboardProgress(
             display_name="Anna", level="B1", streak_days=2,
             completed_lesson_ids=frozenset(), available=True,
@@ -127,11 +153,12 @@ class B1ExamPrepViewTests(TestCase):
         self.assertContains(response, "Пока без автоматического балла")
         self.assertContains(response, "не прогноз экзамена")
 
+    @patch("polskiflow.auth_views.load_b1_mock_attempts", return_value=[])
     @patch("polskiflow.auth_views.tasks", return_value=[
         {"id": "b1-topic-reading-check", "kind": "quiz", "level": "B1"},
     ])
     @patch("polskiflow.auth_views.load_dashboard_progress")
-    def test_exam_page_explains_measured_weak_module_focus(self, progress, _tasks):
+    def test_exam_page_explains_measured_weak_module_focus(self, progress, _tasks, _mock_attempts):
         progress.return_value = DashboardProgress(
             display_name="Anna", level="B1", streak_days=2,
             completed_lesson_ids=frozenset(), available=True,
@@ -145,6 +172,23 @@ class B1ExamPrepViewTests(TestCase):
         self.assertContains(response, "фокус дня")
         self.assertContains(response, "Последние тренировки: 60% — стоит закрепить")
         self.assertContains(response, "все 5 модулей в недельной ротации")
+
+    @patch("polskiflow.auth_views.load_b1_mock_attempts", return_value=[{
+        "listening_correct": 1, "reading_correct": 2, "grammar_correct": 1,
+    }])
+    @patch("polskiflow.auth_views.tasks", return_value=[])
+    @patch("polskiflow.auth_views.load_dashboard_progress")
+    def test_exam_page_uses_latest_mock_for_results_and_focus(self, progress, _tasks, _attempts):
+        progress.return_value = DashboardProgress(
+            display_name="Anna", level="B1", streak_days=2,
+            completed_lesson_ids=frozenset(), available=True,
+        )
+
+        response = self.client.get("/exam/b1/")
+
+        self.assertContains(response, "Последний мини‑модуль · 1 из 3")
+        self.assertContains(response, "Последний мини‑модуль: 33% — стоит закрепить")
+        self.assertContains(response, "обычные уроки не смешиваются с ней")
 
     def test_guest_is_redirected_to_login_with_return_path(self):
         self.client.cookies.clear()

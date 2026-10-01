@@ -23,13 +23,14 @@ from polskiflow.auth import (
     resend_signup_confirmation,
     update_password,
 )
+from polskiflow.b1_mock_store import load_b1_mock_attempts
 from polskiflow.content import course_topics, tasks
 from polskiflow.dictionary_store import load_personal_words
 from polskiflow.lesson_draft_store import load_latest_lesson_draft
 from polskiflow.lesson_bookmark_store import load_lesson_bookmarks
 from polskiflow.domain.achievements import build_achievements
 from polskiflow.domain.auth_rate_limit import consume_auth_attempt
-from polskiflow.domain.b1_exam_prep import build_b1_exam_prep, build_b1_module_results
+from polskiflow.domain.b1_exam_prep import build_b1_exam_prep, build_b1_module_results, overlay_latest_b1_mock
 from polskiflow.domain.daily_plan import DAILY_TIME_MODES, build_daily_plan
 from polskiflow.domain.daily_goal_insights import build_daily_goal_insight
 from polskiflow.domain.password_policy import password_error
@@ -509,13 +510,19 @@ def b1_exam_prep(request: HttpRequest) -> HttpResponse:
     module_results = build_b1_module_results(
         dashboard.recent_completion_results if dashboard.available else (), tasks()
     )
+    mock_attempts = load_b1_mock_attempts(
+        request.supabase_access_token, request.supabase_user.id, limit=1
+    )
+    latest_mock = mock_attempts[0] if mock_attempts else None
+    module_results = overlay_latest_b1_mock(module_results, latest_mock)
     return render(
         request,
         "b1_exam_prep.html",
         {
             "exam_prep": build_b1_exam_prep(timezone.localdate(), module_results),
             "module_results": module_results,
-            "results_available": dashboard.available,
+            "results_available": dashboard.available or mock_attempts is not None,
+            "has_mock_result": latest_mock is not None,
         },
     )
 
