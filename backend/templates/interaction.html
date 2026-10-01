@@ -18,7 +18,7 @@
     </header>
     <div class="card speaking-privacy-note" role="note">
       <strong>Запись остаётся на устройстве</strong>
-      <p>Браузер использует микрофон только после твоего разрешения. Аудио не загружается на сервер, не сохраняется после обновления страницы и не оценивается автоматически.</p>
+      <p>Браузер использует микрофон только после твоего разрешения. Аудио не загружается на сервер и не оценивается автоматически. Сохранение в локальную историю всегда требует отдельного нажатия.</p>
     </div>
     <div class="interaction-list">
       {% for scenario in speaking_scenarios %}
@@ -33,6 +33,7 @@
             <button class="compact-button" type="button" data-start-preparation>Начать подготовку</button>
             <button class="compact-button" type="button" data-start-recording>Записать ответ</button>
             <button class="secondary compact-button" type="button" data-stop-recording disabled>Остановить</button>
+            <button class="secondary compact-button" type="button" data-save-recording hidden>Сохранить на устройстве</button>
           </div>
           <p class="muted speaking-status" role="status" data-speaking-status>Микрофон ещё не используется.</p>
           <audio controls data-speaking-audio hidden aria-label="Прослушать свой устный ответ"></audio>
@@ -44,6 +45,11 @@
         </article>
       {% endfor %}
     </div>
+    <section class="card speaking-history" aria-labelledby="speaking-history-title">
+      <div><p class="eyebrow">Только на этом устройстве</p><h3 id="speaking-history-title">История устных ответов</h3><p class="muted">До 10 записей в браузере. Они не синхронизируются и удаляются вместе с данными сайта.</p></div>
+      <p class="muted" data-speaking-history-empty>Сохранённых записей пока нет.</p>
+      <div data-speaking-history-list></div>
+    </section>
   </section>
 
   {% if error %}<div class="card interaction-error" role="alert"><strong>Ответ не проверен</strong><p>{{ error }}</p></div>{% endif %}
@@ -167,6 +173,93 @@
   <script>
     (function () {
       const storagePrefix = "polskiflow-interaction:{{ request.supabase_user.id|escapejs }}:";
+      const recordingOwner = "{{ request.supabase_user.id|escapejs }}";
+      const historyList = document.querySelector("[data-speaking-history-list]");
+      const historyEmpty = document.querySelector("[data-speaking-history-empty]");
+      const historyUrls = [];
+
+      function recordingDatabase() {
+        return new Promise(function (resolve, reject) {
+          if (!window.indexedDB) { reject(new Error("indexeddb_unavailable")); return; }
+          const request = indexedDB.open("polskiflow-speaking", 1);
+          request.addEventListener("upgradeneeded", function () {
+            if (!request.result.objectStoreNames.contains("recordings")) {
+              request.result.createObjectStore("recordings", { keyPath: "id" });
+            }
+          });
+          request.addEventListener("success", function () { resolve(request.result); });
+          request.addEventListener("error", function () { reject(request.error); });
+        });
+      }
+
+      async function storedRecordings() {
+        const database = await recordingDatabase();
+        return new Promise(function (resolve, reject) {
+          const transaction = database.transaction("recordings", "readonly");
+          const request = transaction.objectStore("recordings").getAll();
+          request.addEventListener("success", function () {
+            resolve(request.result.filter(function (item) { return item.owner === recordingOwner; }).sort(function (a, b) { return b.createdAt - a.createdAt; }));
+          });
+          request.addEventListener("error", function () { reject(request.error); });
+        });
+      }
+
+      async function deleteRecording(id) {
+        const database = await recordingDatabase();
+        await new Promise(function (resolve, reject) {
+          const request = database.transaction("recordings", "readwrite").objectStore("recordings").delete(id);
+          request.addEventListener("success", resolve);
+          request.addEventListener("error", function () { reject(request.error); });
+        });
+      }
+
+      async function renderRecordingHistory() {
+        historyUrls.splice(0).forEach(function (url) { URL.revokeObjectURL(url); });
+        historyList.replaceChildren();
+        try {
+          const recordings = await storedRecordings();
+          historyEmpty.hidden = recordings.length > 0;
+          recordings.forEach(function (recording) {
+            const row = document.createElement("article");
+            const title = document.createElement("strong");
+            const date = document.createElement("small");
+            const audio = document.createElement("audio");
+            const remove = document.createElement("button");
+            const url = URL.createObjectURL(recording.blob);
+            historyUrls.push(url);
+            title.textContent = recording.title;
+            date.textContent = new Date(recording.createdAt).toLocaleString("ru-RU");
+            audio.controls = true;
+            audio.src = url;
+            audio.setAttribute("aria-label", "Прослушать сохранённый ответ: " + recording.title);
+            remove.type = "button";
+            remove.className = "secondary compact-button";
+            remove.textContent = "Удалить";
+            remove.addEventListener("click", async function () {
+              if (!window.confirm("Удалить эту локальную запись?")) return;
+              await deleteRecording(recording.id);
+              await renderRecordingHistory();
+            });
+            row.append(title, date, audio, remove);
+            historyList.append(row);
+          });
+        } catch (error) {
+          historyEmpty.hidden = false;
+          historyEmpty.textContent = "Локальная история недоступна в этом браузере.";
+        }
+      }
+
+      async function saveRecording(recording) {
+        const database = await recordingDatabase();
+        const existing = await storedRecordings();
+        await new Promise(function (resolve, reject) {
+          const store = database.transaction("recordings", "readwrite").objectStore("recordings");
+          store.put(recording);
+          existing.slice(9).forEach(function (item) { store.delete(item.id); });
+          store.transaction.addEventListener("complete", resolve);
+          store.transaction.addEventListener("error", function () { reject(store.transaction.error); });
+        });
+      }
       document.querySelectorAll("[data-interaction-draft]").forEach(function (textarea) {
         const card = textarea.closest(".interaction-free-practice");
         const key = storagePrefix + textarea.dataset.interactionDraft;
@@ -202,6 +295,7 @@
         const startPreparation = card.querySelector("[data-start-preparation]");
         const startRecording = card.querySelector("[data-start-recording]");
         const stopRecording = card.querySelector("[data-stop-recording]");
+        const saveRecordingButton = card.querySelector("[data-save-recording]");
         const audio = card.querySelector("[data-speaking-audio]");
         const review = card.querySelector("[data-speaking-review]");
         let intervalId = null;
@@ -209,6 +303,7 @@
         let stream = null;
         let chunks = [];
         let audioUrl = null;
+        let currentBlob = null;
 
         function renderTime(seconds) {
           const safe = Math.max(0, seconds);
@@ -246,12 +341,14 @@
             recorder.addEventListener("stop", function () {
               stream.getTracks().forEach(function (track) { track.stop(); });
               if (audioUrl) URL.revokeObjectURL(audioUrl);
-              audioUrl = URL.createObjectURL(new Blob(chunks, { type: recorder.mimeType || "audio/webm" }));
+              currentBlob = new Blob(chunks, { type: recorder.mimeType || "audio/webm" });
+              audioUrl = URL.createObjectURL(currentBlob);
               audio.src = audioUrl;
               audio.hidden = false;
               review.hidden = false;
               stopRecording.disabled = true;
               startRecording.disabled = false;
+              saveRecordingButton.hidden = false;
               status.textContent = "Запись готова только в этой вкладке. Прослушай её и отметь чек-лист.";
               audio.focus();
             });
@@ -270,11 +367,33 @@
           window.clearInterval(intervalId);
           if (recorder && recorder.state === "recording") recorder.stop();
         });
+        saveRecordingButton.addEventListener("click", async function () {
+          if (!currentBlob) return;
+          saveRecordingButton.disabled = true;
+          try {
+            await saveRecording({
+              id: (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + "-" + Math.random()),
+              owner: recordingOwner,
+              scenario: card.id,
+              title: card.querySelector("h3").textContent,
+              createdAt: Date.now(),
+              blob: currentBlob,
+            });
+            status.textContent = "Запись сохранена только в этом браузере.";
+            await renderRecordingHistory();
+          } catch (error) {
+            status.textContent = "Не удалось сохранить запись локально. Текущую запись всё ещё можно прослушать.";
+          } finally {
+            saveRecordingButton.disabled = false;
+          }
+        });
         window.addEventListener("pagehide", function () {
           if (stream) stream.getTracks().forEach(function (track) { track.stop(); });
           if (audioUrl) URL.revokeObjectURL(audioUrl);
         });
       });
+      renderRecordingHistory();
+      window.addEventListener("pagehide", function () { historyUrls.forEach(function (url) { URL.revokeObjectURL(url); }); });
     }());
   </script>
 {% endblock %}

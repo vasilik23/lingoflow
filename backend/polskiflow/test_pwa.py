@@ -15,7 +15,7 @@ class PwaPrototypeTests(SimpleTestCase):
         self.assertEqual(manifest["start_url"], "/")
         self.assertEqual(manifest["scope"], "/")
         self.assertEqual(manifest["display"], "standalone")
-        self.assertTrue(all(icon["src"].endswith("?shell=v28") for icon in manifest["icons"]))
+        self.assertTrue(all(icon["src"].endswith("?shell=v29") for icon in manifest["icons"]))
         self.assertEqual({icon["purpose"] for icon in manifest["icons"]}, {"any", "maskable"})
         self.assertTrue(all(icon["type"] == "image/svg+xml" for icon in manifest["icons"]))
 
@@ -30,9 +30,9 @@ class PwaPrototypeTests(SimpleTestCase):
     def test_service_worker_only_precaches_public_shell_assets(self):
         source = self.client.get(reverse("service-worker")).content.decode()
 
-        self.assertIn('const OFFLINE_URL = "/offline/?shell=v28"', source)
-        self.assertIn('"/static/polskiflow/app.css?shell=v28"', source)
-        self.assertIn('"/static/polskiflow/favicon.svg?shell=v28"', source)
+        self.assertIn('const OFFLINE_URL = "/offline/?shell=v29"', source)
+        self.assertIn('"/static/polskiflow/app.css?shell=v29"', source)
+        self.assertIn('"/static/polskiflow/favicon.svg?shell=v29"', source)
         self.assertIn('if (request.method !== "GET") return', source)
         self.assertIn('if (request.mode === "navigate")', source)
         self.assertIn("fetch(request).catch(() => caches.match(OFFLINE_URL))", source)
@@ -50,8 +50,8 @@ class PwaPrototypeTests(SimpleTestCase):
         with self.settings(ROOT_URLCONF="polskiflow.urls"):
             response = self.client.get(reverse("login"))
 
-        self.assertContains(response, "/static/polskiflow/app.css?shell=v28")
-        self.assertContains(response, "/static/polskiflow/favicon.svg?shell=v28")
+        self.assertContains(response, "/static/polskiflow/app.css?shell=v29")
+        self.assertContains(response, "/static/polskiflow/favicon.svg?shell=v29")
 
     def test_service_worker_removes_old_caches(self):
         source = self.client.get(reverse("service-worker")).content.decode()
