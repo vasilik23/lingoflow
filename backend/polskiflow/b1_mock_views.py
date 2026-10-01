@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
 
 from polskiflow.auth_views import require_browser_user
+from polskiflow.b1_mock_store import load_b1_mock_attempts, save_b1_mock_attempt
 from polskiflow.domain.b1_weekly_mock import LISTENING_TRANSCRIPT, QUESTIONS, READING_TEXT, score_mock_answers
 
 ATTEMPT_SALT = "polskiflow.b1-weekly-mock"
@@ -21,6 +22,7 @@ def b1_weekly_mock(request: HttpRequest) -> HttpResponse:
     result = None
     error = None
     status = 200
+    saved = None
     token = _attempt_token(request.supabase_user.id)
     if request.method == "POST":
         token = request.POST.get("attempt_token", "")
@@ -34,10 +36,16 @@ def b1_weekly_mock(request: HttpRequest) -> HttpResponse:
                     raise BadSignature
                 answers = {item.id: int(request.POST[f"answer_{item.id}"]) for item in QUESTIONS}
                 result = score_mock_answers(answers)
+                saved = save_b1_mock_attempt(
+                    request.supabase_access_token, request.supabase_user.id, result
+                )
             except SignatureExpired:
                 error, status = "Время попытки истекло. Начни новый модуль.", 400
             except (BadSignature, KeyError, TypeError, ValueError):
                 error, status = "Ответь на все проверяемые вопросы и попробуй снова.", 400
+    history = load_b1_mock_attempts(
+        request.supabase_access_token, request.supabase_user.id
+    )
     return render(request, "b1_weekly_mock.html", {
         "questions": QUESTIONS,
         "listening_transcript": LISTENING_TRANSCRIPT,
@@ -45,5 +53,7 @@ def b1_weekly_mock(request: HttpRequest) -> HttpResponse:
         "attempt_token": token,
         "duration_seconds": 15 * 60,
         "result": result,
+        "saved": saved,
+        "history": history,
         "error": error,
     }, status=status)

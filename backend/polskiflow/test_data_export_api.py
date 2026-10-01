@@ -35,7 +35,7 @@ class LearnerDataExportApiTests(TestCase):
         self.assertIn("Authorization", response["Vary"])
         payload = response.json()
         self.assertEqual(payload["meta"]["contract"], "learner-data-export")
-        self.assertEqual(payload["data"]["schema_version"], "2.0")
+        self.assertEqual(payload["data"]["schema_version"], "2.1")
         self.assertEqual(payload["data"]["account"]["email"], "anna@example.com")
         self.assertNotIn("token", response.content.decode().lower())
         load_export.assert_called_once_with("access", "user-123")

@@ -33,7 +33,7 @@ class ProfileExportTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response["Cache-Control"], "private, no-store")
         self.assertIn("attachment", response["Content-Disposition"])
-        self.assertEqual(response.json()["schema_version"], "2.0")
+        self.assertEqual(response.json()["schema_version"], "2.1")
         self.assertEqual(response.json()["account"]["email"], "anna@example.com")
         self.assertEqual(response.json()["lesson_drafts"][0]["lesson_id"], "quiz")
         self.assertNotIn("token", response.content.decode().lower())

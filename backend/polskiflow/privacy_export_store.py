@@ -26,6 +26,7 @@ DATASETS = {
     "learning_collection_items": ("learning_collection_items", "id,collection_id,content_type,content_id,created_at", "created_at.asc,id.asc"),
     "feedback": ("user_feedback", "id,category,message,page_url,priority,status,created_at", "created_at.asc,id.asc"),
     "reminder_preferences": ("reminder_preferences", "daily_reminder_enabled,reminder_time,timezone,updated_at", "updated_at.asc"),
+    "b1_mock_attempts": ("b1_mock_attempts", "id,attempted_at,attempt_version,listening_correct,reading_correct,grammar_correct", "attempted_at.asc,id.asc"),
 }
 
 
