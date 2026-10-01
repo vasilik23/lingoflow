@@ -397,3 +397,17 @@ class ReminderPreference(models.Model):
     class Meta:
         db_table = "reminder_preferences"
         managed = False
+
+
+class B1MockAttempt(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user_id = models.UUIDField()
+    attempted_at = models.DateTimeField(auto_now_add=True)
+    attempt_version = models.CharField(max_length=32, default="b1-weekly-v1")
+    listening_correct = models.PositiveSmallIntegerField()
+    reading_correct = models.PositiveSmallIntegerField()
+    grammar_correct = models.PositiveSmallIntegerField()
+
+    class Meta:
+        db_table = "b1_mock_attempts"
+        managed = False

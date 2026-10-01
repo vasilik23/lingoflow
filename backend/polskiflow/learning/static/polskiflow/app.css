@@ -1061,6 +1061,12 @@ button.secondary { background: white; color: var(--text); border: 1px solid #dcd
 .mock-module-results strong { color: var(--primary-dark); font-size: 1.25rem; }
 .mock-module-results span { color: var(--muted); font-size: .78rem; }
 .mock-submit { justify-self: start; }
+.mock-history { margin-top: 2rem; }
+.mock-history-list { display: grid; gap: .75rem; }
+.mock-history-list article { display: grid; gap: .65rem; }
+.mock-history-list time { color: var(--muted); font-size: .8rem; font-weight: 800; }
+.mock-history-list article > div { display: flex; flex-wrap: wrap; gap: .5rem; }
+.mock-history-list span { padding: .35rem .55rem; border-radius: 999px; background: var(--surface-soft); font-size: .78rem; }
 @media (min-width: 700px) {
   .exam-home-card { grid-template-columns: auto minmax(0, 1fr) auto; }
   .exam-home-card > .compact-button { grid-column: auto; justify-self: end; }

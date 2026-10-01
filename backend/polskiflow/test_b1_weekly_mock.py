@@ -52,7 +52,12 @@ class B1WeeklyMockViewTests(TestCase):
         self.assertNotContains(response, "Nagranie mówi")
         self.assertNotContains(response, "Баллы относятся")
 
-    def test_post_scores_answers_and_reveals_explanations(self):
+    @patch("polskiflow.b1_mock_views.load_b1_mock_attempts", return_value=[{
+        "attempted_at": "2026-10-01T08:00:00Z", "listening_correct": 2,
+        "reading_correct": 2, "grammar_correct": 3,
+    }])
+    @patch("polskiflow.b1_mock_views.save_b1_mock_attempt", return_value=True)
+    def test_post_scores_answers_saves_aggregates_and_reveals_explanations(self, save_attempt, _history):
         get_response = self.client.get("/exam/b1/mock/")
         payload = {"attempt_token": get_response.context["attempt_token"]}
         payload.update({f"answer_{question.id}": str(question.correct) for question in QUESTIONS})
@@ -64,6 +69,11 @@ class B1WeeklyMockViewTests(TestCase):
         self.assertContains(response, "100%", count=3)
         self.assertContains(response, "Nagranie mówi")
         self.assertContains(response, "не равны результату государственного экзамена")
+        self.assertContains(response, "Агрегированный результат сохранён")
+        self.assertContains(response, "2026-10-01")
+        save_attempt.assert_called_once()
+        saved_result = save_attempt.call_args.args[2]
+        self.assertNotIn("answers", saved_result)
 
     def test_post_rejects_incomplete_unknown_and_cross_user_payloads(self):
         token = self.client.get("/exam/b1/mock/").context["attempt_token"]
