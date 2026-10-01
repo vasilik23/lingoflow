@@ -430,6 +430,15 @@ class LessonViewsTests(TestCase):
         self.assertGreater(content.index("</nav>"), content.index('class="nav-links"'))
         self.assertLess(content.index("</nav>"), content.index('class="user-menu app-user-menu"'))
 
+    def test_primary_navigation_promotes_practice(self):
+        home = self.client.get("/")
+        practice = self.client.get("/practice/")
+
+        self.assertContains(home, 'href="/practice/" class="nav-link ')
+        self.assertContains(home, "<span>Практика</span>", html=True)
+        self.assertNotContains(home, '<span>Новости</span>')
+        self.assertContains(practice, 'href="/practice/" class="nav-link active"')
+
     def test_base_template_offers_persisted_accessible_theme_selection(self):
         response = self.client.get("/")
 

@@ -34,9 +34,9 @@
       }());
     </script>
     <title>{% block title %}PolskiFlow{% endblock %}</title>
-    <link rel="icon" href="{% static 'polskiflow/favicon.svg' %}?shell=v27" type="image/svg+xml">
+    <link rel="icon" href="{% static 'polskiflow/favicon.svg' %}?shell=v28" type="image/svg+xml">
     <link rel="manifest" href="{% url 'web-app-manifest' %}">
-    <link rel="stylesheet" href="{% static 'polskiflow/app.css' %}?shell=v27">
+    <link rel="stylesheet" href="{% static 'polskiflow/app.css' %}?shell=v28">
   </head>
   <body class="{% block body_class %}{% endblock %}">
     <a class="skip-link" href="#main-content">К основному содержимому</a>
@@ -52,11 +52,11 @@
           <a href="{% url 'course' %}" class="nav-link {% if request.resolver_match.url_name == 'course' or request.resolver_match.url_name == 'lesson' %}active{% endif %}">
             <span class="nav-icon" aria-hidden="true">◫</span><span>Курс</span>
           </a>
-          <a href="{% url 'reading-library' %}" class="nav-link {% if request.resolver_match.url_name == 'reading-library' or request.resolver_match.url_name == 'reader' %}active{% endif %}">
-            <span class="nav-icon" aria-hidden="true">▤</span><span>Читать</span>
+          <a href="{% url 'practice-hub' %}" class="nav-link {% if request.resolver_match.url_name == 'practice-hub' or request.resolver_match.url_name == 'listening-practice' or request.resolver_match.url_name == 'writing-practice' or request.resolver_match.url_name == 'interaction-practice' or request.resolver_match.url_name == 'diagnostic' %}active{% endif %}">
+            <span class="nav-icon" aria-hidden="true">◎</span><span>Практика</span>
           </a>
-          <a href="{% url 'news-library' %}" class="nav-link {% if request.resolver_match.url_name == 'news-library' %}active{% endif %}">
-            <span class="nav-icon" aria-hidden="true">▧</span><span>Новости</span>
+          <a href="{% url 'reading-library' %}" class="nav-link {% if request.resolver_match.url_name == 'reading-library' or request.resolver_match.url_name == 'reader' or request.resolver_match.url_name == 'news-library' %}active{% endif %}">
+            <span class="nav-icon" aria-hidden="true">▤</span><span>Читать</span>
           </a>
           <a href="{% url 'dictionary' %}" class="nav-link {% if request.resolver_match.url_name == 'dictionary' %}active{% endif %}">
             <span class="nav-icon" aria-hidden="true">◇</span><span>Словарь</span>
@@ -75,7 +75,6 @@
           <details class="user-menu-group">
             <summary>Учёба и материалы <span aria-hidden="true">⌄</span></summary>
             <div>
-              <a class="user-menu-link" href="{% url 'practice-hub' %}">Практика</a>
               <a class="user-menu-link" href="{% url 'learning-space' %}">Мои материалы</a>
               <a class="user-menu-link" href="{% url 'global-search' %}">Поиск по приложению</a>
             </div>
