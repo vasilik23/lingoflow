@@ -4,7 +4,12 @@ from unittest.mock import patch
 from django.test import SimpleTestCase, TestCase
 
 from polskiflow.auth import ACCESS_COOKIE, SupabaseUser
-from polskiflow.domain.b1_exam_prep import build_b1_exam_prep, build_b1_module_results, overlay_latest_b1_mock
+from polskiflow.domain.b1_exam_prep import (
+    attach_b1_mock_trends,
+    build_b1_exam_prep,
+    build_b1_module_results,
+    overlay_latest_b1_mock,
+)
 from polskiflow.progress_store import DashboardProgress
 
 
@@ -114,6 +119,37 @@ class B1ExamPrepDomainTests(SimpleTestCase):
             overlay_latest_b1_mock(base, {"listening_correct": 9}), base
         )
 
+    def test_mock_trends_compare_two_newest_points_per_checked_module(self):
+        base = overlay_latest_b1_mock(build_b1_module_results((), []), {
+            "listening_correct": 2, "reading_correct": 1, "grammar_correct": 2,
+        })
+        results = attach_b1_mock_trends(base, [
+            {"listening_correct": 2, "reading_correct": 1, "grammar_correct": 2},
+            {"listening_correct": 1, "reading_correct": 2, "grammar_correct": 2},
+        ])
+        by_id = {item["id"]: item for item in results}
+
+        self.assertEqual(by_id["listening"]["trend"], {
+            "status": "improved", "current_percent": 100,
+            "previous_percent": 50, "delta": 50,
+            "label": "+50 п.п. к предыдущей попытке",
+        })
+        self.assertEqual(by_id["reading"]["trend"]["status"], "declined")
+        self.assertEqual(by_id["reading"]["trend"]["label"], "-50 п.п. к предыдущей попытке")
+        self.assertEqual(by_id["grammar"]["trend"]["status"], "stable")
+        self.assertEqual(by_id["writing"]["trend"]["status"], "unmeasured")
+        self.assertEqual(by_id["speaking"]["trend"]["status"], "unmeasured")
+
+    def test_mock_trends_label_first_point_and_skip_invalid_rows(self):
+        results = attach_b1_mock_trends(build_b1_module_results((), []), [
+            {"listening_correct": 9, "reading_correct": 1, "grammar_correct": 1},
+        ])
+        by_id = {item["id"]: item for item in results}
+
+        self.assertEqual(by_id["listening"]["trend"]["status"], "empty")
+        self.assertEqual(by_id["reading"]["trend"]["status"], "first")
+        self.assertEqual(by_id["reading"]["trend"]["label"], "Первая точка динамики")
+
 
 class B1ExamPrepViewTests(TestCase):
     def setUp(self):
@@ -175,10 +211,12 @@ class B1ExamPrepViewTests(TestCase):
 
     @patch("polskiflow.auth_views.load_b1_mock_attempts", return_value=[{
         "listening_correct": 1, "reading_correct": 2, "grammar_correct": 1,
+    }, {
+        "listening_correct": 0, "reading_correct": 1, "grammar_correct": 2,
     }])
     @patch("polskiflow.auth_views.tasks", return_value=[])
     @patch("polskiflow.auth_views.load_dashboard_progress")
-    def test_exam_page_uses_latest_mock_for_results_and_focus(self, progress, _tasks, _attempts):
+    def test_exam_page_uses_latest_mock_for_results_and_focus(self, progress, _tasks, attempts):
         progress.return_value = DashboardProgress(
             display_name="Anna", level="B1", streak_days=2,
             completed_lesson_ids=frozenset(), available=True,
@@ -186,8 +224,12 @@ class B1ExamPrepViewTests(TestCase):
 
         response = self.client.get("/exam/b1/")
 
+        attempts.assert_called_once_with("access", "user-123", limit=8)
         self.assertContains(response, "Последний мини‑модуль · 1 из 3")
         self.assertContains(response, "Последний мини‑модуль: 33% — стоит закрепить")
+        self.assertContains(response, "+50 п.п. к предыдущей попытке")
+        self.assertContains(response, "-34 п.п. к предыдущей попытке")
+        self.assertContains(response, "Для письма и говорения числовая динамика не создаётся")
         self.assertContains(response, "обычные уроки не смешиваются с ней")
 
     def test_guest_is_redirected_to_login_with_return_path(self):
