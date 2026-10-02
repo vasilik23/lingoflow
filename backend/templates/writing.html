@@ -7,7 +7,7 @@
   </header>
 
   <nav class="course-levels writing-levels" aria-label="Уровень письменной практики">
-    {% for level in writing_levels %}<a href="?level={{ level }}"{% if level == selected_writing_level %} aria-current="page"{% endif %}><strong>{{ level }}</strong><small>4 задания</small></a>{% endfor %}
+    {% for level in writing_levels %}<a href="?level={{ level.id }}"{% if level.id == selected_writing_level %} aria-current="page"{% endif %}><strong>{{ level.id }}</strong><small>{{ level.prompt_count }} заданий</small></a>{% endfor %}
   </nav>
 
   <section class="card writing-focus-summary" aria-labelledby="writing-focus-title" data-writing-focus-summary>
