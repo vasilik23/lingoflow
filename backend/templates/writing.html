@@ -64,7 +64,7 @@
               </fieldset>
               <fieldset>
                 <legend>Что проверить в языке</legend>
-                {% for focus in prompt.grammar_focus %}<label><input type="checkbox" data-writing-error value="{{ focus }}"> {{ focus }}</label>{% endfor %}
+                {% for focus in prompt.grammar_recommendations %}<label><input type="checkbox" data-writing-error value="{{ focus.label }}" data-writing-href="{% url 'lesson' focus.lesson_id %}" data-writing-lesson-title="{{ focus.lesson_title }}"> {{ focus.label }}</label>{% endfor %}
               </fieldset>
             </div>
             <details class="writing-sample"><summary>Показать пример ответа после своей попытки</summary><p lang="pl">{{ prompt.sample_answer }}</p><p class="muted">Это один возможный ответ. Сравни структуру и выполнение пунктов, а не копируй текст.</p></details>
@@ -86,11 +86,17 @@
         const counts = new Map();
         panels.forEach(function (panel) {
           panel.querySelectorAll("[data-writing-error]:checked").forEach(function (input) {
-            counts.set(input.value, (counts.get(input.value) || 0) + 1);
+            const current = counts.get(input.value) || {
+              count: 0,
+              href: input.dataset.writingHref,
+              lessonTitle: input.dataset.writingLessonTitle
+            };
+            current.count += 1;
+            counts.set(input.value, current);
           });
         });
         const priorities = Array.from(counts.entries()).sort(function (left, right) {
-          return right[1] - left[1] || left[0].localeCompare(right[0], "ru");
+          return right[1].count - left[1].count || left[0].localeCompare(right[0], "ru");
         }).slice(0, 3);
         const list = focusSummary.querySelector("[data-writing-focus-list]");
         const empty = focusSummary.querySelector("[data-writing-focus-empty]");
@@ -98,9 +104,10 @@
         priorities.forEach(function (priority) {
           const item = document.createElement("li");
           const title = document.createElement("strong");
-          const action = document.createElement("span");
+          const action = document.createElement("a");
           title.textContent = priority[0];
-          action.textContent = "5 минут: вспомни правило, исправь два места в черновике и перечитай их вслух.";
+          action.href = priority[1].href;
+          action.textContent = "Открыть урок: " + priority[1].lessonTitle + " →";
           item.append(title, action);
           list.append(item);
         });

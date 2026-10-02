@@ -34,6 +34,7 @@ from polskiflow.domain.b1_exam_prep import build_b1_exam_prep, build_b1_module_r
 from polskiflow.domain.daily_plan import DAILY_TIME_MODES, build_daily_plan
 from polskiflow.domain.daily_goal_insights import build_daily_goal_insight
 from polskiflow.domain.password_policy import password_error
+from polskiflow.domain.writing_reinforcement import enrich_writing_prompts
 from polskiflow.domain.course_catalog import (
     COMPLETION_FILTERS,
     DURATION_FILTERS,
@@ -803,7 +804,7 @@ def writing_practice(request: HttpRequest) -> HttpResponse:
         request,
         "writing.html",
         {
-            "writing_prompts": WRITING_PROMPTS[selected_level],
+            "writing_prompts": enrich_writing_prompts(WRITING_PROMPTS[selected_level]),
             "writing_levels": tuple(
                 {"id": level, "prompt_count": len(prompts)}
                 for level, prompts in WRITING_PROMPTS.items()

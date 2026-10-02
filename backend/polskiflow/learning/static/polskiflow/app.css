@@ -452,8 +452,8 @@ p { line-height: 1.65; }
 .writing-focus-summary p { margin: 0; }
 .writing-focus-summary ol { display: grid; gap: .65rem; margin: .8rem 0 0; padding-left: 1.35rem; }
 .writing-focus-summary li { padding-left: .2rem; }
-.writing-focus-summary li strong, .writing-focus-summary li span { display: block; }
-.writing-focus-summary li span { margin-top: .15rem; color: var(--muted); font-size: .82rem; line-height: 1.45; }
+.writing-focus-summary li strong, .writing-focus-summary li a { display: block; }
+.writing-focus-summary li a { margin-top: .15rem; font-size: .82rem; line-height: 1.45; }
 .writing-prompt-select { width: 100%; padding: .8rem .9rem; border: 1px solid var(--line); border-radius: .8rem; background: var(--surface); color: var(--text); font: inherit; }
 .writing-prompt { min-width: 0; padding-top: .6rem; }
 .writing-prompt[hidden] { display: none; }
