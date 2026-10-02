@@ -32,16 +32,34 @@ class B1MockStoreTests(SimpleTestCase):
             {"id": "grammar", "correct": 2},
         )}
 
-        self.assertTrue(save_b1_mock_attempt("access", "user-123", result))
+        self.assertTrue(save_b1_mock_attempt(
+            "access", "user-123", "11111111-1111-4111-8111-111111111111", result
+        ))
 
         request = mocked_urlopen.call_args.args[0]
         payload = json.loads(request.data)
         self.assertEqual(request.headers["Authorization"], "Bearer access")
         self.assertEqual(payload, {
-            "user_id": "user-123", "attempt_version": "b1-weekly-v2",
+            "user_id": "user-123",
+            "attempt_id": "11111111-1111-4111-8111-111111111111",
+            "attempt_version": "b1-weekly-v2",
             "listening_correct": 2, "reading_correct": 1, "grammar_correct": 2,
         })
         self.assertNotIn("answers", payload)
+        self.assertIn("on_conflict=user_id%2Cattempt_id", request.full_url)
+        self.assertEqual(
+            request.headers["Prefer"],
+            "resolution=ignore-duplicates,return=minimal",
+        )
+
+    def test_idempotency_migration_is_compatible_and_keeps_rls_grants(self):
+        migration = Path(__file__).parents[2] / "supabase/migrations/20261002090000_b1_mock_attempt_id.sql"
+        sql = migration.read_text()
+        self.assertIn("attempt_id uuid not null default gen_random_uuid()", sql)
+        self.assertIn("unique index if not exists b1_mock_attempts_user_attempt_key", sql)
+        self.assertIn("(user_id, attempt_id)", sql)
+        self.assertNotIn("grant ", sql)
+        self.assertNotIn("policy", sql)
 
     @patch("polskiflow.b1_mock_store.urlopen")
     def test_load_is_owner_scoped_bounded_and_newest_first(self, mocked_urlopen):

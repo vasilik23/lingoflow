@@ -402,6 +402,7 @@ class ReminderPreference(models.Model):
 class B1MockAttempt(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     user_id = models.UUIDField()
+    attempt_id = models.UUIDField(default=uuid.uuid4)
     attempted_at = models.DateTimeField(auto_now_add=True)
     attempt_version = models.CharField(max_length=32, default="b1-weekly-v1")
     listening_correct = models.PositiveSmallIntegerField()
@@ -411,3 +412,9 @@ class B1MockAttempt(models.Model):
     class Meta:
         db_table = "b1_mock_attempts"
         managed = False
+        constraints = [
+            models.UniqueConstraint(
+                fields=("user_id", "attempt_id"),
+                name="b1_mock_attempts_user_attempt_key",
+            ),
+        ]

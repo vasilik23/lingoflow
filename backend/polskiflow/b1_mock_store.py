@@ -14,20 +14,27 @@ ATTEMPT_LABELS = {
 }
 
 
-def save_b1_mock_attempt(access_token: str | None, user_id: str, result: dict) -> bool:
+def save_b1_mock_attempt(
+    access_token: str | None, user_id: str, attempt_id: str, result: dict
+) -> bool:
     """Persist scores only; selected answers and free production never leave the page."""
     if not _configured(access_token):
         return False
     by_id = {item["id"]: item for item in result["modules"]}
     payload = {
         "user_id": user_id,
+        "attempt_id": attempt_id,
         "attempt_version": result.get("attempt_version", "b1-weekly-v1"),
         "listening_correct": by_id["listening"]["correct"],
         "reading_correct": by_id["reading"]["correct"],
         "grammar_correct": by_id["grammar"]["correct"],
     }
     try:
-        with urlopen(_request("b1_mock_attempts", access_token, "POST", payload), timeout=settings.SUPABASE_AUTH_TIMEOUT) as response:
+        path = "b1_mock_attempts?on_conflict=user_id%2Cattempt_id"
+        with urlopen(
+            _request(path, access_token, "POST", payload, ignore_duplicates=True),
+            timeout=settings.SUPABASE_AUTH_TIMEOUT,
+        ) as response:
             return response.status in (200, 201, 204)
     except (HTTPError, URLError, TimeoutError):
         return False
@@ -57,14 +64,15 @@ def load_b1_mock_attempts(access_token: str | None, user_id: str, limit: int = 8
     ]
 
 
-def _request(path, token, method="GET", payload=None):
+def _request(path, token, method="GET", payload=None, ignore_duplicates=False):
     headers = {
         "apikey": settings.SUPABASE_ANON_KEY,
         "Authorization": f"Bearer {token}",
         "Accept": "application/json",
     }
     if payload is not None:
-        headers.update({"Content-Type": "application/json", "Prefer": "return=minimal"})
+        prefer = "resolution=ignore-duplicates,return=minimal" if ignore_duplicates else "return=minimal"
+        headers.update({"Content-Type": "application/json", "Prefer": prefer})
     return Request(
         f"{settings.SUPABASE_URL.rstrip('/')}/rest/v1/{path}",
         data=json.dumps(payload).encode() if payload is not None else None,
