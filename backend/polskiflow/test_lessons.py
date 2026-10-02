@@ -613,7 +613,9 @@ class LessonViewsTests(TestCase):
         self.assertContains(response, "Персональное закрепление")
         self.assertContains(response, "data-writing-focus-list")
         self.assertContains(response, "updateFocusSummary();", count=3)
-        self.assertContains(response, "исправь два места в черновике")
+        self.assertContains(response, 'data-writing-href="/lesson/bio-grammar/"')
+        self.assertContains(response, 'data-writing-href="/lesson/b1work-grammar/"')
+        self.assertContains(response, "Открыть урок:")
         self.assertContains(response, 'href="/course/?level=B1&kind=grammar"')
         self.assertContains(response, "Это один возможный ответ")
 
