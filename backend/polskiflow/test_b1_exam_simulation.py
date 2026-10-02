@@ -1,0 +1,106 @@
+from unittest.mock import patch
+
+from django.core import signing
+from django.test import SimpleTestCase, TestCase
+
+from polskiflow.auth import ACCESS_COOKIE, SupabaseUser
+from polskiflow.domain.b1_exam_simulation import (
+    B1_SIMULATION_PARTS,
+    get_simulation_part,
+    score_simulation_part,
+    simulation_questions,
+)
+from polskiflow.domain.b1_weekly_mock import VARIANTS
+
+
+class B1ExamSimulationDomainTests(SimpleTestCase):
+    def test_five_parts_keep_official_time_and_honest_modes(self):
+        self.assertEqual(
+            [(part["id"], part["minutes"]) for part in B1_SIMULATION_PARTS],
+            [("listening", 25), ("reading", 45), ("grammar", 45), ("writing", 75), ("speaking", 15)],
+        )
+        self.assertEqual(get_simulation_part("writing")["mode"], "self_review")
+        self.assertIsNone(get_simulation_part("unknown"))
+
+    def test_scores_exactly_one_objective_part(self):
+        variant = VARIANTS[0]
+        questions = simulation_questions(variant, "grammar")
+        result = score_simulation_part(
+            variant, "grammar", {question.id: question.correct for question in questions}
+        )
+
+        self.assertEqual((result["correct"], result["total"], result["percent"]), (3, 3, 100))
+        self.assertEqual(len(result["details"]), 3)
+        with self.assertRaises(ValueError):
+            score_simulation_part(variant, "grammar", {})
+        with self.assertRaises(ValueError):
+            score_simulation_part(variant, "writing", {})
+
+
+class B1ExamSimulationViewTests(TestCase):
+    def setUp(self):
+        self.client.cookies[ACCESS_COOKIE] = "access"
+        auth = patch(
+            "polskiflow.auth.authenticate_access_token",
+            return_value=SupabaseUser("user-123", "learner@example.com"),
+        )
+        auth.start()
+        self.addCleanup(auth.stop)
+
+    def test_hub_lists_five_separate_parts_and_limits(self):
+        response = self.client.get("/exam/b1/simulation/")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Тренажёр частей экзамена")
+        self.assertContains(response, "Начать часть", count=5)
+        self.assertContains(response, "75 мин")
+        self.assertContains(response, "самопроверка", count=2)
+
+    def test_objective_part_has_signed_state_timer_and_stateless_feedback(self):
+        opened = self.client.get("/exam/b1/simulation/?part=grammar")
+        self.assertContains(opened, "45:00")
+        self.assertContains(opened, "объём этого оригинального набора PolskiFlow меньше")
+        questions = opened.context["questions"]
+        payload = {"simulation_token": opened.context["simulation_token"]}
+        payload.update({f"answer_{question.id}": question.correct for question in questions})
+
+        result = self.client.post("/exam/b1/simulation/", payload)
+
+        self.assertEqual(result.status_code, 200)
+        self.assertContains(result, "3 из 3 · 100%")
+        self.assertContains(result, "не оценка официальной части B1")
+        self.assertNotContains(result, "Агрегированный результат сохранён")
+
+    def test_writing_and_speaking_have_no_automatic_score_or_server_text_field(self):
+        writing = self.client.get("/exam/b1/simulation/?part=writing")
+        speaking = self.client.get("/exam/b1/simulation/?part=speaking")
+
+        self.assertContains(writing, "75:00")
+        self.assertContains(writing, "Текст не отправляется и не оценивается автоматически")
+        self.assertContains(writing, '<textarea id="simulation-writing" rows="14"')
+        self.assertNotContains(writing, 'name="simulation-writing"')
+        self.assertContains(speaking, "15:00")
+        self.assertContains(speaking, "Речь не записывается")
+
+    def test_rejects_unknown_part_fields_and_forged_state(self):
+        opened = self.client.get("/exam/b1/simulation/?part=reading")
+        unknown = self.client.post("/exam/b1/simulation/", {
+            "simulation_token": opened.context["simulation_token"], "extra": "1"
+        })
+        forged = signing.dumps(
+            {"user_id": "another", "variant_id": "b1-weekly-v1", "part_id": "reading"},
+            salt="polskiflow.b1-exam-simulation",
+        )
+        foreign = self.client.post("/exam/b1/simulation/", {"simulation_token": forged})
+
+        self.assertEqual(unknown.status_code, 400)
+        self.assertContains(unknown, "неизвестные поля", status_code=400)
+        self.assertEqual(foreign.status_code, 400)
+
+    def test_guest_is_redirected_to_login(self):
+        self.client.cookies.clear()
+        self.assertRedirects(
+            self.client.get("/exam/b1/simulation/"),
+            "/login/?next=%2Fexam%2Fb1%2Fsimulation%2F",
+            fetch_redirect_response=False,
+        )
