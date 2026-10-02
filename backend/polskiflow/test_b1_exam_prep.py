@@ -184,6 +184,8 @@ class B1ExamPrepViewTests(TestCase):
         self.assertContains(response, "минимум 50% в каждом модуле")
         self.assertContains(response, "certyfikatpolski.pl")
         self.assertContains(response, "Официальные даты")
+        self.assertContains(response, "Тренажёр экзаменационного времени")
+        self.assertContains(response, 'href="/exam/b1/simulation/"')
         self.assertContains(response, "Результаты по модулям")
         self.assertContains(response, "80%")
         self.assertContains(response, "Пока без автоматического балла")

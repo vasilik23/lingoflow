@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Тренажёр частей B1 · PolskiFlow{% endblock %}
+{% block content %}
+<main class="mock-shell">
+  <header class="mock-header">
+    <div><p class="eyebrow">B1 · {{ variant.label }}</p><h1>{% if part %}{{ part.title }} на время{% else %}Тренажёр частей экзамена{% endif %}</h1><p>{% if part %}Лимит {{ part.minutes }} минут соответствует формату части, но объём этого оригинального набора PolskiFlow меньше официального экзамена.{% else %}Тренируй каждую часть отдельно с её экзаменационным лимитом времени.{% endif %}</p></div>
+    {% if part and not result %}<div class="mock-timer" role="timer" aria-live="polite"><strong id="simulation-timer">{{ part.minutes }}:00</strong><span>осталось</span></div>{% endif %}
+  </header>
+
+  {% if not part %}
+    <div class="exam-module-grid simulation-part-grid">
+      {% for item in parts %}<article class="card exam-module-card exam-accent-{{ item.accent }}"><header><span>{{ item.minutes }} мин</span><span>{% if item.mode == "objective" %}с проверкой{% else %}самопроверка{% endif %}</span></header><p class="eyebrow" lang="pl">{{ item.polish_title }}</p><h2>{{ item.title }}</h2><a href="?part={{ item.id }}">Начать часть</a></article>{% endfor %}
+    </div>
+  {% else %}
+    <p><a href="{% url 'b1-exam-simulation' %}">← Выбрать другую часть</a></p>
+    {% if error %}<div class="form-message error" role="alert">{{ error }}</div>{% endif %}
+    {% if result %}<section class="card mock-summary"><div><p class="eyebrow">Результат этой тренировки</p><h2>{{ result.correct }} из {{ result.total }} · {{ result.percent }}%</h2><p class="muted">Это результат короткого оригинального набора, не оценка официальной части B1.</p></div></section>{% endif %}
+
+    {% if part.mode == "objective" %}
+      <form method="post" class="mock-form" id="simulation-form">{% csrf_token %}<input type="hidden" name="simulation_token" value="{{ simulation_token }}">
+        <section class="card mock-section">
+          <div class="mock-section-heading"><span>1</span><div><p class="eyebrow" lang="pl">{{ part.polish_title }}</p><h2>{{ part.title }}</h2></div></div>
+          {% if part.id == "listening" %}{% if result %}<p lang="pl" class="mock-source-text">{{ variant.listening_transcript }}</p>{% else %}<button class="compact-button" type="button" id="simulation-play">▶ Прослушать сообщение</button><p class="muted" id="simulation-audio-status" aria-live="polite">Системный польский голос устройства; запись можно повторить.</p>{% endif %}{% elif part.id == "reading" %}<p lang="pl" class="mock-source-text">{{ variant.reading_text }}</p>{% endif %}
+          {% for question in questions %}{% include "partials/b1_mock_question.html" %}{% endfor %}
+        </section>
+        {% if not result and not error %}<button class="primary-button mock-submit" type="submit">Завершить часть и проверить</button>{% endif %}
+      </form>
+    {% elif part.id == "writing" %}
+      <section class="card mock-section"><p class="eyebrow" lang="pl">Pisanie</p><h2>Задание</h2><p lang="pl"><strong>{{ variant.writing_prompt }}</strong></p><label for="simulation-writing">Черновик остаётся только в этой вкладке</label><textarea id="simulation-writing" rows="14" aria-describedby="simulation-writing-note"></textarea><p class="muted" id="simulation-writing-note">Текст не отправляется и не оценивается автоматически. После таймера проверь выполнение всех пунктов, структуру, регистр и грамматику.</p></section>
+    {% else %}
+      <section class="card mock-section"><p class="eyebrow" lang="pl">Mówienie</p><h2>Задание</h2><p lang="pl"><strong>{{ variant.speaking_prompt }}</strong></p><ul><li>выполни все пункты задания;</li><li>свяжи части ответа;</li><li>приведи конкретный пример;</li><li>заверши понятным выводом.</li></ul><p class="muted">Речь не записывается и не получает автоматического балла на этом экране.</p></section>
+    {% endif %}
+  {% endif %}
+</main>
+{{ variant.listening_transcript|json_script:"simulation-listening-transcript" }}
+{% if part and not result %}<script>
+(() => {
+  const timer = document.getElementById('simulation-timer');
+  let left = {{ duration_seconds }};
+  const tick = () => {
+    timer.textContent = `${String(Math.floor(left / 60)).padStart(2, '0')}:${String(left % 60).padStart(2, '0')}`;
+    if (left <= 0) { document.querySelectorAll('#simulation-form input, #simulation-form button, #simulation-writing').forEach(el => el.disabled = true); timer.parentElement.classList.add('expired'); return; }
+    left -= 1; window.setTimeout(tick, 1000);
+  }; tick();
+  document.getElementById('simulation-play')?.addEventListener('click', () => {
+    const status = document.getElementById('simulation-audio-status');
+    if (!('speechSynthesis' in window)) { status.textContent = 'На этом устройстве системное воспроизведение недоступно.'; return; }
+    speechSynthesis.cancel(); const utterance = new SpeechSynthesisUtterance(JSON.parse(document.getElementById('simulation-listening-transcript').textContent));
+    utterance.lang = 'pl-PL'; utterance.rate = .9; utterance.onstart = () => status.textContent = 'Воспроизводится…'; utterance.onend = () => status.textContent = 'Сообщение завершено.'; speechSynthesis.speak(utterance);
+  });
+})();
+</script>{% endif %}
+{% endblock %}
