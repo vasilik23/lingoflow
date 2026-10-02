@@ -30,7 +30,7 @@ from polskiflow.lesson_draft_store import load_latest_lesson_draft
 from polskiflow.lesson_bookmark_store import load_lesson_bookmarks
 from polskiflow.domain.achievements import build_achievements
 from polskiflow.domain.auth_rate_limit import consume_auth_attempt
-from polskiflow.domain.b1_exam_prep import build_b1_exam_prep, build_b1_module_results, overlay_latest_b1_mock
+from polskiflow.domain.b1_exam_prep import attach_b1_mock_trends, build_b1_exam_prep, build_b1_module_results, overlay_latest_b1_mock
 from polskiflow.domain.daily_plan import DAILY_TIME_MODES, build_daily_plan
 from polskiflow.domain.daily_goal_insights import build_daily_goal_insight
 from polskiflow.domain.password_policy import password_error
@@ -563,10 +563,11 @@ def b1_exam_prep(request: HttpRequest) -> HttpResponse:
         dashboard.recent_completion_results if dashboard.available else (), tasks()
     )
     mock_attempts = load_b1_mock_attempts(
-        request.supabase_access_token, request.supabase_user.id, limit=1
+        request.supabase_access_token, request.supabase_user.id, limit=8
     )
     latest_mock = mock_attempts[0] if mock_attempts else None
     module_results = overlay_latest_b1_mock(module_results, latest_mock)
+    module_results = attach_b1_mock_trends(module_results, mock_attempts or [])
     return render(
         request,
         "b1_exam_prep.html",

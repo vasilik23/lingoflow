@@ -271,6 +271,62 @@ def overlay_latest_b1_mock(
     )
 
 
+def attach_b1_mock_trends(
+    module_results: tuple[dict, ...], attempts: list[dict] | tuple[dict, ...]
+) -> tuple[dict, ...]:
+    """Compare the two newest valid mock points without grading production."""
+
+    specs = {
+        "listening": ("listening_correct", 2),
+        "reading": ("reading_correct", 2),
+        "grammar": ("grammar_correct", 3),
+    }
+    trends = {}
+    for module_id, (field, total) in specs.items():
+        points = []
+        for attempt in attempts or ():
+            if not isinstance(attempt, dict):
+                continue
+            correct = attempt.get(field)
+            if (
+                isinstance(correct, bool)
+                or not isinstance(correct, int)
+                or not 0 <= correct <= total
+            ):
+                continue
+            points.append(round(correct * 100 / total))
+            if len(points) == 2:
+                break
+        if not points:
+            trends[module_id] = {"status": "empty"}
+            continue
+        if len(points) == 1:
+            trends[module_id] = {
+                "status": "first",
+                "current_percent": points[0],
+                "label": "Первая точка динамики",
+            }
+            continue
+        delta = points[0] - points[1]
+        trends[module_id] = {
+            "status": "improved" if delta > 0 else "declined" if delta < 0 else "stable",
+            "current_percent": points[0],
+            "previous_percent": points[1],
+            "delta": delta,
+            "label": (
+                f"+{delta} п.п. к предыдущей попытке"
+                if delta > 0
+                else f"{delta} п.п. к предыдущей попытке"
+                if delta < 0
+                else "Без изменения к предыдущей попытке"
+            ),
+        }
+    return tuple(
+        {**item, "trend": trends.get(item["id"], {"status": "unmeasured"})}
+        for item in module_results
+    )
+
+
 def _countdown_label(days_remaining: int) -> str:
     if days_remaining == 0:
         return "Экзамен начинается сегодня"

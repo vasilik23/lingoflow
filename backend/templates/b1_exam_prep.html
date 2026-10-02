@@ -79,6 +79,7 @@
           {% if result.status == "measured" %}
             <div class="exam-result-track" role="progressbar" aria-label="{{ result.title }}: {{ result.percent }}% в тренировках" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ result.percent }}"><span style="width: {{ result.percent }}%"></span></div>
             <p class="muted">{{ result.detail }}</p>
+            {% if result.trend.status == "improved" or result.trend.status == "declined" or result.trend.status == "stable" %}<p class="exam-result-trend is-{{ result.trend.status }}">{{ result.trend.label }} <span>({{ result.trend.previous_percent }}% → {{ result.trend.current_percent }}%)</span></p>{% elif result.trend.status == "first" %}<p class="exam-result-trend">{{ result.trend.label }}</p>{% endif %}
           {% elif result.status == "empty" %}
             <p class="muted">Ещё нет сохранённых результатов B1 за 30 дней.</p>
           {% else %}
@@ -88,7 +89,7 @@
         </article>
       {% endfor %}
     </div>
-    <p class="exam-results-note">{% if has_mock_result %}Для аудирования, чтения и грамматики показана последняя завершённая мини‑попытка; обычные уроки не смешиваются с ней.{% else %}Процент считается только по сохранённым заданиям чтения и грамматики B1.{% endif %} Он не подтверждает уровень CEFR и не заменяет официальный пробный экзамен.</p>
+    <p class="exam-results-note">{% if has_mock_result %}Для аудирования, чтения и грамматики показана последняя завершённая мини‑попытка и изменение относительно предыдущей; обычные уроки не смешиваются с ней.{% else %}Процент считается только по сохранённым заданиям чтения и грамматики B1.{% endif %} Для письма и говорения числовая динамика не создаётся. Результат не подтверждает уровень CEFR и не заменяет официальный пробный экзамен.</p>
   </section>
 
   <aside class="card exam-source-note">

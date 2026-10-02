@@ -1023,6 +1023,10 @@ button.secondary { background: white; color: var(--text); border: 1px solid #dcd
 .exam-result-track { height: .48rem; margin: .85rem 0 .55rem; overflow: hidden; border-radius: 999px; background: var(--surface-soft); }
 .exam-result-track span { display: block; height: 100%; border-radius: inherit; background: var(--exam-accent, var(--primary)); }
 .exam-result-card p { margin: .65rem 0; font-size: .82rem; }
+.exam-result-card .exam-result-trend { margin-top: -.2rem; color: var(--muted); font-weight: 750; }
+.exam-result-trend span { font-weight: 500; }
+.exam-result-trend.is-improved { color: var(--green); }
+.exam-result-trend.is-declined { color: var(--red); }
 .exam-result-card > a { color: var(--primary-dark); font-size: .82rem; font-weight: 800; text-decoration: none; }
 .exam-results-note { max-width: 52rem; margin: .85rem 0 0; color: var(--muted); font-size: .78rem; }
 .exam-accent-blue { --exam-accent: #4788e8; }
