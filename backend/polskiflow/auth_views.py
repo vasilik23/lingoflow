@@ -101,6 +101,57 @@ WRITING_PROMPTS = {
         ),
     },
     {
+        "id": "congratulations",
+        "title": "Поздравление",
+        "task": "Напиши 50–70 слов польскому другу, который успешно сдал важный экзамен. Поздравь его, назови конкретный повод для радости и предложи вместе отметить событие.",
+        "hint": "Сохрани тёплый неофициальный тон и используй «gratuluję», «cieszę się, że…», «może…». ",
+        "genre": "Gratulacje",
+        "requirements": ("поздравить с конкретным успехом", "выразить личную радость", "предложить способ отметить событие"),
+        "grammar_focus": ("дательный падеж", "управление gratulować", "формы предложения", "неофициальное обращение"),
+        "sample_answer": "Droga Olu! Serdecznie gratuluję Ci zdania egzaminu na prawo jazdy! Wiem, ile czasu poświęciłaś na naukę i jak bardzo stresowałaś się przed częścią praktyczną, dlatego naprawdę cieszę się z Twojego sukcesu. Zasłużyłaś na chwilę odpoczynku. Może spotkamy się w sobotę w naszej ulubionej kawiarni i razem uczcimy ten ważny dzień? Napisz, o której godzinie Ci pasuje. Jeszcze raz wielkie gratulacje! Ania",
+        "min_words": 50, "min_paragraphs": 2, "markers": ("gratuluję", "cieszę się"),
+        "checklist": (
+            "Я ясно назвал успех и поздравил адресата именно с ним.",
+            "Сообщение передаёт личную радость, а не состоит из общих фраз.",
+            "Предложение отметить событие содержит конкретное действие.",
+            "Я проверил управление gratulować, обращения и неофициальный тон.",
+        ),
+    },
+    {
+        "id": "announcement",
+        "title": "Объявление",
+        "task": "Напиши 50–70 слов для доски объявлений: ты ищешь человека для совместных разговоров по-польски. Укажи цель, удобное время, формат встреч и способ связи.",
+        "hint": "Пиши коротко и конкретно: заголовок, ключевые условия и понятный призыв ответить.",
+        "genre": "Ogłoszenie",
+        "requirements": ("объяснить цель объявления", "указать время и формат встреч", "добавить способ связи"),
+        "grammar_focus": ("безличные конструкции", "винительный падеж", "предлоги времени", "лаконичный регистр"),
+        "sample_answer": "Partner do rozmów po polsku. Szukam osoby na poziomie B1, która chce regularnie ćwiczyć mówienie. Proponuję dwa spotkania w tygodniu, najlepiej we wtorki i czwartki po godzinie osiemnastej. Możemy rozmawiać online albo spotykać się w bibliotece w centrum. Każde spotkanie potrwa około czterdziestu minut. Interesują mnie podróże, filmy i życie w Polsce. Jeśli masz podobny cel, napisz do mnie: rozmowa@example.com.",
+        "min_words": 50, "min_paragraphs": 2, "markers": ("szukam", "napisz"),
+        "checklist": (
+            "Из заголовка и начала сразу понятно, кого и зачем я ищу.",
+            "Время, формат и длительность встреч указаны без противоречий.",
+            "Читателю понятно, как связаться и что написать в ответ.",
+            "Я проверил падежи после szukać, предлоги времени и краткость фраз.",
+        ),
+    },
+    {
+        "id": "description",
+        "title": "Описание человека",
+        "task": "Опиши в 90–120 словах человека, который многому тебя научил. Представь его, назови две черты характера, приведи конкретный пример и объясни его влияние на тебя.",
+        "hint": "Связывай черту с примером: не только «jest cierpliwy», но и ситуация, которая это показывает.",
+        "genre": "Opis osoby",
+        "requirements": ("представить человека и ваши отношения", "показать две черты на конкретном примере", "объяснить влияние на себя"),
+        "grammar_focus": ("творительный падеж", "согласование прилагательных", "относительные предложения", "прошедшее время"),
+        "sample_answer": "Osobą, która wiele mnie nauczyła, jest mój starszy sąsiad, pan Marek. Poznaliśmy się kilka lat temu, kiedy pomagałem mu uporządkować ogród. Jest niezwykle cierpliwy i uważny. Gdy pierwszy raz próbowałem naprawić rower, nie zrobił tego za mnie. Spokojnie wyjaśnił każdy krok i pozwolił mi popełnić kilka błędów. Pan Marek jest też bardzo odpowiedzialny. Zawsze dotrzymuje słowa, nawet jeśli wymaga to dodatkowego wysiłku. Dzięki niemu zrozumiałem, że warto pracować dokładnie i nie rezygnować po pierwszej porażce. Dzisiaj, kiedy uczę się czegoś trudnego, przypominam sobie jego sposób działania. Staram się najpierw dobrze zrozumieć problem, a dopiero potem szukać szybkiego rozwiązania.",
+        "min_words": 90, "min_paragraphs": 2, "markers": ("jest", "dzięki"),
+        "checklist": (
+            "Я представил человека и объяснил, откуда его знаю.",
+            "Две черты характера подтверждены конкретным поступком или ситуацией.",
+            "Завершение показывает, чему я научился и что во мне изменилось.",
+            "Я проверил согласование прилагательных, творительный падеж и прошедшее время.",
+        ),
+    },
+    {
         "id": "story",
         "title": "Короткая история",
         "task": "Опиши в 100–130 словах ситуацию, когда планы неожиданно изменились. Покажи последовательность событий, реакцию и итог.",
@@ -753,7 +804,10 @@ def writing_practice(request: HttpRequest) -> HttpResponse:
         "writing.html",
         {
             "writing_prompts": WRITING_PROMPTS[selected_level],
-            "writing_levels": tuple(WRITING_PROMPTS),
+            "writing_levels": tuple(
+                {"id": level, "prompt_count": len(prompts)}
+                for level, prompts in WRITING_PROMPTS.items()
+            ),
             "selected_writing_level": selected_level,
         },
     )

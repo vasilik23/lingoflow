@@ -25,7 +25,14 @@ class NativeWritingApiTests(TestCase):
         self.assertEqual(response.status_code, 200)
         data = response.json()["data"]
         self.assertEqual(data["levels"], ["B1", "B2"])
-        self.assertEqual(data["prompt_count"], 8)
+        self.assertEqual(data["prompt_count"], 11)
+        self.assertEqual(
+            [item["id"] for item in data["prompts"] if item["level"] == "B1"],
+            [
+                "formal-request", "recommendation", "opinion",
+                "congratulations", "announcement", "description", "story",
+            ],
+        )
         self.assertEqual(data["persistence"], "none")
         self.assertEqual(data["assessment"], "observable_structure_only")
         self.assertEqual(len(data["prompts"][0]["checklist"]), 4)
