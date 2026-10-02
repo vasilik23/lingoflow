@@ -1,4 +1,5 @@
 from datetime import date
+from uuid import UUID
 from unittest.mock import patch
 
 from django.core import signing
@@ -92,9 +93,32 @@ class B1WeeklyMockViewTests(TestCase):
         self.assertContains(response, "Агрегированный результат сохранён")
         self.assertContains(response, "2026-10-01")
         save_attempt.assert_called_once()
-        saved_result = save_attempt.call_args.args[2]
+        saved_attempt_id = save_attempt.call_args.args[2]
+        UUID(saved_attempt_id)
+        saved_result = save_attempt.call_args.args[3]
         self.assertNotIn("answers", saved_result)
         self.assertEqual(saved_result["attempt_version"], get_response.context["variant"].id)
+
+    @patch("polskiflow.b1_mock_views.load_b1_mock_attempts", return_value=[])
+    @patch("polskiflow.b1_mock_views.save_b1_mock_attempt", return_value=True)
+    def test_replayed_submission_reuses_the_same_idempotency_key(self, save_attempt, _history):
+        opened = self.client.get("/exam/b1/mock/")
+        payload = {"attempt_token": opened.context["attempt_token"]}
+        payload.update({
+            f"answer_{question.id}": question.correct
+            for question in opened.context["questions"]
+        })
+
+        first = self.client.post("/exam/b1/mock/", payload)
+        second = self.client.post("/exam/b1/mock/", payload)
+
+        self.assertEqual((first.status_code, second.status_code), (200, 200))
+        self.assertEqual(save_attempt.call_count, 2)
+        self.assertEqual(
+            save_attempt.call_args_list[0].args[2],
+            save_attempt.call_args_list[1].args[2],
+        )
+        UUID(save_attempt.call_args_list[0].args[2])
 
     @patch("polskiflow.b1_mock_views.load_b1_mock_attempts", return_value=[])
     @patch("polskiflow.b1_mock_views.save_b1_mock_attempt", return_value=True)
@@ -119,10 +143,20 @@ class B1WeeklyMockViewTests(TestCase):
         foreign = signing.dumps({"user_id": "another-user"}, salt="polskiflow.b1-weekly-mock")
         payload = {"attempt_token": foreign, **{f"answer_{item.id}": item.correct for item in QUESTIONS}}
         cross_user = self.client.post("/exam/b1/mock/", payload)
+        invalid_id = signing.dumps({
+            "user_id": "user-123",
+            "variant_id": "b1-weekly-v1",
+            "attempt_id": "not-a-uuid",
+        }, salt="polskiflow.b1-weekly-mock")
+        bad_attempt = self.client.post("/exam/b1/mock/", {
+            "attempt_token": invalid_id,
+            **{f"answer_{item.id}": item.correct for item in QUESTIONS},
+        })
 
         self.assertEqual(incomplete.status_code, 400)
         self.assertEqual(unknown.status_code, 400)
         self.assertEqual(cross_user.status_code, 400)
+        self.assertEqual(bad_attempt.status_code, 400)
         self.assertContains(unknown, "неизвестные поля", status_code=400)
 
     def test_guest_is_redirected_to_login(self):

@@ -119,7 +119,7 @@ def learner_data_export_v1(request):
     return _private_response(
         "learner-data-export",
         {
-            "schema_version": "2.1",
+            "schema_version": "2.2",
             "account": {"email": request.supabase_user.email},
             **export.datasets,
         },

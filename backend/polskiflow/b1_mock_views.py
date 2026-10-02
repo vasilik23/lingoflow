@@ -1,3 +1,5 @@
+from uuid import UUID, uuid4
+
 from django.core import signing
 from django.core.signing import BadSignature, SignatureExpired
 from django.http import HttpRequest, HttpResponse
@@ -13,8 +15,12 @@ ATTEMPT_SALT = "polskiflow.b1-weekly-mock"
 ATTEMPT_MAX_AGE_SECONDS = 20 * 60
 
 
-def _attempt_token(user_id: str, variant_id: str) -> str:
-    return signing.dumps({"user_id": user_id, "variant_id": variant_id}, salt=ATTEMPT_SALT)
+def _attempt_token(user_id: str, variant_id: str, attempt_id: str | None = None) -> str:
+    return signing.dumps({
+        "user_id": user_id,
+        "variant_id": variant_id,
+        "attempt_id": attempt_id or str(uuid4()),
+    }, salt=ATTEMPT_SALT)
 
 
 @require_browser_user
@@ -35,6 +41,7 @@ def b1_weekly_mock(request: HttpRequest) -> HttpResponse:
             variant = get_mock_variant(payload.get("variant_id", ""))
             if variant is None:
                 raise BadSignature
+            attempt_id = str(UUID(payload.get("attempt_id", "")))
             allowed = {"csrfmiddlewaretoken", "attempt_token", *(f"answer_{item.id}" for item in variant.questions)}
             if set(request.POST) - allowed:
                 error, status = "Форма содержит неизвестные поля. Начни попытку заново.", 400
@@ -42,7 +49,10 @@ def b1_weekly_mock(request: HttpRequest) -> HttpResponse:
                 answers = {item.id: int(request.POST[f"answer_{item.id}"]) for item in variant.questions}
                 result = score_mock_answers(answers, variant)
                 saved = save_b1_mock_attempt(
-                    request.supabase_access_token, request.supabase_user.id, result
+                    request.supabase_access_token,
+                    request.supabase_user.id,
+                    attempt_id,
+                    result,
                 )
         except SignatureExpired:
             error, status = "Время попытки истекло. Начни новый модуль.", 400
