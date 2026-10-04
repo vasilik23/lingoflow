@@ -9,7 +9,7 @@
 
   {% if not part %}
     <div class="exam-module-grid simulation-part-grid">
-      {% for item in parts %}<article class="card exam-module-card exam-accent-{{ item.accent }}" data-simulation-card="{{ item.id }}"><header><span>{{ item.minutes }} мин</span><span>{% if item.mode == "objective" %}с проверкой{% else %}самопроверка{% endif %}</span></header><p class="eyebrow" lang="pl">{{ item.polish_title }}</p><h2>{{ item.title }}</h2><p class="simulation-progress muted" data-simulation-progress>Ещё не начато</p><a href="?part={{ item.id }}">Начать часть</a></article>{% endfor %}
+      {% for item in parts %}<article class="card exam-module-card exam-accent-{{ item.accent }}" data-simulation-card="{{ item.id }}"><header><span>{{ item.minutes }} мин</span><span>{% if item.mode == "objective" %}{{ item.question_count }} заданий{% else %}самопроверка{% endif %}</span></header><p class="eyebrow" lang="pl">{{ item.polish_title }}</p><h2>{{ item.title }}</h2><p class="simulation-progress muted" data-simulation-progress>Ещё не начато</p><a href="?part={{ item.id }}">Начать часть</a></article>{% endfor %}
     </div>
   {% else %}
     <p><a href="{% url 'b1-exam-simulation' %}">← Выбрать другую часть</a></p>
@@ -19,7 +19,7 @@
     {% if part.mode == "objective" %}
       <form method="post" class="mock-form" id="simulation-form">{% csrf_token %}<input type="hidden" name="simulation_token" value="{{ simulation_token }}">
         <section class="card mock-section">
-          <div class="mock-section-heading"><span>1</span><div><p class="eyebrow" lang="pl">{{ part.polish_title }}</p><h2>{{ part.title }}</h2></div></div>
+          <div class="mock-section-heading"><span>{{ question_count }}</span><div><p class="eyebrow" lang="pl">{{ part.polish_title }}</p><h2>{{ part.title }}</h2><p class="muted">{{ question_count }} оригинальных заданий</p></div></div>
           {% if part.id == "listening" %}{% if result %}<p lang="pl" class="mock-source-text">{{ variant.listening_transcript }}</p>{% else %}<button class="compact-button" type="button" id="simulation-play">▶ Прослушать сообщение</button><p class="muted" id="simulation-audio-status" aria-live="polite">Системный польский голос устройства; запись можно повторить.</p>{% endif %}{% elif part.id == "reading" %}<p lang="pl" class="mock-source-text">{{ variant.reading_text }}</p>{% endif %}
           {% for question in questions %}{% include "partials/b1_mock_question.html" %}{% endfor %}
         </section>
