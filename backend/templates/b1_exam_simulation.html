@@ -11,10 +11,22 @@
     <div class="exam-module-grid simulation-part-grid">
       {% for item in parts %}<article class="card exam-module-card exam-accent-{{ item.accent }}" data-simulation-card="{{ item.id }}"><header><span>{{ item.minutes }} мин</span><span>{% if item.mode == "objective" %}{{ item.question_count }} заданий{% else %}самопроверка{% endif %}</span></header><p class="eyebrow" lang="pl">{{ item.polish_title }}</p><h2>{{ item.title }}</h2><p class="simulation-progress muted" data-simulation-progress>Ещё не начато</p><a href="?part={{ item.id }}">Начать часть</a></article>{% endfor %}
     </div>
+    <section class="card mock-history" aria-labelledby="section-history-title">
+      <div><p class="eyebrow">Между устройствами</p><h2 id="section-history-title">Последние проверяемые части</h2><p class="muted">Хранятся только агрегированный балл, часть, вариант и дата. Ответы, письмо и речь не сохраняются.</p></div>
+      {% if history is None %}
+        <p class="form-message error" role="status">История временно недоступна. Тренировку можно продолжить.</p>
+      {% elif history %}
+        <ol class="mock-history-list">
+          {% for attempt in history %}<li><span><strong>{{ attempt.section_label }}</strong><small>{{ attempt.attempted_at_display }} · {{ attempt.variant_label }}</small></span><strong>{{ attempt.correct }} / {{ attempt.total }} · {{ attempt.percent }}%</strong></li>{% endfor %}
+        </ol>
+      {% else %}
+        <p class="muted">Заверши аудирование, чтение или грамматику — результат появится здесь.</p>
+      {% endif %}
+    </section>
   {% else %}
     <p><a href="{% url 'b1-exam-simulation' %}">← Выбрать другую часть</a></p>
     {% if error %}<div class="form-message error" role="alert">{{ error }}</div>{% endif %}
-    {% if result %}<section class="card mock-summary"><div><p class="eyebrow">Результат этой тренировки</p><h2>{{ result.correct }} из {{ result.total }} · {{ result.percent }}%</h2><p class="muted">Это результат короткого оригинального набора, не оценка официальной части B1.</p><a class="compact-button" href="{% url 'b1-exam-simulation' %}">К пяти частям</a></div></section>{% endif %}
+    {% if result %}<section class="card mock-summary"><div><p class="eyebrow">Результат этой тренировки</p><h2>{{ result.correct }} из {{ result.total }} · {{ result.percent }}%</h2><p class="muted">Это результат короткого оригинального набора, не оценка официальной части B1.</p>{% if saved %}<p class="form-message success">Агрегированный результат сохранён между устройствами.</p>{% elif saved is False %}<p class="form-message error">Результат показан, но историю сейчас сохранить не удалось.</p>{% endif %}<a class="compact-button" href="{% url 'b1-exam-simulation' %}">К пяти частям</a></div></section>{% endif %}
 
     {% if part.mode == "objective" %}
       <form method="post" class="mock-form" id="simulation-form">{% csrf_token %}<input type="hidden" name="simulation_token" value="{{ simulation_token }}">
