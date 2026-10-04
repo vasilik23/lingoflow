@@ -125,11 +125,16 @@ def b1_exam_simulation(request: HttpRequest) -> HttpResponse:
             "part_id": part["id"],
         }, salt=SIMULATION_SALT)
     questions = simulation_questions(variant, part["id"]) if part else ()
+    parts = tuple({
+        **item,
+        "question_count": len(simulation_questions(variant, item["id"])),
+    } for item in B1_SIMULATION_PARTS)
     return render(request, "b1_exam_simulation.html", {
-        "parts": B1_SIMULATION_PARTS,
+        "parts": parts,
         "part": part,
         "variant": variant,
         "questions": questions,
+        "question_count": len(questions),
         "simulation_token": token,
         "duration_seconds": part["minutes"] * 60 if part else 0,
         "result": result,

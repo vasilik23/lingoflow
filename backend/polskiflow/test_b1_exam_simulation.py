@@ -6,6 +6,7 @@ from django.test import SimpleTestCase, TestCase
 from polskiflow.auth import ACCESS_COOKIE, SupabaseUser
 from polskiflow.domain.b1_exam_simulation import (
     B1_SIMULATION_PARTS,
+    SIMULATION_EXTRA_QUESTIONS,
     get_simulation_part,
     score_simulation_part,
     simulation_questions,
@@ -29,12 +30,34 @@ class B1ExamSimulationDomainTests(SimpleTestCase):
             variant, "grammar", {question.id: question.correct for question in questions}
         )
 
-        self.assertEqual((result["correct"], result["total"], result["percent"]), (3, 3, 100))
-        self.assertEqual(len(result["details"]), 3)
+        self.assertEqual((result["correct"], result["total"], result["percent"]), (6, 6, 100))
+        self.assertEqual(len(result["details"]), 6)
         with self.assertRaises(ValueError):
             score_simulation_part(variant, "grammar", {})
         with self.assertRaises(ValueError):
             score_simulation_part(variant, "writing", {})
+
+    def test_each_variant_has_expanded_balanced_original_objective_pack(self):
+        self.assertEqual(set(SIMULATION_EXTRA_QUESTIONS), {variant.id for variant in VARIANTS})
+        for variant in VARIANTS:
+            counts = {
+                module: len(simulation_questions(variant, module))
+                for module in ("listening", "reading", "grammar")
+            }
+            self.assertEqual(counts, {"listening": 5, "reading": 5, "grammar": 6})
+            questions = tuple(
+                question
+                for module in counts
+                for question in simulation_questions(variant, module)
+            )
+            self.assertEqual(len({question.id for question in questions}), 16)
+            self.assertTrue(all(len(question.options) == 3 for question in questions))
+            self.assertTrue(all(question.correct in range(3) for question in questions))
+            self.assertTrue(all(question.explanation.strip() for question in questions))
+            self.assertTrue(all(
+                len(question.explanation.split()) >= 8
+                for question in SIMULATION_EXTRA_QUESTIONS[variant.id]
+            ))
 
 
 class B1ExamSimulationViewTests(TestCase):
@@ -55,6 +78,8 @@ class B1ExamSimulationViewTests(TestCase):
         self.assertContains(response, "Начать часть", count=5)
         self.assertContains(response, "75 мин")
         self.assertContains(response, "самопроверка", count=2)
+        self.assertContains(response, "5 заданий", count=2)
+        self.assertContains(response, "6 заданий", count=1)
         self.assertContains(
             response,
             '<p class="simulation-progress muted" data-simulation-progress>',
@@ -73,7 +98,7 @@ class B1ExamSimulationViewTests(TestCase):
         result = self.client.post("/exam/b1/simulation/", payload)
 
         self.assertEqual(result.status_code, 200)
-        self.assertContains(result, "3 из 3 · 100%")
+        self.assertContains(result, "6 из 6 · 100%")
         self.assertContains(result, "не оценка официальной части B1")
         self.assertNotContains(result, "Агрегированный результат сохранён")
         self.assertContains(result, 'data-result-percent="100"')
