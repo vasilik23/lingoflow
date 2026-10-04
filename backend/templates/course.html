@@ -62,35 +62,60 @@
   </div>
   <div class="topic-list" aria-label="Темы курса">
     {% for topic in course_topics %}
-      <section class="topic-card" id="topic-{{ topic.id }}">
-        <header class="topic-header">
-          <span class="topic-emoji">{{ topic.emoji }}</span>
-          <span><small>{{ selected_level }} · Тема {{ forloop.counter }}</small><strong>{{ topic.title }}</strong><span>{{ topic.description }}</span></span>
-        </header>
-        <div class="topic-progress-row">
-          <span>{{ topic.completed_count }} / {{ topic.lesson_count }} уроков</span>
-          <span>{% if topic.completed %}Тема завершена{% else %}{{ topic.progress_percent }}%{% endif %}</span>
+      <details class="topic-card" id="topic-{{ topic.id }}" open data-course-topic{% if topic.id == primary_topic_id %} data-course-topic-primary="true"{% endif %}>
+        <summary class="topic-summary">
+          <span class="topic-header">
+            <span class="topic-emoji">{{ topic.emoji }}</span>
+            <span><small>{{ selected_level }} · Тема {{ forloop.counter }}</small><strong>{{ topic.title }}</strong><span>{{ topic.description }}</span></span>
+          </span>
+          <span class="topic-progress-row">
+            <span>{{ topic.completed_count }} / {{ topic.lesson_count }} уроков</span>
+            <span>{% if topic.completed %}Тема завершена{% else %}{{ topic.progress_percent }}%{% endif %}</span>
+          </span>
+          <span class="topic-progress" role="progressbar" aria-label="Прогресс темы «{{ topic.title }}»" aria-valuemin="0" aria-valuemax="{{ topic.lesson_count }}" aria-valuenow="{{ topic.completed_count }}">
+            <span style="--value: {{ topic.progress_percent }}%"></span>
+          </span>
+          <span class="topic-summary-action">Показать уроки <span aria-hidden="true">⌄</span></span>
+        </summary>
+        <div class="topic-lessons">
+          <div class="task-list">
+            {% for task in topic.lessons %}
+              <div class="task-card-row"><a class="task-card" href="{% url 'lesson' task.id %}">
+                <span class="task-icon">{{ task.emoji }}</span>
+                <span class="task-copy"><strong>{{ task.title }}{% if task.completed %} <span class="task-complete">✓</span>{% endif %}</strong><small>{{ task.description }} · ~{{ task.minutes }} мин</small></span>
+                <span class="task-arrow" aria-hidden="true">→</span>
+              </a>{% if lesson_bookmarks_available %}<form method="post" action="{% url 'toggle-lesson-bookmark' task.id %}">{% csrf_token %}<input type="hidden" name="saved" value="{% if task.saved %}0{% else %}1{% endif %}"><input type="hidden" name="next" value="{{ request.get_full_path }}#topic-{{ topic.id }}"><button class="bookmark-icon-button{% if task.saved %} is-saved{% endif %}" type="submit" aria-label="{% if task.saved %}Убрать урок «{{ task.title }}» из сохранённого{% else %}Сохранить урок «{{ task.title }}»{% endif %}">{% if task.saved %}★{% else %}☆{% endif %}</button></form>{% endif %}</div>
+            {% endfor %}
+          </div>
+          {% if topic.next_lesson %}
+            <a class="topic-action" href="{% url 'lesson' topic.next_lesson.id %}">Продолжить <span aria-hidden="true">→</span></a>
+          {% else %}
+            <p class="topic-complete-status"><span aria-hidden="true">✓</span> Все уроки пройдены</p>
+          {% endif %}
         </div>
-        <div class="topic-progress" role="progressbar" aria-label="Прогресс темы «{{ topic.title }}»" aria-valuemin="0" aria-valuemax="{{ topic.lesson_count }}" aria-valuenow="{{ topic.completed_count }}">
-          <span style="--value: {{ topic.progress_percent }}%"></span>
-        </div>
-        <div class="task-list">
-          {% for task in topic.lessons %}
-            <div class="task-card-row"><a class="task-card" href="{% url 'lesson' task.id %}">
-              <span class="task-icon">{{ task.emoji }}</span>
-              <span class="task-copy"><strong>{{ task.title }}{% if task.completed %} <span class="task-complete">✓</span>{% endif %}</strong><small>{{ task.description }} · ~{{ task.minutes }} мин</small></span>
-              <span class="task-arrow" aria-hidden="true">→</span>
-            </a>{% if lesson_bookmarks_available %}<form method="post" action="{% url 'toggle-lesson-bookmark' task.id %}">{% csrf_token %}<input type="hidden" name="saved" value="{% if task.saved %}0{% else %}1{% endif %}"><input type="hidden" name="next" value="{{ request.get_full_path }}#topic-{{ topic.id }}"><button class="bookmark-icon-button{% if task.saved %} is-saved{% endif %}" type="submit" aria-label="{% if task.saved %}Убрать урок «{{ task.title }}» из сохранённого{% else %}Сохранить урок «{{ task.title }}»{% endif %}">{% if task.saved %}★{% else %}☆{% endif %}</button></form>{% endif %}</div>
-          {% endfor %}
-        </div>
-        {% if topic.next_lesson %}
-          <a class="topic-action" href="{% url 'lesson' topic.next_lesson.id %}">Продолжить <span aria-hidden="true">→</span></a>
-        {% else %}
-          <p class="topic-complete-status"><span aria-hidden="true">✓</span> Все уроки пройдены</p>
-        {% endif %}
-      </section>
+      </details>
     {% empty %}
       <div class="card empty-state"><span>🔎</span><h2>Ничего не найдено</h2><p>Попробуй изменить запрос или сбросить фильтры.</p><a class="compact-button" href="?level={{ selected_level }}">Сбросить фильтры</a></div>
     {% endfor %}
   </div>
+{% endblock %}
+{% block scripts %}
+  <script>
+    (function () {
+      const topics = Array.from(document.querySelectorAll("[data-course-topic]"));
+      const mobile = window.matchMedia("(max-width: 699px)");
+      let compact = null;
+
+      function syncTopics() {
+        if (compact === mobile.matches) return;
+        compact = mobile.matches;
+        topics.forEach(function (topic) {
+          topic.open = !compact || topic.dataset.courseTopicPrimary === "true";
+        });
+      }
+
+      syncTopics();
+      mobile.addEventListener?.("change", syncTopics);
+    }());
+  </script>
 {% endblock %}
