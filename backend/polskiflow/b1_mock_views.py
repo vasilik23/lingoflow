@@ -5,6 +5,7 @@ from django.core.signing import BadSignature, SignatureExpired
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 from django.utils import timezone
+from django.utils.crypto import salted_hmac
 from django.views.decorators.http import require_http_methods
 
 from polskiflow.auth_views import require_browser_user
@@ -133,4 +134,8 @@ def b1_exam_simulation(request: HttpRequest) -> HttpResponse:
         "duration_seconds": part["minutes"] * 60 if part else 0,
         "result": result,
         "error": error,
+        "simulation_storage_namespace": salted_hmac(
+            "polskiflow.b1-exam-simulation-browser",
+            request.supabase_user.id,
+        ).hexdigest()[:32],
     }, status=status)

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Тренажёр частей B1 · PolskiFlow{% endblock %}
 {% block content %}
-<main class="mock-shell">
+<main class="mock-shell" data-simulation-root data-storage-namespace="{{ simulation_storage_namespace }}" data-variant-id="{{ variant.id }}"{% if part %} data-part-id="{{ part.id }}" data-duration-seconds="{{ duration_seconds }}"{% endif %}{% if result %} data-result-percent="{{ result.percent }}"{% endif %}>
   <header class="mock-header">
     <div><p class="eyebrow">B1 · {{ variant.label }}</p><h1>{% if part %}{{ part.title }} на время{% else %}Тренажёр частей экзамена{% endif %}</h1><p>{% if part %}Лимит {{ part.minutes }} минут соответствует формату части, но объём этого оригинального набора PolskiFlow меньше официального экзамена.{% else %}Тренируй каждую часть отдельно с её экзаменационным лимитом времени.{% endif %}</p></div>
     {% if part and not result %}<div class="mock-timer" role="timer" aria-live="polite"><strong id="simulation-timer">{{ part.minutes }}:00</strong><span>осталось</span></div>{% endif %}
@@ -9,12 +9,12 @@
 
   {% if not part %}
     <div class="exam-module-grid simulation-part-grid">
-      {% for item in parts %}<article class="card exam-module-card exam-accent-{{ item.accent }}"><header><span>{{ item.minutes }} мин</span><span>{% if item.mode == "objective" %}с проверкой{% else %}самопроверка{% endif %}</span></header><p class="eyebrow" lang="pl">{{ item.polish_title }}</p><h2>{{ item.title }}</h2><a href="?part={{ item.id }}">Начать часть</a></article>{% endfor %}
+      {% for item in parts %}<article class="card exam-module-card exam-accent-{{ item.accent }}" data-simulation-card="{{ item.id }}"><header><span>{{ item.minutes }} мин</span><span>{% if item.mode == "objective" %}с проверкой{% else %}самопроверка{% endif %}</span></header><p class="eyebrow" lang="pl">{{ item.polish_title }}</p><h2>{{ item.title }}</h2><p class="simulation-progress muted" data-simulation-progress>Ещё не начато</p><a href="?part={{ item.id }}">Начать часть</a></article>{% endfor %}
     </div>
   {% else %}
     <p><a href="{% url 'b1-exam-simulation' %}">← Выбрать другую часть</a></p>
     {% if error %}<div class="form-message error" role="alert">{{ error }}</div>{% endif %}
-    {% if result %}<section class="card mock-summary"><div><p class="eyebrow">Результат этой тренировки</p><h2>{{ result.correct }} из {{ result.total }} · {{ result.percent }}%</h2><p class="muted">Это результат короткого оригинального набора, не оценка официальной части B1.</p></div></section>{% endif %}
+    {% if result %}<section class="card mock-summary"><div><p class="eyebrow">Результат этой тренировки</p><h2>{{ result.correct }} из {{ result.total }} · {{ result.percent }}%</h2><p class="muted">Это результат короткого оригинального набора, не оценка официальной части B1.</p><a class="compact-button" href="{% url 'b1-exam-simulation' %}">К пяти частям</a></div></section>{% endif %}
 
     {% if part.mode == "objective" %}
       <form method="post" class="mock-form" id="simulation-form">{% csrf_token %}<input type="hidden" name="simulation_token" value="{{ simulation_token }}">
@@ -26,17 +26,66 @@
         {% if not result and not error %}<button class="primary-button mock-submit" type="submit">Завершить часть и проверить</button>{% endif %}
       </form>
     {% elif part.id == "writing" %}
-      <section class="card mock-section"><p class="eyebrow" lang="pl">Pisanie</p><h2>Задание</h2><p lang="pl"><strong>{{ variant.writing_prompt }}</strong></p><label for="simulation-writing">Черновик остаётся только в этой вкладке</label><textarea id="simulation-writing" rows="14" aria-describedby="simulation-writing-note"></textarea><p class="muted" id="simulation-writing-note">Текст не отправляется и не оценивается автоматически. После таймера проверь выполнение всех пунктов, структуру, регистр и грамматику.</p></section>
+      <section class="card mock-section"><p class="eyebrow" lang="pl">Pisanie</p><h2>Задание</h2><p lang="pl"><strong>{{ variant.writing_prompt }}</strong></p><label for="simulation-writing">Черновик остаётся только в этой вкладке</label><textarea id="simulation-writing" rows="14" aria-describedby="simulation-writing-note"></textarea><p class="muted" id="simulation-writing-note">Текст не отправляется, не сохраняется при перезагрузке и не оценивается автоматически. Таймер продолжится после возврата. После попытки проверь выполнение всех пунктов, структуру, регистр и грамматику.</p><button class="primary-button mock-submit" type="button" data-complete-self-review>Завершить самопроверку</button></section>
     {% else %}
-      <section class="card mock-section"><p class="eyebrow" lang="pl">Mówienie</p><h2>Задание</h2><p lang="pl"><strong>{{ variant.speaking_prompt }}</strong></p><ul><li>выполни все пункты задания;</li><li>свяжи части ответа;</li><li>приведи конкретный пример;</li><li>заверши понятным выводом.</li></ul><p class="muted">Речь не записывается и не получает автоматического балла на этом экране.</p></section>
+      <section class="card mock-section"><p class="eyebrow" lang="pl">Mówienie</p><h2>Задание</h2><p lang="pl"><strong>{{ variant.speaking_prompt }}</strong></p><ul><li>выполни все пункты задания;</li><li>свяжи части ответа;</li><li>приведи конкретный пример;</li><li>заверши понятным выводом.</li></ul><p class="muted">Речь не записывается и не получает автоматического балла на этом экране. Таймер продолжится после возврата.</p><button class="primary-button mock-submit" type="button" data-complete-self-review>Завершить самопроверку</button></section>
     {% endif %}
   {% endif %}
 </main>
 {{ variant.listening_transcript|json_script:"simulation-listening-transcript" }}
-{% if part and not result %}<script>
+<script>
 (() => {
+  const root = document.querySelector('[data-simulation-root]');
+  const prefix = `polskiflow-b1-simulation:${root.dataset.storageNamespace}:${root.dataset.variantId}:`;
+  const readState = (partId) => {
+    try { return JSON.parse(localStorage.getItem(prefix + partId) || 'null'); }
+    catch (error) { return null; }
+  };
+  const writeState = (partId, state) => {
+    try { localStorage.setItem(prefix + partId, JSON.stringify(state)); }
+    catch (error) { /* Тренировка остаётся доступной без локального прогресса. */ }
+  };
+  document.querySelectorAll('[data-simulation-card]').forEach((card) => {
+    const state = readState(card.dataset.simulationCard);
+    if (!state) return;
+    const progress = card.querySelector('[data-simulation-progress]');
+    const link = card.querySelector('a');
+    if (state.status === 'completed') {
+      progress.textContent = Number.isInteger(state.percent) ? `Завершено · ${state.percent}%` : 'Самопроверка завершена';
+      link.textContent = 'Пройти ещё раз';
+      link.href += '&restart=1';
+    } else if (state.startedAt) {
+      progress.textContent = 'Есть незавершённая попытка';
+      link.textContent = 'Продолжить';
+    }
+  });
+  const partId = root.dataset.partId;
+  if (!partId) return;
+  const duration = Number(root.dataset.durationSeconds);
+  let state = readState(partId);
+  const restart = new URLSearchParams(window.location.search).get('restart') === '1';
+  const storedStart = Number(state?.startedAt);
+  if (restart || !state || state.status === 'completed' || !Number.isFinite(storedStart) || storedStart > Date.now()) {
+    state = { status: 'started', startedAt: Date.now() };
+    writeState(partId, state);
+    if (restart) {
+      const cleanUrl = new URL(window.location.href);
+      cleanUrl.searchParams.delete('restart');
+      window.history.replaceState({}, '', cleanUrl);
+    }
+  }
+  const resultPercent = Number(root.dataset.resultPercent);
+  if (Number.isInteger(resultPercent)) {
+    writeState(partId, { status: 'completed', completedAt: Date.now(), percent: resultPercent });
+    return;
+  }
+  document.querySelector('[data-complete-self-review]')?.addEventListener('click', () => {
+    writeState(partId, { status: 'completed', completedAt: Date.now() });
+    window.location.assign('{% url "b1-exam-simulation" %}');
+  });
   const timer = document.getElementById('simulation-timer');
-  let left = {{ duration_seconds }};
+  if (!timer) return;
+  let left = Math.max(0, duration - Math.floor((Date.now() - state.startedAt) / 1000));
   const tick = () => {
     timer.textContent = `${String(Math.floor(left / 60)).padStart(2, '0')}:${String(left % 60).padStart(2, '0')}`;
     if (left <= 0) { document.querySelectorAll('#simulation-form input, #simulation-form button, #simulation-writing').forEach(el => el.disabled = true); timer.parentElement.classList.add('expired'); return; }
@@ -49,5 +98,5 @@
     utterance.lang = 'pl-PL'; utterance.rate = .9; utterance.onstart = () => status.textContent = 'Воспроизводится…'; utterance.onend = () => status.textContent = 'Сообщение завершено.'; speechSynthesis.speak(utterance);
   });
 })();
-</script>{% endif %}
+</script>
 {% endblock %}

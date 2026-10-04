@@ -55,6 +55,12 @@ class B1ExamSimulationViewTests(TestCase):
         self.assertContains(response, "Начать часть", count=5)
         self.assertContains(response, "75 мин")
         self.assertContains(response, "самопроверка", count=2)
+        self.assertContains(
+            response,
+            '<p class="simulation-progress muted" data-simulation-progress>',
+            count=5,
+        )
+        self.assertNotContains(response, "user-123")
 
     def test_objective_part_has_signed_state_timer_and_stateless_feedback(self):
         opened = self.client.get("/exam/b1/simulation/?part=grammar")
@@ -70,17 +76,29 @@ class B1ExamSimulationViewTests(TestCase):
         self.assertContains(result, "3 из 3 · 100%")
         self.assertContains(result, "не оценка официальной части B1")
         self.assertNotContains(result, "Агрегированный результат сохранён")
+        self.assertContains(result, 'data-result-percent="100"')
 
     def test_writing_and_speaking_have_no_automatic_score_or_server_text_field(self):
         writing = self.client.get("/exam/b1/simulation/?part=writing")
         speaking = self.client.get("/exam/b1/simulation/?part=speaking")
 
         self.assertContains(writing, "75:00")
-        self.assertContains(writing, "Текст не отправляется и не оценивается автоматически")
+        self.assertContains(writing, "Текст не отправляется, не сохраняется при перезагрузке")
         self.assertContains(writing, '<textarea id="simulation-writing" rows="14"')
         self.assertNotContains(writing, 'name="simulation-writing"')
         self.assertContains(speaking, "15:00")
         self.assertContains(speaking, "Речь не записывается")
+        self.assertContains(writing, "Завершить самопроверку")
+        self.assertContains(speaking, "Завершить самопроверку")
+
+    def test_browser_resume_stores_only_timing_and_aggregate_result(self):
+        response = self.client.get("/exam/b1/simulation/?part=reading")
+
+        self.assertContains(response, "localStorage.getItem(prefix + partId)")
+        self.assertContains(response, "startedAt")
+        self.assertContains(response, "completedAt")
+        self.assertNotContains(response, "selectedAnswers")
+        self.assertNotContains(response, "simulation-writing', textarea")
 
     def test_rejects_unknown_part_fields_and_forged_state(self):
         opened = self.client.get("/exam/b1/simulation/?part=reading")
