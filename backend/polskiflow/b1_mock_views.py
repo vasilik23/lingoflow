@@ -10,6 +10,7 @@ from django.views.decorators.http import require_http_methods
 
 from polskiflow.auth_views import require_browser_user
 from polskiflow.b1_mock_store import load_b1_mock_attempts, save_b1_mock_attempt
+from polskiflow.b1_section_store import load_b1_section_attempts, save_b1_section_attempt
 from polskiflow.domain.b1_exam_simulation import (
     B1_SIMULATION_PARTS,
     get_simulation_part,
@@ -95,6 +96,7 @@ def b1_exam_simulation(request: HttpRequest) -> HttpResponse:
     error = None
     status = 200
     token = ""
+    saved = None
     if request.method == "POST":
         token = request.POST.get("simulation_token", "")
         try:
@@ -107,6 +109,7 @@ def b1_exam_simulation(request: HttpRequest) -> HttpResponse:
             variant = get_mock_variant(payload.get("variant_id", ""))
             if part is None or variant is None or part["mode"] != "objective":
                 raise BadSignature
+            attempt_id = str(UUID(payload.get("attempt_id", "")))
             questions = simulation_questions(variant, part["id"])
             allowed = {"csrfmiddlewaretoken", "simulation_token", *(f"answer_{item.id}" for item in questions)}
             if set(request.POST) - allowed:
@@ -114,6 +117,13 @@ def b1_exam_simulation(request: HttpRequest) -> HttpResponse:
             else:
                 answers = {item.id: int(request.POST[f"answer_{item.id}"]) for item in questions}
                 result = score_simulation_part(variant, part["id"], answers)
+                saved = save_b1_section_attempt(
+                    request.supabase_access_token,
+                    request.supabase_user.id,
+                    attempt_id,
+                    variant.id,
+                    result,
+                )
         except SignatureExpired:
             error, status = "Время этой части истекло. Начни новую попытку.", 400
         except (BadSignature, KeyError, TypeError, ValueError):
@@ -123,12 +133,16 @@ def b1_exam_simulation(request: HttpRequest) -> HttpResponse:
             "user_id": request.supabase_user.id,
             "variant_id": variant.id,
             "part_id": part["id"],
+            "attempt_id": str(uuid4()),
         }, salt=SIMULATION_SALT)
     questions = simulation_questions(variant, part["id"]) if part else ()
     parts = tuple({
         **item,
         "question_count": len(simulation_questions(variant, item["id"])),
     } for item in B1_SIMULATION_PARTS)
+    history = load_b1_section_attempts(
+        request.supabase_access_token, request.supabase_user.id
+    )
     return render(request, "b1_exam_simulation.html", {
         "parts": parts,
         "part": part,
@@ -138,6 +152,8 @@ def b1_exam_simulation(request: HttpRequest) -> HttpResponse:
         "simulation_token": token,
         "duration_seconds": part["minutes"] * 60 if part else 0,
         "result": result,
+        "saved": saved,
+        "history": history,
         "error": error,
         "simulation_storage_namespace": salted_hmac(
             "polskiflow.b1-exam-simulation-browser",

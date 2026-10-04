@@ -82,6 +82,7 @@ def score_simulation_part(variant: MockVariant, part_id: str, answers: dict[str,
         })
     correct = sum(item["is_correct"] for item in details)
     return {
+        "section_id": part_id,
         "correct": correct,
         "total": len(questions),
         "percent": round(correct * 100 / len(questions)),

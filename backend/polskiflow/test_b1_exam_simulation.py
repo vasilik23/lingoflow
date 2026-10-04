@@ -87,7 +87,8 @@ class B1ExamSimulationViewTests(TestCase):
         )
         self.assertNotContains(response, "user-123")
 
-    def test_objective_part_has_signed_state_timer_and_stateless_feedback(self):
+    @patch("polskiflow.b1_mock_views.save_b1_section_attempt", return_value=True)
+    def test_objective_part_has_signed_state_timer_and_aggregate_history(self, save_attempt):
         opened = self.client.get("/exam/b1/simulation/?part=grammar")
         self.assertContains(opened, "45:00")
         self.assertContains(opened, "объём этого оригинального набора PolskiFlow меньше")
@@ -100,8 +101,33 @@ class B1ExamSimulationViewTests(TestCase):
         self.assertEqual(result.status_code, 200)
         self.assertContains(result, "6 из 6 · 100%")
         self.assertContains(result, "не оценка официальной части B1")
-        self.assertNotContains(result, "Агрегированный результат сохранён")
+        self.assertContains(result, "Агрегированный результат сохранён между устройствами")
         self.assertContains(result, 'data-result-percent="100"')
+        saved_result = save_attempt.call_args.args[4]
+        self.assertEqual(saved_result["section_id"], "grammar")
+        self.assertEqual((saved_result["correct"], saved_result["total"]), (6, 6))
+        self.assertNotIn("answers", saved_result)
+
+    @patch("polskiflow.b1_mock_views.load_b1_section_attempts")
+    def test_hub_shows_cross_device_aggregate_history(self, load_history):
+        load_history.return_value = [{
+            "section_label": "Чтение",
+            "attempted_at": "2026-10-04T08:00:00Z",
+            "attempt_version": "b1-weekly-v2",
+            "correct": 4,
+            "total": 5,
+            "percent": 80,
+            "variant_label": "Вариант 2",
+            "attempted_at_display": "04.10.2026 08:00",
+        }]
+
+        response = self.client.get("/exam/b1/simulation/")
+
+        self.assertContains(response, "Последние проверяемые части")
+        self.assertContains(response, "Чтение")
+        self.assertContains(response, "4 / 5 · 80%")
+        self.assertContains(response, "04.10.2026 08:00 · Вариант 2")
+        self.assertContains(response, "Ответы, письмо и речь не сохраняются")
 
     def test_writing_and_speaking_have_no_automatic_score_or_server_text_field(self):
         writing = self.client.get("/exam/b1/simulation/?part=writing")
