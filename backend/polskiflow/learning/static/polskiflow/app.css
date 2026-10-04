@@ -221,11 +221,13 @@ p { line-height: 1.65; }
 .practice-card--green { --card-accent: #21865a; --card-tint: #e7f8ef; }
 .practice-card--amber { --card-accent: #a9660e; --card-tint: #fff4df; }
 .practice-card--slate { --card-accent: #58647b; --card-tint: #edf0f5; }
+.practice-card--exam { --card-accent: #72522a; --card-tint: #fff0cf; }
 :root[data-theme="dark"] .practice-card--blue { --card-accent: #79b2ff; --card-tint: #1c3554; }
 :root[data-theme="dark"] .practice-card--rose { --card-accent: #ff8eb7; --card-tint: #482337; }
 :root[data-theme="dark"] .practice-card--green { --card-accent: #6fdaa4; --card-tint: #173d2d; }
 :root[data-theme="dark"] .practice-card--amber { --card-accent: #ffc36c; --card-tint: #49351a; }
 :root[data-theme="dark"] .practice-card--slate { --card-accent: #bdc9e0; --card-tint: #303646; }
+:root[data-theme="dark"] .practice-card--exam { --card-accent: #ffd58b; --card-tint: #493719; }
 .search-hero { display: grid; gap: 1.25rem; margin-bottom: 1.75rem; padding: clamp(1.2rem, 4vw, 2rem); border: 1px solid var(--line); border-radius: 1.5rem; background: linear-gradient(135deg, var(--surface), var(--surface-soft)); box-shadow: var(--shadow); }
 .search-hero h1 { margin-bottom: .5rem; }
 .global-search-form { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: .65rem; padding: .5rem; border: 1px solid color-mix(in srgb, var(--primary) 30%, var(--line)); border-radius: 1rem; background: var(--surface); box-shadow: 0 8px 24px rgba(43,39,82,.06); }
@@ -312,6 +314,9 @@ p { line-height: 1.65; }
 .audio-attribution h2 { margin-top: 0; font-size: 1rem; }
 .audio-attribution p { margin-bottom: 0; color: var(--muted); font-size: .78rem; }
 .topic-card { min-width: 0; padding: 1rem; border: 1px solid var(--line); border-radius: 1.35rem; background: rgba(255,255,255,.55); }
+.topic-card > summary { list-style: none; }
+.topic-card > summary::-webkit-details-marker { display: none; }
+.topic-summary { cursor: pointer; }
 .topic-header { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: .8rem; margin-bottom: .85rem; }
 .topic-emoji { display: grid; place-items: center; width: 3rem; aspect-ratio: 1; border-radius: .95rem; background: var(--primary-soft); font-size: 1.45rem; }
 .topic-header small, .topic-header strong, .topic-header span span { display: block; }
@@ -321,6 +326,10 @@ p { line-height: 1.65; }
 .topic-progress-row { display: flex; justify-content: space-between; gap: 1rem; margin-bottom: .38rem; color: var(--muted); font-size: .72rem; font-weight: 750; }
 .topic-progress { height: .42rem; margin-bottom: .9rem; overflow: hidden; border-radius: 999px; background: #e5e2f3; }
 .topic-progress span { display: block; width: var(--value); height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--primary), #9b7cff); }
+.topic-summary-action { display: none; align-items: center; justify-content: space-between; color: var(--primary-dark); font-size: .76rem; font-weight: 850; }
+.topic-summary-action span { font-size: 1.1rem; transition: transform .18s ease; }
+.topic-card[open] .topic-summary-action span { transform: rotate(180deg); }
+.topic-lessons { padding-top: .1rem; }
 .topic-action { display: flex; align-items: center; justify-content: center; gap: .45rem; min-height: 2.8rem; margin-top: .85rem; border-radius: .9rem; background: var(--action); color: white; font-size: .82rem; font-weight: 800; text-decoration: none; }
 .topic-action:hover { background: var(--action-hover); }
 .topic-complete-status { display: flex; align-items: center; justify-content: center; gap: .45rem; min-height: 2.8rem; margin: .85rem 0 0; border-radius: .9rem; background: var(--green-soft); color: var(--green); font-size: .82rem; font-weight: 800; }
@@ -869,6 +878,13 @@ button.secondary { background: white; color: var(--text); border: 1px solid #dcd
   .auth-brand { display: flex; flex-direction: column; }
   .auth-panel { padding: 3rem; }
   .auth-panel .brand { display: none; }
+}
+
+@media (max-width: 699px) {
+  .topic-card { padding: .9rem; }
+  .topic-summary-action { display: flex; }
+  .topic-card:not([open]) .topic-progress { margin-bottom: .65rem; }
+  .topic-card[open] .topic-summary-action { margin-bottom: .85rem; }
 }
 
 @media (min-width: 850px) {

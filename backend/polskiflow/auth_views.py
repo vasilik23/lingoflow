@@ -1017,6 +1017,10 @@ def course(request: HttpRequest) -> HttpResponse:
         duration=filters["duration"],
         completion=filters["completion"],
     )
+    primary_topic_id = next(
+        (topic["id"] for topic in topics if not topic["completed"]),
+        topics[0]["id"] if topics else "",
+    )
     result_lesson_count = sum(len(topic["lessons"]) for topic in topics)
     return render(
         request,
@@ -1024,6 +1028,7 @@ def course(request: HttpRequest) -> HttpResponse:
         {
             "dashboard": dashboard,
             "course_topics": topics,
+            "primary_topic_id": primary_topic_id,
             "course_levels": [
                 {
                     "name": level,
