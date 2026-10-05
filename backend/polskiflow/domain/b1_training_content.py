@@ -6,7 +6,7 @@ from polskiflow.domain.b1_weekly_mock import MockQuestion
 from polskiflow.domain.b1_exam_simulation import simulation_questions, score_simulation_part
 from polskiflow.domain.b1_training_reading import READING_BLOCKS, ReadingBlock
 
-CONTENT_VERSION = 4
+CONTENT_VERSION = 5
 ORIGIN = "original"
 CREATED_FOR = "PolskiFlow"
 VERIFIED_AT = date(2026, 10, 5)  # Internal editorial review, not independent validation.

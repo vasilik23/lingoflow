@@ -2,7 +2,7 @@
 {% load static %}
 {% block title %}Учебный прогон B1 · PolskiFlow{% endblock %}
 {% block content %}
-<div class="mock-shell" data-b1-run data-namespace="{{ run_namespace }}" data-run-id="{{ state.run_id }}" data-phase="{{ state.phase }}" data-seconds="{{ timer_seconds }}"{% if fresh %} data-fresh="1"{% endif %}{% if discard_draft %} data-discard="1"{% endif %}{% if normalize_navigation %} data-normalize-navigation="1"{% endif %}>
+<div class="mock-shell" data-b1-run data-namespace="{{ run_namespace }}" data-run-id="{{ state.run_id }}" data-phase="{{ state.phase }}" data-seconds="{{ timer_seconds }}" data-preparation-seconds="{{ speaking_preparation_seconds }}"{% if speaking_preparation_seconds %} data-preparing-speaking="1"{% endif %}{% if fresh %} data-fresh="1"{% endif %}{% if discard_draft %} data-discard="1"{% endif %}{% if normalize_navigation %} data-normalize-navigation="1"{% endif %}>
   <header class="mock-header"><div><p class="eyebrow">B1 · {{ variant.label }}</p><h1>Учебный прогон пяти частей</h1><p>Оригинальные учебные задания PolskiFlow. Это учебный маршрут, не полная симуляция и не оценка государственного экзамена.</p></div></header>
   <p><a href="{% url 'b1-exam-prep' %}">← К подготовке B1</a></p>
   {% if error %}<p class="form-message error" role="alert">{{ error }}</p>{% endif %}
@@ -25,10 +25,12 @@
             {% for task in writing_tasks %}<section aria-labelledby="writing-{{ task.id }}"><h3 id="writing-{{ task.id }}" lang="pl">{{ task.title }}</h3><p lang="pl"><strong>{{ task.prompt }}</strong></p><label for="run-writing{% if not forloop.first %}-2{% endif %}">Черновик {{ forloop.counter }} только в этой вкладке</label><textarea id="run-writing{% if not forloop.first %}-2{% endif %}" rows="{% if forloop.first %}8{% else %}14{% endif %}" aria-describedby="run-writing-note writing-words-{{ task.id }}"></textarea><p id="writing-words-{{ task.id }}" class="muted" data-writing-words data-editor="run-writing{% if not forloop.first %}-2{% endif %}" data-minimum="{{ task.minimum }}" data-maximum="{{ task.maximum }}" aria-live="off">Слов: 0 · ориентир {{ task.minimum }}–{{ task.maximum }}</p><button type="button" class="compact-button" data-clear-run-writing{% if not forloop.first %}2{% endif %}>Удалить текст {{ forloop.counter }}</button></section>{% endfor %}
             <p id="run-writing-note" class="muted">Тексты не отправляются на сервер. Счётчик — ориентир объёма, не оценка качества. Проверь выполнение всех пунктов каждого задания, связность, стиль и языковую правильность. Завершение или пропуск части удаляет черновики.</p>
           {% else %}
-            <p lang="pl"><strong>{{ variant.speaking_prompt }}</strong></p>
+            {% if speaking_tasks|length > 1 %}<p class="muted">Общий таймер включает 2 минуты подготовки и 9 минут для трёх ответов и самопроверки. Это учебные лимиты. Репетиция диалога самостоятельная: реплики собеседника напечатаны.</p><p>Подготовка: <strong data-speaking-prep-timer role="timer" aria-live="off"></strong></p><p data-speaking-prep-status role="status">Прочитай все три задания и составь план. Запись будет доступна после подготовки.</p>{% endif %}
+            {% for task in speaking_tasks %}<section aria-labelledby="speaking-{{ task.id }}"><h3 id="speaking-{{ task.id }}" lang="pl">{{ task.title }}</h3><p lang="pl"><strong>{{ task.prompt }}</strong></p><ul lang="pl">{% for item in task.checklist %}<li>{{ item }}</li>{% endfor %}</ul></section>{% endfor %}
             <div data-run-recorder>
               <p class="muted">Ответь вслух. Запись добровольная: микрофон включается только по кнопке и с твоего разрешения. Аудио остаётся в памяти этой страницы, не отправляется на сервер и не оценивается автоматически.</p>
-              <div class="speaking-controls"><button type="button" class="compact-button" data-record-start>Записать устный ответ</button><button type="button" class="compact-button secondary" data-record-stop disabled>Остановить запись</button><button type="button" class="compact-button secondary" data-record-delete hidden>Удалить запись</button></div>
+              {% if speaking_tasks|length > 1 %}<p class="muted">Одна запись для всех трёх ответов. Новая запись заменит предыдущую.</p>{% endif %}
+              <div class="speaking-controls"><button type="button" class="compact-button" data-record-start{% if speaking_preparation_seconds %} disabled{% endif %}>Записать устный ответ</button><button type="button" class="compact-button secondary" data-record-stop disabled>Остановить запись</button><button type="button" class="compact-button secondary" data-record-delete hidden>Удалить запись</button></div>
               <p class="muted" data-record-status role="status">Микрофон ещё не используется.</p>
               <audio controls data-record-audio hidden aria-label="Прослушать свой устный ответ"></audio>
               <p class="muted">Микрофон выключится по таймеру или при уходе. Перезагрузка, завершение части или новый прогон удалят аудио; запись не восстанавливается вместе с прогрессом.</p>
@@ -36,7 +38,7 @@
           {% endif %}
           <label><input type="checkbox" name="reviewed"> Я проверил выполнение всех пунктов, структуру, стиль и языковую правильность</label>
         {% endif %}
-        <button type="submit" name="action" value="finish" class="primary-button" data-finish-part>Завершить {% if part.mode == 'objective' %}и проверить{% else %}самопроверку{% endif %}</button>
+        <button type="submit" name="action" value="finish" class="primary-button" data-finish-part{% if speaking_preparation_seconds %} disabled{% endif %}>Завершить {% if part.mode == 'objective' %}и проверить{% else %}самопроверку{% endif %}</button>
         <button type="submit" name="action" value="skip" class="compact-button" formnovalidate>Пропустить часть без балла</button>
       </section>
     {% endif %}
@@ -51,4 +53,5 @@
 <script src="{% static 'polskiflow/b1-run-recorder.js' %}?shell={{ pwa_shell_version }}" defer></script>
 <script src="{% static 'polskiflow/b1-run-listening.js' %}?shell={{ pwa_shell_version }}" defer></script>
 <script src="{% static 'polskiflow/b1-run-writing.js' %}?shell={{ pwa_shell_version }}" defer></script>
+<script src="{% static 'polskiflow/b1-run-speaking.js' %}?shell={{ pwa_shell_version }}" defer></script>
 {% endblock %}

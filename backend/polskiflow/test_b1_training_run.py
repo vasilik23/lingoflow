@@ -11,9 +11,41 @@ from polskiflow.b1_run_views import BREAK_SECONDS, RUN_MAX_AGE, RUN_SALT
 from polskiflow.domain.b1_training_content import training_questions, score_training_part, training_reading_blocks
 from polskiflow.domain.b1_weekly_mock import VARIANTS
 from polskiflow.domain.b1_training_writing import training_writing_tasks
+from polskiflow.domain.b1_training_speaking import PREPARATION_SECONDS, training_speaking_tasks
 
 
 class B1TrainingRunTests(TestCase):
+    def test_extended_speaking_tasks_and_legacy_three_minute_budget(self):
+        for variant in VARIANTS:
+            self.assertEqual(len(training_speaking_tasks(variant, 5)), 3)
+            self.assertTrue(all(task.prompt and task.checklist for task in training_speaking_tasks(variant, 5)))
+            for version in (1, 2, 3, 4):
+                self.assertEqual(len(training_speaking_tasks(variant, version)), 1)
+        opened = self.client.get("/exam/b1/run/")
+        for version in (1, 2, 3, 4):
+            state = dict(opened.context["state"], content_version=version, phase="break", step=4, break_until=self.now)
+            legacy = self.client.post("/exam/b1/run/", {"run_token": signing.dumps(state, salt=RUN_SALT), "action": "start"})
+            self.assertEqual(legacy.context["timer_seconds"], 180)
+            self.assertEqual(legacy.context["speaking_preparation_seconds"], 0)
+            self.assertNotContains(legacy, "data-speaking-prep-timer")
+            self.assertEqual(len(legacy.context["speaking_tasks"]), 1)
+
+    def test_speaking_preparation_cannot_be_skipped_by_finish_or_reload(self):
+        opened = self.client.get("/exam/b1/run/")
+        state = dict(opened.context["state"], phase="break", step=4, break_until=self.now)
+        speaking = self.client.post("/exam/b1/run/", {"run_token": signing.dumps(state, salt=RUN_SALT), "action": "start"})
+        self.assertEqual(speaking.context["timer_seconds"], 11 * 60)
+        self.assertEqual(self.advance(speaking, "finish", reviewed="on").status_code, 400)
+        self.now += 30
+        resumed = self.advance(speaking, "resume")
+        self.assertEqual(resumed.context["speaking_preparation_seconds"], PREPARATION_SECONDS - 30)
+        self.assertEqual(resumed.context["state"]["deadline"], speaking.context["state"]["deadline"])
+        self.now += PREPARATION_SECONDS - 30
+        result = self.advance(resumed, "finish", reviewed="on")
+        self.assertEqual(result.status_code, 200)
+        self.assertNotIn("speaking_ready_at", result.context["state"])
+        self.assertNotIn("percent", result.context["state"]["results"][-1])
+
     def test_new_writing_has_two_original_tasks_without_changing_legacy_runs(self):
         for variant in VARIANTS:
             tasks = training_writing_tasks(variant, 4)
@@ -145,6 +177,8 @@ class B1TrainingRunTests(TestCase):
             fields = {f"answer_{q.id}": q.correct for q in response.context["questions"]}
             if part["mode"] == "self_review":
                 fields = {"reviewed": "on"}
+            if part["id"] == "speaking":
+                self.now += PREPARATION_SECONDS
             response = self.advance(response, "finish", **fields)
             self.assertEqual(response.status_code, 200)
             if index < 4:
@@ -222,6 +256,7 @@ class B1TrainingRunTests(TestCase):
         speaking = self.advance(completed, "start")
         self.assertContains(speaking, "data-run-recorder")
         self.assertEqual(self.advance(speaking, "finish", reviewed="on", audio="private audio").status_code, 400)
+        self.now += PREPARATION_SECONDS
         self.assertEqual(self.advance(speaking, "finish", reviewed="on").status_code, 200)
 
     def test_guest_and_csrf_boundaries(self):

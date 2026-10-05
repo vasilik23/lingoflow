@@ -5,13 +5,15 @@ const path = require('node:path');
 const source = fs.readFileSync(path.join(__dirname, 'learning/static/polskiflow/b1-run-recorder.js'), 'utf8');
 class Element {
   constructor() { this.events = {}; this.dataset = {}; this.hidden = false; }
-  addEventListener(name, callback) { this.events[name] = callback; }
-  emit(name, event = {}) { return this.events[name]?.(event); }
+  addEventListener(name, callback) { (this.events[name] ||= []).push(callback); }
+  emit(name, event = {}) { return this.events[name]?.reduce((_, callback) => callback(event), undefined); }
+  dispatchEvent(event) { return this.emit(event.type, event); }
   pause() {} load() {} focus() {}
   removeAttribute(name) { delete this[name]; }
 }
-function fixture({denied = false, delayed = false, broken = false} = {}) {
+function fixture({denied = false, delayed = false, broken = false, preparing = false} = {}) {
   const nodes = Object.fromEntries(['start', 'stop', 'delete', 'audio', 'status', 'finish', 'restart', 'form', 'root', 'window', 'panel'].map(name => [name, new Element()]));
+  if (preparing) nodes.root.dataset.preparingSpeaking = '1';
   nodes.panel.querySelector = selector => nodes[selector === 'audio' ? 'audio' : selector.match(/record-(.*?)\]/)[1]];
   nodes.root.querySelector = selector => nodes[selector.includes('finish') ? 'finish' : 'restart'];
   const track = new Element(); track.readyState = 'live'; track.stop = () => { track.readyState = 'ended'; };
@@ -56,5 +58,26 @@ function fixture({denied = false, delayed = false, broken = false} = {}) {
     assert.equal(f.nodes.finish.disabled, false, 'self review remains available');
     if (options.broken) assert.equal(f.track.readyState, 'ended');
   }
+  const preparing = fixture({preparing: true});
+  assert.equal(preparing.nodes.start.disabled, true);
+  await preparing.nodes.start.emit('click'); assert.equal(preparing.calls(), 0, 'preparation never requests microphone');
+  const timer = new Element(), status = new Element(), tasks = [];
+  const previousQuery = preparing.nodes.root.querySelector;
+  preparing.nodes.root.querySelector = selector => selector.includes('prep-timer') ? timer : selector.includes('prep-status') ? status : previousQuery(selector);
+  preparing.nodes.root.dataset.preparationSeconds = '120';
+  let now = 100000;
+  preparing.nodes.window.setTimeout = callback => tasks.push(callback);
+  vm.runInNewContext(fs.readFileSync(path.join(__dirname, 'learning/static/polskiflow/b1-run-speaking.js'), 'utf8'), {
+    document: {querySelector: () => preparing.nodes.root}, window: preparing.nodes.window, Date: {now: () => now}, Event,
+  });
+  assert.equal(timer.textContent, '02:00');
+  now += 30000; tasks[0](); assert.equal(timer.textContent, '01:30');
+  now += 90000; tasks.at(-1)();
+  assert.equal(timer.textContent, '00:00'); assert.equal(preparing.nodes.start.disabled, false); assert.equal(preparing.calls(), 0);
+  await preparing.nodes.start.emit('click'); assert.equal(preparing.calls(), 1);
+  preparing.nodes.window.emit('pagehide'); assert.equal(preparing.track.readyState, 'ended');
+  const expiredPreparation = fixture({preparing: true});
+  expiredPreparation.nodes.root.emit('b1-run-expired'); expiredPreparation.nodes.root.emit('b1-speaking-ready');
+  assert.equal(expiredPreparation.nodes.finish.disabled, true, 'readiness cannot revive an expired part');
   console.log('Recording lifecycle: PASS');
 })().catch(error => { console.error(error); process.exitCode = 1; });

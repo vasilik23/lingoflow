@@ -15,6 +15,11 @@ B1_RUN_WRITING_INSTRUCTION = {
     "russian": "Прочитай оба задания и напиши два текста по-польски. В каждом включи всю требуемую информацию. Затем проверь структуру, стиль и языковую правильность обоих текстов. Счётчик слов помогает контролировать объём, но не оценивает качество. Эта часть предназначена для самопроверки.",
 }
 
+B1_RUN_SPEAKING_INSTRUCTION = {
+    "polish": "Przeczytaj trzy polecenia i przygotuj plan odpowiedzi w ciągu dwóch minut. Następnie odpowiedz na głos: przedstaw wypowiedź osobistą, opisz sytuację i odpowiedz na podane kwestie rozmówcy. Pozostałe dziewięć minut przeznacz na odpowiedzi i samoocenę. Nagranie jest dobrowolne. To zasady treningu, nie oficjalna procedura egzaminu.",
+    "russian": "Прочитай три задания и за две минуты подготовь план ответов. Затем ответь вслух: расскажи о себе, опиши ситуацию и ответь на приведённые реплики собеседника. Оставшиеся девять минут используй для ответов и самопроверки. Запись добровольная. Это учебные правила, не официальная процедура экзамена.",
+}
+
 B1_INSTRUCTIONS = {
     "listening": {
         "polish": "Posłuchaj komunikatu. Przeczytaj pytania i zaznacz jedną odpowiedź w każdym zadaniu. W tej treningowej wersji możesz ponownie odtworzyć komunikat.",
