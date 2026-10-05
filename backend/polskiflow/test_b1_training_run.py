@@ -15,6 +15,24 @@ from polskiflow.domain.b1_training_speaking import PREPARATION_SECONDS, training
 
 
 class B1TrainingRunTests(TestCase):
+    def test_recording_metadata_and_pinned_asset_are_rendered_only_for_matching_run(self):
+        from polskiflow.test_b1_listening_recordings import B1RecordingChecksTests
+        fixture = B1RecordingChecksTests()
+        fixture.setUp()
+        with patch("polskiflow.b1_run_views.weekly_mock_variant", return_value=VARIANTS[0]), patch(
+            "polskiflow.domain.b1_listening_recordings.RECORDINGS", (fixture.item,)
+        ):
+            intro = self.client.get("/exam/b1/run/")
+            self.assertEqual(intro.context["state"]["listening_recording_id"], fixture.item.id)
+            opened = self.advance(intro, "start")
+            self.assertContains(opened, "data-run-audio preload=\"none\"")
+            self.assertContains(opened, "Test narrator")
+            self.assertContains(opened, fixture.item.license_url)
+            self.assertNotContains(opened, "Системный польский голос устройства")
+        resumed = self.advance(opened, "resume")
+        self.assertContains(resumed, "data-missing-recording=\"1\"")
+        self.assertNotContains(resumed, "Системный польский голос устройства")
+
     def test_extended_speaking_tasks_and_legacy_three_minute_budget(self):
         for variant in VARIANTS:
             self.assertEqual(len(training_speaking_tasks(variant, 5)), 3)

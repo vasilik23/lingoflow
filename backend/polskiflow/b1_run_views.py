@@ -17,6 +17,7 @@ from polskiflow.domain.b1_training_writing import training_writing_tasks
 from polskiflow.domain.b1_training_speaking import PREPARATION_SECONDS, training_speaking_tasks
 from polskiflow.domain.b1_weekly_mock import get_mock_variant, weekly_mock_variant
 from polskiflow.practice_preferences import excluded_practice_topics
+from polskiflow.domain.b1_listening_recordings import recording_for_variant, recording_for_run
 
 RUN_SALT = "polskiflow.b1-training-run.v1"
 RUN_MAX_AGE = 4 * 60 * 60
@@ -38,11 +39,13 @@ def _minutes(state, part_id):
 
 def _new_state(request):
     variant = weekly_mock_variant(timezone.localdate(), excluded_practice_topics(request))
+    recording = recording_for_variant(variant)
     return {
         "user_id": request.supabase_user.id, "run_id": str(uuid4()),
         "variant_id": variant.id, "phase": "intro", "step": 0, "results": [],
         "created_at": int(time.time()),
         "content_version": CONTENT_VERSION,
+        "listening_recording_id": recording.id if recording else None,
     }
 
 
@@ -129,6 +132,7 @@ def b1_training_run(request):
     token = token or signing.dumps(state, salt=RUN_SALT)
     report = tuple({**part_info, **result} for part_info, result in zip(B1_SIMULATION_PARTS, state["results"]))
     instruction = B1_INSTRUCTIONS.get(part["id"]) if part else None
+    listening_recording = recording_for_run(state, variant) if part and part["id"] == "listening" else None
     if part and part["id"] == "listening":
         instruction = B1_RUN_LISTENING_INSTRUCTION
     elif part and part["id"] == "reading" and state.get("content_version", 1) >= 3:
@@ -145,6 +149,8 @@ def b1_training_run(request):
         "speaking_tasks": training_speaking_tasks(variant, state.get("content_version", 1)) if part and part["id"] == "speaking" else (),
         "speaking_preparation_seconds": max(0, state.get("speaking_ready_at", now) - now) if part and part["id"] == "speaking" else 0,
         "instruction": instruction,
+        "listening_recording": listening_recording,
+        "missing_recording": bool(part and part["id"] == "listening" and state.get("listening_recording_id") and not listening_recording),
         "run_token": token, "error": error, "report": report,
         "timer_seconds": max(0, state.get("deadline", state.get("break_until", now)) - now),
         "run_namespace": salted_hmac(RUN_SALT, request.supabase_user.id).hexdigest()[:32],
