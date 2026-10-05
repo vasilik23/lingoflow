@@ -3,13 +3,13 @@
 {% block title %}Учебный прогон B1 · PolskiFlow{% endblock %}
 {% block content %}
 <div class="mock-shell" data-b1-run data-namespace="{{ run_namespace }}" data-run-id="{{ state.run_id }}" data-phase="{{ state.phase }}" data-seconds="{{ timer_seconds }}"{% if fresh %} data-fresh="1"{% endif %}{% if discard_draft %} data-discard="1"{% endif %}{% if normalize_navigation %} data-normalize-navigation="1"{% endif %}>
-  <header class="mock-header"><div><p class="eyebrow">B1 · {{ variant.label }}</p><h1>Учебный прогон пяти частей</h1><p>Короткие оригинальные задания PolskiFlow. Это учебный маршрут, не полная симуляция и не оценка государственного экзамена.</p></div></header>
+  <header class="mock-header"><div><p class="eyebrow">B1 · {{ variant.label }}</p><h1>Учебный прогон пяти частей</h1><p>Оригинальные учебные задания PolskiFlow. Это учебный маршрут, не полная симуляция и не оценка государственного экзамена.</p></div></header>
   <p><a href="{% url 'b1-exam-prep' %}">← К подготовке B1</a></p>
   {% if error %}<p class="form-message error" role="alert">{{ error }}</p>{% endif %}
   <p class="form-message warning" data-run-storage-status role="status" hidden></p>
   <form method="post" id="b1-run-form">{% csrf_token %}<input type="hidden" name="run_token" value="{{ run_token }}">
     {% if state.phase == 'intro' %}
-      <section class="card mock-section"><h2>Пять частей по порядку</h2><ol>{% for item in parts %}<li>{{ item.title }} · {{ item.training_minutes }} мин{% if item.mode == "objective" %} · {{ item.question_count }} заданий{% endif %}{% if item.mode == 'self_review' %} · самопроверка{% endif %}</li>{% endfor %}</ol><p>Между частями — учебный перерыв 2 минуты. Лимиты редакторские, ещё не проверены на учащихся; число вопросов указано для каждой части, письмо и речь — короткие задания.</p><p>Прогон восстанавливается в текущей вкладке до 4 часов. Ответы отправляются только кнопкой проверки, после чего остаются агрегированные баллы. Письмо и речь не отправляются на сервер. Итог хранится в этой вкладке, не добавляется в историю аккаунта.</p><button type="submit" name="action" value="start" class="primary-button">Начать учебный прогон</button></section>
+      <section class="card mock-section"><h2>Пять частей по порядку</h2><ol>{% for item in parts %}<li>{{ item.title }} · {{ item.training_minutes }} мин{% if item.mode == "objective" %} · {{ item.question_count }} заданий{% endif %}{% if item.mode == 'self_review' %} · самопроверка{% endif %}</li>{% endfor %}</ol><p>Между частями — учебный перерыв 2 минуты. Лимиты редакторские, ещё не проверены на учащихся; число вопросов указано для каждой части, письмо и речь — самопроверка.</p><p>Прогон восстанавливается в текущей вкладке до 4 часов. Ответы отправляются только кнопкой проверки, после чего остаются агрегированные баллы. Письмо и речь не отправляются на сервер. Итог хранится в этой вкладке, не добавляется в историю аккаунта.</p><button type="submit" name="action" value="start" class="primary-button">Начать учебный прогон</button></section>
     {% elif state.phase == 'break' %}
       <section class="card mock-section"><h2>Перерыв перед частью «{{ part.title }}»</h2><p>Завершено {{ state.step }} из 5. Отдохни: таймер новой части начнётся после нажатия кнопки.</p><strong data-run-timer role="timer" aria-live="off"></strong><p data-run-timer-status role="status" aria-live="polite"></p><button type="submit" name="action" value="start" class="primary-button" data-next-part{% if timer_seconds %} disabled{% endif %}>Начать следующую часть</button></section>
     {% elif state.phase == 'part' %}
@@ -21,9 +21,11 @@
             {% for block in reading_blocks %}<section aria-labelledby="reading-{{ block.id }}"><h3 id="reading-{{ block.id }}" lang="pl">{{ block.title }}</h3><p class="mock-source-text" lang="pl">{{ block.text }}</p>{% for question in block.questions %}{% include "partials/b1_mock_question.html" %}{% endfor %}</section>{% endfor %}
           {% else %}{% for question in questions %}{% include "partials/b1_mock_question.html" %}{% endfor %}{% endif %}
         {% else %}
-          <p lang="pl"><strong>{% if part.id == 'writing' %}{{ variant.writing_prompt }}{% else %}{{ variant.speaking_prompt }}{% endif %}</strong></p>
-          {% if part.id == 'writing' %}<label for="run-writing">Черновик только в этой вкладке</label><textarea id="run-writing" rows="12" aria-describedby="run-writing-note"></textarea><p id="run-writing-note" class="muted">Текст не отправляется на сервер. Завершение или пропуск части удаляет черновик.</p><button type="button" class="compact-button" data-clear-run-writing>Удалить текст</button>
+          {% if part.id == 'writing' %}
+            {% for task in writing_tasks %}<section aria-labelledby="writing-{{ task.id }}"><h3 id="writing-{{ task.id }}" lang="pl">{{ task.title }}</h3><p lang="pl"><strong>{{ task.prompt }}</strong></p><label for="run-writing{% if not forloop.first %}-2{% endif %}">Черновик {{ forloop.counter }} только в этой вкладке</label><textarea id="run-writing{% if not forloop.first %}-2{% endif %}" rows="{% if forloop.first %}8{% else %}14{% endif %}" aria-describedby="run-writing-note writing-words-{{ task.id }}"></textarea><p id="writing-words-{{ task.id }}" class="muted" data-writing-words data-editor="run-writing{% if not forloop.first %}-2{% endif %}" data-minimum="{{ task.minimum }}" data-maximum="{{ task.maximum }}" aria-live="off">Слов: 0 · ориентир {{ task.minimum }}–{{ task.maximum }}</p><button type="button" class="compact-button" data-clear-run-writing{% if not forloop.first %}2{% endif %}>Удалить текст {{ forloop.counter }}</button></section>{% endfor %}
+            <p id="run-writing-note" class="muted">Тексты не отправляются на сервер. Счётчик — ориентир объёма, не оценка качества. Проверь выполнение всех пунктов каждого задания, связность, стиль и языковую правильность. Завершение или пропуск части удаляет черновики.</p>
           {% else %}
+            <p lang="pl"><strong>{{ variant.speaking_prompt }}</strong></p>
             <div data-run-recorder>
               <p class="muted">Ответь вслух. Запись добровольная: микрофон включается только по кнопке и с твоего разрешения. Аудио остаётся в памяти этой страницы, не отправляется на сервер и не оценивается автоматически.</p>
               <div class="speaking-controls"><button type="button" class="compact-button" data-record-start>Записать устный ответ</button><button type="button" class="compact-button secondary" data-record-stop disabled>Остановить запись</button><button type="button" class="compact-button secondary" data-record-delete hidden>Удалить запись</button></div>
@@ -32,7 +34,7 @@
               <p class="muted">Микрофон выключится по таймеру или при уходе. Перезагрузка, завершение части или новый прогон удалят аудио; запись не восстанавливается вместе с прогрессом.</p>
             </div>
           {% endif %}
-          <label><input type="checkbox" name="reviewed"> Я проверил выполнение задания, структуру, стиль и языковую правильность</label>
+          <label><input type="checkbox" name="reviewed"> Я проверил выполнение всех пунктов, структуру, стиль и языковую правильность</label>
         {% endif %}
         <button type="submit" name="action" value="finish" class="primary-button" data-finish-part>Завершить {% if part.mode == 'objective' %}и проверить{% else %}самопроверку{% endif %}</button>
         <button type="submit" name="action" value="skip" class="compact-button" formnovalidate>Пропустить часть без балла</button>
@@ -48,4 +50,5 @@
 <script src="{% static 'polskiflow/b1-training-run.js' %}?shell={{ pwa_shell_version }}" defer></script>
 <script src="{% static 'polskiflow/b1-run-recorder.js' %}?shell={{ pwa_shell_version }}" defer></script>
 <script src="{% static 'polskiflow/b1-run-listening.js' %}?shell={{ pwa_shell_version }}" defer></script>
+<script src="{% static 'polskiflow/b1-run-writing.js' %}?shell={{ pwa_shell_version }}" defer></script>
 {% endblock %}
