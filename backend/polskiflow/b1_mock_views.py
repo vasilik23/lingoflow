@@ -11,6 +11,7 @@ from django.views.decorators.http import require_http_methods
 from polskiflow.auth_views import require_browser_user
 from polskiflow.b1_mock_store import load_b1_mock_attempts, save_b1_mock_attempt
 from polskiflow.b1_section_store import load_b1_section_attempts, save_b1_section_attempt
+from polskiflow.domain.b1_exam_instructions import B1_INSTRUCTIONS
 from polskiflow.domain.b1_exam_simulation import (
     B1_SIMULATION_PARTS,
     get_simulation_part,
@@ -76,6 +77,7 @@ def b1_weekly_mock(request: HttpRequest) -> HttpResponse:
     )
     return render(request, "b1_weekly_mock.html", {
         "variant": variant,
+        "instructions": B1_INSTRUCTIONS,
         "questions": variant.questions,
         "listening_transcript": variant.listening_transcript,
         "reading_text": variant.reading_text,
@@ -158,6 +160,7 @@ def b1_exam_simulation(request: HttpRequest) -> HttpResponse:
     return render(request, "b1_exam_simulation.html", {
         "parts": parts,
         "part": part,
+        "instruction": B1_INSTRUCTIONS.get(part["id"]) if part else None,
         "variant": variant,
         "questions": questions,
         "question_count": len(questions),

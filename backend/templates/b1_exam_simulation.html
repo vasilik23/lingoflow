@@ -26,6 +26,7 @@
   {% else %}
     <p><a href="{% url 'b1-exam-simulation' %}">← Выбрать другую часть</a></p>
     {% if error %}<div class="form-message error" role="alert">{{ error }}</div>{% endif %}
+    {% if not result %}<section class="card mock-section">{% include "partials/b1_exam_instruction.html" %}</section>{% endif %}
     {% if result %}<section class="card mock-summary"><div><p class="eyebrow">Результат этой тренировки</p><h2>{{ result.correct }} из {{ result.total }} · {{ result.percent }}%</h2><p class="muted">Это результат короткого оригинального набора, не оценка официальной части B1.</p>{% if saved %}<p class="form-message success">Агрегированный результат сохранён между устройствами.</p>{% elif saved is False %}<p class="form-message error">Результат показан, но историю сейчас сохранить не удалось.</p>{% endif %}<a class="compact-button" href="{% url 'b1-exam-simulation' %}">К пяти частям</a></div></section>{% endif %}
 
     {% if part.mode == "objective" %}
@@ -40,7 +41,7 @@
     {% elif part.id == "writing" %}
       <section class="card mock-section"><p class="eyebrow" lang="pl">Pisanie</p><h2>Задание</h2><p lang="pl"><strong>{{ variant.writing_prompt }}</strong></p><label for="simulation-writing">Черновик остаётся только в этой вкладке</label><textarea id="simulation-writing" rows="14" aria-describedby="simulation-writing-note"></textarea><button class="compact-button" type="button" id="simulation-clear-writing">Удалить текст черновика</button><p class="muted" id="simulation-draft-status" role="status"></p><p class="muted" id="simulation-writing-note">Текст восстанавливается после перезагрузки в этой вкладке, не отправляется на сервер и не оценивается автоматически. Завершение самопроверки удаляет черновик. Таймер продолжится после возврата. После попытки проверь выполнение всех пунктов, структуру, регистр и грамматику.</p><button class="primary-button mock-submit" type="button" data-complete-self-review>Завершить самопроверку</button></section>
     {% else %}
-      <section class="card mock-section"><p class="eyebrow" lang="pl">Mówienie</p><h2>Задание</h2><p lang="pl"><strong>{{ variant.speaking_prompt }}</strong></p><ul><li>выполни все пункты задания;</li><li>свяжи части ответа;</li><li>приведи конкретный пример;</li><li>заверши понятным выводом.</li></ul><p class="muted">Речь не записывается и не получает автоматического балла на этом экране. Таймер продолжится после возврата.</p><button class="primary-button mock-submit" type="button" data-complete-self-review>Завершить самопроверку</button></section>
+      <section class="card mock-section"><p class="eyebrow" lang="pl">Mówienie</p><h2>Задание</h2><p lang="pl"><strong>{{ variant.speaking_prompt }}</strong></p><p class="muted">Речь не записывается и не получает автоматического балла на этом экране. Таймер продолжится после возврата.</p><button class="primary-button mock-submit" type="button" data-complete-self-review>Завершить самопроверку</button></section>
     {% endif %}
   {% endif %}
 </div>

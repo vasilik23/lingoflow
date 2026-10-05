@@ -24,24 +24,27 @@
 
     <section class="card mock-section" aria-labelledby="mock-listening-title">
       <div class="mock-section-heading"><span>1</span><div><p class="eyebrow">Rozumienie ze słuchu</p><h2 id="mock-listening-title">Аудирование</h2></div></div>
+      {% if not result %}{% include "partials/b1_exam_instruction.html" with instruction=instructions.listening %}{% endif %}
       {% if not result %}<button class="compact-button" type="button" id="mock-play">▶ Прослушать сообщение</button><p class="muted" id="mock-audio-status" aria-live="polite">Системный польский голос устройства; можно прослушать повторно.</p>{% else %}<p lang="pl" class="mock-source-text">{{ listening_transcript }}</p>{% endif %}
       {% for question in questions %}{% if question.module == "listening" %}{% include "partials/b1_mock_question.html" %}{% endif %}{% endfor %}
     </section>
 
     <section class="card mock-section" aria-labelledby="mock-reading-title">
       <div class="mock-section-heading"><span>2</span><div><p class="eyebrow">Rozumienie tekstów pisanych</p><h2 id="mock-reading-title">Чтение</h2></div></div>
+      {% if not result %}{% include "partials/b1_exam_instruction.html" with instruction=instructions.reading %}{% endif %}
       <p lang="pl" class="mock-source-text">{{ reading_text }}</p>
       {% for question in questions %}{% if question.module == "reading" %}{% include "partials/b1_mock_question.html" %}{% endif %}{% endfor %}
     </section>
 
     <section class="card mock-section" aria-labelledby="mock-grammar-title">
       <div class="mock-section-heading"><span>3</span><div><p class="eyebrow">Poprawność gramatyczna</p><h2 id="mock-grammar-title">Грамматика</h2></div></div>
+      {% if not result %}{% include "partials/b1_exam_instruction.html" with instruction=instructions.grammar %}{% endif %}
       {% for question in questions %}{% if question.module == "grammar" %}{% include "partials/b1_mock_question.html" %}{% endif %}{% endfor %}
     </section>
 
     <section class="mock-self-grid">
-      <article class="card mock-section"><div class="mock-section-heading"><span>4</span><div><p class="eyebrow">Pisanie</p><h2>Письмо</h2></div></div><p lang="pl"><strong>{{ variant.writing_prompt }}</strong></p>{% if not result %}<label for="mock-writing">Локальный черновик</label><textarea id="mock-writing" rows="8" aria-describedby="mock-writing-note"></textarea><button class="compact-button" type="button" id="mock-clear-writing">Удалить текст черновика</button><p class="muted" id="mock-draft-status" role="status"></p>{% endif %}<p class="muted" id="mock-writing-note">Черновик восстанавливается после перезагрузки в этой вкладке и удаляется после завершения. Текст не отправляется на сервер и не оценивается автоматически.</p></article>
-      <article class="card mock-section"><div class="mock-section-heading"><span>5</span><div><p class="eyebrow">Mówienie</p><h2>Говорение</h2></div></div><p lang="pl"><strong>{{ variant.speaking_prompt }}</strong></p><p class="muted">Ответь вслух и проверь: задача выполнена, есть связки, пример и понятный итог. Автоматического балла нет.</p></article>
+      <article class="card mock-section"><div class="mock-section-heading"><span>4</span><div><p class="eyebrow">Pisanie</p><h2>Письмо</h2></div></div>{% if not result %}{% include "partials/b1_exam_instruction.html" with instruction=instructions.writing %}{% endif %}<p lang="pl"><strong>{{ variant.writing_prompt }}</strong></p>{% if not result %}<label for="mock-writing">Локальный черновик</label><textarea id="mock-writing" rows="8" aria-describedby="mock-writing-note"></textarea><button class="compact-button" type="button" id="mock-clear-writing">Удалить текст черновика</button><p class="muted" id="mock-draft-status" role="status"></p>{% endif %}<p class="muted" id="mock-writing-note">Черновик восстанавливается после перезагрузки в этой вкладке и удаляется после завершения. Текст не отправляется на сервер и не оценивается автоматически.</p></article>
+      <article class="card mock-section"><div class="mock-section-heading"><span>5</span><div><p class="eyebrow">Mówienie</p><h2>Говорение</h2></div></div>{% if not result %}{% include "partials/b1_exam_instruction.html" with instruction=instructions.speaking %}{% endif %}<p lang="pl"><strong>{{ variant.speaking_prompt }}</strong></p></article>
     </section>
 
     {% if not result and not error %}<button class="primary-button mock-submit" type="submit">Завершить и проверить</button>{% endif %}
