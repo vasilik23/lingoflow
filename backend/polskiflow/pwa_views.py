@@ -3,9 +3,9 @@ import json
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.templatetags.static import static
+from polskiflow.pwa_version import PWA_SHELL_VERSION
 
 
-PWA_SHELL_VERSION = "v32"
 PWA_CACHE_VERSION = f"polskiflow-shell-{PWA_SHELL_VERSION}"
 
 

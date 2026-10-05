@@ -283,6 +283,10 @@
   считается отдельно по среднему баллу 3–5 последних допустимых попыток;
   до трёх попыток mini-mock не меняет приоритет. Обычные уроки не смешиваются
   с mini-mock, письмо и речь не получают искусственного процента.
+- Версия PWA-кэша, manifest и ссылок public shell автоматически формируется
+  из commit/deployment ID Vercel; локально — из хэша файлов оболочки.
+  Browser smoke подтвердил три публичных ресурса и offline fallback при
+  остановленном сервере. Полный набор из 767 тестов и Django checks прошёл.
 
 Проверено 05.10.2026: 766 Django-тестов, system check, migration drift и
 JavaScript-регрессии проходят. Desktop/mobile browser smoke проверил B1
@@ -298,9 +302,16 @@ https://certyfikatpolski.pl/category/terminy/ (проверен 05.10.2026).
 
 ### P1 — оставшиеся задачи quality sprint
 
-1. Перепривязать Python SDK к текущему `backend/.venv` вместо совместимого алиаса.
-2. Генерировать версию PWA shell из build/release hash.
-3. Настроить короткоживущий `POLSKIFLOW_SMOKE_ACCESS_TOKEN` и выполнить авторизованный production smoke.
+1. Перепривязать SDK в активной IDE к текущему `backend/.venv`, подтвердить путь и удалить совместимый alias.
+2. Настроить короткоживущий `POLSKIFLOW_SMOKE_ACCESS_TOKEN` и выполнить авторизованный production smoke.
+
+Настройка SDK на диске исправлена 05.10.2026: executable, site-packages,
+associated project и working directory указывают на текущую папку Documents.
+После перезапуска инструмент активной IDE всё ещё возвращает Desktop-путь;
+alias сохранён до подтверждения новой привязки.
+Текущее окружение подтверждено, system check и migration drift проходят.
+Для smoke подготовлен игнорируемый `backend/.env.smoke.local` с правами 0600;
+токен пока не настроен, авторизованный smoke не выполнен.
 
 ### P2 — после экзамена: упростить основной учебный продукт
 
