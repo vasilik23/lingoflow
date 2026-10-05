@@ -3,8 +3,17 @@ import json
 from django.test import SimpleTestCase
 from django.urls import reverse
 
+from polskiflow.pwa_version import PWA_SHELL_VERSION, build_shell_version
+
 
 class PwaPrototypeTests(SimpleTestCase):
+    def test_release_and_asset_changes_invalidate_the_shell(self):
+        self.assertEqual(build_shell_version("commit-a"), build_shell_version("commit-a"))
+        self.assertNotEqual(build_shell_version("commit-a"), build_shell_version("commit-b"))
+        self.assertNotEqual(build_shell_version("", (b"old css",)), build_shell_version("", (b"new css",)))
+        self.assertNotEqual(build_shell_version("", (b"ab", b"c")), build_shell_version("", (b"a", b"bc")))
+        self.assertRegex(build_shell_version('unsafe"\nvalue'), r"^build-[0-9a-f]{16}$")
+
     def test_manifest_describes_root_scoped_standalone_app(self):
         response = self.client.get(reverse("web-app-manifest"))
 
@@ -15,7 +24,7 @@ class PwaPrototypeTests(SimpleTestCase):
         self.assertEqual(manifest["start_url"], "/")
         self.assertEqual(manifest["scope"], "/")
         self.assertEqual(manifest["display"], "standalone")
-        self.assertTrue(all(icon["src"].endswith("?shell=v32") for icon in manifest["icons"]))
+        self.assertTrue(all(icon["src"].endswith(f"?shell={PWA_SHELL_VERSION}") for icon in manifest["icons"]))
         self.assertEqual({icon["purpose"] for icon in manifest["icons"]}, {"any", "maskable"})
         self.assertTrue(all(icon["type"] == "image/svg+xml" for icon in manifest["icons"]))
 
@@ -30,9 +39,9 @@ class PwaPrototypeTests(SimpleTestCase):
     def test_service_worker_only_precaches_public_shell_assets(self):
         source = self.client.get(reverse("service-worker")).content.decode()
 
-        self.assertIn('const OFFLINE_URL = "/offline/?shell=v32"', source)
-        self.assertIn('"/static/polskiflow/app.css?shell=v32"', source)
-        self.assertIn('"/static/polskiflow/favicon.svg?shell=v32"', source)
+        self.assertIn(f'const OFFLINE_URL = "/offline/?shell={PWA_SHELL_VERSION}"', source)
+        self.assertIn(f'"/static/polskiflow/app.css?shell={PWA_SHELL_VERSION}"', source)
+        self.assertIn(f'"/static/polskiflow/favicon.svg?shell={PWA_SHELL_VERSION}"', source)
         self.assertIn('if (request.method !== "GET") return', source)
         self.assertIn('if (request.mode === "navigate")', source)
         self.assertIn("fetch(request).catch(() => caches.match(OFFLINE_URL))", source)
@@ -50,8 +59,8 @@ class PwaPrototypeTests(SimpleTestCase):
         with self.settings(ROOT_URLCONF="polskiflow.urls"):
             response = self.client.get(reverse("login"))
 
-        self.assertContains(response, "/static/polskiflow/app.css?shell=v32")
-        self.assertContains(response, "/static/polskiflow/favicon.svg?shell=v32")
+        self.assertContains(response, f"/static/polskiflow/app.css?shell={PWA_SHELL_VERSION}")
+        self.assertContains(response, f"/static/polskiflow/favicon.svg?shell={PWA_SHELL_VERSION}")
 
     def test_service_worker_removes_old_caches(self):
         source = self.client.get(reverse("service-worker")).content.decode()

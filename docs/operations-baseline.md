@@ -47,6 +47,24 @@ backend/.venv/bin/python backend/manage.py production_smoke \
 The token is accepted only through an environment variable, not a CLI argument.
 Do not store it in Git, workflow logs or long-lived repository variables.
 
+Alternatively, put the short-lived token in the ignored local file
+`backend/.env.smoke.local` with owner-only permissions (`chmod 600`). Keep its
+only assignment as `POLSKIFLOW_SMOKE_ACCESS_TOKEN=...`; never paste it into chat.
+The command does not automatically load this file. From the repository root:
+
+```shell
+set +x
+set -a
+. backend/.env.smoke.local
+set +a
+backend/.venv/bin/python backend/manage.py production_smoke \
+  https://polish-learn.vercel.app
+unset POLSKIFLOW_SMOKE_ACCESS_TOKEN
+```
+
+Use only a local file you control; shell sourcing executes its contents. An
+empty or expired token does not count as a successful authenticated smoke.
+
 The public half runs automatically every four hours from
 `.github/workflows/production-smoke.yml`. It sends no credentials and checks
 health, readiness, OpenAPI and catalog. A failure marks the workflow red and
