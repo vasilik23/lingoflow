@@ -2,7 +2,7 @@
 {% load static %}
 {% block title %}Учебный прогон B1 · PolskiFlow{% endblock %}
 {% block content %}
-<div class="mock-shell" data-b1-run data-namespace="{{ run_namespace }}" data-phase="{{ state.phase }}" data-seconds="{{ timer_seconds }}"{% if fresh %} data-fresh="1"{% endif %}{% if discard_draft %} data-discard="1"{% endif %}>
+<div class="mock-shell" data-b1-run data-namespace="{{ run_namespace }}" data-run-id="{{ state.run_id }}" data-phase="{{ state.phase }}" data-seconds="{{ timer_seconds }}"{% if fresh %} data-fresh="1"{% endif %}{% if discard_draft %} data-discard="1"{% endif %}>
   <header class="mock-header"><div><p class="eyebrow">B1 · {{ variant.label }}</p><h1>Учебный прогон пяти частей</h1><p>Короткие оригинальные задания PolskiFlow. Это учебный маршрут, не полная симуляция и не оценка государственного экзамена.</p></div></header>
   <p><a href="{% url 'b1-exam-prep' %}">← К подготовке B1</a></p>
   {% if error %}<p class="form-message error" role="alert">{{ error }}</p>{% endif %}
@@ -14,7 +14,7 @@
       <section class="card mock-section"><h2>Перерыв перед частью «{{ part.title }}»</h2><p>Завершено {{ state.step }} из 5. Отдохни: таймер новой части начнётся после нажатия кнопки.</p><strong data-run-timer role="timer" aria-live="off"></strong><p data-run-timer-status role="status" aria-live="polite"></p><button type="submit" name="action" value="start" class="primary-button" data-next-part{% if timer_seconds %} disabled{% endif %}>Начать следующую часть</button></section>
     {% elif state.phase == 'part' %}
       <section class="card mock-section"><p class="eyebrow" lang="pl">{{ part.polish_title }}</p><h2>{{ part.title }} · часть {{ state.step|add:1 }} из 5</h2><strong data-run-timer role="timer" aria-live="off"></strong><p data-run-timer-status role="status" aria-live="polite"></p>{% include "partials/b1_exam_instruction.html" %}
-        {% if part.id == 'listening' %}<button type="button" class="compact-button" data-run-play>▶ Прослушать сообщение</button><p class="muted" data-run-audio-status role="status">Системный польский голос устройства; повторы доступны.</p>
+        {% if part.id == 'listening' %}<div class="speaking-controls"><button type="button" class="compact-button" data-run-play>Прослушать · осталось 2 из 2</button><button type="button" class="compact-button secondary" data-run-audio-stop disabled>Остановить прослушивание</button></div><p class="muted">Системный польский голос устройства, не проверенная запись диктора. Учебное правило: два прослушивания и пауза 30 секунд между ними; начатое прослушивание считается использованным даже при остановке. Счётчик хранится в текущей вкладке. Это не защита от обхода и не официальный экзаменационный режим.</p><p class="muted" data-run-audio-status role="status">Прочитай вопросы перед прослушиванием.</p>
         {% elif part.id == 'reading' %}<p class="mock-source-text" lang="pl">{{ variant.reading_text }}</p>{% endif %}
         {% if part.mode == 'objective' %}
           {% for question in questions %}{% include "partials/b1_mock_question.html" %}{% endfor %}
@@ -45,4 +45,5 @@
 {{ variant.listening_transcript|json_script:"run-listening-transcript" }}
 <script src="{% static 'polskiflow/b1-training-run.js' %}?shell={{ pwa_shell_version }}" defer></script>
 <script src="{% static 'polskiflow/b1-run-recorder.js' %}?shell={{ pwa_shell_version }}" defer></script>
+<script src="{% static 'polskiflow/b1-run-listening.js' %}?shell={{ pwa_shell_version }}" defer></script>
 {% endblock %}

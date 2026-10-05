@@ -10,7 +10,7 @@ from django.utils.crypto import salted_hmac
 from django.views.decorators.http import require_http_methods
 
 from polskiflow.auth_views import require_browser_user
-from polskiflow.domain.b1_exam_instructions import B1_INSTRUCTIONS
+from polskiflow.domain.b1_exam_instructions import B1_INSTRUCTIONS, B1_RUN_LISTENING_INSTRUCTION
 from polskiflow.domain.b1_exam_simulation import B1_SIMULATION_PARTS, score_simulation_part, simulation_questions
 from polskiflow.domain.b1_weekly_mock import get_mock_variant, weekly_mock_variant
 from polskiflow.practice_preferences import excluded_practice_topics
@@ -110,7 +110,7 @@ def b1_training_run(request):
     response = render(request, "b1_training_run.html", {
         "state": state, "variant": variant, "part": part,
         "questions": simulation_questions(variant, part["id"]) if part else (),
-        "instruction": B1_INSTRUCTIONS.get(part["id"]) if part else None,
+        "instruction": (B1_RUN_LISTENING_INSTRUCTION if part["id"] == "listening" else B1_INSTRUCTIONS.get(part["id"])) if part else None,
         "run_token": token, "error": error, "report": report,
         "timer_seconds": max(0, state.get("deadline", state.get("break_until", now)) - now),
         "run_namespace": salted_hmac(RUN_SALT, request.supabase_user.id).hexdigest()[:32],
