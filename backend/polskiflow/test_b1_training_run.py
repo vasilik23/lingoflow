@@ -1,4 +1,6 @@
 import time
+import subprocess
+from pathlib import Path
 from unittest.mock import patch
 
 from django.test import Client, TestCase
@@ -8,6 +10,13 @@ from polskiflow.b1_run_views import BREAK_SECONDS, RUN_MAX_AGE
 
 
 class B1TrainingRunTests(TestCase):
+    def test_local_recording_lifecycle(self):
+        result = subprocess.run(
+            ["node", str(Path(__file__).with_name("test_b1_run_recorder.cjs"))],
+            capture_output=True, text=True, timeout=15,
+        )
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
     def setUp(self):
         self.client.cookies[ACCESS_COOKIE] = "access"
         self.now = int(time.time())
@@ -101,6 +110,11 @@ class B1TrainingRunTests(TestCase):
         self.assertEqual(self.advance(response, "finish", reviewed="on", writing="private text").status_code, 400)
         completed = self.advance(response, "finish", reviewed="on")
         self.assertEqual(completed.context["state"]["results"][-1], {"id": "writing", "status": "self_review"})
+        self.now += BREAK_SECONDS
+        speaking = self.advance(completed, "start")
+        self.assertContains(speaking, "data-run-recorder")
+        self.assertEqual(self.advance(speaking, "finish", reviewed="on", audio="private audio").status_code, 400)
+        self.assertEqual(self.advance(speaking, "finish", reviewed="on").status_code, 200)
 
     def test_guest_and_csrf_boundaries(self):
         csrf = Client(enforce_csrf_checks=True)

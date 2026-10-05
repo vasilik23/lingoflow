@@ -20,7 +20,16 @@
           {% for question in questions %}{% include "partials/b1_mock_question.html" %}{% endfor %}
         {% else %}
           <p lang="pl"><strong>{% if part.id == 'writing' %}{{ variant.writing_prompt }}{% else %}{{ variant.speaking_prompt }}{% endif %}</strong></p>
-          {% if part.id == 'writing' %}<label for="run-writing">Черновик только в этой вкладке</label><textarea id="run-writing" rows="12" aria-describedby="run-writing-note"></textarea><p id="run-writing-note" class="muted">Текст не отправляется на сервер. Завершение или пропуск части удаляет черновик.</p><button type="button" class="compact-button" data-clear-run-writing>Удалить текст</button>{% else %}<p class="muted">Ответь вслух. Этот экран не записывает и не оценивает речь автоматически.</p>{% endif %}
+          {% if part.id == 'writing' %}<label for="run-writing">Черновик только в этой вкладке</label><textarea id="run-writing" rows="12" aria-describedby="run-writing-note"></textarea><p id="run-writing-note" class="muted">Текст не отправляется на сервер. Завершение или пропуск части удаляет черновик.</p><button type="button" class="compact-button" data-clear-run-writing>Удалить текст</button>
+          {% else %}
+            <div data-run-recorder>
+              <p class="muted">Ответь вслух. Запись добровольная: микрофон включается только по кнопке и с твоего разрешения. Аудио остаётся в памяти этой страницы, не отправляется на сервер и не оценивается автоматически.</p>
+              <div class="speaking-controls"><button type="button" class="compact-button" data-record-start>Записать устный ответ</button><button type="button" class="compact-button secondary" data-record-stop disabled>Остановить запись</button><button type="button" class="compact-button secondary" data-record-delete hidden>Удалить запись</button></div>
+              <p class="muted" data-record-status role="status">Микрофон ещё не используется.</p>
+              <audio controls data-record-audio hidden aria-label="Прослушать свой устный ответ"></audio>
+              <p class="muted">Микрофон выключится по таймеру или при уходе. Перезагрузка, завершение части или новый прогон удалят аудио; запись не восстанавливается вместе с прогрессом.</p>
+            </div>
+          {% endif %}
           <label><input type="checkbox" name="reviewed"> Я проверил выполнение задания, структуру, стиль и языковую правильность</label>
         {% endif %}
         <button type="submit" name="action" value="finish" class="primary-button" data-finish-part>Завершить {% if part.mode == 'objective' %}и проверить{% else %}самопроверку{% endif %}</button>
@@ -35,4 +44,5 @@
 </div>
 {{ variant.listening_transcript|json_script:"run-listening-transcript" }}
 <script src="{% static 'polskiflow/b1-training-run.js' %}?shell={{ pwa_shell_version }}" defer></script>
+<script src="{% static 'polskiflow/b1-run-recorder.js' %}?shell={{ pwa_shell_version }}" defer></script>
 {% endblock %}

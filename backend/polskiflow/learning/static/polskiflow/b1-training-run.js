@@ -64,6 +64,8 @@
           root.querySelector('[data-next-part]').disabled = false;
           timerStatus.textContent = 'Перерыв завершён. Можно начать следующую часть.';
         } else {
+          root.dataset.expired = '1';
+          root.dispatchEvent(new Event('b1-run-expired'));
           root.querySelector('[data-finish-part]').disabled = true;
           fields.forEach(input => { input.disabled = true; });
           if (writing) writing.disabled = true;
