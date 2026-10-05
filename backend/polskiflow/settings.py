@@ -21,6 +21,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "polskiflow.auth_cache.AuthFormCacheMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "polskiflow.request_id.RequestIdMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",

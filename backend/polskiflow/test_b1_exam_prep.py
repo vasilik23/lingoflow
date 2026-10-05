@@ -119,6 +119,20 @@ class B1ExamPrepDomainTests(SimpleTestCase):
             overlay_latest_b1_mock(base, {"listening_correct": 9}), base
         )
 
+    def test_recommendation_requires_three_attempts_and_uses_at_most_five(self):
+        attempt = {"listening_correct": 2, "reading_correct": 2, "grammar_correct": 0}
+        base = overlay_latest_b1_mock(build_b1_module_results((), []), attempt)
+        for count in (1, 2):
+            results = attach_b1_mock_trends(base, [attempt] * count)
+            self.assertIsNone(build_b1_exam_prep(date(2026, 9, 28), results)["focus"])
+        good = {**attempt, "grammar_correct": 3}
+        results = attach_b1_mock_trends(base, [good, attempt, attempt, good, attempt, good])
+        grammar = next(item for item in results if item["id"] == "grammar")
+        self.assertEqual(grammar["recommendation"], {"attempts": 5, "percent": 40})
+        plan = build_b1_exam_prep(date(2026, 9, 28), results)
+        self.assertEqual(plan["focus"]["id"], "grammar")
+        self.assertEqual(plan["focus"]["percent"], 40)
+
     def test_mock_trends_compare_two_newest_points_per_checked_module(self):
         base = overlay_latest_b1_mock(build_b1_module_results((), []), {
             "listening_correct": 2, "reading_correct": 1, "grammar_correct": 2,
@@ -228,7 +242,8 @@ class B1ExamPrepViewTests(TestCase):
 
         attempts.assert_called_once_with("access", "user-123", limit=8)
         self.assertContains(response, "Последний мини‑модуль · 1 из 3")
-        self.assertContains(response, "Последний мини‑модуль: 33% — стоит закрепить")
+        self.assertIsNone(response.context["exam_prep"]["focus"])
+        self.assertContains(response, "до трёх попыток мини‑модуль не меняет приоритет")
         self.assertContains(response, "+50 п.п. к предыдущей попытке")
         self.assertContains(response, "-34 п.п. к предыдущей попытке")
         self.assertContains(response, "Для письма и говорения числовая динамика не создаётся")

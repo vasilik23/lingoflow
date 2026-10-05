@@ -16,6 +16,7 @@ from polskiflow.domain.b1_exam_simulation import (
     get_simulation_part,
     score_simulation_part,
     simulation_questions,
+    simulation_timing,
 )
 from polskiflow.domain.b1_weekly_mock import get_mock_variant, score_mock_answers, weekly_mock_variant
 
@@ -53,7 +54,9 @@ def b1_weekly_mock(request: HttpRequest) -> HttpResponse:
                 raise BadSignature
             attempt_id = str(UUID(payload.get("attempt_id", "")))
             allowed = {"csrfmiddlewaretoken", "attempt_token", *(f"answer_{item.id}" for item in variant.questions)}
-            if set(request.POST) - allowed:
+            if request.POST.get("resume") == "1" and set(request.POST) <= {"csrfmiddlewaretoken", "attempt_token", "resume"}:
+                pass  # Restore the signed variant without scoring or writing history.
+            elif set(request.POST) - allowed:
                 error, status = "Форма содержит неизвестные поля. Начни попытку заново.", 400
             else:
                 answers = {item.id: int(request.POST[f"answer_{item.id}"]) for item in variant.questions}
@@ -82,6 +85,9 @@ def b1_weekly_mock(request: HttpRequest) -> HttpResponse:
         "saved": saved,
         "history": history,
         "error": error,
+        "mock_storage_namespace": salted_hmac(
+            "polskiflow.b1-weekly-mock-browser", request.supabase_user.id,
+        ).hexdigest()[:32],
     }, status=status)
 
 
@@ -91,6 +97,7 @@ def b1_exam_simulation(request: HttpRequest) -> HttpResponse:
     """Run one timed exam-shaped section with stateless objective feedback."""
     part_id = request.GET.get("part", "") if request.method == "GET" else ""
     part = get_simulation_part(part_id)
+    timing_mode = "full" if request.GET.get("timing") == "full" else "short"
     variant = weekly_mock_variant(timezone.localdate())
     result = None
     error = None
@@ -109,6 +116,9 @@ def b1_exam_simulation(request: HttpRequest) -> HttpResponse:
             variant = get_mock_variant(payload.get("variant_id", ""))
             if part is None or variant is None or part["mode"] != "objective":
                 raise BadSignature
+            candidate_timing = payload.get("timing_mode", "full")
+            simulation_timing(variant, part, candidate_timing)
+            timing_mode = candidate_timing
             attempt_id = str(UUID(payload.get("attempt_id", "")))
             questions = simulation_questions(variant, part["id"])
             allowed = {"csrfmiddlewaretoken", "simulation_token", *(f"answer_{item.id}" for item in questions)}
@@ -133,12 +143,14 @@ def b1_exam_simulation(request: HttpRequest) -> HttpResponse:
             "user_id": request.supabase_user.id,
             "variant_id": variant.id,
             "part_id": part["id"],
+            "timing_mode": simulation_timing(variant, part, timing_mode)["timing_mode"],
             "attempt_id": str(uuid4()),
         }, salt=SIMULATION_SALT)
     questions = simulation_questions(variant, part["id"]) if part else ()
     parts = tuple({
         **item,
         "question_count": len(simulation_questions(variant, item["id"])),
+        **simulation_timing(variant, item),
     } for item in B1_SIMULATION_PARTS)
     history = load_b1_section_attempts(
         request.supabase_access_token, request.supabase_user.id
@@ -150,7 +162,7 @@ def b1_exam_simulation(request: HttpRequest) -> HttpResponse:
         "questions": questions,
         "question_count": len(questions),
         "simulation_token": token,
-        "duration_seconds": part["minutes"] * 60 if part else 0,
+        **(simulation_timing(variant, part, timing_mode) if part else {}),
         "result": result,
         "saved": saved,
         "history": history,

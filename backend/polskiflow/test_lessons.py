@@ -125,7 +125,7 @@ class LessonViewsTests(TestCase):
     def test_listening_pilot_scores_public_domain_clips(self):
         page = self.client.get("/listening/")
         self.assertEqual(page.status_code, 200)
-        self.assertContains(page, "Узнай слово на слух")
+        self.assertContains(page, "Пойми слова, диалог и связную речь")
         self.assertContains(page, "polskiflow/audio/tecza.ogg")
         self.assertContains(page, "polskiflow/audio/wrobel.ogg")
         self.assertContains(page, "polskiflow/audio/mysz.ogg")

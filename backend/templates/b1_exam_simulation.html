@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 {% block title %}Тренажёр частей B1 · PolskiFlow{% endblock %}
 {% block content %}
-<main class="mock-shell" data-simulation-root data-storage-namespace="{{ simulation_storage_namespace }}" data-variant-id="{{ variant.id }}"{% if part %} data-part-id="{{ part.id }}" data-duration-seconds="{{ duration_seconds }}"{% endif %}{% if result %} data-result-percent="{{ result.percent }}"{% endif %}>
+<div class="mock-shell" data-simulation-root data-storage-namespace="{{ simulation_storage_namespace }}" data-variant-id="{{ variant.id }}" data-timing-mode="{{ timing_mode|default:'short' }}"{% if part %} data-part-id="{{ part.id }}" data-duration-seconds="{{ duration_seconds }}"{% endif %}{% if result %} data-result-percent="{{ result.percent }}"{% endif %}>
   <header class="mock-header">
-    <div><p class="eyebrow">B1 · {{ variant.label }}</p><h1>{% if part %}{{ part.title }} на время{% else %}Тренажёр частей экзамена{% endif %}</h1><p>{% if part %}Лимит {{ part.minutes }} минут соответствует формату части, но объём этого оригинального набора PolskiFlow меньше официального экзамена.{% else %}Тренируй каждую часть отдельно с её экзаменационным лимитом времени.{% endif %}</p></div>
-    {% if part and not result %}<div class="mock-timer" role="timer" aria-live="polite"><strong id="simulation-timer">{{ part.minutes }}:00</strong><span>осталось</span></div>{% endif %}
+    <div><p class="eyebrow">B1 · {{ variant.label }}</p><h1>{% if part %}{{ part.title }} на время{% else %}Тренажёр частей экзамена{% endif %}</h1><p>{% if part %}{% if timing_mode == 'short' %}Короткая тренировка: {{ timer_minutes }} мин. Учебный ориентир — минута на вопрос{% if part.id == 'listening' %} и три минуты на прослушивание{% elif part.id == 'reading' %} и две минуты на чтение{% endif %}; это не официальный норматив.{% else %}Полный лимит: {{ part.minutes }} мин.{% endif %} Объём этого оригинального набора PolskiFlow меньше официального экзамена.{% else %}Для коротких наборов доступен учебный таймер и отдельный полный лимит части.{% endif %}</p></div>
+    {% if part and not result %}<div class="mock-timer" role="timer" aria-live="off"><strong id="simulation-timer">{{ timer_minutes }}:00</strong><span>осталось</span></div><p class="visually-hidden" id="simulation-timer-status" role="status" aria-live="polite" aria-atomic="true"></p>{% endif %}
   </header>
 
   {% if not part %}
     <div class="exam-module-grid simulation-part-grid">
-      {% for item in parts %}<article class="card exam-module-card exam-accent-{{ item.accent }}" data-simulation-card="{{ item.id }}"><header><span>{{ item.minutes }} мин</span><span>{% if item.mode == "objective" %}{{ item.question_count }} заданий{% else %}самопроверка{% endif %}</span></header><p class="eyebrow" lang="pl">{{ item.polish_title }}</p><h2>{{ item.title }}</h2><p class="simulation-progress muted" data-simulation-progress>Ещё не начато</p><a href="?part={{ item.id }}">Начать часть</a></article>{% endfor %}
+      {% for item in parts %}<article class="card exam-module-card exam-accent-{{ item.accent }}" data-simulation-card="{{ item.id }}"><header><span>{{ item.timer_minutes }} мин</span><span>{% if item.mode == "objective" %}{{ item.question_count }} заданий{% else %}самопроверка{% endif %}</span></header><p class="eyebrow" lang="pl">{{ item.polish_title }}</p><h2>{{ item.title }}</h2><p class="simulation-progress muted" data-simulation-progress>Ещё не начато</p><a href="?part={{ item.id }}{% if item.mode != 'objective' %}&timing=full{% endif %}">Начать часть</a>{% if item.mode == 'objective' %}<p><a href="?part={{ item.id }}&timing=full">Полный лимит · {{ item.minutes }} мин</a></p>{% endif %}</article>{% endfor %}
     </div>
     <section class="card mock-history" aria-labelledby="section-history-title">
       <div><p class="eyebrow">Между устройствами</p><h2 id="section-history-title">Последние проверяемые части</h2><p class="muted">Хранятся только агрегированный балл, часть, вариант и дата. Ответы, письмо и речь не сохраняются.</p></div>
@@ -38,19 +38,20 @@
         {% if not result and not error %}<button class="primary-button mock-submit" type="submit">Завершить часть и проверить</button>{% endif %}
       </form>
     {% elif part.id == "writing" %}
-      <section class="card mock-section"><p class="eyebrow" lang="pl">Pisanie</p><h2>Задание</h2><p lang="pl"><strong>{{ variant.writing_prompt }}</strong></p><label for="simulation-writing">Черновик остаётся только в этой вкладке</label><textarea id="simulation-writing" rows="14" aria-describedby="simulation-writing-note"></textarea><p class="muted" id="simulation-writing-note">Текст не отправляется, не сохраняется при перезагрузке и не оценивается автоматически. Таймер продолжится после возврата. После попытки проверь выполнение всех пунктов, структуру, регистр и грамматику.</p><button class="primary-button mock-submit" type="button" data-complete-self-review>Завершить самопроверку</button></section>
+      <section class="card mock-section"><p class="eyebrow" lang="pl">Pisanie</p><h2>Задание</h2><p lang="pl"><strong>{{ variant.writing_prompt }}</strong></p><label for="simulation-writing">Черновик остаётся только в этой вкладке</label><textarea id="simulation-writing" rows="14" aria-describedby="simulation-writing-note"></textarea><button class="compact-button" type="button" id="simulation-clear-writing">Удалить текст черновика</button><p class="muted" id="simulation-draft-status" role="status"></p><p class="muted" id="simulation-writing-note">Текст восстанавливается после перезагрузки в этой вкладке, не отправляется на сервер и не оценивается автоматически. Завершение самопроверки удаляет черновик. Таймер продолжится после возврата. После попытки проверь выполнение всех пунктов, структуру, регистр и грамматику.</p><button class="primary-button mock-submit" type="button" data-complete-self-review>Завершить самопроверку</button></section>
     {% else %}
       <section class="card mock-section"><p class="eyebrow" lang="pl">Mówienie</p><h2>Задание</h2><p lang="pl"><strong>{{ variant.speaking_prompt }}</strong></p><ul><li>выполни все пункты задания;</li><li>свяжи части ответа;</li><li>приведи конкретный пример;</li><li>заверши понятным выводом.</li></ul><p class="muted">Речь не записывается и не получает автоматического балла на этом экране. Таймер продолжится после возврата.</p><button class="primary-button mock-submit" type="button" data-complete-self-review>Завершить самопроверку</button></section>
     {% endif %}
   {% endif %}
-</main>
+</div>
 {{ variant.listening_transcript|json_script:"simulation-listening-transcript" }}
 <script>
 (() => {
   const root = document.querySelector('[data-simulation-root]');
-  const prefix = `polskiflow-b1-simulation:${root.dataset.storageNamespace}:${root.dataset.variantId}:`;
+  const prefix = `polskiflow-b1-simulation:${root.dataset.storageNamespace}:${root.dataset.variantId}:${root.dataset.timingMode}:`;
   const readState = (partId) => {
-    try { return JSON.parse(localStorage.getItem(prefix + partId) || 'null'); }
+    const statePrefix = !root.dataset.partId && ['writing', 'speaking'].includes(partId) ? prefix.replace(/short:$/, 'full:') : prefix;
+    try { return JSON.parse(localStorage.getItem(statePrefix + partId) || 'null'); }
     catch (error) { return null; }
   };
   const writeState = (partId, state) => {
@@ -74,10 +75,15 @@
   const partId = root.dataset.partId;
   if (!partId) return;
   const duration = Number(root.dataset.durationSeconds);
+  const draftKey = prefix + partId + ':draft';
+  const clearDraft = () => {
+    try { sessionStorage.removeItem(draftKey); } catch (error) { /* Storage can be unavailable. */ }
+  };
   let state = readState(partId);
   const restart = new URLSearchParams(window.location.search).get('restart') === '1';
   const storedStart = Number(state?.startedAt);
   if (restart || !state || state.status === 'completed' || !Number.isFinite(storedStart) || storedStart > Date.now()) {
+    clearDraft();
     state = { status: 'started', startedAt: Date.now() };
     writeState(partId, state);
     if (restart) {
@@ -88,20 +94,72 @@
   }
   const resultPercent = Number(root.dataset.resultPercent);
   if (Number.isInteger(resultPercent)) {
+    clearDraft();
     writeState(partId, { status: 'completed', completedAt: Date.now(), percent: resultPercent });
     return;
   }
   document.querySelector('[data-complete-self-review]')?.addEventListener('click', () => {
+    clearDraft();
+    const writing = document.getElementById('simulation-writing');
+    if (writing) writing.value = '';
     writeState(partId, { status: 'completed', completedAt: Date.now() });
     window.location.assign('{% url "b1-exam-simulation" %}');
   });
   const timer = document.getElementById('simulation-timer');
   if (!timer) return;
-  let left = Math.max(0, duration - Math.floor((Date.now() - state.startedAt) / 1000));
+  const form = document.getElementById('simulation-form');
+  const writing = document.getElementById('simulation-writing');
+  const draftStatus = document.getElementById('simulation-draft-status');
+  let savedWriting = '';
+  const answers = Array.from(document.querySelectorAll('#simulation-form input[type="radio"]'));
+  const token = form?.querySelector('[name="simulation_token"]');
+  try {
+    const draft = JSON.parse(sessionStorage.getItem(draftKey) || 'null');
+    if (draft && draft.startedAt === state.startedAt) {
+      answers.forEach(input => { input.checked = draft.answers?.[input.name] === input.value; });
+      if (writing && typeof draft.writing === 'string') writing.value = draft.writing;
+      if (token && typeof draft.token === 'string') token.value = draft.token;
+    }
+  } catch (error) { /* A damaged draft must not prevent practice. */ }
+  const saveDraft = () => {
+    const selected = {};
+    answers.forEach(input => { if (input.checked) selected[input.name] = input.value; });
+    try {
+      sessionStorage.setItem(draftKey, JSON.stringify({
+        startedAt: state.startedAt, answers: selected,
+        writing: writing?.value || '', token: token?.value || '',
+      }));
+      savedWriting = writing?.value || '';
+      if (draftStatus) draftStatus.textContent = writing?.value ? 'Черновик сохранён в этой вкладке.' : '';
+    } catch (error) {
+      if (draftStatus) draftStatus.textContent = 'Браузер не смог сохранить черновик. Скопируй текст перед уходом.';
+    }
+  };
+  document.getElementById('simulation-clear-writing')?.addEventListener('click', () => {
+    writing.value = ''; saveDraft(); writing.focus();
+  });
+  window.addEventListener('beforeunload', event => {
+    if (writing?.value && writing.value !== savedWriting) {
+      event.preventDefault(); event.returnValue = '';
+    }
+  });
+  form?.addEventListener('change', saveDraft);
+  writing?.addEventListener('input', saveDraft);
+  saveDraft();
+  const timerStatus = document.getElementById('simulation-timer-status');
+  let previousLeft = Math.max(0, duration - Math.floor((Date.now() - state.startedAt) / 1000));
   const tick = () => {
+    const left = Math.max(0, duration - Math.floor((Date.now() - state.startedAt) / 1000));
+    const crossed = [600, 300, 60].filter(point => previousLeft > point && left <= point);
+    if (timerStatus && left === 0) timerStatus.textContent = 'Время истекло.';
+    else if (timerStatus && crossed.length) {
+      const checkpoint = crossed[crossed.length - 1] / 60;
+      timerStatus.textContent = checkpoint === 1 ? 'Осталась одна минута.' : `Осталось ${checkpoint} минут.`;
+    }
+    previousLeft = left;
     timer.textContent = `${String(Math.floor(left / 60)).padStart(2, '0')}:${String(left % 60).padStart(2, '0')}`;
     if (left <= 0) { document.querySelectorAll('#simulation-form input, #simulation-form button, #simulation-writing').forEach(el => el.disabled = true); timer.parentElement.classList.add('expired'); return; }
-    left -= 1; window.setTimeout(tick, 1000);
+    window.setTimeout(tick, 1000);
   }; tick();
   document.getElementById('simulation-play')?.addEventListener('click', () => {
     const status = document.getElementById('simulation-audio-status');

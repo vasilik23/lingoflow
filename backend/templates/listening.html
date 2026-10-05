@@ -3,15 +3,21 @@
 {% block title %}Аудирование · PolskiFlow{% endblock %}
 {% block content %}
   <header class="content-header">
-    <div><p class="eyebrow">Аудирование · A1–A2</p><h1>Узнай слово на слух и пойми диалог</h1><p class="muted">Начни с короткого диалога, затем потренируй отдельные звуки. Результат не влияет на прогресс.</p></div>
-    <a class="compact-button" href="{% url 'course' %}?level=A1">К курсу →</a>
+    <div><p class="eyebrow">Аудирование · A1–B2</p><h1>Пойми слова, диалог и связную речь</h1><p class="muted">Выбери уровень: короткий диалог A1–A2 или связная речь B1/B2. Результат не влияет на прогресс.</p></div>
+    <a class="compact-button" href="{% url 'course' %}">К курсу →</a>
   </header>
+  <nav class="reading-audio-actions" aria-label="Уровни аудирования">
+    <a class="compact-button" href="#a1-a2-listening">A1–A2 · диалог</a>
+    <a class="compact-button" href="#b1-listening">B1 · связная речь</a>
+    <a class="compact-button" href="#b2-listening">B2 · связная речь</a>
+    <a class="compact-button" href="#listening-words">A1 · отдельные слова</a>
+  </nav>
   {% if submitted %}
     <section class="card listening-result" aria-live="polite"><strong>{{ score }} / {{ listening_items|length }}</strong><span>{% if score == listening_items|length %}Все слова распознаны{% else %}Можно прослушать ещё раз и повторить{% endif %}</span></section>
   {% endif %}
   <form method="post" class="listening-list">
     {% csrf_token %}
-    <section class="card listening-dialogue" aria-labelledby="dialogue-title">
+    <section class="card listening-dialogue" id="a1-a2-listening" tabindex="-1" aria-labelledby="dialogue-title">
       <p class="eyebrow">Мини-диалог · {{ dialogue.level }}</p>
       <h2 id="dialogue-title">{{ dialogue.title }}</h2>
       {{ dialogue.lines|json_script:"listening-dialogue-lines" }}
@@ -43,7 +49,7 @@
       {% endfor %}
       <p class="muted listening-audio-note">Звук создаёт системный польский голос браузера из оригинального текста PolskiFlow; доступность и тембр голоса зависят от устройства.</p>
     </section>
-    <section class="card listening-dialogue" id="b1-listening" aria-labelledby="b1-listening-title">
+    <section class="card listening-dialogue" id="b1-listening" tabindex="-1" aria-labelledby="b1-listening-title">
       <p class="eyebrow">Связная речь · {{ b1_listening.level }}</p>
       <h2 id="b1-listening-title">{{ b1_listening.title }}</h2>
       {{ b1_listening.lines|json_script:"b1-listening-lines" }}
@@ -72,7 +78,7 @@
       {% endfor %}
       <p class="muted listening-audio-note">Звук создаёт системный голос <span lang="pl">pl-PL</span> из оригинального текста PolskiFlow. Голос, тембр и доступность зависят от браузера и устройства; это не студийная запись.</p>
     </section>
-    <section class="card listening-dialogue" aria-labelledby="b2-listening-title">
+    <section class="card listening-dialogue" id="b2-listening" tabindex="-1" aria-labelledby="b2-listening-title">
       <p class="eyebrow">Связная речь · {{ b2_listening.level }}</p>
       <h2 id="b2-listening-title">{{ b2_listening.title }}</h2>
       {{ b2_listening.lines|json_script:"b2-listening-lines" }}
@@ -101,7 +107,7 @@
       {% endfor %}
       <p class="muted listening-audio-note">Звук создаёт системный голос <span lang="pl">pl-PL</span> из оригинального текста PolskiFlow. Это тренировка понимания связной речи, но не студийная запись: голос и тембр зависят от браузера и устройства.</p>
     </section>
-    <h2>Отдельные слова</h2>
+    <h2 id="listening-words" tabindex="-1">Отдельные слова · A1</h2>
     {% for item in listening_items %}
       <fieldset class="card listening-card">
         <legend>Запись {{ forloop.counter }}</legend>
