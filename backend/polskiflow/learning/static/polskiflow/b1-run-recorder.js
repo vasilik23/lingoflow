@@ -16,6 +16,7 @@
   let recordingBusy = false;
   let disposed = false;
   let expired = root.dataset.expired === '1';
+  let preparing = root.dataset.preparingSpeaking === '1';
   const active = () => recorder && recorder.state !== 'inactive';
   const release = () => {
     stream?.getTracks().forEach(track => track.stop());
@@ -28,9 +29,9 @@
     audioUrl = null;
   };
   const update = () => {
-    start.disabled = pending || recordingBusy || expired || disposed;
+    start.disabled = pending || recordingBusy || preparing || expired || disposed;
     stop.disabled = !active();
-    finish.disabled = pending || recordingBusy || expired;
+    finish.disabled = pending || recordingBusy || preparing || expired;
   };
   const stopRecording = () => {
     if (active()) { try { recorder.stop(); } catch (_) {} }
@@ -40,7 +41,7 @@
     disposed = true; stopRecording(); clearClip(); update();
   };
   start.addEventListener('click', async () => {
-    if (pending || recordingBusy || expired || disposed) return;
+    if (pending || recordingBusy || preparing || expired || disposed) return;
     if (!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder) {
       status.textContent = 'Запись недоступна в этом браузере. Можно ответить вслух без записи.';
       return;
@@ -87,6 +88,7 @@
   root.addEventListener('b1-run-expired', () => {
     expired = true; stopRecording(); update();
   });
+  root.addEventListener('b1-speaking-ready', () => { preparing = false; update(); });
   form.addEventListener('submit', cleanup);
   root.querySelector('[data-restart-run]').addEventListener('click', cleanup);
   window.addEventListener('pagehide', cleanup);

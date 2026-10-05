@@ -10,20 +10,23 @@ from django.utils.crypto import salted_hmac
 from django.views.decorators.http import require_http_methods
 
 from polskiflow.auth_views import require_browser_user
-from polskiflow.domain.b1_exam_instructions import B1_INSTRUCTIONS, B1_RUN_LISTENING_INSTRUCTION, B1_RUN_READING_INSTRUCTION, B1_RUN_WRITING_INSTRUCTION
+from polskiflow.domain.b1_exam_instructions import B1_INSTRUCTIONS, B1_RUN_LISTENING_INSTRUCTION, B1_RUN_READING_INSTRUCTION, B1_RUN_WRITING_INSTRUCTION, B1_RUN_SPEAKING_INSTRUCTION
 from polskiflow.domain.b1_exam_simulation import B1_SIMULATION_PARTS
 from polskiflow.domain.b1_training_content import CONTENT_VERSION, score_training_part, training_questions, training_reading_blocks
 from polskiflow.domain.b1_training_writing import training_writing_tasks
+from polskiflow.domain.b1_training_speaking import PREPARATION_SECONDS, training_speaking_tasks
 from polskiflow.domain.b1_weekly_mock import get_mock_variant, weekly_mock_variant
 from polskiflow.practice_preferences import excluded_practice_topics
 
 RUN_SALT = "polskiflow.b1-training-run.v1"
 RUN_MAX_AGE = 4 * 60 * 60
 BREAK_SECONDS = 120
-TRAINING_MINUTES = {"listening": 8, "reading": 22, "grammar": 20, "writing": 35, "speaking": 3}
+TRAINING_MINUTES = {"listening": 8, "reading": 22, "grammar": 20, "writing": 35, "speaking": 11}
 
 
 def _minutes(state, part_id):
+    if part_id == "speaking" and state.get("content_version", 1) < 5:
+        return 3
     if part_id == "writing" and state.get("content_version", 1) < 4:
         return 15
     if part_id == "reading" and state.get("content_version", 1) < 3:
@@ -49,6 +52,7 @@ def _finish_part(state, result, now):
     state["phase"] = "report" if state["step"] == len(B1_SIMULATION_PARTS) else "break"
     state["break_until"] = now + BREAK_SECONDS
     state.pop("deadline", None)
+    state.pop("speaking_ready_at", None)
 
 
 @require_browser_user
@@ -91,6 +95,8 @@ def b1_training_run(request):
                 else:
                     state["phase"] = "part"
                     state["deadline"] = now + _minutes(state, part["id"]) * 60
+                    if part["id"] == "speaking" and state.get("content_version", 1) >= 5:
+                        state["speaking_ready_at"] = now + PREPARATION_SECONDS
                     token = ""
             elif action == "skip" and state["phase"] == "part":
                 _finish_part(state, {"id": part["id"], "status": "skipped"}, now)
@@ -98,6 +104,8 @@ def b1_training_run(request):
             elif action == "finish" and state["phase"] == "part":
                 if now >= state["deadline"]:
                     error, status = "Время части истекло. Отметь её как пропущенную и продолжи.", 400
+                elif part["id"] == "speaking" and now < state.get("speaking_ready_at", now):
+                    error, status = "Подготовка ещё не закончилась. Прочитай задания и составь план ответов.", 400
                 elif part["mode"] == "objective":
                     try:
                         answers = {question.id: int(request.POST[f"answer_{question.id}"]) for question in questions}
@@ -127,11 +135,15 @@ def b1_training_run(request):
         instruction = B1_RUN_READING_INSTRUCTION
     elif part and part["id"] == "writing" and state.get("content_version", 1) >= 4:
         instruction = B1_RUN_WRITING_INSTRUCTION
+    elif part and part["id"] == "speaking" and state.get("content_version", 1) >= 5:
+        instruction = B1_RUN_SPEAKING_INSTRUCTION
     response = render(request, "b1_training_run.html", {
         "state": state, "variant": variant, "part": part,
         "questions": training_questions(variant, part["id"], state.get("content_version", 1)) if part else (),
         "reading_blocks": training_reading_blocks(variant, state.get("content_version", 1)) if part and part["id"] == "reading" else (),
         "writing_tasks": training_writing_tasks(variant, state.get("content_version", 1)) if part and part["id"] == "writing" else (),
+        "speaking_tasks": training_speaking_tasks(variant, state.get("content_version", 1)) if part and part["id"] == "speaking" else (),
+        "speaking_preparation_seconds": max(0, state.get("speaking_ready_at", now) - now) if part and part["id"] == "speaking" else 0,
         "instruction": instruction,
         "run_token": token, "error": error, "report": report,
         "timer_seconds": max(0, state.get("deadline", state.get("break_until", now)) - now),
