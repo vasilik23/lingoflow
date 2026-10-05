@@ -8,11 +8,43 @@ from django.core import signing
 
 from polskiflow.auth import ACCESS_COOKIE, SupabaseUser
 from polskiflow.b1_run_views import BREAK_SECONDS, RUN_MAX_AGE, RUN_SALT
-from polskiflow.domain.b1_training_content import training_questions, score_training_part
+from polskiflow.domain.b1_training_content import training_questions, score_training_part, training_reading_blocks
 from polskiflow.domain.b1_weekly_mock import VARIANTS
 
 
 class B1TrainingRunTests(TestCase):
+    def test_extended_reading_has_four_grouped_texts_and_twenty_questions(self):
+        for variant in VARIANTS:
+            blocks = training_reading_blocks(variant)
+            questions = training_questions(variant, "reading")
+            self.assertEqual(len(blocks), 4)
+            self.assertEqual([len(block.questions) for block in blocks], [5] * 4)
+            self.assertEqual(tuple(q for block in blocks for q in block.questions), questions)
+            self.assertEqual(len({q.id for q in questions}), 20)
+            self.assertTrue(all(block.text and block.title for block in blocks))
+            correct = {q.id: q.correct for q in questions}
+            score = score_training_part(variant, "reading", correct)
+            self.assertEqual((score["correct"], score["total"], score["percent"]), (20, 20, 100))
+            with self.assertRaises(ValueError):
+                score_training_part(variant, "reading", dict(list(correct.items())[:-1]))
+            for version in (1, 2):
+                self.assertEqual(len(training_questions(variant, "reading", version)), 5)
+                self.assertEqual(len(training_reading_blocks(variant, version)), 1)
+
+    def test_legacy_reading_run_keeps_its_text_count_and_deadline(self):
+        for version in (1, 2):
+            with self.subTest(version=version):
+                opened = self.client.get("/exam/b1/run/")
+                state = dict(opened.context["state"], content_version=version)
+                opened = self.client.post("/exam/b1/run/", {"run_token": signing.dumps(state, salt=RUN_SALT), "action": "start"})
+                opened = self.advance(opened, "skip")
+                self.now += BREAK_SECONDS
+                opened = self.advance(opened, "start")
+                self.assertEqual(len(opened.context["questions"]), 5)
+                self.assertEqual(len(opened.context["reading_blocks"]), 1)
+                self.assertEqual(opened.context["timer_seconds"], 7 * 60)
+                self.assertNotContains(opened, "Ogłoszenie biblioteki")
+
     def test_mutation_navigation_preserves_new_signed_state_before_resume(self):
         result = subprocess.run(
             ["node", str(Path(__file__).with_name("test_b1_run_navigation.cjs"))],
@@ -87,6 +119,9 @@ class B1TrainingRunTests(TestCase):
             part = response.context["part"]
             if part["id"] == "grammar":
                 self.assertEqual(response.context["timer_seconds"], 20 * 60)
+            if part["id"] == "reading":
+                self.assertEqual(response.context["timer_seconds"], 22 * 60)
+                self.assertContains(response, "Ogłoszenie biblioteki")
             fields = {f"answer_{q.id}": q.correct for q in response.context["questions"]}
             if part["mode"] == "self_review":
                 fields = {"reviewed": "on"}
@@ -100,7 +135,7 @@ class B1TrainingRunTests(TestCase):
         self.assertEqual(response.context["state"]["run_id"], run_id)
         report = response.context["report"]
         self.assertEqual([item["status"] for item in report], ["scored"] * 3 + ["self_review"] * 2)
-        self.assertEqual([item["total"] for item in report[:3]], [5, 5, 20])
+        self.assertEqual([item["total"] for item in report[:3]], [5, 20, 20])
         self.assertTrue(all(item["percent"] == 100 for item in report[:3]))
         self.assertTrue(all("percent" not in item for item in report[3:]))
         self.assertTrue(all("details" not in item for item in response.context["state"]["results"]))

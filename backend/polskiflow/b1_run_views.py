@@ -10,19 +10,21 @@ from django.utils.crypto import salted_hmac
 from django.views.decorators.http import require_http_methods
 
 from polskiflow.auth_views import require_browser_user
-from polskiflow.domain.b1_exam_instructions import B1_INSTRUCTIONS, B1_RUN_LISTENING_INSTRUCTION
+from polskiflow.domain.b1_exam_instructions import B1_INSTRUCTIONS, B1_RUN_LISTENING_INSTRUCTION, B1_RUN_READING_INSTRUCTION
 from polskiflow.domain.b1_exam_simulation import B1_SIMULATION_PARTS
-from polskiflow.domain.b1_training_content import CONTENT_VERSION, score_training_part, training_questions
+from polskiflow.domain.b1_training_content import CONTENT_VERSION, score_training_part, training_questions, training_reading_blocks
 from polskiflow.domain.b1_weekly_mock import get_mock_variant, weekly_mock_variant
 from polskiflow.practice_preferences import excluded_practice_topics
 
 RUN_SALT = "polskiflow.b1-training-run.v1"
 RUN_MAX_AGE = 4 * 60 * 60
 BREAK_SECONDS = 120
-TRAINING_MINUTES = {"listening": 8, "reading": 7, "grammar": 20, "writing": 15, "speaking": 3}
+TRAINING_MINUTES = {"listening": 8, "reading": 22, "grammar": 20, "writing": 15, "speaking": 3}
 
 
 def _minutes(state, part_id):
+    if part_id == "reading" and state.get("content_version", 1) < 3:
+        return 7
     if part_id == "grammar" and state.get("content_version", 1) < 2:
         return 6
     return TRAINING_MINUTES[part_id]
@@ -115,10 +117,16 @@ def b1_training_run(request):
     part = B1_SIMULATION_PARTS[state["step"]] if state["step"] < 5 else None
     token = token or signing.dumps(state, salt=RUN_SALT)
     report = tuple({**part_info, **result} for part_info, result in zip(B1_SIMULATION_PARTS, state["results"]))
+    instruction = B1_INSTRUCTIONS.get(part["id"]) if part else None
+    if part and part["id"] == "listening":
+        instruction = B1_RUN_LISTENING_INSTRUCTION
+    elif part and part["id"] == "reading" and state.get("content_version", 1) >= 3:
+        instruction = B1_RUN_READING_INSTRUCTION
     response = render(request, "b1_training_run.html", {
         "state": state, "variant": variant, "part": part,
         "questions": training_questions(variant, part["id"], state.get("content_version", 1)) if part else (),
-        "instruction": (B1_RUN_LISTENING_INSTRUCTION if part["id"] == "listening" else B1_INSTRUCTIONS.get(part["id"])) if part else None,
+        "reading_blocks": training_reading_blocks(variant, state.get("content_version", 1)) if part and part["id"] == "reading" else (),
+        "instruction": instruction,
         "run_token": token, "error": error, "report": report,
         "timer_seconds": max(0, state.get("deadline", state.get("break_until", now)) - now),
         "run_namespace": salted_hmac(RUN_SALT, request.supabase_user.id).hexdigest()[:32],

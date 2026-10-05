@@ -5,6 +5,11 @@ B1_RUN_LISTENING_INSTRUCTION = {
     "russian": "Прочитай вопросы. Прослушай сообщение не более двух раз и выбери один ответ в каждом задании. Между прослушиваниями — пауза 30 секунд. Начатое прослушивание считается использованным даже при остановке. Это учебное правило, не официальная процедура экзамена.",
 }
 
+B1_RUN_READING_INSTRUCTION = {
+    "polish": "Przeczytaj każdy tekst i przypisane do niego pytania. W każdym zadaniu zaznacz jedną odpowiedź zgodną z tekstem. Możesz wracać do wszystkich tekstów podczas rozwiązywania zadań.",
+    "russian": "Прочитай каждый текст и вопросы к нему. В каждом задании выбери один ответ, соответствующий тексту. Во время работы можно возвращаться ко всем текстам.",
+}
+
 B1_INSTRUCTIONS = {
     "listening": {
         "polish": "Posłuchaj komunikatu. Przeczytaj pytania i zaznacz jedną odpowiedź w każdym zadaniu. W tej treningowej wersji możesz ponownie odtworzyć komunikat.",
