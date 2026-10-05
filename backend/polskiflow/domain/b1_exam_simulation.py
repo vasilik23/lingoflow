@@ -34,7 +34,7 @@ SIMULATION_EXTRA_QUESTIONS = {
         MockQuestion("sr4", "reading", "Jak często Piotr pracuje z biura?", ("Dwa razy w tygodniu", "Codziennie", "Raz w miesiącu"), 0, "Tekst dokładnie podaje, że bohater pojawia się w biurze dwa razy tygodniowo."),
         MockQuestion("sr5", "reading", "Jaki kompromis znalazł Piotr?", ("Przestał pracować z domu", "Pracuje wyłącznie wieczorami", "Łączy pracę z domu z regularnymi wizytami w biurze"), 2, "Piotr zachował zalety pracy zdalnej, ale dwa razy w tygodniu spotyka współpracowników."),
         MockQuestion("sg4", "grammar", "Nie mogłem wejść, ponieważ zapomniałem ___.", ("kluczy", "klucze", "kluczami"), 0, "Czasownik „zapomnieć” w tym znaczeniu łączy się z dopełniaczem: „kluczy”."),
-        MockQuestion("sg5", "grammar", "Anna zapytała, czy ___ jej w projekcie.", ("pomagam", "pomógłbym", "pomogę"), 1, "Pytanie pośrednie o hipotetyczną pomoc wymaga tutaj formy warunkowej „pomógłbym”."),
+        MockQuestion("sg5", "grammar", "Gdybym miał wolny weekend, ___ Annie w projekcie.", ("pomagam", "pomógłbym", "pomogę"), 1, "Warunek z „gdybym” wymaga formy warunkowej w zdaniu głównym: „pomógłbym”."),
         MockQuestion("sg6", "grammar", "W przyszłym tygodniu będziemy ___ nowy plan.", ("omówili", "omawiając", "omawiać"), 2, "Czas przyszły złożony tworzymy z formy „będziemy” i bezokolicznika „omawiać”."),
     ),
     "b1-weekly-v3": (
@@ -76,12 +76,12 @@ def simulation_timing(variant: MockVariant, part: dict, timing_mode: str = "shor
     return {"timing_mode": mode, "timer_minutes": minutes, "duration_seconds": minutes * 60}
 
 
-def score_simulation_part(variant: MockVariant, part_id: str, answers: dict[str, int]) -> dict:
+def score_simulation_part(variant: MockVariant, part_id: str, answers: dict[str, int], *, extra_questions: tuple = ()) -> dict:
     """Score exactly one objective section; free production is never graded."""
     part = get_simulation_part(part_id)
     if part is None or part["mode"] != "objective":
         raise ValueError("Эта часть доступна только для самопроверки.")
-    questions = simulation_questions(variant, part_id)
+    questions = (*simulation_questions(variant, part_id), *extra_questions)
     if set(answers) != {question.id for question in questions}:
         raise ValueError("Ответь на все вопросы выбранной части.")
     details = []
