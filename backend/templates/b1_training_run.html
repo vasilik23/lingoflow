@@ -15,9 +15,11 @@
     {% elif state.phase == 'part' %}
       <section class="card mock-section"><p class="eyebrow" lang="pl">{{ part.polish_title }}</p><h2>{{ part.title }} · часть {{ state.step|add:1 }} из 5</h2><strong data-run-timer role="timer" aria-live="off"></strong><p data-run-timer-status role="status" aria-live="polite"></p>{% include "partials/b1_exam_instruction.html" %}
         {% if part.id == 'listening' %}<div class="speaking-controls"><button type="button" class="compact-button" data-run-play>Прослушать · осталось 2 из 2</button><button type="button" class="compact-button secondary" data-run-audio-stop disabled>Остановить прослушивание</button></div><p class="muted">Системный польский голос устройства, не проверенная запись диктора. Учебное правило: два прослушивания и пауза 30 секунд между ними; начатое прослушивание считается использованным даже при остановке. Счётчик хранится в текущей вкладке. Это не защита от обхода и не официальный экзаменационный режим.</p><p class="muted" data-run-audio-status role="status">Прочитай вопросы перед прослушиванием.</p>
-        {% elif part.id == 'reading' %}<p class="mock-source-text" lang="pl">{{ variant.reading_text }}</p>{% endif %}
+        {% endif %}
         {% if part.mode == 'objective' %}
-          {% for question in questions %}{% include "partials/b1_mock_question.html" %}{% endfor %}
+          {% if part.id == 'reading' %}
+            {% for block in reading_blocks %}<section aria-labelledby="reading-{{ block.id }}"><h3 id="reading-{{ block.id }}" lang="pl">{{ block.title }}</h3><p class="mock-source-text" lang="pl">{{ block.text }}</p>{% for question in block.questions %}{% include "partials/b1_mock_question.html" %}{% endfor %}</section>{% endfor %}
+          {% else %}{% for question in questions %}{% include "partials/b1_mock_question.html" %}{% endfor %}{% endif %}
         {% else %}
           <p lang="pl"><strong>{% if part.id == 'writing' %}{{ variant.writing_prompt }}{% else %}{{ variant.speaking_prompt }}{% endif %}</strong></p>
           {% if part.id == 'writing' %}<label for="run-writing">Черновик только в этой вкладке</label><textarea id="run-writing" rows="12" aria-describedby="run-writing-note"></textarea><p id="run-writing-note" class="muted">Текст не отправляется на сервер. Завершение или пропуск части удаляет черновик.</p><button type="button" class="compact-button" data-clear-run-writing>Удалить текст</button>

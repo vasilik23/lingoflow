@@ -1,11 +1,12 @@
-"""Original extended grammar set for version-two guided runs only."""
+"""Versioned original question sets for the guided B1 run."""
 
 from datetime import date
 
 from polskiflow.domain.b1_weekly_mock import MockQuestion
 from polskiflow.domain.b1_exam_simulation import simulation_questions, score_simulation_part
+from polskiflow.domain.b1_training_reading import READING_BLOCKS, ReadingBlock
 
-CONTENT_VERSION = 2
+CONTENT_VERSION = 3
 ORIGIN = "original"
 CREATED_FOR = "PolskiFlow"
 VERIFIED_AT = date(2026, 10, 5)  # Internal editorial review, not independent validation.
@@ -29,11 +30,25 @@ RUN_GRAMMAR_QUESTIONS = (
 )
 
 
+def _extra_questions(part_id, content_version):
+    if part_id == "grammar" and content_version >= 2:
+        return RUN_GRAMMAR_QUESTIONS
+    if part_id == "reading" and content_version >= 3:
+        return tuple(question for block in READING_BLOCKS for question in block.questions)
+    return ()
+
+
+def training_reading_blocks(variant, content_version=CONTENT_VERSION):
+    title = {"b1-weekly-v1": "Dojazdy rowerem", "b1-weekly-v2": "Praca w domu i w biurze", "b1-weekly-v3": "Wspólny ogród"}.get(variant.id, "Krótki artykuł")
+    first = ReadingBlock("variant", title, variant.reading_text, simulation_questions(variant, "reading"))
+    return (first, *READING_BLOCKS) if content_version >= 3 else (first,)
+
+
 def training_questions(variant, part_id, content_version=CONTENT_VERSION):
-    extra = RUN_GRAMMAR_QUESTIONS if part_id == "grammar" and content_version >= 2 else ()
+    extra = _extra_questions(part_id, content_version)
     return (*simulation_questions(variant, part_id), *extra)
 
 
 def score_training_part(variant, part_id, answers, content_version=CONTENT_VERSION):
-    extra = RUN_GRAMMAR_QUESTIONS if part_id == "grammar" and content_version >= 2 else ()
+    extra = _extra_questions(part_id, content_version)
     return score_simulation_part(variant, part_id, answers, extra_questions=extra)
