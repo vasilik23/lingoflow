@@ -20,6 +20,7 @@ from polskiflow.domain.b1_exam_simulation import (
     simulation_timing,
 )
 from polskiflow.domain.b1_weekly_mock import get_mock_variant, score_mock_answers, weekly_mock_variant
+from polskiflow.practice_preferences import excluded_practice_topics
 
 ATTEMPT_SALT = "polskiflow.b1-weekly-mock"
 ATTEMPT_MAX_AGE_SECONDS = 20 * 60
@@ -42,7 +43,7 @@ def b1_weekly_mock(request: HttpRequest) -> HttpResponse:
     error = None
     status = 200
     saved = None
-    variant = weekly_mock_variant(timezone.localdate())
+    variant = weekly_mock_variant(timezone.localdate(), excluded_practice_topics(request))
     token = _attempt_token(request.supabase_user.id, variant.id)
     if request.method == "POST":
         token = request.POST.get("attempt_token", "")
@@ -100,7 +101,7 @@ def b1_exam_simulation(request: HttpRequest) -> HttpResponse:
     part_id = request.GET.get("part", "") if request.method == "GET" else ""
     part = get_simulation_part(part_id)
     timing_mode = "full" if request.GET.get("timing") == "full" else "short"
-    variant = weekly_mock_variant(timezone.localdate())
+    variant = weekly_mock_variant(timezone.localdate(), excluded_practice_topics(request))
     result = None
     error = None
     status = 200
