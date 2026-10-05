@@ -11,14 +11,21 @@ from django.views.decorators.http import require_http_methods
 
 from polskiflow.auth_views import require_browser_user
 from polskiflow.domain.b1_exam_instructions import B1_INSTRUCTIONS, B1_RUN_LISTENING_INSTRUCTION
-from polskiflow.domain.b1_exam_simulation import B1_SIMULATION_PARTS, score_simulation_part, simulation_questions
+from polskiflow.domain.b1_exam_simulation import B1_SIMULATION_PARTS
+from polskiflow.domain.b1_training_content import CONTENT_VERSION, score_training_part, training_questions
 from polskiflow.domain.b1_weekly_mock import get_mock_variant, weekly_mock_variant
 from polskiflow.practice_preferences import excluded_practice_topics
 
 RUN_SALT = "polskiflow.b1-training-run.v1"
 RUN_MAX_AGE = 4 * 60 * 60
 BREAK_SECONDS = 120
-TRAINING_MINUTES = {"listening": 8, "reading": 7, "grammar": 6, "writing": 15, "speaking": 3}
+TRAINING_MINUTES = {"listening": 8, "reading": 7, "grammar": 20, "writing": 15, "speaking": 3}
+
+
+def _minutes(state, part_id):
+    if part_id == "grammar" and state.get("content_version", 1) < 2:
+        return 6
+    return TRAINING_MINUTES[part_id]
 
 
 def _new_state(request):
@@ -27,6 +34,7 @@ def _new_state(request):
         "user_id": request.supabase_user.id, "run_id": str(uuid4()),
         "variant_id": variant.id, "phase": "intro", "step": 0, "results": [],
         "created_at": int(time.time()),
+        "content_version": CONTENT_VERSION,
     }
 
 
@@ -62,7 +70,7 @@ def b1_training_run(request):
             action = request.POST.get("action", "")
             variant = get_mock_variant(state["variant_id"])
             part = B1_SIMULATION_PARTS[state["step"]] if state["step"] < 5 else None
-            questions = simulation_questions(variant, part["id"]) if part else ()
+            questions = training_questions(variant, part["id"], state.get("content_version", 1)) if part else ()
             allowed = {"csrfmiddlewaretoken", "run_token", "action"}
             if action in {"finish", "skip"} and state["phase"] == "part":
                 allowed |= {f"answer_{question.id}" for question in questions}
@@ -77,7 +85,7 @@ def b1_training_run(request):
                     error, status = "Учебный перерыв ещё не закончился.", 400
                 else:
                     state["phase"] = "part"
-                    state["deadline"] = now + TRAINING_MINUTES[part["id"]] * 60
+                    state["deadline"] = now + _minutes(state, part["id"]) * 60
                     token = ""
             elif action == "skip" and state["phase"] == "part":
                 _finish_part(state, {"id": part["id"], "status": "skipped"}, now)
@@ -88,7 +96,7 @@ def b1_training_run(request):
                 elif part["mode"] == "objective":
                     try:
                         answers = {question.id: int(request.POST[f"answer_{question.id}"]) for question in questions}
-                        score = score_simulation_part(variant, part["id"], answers)
+                        score = score_training_part(variant, part["id"], answers, state.get("content_version", 1))
                     except (KeyError, TypeError, ValueError):
                         error, status = "Ответь на все вопросы этой части.", 400
                     else:
@@ -109,13 +117,14 @@ def b1_training_run(request):
     report = tuple({**part_info, **result} for part_info, result in zip(B1_SIMULATION_PARTS, state["results"]))
     response = render(request, "b1_training_run.html", {
         "state": state, "variant": variant, "part": part,
-        "questions": simulation_questions(variant, part["id"]) if part else (),
+        "questions": training_questions(variant, part["id"], state.get("content_version", 1)) if part else (),
         "instruction": (B1_RUN_LISTENING_INSTRUCTION if part["id"] == "listening" else B1_INSTRUCTIONS.get(part["id"])) if part else None,
         "run_token": token, "error": error, "report": report,
         "timer_seconds": max(0, state.get("deadline", state.get("break_until", now)) - now),
         "run_namespace": salted_hmac(RUN_SALT, request.supabase_user.id).hexdigest()[:32],
         "fresh": request.method == "GET", "discard_draft": bool(error and not request.POST.get("run_token") == token),
-        "parts": tuple({**item, "training_minutes": TRAINING_MINUTES[item["id"]]} for item in B1_SIMULATION_PARTS),
+        "normalize_navigation": request.method == "POST" and request.POST.get("action") != "resume" and not error,
+        "parts": tuple({**item, "training_minutes": _minutes(state, item["id"]), "question_count": len(training_questions(variant, item["id"], state.get("content_version", 1)))} for item in B1_SIMULATION_PARTS),
     }, status=status)
     response["Cache-Control"] = "private, no-store"
     return response

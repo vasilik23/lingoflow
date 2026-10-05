@@ -54,6 +54,11 @@
     }
   });
   save();
+  // Refresh must replay resume, never the previous start/finish operation.
+  // Only navigate once the new signed state has been safely saved in this tab.
+  if (root.dataset.normalizeNavigation && storageStatus.hidden) {
+    window.location.replace(url); return;
+  }
   const timer = root.querySelector('[data-run-timer]');
   const timerStatus = root.querySelector('[data-run-timer-status]');
   const endsAt = Date.now() + Number(root.dataset.seconds) * 1000;

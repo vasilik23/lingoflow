@@ -4,12 +4,48 @@ from pathlib import Path
 from unittest.mock import patch
 
 from django.test import Client, TestCase
+from django.core import signing
 
 from polskiflow.auth import ACCESS_COOKIE, SupabaseUser
-from polskiflow.b1_run_views import BREAK_SECONDS, RUN_MAX_AGE
+from polskiflow.b1_run_views import BREAK_SECONDS, RUN_MAX_AGE, RUN_SALT
+from polskiflow.domain.b1_training_content import training_questions, score_training_part
+from polskiflow.domain.b1_weekly_mock import VARIANTS
 
 
 class B1TrainingRunTests(TestCase):
+    def test_mutation_navigation_preserves_new_signed_state_before_resume(self):
+        result = subprocess.run(
+            ["node", str(Path(__file__).with_name("test_b1_run_navigation.cjs"))],
+            capture_output=True, text=True, timeout=15,
+        )
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+    def test_extended_grammar_all_variants_and_existing_short_sets(self):
+        for variant in VARIANTS:
+            questions = training_questions(variant, "grammar")
+            self.assertEqual(len(questions), 20)
+            self.assertEqual(len({q.id for q in questions}), 20)
+            score = score_training_part(variant, "grammar", {q.id: q.correct for q in questions})
+            self.assertEqual((score["correct"], score["total"], score["percent"]), (20, 20, 100))
+            self.assertEqual(len(training_questions(variant, "grammar", 1)), 6)
+            self.assertEqual(len(variant.questions), 7)
+            with self.assertRaises(ValueError):
+                score_training_part(variant, "grammar", {q.id: q.correct for q in questions[:-1]})
+
+    def test_old_signed_run_keeps_six_questions_and_six_minute_limit(self):
+        response = self.client.get("/exam/b1/run/")
+        state = dict(response.context["state"])
+        state.pop("content_version")
+        response = self.client.post("/exam/b1/run/", {"run_token": signing.dumps(state, salt=RUN_SALT), "action": "start"})
+        for _ in range(2):
+            response = self.advance(response, "skip")
+            self.now += BREAK_SECONDS
+            response = self.advance(response, "start")
+        self.assertEqual(len(response.context["questions"]), 6)
+        self.assertEqual(response.context["timer_seconds"], 360)
+        response = self.advance(response, "finish", **{f"answer_{q.id}": q.correct for q in response.context["questions"]})
+        self.assertEqual(response.context["state"]["results"][-1]["total"], 6)
+
     def test_local_recording_lifecycle(self):
         result = subprocess.run(
             ["node", str(Path(__file__).with_name("test_b1_run_recorder.cjs"))],
@@ -49,6 +85,8 @@ class B1TrainingRunTests(TestCase):
         for index in range(5):
             self.assertEqual(response.context["state"]["step"], index)
             part = response.context["part"]
+            if part["id"] == "grammar":
+                self.assertEqual(response.context["timer_seconds"], 20 * 60)
             fields = {f"answer_{q.id}": q.correct for q in response.context["questions"]}
             if part["mode"] == "self_review":
                 fields = {"reviewed": "on"}
@@ -62,7 +100,7 @@ class B1TrainingRunTests(TestCase):
         self.assertEqual(response.context["state"]["run_id"], run_id)
         report = response.context["report"]
         self.assertEqual([item["status"] for item in report], ["scored"] * 3 + ["self_review"] * 2)
-        self.assertEqual([item["total"] for item in report[:3]], [5, 5, 6])
+        self.assertEqual([item["total"] for item in report[:3]], [5, 5, 20])
         self.assertTrue(all(item["percent"] == 100 for item in report[:3]))
         self.assertTrue(all("percent" not in item for item in report[3:]))
         self.assertTrue(all("details" not in item for item in response.context["state"]["results"]))
@@ -72,6 +110,7 @@ class B1TrainingRunTests(TestCase):
 
     def test_break_and_part_deadline_cannot_be_bypassed_by_post(self):
         opened = self.advance(self.client.get("/exam/b1/run/"), "start")
+        self.assertTrue(opened.context["normalize_navigation"])
         fields = {f"answer_{q.id}": q.correct for q in opened.context["questions"]}
         self.now = opened.context["state"]["deadline"]
         late = self.advance(opened, "finish", **fields)
@@ -89,6 +128,7 @@ class B1TrainingRunTests(TestCase):
         opened = self.advance(self.client.get("/exam/b1/run/"), "start")
         self.now += 20
         resumed = self.advance(opened, "resume")
+        self.assertFalse(resumed.context["normalize_navigation"])
         self.assertEqual(resumed.context["state"], opened.context["state"])
         self.assertEqual(resumed.context["run_token"], opened.context["run_token"])
         self.assertEqual(resumed.context["timer_seconds"], 8 * 60 - 20)

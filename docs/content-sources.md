@@ -80,6 +80,19 @@ PolskiFlow. Внешний материал используется тольк�
 
 ## Лицензионные правила
 
+### Оригинальная грамматика учебного прогона B1 — 05.10.2026
+
+14 вопросов расширения созданы для PolskiFlow (`origin: original`,
+`created_for: PolskiFlow`, `verified_at: 2026-10-05`). Уровень — редакторская
+цель, независимая польскоязычная проверка ещё не проведена. Словарные
+определения и корпусные примеры не копируются. Рекцию «przyglądać się»
+сверяли с [WSJP PAN](https://wsjp.pl/haslo/podglad/20433/przygladac-sie)
+и [образовательной платформой ZPE](https://zpe.gov.pl/a/o-innych-czesciach-zdania---dopelnienie-okolicznik-przydawka/D1E4MWzfQ).
+Формы «pomogę»/«pomógłbym» проверены по
+[WSJP PAN: pomóc](https://wsjp.pl/haslo/podglad/25624/pomoc/4616433/w-nauce).
+Редакторское решение: прежний вопрос «Anna zapytała, czy…» заменён явным
+условием с «gdybym», чтобы контекст однозначно требовал «pomógłbym».
+
 ### Проверка кандидата для аудирования B1 — 05.10.2026
 
 Для «Katarynki» проверен [первичный API](https://wolnelektury.pl/api/books/katarynka/).
