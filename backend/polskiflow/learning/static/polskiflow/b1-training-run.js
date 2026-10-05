@@ -9,7 +9,10 @@
   const storageStatus = root.querySelector('[data-run-storage-status]');
   let savedWriting = '';
   let intentionalLeave = false;
-  const clear = () => { try { sessionStorage.removeItem(key); } catch (_) {} };
+  const clear = () => { try { sessionStorage.removeItem(key); sessionStorage.removeItem(`polskiflow-b1-run-listening:${root.dataset.namespace}`); } catch (_) {} };
+  if (root.dataset.phase === 'report') {
+    try { sessionStorage.removeItem(`polskiflow-b1-run-listening:${root.dataset.namespace}`); } catch (_) {}
+  }
   const url = new URL(window.location.href);
   if (url.searchParams.get('restart') === '1' || root.dataset.discard) {
     clear(); url.searchParams.delete('restart'); window.history.replaceState({}, '', url);
@@ -81,15 +84,4 @@
     };
     tick();
   }
-  root.querySelector('[data-run-play]')?.addEventListener('click', () => {
-    const status = root.querySelector('[data-run-audio-status]');
-    if (!('speechSynthesis' in window)) { status.textContent = 'Системное озвучивание недоступно на этом устройстве.'; return; }
-    speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(JSON.parse(document.getElementById('run-listening-transcript').textContent));
-    utterance.lang = 'pl-PL'; utterance.rate = .9;
-    utterance.onstart = () => { status.textContent = 'Воспроизводится…'; };
-    utterance.onend = () => { status.textContent = 'Сообщение завершено. Повтор доступен.'; };
-    speechSynthesis.speak(utterance);
-  });
-  window.addEventListener('pagehide', () => { if ('speechSynthesis' in window) speechSynthesis.cancel(); });
 })();

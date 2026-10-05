@@ -1,5 +1,10 @@
 """Original bilingual directions for the current B1 practice formats."""
 
+B1_RUN_LISTENING_INSTRUCTION = {
+    "polish": "Przeczytaj pytania. Posłuchaj komunikatu najwyżej dwa razy i zaznacz jedną odpowiedź w każdym zadaniu. Między odtworzeniami jest 30 sekund przerwy. Rozpoczęte odtworzenie liczy się również po zatrzymaniu. To reguła treningowa, nie oficjalna procedura egzaminu.",
+    "russian": "Прочитай вопросы. Прослушай сообщение не более двух раз и выбери один ответ в каждом задании. Между прослушиваниями — пауза 30 секунд. Начатое прослушивание считается использованным даже при остановке. Это учебное правило, не официальная процедура экзамена.",
+}
+
 B1_INSTRUCTIONS = {
     "listening": {
         "polish": "Posłuchaj komunikatu. Przeczytaj pytania i zaznacz jedną odpowiedź w każdym zadaniu. W tej treningowej wersji możesz ponownie odtworzyć komunikat.",

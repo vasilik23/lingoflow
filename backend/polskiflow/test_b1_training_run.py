@@ -17,6 +17,16 @@ class B1TrainingRunTests(TestCase):
         )
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
+    def test_listening_limits_pause_and_resume(self):
+        result = subprocess.run(
+            ["node", str(Path(__file__).with_name("test_b1_run_listening.cjs"))],
+            capture_output=True, text=True, timeout=15,
+        )
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        opened = self.advance(self.client.get("/exam/b1/run/"), "start")
+        self.assertContains(opened, "data-run-audio-stop")
+        self.assertContains(opened, "два прослушивания")
+
     def setUp(self):
         self.client.cookies[ACCESS_COOKIE] = "access"
         self.now = int(time.time())

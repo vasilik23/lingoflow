@@ -1,0 +1,68 @@
+(() => {
+  const root = document.querySelector('[data-b1-run]');
+  const play = root?.querySelector('[data-run-play]');
+  if (!play) return;
+  const stop = root.querySelector('[data-run-audio-stop]');
+  const status = root.querySelector('[data-run-audio-status]');
+  const key = `polskiflow-b1-run-listening:${root.dataset.namespace}`;
+  const limit = 2, pauseMs = 30000;
+  let state = {runId: root.dataset.runId, used: 0, cooldownUntil: 0};
+  let unavailableStorage = false;
+  try {
+    const saved = JSON.parse(sessionStorage.getItem(key) || 'null');
+    if (saved?.runId === state.runId && Number.isInteger(saved.used) && saved.used >= 0 && saved.used <= limit && Number.isFinite(saved.cooldownUntil)) {
+      state = saved;
+    }
+  } catch (_) { unavailableStorage = true; }
+  let busy = false, started = false, expired = root.dataset.expired === '1', disposed = false;
+  let utterance = null, watchdog = null;
+  const save = () => {
+    try { sessionStorage.setItem(key, JSON.stringify(state)); }
+    catch (_) { unavailableStorage = true; }
+  };
+  const update = () => {
+    const left = Math.max(0, Math.ceil((state.cooldownUntil - Date.now()) / 1000));
+    play.disabled = busy || expired || disposed || state.used >= limit || left > 0;
+    stop.disabled = !busy;
+    play.textContent = busy ? 'Воспроизводится…' : left && state.used < limit ? `Повтор через ${left} с` : `Прослушать · осталось ${limit - state.used} из ${limit}`;
+  };
+  const settled = (message) => {
+    if (!busy) return;
+    clearTimeout(watchdog); busy = false;
+    if (started) state.cooldownUntil = Date.now() + pauseMs;
+    save(); update();
+    if (!disposed) status.textContent = message + (unavailableStorage ? ' Счётчик не сохранится при перезагрузке: хранилище браузера недоступно.' : '');
+  };
+  const cancel = (message) => {
+    settled(message);
+    if ('speechSynthesis' in window) speechSynthesis.cancel();
+  };
+  play.addEventListener('click', () => {
+    if (busy || expired || disposed || state.used >= limit || Date.now() < state.cooldownUntil) return;
+    if (!('speechSynthesis' in window) || !window.SpeechSynthesisUtterance) {
+      status.textContent = 'Системный голос недоступен. Можно пропустить аудирование без балла.'; return;
+    }
+    busy = true; started = false; update();
+    status.textContent = 'Подготавливаем системный польский голос…';
+    utterance = new SpeechSynthesisUtterance(JSON.parse(document.getElementById('run-listening-transcript').textContent));
+    const current = utterance;
+    current.lang = 'pl-PL'; current.rate = .9;
+    current.onstart = () => {
+      if (!busy || disposed || expired || current !== utterance || started) return;
+      started = true; clearTimeout(watchdog); state.used++; state.cooldownUntil = Date.now() + pauseMs; save(); update();
+      status.textContent = `Прослушивание ${state.used} из ${limit}. Остановка тоже расходует прослушивание.`;
+    };
+    current.onend = () => { if (current === utterance) settled(state.used < limit ? 'Сообщение завершено. Перед повтором — пауза 30 секунд для ответов.' : 'Два прослушивания использованы. Ответь на вопросы.'); };
+    current.onerror = () => { if (current === utterance) settled(started ? 'Воспроизведение прервано; начатое прослушивание учтено.' : 'Голос не запустился; прослушивание не потрачено. Попробуй ещё раз или пропусти часть.'); };
+    watchdog = setTimeout(() => { if (!started && current === utterance) cancel('Голос не запустился; прослушивание не потрачено. Можно попробовать ещё раз.'); }, 10000);
+    try { speechSynthesis.speak(current); }
+    catch (_) { cancel('Системный голос недоступен; прослушивание не потрачено.'); }
+  });
+  stop.addEventListener('click', () => cancel('Воспроизведение остановлено. Начатое прослушивание учтено; перед повтором — пауза 30 секунд.'));
+  root.addEventListener('b1-run-expired', () => { expired = true; cancel('Время части истекло. Можно пропустить её без балла.'); update(); });
+  const leave = () => { disposed = true; cancel(''); update(); };
+  document.getElementById('b1-run-form').addEventListener('submit', leave);
+  window.addEventListener('pagehide', leave);
+  const tick = () => { if (disposed) return; update(); setTimeout(tick, 1000); };
+  save(); tick();
+})();
