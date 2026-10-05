@@ -295,22 +295,21 @@ resume, удаление черновика, отправку результат
 создан совместимый alias к существующему `backend/.venv`.
 Выпуск: [PR #234](https://github.com/vasilik23/polish-learn/pull/234), production
 05.10.2026. GET login/register и `private, no-store` проверены, error/fatal
-логов нового deployment не найдено. Авторизованный production smoke остаётся
-до получения короткоживущего токена.
+логов нового deployment не найдено. Авторизованный production smoke
+завершён 05.10.2026; результаты приведены ниже.
 Ссылка на даты заменена универсальным разделом
 https://certyfikatpolski.pl/category/terminy/ (проверен 05.10.2026).
 
-### P1 — оставшиеся задачи quality sprint
+### P1 — production-проверка и окружение завершены
 
-1. Перепривязать SDK в активной IDE к текущему `backend/.venv`, подтвердить путь и удалить совместимый alias.
-2. Настроить короткоживущий `POLSKIFLOW_SMOKE_ACCESS_TOKEN` и выполнить авторизованный production smoke.
-
-Повторная проверка 05.10.2026: PyCharm после перезапуска вернул старые
-Desktop-пути SDK на диск. Правка XML не меняет активную привязку;
-alias к текущему окружению сохранён до подтверждения новой привязки в IDE.
-Текущее окружение подтверждено, system check и migration drift проходят.
+Проверено 05.10.2026: активный SDK Django-модуля `polskiflow` использует
+`Documents/polish-learn/backend/.venv/bin/python` (Python 3.11.9).
+Совместимый Desktop-alias удалён после подтверждения привязки;
+769 Django-тестов, system check и migration drift проходят без него.
 Для smoke подготовлен игнорируемый `backend/.env.smoke.local` с правами 0600;
-токен пока не настроен, авторизованный smoke не выполнен.
+токен настроен локально, авторизованный smoke 05.10.2026 прошёл 6 проверок:
+health, ready, OpenAPI, catalog, bootstrap и export. Подтверждены приватные
+cache headers; токен и пользовательские payload не выводились.
 
 Production smoke отклоняет все HTTP-перенаправления: bearer-токен не переносится
 на новый адрес, а ошибка содержит только имя проверки и HTTP-код.
