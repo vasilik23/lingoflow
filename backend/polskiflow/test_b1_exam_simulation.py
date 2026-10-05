@@ -1,4 +1,6 @@
 from unittest.mock import patch
+from pathlib import Path
+import subprocess
 
 from django.core import signing
 from django.test import SimpleTestCase, TestCase
@@ -10,11 +12,29 @@ from polskiflow.domain.b1_exam_simulation import (
     get_simulation_part,
     score_simulation_part,
     simulation_questions,
+    simulation_timing,
 )
 from polskiflow.domain.b1_weekly_mock import VARIANTS
 
 
 class B1ExamSimulationDomainTests(SimpleTestCase):
+    def test_short_budget_tracks_question_count_and_preserves_full_limits(self):
+        for variant in VARIANTS:
+            for part_id, minutes in (("listening", 8), ("reading", 7), ("grammar", 6)):
+                part = get_simulation_part(part_id)
+                self.assertEqual(simulation_timing(variant, part)["timer_minutes"], minutes)
+                self.assertEqual(simulation_timing(variant, part, "full")["timer_minutes"], part["minutes"])
+            self.assertEqual(simulation_timing(variant, get_simulation_part("writing"))["timer_minutes"], 75)
+        with self.assertRaises(ValueError):
+            simulation_timing(VARIANTS[0], get_simulation_part("reading"), "invalid")
+
+    def test_browser_draft_lifecycle_and_elapsed_timer(self):
+        completed = subprocess.run(
+            ["node", str(Path(__file__).with_name("test_b1_simulation_resume.cjs"))],
+            capture_output=True, text=True, timeout=15,
+        )
+        self.assertEqual(completed.returncode, 0, completed.stdout + completed.stderr)
+
     def test_five_parts_keep_official_time_and_honest_modes(self):
         self.assertEqual(
             [(part["id"], part["minutes"]) for part in B1_SIMULATION_PARTS],
@@ -90,8 +110,11 @@ class B1ExamSimulationViewTests(TestCase):
     @patch("polskiflow.b1_mock_views.save_b1_section_attempt", return_value=True)
     def test_objective_part_has_signed_state_timer_and_aggregate_history(self, save_attempt):
         opened = self.client.get("/exam/b1/simulation/?part=grammar")
-        self.assertContains(opened, "45:00")
-        self.assertContains(opened, "объём этого оригинального набора PolskiFlow меньше")
+        self.assertContains(opened, "6:00")
+        self.assertContains(opened, '<main ', count=1)
+        self.assertContains(opened, 'role="timer" aria-live="off"')
+        self.assertContains(opened, 'id="simulation-timer-status" role="status"')
+        self.assertContains(opened, "Объём этого оригинального набора PolskiFlow меньше")
         questions = opened.context["questions"]
         payload = {"simulation_token": opened.context["simulation_token"]}
         payload.update({f"answer_{question.id}": question.correct for question in questions})
@@ -134,7 +157,7 @@ class B1ExamSimulationViewTests(TestCase):
         speaking = self.client.get("/exam/b1/simulation/?part=speaking")
 
         self.assertContains(writing, "75:00")
-        self.assertContains(writing, "Текст не отправляется, не сохраняется при перезагрузке")
+        self.assertContains(writing, "Текст восстанавливается после перезагрузки в этой вкладке")
         self.assertContains(writing, '<textarea id="simulation-writing" rows="14"')
         self.assertNotContains(writing, 'name="simulation-writing"')
         self.assertContains(speaking, "15:00")
@@ -142,12 +165,15 @@ class B1ExamSimulationViewTests(TestCase):
         self.assertContains(writing, "Завершить самопроверку")
         self.assertContains(speaking, "Завершить самопроверку")
 
-    def test_browser_resume_stores_only_timing_and_aggregate_result(self):
+    def test_browser_resume_keeps_draft_in_tab_and_progress_in_local_storage(self):
         response = self.client.get("/exam/b1/simulation/?part=reading")
 
-        self.assertContains(response, "localStorage.getItem(prefix + partId)")
+        self.assertContains(response, "localStorage.getItem(statePrefix + partId)")
         self.assertContains(response, "startedAt")
         self.assertContains(response, "completedAt")
+        self.assertContains(response, "sessionStorage.setItem(draftKey")
+        self.assertContains(response, "draft.startedAt === state.startedAt")
+        self.assertContains(response, "sessionStorage.removeItem(draftKey)")
         self.assertNotContains(response, "selectedAnswers")
         self.assertNotContains(response, "simulation-writing', textarea")
 
@@ -165,6 +191,19 @@ class B1ExamSimulationViewTests(TestCase):
         self.assertEqual(unknown.status_code, 400)
         self.assertContains(unknown, "неизвестные поля", status_code=400)
         self.assertEqual(foreign.status_code, 400)
+
+    @patch("polskiflow.b1_mock_views.save_b1_section_attempt", return_value=True)
+    def test_full_timing_is_signed_and_survives_post(self, _save):
+        opened = self.client.get("/exam/b1/simulation/?part=grammar&timing=full")
+        self.assertContains(opened, "45:00")
+        token = opened.context["simulation_token"]
+        payload = signing.loads(token, salt="polskiflow.b1-exam-simulation")
+        self.assertEqual(payload["timing_mode"], "full")
+        submitted = self.client.post("/exam/b1/simulation/", {
+            "simulation_token": token,
+            **{f"answer_{q.id}": q.correct for q in opened.context["questions"]},
+        })
+        self.assertEqual(submitted.context["duration_seconds"], 45 * 60)
 
     def test_guest_is_redirected_to_login(self):
         self.client.cookies.clear()

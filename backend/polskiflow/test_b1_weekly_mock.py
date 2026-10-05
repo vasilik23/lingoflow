@@ -1,6 +1,8 @@
 from datetime import date
 from uuid import UUID
 from unittest.mock import patch
+from pathlib import Path
+import subprocess
 
 from django.core import signing
 from django.test import SimpleTestCase, TestCase
@@ -10,6 +12,13 @@ from polskiflow.domain.b1_weekly_mock import QUESTIONS, VARIANTS, score_mock_ans
 
 
 class B1WeeklyMockDomainTests(SimpleTestCase):
+    def test_browser_resume_lifecycle(self):
+        completed = subprocess.run(
+            ["node", str(Path(__file__).with_name("test_b1_mock_resume.cjs"))],
+            capture_output=True, text=True, timeout=15,
+        )
+        self.assertEqual(completed.returncode, 0, completed.stdout + completed.stderr)
+
     def test_scores_each_objective_module_separately(self):
         answers = {question.id: question.correct for question in QUESTIONS}
         answers["g1"] = 0
@@ -71,6 +80,9 @@ class B1WeeklyMockViewTests(TestCase):
         self.assertContains(response, "Говорение")
         self.assertNotContains(response, "Nagranie mówi")
         self.assertNotContains(response, "Баллы относятся")
+        self.assertContains(response, '<main ', count=1)
+        self.assertContains(response, 'role="timer" aria-live="off"')
+        self.assertContains(response, 'id="mock-timer-status" role="status"')
 
     @patch("polskiflow.b1_mock_views.load_b1_mock_attempts", return_value=[{
         "attempted_at": "2026-10-01T08:00:00Z", "listening_correct": 2,
@@ -88,7 +100,7 @@ class B1WeeklyMockViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "7 из 7")
         self.assertContains(response, "100%", count=3)
-        self.assertContains(response, "Nagranie mówi")
+        self.assertContains(response, questions[0].explanation)
         self.assertContains(response, "не равны результату государственного экзамена")
         self.assertContains(response, "Агрегированный результат сохранён")
         self.assertContains(response, "2026-10-01")
@@ -158,6 +170,22 @@ class B1WeeklyMockViewTests(TestCase):
         self.assertEqual(cross_user.status_code, 400)
         self.assertEqual(bad_attempt.status_code, 400)
         self.assertContains(unknown, "неизвестные поля", status_code=400)
+
+    @patch("polskiflow.b1_mock_views.save_b1_mock_attempt")
+    def test_resume_restores_signed_variant_without_saving_result(self, save_attempt):
+        with patch("polskiflow.b1_mock_views.timezone.localdate", return_value=date(2026, 1, 5)):
+            opened = self.client.get("/exam/b1/mock/")
+        with patch("polskiflow.b1_mock_views.timezone.localdate", return_value=date(2026, 1, 12)):
+            resumed = self.client.post("/exam/b1/mock/", {
+                "attempt_token": opened.context["attempt_token"], "resume": "1",
+            })
+        self.assertEqual(resumed.status_code, 200)
+        self.assertEqual(resumed.context["variant"].id, opened.context["variant"].id)
+        self.assertEqual(resumed.context["attempt_token"], opened.context["attempt_token"])
+        self.assertIsNone(resumed.context["result"])
+        save_attempt.assert_not_called()
+        foreign = self.client.post("/exam/b1/mock/", {"attempt_token": "forged", "resume": "1"})
+        self.assertEqual(foreign.status_code, 400)
 
     def test_guest_is_redirected_to_login(self):
         self.client.cookies.clear()

@@ -183,9 +183,18 @@ def build_b1_exam_prep(today: date, module_results: tuple[dict, ...] = ()) -> di
 
 
 def _weak_measured_module(module_results: tuple[dict, ...]) -> dict | None:
+    candidates = []
+    for item in module_results:
+        recommendation = item.get("recommendation")
+        if item.get("source") == "mock" and isinstance(recommendation, dict):
+            if recommendation.get("attempts", 0) < 3:
+                continue
+            item = {**item, "percent": recommendation["percent"],
+                    "reason_label": f"Последние {recommendation['attempts']} мини‑попытки"}
+        candidates.append(item)
     weak = [
         item
-        for item in module_results
+        for item in candidates
         if item.get("status") == "measured"
         and isinstance(item.get("percent"), int)
         and item["percent"] < 70
@@ -282,8 +291,10 @@ def attach_b1_mock_trends(
         "grammar": ("grammar_correct", 3),
     }
     trends = {}
+    recommendations = {}
     for module_id, (field, total) in specs.items():
         points = []
+        correct_points = []
         for attempt in attempts or ():
             if not isinstance(attempt, dict):
                 continue
@@ -295,8 +306,13 @@ def attach_b1_mock_trends(
             ):
                 continue
             points.append(round(correct * 100 / total))
-            if len(points) == 2:
+            correct_points.append(correct)
+            if len(points) == 5:
                 break
+        recommendations[module_id] = {
+            "attempts": len(points),
+            "percent": round(sum(correct_points) * 100 / (total * len(points))) if len(points) >= 3 else None,
+        }
         if not points:
             trends[module_id] = {"status": "empty"}
             continue
@@ -322,7 +338,8 @@ def attach_b1_mock_trends(
             ),
         }
     return tuple(
-        {**item, "trend": trends.get(item["id"], {"status": "unmeasured"})}
+        {**item, "trend": trends.get(item["id"], {"status": "unmeasured"}),
+         "recommendation": recommendations.get(item["id"], {"attempts": 0, "percent": None})}
         for item in module_results
     )
 

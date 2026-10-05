@@ -60,6 +60,22 @@ def simulation_questions(variant: MockVariant, part_id: str) -> tuple:
     return tuple(question for question in questions if question.module == part_id)
 
 
+def simulation_timing(variant: MockVariant, part: dict, timing_mode: str = "short") -> dict:
+    """Editorial practice budget: a minute per item plus source preparation.
+
+    This is not an official exam ratio or a calibrated assessment limit.
+    Free-production prompts retain their full section limits.
+    """
+    if timing_mode not in {"short", "full"}:
+        raise ValueError("Неизвестный режим времени.")
+    mode = timing_mode if part["mode"] == "objective" else "full"
+    minutes = part["minutes"]
+    if mode == "short":
+        preparation = {"listening": 3, "reading": 2, "grammar": 0}[part["id"]]
+        minutes = min(minutes, len(simulation_questions(variant, part["id"])) + preparation)
+    return {"timing_mode": mode, "timer_minutes": minutes, "duration_seconds": minutes * 60}
+
+
 def score_simulation_part(variant: MockVariant, part_id: str, answers: dict[str, int]) -> dict:
     """Score exactly one objective section; free production is never graded."""
     part = get_simulation_part(part_id)

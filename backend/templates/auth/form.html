@@ -10,7 +10,7 @@
     </aside>
     <section class="auth-panel">
       <a class="brand" href="{% url 'login' %}"><span class="brand-mark">P</span> PolskiFlow</a>
-      <p class="eyebrow">Witaj ponownie</p>
+      <p class="eyebrow" lang="pl">{% if mode == 'login' %}Witaj ponownie{% else %}Załóż konto{% endif %}</p>
       <h1>{% if mode == "login" %}Рады видеть!{% else %}Начнём учиться{% endif %}</h1>
       <p class="muted">{% if mode == "login" %}Продолжи с того места, где остановился.{% else %}Создай аккаунт и начни первый урок.{% endif %}</p>
       {% if error %}<p class="error" role="alert">{{ error }}</p>{% endif %}

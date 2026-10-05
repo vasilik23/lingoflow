@@ -1,17 +1,17 @@
 {% extends "base.html" %}
 {% block title %}Недельный пробный модуль B1 · PolskiFlow{% endblock %}
 {% block content %}
-<main class="mock-shell">
+<div class="mock-shell" data-mock-root data-storage-namespace="{{ mock_storage_namespace }}" data-variant-id="{{ variant.id }}" data-duration-seconds="{{ duration_seconds }}"{% if result %} data-completed="true"{% endif %}{% if error %} data-error="true"{% endif %}>
   <header class="mock-header">
-    <div><p class="eyebrow">B1 · недельная тренировка · {{ variant.label }}</p><h1>Пробный мини‑модуль</h1><p>15 минут, пять экзаменационных навыков. Вариант меняется раз в неделю. Это тренировка PolskiFlow, не официальный тест и не прогноз результата.</p></div>
-    {% if not result %}<div class="mock-timer" role="timer" aria-live="polite"><strong id="mock-timer">15:00</strong><span>осталось</span></div>{% endif %}
+    <div><p class="eyebrow">B1 · недельная тренировка · {{ variant.label }}</p><h1>Пробный мини‑модуль</h1><p>15 минут: 3 проверяемых блока + 2 блока самопроверки. Аудирование и чтение — по 2 вопроса, грамматика — 3. Письмо и речь не получают автоматического балла. Вариант меняется раз в неделю. Это тренировка PolskiFlow, не официальный тест и не прогноз результата.</p></div>
+    {% if not result %}<div class="mock-timer" role="timer" aria-live="off"><strong id="mock-timer">15:00</strong><span>осталось</span></div><p class="visually-hidden" id="mock-timer-status" role="status" aria-live="polite" aria-atomic="true"></p>{% endif %}
   </header>
 
-  {% if error %}<div class="form-message error" role="alert">{{ error }} <a href="{% url 'b1-weekly-mock' %}">Начать заново</a></div>{% endif %}
+  {% if error %}<div class="form-message error" role="alert">{{ error }} <a href="{% url 'b1-weekly-mock' %}?restart=1">Начать заново</a></div>{% endif %}
 
   {% if result %}
     <section class="card mock-summary" aria-labelledby="mock-result-title">
-      <div><p class="eyebrow">Проверяемая часть</p><h2 id="mock-result-title">{{ result.correct }} из {{ result.total }}</h2><p class="muted">Баллы относятся только к заданиям ниже и не равны результату государственного экзамена.</p></div>
+      <div><p class="eyebrow">Проверяемая часть</p><h2 id="mock-result-title">{{ result.correct }} из {{ result.total }}</h2><p class="muted">Баллы относятся только к заданиям ниже и не равны результату государственного экзамена. Выборка мала: 2–3 вопроса на навык. Уверенность в выводах низкая; один ответ меняет результат блока на 33–50 процентных пунктов.</p></div>
       <div class="mock-module-results">
         {% for module in result.modules %}<div><strong>{{ module.percent }}%</strong><span>{{ module.label }} · {{ module.correct }}/{{ module.total }}</span></div>{% endfor %}
       </div>
@@ -40,13 +40,13 @@
     </section>
 
     <section class="mock-self-grid">
-      <article class="card mock-section"><div class="mock-section-heading"><span>4</span><div><p class="eyebrow">Pisanie</p><h2>Письмо</h2></div></div><p lang="pl"><strong>{{ variant.writing_prompt }}</strong></p><p class="muted">Напиши отдельно или в тренажёре письма. Эта попытка не сохраняет и не оценивает текст.</p></article>
+      <article class="card mock-section"><div class="mock-section-heading"><span>4</span><div><p class="eyebrow">Pisanie</p><h2>Письмо</h2></div></div><p lang="pl"><strong>{{ variant.writing_prompt }}</strong></p>{% if not result %}<label for="mock-writing">Локальный черновик</label><textarea id="mock-writing" rows="8" aria-describedby="mock-writing-note"></textarea><button class="compact-button" type="button" id="mock-clear-writing">Удалить текст черновика</button><p class="muted" id="mock-draft-status" role="status"></p>{% endif %}<p class="muted" id="mock-writing-note">Черновик восстанавливается после перезагрузки в этой вкладке и удаляется после завершения. Текст не отправляется на сервер и не оценивается автоматически.</p></article>
       <article class="card mock-section"><div class="mock-section-heading"><span>5</span><div><p class="eyebrow">Mówienie</p><h2>Говорение</h2></div></div><p lang="pl"><strong>{{ variant.speaking_prompt }}</strong></p><p class="muted">Ответь вслух и проверь: задача выполнена, есть связки, пример и понятный итог. Автоматического балла нет.</p></article>
     </section>
 
     {% if not result and not error %}<button class="primary-button mock-submit" type="submit">Завершить и проверить</button>{% endif %}
   </form>
-  {% if result %}<a class="compact-button" href="{% url 'b1-weekly-mock' %}">Новая попытка</a>{% endif %}
+  {% if result %}<a class="compact-button" href="{% url 'b1-weekly-mock' %}?restart=1">Новая попытка</a>{% else %}<a class="compact-button" href="{% url 'b1-weekly-mock' %}?restart=1">Начать заново</a>{% endif %}
 
   <section class="mock-history" aria-labelledby="mock-history-title">
     <div class="section-heading"><div><p class="eyebrow">Последние попытки</p><h2 id="mock-history-title">Динамика мини‑модуля</h2></div><span>хранятся только три агрегированных балла</span></div>
@@ -54,19 +54,80 @@
     {% elif history %}<div class="mock-history-list">{% for attempt in history %}<article class="card"><time datetime="{{ attempt.attempted_at }}">{{ attempt.attempted_at|slice:":10" }} · {{ attempt.variant_label }}</time><div><span>Аудирование <strong>{{ attempt.listening_correct }}/2</strong></span><span>Чтение <strong>{{ attempt.reading_correct }}/2</strong></span><span>Грамматика <strong>{{ attempt.grammar_correct }}/3</strong></span></div></article>{% endfor %}</div>
     {% else %}<p class="card muted">Завершённые попытки появятся здесь. Выбранные ответы и свободные тексты не сохраняются.</p>{% endif %}
   </section>
-</main>
+</div>
 {{ listening_transcript|json_script:"mock-listening-transcript" }}
-{% if not result %}<script>
+<script>
 (() => {
+  const root = document.querySelector('[data-mock-root]');
+  const key = `polskiflow-b1-mock:${root.dataset.storageNamespace}`;
+  const clear = () => { try { sessionStorage.removeItem(key); } catch (error) {} };
+  if (root.dataset.completed) { clear(); return; }
   const timer = document.getElementById('mock-timer');
   const form = document.getElementById('mock-form');
-  let left = {{ duration_seconds }};
+  const token = form.querySelector('[name="attempt_token"]');
+  const writing = document.getElementById('mock-writing');
+  const draftStatus = document.getElementById('mock-draft-status');
+  let savedWriting = '';
+  const answers = Array.from(form.querySelectorAll('input[type="radio"]'));
+  const duration = Number(root.dataset.durationSeconds);
+  let draft = null;
+  try { draft = JSON.parse(sessionStorage.getItem(key) || 'null'); } catch (error) {}
+  const url = new URL(window.location.href);
+  if (url.searchParams.get('restart') === '1') {
+    clear(); draft = null;
+    url.searchParams.delete('restart'); window.history.replaceState({}, '', url);
+  }
+  if (!draft || !Number.isFinite(draft.startedAt) || draft.startedAt <= 0 || draft.startedAt > Date.now() || typeof draft.token !== 'string') {
+    draft = {startedAt: Date.now(), token: token.value, variant: root.dataset.variantId, answers: {}, writing: ''};
+  }
+  if (root.dataset.error) { clear(); return; }
+  if (draft.variant !== root.dataset.variantId && Date.now() - draft.startedAt < duration * 1000) {
+    token.value = draft.token;
+    answers.forEach(input => input.disabled = true);
+    const resume = document.createElement('input');
+    resume.type = 'hidden'; resume.name = 'resume'; resume.value = '1';
+    form.appendChild(resume); form.submit(); return;
+  }
+  token.value = draft.token;
+  answers.forEach(input => { input.checked = draft.answers?.[input.name] === input.value; });
+  if (writing && typeof draft.writing === 'string') writing.value = draft.writing;
+  const save = () => {
+    draft.answers = {};
+    answers.forEach(input => { if (input.checked) draft.answers[input.name] = input.value; });
+    draft.writing = writing?.value || '';
+    try {
+      sessionStorage.setItem(key, JSON.stringify(draft));
+      savedWriting = writing?.value || '';
+      if (draftStatus) draftStatus.textContent = writing?.value ? 'Черновик сохранён в этой вкладке.' : '';
+    } catch (error) {
+      if (draftStatus) draftStatus.textContent = 'Браузер не смог сохранить черновик. Скопируй текст перед уходом.';
+    }
+  };
+  document.getElementById('mock-clear-writing')?.addEventListener('click', () => {
+    writing.value = ''; save(); writing.focus();
+  });
+  window.addEventListener('beforeunload', event => {
+    if (writing?.value && writing.value !== savedWriting) {
+      event.preventDefault(); event.returnValue = '';
+    }
+  });
+  form.addEventListener('change', save); writing?.addEventListener('input', save); save();
+  const timerStatus = document.getElementById('mock-timer-status');
+  let previousLeft = Math.max(0, duration - Math.floor((Date.now() - draft.startedAt) / 1000));
   const tick = () => {
+    const left = Math.max(0, duration - Math.floor((Date.now() - draft.startedAt) / 1000));
+    const crossed = [600, 300, 60].filter(point => previousLeft > point && left <= point);
+    if (timerStatus && left === 0) timerStatus.textContent = 'Время истекло.';
+    else if (timerStatus && crossed.length) {
+      const checkpoint = crossed[crossed.length - 1] / 60;
+      timerStatus.textContent = checkpoint === 1 ? 'Осталась одна минута.' : `Осталось ${checkpoint} минут.`;
+    }
+    previousLeft = left;
     const minutes = String(Math.floor(left / 60)).padStart(2, '0');
     const seconds = String(left % 60).padStart(2, '0');
     timer.textContent = `${minutes}:${seconds}`;
-    if (left <= 0) { form.querySelectorAll('input, button').forEach(el => el.disabled = true); timer.parentElement.classList.add('expired'); return; }
-    left -= 1; window.setTimeout(tick, 1000);
+    if (left <= 0) { form.querySelectorAll('input, button, textarea').forEach(el => el.disabled = true); timer.parentElement.classList.add('expired'); return; }
+    window.setTimeout(tick, 1000);
   }; tick();
   document.getElementById('mock-play')?.addEventListener('click', () => {
     const status = document.getElementById('mock-audio-status');
@@ -75,5 +136,5 @@
     utterance.lang = 'pl-PL'; utterance.rate = .9; utterance.onstart = () => status.textContent = 'Воспроизводится…'; utterance.onend = () => status.textContent = 'Сообщение завершено. Можно прослушать ещё раз.'; speechSynthesis.speak(utterance);
   });
 })();
-</script>{% endif %}
+</script>
 {% endblock %}
