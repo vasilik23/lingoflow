@@ -8,6 +8,7 @@
   </header>
 
   {% if not part %}
+    <p><a class="compact-button" href="{% url 'b1-training-run' %}">Учебный прогон пяти частей с перерывами →</a></p>
     <div class="exam-module-grid simulation-part-grid">
       {% for item in parts %}<article class="card exam-module-card exam-accent-{{ item.accent }}" data-simulation-card="{{ item.id }}"><header><span>{{ item.timer_minutes }} мин</span><span>{% if item.mode == "objective" %}{{ item.question_count }} заданий{% else %}самопроверка{% endif %}</span></header><p class="eyebrow" lang="pl">{{ item.polish_title }}</p><h2>{{ item.title }}</h2><p class="simulation-progress muted" data-simulation-progress>Ещё не начато</p><a href="?part={{ item.id }}{% if item.mode != 'objective' %}&timing=full{% endif %}">Начать часть</a>{% if item.mode == 'objective' %}<p><a href="?part={{ item.id }}&timing=full">Полный лимит · {{ item.minutes }} мин</a></p>{% endif %}</article>{% endfor %}
     </div>
