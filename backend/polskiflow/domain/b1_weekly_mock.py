@@ -28,6 +28,7 @@ class MockVariant:
     origin: str = "original"
     created_for: str = "PolskiFlow"
     verified_at: date = date(2026, 10, 1)
+    topics: tuple[str, ...] = ()
 
 
 LISTENING_TRANSCRIPT = (
@@ -77,6 +78,7 @@ VARIANTS = (
             MockQuestion("g2", "grammar", "To jest firma, w ___ pracuje moja siostra.", ("której", "którą", "która"), 0, "Przyimek „w” w znaczeniu miejsca wymaga miejscownika: „w której”."),
             MockQuestion("g3", "grammar", "Mimo ___ pogody poszliśmy na spacer.", ("zła", "złej", "złą"), 1, "Przyimek „mimo” łączy się z dopełniaczem: „mimo złej pogody”."),
         ),
+        topics=("remote-work",),
     ),
     MockVariant(
         "b1-weekly-v3", "Вариант 3",
@@ -99,9 +101,12 @@ VARIANTS = (
 MODULE_LABELS = {"listening": "Аудирование", "reading": "Чтение", "grammar": "Грамматика"}
 
 
-def weekly_mock_variant(today: date) -> MockVariant:
-    """Rotate predictably by ISO week without user-specific tracking."""
-    return VARIANTS[(today.isocalendar().week - 1) % len(VARIANTS)]
+def weekly_mock_variant(today: date, excluded_topics: tuple[str, ...] = ()) -> MockVariant:
+    """Rotate new attempts by ISO week among the allowed themes."""
+    candidates = tuple(variant for variant in VARIANTS if not set(variant.topics) & set(excluded_topics))
+    if not candidates:
+        raise ValueError("Нет доступных вариантов для выбранных тем.")
+    return candidates[(today.isocalendar().week - 1) % len(candidates)]
 
 
 def get_mock_variant(variant_id: str) -> MockVariant | None:

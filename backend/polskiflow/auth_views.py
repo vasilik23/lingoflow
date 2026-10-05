@@ -24,6 +24,8 @@ from polskiflow.auth import (
     update_password,
 )
 from polskiflow.b1_mock_store import load_b1_mock_attempts
+from polskiflow.practice_preferences import excluded_practice_topics, set_practice_topics
+from polskiflow.domain.practice_recommendations import practice_recommendation
 from polskiflow.content import course_topics, tasks
 from polskiflow.dictionary_store import load_personal_words
 from polskiflow.lesson_draft_store import load_latest_lesson_draft
@@ -547,9 +549,23 @@ def daily_tasks(request: HttpRequest) -> HttpResponse:
 
 
 @require_browser_user
+@require_http_methods(["GET", "POST"])
 def practice_hub(request: HttpRequest) -> HttpResponse:
     """Keep optional training modes discoverable without bloating the course catalog."""
-    return render(request, "practice.html")
+    if request.method == "POST":
+        response = redirect("practice-hub")
+        response["Cache-Control"] = "private, no-store"
+        set_practice_topics(response, request, exclude_remote_work=request.POST.get("exclude_remote_work") == "on")
+        return response
+    excluded_topics = excluded_practice_topics(request)
+    dashboard = load_dashboard_progress(
+        request.supabase_access_token, request.supabase_user.id,
+        (request.supabase_user.email or "ученик").split("@", 1)[0],
+    )
+    return _no_store(render(request, "practice.html", {
+        "exclude_remote_work": "remote-work" in excluded_topics,
+        "recommendation": practice_recommendation(dashboard.level, timezone.localdate(), excluded_topics),
+    }))
 
 
 @require_browser_user

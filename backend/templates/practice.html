@@ -13,6 +13,22 @@
     <a class="practice-course-link" href="{% url 'course' %}"><span>Последовательный курс</span><strong>Вернуться к темам →</strong></a>
   </section>
 
+  {% if recommendation %}
+    <section class="card" aria-labelledby="practice-recommendation-title">
+      <h2 id="practice-recommendation-title">Рекомендация на сегодня</h2>
+      <p><a href="{{ recommendation.href }}">{{ recommendation.title }} →</a></p>
+    </section>
+  {% endif %}
+  <section class="profile-settings" aria-labelledby="practice-topics-title">
+    <h2 id="practice-topics-title">Темы персональной практики</h2>
+    <form class="card profile-form" method="post">
+      {% csrf_token %}
+      <label><span><input type="checkbox" name="exclude_remote_work"{% if exclude_remote_work %} checked{% endif %}> Не предлагать удалённую и гибридную работу</span></label>
+      <p class="muted">Применяется к новым B1 mini-mock и timed-частям, а также рекомендации B2 на этом экране. Начатая попытка сохраняется. Общий каталог и тренажёры ниже не скрываются.</p>
+      <p class="muted">Выбор хранится в cookie этого браузера до 90 дней, отдельно для аккаунта, и не синхронизируется с другими устройствами. Сними отметку и сохрани, чтобы удалить настройку.</p>
+      <button type="submit">Сохранить выбор тем</button>
+    </form>
+  </section>
   <div class="section-heading practice-section-heading">
     <div><p class="eyebrow">Все тренажёры</p><h2>Что хочешь прокачать?</h2></div>
     <span>Выбирай один формат или сочетай несколько</span>
