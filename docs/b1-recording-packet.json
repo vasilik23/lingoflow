@@ -1,0 +1,127 @@
+{
+  "created_for": "PolskiFlow",
+  "origin": "original",
+  "status": "awaiting_recording_and_review",
+  "instructions": [
+    "Read the exact Polish transcript, without adding an introduction or reading questions.",
+    "Use a natural, clear pace; retain all dates, numbers and correction phrases.",
+    "Deliver MP3, OGG or WAV without music, clipping or long leading/trailing silence.",
+    "Confirm redistribution rights for the voice and recording separately from the original text.",
+    "Have a Polish-speaking reviewer listen to the entire file and check every answer against it.",
+    "Record source, author, license URL, changes, reviewer, review date and final file SHA-256.",
+    "Add reviewed immutable files and metadata to b1_listening_recordings.RECORDINGS; run Django check."
+  ],
+  "variants": [
+    {
+      "id": "b1-weekly-v1",
+      "transcript": "Dzień dobry. Informujemy, że sobotnie warsztaty fotograficzne rozpoczną się o jedenastej, a nie o dziesiątej. Spotykamy się przy głównym wejściu do domu kultury. Prosimy przynieść telefon lub aparat oraz coś do picia. W razie deszczu pierwsza część zajęć odbędzie się w sali numer dwanaście.",
+      "transcript_sha256": "755b6813c30c3b7ecca5b41f0cbb4eefaf73a630351cf7a9fff4bac6710e21a8",
+      "answer_checks": [
+        {
+          "id": "l1",
+          "question": "O której rozpoczną się warsztaty?",
+          "correct_answer": "O 11:00",
+          "explanation": "Nagranie mówi, że warsztaty rozpoczną się o jedenastej."
+        },
+        {
+          "id": "l2",
+          "question": "Co trzeba przynieść?",
+          "correct_answer": "Aparat lub telefon i napój",
+          "explanation": "Organizator prosi o telefon lub aparat oraz coś do picia."
+        },
+        {
+          "id": "sl3",
+          "question": "Gdzie uczestnicy mają się spotkać?",
+          "correct_answer": "Przy wejściu do domu kultury",
+          "explanation": "Komunikat wyraźnie wskazuje główne wejście do domu kultury jako miejsce spotkania."
+        },
+        {
+          "id": "sl4",
+          "question": "Co zmieni się w razie deszczu?",
+          "correct_answer": "Pierwsza część odbędzie się w sali",
+          "explanation": "Deszcz zmienia jedynie miejsce pierwszej części zajęć, a nie godzinę ani termin."
+        },
+        {
+          "id": "sl5",
+          "question": "Jaki jest główny cel komunikatu?",
+          "correct_answer": "Przekazać organizacyjne szczegóły warsztatów",
+          "explanation": "Nagranie podaje nową godzinę, miejsce spotkania oraz listę potrzebnych rzeczy."
+        }
+      ]
+    },
+    {
+      "id": "b1-weekly-v2",
+      "transcript": "Uwaga, uczestnicy klubu książki. Najbliższe spotkanie odbędzie się w czwartek o osiemnastej trzydzieści, a nie w środę. Czekamy w czytelni na drugim piętrze biblioteki. Każdy uczestnik powinien przynieść książkę i zaznaczyć krótki fragment, o którym chce porozmawiać. Po spotkaniu będzie można zapisać się na listopadowe warsztaty.",
+      "transcript_sha256": "0032910aa4d1d3ba6d3dd89d86cbe2e29ca13ed0583b0491071aa1b8d04988f7",
+      "answer_checks": [
+        {
+          "id": "l1",
+          "question": "Kiedy odbędzie się spotkanie?",
+          "correct_answer": "W czwartek o 18:30",
+          "explanation": "Komunikat przenosi spotkanie na czwartek na godzinę osiemnastą trzydzieści."
+        },
+        {
+          "id": "l2",
+          "question": "Co powinien przygotować uczestnik?",
+          "correct_answer": "Książkę z zaznaczonym fragmentem",
+          "explanation": "Każdy ma przynieść książkę i zaznaczyć fragment do rozmowy."
+        },
+        {
+          "id": "sl3",
+          "question": "Gdzie odbędzie się spotkanie klubu?",
+          "correct_answer": "W czytelni na drugim piętrze",
+          "explanation": "Uczestnicy mają przyjść do czytelni znajdującej się na drugim piętrze biblioteki."
+        },
+        {
+          "id": "sl4",
+          "question": "O czym uczestnik ma porozmawiać?",
+          "correct_answer": "O wybranym fragmencie książki",
+          "explanation": "Każdy zaznacza krótki fragment książki, który chce omówić podczas spotkania."
+        },
+        {
+          "id": "sl5",
+          "question": "Co będzie możliwe po spotkaniu?",
+          "correct_answer": "Zapisanie się na listopadowe warsztaty",
+          "explanation": "Końcowa informacja dotyczy zapisów na warsztaty organizowane w listopadzie."
+        }
+      ]
+    },
+    {
+      "id": "b1-weekly-v3",
+      "transcript": "Pociąg do Gdańska odjedzie dziś z peronu piątego zamiast trzeciego. Z powodu prac na torach wyjazd jest opóźniony o dwadzieścia minut. Podróżni z rowerami powinni zająć miejsca w ostatnim wagonie. Bilety zachowują ważność i nie trzeba ich wymieniać. Przepraszamy za zmianę i prosimy uważnie słuchać kolejnych komunikatów.",
+      "transcript_sha256": "6abe8c2d5010984a5f5c8fab2f7303c3bbf3767014dec551bbb241198e7abed6",
+      "answer_checks": [
+        {
+          "id": "l1",
+          "question": "Z którego peronu odjedzie pociąg?",
+          "correct_answer": "Z piątego",
+          "explanation": "Komunikat zmienia peron z trzeciego na piąty."
+        },
+        {
+          "id": "l2",
+          "question": "Co mają zrobić osoby z rowerami?",
+          "correct_answer": "Wsiąść do ostatniego wagonu",
+          "explanation": "Dla podróżnych z rowerami wskazano ostatni wagon."
+        },
+        {
+          "id": "sl3",
+          "question": "Dlaczego pociąg jest opóźniony?",
+          "correct_answer": "Z powodu prac na torach",
+          "explanation": "Komunikat bezpośrednio łączy dwudziestominutowe opóźnienie z pracami na torach."
+        },
+        {
+          "id": "sl4",
+          "question": "O ile później odjedzie pociąg?",
+          "correct_answer": "O dwadzieścia minut",
+          "explanation": "Zapowiedziane w komunikacie opóźnienie pociągu wynosi dokładnie dwadzieścia minut."
+        },
+        {
+          "id": "sl5",
+          "question": "Co trzeba zrobić z biletem?",
+          "correct_answer": "Zachować go, ponieważ nadal jest ważny",
+          "explanation": "Bilety zachowują ważność, więc podróżni nie muszą ich wymieniać."
+        }
+      ]
+    }
+  ]
+}

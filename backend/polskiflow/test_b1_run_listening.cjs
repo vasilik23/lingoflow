@@ -9,10 +9,12 @@ class Element {
   addEventListener(event, callback) { this.events[event] = callback; }
   emit(event) { return this.events[event]?.(); }
 }
-function page(storage = new Map(), {runId = 'run-one', failStorage = false, unavailable = false} = {}) {
+function page(storage = new Map(), {runId = 'run-one', failStorage = false, unavailable = false, recorded = false} = {}) {
   const root = new Element(), play = new Element(), stop = new Element(), status = new Element(), form = new Element(), window = new Element();
   root.dataset.runId = runId;
-  root.querySelector = selector => selector.includes('audio-stop') ? stop : selector.includes('audio-status') ? status : play;
+  const audio = recorded ? new Element() : null;
+  if (audio) Object.assign(audio, {plays: 0, pauses: 0, currentTime: 0, play() { this.plays++; }, pause() { this.pauses++; }});
+  root.querySelector = selector => selector === 'audio[data-run-audio]' ? audio : selector.includes('audio-stop') ? stop : selector.includes('audio-status') ? status : play;
   let spoken = [], cancels = 0;
   const tasks = [];
   const synthesis = {speak: utterance => spoken.push(utterance), cancel: () => {cancels++;}};
@@ -24,7 +26,7 @@ function page(storage = new Map(), {runId = 'run-one', failStorage = false, unav
     sessionStorage: {getItem: key => storage.get(key), setItem: (key, value) => {if (failStorage) throw Error('quota'); storage.set(key, value);}},
     setTimeout: (callback, delay) => {const task = {callback, delay, cancelled: false}; tasks.push(task); return task;}, clearTimeout: task => {if (task) task.cancelled = true;},
   });
-  return {root, play, stop, status, form, window, spoken, tasks, cancels: () => cancels, state: () => JSON.parse([...storage.values()][0])};
+  return {root, play, stop, status, form, window, audio, spoken, tasks, cancels: () => cancels, state: () => JSON.parse([...storage.values()][0])};
 }
 const storage = new Map();
 let f = page(storage);
@@ -50,3 +52,46 @@ f = page(new Map(), {failStorage: true}); f.play.emit('click'); f.spoken[0].onst
 assert.match(f.status.textContent, /не сохранится/);
 f = page(new Map(), {unavailable: true}); f.play.emit('click'); assert.match(f.status.textContent, /недоступен/);
 console.log('B1 listening limits, pauses, resume and cancellation: PASS');
+
+const recordedStorage = new Map();
+f = page(recordedStorage, {recorded: true, unavailable: true});
+assert.equal(f.audio.plays, 0, 'recorded audio has no autoplay');
+f.play.emit('click'); assert.equal(f.audio.plays, 1); assert.equal(f.state().used, 0);
+f.audio.emit('playing'); f.audio.emit('playing'); assert.equal(f.state().used, 1);
+f.stop.emit('click'); assert.equal(f.audio.pauses, 1); assert.equal(f.audio.currentTime, 0);
+f = page(recordedStorage, {recorded: true}); assert.equal(f.play.disabled, true);
+now += 30000; f.play.emit('click'); f.audio.emit('playing'); f.audio.emit('ended');
+assert.equal(f.state().used, 2);
+f = page(recordedStorage, {recorded: true}); now += 30000; f.play.emit('click'); assert.equal(f.audio.plays, 0);
+for (const event of ['b1-run-expired', 'pagehide', 'submit']) {
+  f = page(new Map(), {recorded: true}); f.play.emit('click'); f.audio.emit('playing');
+  (event === 'pagehide' ? f.window : event === 'submit' ? f.form : f.root).emit(event);
+  assert.equal(f.audio.pauses, 1); assert.equal(f.play.disabled, true);
+  f.audio.emit('ended'); assert.equal(f.play.disabled, true);
+}
+f = page(new Map(), {recorded: true}); f.play.emit('click'); f.audio.emit('error');
+assert.equal(f.state().used, 0); assert.equal(f.play.disabled, false);
+f.play.emit('click'); f.tasks.filter(t=>t.delay===10000).at(-1).callback();
+assert.equal(f.audio.pauses, 2); assert.equal(f.state().used, 0);
+f.play.emit('click'); f.audio.emit('playing'); f.audio.emit('error');
+assert.equal(f.state().used, 1); assert.equal(f.play.disabled, true);
+console.log('Recorded audio: plays, reload, errors, watchdog and cleanup PASS');
+(async () => {
+  let fixture = page(new Map(), {recorded: true});
+  let rejectOld;
+  fixture.audio.play = () => new Promise((_, reject) => { rejectOld = reject; });
+  fixture.play.emit('click');
+  fixture.stop.emit('click');
+  fixture.audio.play = () => Promise.resolve();
+  fixture.play.emit('click');
+  rejectOld(new Error('old attempt aborted'));
+  await Promise.resolve();
+  assert.equal(fixture.audio.pauses, 1, 'late rejection cannot cancel the new attempt');
+  fixture.audio.emit('playing'); assert.equal(fixture.state().used, 1);
+  fixture = page(new Map(), {recorded: true});
+  fixture.audio.play = () => Promise.reject(new Error('network'));
+  fixture.play.emit('click'); await Promise.resolve();
+  assert.equal(fixture.state().used, 0); assert.equal(fixture.play.disabled, false);
+  assert.equal(fixture.audio.pauses, 1);
+  console.log('Recorded audio promise rejection and stale attempt: PASS');
+})().catch(error => { console.error(error); process.exitCode = 1; });

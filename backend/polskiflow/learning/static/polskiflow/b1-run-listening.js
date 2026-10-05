@@ -4,6 +4,12 @@
   if (!play) return;
   const stop = root.querySelector('[data-run-audio-stop]');
   const status = root.querySelector('[data-run-audio-status]');
+  const audio = root.querySelector('audio[data-run-audio]');
+  if (root.dataset.missingRecording === '1') {
+    play.disabled = true; stop.disabled = true;
+    status.textContent = 'Запись этого прогона недоступна. Можно пропустить часть или начать новый прогон.';
+    return;
+  }
   const key = `polskiflow-b1-run-listening:${root.dataset.namespace}`;
   const limit = 2, pauseMs = 30000;
   let state = {runId: root.dataset.runId, used: 0, cooldownUntil: 0};
@@ -16,6 +22,7 @@
   } catch (_) { unavailableStorage = true; }
   let busy = false, started = false, expired = root.dataset.expired === '1', disposed = false;
   let utterance = null, watchdog = null;
+  let attempt = 0;
   const save = () => {
     try { sessionStorage.setItem(key, JSON.stringify(state)); }
     catch (_) { unavailableStorage = true; }
@@ -34,11 +41,34 @@
     if (!disposed) status.textContent = message + (unavailableStorage ? ' Счётчик не сохранится при перезагрузке: хранилище браузера недоступно.' : '');
   };
   const cancel = (message) => {
+    attempt++;
     settled(message);
+    if (audio) { audio.pause(); audio.currentTime = 0; }
     if ('speechSynthesis' in window) speechSynthesis.cancel();
   };
+  if (audio) {
+    audio.addEventListener('playing', () => {
+      if (!busy || disposed || expired || started) return;
+      started = true; clearTimeout(watchdog); state.used++; state.cooldownUntil = Date.now() + pauseMs; save(); update();
+      status.textContent = `Прослушивание ${state.used} из ${limit}. Остановка тоже расходует прослушивание.`;
+    });
+    audio.addEventListener('ended', () => settled(state.used < limit ? 'Сообщение завершено. Перед повтором — пауза 30 секунд для ответов.' : 'Два прослушивания использованы. Ответь на вопросы.'));
+    audio.addEventListener('error', () => cancel(started ? 'Запись прервана; начатое прослушивание учтено.' : 'Запись не запустилась; прослушивание не потрачено. Попробуй ещё раз или пропусти часть.'));
+  }
   play.addEventListener('click', () => {
     if (busy || expired || disposed || state.used >= limit || Date.now() < state.cooldownUntil) return;
+    if (audio) {
+      busy = true; started = false; update();
+      status.textContent = 'Подготавливаем аудиозапись…';
+      const currentAttempt = ++attempt;
+      watchdog = setTimeout(() => { if (!started && currentAttempt === attempt) cancel('Запись не запустилась; прослушивание не потрачено. Можно попробовать ещё раз.'); }, 10000);
+      try {
+        audio.currentTime = 0;
+        const promise = audio.play();
+        promise?.catch(() => { if (currentAttempt === attempt) cancel('Запись недоступна; прослушивание не потрачено. Попробуй ещё раз или пропусти часть.'); });
+      } catch (_) { cancel('Запись недоступна; прослушивание не потрачено.'); }
+      return;
+    }
     if (!('speechSynthesis' in window) || !window.SpeechSynthesisUtterance) {
       status.textContent = 'Системный голос недоступен. Можно пропустить аудирование без балла.'; return;
     }
