@@ -1,13 +1,17 @@
 import io
 import json
 import os
+from email.message import Message
 from unittest.mock import MagicMock, patch
+from urllib.error import HTTPError
+from urllib.request import HTTPSHandler, Request, build_opener
+from urllib.response import addinfourl
 
 from django.core.management import call_command
 from django.core.management.base import CommandError
 from django.test import SimpleTestCase
 
-from polskiflow.domain.synthetic_smoke import SmokeFailure, run_synthetic_smoke
+from polskiflow.domain.synthetic_smoke import _RejectRedirects, SmokeFailure, run_synthetic_smoke
 
 
 def _response(payload, *, cache="public, max-age=0", request_id="request-1"):
@@ -20,6 +24,41 @@ def _response(payload, *, cache="public, max-age=0", request_id="request-1"):
 
 
 class SyntheticSmokeTests(SimpleTestCase):
+    def test_redirects_never_make_a_second_request_with_credentials(self):
+        class RedirectServer(HTTPSHandler):
+            def __init__(self, code, destination):
+                super().__init__()
+                self.code = code
+                self.destination = destination
+                self.requests = []
+
+            def https_open(self, request):
+                self.requests.append(request)
+                headers = Message()
+                headers["Location"] = self.destination
+                response = addinfourl(io.BytesIO(b""), headers, request.full_url, self.code)
+                response.msg = "Redirect"
+                return response
+
+        for code in (301, 302, 303, 307, 308):
+            for destination in ("https://other.example/", "https://learn.example/login/"):
+                with self.subTest(code=code, destination=destination):
+                    server = RedirectServer(code, destination)
+                    opener = build_opener(server, _RejectRedirects())
+                    request = Request("https://learn.example/api/v1/me/bootstrap/",
+                                      headers={"Authorization": "Bearer private-token"})
+                    with self.assertRaises(HTTPError) as raised:
+                        opener.open(request)
+                    self.assertEqual(raised.exception.code, code)
+                    self.assertEqual(len(server.requests), 1)
+
+    @patch("polskiflow.domain.synthetic_smoke.urlopen")
+    def test_redirect_failure_does_not_print_sensitive_location(self, urlopen):
+        urlopen.side_effect = HTTPError("https://example.com/?token=private-token", 302,
+                                       "secret redirect", {}, None)
+        with self.assertRaisesMessage(SmokeFailure, "health: HTTP 302"):
+            run_synthetic_smoke("https://example.com", include_private=False)
+
     @patch("polskiflow.domain.synthetic_smoke.urlopen")
     def test_read_only_public_and_private_path_passes_without_exposing_token(self, urlopen):
         urlopen.side_effect = [

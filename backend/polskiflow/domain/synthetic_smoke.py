@@ -5,7 +5,7 @@ import ssl
 from dataclasses import dataclass
 from urllib.error import HTTPError, URLError
 from urllib.parse import urljoin, urlparse
-from urllib.request import Request, urlopen
+from urllib.request import HTTPSHandler, HTTPRedirectHandler, Request, build_opener
 
 import certifi
 
@@ -21,6 +21,18 @@ PRIVATE_CHECKS = (
     ("export", "api/v1/me/export/"),
 )
 SSL_CONTEXT = ssl.create_default_context(cafile=certifi.where())
+
+
+class _RejectRedirects(HTTPRedirectHandler):
+    """Require direct contracts; never forward a learner token to a redirect."""
+
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        return None
+
+
+def urlopen(request, *, timeout, context):
+    opener = build_opener(HTTPSHandler(context=context), _RejectRedirects())
+    return opener.open(request, timeout=timeout)
 
 
 @dataclass(frozen=True)
