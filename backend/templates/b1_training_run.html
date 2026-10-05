@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Учебный прогон B1 · PolskiFlow{% endblock %}
+{% block content %}
+<div class="mock-shell" data-b1-run data-namespace="{{ run_namespace }}" data-phase="{{ state.phase }}" data-seconds="{{ timer_seconds }}"{% if fresh %} data-fresh="1"{% endif %}{% if discard_draft %} data-discard="1"{% endif %}>
+  <header class="mock-header"><div><p class="eyebrow">B1 · {{ variant.label }}</p><h1>Учебный прогон пяти частей</h1><p>Короткие оригинальные задания PolskiFlow. Это учебный маршрут, не полная симуляция и не оценка государственного экзамена.</p></div></header>
+  <p><a href="{% url 'b1-exam-prep' %}">← К подготовке B1</a></p>
+  {% if error %}<p class="form-message error" role="alert">{{ error }}</p>{% endif %}
+  <p class="form-message warning" data-run-storage-status role="status" hidden></p>
+  <form method="post" id="b1-run-form">{% csrf_token %}<input type="hidden" name="run_token" value="{{ run_token }}">
+    {% if state.phase == 'intro' %}
+      <section class="card mock-section"><h2>Пять частей по порядку</h2><ol>{% for item in parts %}<li>{{ item.title }} · {{ item.training_minutes }} мин{% if item.mode == 'self_review' %} · самопроверка{% endif %}</li>{% endfor %}</ol><p>Между частями — учебный перерыв 2 минуты. Лимиты редакторские, ещё не проверены на учащихся; объём — 5/5/6 вопросов и короткие задания письма и речи.</p><p>Прогон восстанавливается в текущей вкладке до 4 часов. Ответы отправляются только кнопкой проверки, после чего остаются агрегированные баллы. Письмо и речь не отправляются на сервер. Итог хранится в этой вкладке, не добавляется в историю аккаунта.</p><button type="submit" name="action" value="start" class="primary-button">Начать учебный прогон</button></section>
+    {% elif state.phase == 'break' %}
+      <section class="card mock-section"><h2>Перерыв перед частью «{{ part.title }}»</h2><p>Завершено {{ state.step }} из 5. Отдохни: таймер новой части начнётся после нажатия кнопки.</p><strong data-run-timer role="timer" aria-live="off"></strong><p data-run-timer-status role="status" aria-live="polite"></p><button type="submit" name="action" value="start" class="primary-button" data-next-part{% if timer_seconds %} disabled{% endif %}>Начать следующую часть</button></section>
+    {% elif state.phase == 'part' %}
+      <section class="card mock-section"><p class="eyebrow" lang="pl">{{ part.polish_title }}</p><h2>{{ part.title }} · часть {{ state.step|add:1 }} из 5</h2><strong data-run-timer role="timer" aria-live="off"></strong><p data-run-timer-status role="status" aria-live="polite"></p>{% include "partials/b1_exam_instruction.html" %}
+        {% if part.id == 'listening' %}<button type="button" class="compact-button" data-run-play>▶ Прослушать сообщение</button><p class="muted" data-run-audio-status role="status">Системный польский голос устройства; повторы доступны.</p>
+        {% elif part.id == 'reading' %}<p class="mock-source-text" lang="pl">{{ variant.reading_text }}</p>{% endif %}
+        {% if part.mode == 'objective' %}
+          {% for question in questions %}{% include "partials/b1_mock_question.html" %}{% endfor %}
+        {% else %}
+          <p lang="pl"><strong>{% if part.id == 'writing' %}{{ variant.writing_prompt }}{% else %}{{ variant.speaking_prompt }}{% endif %}</strong></p>
+          {% if part.id == 'writing' %}<label for="run-writing">Черновик только в этой вкладке</label><textarea id="run-writing" rows="12" aria-describedby="run-writing-note"></textarea><p id="run-writing-note" class="muted">Текст не отправляется на сервер. Завершение или пропуск части удаляет черновик.</p><button type="button" class="compact-button" data-clear-run-writing>Удалить текст</button>
+          {% else %}
+            <div data-run-recorder>
+              <p class="muted">Ответь вслух. Запись добровольная: микрофон включается только по кнопке и с твоего разрешения. Аудио остаётся в памяти этой страницы, не отправляется на сервер и не оценивается автоматически.</p>
+              <div class="speaking-controls"><button type="button" class="compact-button" data-record-start>Записать устный ответ</button><button type="button" class="compact-button secondary" data-record-stop disabled>Остановить запись</button><button type="button" class="compact-button secondary" data-record-delete hidden>Удалить запись</button></div>
+              <p class="muted" data-record-status role="status">Микрофон ещё не используется.</p>
+              <audio controls data-record-audio hidden aria-label="Прослушать свой устный ответ"></audio>
+              <p class="muted">Микрофон выключится по таймеру или при уходе. Перезагрузка, завершение части или новый прогон удалят аудио; запись не восстанавливается вместе с прогрессом.</p>
+            </div>
+          {% endif %}
+          <label><input type="checkbox" name="reviewed"> Я проверил выполнение задания, структуру, стиль и языковую правильность</label>
+        {% endif %}
+        <button type="submit" name="action" value="finish" class="primary-button" data-finish-part>Завершить {% if part.mode == 'objective' %}и проверить{% else %}самопроверку{% endif %}</button>
+        <button type="submit" name="action" value="skip" class="compact-button" formnovalidate>Пропустить часть без балла</button>
+      </section>
+    {% endif %}
+  </form>
+  {% if report %}
+    <section class="card mock-section" aria-labelledby="run-report-title"><h2 id="run-report-title">{% if state.phase == 'report' %}Итог по пяти модулям{% else %}Результаты завершённых частей{% endif %}</h2><p>Общего балла нет. 50% — лишь учебный ориентир для каждой короткой проверяемой части; маленькая выборка не подтверждает готовность к экзамену. Письмо и речь не получают процента.</p><ol>{% for item in report %}<li><strong>{{ item.title }}:</strong> {% if item.status == 'scored' %}{{ item.correct }}/{{ item.total }} · {{ item.percent }}% · {% if item.percent >= 50 %}учебный ориентир достигнут{% else %}ниже учебного ориентира{% endif %}{% elif item.status == 'self_review' %}самопроверка завершена · без автоматического балла{% else %}пропущено · без балла{% endif %}</li>{% endfor %}</ol></section>
+  {% endif %}
+  <p><a href="{% url 'b1-training-run' %}?restart=1" data-restart-run>Новый прогон · удалить текущий прогресс и черновик</a></p>
+</div>
+{{ variant.listening_transcript|json_script:"run-listening-transcript" }}
+<script src="{% static 'polskiflow/b1-training-run.js' %}?shell={{ pwa_shell_version }}" defer></script>
+<script src="{% static 'polskiflow/b1-run-recorder.js' %}?shell={{ pwa_shell_version }}" defer></script>
+{% endblock %}

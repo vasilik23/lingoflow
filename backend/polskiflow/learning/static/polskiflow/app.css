@@ -466,6 +466,7 @@ p { line-height: 1.65; }
 .writing-prompt-select { width: 100%; padding: .8rem .9rem; border: 1px solid var(--line); border-radius: .8rem; background: var(--surface); color: var(--text); font: inherit; }
 .writing-prompt { min-width: 0; padding-top: .6rem; }
 .writing-prompt[hidden] { display: none; }
+[data-b1-run] [hidden] { display: none !important; }
 .writing-prompt h2 { margin-bottom: .6rem; }
 .writing-hint { padding: .85rem 1rem; border-left: 4px solid var(--primary); border-radius: .35rem .8rem .8rem .35rem; background: var(--primary-soft); }
 .writing-prompt textarea { width: 100%; resize: vertical; min-height: 14rem; padding: 1rem; border: 1px solid var(--line); border-radius: .9rem; background: var(--surface); color: var(--text); font: inherit; line-height: 1.6; }

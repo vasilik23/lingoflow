@@ -32,6 +32,7 @@ from polskiflow.note_views import delete_lesson_note, lesson_notes
 from polskiflow.collection_views import add_material_to_collection, collection_action, collections, create_collection_view, remove_collection_item
 from polskiflow.beta_views import beta_center
 from polskiflow.b1_mock_views import b1_exam_simulation, b1_weekly_mock
+from polskiflow.b1_run_views import b1_training_run
 
 
 @require_supabase_user
@@ -50,6 +51,7 @@ urlpatterns = [
     path("tasks/", daily_tasks, name="daily-tasks"),
     path("course/", course, name="course"),
     path("practice/", practice_hub, name="practice-hub"),
+    path("exam/b1/run/", b1_training_run, name="b1-training-run"),
     path("exam/b1/", b1_exam_prep, name="b1-exam-prep"),
     path("exam/b1/mock/", b1_weekly_mock, name="b1-weekly-mock"),
     path("exam/b1/simulation/", b1_exam_simulation, name="b1-exam-simulation"),
