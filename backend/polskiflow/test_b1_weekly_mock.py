@@ -69,6 +69,13 @@ class B1WeeklyMockViewTests(TestCase):
         auth.start()
         self.addCleanup(auth.stop)
 
+    def test_all_five_modules_offer_closed_russian_help_for_polish_directions(self):
+        response = self.client.get("/exam/b1/mock/")
+        self.assertContains(response, '<details lang="ru">', count=5)
+        self.assertNotContains(response, '<details lang="ru" open')
+        for instruction in response.context["instructions"].values():
+            self.assertContains(response, f'<p lang="pl">{instruction["polish"]}</p>', html=True)
+
     def test_get_shows_five_modules_but_hides_answers_and_transcript(self):
         response = self.client.get("/exam/b1/mock/")
 

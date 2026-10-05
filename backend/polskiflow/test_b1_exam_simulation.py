@@ -90,6 +90,18 @@ class B1ExamSimulationViewTests(TestCase):
         auth.start()
         self.addCleanup(auth.stop)
 
+    def test_each_part_has_polish_directions_and_optional_russian_help(self):
+        for part in B1_SIMULATION_PARTS:
+            with self.subTest(part=part["id"]):
+                response = self.client.get("/exam/b1/simulation/", {"part": part["id"]})
+                self.assertEqual(response.status_code, 200)
+                instruction = response.context["instruction"]
+                self.assertContains(response, f'<p lang="pl">{instruction["polish"]}</p>', html=True)
+                self.assertContains(response, '<details lang="ru">')
+                self.assertNotContains(response, '<details lang="ru" open')
+                if part["mode"] == "self_review":
+                    self.assertIn("nie otrzymuje automatycznej oceny", instruction["polish"])
+
     def test_hub_lists_five_separate_parts_and_limits(self):
         response = self.client.get("/exam/b1/simulation/")
 

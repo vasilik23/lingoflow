@@ -1064,6 +1064,11 @@ button.secondary { background: white; color: var(--text); border: 1px solid #dcd
 .mock-timer.expired { background: var(--red-soft); color: var(--red); }
 .mock-form, .mock-section { display: grid; gap: 1rem; }
 .mock-section { margin-bottom: 1rem; }
+.mock-instructions { display: grid; gap: .65rem; }
+.mock-instructions h3, .mock-instructions p { margin: 0; }
+.mock-instructions details { border-top: 1px solid var(--line); padding-top: .65rem; }
+.mock-instructions summary { cursor: pointer; color: var(--primary-dark); }
+.mock-instructions details p { margin-top: .65rem; }
 .mock-section-heading { display: flex; align-items: center; gap: .8rem; }
 .mock-section-heading > span { display: grid; place-items: center; width: 2.4rem; aspect-ratio: 1; border-radius: .8rem; background: var(--primary-soft); color: var(--primary-dark); font-weight: 900; }
 .mock-section-heading h2, .mock-section-heading p { margin: 0; }
