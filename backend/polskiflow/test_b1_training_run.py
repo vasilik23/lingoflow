@@ -10,9 +10,29 @@ from polskiflow.auth import ACCESS_COOKIE, SupabaseUser
 from polskiflow.b1_run_views import BREAK_SECONDS, RUN_MAX_AGE, RUN_SALT
 from polskiflow.domain.b1_training_content import training_questions, score_training_part, training_reading_blocks
 from polskiflow.domain.b1_weekly_mock import VARIANTS
+from polskiflow.domain.b1_training_writing import training_writing_tasks
 
 
 class B1TrainingRunTests(TestCase):
+    def test_new_writing_has_two_original_tasks_without_changing_legacy_runs(self):
+        for variant in VARIANTS:
+            tasks = training_writing_tasks(variant, 4)
+            self.assertEqual(len(tasks), 2)
+            self.assertEqual([(task.minimum, task.maximum) for task in tasks], [(50, 80), (140, 170)])
+            self.assertEqual(tasks[0].prompt, variant.writing_prompt)
+            self.assertTrue(tasks[1].prompt and tasks[1].title)
+            for version in (1, 2, 3):
+                self.assertEqual(len(training_writing_tasks(variant, version)), 1)
+
+    def test_legacy_writing_keeps_one_draft_and_fifteen_minutes(self):
+        for version in (1, 2, 3):
+            opened = self.client.get("/exam/b1/run/")
+            state = dict(opened.context["state"], content_version=version, phase="break", step=3, break_until=self.now)
+            opened = self.client.post("/exam/b1/run/", {"run_token": signing.dumps(state, salt=RUN_SALT), "action": "start"})
+            self.assertEqual(opened.context["timer_seconds"], 15 * 60)
+            self.assertEqual(len(opened.context["writing_tasks"]), 1)
+            self.assertNotContains(opened, 'id="run-writing-2"')
+
     def test_extended_reading_has_four_grouped_texts_and_twenty_questions(self):
         for variant in VARIANTS:
             blocks = training_reading_blocks(variant)
@@ -189,10 +209,13 @@ class B1TrainingRunTests(TestCase):
             self.now += BREAK_SECONDS
             response = self.advance(response, "start")
         self.assertEqual(response.context["part"]["id"], "writing")
+        self.assertEqual(response.context["timer_seconds"], 35 * 60)
         self.assertContains(response, '<textarea id="run-writing"')
+        self.assertContains(response, '<textarea id="run-writing-2"')
         self.assertNotContains(response, 'name="writing"')
         self.assertEqual(self.advance(response, "finish").status_code, 400)
         self.assertEqual(self.advance(response, "finish", reviewed="on", writing="private text").status_code, 400)
+        self.assertEqual(self.advance(response, "finish", reviewed="on", writing2="private text").status_code, 400)
         completed = self.advance(response, "finish", reviewed="on")
         self.assertEqual(completed.context["state"]["results"][-1], {"id": "writing", "status": "self_review"})
         self.now += BREAK_SECONDS

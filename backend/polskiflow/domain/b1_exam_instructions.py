@@ -10,6 +10,11 @@ B1_RUN_READING_INSTRUCTION = {
     "russian": "Прочитай каждый текст и вопросы к нему. В каждом задании выбери один ответ, соответствующий тексту. Во время работы можно возвращаться ко всем текстам.",
 }
 
+B1_RUN_WRITING_INSTRUCTION = {
+    "polish": "Przeczytaj oba polecenia i napisz dwa teksty po polsku. W każdym tekście uwzględnij wszystkie wymagane informacje. Następnie sprawdź układ, styl i poprawność językową obu tekstów. Licznik słów pomaga kontrolować objętość, ale nie ocenia jakości. Ta część służy do samooceny.",
+    "russian": "Прочитай оба задания и напиши два текста по-польски. В каждом включи всю требуемую информацию. Затем проверь структуру, стиль и языковую правильность обоих текстов. Счётчик слов помогает контролировать объём, но не оценивает качество. Эта часть предназначена для самопроверки.",
+}
+
 B1_INSTRUCTIONS = {
     "listening": {
         "polish": "Posłuchaj komunikatu. Przeczytaj pytania i zaznacz jedną odpowiedź w każdym zadaniu. W tej treningowej wersji możesz ponownie odtworzyć komunikat.",

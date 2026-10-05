@@ -5,6 +5,8 @@
   const token = form.querySelector('[name="run_token"]');
   const key = `polskiflow-b1-run:${root.dataset.namespace}`;
   const writing = document.getElementById('run-writing');
+  const writing2 = document.getElementById('run-writing-2');
+  const writingSnapshot = () => JSON.stringify([writing?.value || '', writing2?.value || '']);
   const fields = Array.from(form.querySelectorAll('input[type="radio"], input[type="checkbox"]'));
   const storageStatus = root.querySelector('[data-run-storage-status]');
   let savedWriting = '';
@@ -28,13 +30,14 @@
   if (draft?.token === token.value) {
     fields.forEach(input => { input.checked = draft.answers?.[input.name] === input.value; });
     if (writing && typeof draft.writing === 'string') writing.value = draft.writing;
+    if (writing2 && typeof draft.writing2 === 'string') writing2.value = draft.writing2;
   }
   const save = () => {
     const answers = {};
     fields.forEach(input => { if (input.checked) answers[input.name] = input.value; });
     try {
-      sessionStorage.setItem(key, JSON.stringify({token: token.value, answers, writing: writing?.value || ''}));
-      savedWriting = writing?.value || '';
+      sessionStorage.setItem(key, JSON.stringify({token: token.value, answers, writing: writing?.value || '', writing2: writing2?.value || ''}));
+      savedWriting = writingSnapshot();
       storageStatus.hidden = true;
     } catch (_) {
       storageStatus.hidden = false;
@@ -43,13 +46,17 @@
   };
   form.addEventListener('change', save);
   writing?.addEventListener('input', save);
+  writing2?.addEventListener('input', save);
   root.querySelector('[data-clear-run-writing]')?.addEventListener('click', () => {
     writing.value = ''; save(); writing.focus();
+  });
+  root.querySelector('[data-clear-run-writing2]')?.addEventListener('click', () => {
+    writing2.value = ''; save(); writing2.focus(); writing2.dispatchEvent(new Event('input', {bubbles: true}));
   });
   root.querySelector('[data-restart-run]').addEventListener('click', () => { intentionalLeave = true; clear(); });
   form.addEventListener('submit', () => { intentionalLeave = true; save(); });
   window.addEventListener('beforeunload', event => {
-    if (!intentionalLeave && writing?.value && writing.value !== savedWriting) {
+    if (!intentionalLeave && (writing?.value || writing2?.value) && writingSnapshot() !== savedWriting) {
       event.preventDefault(); event.returnValue = '';
     }
   });
@@ -77,6 +84,7 @@
           root.querySelector('[data-finish-part]').disabled = true;
           fields.forEach(input => { input.disabled = true; });
           if (writing) writing.disabled = true;
+          if (writing2) writing2.disabled = true;
           root.querySelector('[data-run-play]')?.setAttribute('disabled', '');
           if ('speechSynthesis' in window) speechSynthesis.cancel();
           timerStatus.textContent = 'Время истекло. Можно пропустить часть без балла.';
