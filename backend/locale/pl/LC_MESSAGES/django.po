@@ -6843,3 +6843,9 @@ msgid_plural "попыток"
 msgstr[0] "próba"
 msgstr[1] "próby"
 msgstr[2] "prób"
+
+msgid "Блок"
+msgstr "Blok"
+
+msgid "Восемь блоков по пять ответов. Выбор формы — один из экзаменационных форматов; ввод форм и преобразования предложений ещё не включены."
+msgstr "Osiem bloków po pięć odpowiedzi. Wybór formy to jeden z formatów egzaminacyjnych; wpisywanie form i przekształcanie zdań nie są jeszcze uwzględnione."

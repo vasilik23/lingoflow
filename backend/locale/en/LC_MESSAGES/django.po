@@ -16435,3 +16435,69 @@ msgid "попытка"
 msgid_plural "попыток"
 msgstr[0] "attempt"
 msgstr[1] "attempts"
+
+msgid "Po „kupić” bez przeczenia używamy biernika: „kupić bilet”."
+msgstr "Without negation, kupić takes the accusative: kupić bilet."
+
+msgid "Rzeczownik „adres” łączy się tu z dopełniaczem osoby: „adres koleżanki”."
+msgstr "Here adres takes a person in the genitive: adres koleżanki."
+
+msgid "„Z” w znaczeniu towarzystwa wymaga narzędnika; przymiotnik zgadza się z „sąsiadem”: „nowym”."
+msgstr "Z meaning accompaniment takes the instrumental; the adjective agrees with sąsiadem: nowym."
+
+msgid "Przyimek „dla” wymaga dopełniacza: „dla mojej siostry”."
+msgstr "Dla takes the genitive: dla mojej siostry."
+
+msgid "Czasownik „pomagać” wymaga celownika osoby: „pomagałem nauczycielowi”."
+msgstr "Pomagać takes a person in the dative: pomagałem nauczycielowi."
+
+msgid "„Będzie” z bezokolicznikiem tworzy czas przyszły złożony: „będzie zaczynać”."
+msgstr "Będzie with an infinitive forms the compound future tense: będzie zaczynać."
+
+msgid "Czynność trwającą w chwili innego zdarzenia w przeszłości wyraża „gotowałem”."
+msgstr "Gotowałem expresses an action in progress when another event occurred in the past."
+
+msgid "Zdanie z „gdybym” wymaga trybu przypuszczającego: „powiedziałbym”."
+msgstr "A clause with gdybym requires the conditional: powiedziałbym."
+
+msgid "W prośbie „proszę” łączy się z bezokolicznikiem: „proszę wypełnić”."
+msgstr "In this request, proszę takes an infinitive: proszę wypełnić."
+
+msgid "„Jeszcze nie skończyłem” oznacza, że zadanie nadal nie jest ukończone."
+msgstr "Jeszcze nie skończyłem means the task is still unfinished."
+
+msgid "Zaimek jest dopełnieniem „poleciła”; dla „książka” potrzebny jest biernik: „którą”."
+msgstr "The pronoun is the object of poleciła; książka requires the accusative pronoun którą."
+
+msgid "„Kiedy” wprowadza zdanie określające czas wyjścia na spacer."
+msgstr "Kiedy introduces the time clause specifying when the walk will begin."
+
+msgid "„Ale” łączy przeciwstawne informacje: zmęczenie i ukończenie pracy."
+msgstr "Ale links contrasting information: being tired and finishing the work."
+
+msgid "„Żeby” z bezokolicznikiem wyraża cel zapisania numeru."
+msgstr "Żeby with an infinitive expresses the purpose of writing down the number."
+
+msgid "„Ponieważ” wprowadza przyczynę; brak biletów wyjaśnia rezygnację z koncertu."
+msgstr "Ponieważ introduces a reason; the lack of tickets explains not going to the concert."
+
+msgid "Opisujemy sposób jazdy, więc potrzebny jest stopień wyższy przysłówka: „szybciej”."
+msgstr "We describe how the bus travels, so use the comparative adverb szybciej."
+
+msgid "Przy liczebniku „dwa” i rzeczowniku „fotele” używamy formy „wygodne”."
+msgstr "With dwa and fotele, the adjective form is wygodne."
+
+msgid "Po liczebniku „pięć” potrzebny jest dopełniacz liczby mnogiej: „pięć osób”."
+msgstr "Pięć requires the genitive plural: pięć osób."
+
+msgid "Podmiot „dwie kobiety” wymaga niemęskoosobowych form „były zmęczone”."
+msgstr "Dwie kobiety requires non-masculine-personal plural forms: były zmęczone."
+
+msgid "Przysłówek „chętnie” określa sposób wykonania czynności „pomogę”."
+msgstr "The adverb chętnie describes how the action pomogę is performed."
+
+msgid "Блок"
+msgstr "Block"
+
+msgid "Восемь блоков по пять ответов. Выбор формы — один из экзаменационных форматов; ввод форм и преобразования предложений ещё не включены."
+msgstr "Eight blocks of five answers. Choosing a form is one exam format; entering forms and transforming sentences are not included yet."
