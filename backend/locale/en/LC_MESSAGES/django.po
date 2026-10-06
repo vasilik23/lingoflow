@@ -16567,3 +16567,21 @@ msgstr "Service E provides individual help on Tuesday morning and requires a tel
 
 msgid "Пять блоков, 30 ответов и 45 минут. В объявлениях одну букву можно выбрать несколько раз; одно объявление лишнее. Это учебный набор, не полная симуляция."
 msgstr "Five blocks, 30 answers and 45 minutes. For the advertisements, you may choose the same letter more than once; one advertisement is unused. This is a training set, not a complete simulation."
+
+msgid "„Tę listę” odnosi się do listy psów przekazanej przez koordynatorkę w zdaniu C."
+msgstr "“Tę listę” refers to the list of dogs given by the coordinator in sentence C."
+
+msgid "Zdanie E wyjaśnia, dlaczego opiekunka poprosiła o spokojne posiedzenie z psem."
+msgstr "Sentence E explains why the carer asked the volunteer to sit calmly with the dog."
+
+msgid "Deszcz w zdaniu A łączy ciemne chmury z mokrymi kurtkami po powrocie."
+msgstr "The rain in sentence A connects the dark clouds with the wet jackets after the return."
+
+msgid "„Je” w zdaniu F odnosi się do zdjęcia, a „tej wiadomości” do jego wysłania koordynatorce."
+msgstr "“Je” in sentence F refers to the photo, and “tej wiadomości” to sending it to the coordinator."
+
+msgid "Zdanie B ustala regularny termin jednej soboty w miesiącu, do którego odnosi się „ten regularny plan”."
+msgstr "Sentence B establishes a regular date of one Saturday per month, which “ten regularny plan” refers to."
+
+msgid "В тексте с пропусками каждое предложение используется не более одного раза; одно лишнее. В объявлениях повторный выбор буквы разрешён."
+msgstr "In the gapped text, use each sentence at most once; one is unused. In the advertisements, you may choose the same letter more than once."
