@@ -1,27 +1,28 @@
 {% extends "base.html" %}
-{% block title %}Мои заметки · PolskiFlow{% endblock %}
+{% load i18n ui %}
+{% block title %}{% translate "Мои заметки · PolskiFlow" %}{% endblock %}
 {% block content %}
-  <header class="content-header notes-header"><div><p class="eyebrow">Личная база знаний</p><h1>Мои заметки</h1><p class="muted">Правила, примеры и вопросы, сохранённые внутри уроков.</p></div><span class="result-count">{{ total_count }} заметок</span></header>
+  <header class="content-header notes-header"><div><p class="eyebrow">{% translate "Личная база знаний" %}</p><h1>{% translate "Мои заметки" %}</h1><p class="muted">{% translate "Правила, примеры и вопросы, сохранённые внутри уроков." %}</p></div><span class="result-count">{{ total_count|ui_text }} {% translate "заметок" %}</span></header>
   {% include "partials/personal_learning_nav.html" %}
-  {% if request.GET.status == "deleted" %}<p class="form-success" role="status">Заметка удалена.</p>{% elif request.GET.status == "error" %}<p class="form-error" role="alert">Не удалось удалить заметку. Попробуй ещё раз.</p>{% endif %}
+  {% if request.GET.status == "deleted" %}<p class="form-success" role="status">{% translate "Заметка удалена." %}</p>{% elif request.GET.status == "error" %}<p class="form-error" role="alert">{% translate "Не удалось удалить заметку. Попробуй ещё раз." %}</p>{% endif %}
   <form class="card catalog-filter notes-filter" method="get" role="search">
-    <label for="notes-search">Поиск по заметкам и урокам</label>
-    <div class="filter-search-row"><input id="notes-search" name="q" value="{{ query }}" maxlength="80" placeholder="Например: падеж или szukać"><button type="submit">Найти</button>{% if query %}<a class="compact-button secondary" href="{% url 'lesson-notes' %}">Сбросить</a>{% endif %}</div>
+    <label for="notes-search">{% translate "Поиск по заметкам и урокам" %}</label>
+    <div class="filter-search-row"><input id="notes-search" name="q" value="{{ query }}" maxlength="80" placeholder="{% translate "Например: падеж или szukać" %}"><button type="submit">{% translate "Найти" %}</button>{% if query %}<a class="compact-button secondary" href="{% url 'lesson-notes' %}">{% translate "Сбросить" %}</a>{% endif %}</div>
   </form>
   {% if not notes_available %}
-    <section class="card empty-state"><h2>Заметки временно недоступны</h2><p>Уроки продолжают работать. Попробуй открыть страницу позже.</p></section>
+    <section class="card empty-state"><h2>{% translate "Заметки временно недоступны" %}</h2><p>{% translate "Уроки продолжают работать. Попробуй открыть страницу позже." %}</p></section>
   {% elif notes %}
-    <section class="notes-grid" aria-label="Сохранённые заметки">
+    <section class="notes-grid" aria-label="{% translate "Сохранённые заметки" %}">
       {% for note in notes %}<article class="card note-library-card">
-        <div class="note-library-meta"><span>{{ note.lesson.topic.course.level }} · {{ note.lesson.topic.title }}</span>{% if note.updated_at %}<time datetime="{{ note.updated_at }}">обновлено {{ note.updated_at|slice:":10" }}</time>{% endif %}</div>
-        <h2><a href="{% url 'lesson' note.lesson.id %}#lesson-note">{{ note.lesson.plan_title }}</a></h2>
+        <div class="note-library-meta"><span>{{ note.lesson.topic.course.level|ui_text }} · {{ note.lesson.topic.title|ui_text }}</span>{% if note.updated_at %}<time datetime="{{ note.updated_at }}">{% translate "обновлено" %} {{ note.updated_at|slice:":10"|ui_text }}</time>{% endif %}</div>
+        <h2><a href="{% url 'lesson' note.lesson.id %}#lesson-note">{{ note.lesson.plan_title|ui_text }}</a></h2>
         <p class="note-library-body">{{ note.body }}</p>
-        <div class="note-library-actions"><a class="compact-button" href="{% url 'lesson' note.lesson.id %}#lesson-note">Открыть урок</a><form method="post" action="{% url 'delete-lesson-note' note.lesson.id %}">{% csrf_token %}<button class="compact-button secondary danger-soft" type="submit">Удалить</button></form></div>
+        <div class="note-library-actions"><a class="compact-button" href="{% url 'lesson' note.lesson.id %}#lesson-note">{% translate "Открыть урок" %}</a><form method="post" action="{% url 'delete-lesson-note' note.lesson.id %}">{% csrf_token %}<button class="compact-button secondary danger-soft" type="submit">{% translate "Удалить" %}</button></form></div>
       </article>{% endfor %}
     </section>
   {% elif query %}
-    <section class="card empty-state"><h2>Ничего не найдено</h2><p>Попробуй другое слово или сбрось поиск.</p><a class="compact-button" href="{% url 'lesson-notes' %}">Показать все заметки</a></section>
+    <section class="card empty-state"><h2>{% translate "Ничего не найдено" %}</h2><p>{% translate "Попробуй другое слово или сбрось поиск." %}</p><a class="compact-button" href="{% url 'lesson-notes' %}">{% translate "Показать все заметки" %}</a></section>
   {% else %}
-    <section class="card empty-state"><h2>Заметок пока нет</h2><p>Открой любой урок и запиши правило, пример или вопрос — заметка появится здесь.</p><a class="compact-button" href="{% url 'course' %}">Выбрать урок</a></section>
+    <section class="card empty-state"><h2>{% translate "Заметок пока нет" %}</h2><p>{% translate "Открой любой урок и запиши правило, пример или вопрос — заметка появится здесь." %}</p><a class="compact-button" href="{% url 'course' %}">{% translate "Выбрать урок" %}</a></section>
   {% endif %}
 {% endblock %}

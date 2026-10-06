@@ -1,5 +1,6 @@
+{% load i18n ui %}
 <section class="card complete-card">
-  <div class="complete-icon">🏆</div><p class="eyebrow">Тренировка завершена</p><h1>Отличная работа!</h1><div class="score">{{ score }} / {{ total }}</div>
-  <p class="muted">{% if saved %}Результат добавлен в твой дневной прогресс.{% else %}Результат не сохранился, но тренировку можно повторить.{% endif %} {% if not review_saved %}Последнее расписание повторения не сохранилось.{% endif %}</p>
-  <a class="button" href="{{ repeat_url|default:'/dictionary/practice/' }}">Повторить</a><a class="button secondary" href="{% url 'dictionary' %}">Вернуться в словарь</a>
+  <div class="complete-icon">🏆</div><p class="eyebrow">{% translate "Тренировка завершена" %}</p><h1>{% translate "Отличная работа!" %}</h1><div class="score">{{ score|ui_text }} / {{ total|ui_text }}</div>
+  <p class="muted">{% if saved %}{% translate "Результат добавлен в твой дневной прогресс." %}{% else %}{% translate "Результат не сохранился, но тренировку можно повторить." %}{% endif %} {% if not review_saved %}{% translate "Последнее расписание повторения не сохранилось." %}{% endif %}</p>
+  <a class="button" href="{{ repeat_url|default:'/dictionary/practice/' }}">{% translate "Повторить" %}</a><a class="button secondary" href="{% url 'dictionary' %}">{% translate "Вернуться в словарь" %}</a>
 </section>

@@ -1,66 +1,69 @@
 {% extends "base.html" %}
-{% block title %}Недельный пробный модуль B1 · PolskiFlow{% endblock %}
+{% load i18n ui %}
+{% block title %}{% translate "Недельный пробный модуль B1 · PolskiFlow" %}{% endblock %}
 {% block content %}
 <div class="mock-shell" data-mock-root data-storage-namespace="{{ mock_storage_namespace }}" data-variant-id="{{ variant.id }}" data-duration-seconds="{{ duration_seconds }}"{% if result %} data-completed="true"{% endif %}{% if error %} data-error="true"{% endif %}>
   <header class="mock-header">
-    <div><p class="eyebrow">B1 · недельная тренировка · {{ variant.label }}</p><h1>Пробный мини‑модуль</h1><p>15 минут: 3 проверяемых блока + 2 блока самопроверки. Аудирование и чтение — по 2 вопроса, грамматика — 3. Письмо и речь не получают автоматического балла. Вариант меняется раз в неделю. Это тренировка PolskiFlow, не официальный тест и не прогноз результата.</p></div>
-    {% if not result %}<div class="mock-timer" role="timer" aria-live="off"><strong id="mock-timer">15:00</strong><span>осталось</span></div><p class="visually-hidden" id="mock-timer-status" role="status" aria-live="polite" aria-atomic="true"></p>{% endif %}
+    <div><p class="eyebrow">{% translate "B1 · недельная тренировка ·" %} {{ variant.label|ui_text }}</p><h1>{% translate "Пробный мини‑модуль" %}</h1><p>{% translate "15 минут: 3 проверяемых блока + 2 блока самопроверки. Аудирование и чтение — по 2 вопроса, грамматика — 3. Письмо и речь не получают автоматического балла. Вариант меняется раз в неделю. Это тренировка PolskiFlow, не официальный тест и не прогноз результата." %}</p></div>
+    {% if not result %}<div class="mock-timer" role="timer" aria-live="off"><strong id="mock-timer">15:00</strong><span>{% translate "осталось" %}</span></div><p class="visually-hidden" id="mock-timer-status" role="status" aria-live="polite" aria-atomic="true"></p>{% endif %}
   </header>
 
-  {% if error %}<div class="form-message error" role="alert">{{ error }} <a href="{% url 'b1-weekly-mock' %}?restart=1">Начать заново</a></div>{% endif %}
+  {% if error %}<div class="form-message error" role="alert">{{ error|ui_text }} <a href="{% url 'b1-weekly-mock' %}?restart=1">{% translate "Начать заново" %}</a></div>{% endif %}
 
   {% if result %}
     <section class="card mock-summary" aria-labelledby="mock-result-title">
-      <div><p class="eyebrow">Проверяемая часть</p><h2 id="mock-result-title">{{ result.correct }} из {{ result.total }}</h2><p class="muted">Баллы относятся только к заданиям ниже и не равны результату государственного экзамена. Выборка мала: 2–3 вопроса на навык. Уверенность в выводах низкая; один ответ меняет результат блока на 33–50 процентных пунктов.</p></div>
+      <div><p class="eyebrow">{% translate "Проверяемая часть" %}</p><h2 id="mock-result-title">{{ result.correct|ui_text }} {% translate "из" %} {{ result.total|ui_text }}</h2><p class="muted">{% translate "Баллы относятся только к заданиям ниже и не равны результату государственного экзамена. Выборка мала: 2–3 вопроса на навык. Уверенность в выводах низкая; один ответ меняет результат блока на 33–50 процентных пунктов." %}</p></div>
       <div class="mock-module-results">
-        {% for module in result.modules %}<div><strong>{{ module.percent }}%</strong><span>{{ module.label }} · {{ module.correct }}/{{ module.total }}</span></div>{% endfor %}
+        {% for module in result.modules %}<div><strong>{{ module.percent|ui_text }}%</strong><span>{{ module.label|ui_text }} · {{ module.correct|ui_text }}/{{ module.total|ui_text }}</span></div>{% endfor %}
       </div>
     </section>
-    {% if saved %}<p class="form-message success" role="status">Агрегированный результат сохранён. Ответы, письмо и запись речи не сохранялись.</p>{% else %}<p class="form-message warning" role="status">Результат показан, но история сейчас недоступна. Ответы не потеряны для текущего разбора.</p>{% endif %}
+    {% if saved %}<p class="form-message success" role="status">{% translate "Агрегированный результат сохранён. Ответы, письмо и запись речи не сохранялись." %}</p>{% else %}<p class="form-message warning" role="status">{% translate "Результат показан, но история сейчас недоступна. Ответы не потеряны для текущего разбора." %}</p>{% endif %}
   {% endif %}
 
   <form method="post" class="mock-form" id="mock-form">
     {% csrf_token %}<input type="hidden" name="attempt_token" value="{{ attempt_token }}">
 
     <section class="card mock-section" aria-labelledby="mock-listening-title">
-      <div class="mock-section-heading"><span>1</span><div><p class="eyebrow">Rozumienie ze słuchu</p><h2 id="mock-listening-title">Аудирование</h2></div></div>
+      <div class="mock-section-heading"><span>1</span><div><p class="eyebrow">Rozumienie ze słuchu</p><h2 id="mock-listening-title">{% translate "Аудирование" %}</h2></div></div>
       {% if not result %}{% include "partials/b1_exam_instruction.html" with instruction=instructions.listening %}{% endif %}
-      {% if not result %}<button class="compact-button" type="button" id="mock-play">▶ Прослушать сообщение</button><p class="muted" id="mock-audio-status" aria-live="polite">Системный польский голос устройства; можно прослушать повторно.</p>{% else %}<p lang="pl" class="mock-source-text">{{ listening_transcript }}</p>{% endif %}
+      {% if not result %}<button class="compact-button" type="button" id="mock-play">{% translate "▶ Прослушать сообщение" %}</button><p class="muted" id="mock-audio-status" aria-live="polite">{% translate "Системный польский голос устройства; можно прослушать повторно." %}</p>{% else %}<p lang="pl" class="mock-source-text">{{ listening_transcript|ui_text }}</p>{% endif %}
       {% for question in questions %}{% if question.module == "listening" %}{% include "partials/b1_mock_question.html" %}{% endif %}{% endfor %}
     </section>
 
     <section class="card mock-section" aria-labelledby="mock-reading-title">
-      <div class="mock-section-heading"><span>2</span><div><p class="eyebrow">Rozumienie tekstów pisanych</p><h2 id="mock-reading-title">Чтение</h2></div></div>
+      <div class="mock-section-heading"><span>2</span><div><p class="eyebrow">Rozumienie tekstów pisanych</p><h2 id="mock-reading-title">{% translate "Чтение" %}</h2></div></div>
       {% if not result %}{% include "partials/b1_exam_instruction.html" with instruction=instructions.reading %}{% endif %}
-      <p lang="pl" class="mock-source-text">{{ reading_text }}</p>
+      <p lang="pl" class="mock-source-text">{{ reading_text|ui_text }}</p>
       {% for question in questions %}{% if question.module == "reading" %}{% include "partials/b1_mock_question.html" %}{% endif %}{% endfor %}
     </section>
 
     <section class="card mock-section" aria-labelledby="mock-grammar-title">
-      <div class="mock-section-heading"><span>3</span><div><p class="eyebrow">Poprawność gramatyczna</p><h2 id="mock-grammar-title">Грамматика</h2></div></div>
+      <div class="mock-section-heading"><span>3</span><div><p class="eyebrow">Poprawność gramatyczna</p><h2 id="mock-grammar-title">{% translate "Грамматика" %}</h2></div></div>
       {% if not result %}{% include "partials/b1_exam_instruction.html" with instruction=instructions.grammar %}{% endif %}
       {% for question in questions %}{% if question.module == "grammar" %}{% include "partials/b1_mock_question.html" %}{% endif %}{% endfor %}
     </section>
 
     <section class="mock-self-grid">
-      <article class="card mock-section"><div class="mock-section-heading"><span>4</span><div><p class="eyebrow">Pisanie</p><h2>Письмо</h2></div></div>{% if not result %}{% include "partials/b1_exam_instruction.html" with instruction=instructions.writing %}{% endif %}<p lang="pl"><strong>{{ variant.writing_prompt }}</strong></p>{% if not result %}<label for="mock-writing">Локальный черновик</label><textarea id="mock-writing" rows="8" aria-describedby="mock-writing-note"></textarea><button class="compact-button" type="button" id="mock-clear-writing">Удалить текст черновика</button><p class="muted" id="mock-draft-status" role="status"></p>{% endif %}<p class="muted" id="mock-writing-note">Черновик восстанавливается после перезагрузки в этой вкладке и удаляется после завершения. Текст не отправляется на сервер и не оценивается автоматически.</p></article>
-      <article class="card mock-section"><div class="mock-section-heading"><span>5</span><div><p class="eyebrow">Mówienie</p><h2>Говорение</h2></div></div>{% if not result %}{% include "partials/b1_exam_instruction.html" with instruction=instructions.speaking %}{% endif %}<p lang="pl"><strong>{{ variant.speaking_prompt }}</strong></p></article>
+      <article class="card mock-section"><div class="mock-section-heading"><span>4</span><div><p class="eyebrow">Pisanie</p><h2>{% translate "Письмо" %}</h2></div></div>{% if not result %}{% include "partials/b1_exam_instruction.html" with instruction=instructions.writing %}{% endif %}<p lang="pl"><strong>{{ variant.writing_prompt|ui_text }}</strong></p>{% if not result %}<label for="mock-writing">{% translate "Локальный черновик" %}</label><textarea id="mock-writing" rows="8" aria-describedby="mock-writing-note"></textarea><button class="compact-button" type="button" id="mock-clear-writing">{% translate "Удалить текст черновика" %}</button><p class="muted" id="mock-draft-status" role="status"></p>{% endif %}<p class="muted" id="mock-writing-note">{% translate "Черновик восстанавливается после перезагрузки в этой вкладке и удаляется после завершения. Текст не отправляется на сервер и не оценивается автоматически." %}</p></article>
+      <article class="card mock-section"><div class="mock-section-heading"><span>5</span><div><p class="eyebrow">Mówienie</p><h2>{% translate "Говорение" %}</h2></div></div>{% if not result %}{% include "partials/b1_exam_instruction.html" with instruction=instructions.speaking %}{% endif %}<p lang="pl"><strong>{{ variant.speaking_prompt|ui_text }}</strong></p></article>
     </section>
 
-    {% if not result and not error %}<button class="primary-button mock-submit" type="submit">Завершить и проверить</button>{% endif %}
+    {% if not result and not error %}<button class="primary-button mock-submit" type="submit">{% translate "Завершить и проверить" %}</button>{% endif %}
   </form>
-  {% if result %}<a class="compact-button" href="{% url 'b1-weekly-mock' %}?restart=1">Новая попытка</a>{% else %}<a class="compact-button" href="{% url 'b1-weekly-mock' %}?restart=1">Начать заново</a>{% endif %}
+  {% if result %}<a class="compact-button" href="{% url 'b1-weekly-mock' %}?restart=1">{% translate "Новая попытка" %}</a>{% else %}<a class="compact-button" href="{% url 'b1-weekly-mock' %}?restart=1">{% translate "Начать заново" %}</a>{% endif %}
 
   <section class="mock-history" aria-labelledby="mock-history-title">
-    <div class="section-heading"><div><p class="eyebrow">Последние попытки</p><h2 id="mock-history-title">Динамика мини‑модуля</h2></div><span>хранятся только три агрегированных балла</span></div>
-    {% if history is None %}<p class="card muted">История временно недоступна. Текущую попытку всё равно можно пройти.</p>
-    {% elif history %}<div class="mock-history-list">{% for attempt in history %}<article class="card"><time datetime="{{ attempt.attempted_at }}">{{ attempt.attempted_at|slice:":10" }} · {{ attempt.variant_label }}</time><div><span>Аудирование <strong>{{ attempt.listening_correct }}/2</strong></span><span>Чтение <strong>{{ attempt.reading_correct }}/2</strong></span><span>Грамматика <strong>{{ attempt.grammar_correct }}/3</strong></span></div></article>{% endfor %}</div>
-    {% else %}<p class="card muted">Завершённые попытки появятся здесь. Выбранные ответы и свободные тексты не сохраняются.</p>{% endif %}
+    <div class="section-heading"><div><p class="eyebrow">{% translate "Последние попытки" %}</p><h2 id="mock-history-title">{% translate "Динамика мини‑модуля" %}</h2></div><span>{% translate "хранятся только три агрегированных балла" %}</span></div>
+    {% if history is None %}<p class="card muted">{% translate "История временно недоступна. Текущую попытку всё равно можно пройти." %}</p>
+    {% elif history %}<div class="mock-history-list">{% for attempt in history %}<article class="card"><time datetime="{{ attempt.attempted_at }}">{{ attempt.attempted_at|slice:":10"|ui_text }} · {{ attempt.variant_label|ui_text }}</time><div><span>{% translate "Аудирование" %} <strong>{{ attempt.listening_correct|ui_text }}/2</strong></span><span>{% translate "Чтение" %} <strong>{{ attempt.reading_correct|ui_text }}/2</strong></span><span>{% translate "Грамматика" %} <strong>{{ attempt.grammar_correct|ui_text }}/3</strong></span></div></article>{% endfor %}</div>
+    {% else %}<p class="card muted">{% translate "Завершённые попытки появятся здесь. Выбранные ответы и свободные тексты не сохраняются." %}</p>{% endif %}
   </section>
 </div>
 {{ listening_transcript|json_script:"mock-listening-transcript" }}
 <script>
 (() => {
+  const ui = (typeof window !== "undefined" && window.PolskiFlowI18n?.t) || ((text, ...values) => Array.isArray(text) ? text.map((part, i) => part + (values[i] ?? "")).join("") : text);
+
   const root = document.querySelector('[data-mock-root]');
   const key = `polskiflow-b1-mock:${root.dataset.storageNamespace}`;
   const clear = () => { try { sessionStorage.removeItem(key); } catch (error) {} };
@@ -101,9 +104,9 @@
     try {
       sessionStorage.setItem(key, JSON.stringify(draft));
       savedWriting = writing?.value || '';
-      if (draftStatus) draftStatus.textContent = writing?.value ? 'Черновик сохранён в этой вкладке.' : '';
+      if (draftStatus) draftStatus.textContent = writing?.value ? ui('Черновик сохранён в этой вкладке.') : '';
     } catch (error) {
-      if (draftStatus) draftStatus.textContent = 'Браузер не смог сохранить черновик. Скопируй текст перед уходом.';
+      if (draftStatus) draftStatus.textContent = ui('Браузер не смог сохранить черновик. Скопируй текст перед уходом.');
     }
   };
   document.getElementById('mock-clear-writing')?.addEventListener('click', () => {
@@ -120,10 +123,10 @@
   const tick = () => {
     const left = Math.max(0, duration - Math.floor((Date.now() - draft.startedAt) / 1000));
     const crossed = [600, 300, 60].filter(point => previousLeft > point && left <= point);
-    if (timerStatus && left === 0) timerStatus.textContent = 'Время истекло.';
+    if (timerStatus && left === 0) timerStatus.textContent = ui('Время истекло.');
     else if (timerStatus && crossed.length) {
       const checkpoint = crossed[crossed.length - 1] / 60;
-      timerStatus.textContent = checkpoint === 1 ? 'Осталась одна минута.' : `Осталось ${checkpoint} минут.`;
+      timerStatus.textContent = checkpoint === 1 ? ui('Осталась одна минута.') : ui`Осталось ${checkpoint} минут.`;
     }
     previousLeft = left;
     const minutes = String(Math.floor(left / 60)).padStart(2, '0');
@@ -134,9 +137,9 @@
   }; tick();
   document.getElementById('mock-play')?.addEventListener('click', () => {
     const status = document.getElementById('mock-audio-status');
-    if (!('speechSynthesis' in window)) { status.textContent = 'На этом устройстве системное воспроизведение недоступно.'; return; }
+    if (!('speechSynthesis' in window)) { status.textContent = ui('На этом устройстве системное воспроизведение недоступно.'); return; }
     speechSynthesis.cancel(); const utterance = new SpeechSynthesisUtterance(JSON.parse(document.getElementById('mock-listening-transcript').textContent));
-    utterance.lang = 'pl-PL'; utterance.rate = .9; utterance.onstart = () => status.textContent = 'Воспроизводится…'; utterance.onend = () => status.textContent = 'Сообщение завершено. Можно прослушать ещё раз.'; speechSynthesis.speak(utterance);
+    utterance.lang = 'pl-PL'; utterance.rate = .9; utterance.onstart = () => status.textContent = ui('Воспроизводится…'); utterance.onend = () => status.textContent = ui('Сообщение завершено. Можно прослушать ещё раз.'); speechSynthesis.speak(utterance);
   });
 })();
 </script>

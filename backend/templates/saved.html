@@ -1,21 +1,22 @@
 {% extends "base.html" %}
-{% block title %}Сохранённое · PolskiFlow{% endblock %}
+{% load i18n ui %}
+{% block title %}{% translate "Сохранённое · PolskiFlow" %}{% endblock %}
 {% block content %}
-  <header class="content-header saved-header"><div><p class="eyebrow">Личная подборка</p><h1>Сохранённое</h1><p class="muted">Уроки и тексты, к которым хочется вернуться. Подборка синхронизируется между устройствами.</p></div><a class="compact-button" href="{% url 'global-search' %}">Найти материалы</a></header>
+  <header class="content-header saved-header"><div><p class="eyebrow">{% translate "Личная подборка" %}</p><h1>{% translate "Сохранённое" %}</h1><p class="muted">{% translate "Уроки и тексты, к которым хочется вернуться. Подборка синхронизируется между устройствами." %}</p></div><a class="compact-button" href="{% url 'global-search' %}">{% translate "Найти материалы" %}</a></header>
   {% include "partials/personal_learning_nav.html" %}
-  {% if not saved_available %}<p class="save-error" role="alert">Сохранённые материалы временно недоступны. Попробуй обновить страницу позже.</p>{% endif %}
+  {% if not saved_available %}<p class="save-error" role="alert">{% translate "Сохранённые материалы временно недоступны. Попробуй обновить страницу позже." %}</p>{% endif %}
   <section class="saved-section" aria-labelledby="saved-lessons-title">
-    <div class="section-heading"><div><p class="eyebrow">Курс</p><h2 id="saved-lessons-title">Уроки</h2></div><span>{{ saved_lessons|length }}</span></div>
+    <div class="section-heading"><div><p class="eyebrow">{% translate "Курс" %}</p><h2 id="saved-lessons-title">{% translate "Уроки" %}</h2></div><span>{{ saved_lessons|length|ui_text }}</span></div>
     <div class="saved-grid">
-      {% for lesson in saved_lessons %}<article class="card saved-card"><a href="{% url 'lesson' lesson.id %}"><span class="saved-card-icon">{{ lesson.emoji }}</span><small>{{ lesson.topic.course.level }} · {{ lesson.topic.title }} · ~{{ lesson.minutes }} мин</small><h3>{{ lesson.plan_title }}</h3><p>{{ lesson.description }}</p></a><form method="post" action="{% url 'toggle-lesson-bookmark' lesson.id %}">{% csrf_token %}<input type="hidden" name="saved" value="0"><input type="hidden" name="next" value="{% url 'saved-learning' %}"><button class="bookmark-button is-saved" type="submit">★ Убрать</button></form></article>
-      {% empty %}<div class="card empty-state"><span>☆</span><h3>Уроков пока нет</h3><p>Сохраняй интересные уроки из курса, поиска или прямо во время занятия.</p><a class="compact-button" href="{% url 'course' %}">Открыть курс</a></div>{% endfor %}
+      {% for lesson in saved_lessons %}<article class="card saved-card"><a href="{% url 'lesson' lesson.id %}"><span class="saved-card-icon">{{ lesson.emoji|ui_text }}</span><small>{{ lesson.topic.course.level|ui_text }} · {{ lesson.topic.title|ui_text }} · ~{{ lesson.minutes|ui_text }} {% translate "мин" %}</small><h3>{{ lesson.plan_title|ui_text }}</h3><p>{{ lesson.description|ui_text }}</p></a><form method="post" action="{% url 'toggle-lesson-bookmark' lesson.id %}">{% csrf_token %}<input type="hidden" name="saved" value="0"><input type="hidden" name="next" value="{% url 'saved-learning' %}"><button class="bookmark-button is-saved" type="submit">{% translate "★ Убрать" %}</button></form></article>
+      {% empty %}<div class="card empty-state"><span>☆</span><h3>{% translate "Уроков пока нет" %}</h3><p>{% translate "Сохраняй интересные уроки из курса, поиска или прямо во время занятия." %}</p><a class="compact-button" href="{% url 'course' %}">{% translate "Открыть курс" %}</a></div>{% endfor %}
     </div>
   </section>
   <section class="saved-section" aria-labelledby="saved-readings-title">
-    <div class="section-heading"><div><p class="eyebrow">Чтение</p><h2 id="saved-readings-title">Тексты</h2></div><span>{{ saved_readings|length }}</span></div>
+    <div class="section-heading"><div><p class="eyebrow">{% translate "Чтение" %}</p><h2 id="saved-readings-title">{% translate "Тексты" %}</h2></div><span>{{ saved_readings|length|ui_text }}</span></div>
     <div class="saved-grid">
-      {% for text in saved_readings %}<article class="card saved-card"><a href="{% url 'reader' text.id %}"><span class="saved-card-icon">{{ text.emoji }}</span><small>{{ text.level }} · чтение · ~{{ text.minutes }} мин</small><h3>{{ text.title }}</h3><p>{{ text.description }}</p></a></article>
-      {% empty %}<div class="card empty-state"><span>▤</span><h3>Текстов пока нет</h3><p>Добавляй тексты в сохранённое во время чтения.</p><a class="compact-button" href="{% url 'reading-library' %}">Открыть библиотеку</a></div>{% endfor %}
+      {% for text in saved_readings %}<article class="card saved-card"><a href="{% url 'reader' text.id %}"><span class="saved-card-icon">{{ text.emoji|ui_text }}</span><small>{{ text.level|ui_text }} {% translate "· чтение · ~" %}{{ text.minutes|ui_text }} {% translate "мин" %}</small><h3>{{ text.title|ui_text }}</h3><p>{{ text.description|ui_text }}</p></a></article>
+      {% empty %}<div class="card empty-state"><span>▤</span><h3>{% translate "Текстов пока нет" %}</h3><p>{% translate "Добавляй тексты в сохранённое во время чтения." %}</p><a class="compact-button" href="{% url 'reading-library' %}">{% translate "Открыть библиотеку" %}</a></div>{% endfor %}
     </div>
   </section>
 {% endblock %}

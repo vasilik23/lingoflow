@@ -1,12 +1,13 @@
 {% extends "base.html" %}
-{% block title %}Тренировка слов · PolskiFlow{% endblock %}
+{% load i18n ui %}
+{% block title %}{% translate "Тренировка слов · PolskiFlow" %}{% endblock %}
 {% block content %}
   <div class="lesson-shell">
-    <header class="lesson-header"><a class="back-button" href="{% url 'dictionary' %}" aria-label="Назад">←</a><strong>Тренировка слов</strong><span></span></header>
-    <nav class="level-tabs practice-mode-tabs" aria-label="Режим тренировки">
-      <a href="{{ mode_urls.translation }}"{% if mode == "translation" %} aria-current="page"{% endif %}>Перевод</a>
-      <a href="{{ mode_urls.lemma }}"{% if mode == "lemma" %} aria-current="page"{% endif %}>Лемма</a>
-      <a href="{{ mode_urls.context }}"{% if mode == "context" %} aria-current="page"{% endif %}>В контексте</a>
+    <header class="lesson-header"><a class="back-button" href="{% url 'dictionary' %}" aria-label="{% translate "Назад" %}">←</a><strong>{% translate "Тренировка слов" %}</strong><span></span></header>
+    <nav class="level-tabs practice-mode-tabs" aria-label="{% translate "Режим тренировки" %}">
+      <a href="{{ mode_urls.translation }}"{% if mode == "translation" %} aria-current="page"{% endif %}>{% translate "Перевод" %}</a>
+      <a href="{{ mode_urls.lemma }}"{% if mode == "lemma" %} aria-current="page"{% endif %}>{% translate "Лемма" %}</a>
+      <a href="{{ mode_urls.context }}"{% if mode == "context" %} aria-current="page"{% endif %}>{% translate "В контексте" %}</a>
     </nav>
     <div id="practice-flow">
       {% if practice_complete %}{% include "reading/_practice_complete.html" %}{% else %}{% include "reading/_practice_question.html" %}{% endif %}

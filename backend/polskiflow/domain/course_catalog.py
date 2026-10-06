@@ -25,6 +25,7 @@ def filter_course_topics(
     kind: str = "",
     duration: str = "",
     completion: str = "",
+    localize=None,
 ) -> list[dict]:
     """Return topics containing lessons matching the validated catalog filters."""
     needle = query.strip().casefold()
@@ -33,13 +34,13 @@ def filter_course_topics(
         if topic_id and topic["id"] != topic_id:
             continue
         topic_matches = needle and needle in _search_text(
-            topic.get("title", ""), topic.get("description", "")
+            topic.get("title", ""), topic.get("description", ""), localize=localize
         )
         matching_lessons = [
             lesson
             for lesson in topic["lessons"]
             if (topic_matches or not needle or needle in _search_text(
-                lesson.get("title", ""), lesson.get("description", "")
+                lesson.get("title", ""), lesson.get("description", ""), localize=localize
             ))
             and (not kind or lesson.get("kind") == kind)
             and _matches_duration(lesson.get("minutes", 0), duration)
@@ -50,8 +51,9 @@ def filter_course_topics(
     return result
 
 
-def _search_text(*parts: str) -> str:
-    return " ".join(parts).casefold()
+def _search_text(*parts: str, localize=None) -> str:
+    translated = [localize(part) for part in parts] if localize else []
+    return " ".join([*parts, *translated]).casefold()
 
 
 def _matches_duration(minutes: int, duration: str) -> bool:

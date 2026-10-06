@@ -1,29 +1,30 @@
 {% extends "base.html" %}
-{% block title %}Новости · PolskiFlow{% endblock %}
+{% load i18n ui %}
+{% block title %}{% translate "Новости · PolskiFlow" %}{% endblock %}
 {% block content %}
   <header class="content-header">
-    <div><p class="eyebrow">Żywy polski</p><h1>Новости на польском</h1><p class="muted">Свежие заголовки из польских RSS по разным темам.</p></div>
-    <div class="content-header-actions"><a class="compact-button secondary-link" href="{% url 'reading-library' %}">Учебные тексты</a><a class="compact-button" href="{% url 'dictionary' %}">Мой словарь →</a></div>
+    <div><p class="eyebrow">Żywy polski</p><h1>{% translate "Новости на польском" %}</h1><p class="muted">{% translate "Свежие заголовки из польских RSS по разным темам." %}</p></div>
+    <div class="content-header-actions"><a class="compact-button secondary-link" href="{% url 'reading-library' %}">{% translate "Учебные тексты" %}</a><a class="compact-button" href="{% url 'dictionary' %}">{% translate "Мой словарь →" %}</a></div>
   </header>
   <section aria-labelledby="news-title">
-    <div class="section-heading"><div><p class="eyebrow">Живой польский</p><h2 id="news-title">Свежие новости</h2></div><span>Польские RSS</span></div>
-    <nav class="news-filters" aria-label="Темы новостей">
-      <a href="{{ news_all_href }}"{% if not selected_news_category %} aria-current="page"{% endif %}>Все темы</a>
+    <div class="section-heading"><div><p class="eyebrow">{% translate "Живой польский" %}</p><h2 id="news-title">{% translate "Свежие новости" %}</h2></div><span>{% translate "Польские RSS" %}</span></div>
+    <nav class="news-filters" aria-label="{% translate "Темы новостей" %}">
+      <a href="{{ news_all_href }}"{% if not selected_news_category %} aria-current="page"{% endif %}>{% translate "Все темы" %}</a>
       {% for category in news_categories %}
-        <a href="{{ category.href }}"{% if selected_news_category == category.id %} aria-current="page"{% endif %}>{{ category.label }}</a>
+        <a href="{{ category.href }}"{% if selected_news_category == category.id %} aria-current="page"{% endif %}>{{ category.label|ui_text }}</a>
       {% endfor %}
     </nav>
     {% if news %}
       <div class="news-list">
         {% for item in news %}
           <a class="news-card" href="{{ item.url }}" target="_blank" rel="noopener noreferrer">
-            <span><small><span class="news-category">{{ item.category_label }}</span> {{ item.source }}{% if item.published %} · {{ item.published }}{% endif %}</small><strong lang="pl">{{ item.title }}</strong></span><span aria-hidden="true">↗</span>
+            <span><small><span class="news-category">{{ item.category_label|ui_text }}</span> {{ item.source|ui_text }}{% if item.published %} · {{ item.published|ui_text }}{% endif %}</small><strong lang="pl">{{ item.title|ui_text }}</strong></span><span aria-hidden="true">↗</span>
           </a>
         {% endfor %}
       </div>
-      <p class="source-note">Показываем только заголовок, дату и источник из опубликованных RSS. Полный материал открывается на сайте редакции.</p>
+      <p class="source-note">{% translate "Показываем только заголовок, дату и источник из опубликованных RSS. Полный материал открывается на сайте редакции." %}</p>
     {% else %}
-      <div class="card empty-state compact-empty"><span>📰</span><h3>Лента временно недоступна</h3><p class="muted">Попробуй обновить страницу позже или открой учебные тексты.</p><a class="button" href="{% url 'reading-library' %}">Читать учебные тексты</a></div>
+      <div class="card empty-state compact-empty"><span>📰</span><h3>{% translate "Лента временно недоступна" %}</h3><p class="muted">{% translate "Попробуй обновить страницу позже или открой учебные тексты." %}</p><a class="button" href="{% url 'reading-library' %}">{% translate "Читать учебные тексты" %}</a></div>
     {% endif %}
   </section>
 {% endblock %}

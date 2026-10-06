@@ -1,24 +1,25 @@
 {% extends "base.html" %}
-{% block title %}Источники · PolskiFlow{% endblock %}
+{% load i18n ui %}
+{% block title %}{% translate "Источники · PolskiFlow" %}{% endblock %}
 {% block content %}
   <header class="profile-header">
     <div>
       <p class="eyebrow">Przejrzystość</p>
-      <h1>Источники и лицензии</h1>
-      <p class="muted">Как мы создаём учебные материалы и используем внешние источники.</p>
+      <h1>{% translate "Источники и лицензии" %}</h1>
+      <p class="muted">{% translate "Как мы создаём учебные материалы и используем внешние источники." %}</p>
     </div>
   </header>
 
   <section aria-labelledby="original-content-title">
     <div class="section-heading">
-      <div><p class="eyebrow">Учебный курс</p><h2 id="original-content-title">Оригинальный контент PolskiFlow</h2></div>
+      <div><p class="eyebrow">{% translate "Учебный курс" %}</p><h2 id="original-content-title">{% translate "Оригинальный контент PolskiFlow" %}</h2></div>
     </div>
     <div class="card settings-list">
       <div class="setting-row">
         <span class="setting-icon" aria-hidden="true">✦</span>
         <span>
-          <strong>Уроки, тексты и задания</strong>
-          <small>По умолчанию примеры, переводы, упражнения и учебные тексты создаются специально для PolskiFlow. Внешний материал не становится частью курса без проверки автора, лицензии и условий атрибуции.</small>
+          <strong>{% translate "Уроки, тексты и задания" %}</strong>
+          <small>{% translate "По умолчанию примеры, переводы, упражнения и учебные тексты создаются специально для PolskiFlow. Внешний материал не становится частью курса без проверки автора, лицензии и условий атрибуции." %}</small>
         </span>
       </div>
     </div>
@@ -26,56 +27,56 @@
 
   <section aria-labelledby="news-sources-title">
     <div class="section-heading">
-      <div><p class="eyebrow">Чтение</p><h2 id="news-sources-title">Внешние новостные ленты</h2></div>
+      <div><p class="eyebrow">{% translate "Чтение" %}</p><h2 id="news-sources-title">{% translate "Внешние новостные ленты" %}</h2></div>
     </div>
-    <p class="muted">В разделе новостей мы показываем только заголовок, дату, категорию, название источника и прямую ссылку. Мы не копируем статьи, описания, изображения, аудио или видео.</p>
+    <p class="muted">{% translate "В разделе новостей мы показываем только заголовок, дату, категорию, название источника и прямую ссылку. Мы не копируем статьи, описания, изображения, аудио или видео." %}</p>
     <div class="card settings-list">
       <a class="setting-row" href="https://stat.gov.pl/rss/" target="_blank" rel="noopener noreferrer">
         <span class="setting-icon" aria-hidden="true">↗</span>
-        <span><strong>Główny Urząd Statystyczny</strong><small>Официальные польские новости и статистика · RSS</small></span>
+        <span><strong>Główny Urząd Statystyczny</strong><small>{% translate "Официальные польские новости и статистика · RSS" %}</small></span>
       </a>
       <a class="setting-row" href="https://www.rmf24.pl/kanaly/rss" target="_blank" rel="noopener noreferrer">
         <span class="setting-icon" aria-hidden="true">↗</span>
-        <span><strong>RMF24</strong><small>Политика, культура и медиа · тематические RSS</small></span>
+        <span><strong>RMF24</strong><small>{% translate "Политика, культура и медиа · тематические RSS" %}</small></span>
       </a>
       <a class="setting-row" href="https://www.polsatsport.pl/kanaly-rss/" target="_blank" rel="noopener noreferrer">
         <span class="setting-icon" aria-hidden="true">↗</span>
-        <span><strong>Polsat Sport</strong><small>Спортивные новости · RSS</small></span>
+        <span><strong>Polsat Sport</strong><small>{% translate "Спортивные новости · RSS" %}</small></span>
       </a>
     </div>
   </section>
 
   <section aria-labelledby="reference-sources-title">
     <div class="section-heading">
-      <div><p class="eyebrow">Проверка качества</p><h2 id="reference-sources-title">Лингвистические и методические ориентиры</h2></div>
+      <div><p class="eyebrow">{% translate "Проверка качества" %}</p><h2 id="reference-sources-title">{% translate "Лингвистические и методические ориентиры" %}</h2></div>
     </div>
-    <p class="muted">Эти ресурсы помогают проверять уровни, словарные формы и грамматику. Они не являются источниками скопированных учебных текстов или упражнений.</p>
+    <p class="muted">{% translate "Эти ресурсы помогают проверять уровни, словарные формы и грамматику. Они не являются источниками скопированных учебных текстов или упражнений." %}</p>
     <div class="card settings-list">
       <a class="setting-row" href="https://www.coe.int/en/web/common-european-framework-reference-languages/home" target="_blank" rel="noopener noreferrer">
         <span class="setting-icon" aria-hidden="true">↗</span>
-        <span><strong>CEFR Companion Volume</strong><small>Рамка уровней A1–C2 и коммуникативных целей</small></span>
+        <span><strong>CEFR Companion Volume</strong><small>{% translate "Рамка уровней A1–C2 и коммуникативных целей" %}</small></span>
       </a>
       <a class="setting-row" href="https://wsjp.pl/" target="_blank" rel="noopener noreferrer">
         <span class="setting-icon" aria-hidden="true">↗</span>
-        <span><strong>Wielki słownik języka polskiego PAN</strong><small>Проверка словарной формы и грамматических характеристик</small></span>
+        <span><strong>Wielki słownik języka polskiego PAN</strong><small>{% translate "Проверка словарной формы и грамматических характеристик" %}</small></span>
       </a>
       <a class="setting-row" href="https://www.wikidata.org/wiki/Wikidata:Copyright" target="_blank" rel="noopener noreferrer">
         <span class="setting-icon" aria-hidden="true">↗</span>
-        <span><strong>Wikidata Lexemes</strong><small>Структурированные лексические факты · CC0 1.0</small></span>
+        <span><strong>Wikidata Lexemes</strong><small>{% translate "Структурированные лексические факты · CC0 1.0" %}</small></span>
       </a>
     </div>
   </section>
 
   <section aria-labelledby="license-policy-title">
     <div class="section-heading">
-      <div><p class="eyebrow">Правила</p><h2 id="license-policy-title">Проверка перед публикацией</h2></div>
+      <div><p class="eyebrow">{% translate "Правила" %}</p><h2 id="license-policy-title">{% translate "Проверка перед публикацией" %}</h2></div>
     </div>
     <div class="card settings-list">
       <div class="setting-row">
         <span class="setting-icon" aria-hidden="true">✓</span>
-        <span><strong>Для каждого внешнего материала отдельно</strong><small>Фиксируем первоисточник, автора, лицензию, дату получения, изменения и требуемую атрибуцию. Материалы с неясными правами не публикуются.</small></span>
+        <span><strong>{% translate "Для каждого внешнего материала отдельно" %}</strong><small>{% translate "Фиксируем первоисточник, автора, лицензию, дату получения, изменения и требуемую атрибуцию. Материалы с неясными правами не публикуются." %}</small></span>
       </div>
     </div>
-    <p class="profile-note">Реестр источников проверен 27 августа 2026 года. Условия конкретного материала всегда проверяются повторно перед импортом.</p>
+    <p class="profile-note">{% translate "Реестр источников проверен 27 августа 2026 года. Условия конкретного материала всегда проверяются повторно перед импортом." %}</p>
   </section>
 {% endblock %}

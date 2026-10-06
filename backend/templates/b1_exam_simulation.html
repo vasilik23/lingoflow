@@ -1,54 +1,57 @@
 {% extends "base.html" %}
-{% block title %}Тренажёр частей B1 · PolskiFlow{% endblock %}
+{% load i18n ui %}
+{% block title %}{% translate "Тренажёр частей B1 · PolskiFlow" %}{% endblock %}
 {% block content %}
 <div class="mock-shell" data-simulation-root data-storage-namespace="{{ simulation_storage_namespace }}" data-variant-id="{{ variant.id }}" data-timing-mode="{{ timing_mode|default:'short' }}"{% if part %} data-part-id="{{ part.id }}" data-duration-seconds="{{ duration_seconds }}"{% endif %}{% if result %} data-result-percent="{{ result.percent }}"{% endif %}>
   <header class="mock-header">
-    <div><p class="eyebrow">B1 · {{ variant.label }}</p><h1>{% if part %}{{ part.title }} на время{% else %}Тренажёр частей экзамена{% endif %}</h1><p>{% if part %}{% if timing_mode == 'short' %}Короткая тренировка: {{ timer_minutes }} мин. Учебный ориентир — минута на вопрос{% if part.id == 'listening' %} и три минуты на прослушивание{% elif part.id == 'reading' %} и две минуты на чтение{% endif %}; это не официальный норматив.{% else %}Полный лимит: {{ part.minutes }} мин.{% endif %} Объём этого оригинального набора PolskiFlow меньше официального экзамена.{% else %}Для коротких наборов доступен учебный таймер и отдельный полный лимит части.{% endif %}</p></div>
-    {% if part and not result %}<div class="mock-timer" role="timer" aria-live="off"><strong id="simulation-timer">{{ timer_minutes }}:00</strong><span>осталось</span></div><p class="visually-hidden" id="simulation-timer-status" role="status" aria-live="polite" aria-atomic="true"></p>{% endif %}
+    <div><p class="eyebrow">B1 · {{ variant.label|ui_text }}</p><h1>{% if part %}{{ part.title|ui_text }} {% translate "на время" %}{% else %}{% translate "Тренажёр частей экзамена" %}{% endif %}</h1><p>{% if part %}{% if timing_mode == 'short' %}{% translate "Короткая тренировка:" %} {{ timer_minutes|ui_text }} {% translate "мин. Учебный ориентир — минута на вопрос" %}{% if part.id == 'listening' %} {% translate "и три минуты на прослушивание" %}{% elif part.id == 'reading' %} {% translate "и две минуты на чтение" %}{% endif %}{% translate "; это не официальный норматив." %}{% else %}{% translate "Полный лимит:" %} {{ part.minutes|ui_text }} {% translate "мин." %}{% endif %} {% translate "Объём этого оригинального набора PolskiFlow меньше официального экзамена." %}{% else %}{% translate "Для коротких наборов доступен учебный таймер и отдельный полный лимит части." %}{% endif %}</p></div>
+    {% if part and not result %}<div class="mock-timer" role="timer" aria-live="off"><strong id="simulation-timer">{{ timer_minutes|ui_text }}:00</strong><span>{% translate "осталось" %}</span></div><p class="visually-hidden" id="simulation-timer-status" role="status" aria-live="polite" aria-atomic="true"></p>{% endif %}
   </header>
 
   {% if not part %}
-    <p><a class="compact-button" href="{% url 'b1-training-run' %}">Учебный прогон пяти частей с перерывами →</a></p>
+    <p><a class="compact-button" href="{% url 'b1-training-run' %}">{% translate "Учебный прогон пяти частей с перерывами →" %}</a></p>
     <div class="exam-module-grid simulation-part-grid">
-      {% for item in parts %}<article class="card exam-module-card exam-accent-{{ item.accent }}" data-simulation-card="{{ item.id }}"><header><span>{{ item.timer_minutes }} мин</span><span>{% if item.mode == "objective" %}{{ item.question_count }} заданий{% else %}самопроверка{% endif %}</span></header><p class="eyebrow" lang="pl">{{ item.polish_title }}</p><h2>{{ item.title }}</h2><p class="simulation-progress muted" data-simulation-progress>Ещё не начато</p><a href="?part={{ item.id }}{% if item.mode != 'objective' %}&timing=full{% endif %}">Начать часть</a>{% if item.mode == 'objective' %}<p><a href="?part={{ item.id }}&timing=full">Полный лимит · {{ item.minutes }} мин</a></p>{% endif %}</article>{% endfor %}
+      {% for item in parts %}<article class="card exam-module-card exam-accent-{{ item.accent }}" data-simulation-card="{{ item.id }}"><header><span>{{ item.timer_minutes|ui_text }} {% translate "мин" %}</span><span>{% if item.mode == "objective" %}{{ item.question_count|ui_text }} {% translate "заданий" %}{% else %}{% translate "самопроверка" %}{% endif %}</span></header><p class="eyebrow" lang="pl">{{ item.polish_title|ui_text }}</p><h2>{{ item.title|ui_text }}</h2><p class="simulation-progress muted" data-simulation-progress>{% translate "Ещё не начато" %}</p><a href="?part={{ item.id }}{% if item.mode != 'objective' %}&timing=full{% endif %}">{% translate "Начать часть" %}</a>{% if item.mode == 'objective' %}<p><a href="?part={{ item.id }}&timing=full">{% translate "Полный лимит ·" %} {{ item.minutes|ui_text }} {% translate "мин" %}</a></p>{% endif %}</article>{% endfor %}
     </div>
     <section class="card mock-history" aria-labelledby="section-history-title">
-      <div><p class="eyebrow">Между устройствами</p><h2 id="section-history-title">Последние проверяемые части</h2><p class="muted">Хранятся только агрегированный балл, часть, вариант и дата. Ответы, письмо и речь не сохраняются.</p></div>
+      <div><p class="eyebrow">{% translate "Между устройствами" %}</p><h2 id="section-history-title">{% translate "Последние проверяемые части" %}</h2><p class="muted">{% translate "Хранятся только агрегированный балл, часть, вариант и дата. Ответы, письмо и речь не сохраняются." %}</p></div>
       {% if history is None %}
-        <p class="form-message error" role="status">История временно недоступна. Тренировку можно продолжить.</p>
+        <p class="form-message error" role="status">{% translate "История временно недоступна. Тренировку можно продолжить." %}</p>
       {% elif history %}
         <ol class="mock-history-list">
-          {% for attempt in history %}<li><span><strong>{{ attempt.section_label }}</strong><small>{{ attempt.attempted_at_display }} · {{ attempt.variant_label }}</small></span><strong>{{ attempt.correct }} / {{ attempt.total }} · {{ attempt.percent }}%</strong></li>{% endfor %}
+          {% for attempt in history %}<li><span><strong>{{ attempt.section_label|ui_text }}</strong><small>{{ attempt.attempted_at_display|ui_text }} · {{ attempt.variant_label|ui_text }}</small></span><strong>{{ attempt.correct|ui_text }} / {{ attempt.total|ui_text }} · {{ attempt.percent|ui_text }}%</strong></li>{% endfor %}
         </ol>
       {% else %}
-        <p class="muted">Заверши аудирование, чтение или грамматику — результат появится здесь.</p>
+        <p class="muted">{% translate "Заверши аудирование, чтение или грамматику — результат появится здесь." %}</p>
       {% endif %}
     </section>
   {% else %}
-    <p><a href="{% url 'b1-exam-simulation' %}">← Выбрать другую часть</a></p>
-    {% if error %}<div class="form-message error" role="alert">{{ error }}</div>{% endif %}
+    <p><a href="{% url 'b1-exam-simulation' %}">{% translate "← Выбрать другую часть" %}</a></p>
+    {% if error %}<div class="form-message error" role="alert">{{ error|ui_text }}</div>{% endif %}
     {% if not result %}<section class="card mock-section">{% include "partials/b1_exam_instruction.html" %}</section>{% endif %}
-    {% if result %}<section class="card mock-summary"><div><p class="eyebrow">Результат этой тренировки</p><h2>{{ result.correct }} из {{ result.total }} · {{ result.percent }}%</h2><p class="muted">Это результат короткого оригинального набора, не оценка официальной части B1.</p>{% if saved %}<p class="form-message success">Агрегированный результат сохранён между устройствами.</p>{% elif saved is False %}<p class="form-message error">Результат показан, но историю сейчас сохранить не удалось.</p>{% endif %}<a class="compact-button" href="{% url 'b1-exam-simulation' %}">К пяти частям</a></div></section>{% endif %}
+    {% if result %}<section class="card mock-summary"><div><p class="eyebrow">{% translate "Результат этой тренировки" %}</p><h2>{{ result.correct|ui_text }} {% translate "из" %} {{ result.total|ui_text }} · {{ result.percent|ui_text }}%</h2><p class="muted">{% translate "Это результат короткого оригинального набора, не оценка официальной части B1." %}</p>{% if saved %}<p class="form-message success">{% translate "Агрегированный результат сохранён между устройствами." %}</p>{% elif saved is False %}<p class="form-message error">{% translate "Результат показан, но историю сейчас сохранить не удалось." %}</p>{% endif %}<a class="compact-button" href="{% url 'b1-exam-simulation' %}">{% translate "К пяти частям" %}</a></div></section>{% endif %}
 
     {% if part.mode == "objective" %}
       <form method="post" class="mock-form" id="simulation-form">{% csrf_token %}<input type="hidden" name="simulation_token" value="{{ simulation_token }}">
         <section class="card mock-section">
-          <div class="mock-section-heading"><span>{{ question_count }}</span><div><p class="eyebrow" lang="pl">{{ part.polish_title }}</p><h2>{{ part.title }}</h2><p class="muted">{{ question_count }} оригинальных заданий</p></div></div>
-          {% if part.id == "listening" %}{% if result %}<p lang="pl" class="mock-source-text">{{ variant.listening_transcript }}</p>{% else %}<button class="compact-button" type="button" id="simulation-play">▶ Прослушать сообщение</button><p class="muted" id="simulation-audio-status" aria-live="polite">Системный польский голос устройства; запись можно повторить.</p>{% endif %}{% elif part.id == "reading" %}<p lang="pl" class="mock-source-text">{{ variant.reading_text }}</p>{% endif %}
+          <div class="mock-section-heading"><span>{{ question_count|ui_text }}</span><div><p class="eyebrow" lang="pl">{{ part.polish_title|ui_text }}</p><h2>{{ part.title|ui_text }}</h2><p class="muted">{{ question_count|ui_text }} {% translate "оригинальных заданий" %}</p></div></div>
+          {% if part.id == "listening" %}{% if result %}<p lang="pl" class="mock-source-text">{{ variant.listening_transcript|ui_text }}</p>{% else %}<button class="compact-button" type="button" id="simulation-play">{% translate "▶ Прослушать сообщение" %}</button><p class="muted" id="simulation-audio-status" aria-live="polite">{% translate "Системный польский голос устройства; запись можно повторить." %}</p>{% endif %}{% elif part.id == "reading" %}<p lang="pl" class="mock-source-text">{{ variant.reading_text|ui_text }}</p>{% endif %}
           {% for question in questions %}{% include "partials/b1_mock_question.html" %}{% endfor %}
         </section>
-        {% if not result and not error %}<button class="primary-button mock-submit" type="submit">Завершить часть и проверить</button>{% endif %}
+        {% if not result and not error %}<button class="primary-button mock-submit" type="submit">{% translate "Завершить часть и проверить" %}</button>{% endif %}
       </form>
     {% elif part.id == "writing" %}
-      <section class="card mock-section"><p class="eyebrow" lang="pl">Pisanie</p><h2>Задание</h2><p lang="pl"><strong>{{ variant.writing_prompt }}</strong></p><label for="simulation-writing">Черновик остаётся только в этой вкладке</label><textarea id="simulation-writing" rows="14" aria-describedby="simulation-writing-note"></textarea><button class="compact-button" type="button" id="simulation-clear-writing">Удалить текст черновика</button><p class="muted" id="simulation-draft-status" role="status"></p><p class="muted" id="simulation-writing-note">Текст восстанавливается после перезагрузки в этой вкладке, не отправляется на сервер и не оценивается автоматически. Завершение самопроверки удаляет черновик. Таймер продолжится после возврата. После попытки проверь выполнение всех пунктов, структуру, регистр и грамматику.</p><button class="primary-button mock-submit" type="button" data-complete-self-review>Завершить самопроверку</button></section>
+      <section class="card mock-section"><p class="eyebrow" lang="pl">Pisanie</p><h2>{% translate "Задание" %}</h2><p lang="pl"><strong>{{ variant.writing_prompt|ui_text }}</strong></p><label for="simulation-writing">{% translate "Черновик остаётся только в этой вкладке" %}</label><textarea id="simulation-writing" rows="14" aria-describedby="simulation-writing-note"></textarea><button class="compact-button" type="button" id="simulation-clear-writing">{% translate "Удалить текст черновика" %}</button><p class="muted" id="simulation-draft-status" role="status"></p><p class="muted" id="simulation-writing-note">{% translate "Текст восстанавливается после перезагрузки в этой вкладке, не отправляется на сервер и не оценивается автоматически. Завершение самопроверки удаляет черновик. Таймер продолжится после возврата. После попытки проверь выполнение всех пунктов, структуру, регистр и грамматику." %}</p><button class="primary-button mock-submit" type="button" data-complete-self-review>{% translate "Завершить самопроверку" %}</button></section>
     {% else %}
-      <section class="card mock-section"><p class="eyebrow" lang="pl">Mówienie</p><h2>Задание</h2><p lang="pl"><strong>{{ variant.speaking_prompt }}</strong></p><p class="muted">Речь не записывается и не получает автоматического балла на этом экране. Таймер продолжится после возврата.</p><button class="primary-button mock-submit" type="button" data-complete-self-review>Завершить самопроверку</button></section>
+      <section class="card mock-section"><p class="eyebrow" lang="pl">Mówienie</p><h2>{% translate "Задание" %}</h2><p lang="pl"><strong>{{ variant.speaking_prompt|ui_text }}</strong></p><p class="muted">{% translate "Речь не записывается и не получает автоматического балла на этом экране. Таймер продолжится после возврата." %}</p><button class="primary-button mock-submit" type="button" data-complete-self-review>{% translate "Завершить самопроверку" %}</button></section>
     {% endif %}
   {% endif %}
 </div>
 {{ variant.listening_transcript|json_script:"simulation-listening-transcript" }}
 <script>
 (() => {
+  const ui = (typeof window !== "undefined" && window.PolskiFlowI18n?.t) || ((text, ...values) => Array.isArray(text) ? text.map((part, i) => part + (values[i] ?? "")).join("") : text);
+
   const root = document.querySelector('[data-simulation-root]');
   const prefix = `polskiflow-b1-simulation:${root.dataset.storageNamespace}:${root.dataset.variantId}:${root.dataset.timingMode}:`;
   const readState = (partId) => {
@@ -66,12 +69,12 @@
     const progress = card.querySelector('[data-simulation-progress]');
     const link = card.querySelector('a');
     if (state.status === 'completed') {
-      progress.textContent = Number.isInteger(state.percent) ? `Завершено · ${state.percent}%` : 'Самопроверка завершена';
-      link.textContent = 'Пройти ещё раз';
+      progress.textContent = Number.isInteger(state.percent) ? ui`Завершено · ${state.percent}%` : ui('Самопроверка завершена');
+      link.textContent = ui('Пройти ещё раз');
       link.href += '&restart=1';
     } else if (state.startedAt) {
-      progress.textContent = 'Есть незавершённая попытка';
-      link.textContent = 'Продолжить';
+      progress.textContent = ui('Есть незавершённая попытка');
+      link.textContent = ui('Продолжить');
     }
   });
   const partId = root.dataset.partId;
@@ -132,9 +135,9 @@
         writing: writing?.value || '', token: token?.value || '',
       }));
       savedWriting = writing?.value || '';
-      if (draftStatus) draftStatus.textContent = writing?.value ? 'Черновик сохранён в этой вкладке.' : '';
+      if (draftStatus) draftStatus.textContent = writing?.value ? ui('Черновик сохранён в этой вкладке.') : '';
     } catch (error) {
-      if (draftStatus) draftStatus.textContent = 'Браузер не смог сохранить черновик. Скопируй текст перед уходом.';
+      if (draftStatus) draftStatus.textContent = ui('Браузер не смог сохранить черновик. Скопируй текст перед уходом.');
     }
   };
   document.getElementById('simulation-clear-writing')?.addEventListener('click', () => {
@@ -153,10 +156,10 @@
   const tick = () => {
     const left = Math.max(0, duration - Math.floor((Date.now() - state.startedAt) / 1000));
     const crossed = [600, 300, 60].filter(point => previousLeft > point && left <= point);
-    if (timerStatus && left === 0) timerStatus.textContent = 'Время истекло.';
+    if (timerStatus && left === 0) timerStatus.textContent = ui('Время истекло.');
     else if (timerStatus && crossed.length) {
       const checkpoint = crossed[crossed.length - 1] / 60;
-      timerStatus.textContent = checkpoint === 1 ? 'Осталась одна минута.' : `Осталось ${checkpoint} минут.`;
+      timerStatus.textContent = checkpoint === 1 ? ui('Осталась одна минута.') : ui`Осталось ${checkpoint} минут.`;
     }
     previousLeft = left;
     timer.textContent = `${String(Math.floor(left / 60)).padStart(2, '0')}:${String(left % 60).padStart(2, '0')}`;
@@ -165,9 +168,9 @@
   }; tick();
   document.getElementById('simulation-play')?.addEventListener('click', () => {
     const status = document.getElementById('simulation-audio-status');
-    if (!('speechSynthesis' in window)) { status.textContent = 'На этом устройстве системное воспроизведение недоступно.'; return; }
+    if (!('speechSynthesis' in window)) { status.textContent = ui('На этом устройстве системное воспроизведение недоступно.'); return; }
     speechSynthesis.cancel(); const utterance = new SpeechSynthesisUtterance(JSON.parse(document.getElementById('simulation-listening-transcript').textContent));
-    utterance.lang = 'pl-PL'; utterance.rate = .9; utterance.onstart = () => status.textContent = 'Воспроизводится…'; utterance.onend = () => status.textContent = 'Сообщение завершено.'; speechSynthesis.speak(utterance);
+    utterance.lang = 'pl-PL'; utterance.rate = .9; utterance.onstart = () => status.textContent = ui('Воспроизводится…'); utterance.onend = () => status.textContent = ui('Сообщение завершено.'); speechSynthesis.speak(utterance);
   });
 })();
 </script>

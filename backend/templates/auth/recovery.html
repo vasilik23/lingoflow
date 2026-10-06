@@ -1,38 +1,39 @@
 {% extends "base.html" %}
-{% block title %}{% if mode == "forgot" %}Восстановление пароля{% elif mode == "reset" %}Новый пароль{% else %}Подтверждение email{% endif %} — PolskiFlow{% endblock %}
+{% load i18n ui %}
+{% block title %}{% if mode == "forgot" %}{% translate "Восстановление пароля" %}{% elif mode == "reset" %}{% translate "Новый пароль" %}{% else %}{% translate "Подтверждение email" %}{% endif %} — PolskiFlow{% endblock %}
 {% block body_class %}auth-page{% endblock %}
 {% block content %}
   <div class="auth-layout">
-    <aside class="auth-brand"><span class="brand-mark">P</span><h2>Вернём доступ к занятиям.</h2><p>Безопасная ссылка приходит на email и действует ограниченное время.</p></aside>
+    <aside class="auth-brand"><span class="brand-mark">P</span><h2>{% translate "Вернём доступ к занятиям." %}</h2><p>{% translate "Безопасная ссылка приходит на email и действует ограниченное время." %}</p></aside>
     <section class="auth-panel">
       <a class="brand" href="{% url 'login' %}"><span class="brand-mark">P</span> PolskiFlow</a>
       {% if mode == "forgot" %}
-        <p class="eyebrow">Odzyskiwanie dostępu</p><h1>Забыли пароль?</h1><p class="muted">Укажите email аккаунта. Мы не сообщаем, зарегистрирован ли такой адрес.</p>
+        <p class="eyebrow">Odzyskiwanie dostępu</p><h1>{% translate "Забыли пароль?" %}</h1><p class="muted">{% translate "Укажите email аккаунта. Мы не сообщаем, зарегистрирован ли такой адрес." %}</p>
       {% elif mode == "reset" %}
-        <p class="eyebrow">Nowe hasło</p><h1>Создайте новый пароль</h1><p class="muted">Ссылка одноразовая. После сохранения войдите заново.</p>
+        <p class="eyebrow">Nowe hasło</p><h1>{% translate "Создайте новый пароль" %}</h1><p class="muted">{% translate "Ссылка одноразовая. После сохранения войдите заново." %}</p>
       {% else %}
-        <p class="eyebrow">Potwierdzenie email</p><h1>Отправить письмо ещё раз</h1><p class="muted">Используйте тот же email, с которым регистрировались.</p>
+        <p class="eyebrow">Potwierdzenie email</p><h1>{% translate "Отправить письмо ещё раз" %}</h1><p class="muted">{% translate "Используйте тот же email, с которым регистрировались." %}</p>
       {% endif %}
-      {% if error %}<p class="error" role="alert">{{ error }}</p>{% endif %}
-      {% if message %}<p class="message" role="status">{{ message }}</p>{% endif %}
+      {% if error %}<p class="error" role="alert">{{ error|ui_text }}</p>{% endif %}
+      {% if message %}<p class="message" role="status">{{ message|ui_text }}</p>{% endif %}
       <form method="post"{% if mode == "reset" %} data-recovery-form{% endif %}>
         {% csrf_token %}
         {% if mode == "reset" %}
           <input type="hidden" name="recovery_token" value="{{ recovery_token|default:'' }}" data-recovery-token>
-          <label for="password">Новый пароль</label>
+          <label for="password">{% translate "Новый пароль" %}</label>
           <input id="password" name="password" type="password" autocomplete="new-password" minlength="10" aria-describedby="password-hint" required>
-          <p class="field-hint" id="password-hint">Минимум 10 символов, строчные и заглавные буквы и цифра.</p>
-          <label for="password-confirmation">Повторите пароль</label>
+          <p class="field-hint" id="password-hint">{% translate "Минимум 10 символов, строчные и заглавные буквы и цифра." %}</p>
+          <label for="password-confirmation">{% translate "Повторите пароль" %}</label>
           <input id="password-confirmation" name="password_confirmation" type="password" autocomplete="new-password" required>
-          <button type="submit" disabled data-recovery-submit>Сохранить новый пароль</button>
-          <p class="error" role="alert" hidden data-recovery-error>Ссылка восстановления недействительна или устарела. Запросите новую.</p>
+          <button type="submit" disabled data-recovery-submit>{% translate "Сохранить новый пароль" %}</button>
+          <p class="error" role="alert" hidden data-recovery-error>{% translate "Ссылка восстановления недействительна или устарела. Запросите новую." %}</p>
         {% else %}
           <label for="email">Email</label>
           <input id="email" name="email" type="email" autocomplete="email" value="{{ email|default:'' }}" required>
-          <button type="submit">{% if mode == "forgot" %}Отправить ссылку{% else %}Отправить подтверждение{% endif %}</button>
+          <button type="submit">{% if mode == "forgot" %}{% translate "Отправить ссылку" %}{% else %}{% translate "Отправить подтверждение" %}{% endif %}</button>
         {% endif %}
       </form>
-      <p class="auth-switch muted"><a href="{% url 'login' %}">Вернуться ко входу</a></p>
+      <p class="auth-switch muted"><a href="{% url 'login' %}">{% translate "Вернуться ко входу" %}</a></p>
     </section>
   </div>
   {% if mode == "reset" %}

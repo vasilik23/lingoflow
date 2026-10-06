@@ -25,6 +25,7 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "polskiflow.request_id.RequestIdMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -41,6 +42,7 @@ TEMPLATES = [
         "OPTIONS": {
             "context_processors": [
                 "django.template.context_processors.request",
+                "django.template.context_processors.i18n",
                 "polskiflow.pwa_version.pwa_shell_context",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
@@ -70,7 +72,13 @@ if database_url := os.environ.get("DATABASE_URL"):
         "OPTIONS": {"sslmode": "require", "prepare_threshold": None},
     }
 
-LANGUAGE_CODE = "ru-ru"
+LANGUAGE_CODE = "ru"
+LANGUAGES = [("ru", "Русский"), ("pl", "Polski")]
+LOCALE_PATHS = [BASE_DIR / "locale"]
+LANGUAGE_COOKIE_AGE = 365 * 24 * 60 * 60
+LANGUAGE_COOKIE_HTTPONLY = True
+LANGUAGE_COOKIE_SAMESITE = "Lax"
+LANGUAGE_COOKIE_SECURE = not DEBUG
 TIME_ZONE = os.environ.get("APP_TIME_ZONE", "Europe/Warsaw")
 USE_I18N = True
 USE_TZ = True

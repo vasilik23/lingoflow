@@ -1,28 +1,29 @@
 {% extends "base.html" %}
-{% block title %}{{ text.title }} · PolskiFlow{% endblock %}
+{% load i18n ui %}
+{% block title %}{{ text.title|ui_text }} · PolskiFlow{% endblock %}
 {% block content %}
   <div class="reader-layout">
     <article class="reader-article">
-      <header class="lesson-header reader-header"><a class="back-button" href="{% url 'reading-library' %}" aria-label="Назад">←</a><strong>{{ text.title }}</strong><span class="level-badge">{{ text.level }}</span></header>
-      <div class="reader-meta"><span>{{ text.emoji }} {{ text.description }}</span><span>◷ {{ text.minutes }} мин</span></div>
-      {% if request.GET.word == "saved" %}<p class="form-success" id="dictionary-status" role="status">Слово добавлено в словарь. Теперь его можно тренировать по расписанию SM-2.</p>{% elif request.GET.word == "error" %}<p class="form-error" id="dictionary-status" role="alert">Не удалось добавить слово. Попробуй ещё раз.</p>{% endif %}
+      <header class="lesson-header reader-header"><a class="back-button" href="{% url 'reading-library' %}" aria-label="{% translate "Назад" %}">←</a><strong>{{ text.title|ui_text }}</strong><span class="level-badge">{{ text.level|ui_text }}</span></header>
+      <div class="reader-meta"><span>{{ text.emoji|ui_text }} {{ text.description|ui_text }}</span><span>◷ {{ text.minutes|ui_text }} {% translate "мин" %}</span></div>
+      {% if request.GET.word == "saved" %}<p class="form-success" id="dictionary-status" role="status">{% translate "Слово добавлено в словарь. Теперь его можно тренировать по расписанию SM-2." %}</p>{% elif request.GET.word == "error" %}<p class="form-error" id="dictionary-status" role="alert">{% translate "Не удалось добавить слово. Попробуй ещё раз." %}</p>{% endif %}
       <details class="card content-tools reader-tools" {% if request.GET.collection %}open{% endif %}>
-        <summary><span><strong>Сохранить и организовать</strong><small>Сохранённое и личные подборки</small></span><span class="content-tools-toggle" aria-hidden="true">⌄</span></summary>
+        <summary><span><strong>{% translate "Сохранить и организовать" %}</strong><small>{% translate "Сохранённое и личные подборки" %}</small></span><span class="content-tools-toggle" aria-hidden="true">⌄</span></summary>
         <div class="content-tools-grid">
-          {% if bookmarks_available %}<section class="content-tool-panel"><p class="eyebrow">Быстрый доступ</p><h2>Сохранённое</h2><form method="post" action="{% url 'toggle-reading-bookmark' text.id %}">{% csrf_token %}<input type="hidden" name="saved" value="{% if is_bookmarked %}0{% else %}1{% endif %}"><button class="compact-button secondary-link" type="submit">{% if is_bookmarked %}★ Убрать из сохранённых{% else %}☆ Сохранить текст{% endif %}</button></form></section>{% endif %}
-          <section class="inline-collection content-tool-panel" id="reading-collection" aria-labelledby="reading-collection-title"><div><p class="eyebrow">Личный маршрут</p><h2 id="reading-collection-title">Добавить в подборку</h2></div>{% if request.GET.collection == "added" %}<p class="form-success" role="status">Текст добавлен в подборку.</p>{% elif request.GET.collection == "error" %}<p class="form-error" role="alert">Не удалось добавить текст.</p>{% endif %}{% if collection_choices %}<form method="post" action="{% url 'add-material-to-collection' 'reading' text.id %}">{% csrf_token %}<label for="reading-collection-select">Подборка</label><div class="filter-search-row"><select id="reading-collection-select" name="collection_id" required><option value="">Выбери список</option>{% for collection in collection_choices %}<option value="{{ collection.id }}">{{ collection.name }}</option>{% endfor %}</select><button type="submit">Добавить</button></div></form>{% elif collections_available %}<p class="muted">Сначала <a href="{% url 'collections' %}">создай подборку</a>.</p>{% else %}<p class="muted">Подборки временно недоступны.</p>{% endif %}</section>
+          {% if bookmarks_available %}<section class="content-tool-panel"><p class="eyebrow">{% translate "Быстрый доступ" %}</p><h2>{% translate "Сохранённое" %}</h2><form method="post" action="{% url 'toggle-reading-bookmark' text.id %}">{% csrf_token %}<input type="hidden" name="saved" value="{% if is_bookmarked %}0{% else %}1{% endif %}"><button class="compact-button secondary-link" type="submit">{% if is_bookmarked %}{% translate "★ Убрать из сохранённых" %}{% else %}{% translate "☆ Сохранить текст" %}{% endif %}</button></form></section>{% endif %}
+          <section class="inline-collection content-tool-panel" id="reading-collection" aria-labelledby="reading-collection-title"><div><p class="eyebrow">{% translate "Личный маршрут" %}</p><h2 id="reading-collection-title">{% translate "Добавить в подборку" %}</h2></div>{% if request.GET.collection == "added" %}<p class="form-success" role="status">{% translate "Текст добавлен в подборку." %}</p>{% elif request.GET.collection == "error" %}<p class="form-error" role="alert">{% translate "Не удалось добавить текст." %}</p>{% endif %}{% if collection_choices %}<form method="post" action="{% url 'add-material-to-collection' 'reading' text.id %}">{% csrf_token %}<label for="reading-collection-select">{% translate "Подборка" %}</label><div class="filter-search-row"><select id="reading-collection-select" name="collection_id" required><option value="">{% translate "Выбери список" %}</option>{% for collection in collection_choices %}<option value="{{ collection.id }}">{{ collection.name }}</option>{% endfor %}</select><button type="submit">{% translate "Добавить" %}</button></div></form>{% elif collections_available %}<p class="muted">{% translate "Сначала" %} <a href="{% url 'collections' %}">{% translate "создай подборку" %}</a>.</p>{% else %}<p class="muted">{% translate "Подборки временно недоступны." %}</p>{% endif %}</section>
         </div>
       </details>
       {{ text.paragraphs|json_script:"reading-audio-text" }}
       <section class="card reading-audio" data-reading-audio hidden aria-labelledby="reading-audio-title">
-        <div><p class="eyebrow">Аудирование</p><h2 id="reading-audio-title">Послушай текст по-польски</h2><p class="muted" data-audio-status aria-live="polite">Готово к воспроизведению</p></div>
+        <div><p class="eyebrow">{% translate "Аудирование" %}</p><h2 id="reading-audio-title">{% translate "Послушай текст по-польски" %}</h2><p class="muted" data-audio-status aria-live="polite">{% translate "Готово к воспроизведению" %}</p></div>
         <div class="reading-audio-actions">
-          <button type="button" data-audio-play>▶ Слушать</button>
-          <button type="button" data-audio-pause disabled>Ⅱ Пауза</button>
-          <button type="button" data-audio-stop disabled>■ Стоп</button>
-          <label><span>Скорость</span><select data-audio-rate><option value="0.8">0,8×</option><option value="1" selected>1×</option><option value="1.15">1,15×</option></select></label>
+          <button type="button" data-audio-play>{% translate "▶ Слушать" %}</button>
+          <button type="button" data-audio-pause disabled>{% translate "Ⅱ Пауза" %}</button>
+          <button type="button" data-audio-stop disabled>{% translate "■ Стоп" %}</button>
+          <label><span>{% translate "Скорость" %}</span><select data-audio-rate><option value="0.8">0,8×</option><option value="1" selected>1×</option><option value="1.15">1,15×</option></select></label>
         </div>
-        <noscript><p class="muted">Для аудирования нужен JavaScript и системный синтез речи.</p></noscript>
+        <noscript><p class="muted">{% translate "Для аудирования нужен JavaScript и системный синтез речи." %}</p></noscript>
       </section>
       <div class="reading-paper">
         {% for paragraph in paragraphs %}
@@ -33,30 +34,30 @@
         <section class="card reading-check-card" aria-labelledby="reading-check-title">
           <span class="reading-check-icon" aria-hidden="true">✓</span>
           <div>
-            <p class="eyebrow">После чтения</p>
-            <h2 id="reading-check-title">Проверь понимание текста</h2>
-            <p class="muted">{{ comprehension_task.subtitle }} · ~{{ comprehension_task.minutes }} мин</p>
+            <p class="eyebrow">{% translate "После чтения" %}</p>
+            <h2 id="reading-check-title">{% translate "Проверь понимание текста" %}</h2>
+            <p class="muted">{{ comprehension_task.subtitle|ui_text }} · ~{{ comprehension_task.minutes|ui_text }} {% translate "мин" %}</p>
           </div>
-          <a class="compact-button" href="{% url 'lesson' comprehension_task.id %}">Начать вопросы →</a>
+          <a class="compact-button" href="{% url 'lesson' comprehension_task.id %}">{% translate "Начать вопросы →" %}</a>
         </section>
       {% endif %}
       <section class="card reading-check-card" aria-labelledby="reading-words-title">
         <span class="reading-check-icon" aria-hidden="true">◇</span>
         <div>
-          <p class="eyebrow">Слова из текста</p>
-          <h2 id="reading-words-title">Закрепи сохранённую лексику</h2>
-          <p class="muted">После добавления слов потренируй их и запусти интервальное повторение SM-2.</p>
+          <p class="eyebrow">{% translate "Слова из текста" %}</p>
+          <h2 id="reading-words-title">{% translate "Закрепи сохранённую лексику" %}</h2>
+          <p class="muted">{% translate "После добавления слов потренируй их и запусти интервальное повторение SM-2." %}</p>
         </div>
-        <a class="compact-button" href="{% url 'dictionary-practice' %}?source={{ text.id|urlencode }}&amp;mode=lemma">Тренировать слова текста →</a>
+        <a class="compact-button" href="{% url 'dictionary-practice' %}?source={{ text.id|urlencode }}&amp;mode=lemma">{% translate "Тренировать слова текста →" %}</a>
       </section>
     </article>
     <aside class="word-panel" id="word-panel">
-      <div class="word-panel-placeholder"><span>👆</span><strong>Нажми на слово</strong><p>Здесь появится перевод, и слово можно будет сохранить.</p></div>
+      <div class="word-panel-placeholder"><span>👆</span><strong>{% translate "Нажми на слово" %}</strong><p>{% translate "Здесь появится перевод, и слово можно будет сохранить." %}</p></div>
       <div class="word-panel-result" hidden>
-        <p class="eyebrow">Перевод</p><h2 id="selected-word"></h2><p class="selected-translation" id="selected-translation"></p>
+        <p class="eyebrow">{% translate "Перевод" %}</p><h2 id="selected-word"></h2><p class="selected-translation" id="selected-translation"></p>
         <form method="post" action="{% url 'add-dictionary-word' text.id %}">
           {% csrf_token %}<input type="hidden" name="word" id="word-input"><input type="hidden" name="translation" id="translation-input"><input type="hidden" name="context" id="context-input">
-          <button type="submit">＋ Добавить в словарь</button>
+          <button type="submit">{% translate "＋ Добавить в словарь" %}</button>
         </form>
         <div{% if request.GET.word %} id="dictionary-inline-status"{% else %} id="dictionary-status"{% endif %} aria-live="polite"></div>
       </div>
@@ -66,6 +67,8 @@
 {% block scripts %}
   <script>
     (() => {
+  const ui = (typeof window !== "undefined" && window.PolskiFlowI18n?.t) || ((text, ...values) => Array.isArray(text) ? text.map((part, i) => part + (values[i] ?? "")).join("") : text);
+
       const panel = document.querySelector('[data-reading-audio]');
       if (!panel || !('speechSynthesis' in window) || !('SpeechSynthesisUtterance' in window)) return;
       panel.hidden = false;
@@ -76,13 +79,13 @@
       const rate = panel.querySelector('[data-audio-rate]');
       const status = panel.querySelector('[data-audio-status]');
       let utterance = null;
-      const reset = (message = 'Готово к воспроизведению') => { play.textContent = '▶ Слушать'; pause.textContent = 'Ⅱ Пауза'; pause.disabled = true; stop.disabled = true; status.textContent = message; utterance = null; };
+      const reset = (message = ui('Готово к воспроизведению')) => { play.textContent = ui('▶ Слушать'); pause.textContent = ui('Ⅱ Пауза'); pause.disabled = true; stop.disabled = true; status.textContent = message; utterance = null; };
       play.addEventListener('click', () => {
-        if (speechSynthesis.paused) { speechSynthesis.resume(); pause.textContent = 'Ⅱ Пауза'; status.textContent = 'Воспроизведение'; return; }
-        speechSynthesis.cancel(); utterance = new SpeechSynthesisUtterance(text); utterance.lang = 'pl-PL'; utterance.rate = Number(rate.value); utterance.onend = () => reset('Текст прослушан'); utterance.onerror = () => reset('Не удалось запустить системный польский голос'); speechSynthesis.speak(utterance); play.textContent = '↻ Сначала'; pause.disabled = false; stop.disabled = false; status.textContent = 'Воспроизведение';
+        if (speechSynthesis.paused) { speechSynthesis.resume(); pause.textContent = ui('Ⅱ Пауза'); status.textContent = ui('Воспроизведение'); return; }
+        speechSynthesis.cancel(); utterance = new SpeechSynthesisUtterance(text); utterance.lang = 'pl-PL'; utterance.rate = Number(rate.value); utterance.onend = () => reset(ui('Текст прослушан')); utterance.onerror = () => reset(ui('Не удалось запустить системный польский голос')); speechSynthesis.speak(utterance); play.textContent = ui('↻ Сначала'); pause.disabled = false; stop.disabled = false; status.textContent = ui('Воспроизведение');
       });
-      pause.addEventListener('click', () => { if (speechSynthesis.paused) { speechSynthesis.resume(); pause.textContent = 'Ⅱ Пауза'; status.textContent = 'Воспроизведение'; } else { speechSynthesis.pause(); pause.textContent = '▶ Продолжить'; status.textContent = 'Пауза'; } });
-      stop.addEventListener('click', () => { speechSynthesis.cancel(); reset('Воспроизведение остановлено'); });
+      pause.addEventListener('click', () => { if (speechSynthesis.paused) { speechSynthesis.resume(); pause.textContent = ui('Ⅱ Пауза'); status.textContent = ui('Воспроизведение'); } else { speechSynthesis.pause(); pause.textContent = ui('▶ Продолжить'); status.textContent = ui('Пауза'); } });
+      stop.addEventListener('click', () => { speechSynthesis.cancel(); reset(ui('Воспроизведение остановлено')); });
       window.addEventListener('pagehide', () => speechSynthesis.cancel());
     })();
     document.querySelectorAll('.reader-word').forEach((button) => button.addEventListener('click', () => {

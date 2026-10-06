@@ -1,91 +1,92 @@
 {% extends "base.html" %}
-{% block title %}Взаимодействие и медиация · PolskiFlow{% endblock %}
+{% load i18n ui %}
+{% block title %}{% translate "Взаимодействие и медиация · PolskiFlow" %}{% endblock %}
 {% block content %}
   <header class="content-header interaction-header">
-    <div><p class="eyebrow">Практика B1–B2</p><h1>Взаимодействие и медиация</h1><p class="muted">Выбирай реплику, которая помогает договориться, сохраняет смысл и учитывает адресата.</p></div>
-    <a class="compact-button" href="{% url 'course' %}?level=B1">К курсу →</a>
+    <div><p class="eyebrow">{% translate "Практика B1–B2" %}</p><h1>{% translate "Взаимодействие и медиация" %}</h1><p class="muted">{% translate "Выбирай реплику, которая помогает договориться, сохраняет смысл и учитывает адресата." %}</p></div>
+    <a class="compact-button" href="{% url 'course' %}?level=B1">{% translate "К курсу →" %}</a>
   </header>
 
   <div class="card interaction-note" role="note">
-    <strong>Как работает тренажёр</strong>
-    <p>Здесь проверяется выбор ответа в конкретной ситуации. Это практика с прозрачными объяснениями, а не экзамен, сертификат или полная оценка языкового уровня.</p>
+    <strong>{% translate "Как работает тренажёр" %}</strong>
+    <p>{% translate "Здесь проверяется выбор ответа в конкретной ситуации. Это практика с прозрачными объяснениями, а не экзамен, сертификат или полная оценка языкового уровня." %}</p>
   </div>
 
   <section class="speaking-practice" id="speaking-practice" aria-labelledby="speaking-title">
     <header class="section-heading interaction-sequence-heading">
-      <div><p class="eyebrow">Устная часть B1</p><h2 id="speaking-title">Ответь вслух за 2–3 минуты</h2></div>
-      <p class="muted">45 секунд на план, затем запись и самостоятельная проверка.</p>
+      <div><p class="eyebrow">{% translate "Устная часть B1" %}</p><h2 id="speaking-title">{% translate "Ответь вслух за 2–3 минуты" %}</h2></div>
+      <p class="muted">{% translate "45 секунд на план, затем запись и самостоятельная проверка." %}</p>
     </header>
     <div class="card speaking-privacy-note" role="note">
-      <strong>Запись остаётся на устройстве</strong>
-      <p>Браузер использует микрофон только после твоего разрешения. Аудио не загружается на сервер и не оценивается автоматически. Сохранение в локальную историю всегда требует отдельного нажатия.</p>
+      <strong>{% translate "Запись остаётся на устройстве" %}</strong>
+      <p>{% translate "Браузер использует микрофон только после твоего разрешения. Аудио не загружается на сервер и не оценивается автоматически. Сохранение в локальную историю всегда требует отдельного нажатия." %}</p>
     </div>
     <div class="interaction-list">
       {% for scenario in speaking_scenarios %}
         <article class="card interaction-card speaking-card" id="speaking-{{ scenario.id }}" data-speaking-card data-preparation-seconds="{{ scenario.preparation_seconds }}" data-response-seconds="{{ scenario.response_seconds }}">
-          <header><span>{{ scenario.level }}</span><span>Говорение</span><span>до 3 минут</span></header>
-          <h3>{{ scenario.title }}</h3>
-          <p lang="pl">{{ scenario.situation }}</p>
-          <p class="interaction-free-task" lang="pl"><strong>Zadanie:</strong> {{ scenario.task }}</p>
-          <div class="speaking-outline"><strong>План ответа</strong><ol>{% for item in scenario.outline %}<li>{{ item }}</li>{% endfor %}</ol></div>
-          <div class="speaking-timer" role="timer" aria-live="polite"><span data-timer-label>Подготовка</span><strong data-timer>00:45</strong></div>
+          <header><span>{{ scenario.level|ui_text }}</span><span>{% translate "Говорение" %}</span><span>{% translate "до 3 минут" %}</span></header>
+          <h3>{{ scenario.title|ui_text }}</h3>
+          <p lang="pl">{{ scenario.situation|ui_text }}</p>
+          <p class="interaction-free-task" lang="pl"><strong>Zadanie:</strong> {{ scenario.task|ui_text }}</p>
+          <div class="speaking-outline"><strong>{% translate "План ответа" %}</strong><ol>{% for item in scenario.outline %}<li>{{ item|ui_text }}</li>{% endfor %}</ol></div>
+          <div class="speaking-timer" role="timer" aria-live="polite"><span data-timer-label>{% translate "Подготовка" %}</span><strong data-timer>00:45</strong></div>
           <div class="speaking-controls">
-            <button class="compact-button" type="button" data-start-preparation>Начать подготовку</button>
-            <button class="compact-button" type="button" data-start-recording>Записать ответ</button>
-            <button class="secondary compact-button" type="button" data-stop-recording disabled>Остановить</button>
-            <button class="secondary compact-button" type="button" data-save-recording hidden>Сохранить на устройстве</button>
+            <button class="compact-button" type="button" data-start-preparation>{% translate "Начать подготовку" %}</button>
+            <button class="compact-button" type="button" data-start-recording>{% translate "Записать ответ" %}</button>
+            <button class="secondary compact-button" type="button" data-stop-recording disabled>{% translate "Остановить" %}</button>
+            <button class="secondary compact-button" type="button" data-save-recording hidden>{% translate "Сохранить на устройстве" %}</button>
           </div>
-          <p class="muted speaking-status" role="status" data-speaking-status>Микрофон ещё не используется.</p>
-          <audio controls data-speaking-audio hidden aria-label="Прослушать свой устный ответ"></audio>
+          <p class="muted speaking-status" role="status" data-speaking-status>{% translate "Микрофон ещё не используется." %}</p>
+          <audio controls data-speaking-audio hidden aria-label="{% translate "Прослушать свой устный ответ" %}"></audio>
           <fieldset class="interaction-self-check speaking-self-check" hidden data-speaking-review>
-            <legend>Самопроверка после попытки</legend>
-            {% for criterion in scenario.checklist %}<label><input type="checkbox"> <span>{{ criterion }}</span></label>{% endfor %}
-            <details><summary>Показать пример ответа</summary><p lang="pl">{{ scenario.sample_answer }}</p><p class="muted">Это один возможный ответ, а не текст для заучивания.</p></details>
+            <legend>{% translate "Самопроверка после попытки" %}</legend>
+            {% for criterion in scenario.checklist %}<label><input type="checkbox"> <span>{{ criterion|ui_text }}</span></label>{% endfor %}
+            <details><summary>{% translate "Показать пример ответа" %}</summary><p lang="pl">{{ scenario.sample_answer|ui_text }}</p><p class="muted">{% translate "Это один возможный ответ, а не текст для заучивания." %}</p></details>
           </fieldset>
         </article>
       {% endfor %}
     </div>
     <section class="card speaking-history" aria-labelledby="speaking-history-title">
-      <div><p class="eyebrow">Только на этом устройстве</p><h3 id="speaking-history-title">История устных ответов</h3><p class="muted">До 10 записей в браузере. Они не синхронизируются и удаляются вместе с данными сайта.</p></div>
-      <p class="muted" data-speaking-history-empty>Сохранённых записей пока нет.</p>
+      <div><p class="eyebrow">{% translate "Только на этом устройстве" %}</p><h3 id="speaking-history-title">{% translate "История устных ответов" %}</h3><p class="muted">{% translate "До 10 записей в браузере. Они не синхронизируются и удаляются вместе с данными сайта." %}</p></div>
+      <p class="muted" data-speaking-history-empty>{% translate "Сохранённых записей пока нет." %}</p>
       <div data-speaking-history-list></div>
     </section>
   </section>
 
-  {% if error %}<div class="card interaction-error" role="alert"><strong>Ответ не проверен</strong><p>{{ error }}</p></div>{% endif %}
+  {% if error %}<div class="card interaction-error" role="alert"><strong>{% translate "Ответ не проверен" %}</strong><p>{{ error|ui_text }}</p></div>{% endif %}
 
   <div class="interaction-list">
     {% for scenario in scenarios %}
       <article class="card interaction-card" id="scenario-{{ scenario.id }}">
-        <header><span>{{ scenario.level }}</span><span>{{ scenario.mode }}</span></header>
-        <h2>{{ scenario.title }}</h2>
-        <p>{{ scenario.situation }}</p>
+        <header><span>{{ scenario.level|ui_text }}</span><span>{{ scenario.mode|ui_text }}</span></header>
+        <h2>{{ scenario.title|ui_text }}</h2>
+        <p>{{ scenario.situation|ui_text }}</p>
         <form method="post" action="{% url 'interaction-practice' %}#scenario-{{ scenario.id }}">
           {% csrf_token %}
           <input type="hidden" name="scenario_id" value="{{ scenario.id }}">
           <input type="hidden" name="task_type" value="choice">
           <fieldset>
-            <legend>{{ scenario.prompt }}</legend>
+            <legend>{{ scenario.prompt|ui_text }}</legend>
             <div class="interaction-options">
               {% for option in scenario.options %}
                 <label><input type="radio" name="option_id" value="{{ option.id }}" required> <span lang="pl">{{ option.text }}</span></label>
               {% endfor %}
             </div>
           </fieldset>
-          <button class="compact-button" type="submit">Проверить ответ</button>
+          <button class="compact-button" type="submit">{% translate "Проверить ответ" %}</button>
         </form>
         {% if result and result.scenario.id == scenario.id %}
           <div class="interaction-result {% if result.is_correct %}correct{% else %}wrong{% endif %}" role="status" tabindex="-1">
-            <strong>{% if result.is_correct %}Подходящий ответ{% else %}Есть более подходящий ответ{% endif %}</strong>
-            {% if not result.is_correct %}<p><span class="muted">Лучший вариант:</span> <span lang="pl">{{ result.correct_option.text }}</span></p>{% endif %}
-            <p>{{ scenario.explanation }}</p>
+            <strong>{% if result.is_correct %}{% translate "Подходящий ответ" %}{% else %}{% translate "Есть более подходящий ответ" %}{% endif %}</strong>
+            {% if not result.is_correct %}<p><span class="muted">{% translate "Лучший вариант:" %}</span> <span lang="pl">{{ result.correct_option.text|ui_text }}</span></p>{% endif %}
+            <p>{{ scenario.explanation|ui_text }}</p>
           </div>
           <fieldset class="interaction-self-check">
-            <legend>Сравни свой ответ с удачным вариантом</legend>
-            <p>Отметки остаются только на этой странице и не оцениваются автоматически.</p>
-            <label><input type="checkbox"> <span>Я сохранил главное намерение и факты ситуации.</span></label>
-            <label><input type="checkbox"> <span>Мой тон подходит адресату и контексту.</span></label>
-            <label><input type="checkbox"> <span>Ответ помогает продолжить разговор или сделать следующий шаг.</span></label>
+            <legend>{% translate "Сравни свой ответ с удачным вариантом" %}</legend>
+            <p>{% translate "Отметки остаются только на этой странице и не оцениваются автоматически." %}</p>
+            <label><input type="checkbox"> <span>{% translate "Я сохранил главное намерение и факты ситуации." %}</span></label>
+            <label><input type="checkbox"> <span>{% translate "Мой тон подходит адресату и контексту." %}</span></label>
+            <label><input type="checkbox"> <span>{% translate "Ответ помогает продолжить разговор или сделать следующий шаг." %}</span></label>
           </fieldset>
         {% endif %}
       </article>
@@ -93,49 +94,49 @@
   </div>
 
   <header class="section-heading interaction-sequence-heading">
-    <div><p class="eyebrow">Новый формат</p><h2>Собери ответ по смысловым шагам</h2></div>
-    <p class="muted">Каждый блок нужен один раз. Выбери, что будет первым, вторым и третьим.</p>
+    <div><p class="eyebrow">{% translate "Новый формат" %}</p><h2>{% translate "Собери ответ по смысловым шагам" %}</h2></div>
+    <p class="muted">{% translate "Каждый блок нужен один раз. Выбери, что будет первым, вторым и третьим." %}</p>
   </header>
   <div class="interaction-list">
     {% for scenario in sequence_scenarios %}
       <article class="card interaction-card" id="scenario-{{ scenario.id }}">
-        <header><span>{{ scenario.level }}</span><span>{{ scenario.mode }}</span><span>Последовательность</span></header>
-        <h2>{{ scenario.title }}</h2>
-        <p>{{ scenario.situation }}</p>
+        <header><span>{{ scenario.level|ui_text }}</span><span>{{ scenario.mode|ui_text }}</span><span>{% translate "Последовательность" %}</span></header>
+        <h2>{{ scenario.title|ui_text }}</h2>
+        <p>{{ scenario.situation|ui_text }}</p>
         <form method="post" action="{% url 'interaction-practice' %}#scenario-{{ scenario.id }}">
           {% csrf_token %}
           <input type="hidden" name="scenario_id" value="{{ scenario.id }}">
           <input type="hidden" name="task_type" value="sequence">
           <fieldset>
-            <legend>{{ scenario.prompt }}</legend>
+            <legend>{{ scenario.prompt|ui_text }}</legend>
             <div class="interaction-sequence-fields">
               {% for position in "123" %}
-                <label><span>{{ position }} шаг</span>
+                <label><span>{{ position|ui_text }} {% translate "шаг" %}</span>
                   <select name="block_id" required>
-                    <option value="">Выбери блок</option>
-                    {% for block in scenario.blocks %}<option value="{{ block.id }}" lang="pl">{{ block.text }}</option>{% endfor %}
+                    <option value="">{% translate "Выбери блок" %}</option>
+                    {% for block in scenario.blocks %}<option value="{{ block.id }}" lang="pl">{{ block.text|ui_text }}</option>{% endfor %}
                   </select>
                 </label>
               {% endfor %}
             </div>
           </fieldset>
-          <button class="compact-button" type="submit">Проверить порядок</button>
+          <button class="compact-button" type="submit">{% translate "Проверить порядок" %}</button>
         </form>
         {% if result and result.scenario.id == scenario.id %}
           <div class="interaction-result {% if result.is_correct %}correct{% else %}wrong{% endif %}" role="status" tabindex="-1">
-            <strong>{% if result.is_correct %}Логичная последовательность{% else %}Порядок стоит изменить{% endif %}</strong>
+            <strong>{% if result.is_correct %}{% translate "Логичная последовательность" %}{% else %}{% translate "Порядок стоит изменить" %}{% endif %}</strong>
             {% if not result.is_correct %}
-              <p class="muted">Подходящий порядок:</p>
-              <ol>{% for block in result.correct_blocks %}<li lang="pl">{{ block.text }}</li>{% endfor %}</ol>
+              <p class="muted">{% translate "Подходящий порядок:" %}</p>
+              <ol>{% for block in result.correct_blocks %}<li lang="pl">{{ block.text|ui_text }}</li>{% endfor %}</ol>
             {% endif %}
-            <p>{{ scenario.explanation }}</p>
+            <p>{{ scenario.explanation|ui_text }}</p>
           </div>
           <fieldset class="interaction-self-check">
-            <legend>Проверь собранное сообщение</legend>
-            <p>Отметки остаются только на этой странице и не оцениваются автоматически.</p>
-            <label><input type="checkbox"> <span>Все существенные факты сохранены без новых предположений.</span></label>
-            <label><input type="checkbox"> <span>Связь между шагами понятна без исходного сообщения.</span></label>
-            <label><input type="checkbox"> <span>Формулировки нейтральны и подходят адресату.</span></label>
+            <legend>{% translate "Проверь собранное сообщение" %}</legend>
+            <p>{% translate "Отметки остаются только на этой странице и не оцениваются автоматически." %}</p>
+            <label><input type="checkbox"> <span>{% translate "Все существенные факты сохранены без новых предположений." %}</span></label>
+            <label><input type="checkbox"> <span>{% translate "Связь между шагами понятна без исходного сообщения." %}</span></label>
+            <label><input type="checkbox"> <span>{% translate "Формулировки нейтральны и подходят адресату." %}</span></label>
           </fieldset>
         {% endif %}
       </article>
@@ -143,28 +144,28 @@
   </div>
 
   <header class="section-heading interaction-sequence-heading" id="free-production">
-    <div><p class="eyebrow">Свободная практика</p><h2>Сформулируй ответ самостоятельно</h2></div>
-    <p class="muted">Черновик остаётся только в этом браузере. Он не отправляется на сервер и не оценивается автоматически.</p>
+    <div><p class="eyebrow">{% translate "Свободная практика" %}</p><h2>{% translate "Сформулируй ответ самостоятельно" %}</h2></div>
+    <p class="muted">{% translate "Черновик остаётся только в этом браузере. Он не отправляется на сервер и не оценивается автоматически." %}</p>
   </header>
   <div class="interaction-list">
     {% for scenario in free_production_scenarios %}
       <article class="card interaction-card interaction-free-practice" id="free-{{ scenario.id }}">
-        <header><span>{{ scenario.level }}</span><span>{{ scenario.mode }}</span><span>Свободный ответ</span></header>
-        <h2>{{ scenario.title }}</h2>
-        <p>{{ scenario.situation }}</p>
-        <p class="interaction-free-task"><strong>Задание:</strong> {{ scenario.task }}</p>
-        <label for="free-draft-{{ scenario.id }}">Твой черновик</label>
+        <header><span>{{ scenario.level|ui_text }}</span><span>{{ scenario.mode|ui_text }}</span><span>{% translate "Свободный ответ" %}</span></header>
+        <h2>{{ scenario.title|ui_text }}</h2>
+        <p>{{ scenario.situation|ui_text }}</p>
+        <p class="interaction-free-task"><strong>{% translate "Задание:" %}</strong> {{ scenario.task|ui_text }}</p>
+        <label for="free-draft-{{ scenario.id }}">{% translate "Твой черновик" %}</label>
         <textarea id="free-draft-{{ scenario.id }}" rows="7" data-interaction-draft="{{ scenario.id }}" aria-describedby="free-status-{{ scenario.id }}"></textarea>
         <div class="writing-draft-meta" id="free-status-{{ scenario.id }}">
-          <span data-word-count aria-live="polite">0 слов</span>
-          <span data-save-status role="status">Сохраняется только локально в этом браузере</span>
+          <span data-word-count aria-live="polite">{% translate "0 слов" %}</span>
+          <span data-save-status role="status">{% translate "Сохраняется только локально в этом браузере" %}</span>
         </div>
         <fieldset class="interaction-self-check">
-          <legend>Жанровая самопроверка</legend>
-          <p>Отметь признаки вручную: это ориентир для перечитывания, а не проверка языка.</p>
-          {% for criterion in scenario.checklist %}<label><input type="checkbox"> <span>{{ criterion }}</span></label>{% endfor %}
+          <legend>{% translate "Жанровая самопроверка" %}</legend>
+          <p>{% translate "Отметь признаки вручную: это ориентир для перечитывания, а не проверка языка." %}</p>
+          {% for criterion in scenario.checklist %}<label><input type="checkbox"> <span>{{ criterion|ui_text }}</span></label>{% endfor %}
         </fieldset>
-        <button class="secondary compact-button interaction-draft-reset" type="button" data-reset-interaction-draft>Удалить черновик</button>
+        <button class="secondary compact-button interaction-draft-reset" type="button" data-reset-interaction-draft>{% translate "Удалить черновик" %}</button>
       </article>
     {% endfor %}
   </div>
@@ -172,6 +173,8 @@
 {% block scripts %}
   <script>
     (function () {
+  const ui = (typeof window !== "undefined" && window.PolskiFlowI18n?.t) || ((text, ...values) => Array.isArray(text) ? text.map((part, i) => part + (values[i] ?? "")).join("") : text);
+
       const storagePrefix = "polskiflow-interaction:{{ request.supabase_user.id|escapejs }}:";
       const recordingOwner = "{{ request.supabase_user.id|escapejs }}";
       const historyList = document.querySelector("[data-speaking-history-list]");
@@ -231,12 +234,12 @@
             date.textContent = new Date(recording.createdAt).toLocaleString("ru-RU");
             audio.controls = true;
             audio.src = url;
-            audio.setAttribute("aria-label", "Прослушать сохранённый ответ: " + recording.title);
+            audio.setAttribute("aria-label", ui("Прослушать сохранённый ответ: ") + recording.title);
             remove.type = "button";
             remove.className = "secondary compact-button";
-            remove.textContent = "Удалить";
+            remove.textContent = ui("Удалить");
             remove.addEventListener("click", async function () {
-              if (!window.confirm("Удалить эту локальную запись?")) return;
+              if (!window.confirm(ui("Удалить эту локальную запись?"))) return;
               await deleteRecording(recording.id);
               await renderRecordingHistory();
             });
@@ -245,7 +248,7 @@
           });
         } catch (error) {
           historyEmpty.hidden = false;
-          historyEmpty.textContent = "Локальная история недоступна в этом браузере.";
+          historyEmpty.textContent = ui("Локальная история недоступна в этом браузере.");
         }
       }
 
@@ -267,23 +270,23 @@
         const status = card.querySelector("[data-save-status]");
         function updateCount() {
           const value = textarea.value.trim();
-          count.textContent = (value ? value.split(/\s+/u).length : 0) + " слов";
+          count.textContent = (value ? value.split(/\s+/u).length : 0) + ui(" слов");
         }
         try { textarea.value = localStorage.getItem(key) || ""; }
-        catch (error) { status.textContent = "Локальное сохранение недоступно"; }
+        catch (error) { status.textContent = ui("Локальное сохранение недоступно"); }
         updateCount();
         textarea.addEventListener("input", function () {
           updateCount();
-          try { localStorage.setItem(key, textarea.value); status.textContent = "Черновик сохранён в этом браузере"; }
-          catch (error) { status.textContent = "Не удалось сохранить черновик локально"; }
+          try { localStorage.setItem(key, textarea.value); status.textContent = ui("Черновик сохранён в этом браузере"); }
+          catch (error) { status.textContent = ui("Не удалось сохранить черновик локально"); }
         });
         card.querySelector("[data-reset-interaction-draft]").addEventListener("click", function () {
-          if (!window.confirm("Удалить этот локальный черновик? Восстановить его не получится.")) return;
+          if (!window.confirm(ui("Удалить этот локальный черновик? Восстановить его не получится."))) return;
           textarea.value = "";
           card.querySelectorAll('input[type="checkbox"]').forEach(function (checkbox) { checkbox.checked = false; });
           try { localStorage.removeItem(key); } catch (error) { /* Поле всё равно очищено. */ }
           updateCount();
-          status.textContent = "Черновик удалён";
+          status.textContent = ui("Черновик удалён");
           textarea.focus();
         });
       });
@@ -319,17 +322,17 @@
           }, 1000);
         }
         startPreparation.addEventListener("click", function () {
-          timerLabel.textContent = "Подготовка";
+          timerLabel.textContent = ui("Подготовка");
           startPreparation.disabled = true;
-          status.textContent = "Составь короткий план. Микрофон пока выключен.";
+          status.textContent = ui("Составь короткий план. Микрофон пока выключен.");
           beginCountdown(Number(card.dataset.preparationSeconds), function () {
-            status.textContent = "Время подготовки закончилось. Можно записывать ответ.";
+            status.textContent = ui("Время подготовки закончилось. Можно записывать ответ.");
             startRecording.focus();
           });
         });
         startRecording.addEventListener("click", async function () {
           if (!navigator.mediaDevices || !window.MediaRecorder) {
-            status.textContent = "Запись не поддерживается этим браузером. Используй таймер и диктофон устройства.";
+            status.textContent = ui("Запись не поддерживается этим браузером. Используй таймер и диктофон устройства.");
             review.hidden = false;
             return;
           }
@@ -349,17 +352,17 @@
               stopRecording.disabled = true;
               startRecording.disabled = false;
               saveRecordingButton.hidden = false;
-              status.textContent = "Запись готова только в этой вкладке. Прослушай её и отметь чек-лист.";
+              status.textContent = ui("Запись готова только в этой вкладке. Прослушай её и отметь чек-лист.");
               audio.focus();
             });
             recorder.start();
             startRecording.disabled = true;
             stopRecording.disabled = false;
-            timerLabel.textContent = "Осталось на ответ";
-            status.textContent = "Идёт запись. Говори свободно, не читай готовый текст.";
+            timerLabel.textContent = ui("Осталось на ответ");
+            status.textContent = ui("Идёт запись. Говори свободно, не читай готовый текст.");
             beginCountdown(Number(card.dataset.responseSeconds), function () { if (recorder && recorder.state === "recording") recorder.stop(); });
           } catch (error) {
-            status.textContent = "Нет доступа к микрофону. Разреши его в браузере или используй диктофон устройства.";
+            status.textContent = ui("Нет доступа к микрофону. Разреши его в браузере или используй диктофон устройства.");
             review.hidden = false;
           }
         });
@@ -379,10 +382,10 @@
               createdAt: Date.now(),
               blob: currentBlob,
             });
-            status.textContent = "Запись сохранена только в этом браузере.";
+            status.textContent = ui("Запись сохранена только в этом браузере.");
             await renderRecordingHistory();
           } catch (error) {
-            status.textContent = "Не удалось сохранить запись локально. Текущую запись всё ещё можно прослушать.";
+            status.textContent = ui("Не удалось сохранить запись локально. Текущую запись всё ещё можно прослушать.");
           } finally {
             saveRecordingButton.disabled = false;
           }

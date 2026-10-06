@@ -1,15 +1,16 @@
-<div class="progress-label">Карточка {{ index|add:1 }} из {{ total }}</div>
+{% load i18n ui %}
+<div class="progress-label">{% translate "Карточка" %} {{ index|add:1|ui_text }} {% translate "из" %} {{ total|ui_text }}</div>
 <div class="lesson-progress"><span style="--value: {% widthratio index|add:1 total 100 %}%; width: var(--value)"></span></div>
 <div class="card lesson-card">
   <p class="eyebrow">{% if lesson_kind == "review" %}Powtórka{% else %}Słówka dnia{% endif %}</p>
-  <h2 class="word">{{ card.polish }}</h2>
-  {% if revealed %}<p class="translation">{{ card.translation }}</p><p class="example">{{ card.example }}</p>{% else %}<p class="muted">Сначала вспомни значение, затем открой перевод.</p>{% endif %}
+  <h2 class="word">{{ card.polish|ui_text }}</h2>
+  {% if revealed %}<p class="translation">{{ card.translation }}</p><p class="example">{{ card.example }}</p>{% else %}<p class="muted">{% translate "Сначала вспомни значение, затем открой перевод." %}</p>{% endif %}
 </div>
 {% if revealed %}
   <div class="actions">
-    <form method="post" action="{% url 'lesson-step' lesson_id %}">{% csrf_token %}<input type="hidden" name="action" value="again"><input type="hidden" name="state" value="{{ lesson_state }}"><button class="secondary">Повторить</button></form>
-    <form method="post" action="{% url 'lesson-step' lesson_id %}">{% csrf_token %}<input type="hidden" name="action" value="know"><input type="hidden" name="state" value="{{ lesson_state }}"><button>Знаю →</button></form>
+    <form method="post" action="{% url 'lesson-step' lesson_id %}">{% csrf_token %}<input type="hidden" name="action" value="again"><input type="hidden" name="state" value="{{ lesson_state }}"><button class="secondary">{% translate "Повторить" %}</button></form>
+    <form method="post" action="{% url 'lesson-step' lesson_id %}">{% csrf_token %}<input type="hidden" name="action" value="know"><input type="hidden" name="state" value="{{ lesson_state }}"><button>{% translate "Знаю →" %}</button></form>
   </div>
 {% else %}
-  <form method="post" action="{% url 'lesson-step' lesson_id %}">{% csrf_token %}<input type="hidden" name="action" value="reveal"><input type="hidden" name="state" value="{{ lesson_state }}"><button>Показать перевод</button></form>
+  <form method="post" action="{% url 'lesson-step' lesson_id %}">{% csrf_token %}<input type="hidden" name="action" value="reveal"><input type="hidden" name="state" value="{{ lesson_state }}"><button>{% translate "Показать перевод" %}</button></form>
 {% endif %}

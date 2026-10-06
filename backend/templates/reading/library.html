@@ -1,54 +1,55 @@
 {% extends "base.html" %}
-{% block title %}Чтение · PolskiFlow{% endblock %}
+{% load i18n ui %}
+{% block title %}{% translate "Чтение · PolskiFlow" %}{% endblock %}
 {% block content %}
   <header class="content-header">
-    <div><p class="eyebrow">Czytelnia</p><h1>Читай по-польски</h1><p class="muted">Короткие адаптированные истории с переводом слов по нажатию.</p></div>
-    <a class="compact-button secondary-link" href="{% url 'news-library' %}">Свежие новости →</a>
+    <div><p class="eyebrow">Czytelnia</p><h1>{% translate "Читай по-польски" %}</h1><p class="muted">{% translate "Короткие адаптированные истории с переводом слов по нажатию." %}</p></div>
+    <a class="compact-button secondary-link" href="{% url 'news-library' %}">{% translate "Свежие новости →" %}</a>
   </header>
   <section aria-labelledby="texts-title">
-    <div class="section-heading"><div><p class="eyebrow">По уровню</p><h2 id="texts-title">Учебные тексты</h2></div></div>
-    <nav class="reading-level-tabs" aria-label="Уровень учебных текстов">
+    <div class="section-heading"><div><p class="eyebrow">{% translate "По уровню" %}</p><h2 id="texts-title">{% translate "Учебные тексты" %}</h2></div></div>
+    <nav class="reading-level-tabs" aria-label="{% translate "Уровень учебных текстов" %}">
       {% for level in reading_levels %}
-        <a href="{{ level.href }}"{% if selected_reading_level == level.id %} aria-current="page"{% endif %}>{{ level.id }}</a>
+        <a href="{{ level.href }}"{% if selected_reading_level == level.id %} aria-current="page"{% endif %}>{{ level.id|ui_text }}</a>
       {% endfor %}
     </nav>
     <form class="card catalog-filters reading-filters" method="get" action="{% url 'reading-library' %}" role="search">
       <input type="hidden" name="level" value="{{ selected_reading_level }}">
       <div class="catalog-search-field">
-        <label for="reading-search">Поиск по текстам</label>
-        <input id="reading-search" type="search" name="q" value="{{ reading_filters.q }}" placeholder="Название или описание">
+        <label for="reading-search">{% translate "Поиск по текстам" %}</label>
+        <input id="reading-search" type="search" name="q" value="{{ reading_filters.q }}" placeholder="{% translate "Название или описание" %}">
       </div>
       <div class="reading-filter-grid">
-        <label>Тема
+        <label>{% translate "Тема" %}
           <select name="topic">
-            <option value="">Все темы</option>
-            {% for topic_id, topic_title in reading_topic_options %}<option value="{{ topic_id }}"{% if reading_filters.topic == topic_id %} selected{% endif %}>{{ topic_title }}</option>{% endfor %}
+            <option value="">{% translate "Все темы" %}</option>
+            {% for topic_id, topic_title in reading_topic_options %}<option value="{{ topic_id }}"{% if reading_filters.topic == topic_id %} selected{% endif %}>{{ topic_title|ui_text }}</option>{% endfor %}
           </select>
         </label>
-        <label>Длительность
+        <label>{% translate "Длительность" %}
           <select name="duration">
-            <option value="">Любая</option>
-            <option value="short"{% if reading_filters.duration == "short" %} selected{% endif %}>До 5 минут</option>
-            <option value="medium"{% if reading_filters.duration == "medium" %} selected{% endif %}>6–10 минут</option>
-            <option value="long"{% if reading_filters.duration == "long" %} selected{% endif %}>Больше 10 минут</option>
+            <option value="">{% translate "Любая" %}</option>
+            <option value="short"{% if reading_filters.duration == "short" %} selected{% endif %}>{% translate "До 5 минут" %}</option>
+            <option value="medium"{% if reading_filters.duration == "medium" %} selected{% endif %}>{% translate "6–10 минут" %}</option>
+            <option value="long"{% if reading_filters.duration == "long" %} selected{% endif %}>{% translate "Больше 10 минут" %}</option>
           </select>
         </label>
       </div>
       <div class="catalog-filter-actions">
-        <label><input type="checkbox" name="saved" value="1"{% if saved_only %} checked{% endif %}> Только сохранённые</label>
-        <button class="compact-button" type="submit">Найти</button>
-        {% if reading_filters_active %}<a href="?level={{ selected_reading_level }}#texts-title">Сбросить</a>{% endif %}
+        <label><input type="checkbox" name="saved" value="1"{% if saved_only %} checked{% endif %}> {% translate "Только сохранённые" %}</label>
+        <button class="compact-button" type="submit">{% translate "Найти" %}</button>
+        {% if reading_filters_active %}<a href="?level={{ selected_reading_level }}#texts-title">{% translate "Сбросить" %}</a>{% endif %}
       </div>
     </form>
-    <p class="reading-result-summary" aria-live="polite">Найдено учебных текстов: <strong>{{ reading_result_count }}</strong></p>
+    <p class="reading-result-summary" aria-live="polite">{% translate "Найдено учебных текстов:" %} <strong>{{ reading_result_count|ui_text }}</strong></p>
     <div class="reading-grid" aria-live="polite">
     {% for text in texts %}
       <a class="reading-card" href="{% url 'reader' text.id %}">
-        <span class="reading-cover">{{ text.emoji|default:"📖" }}</span>
-        <span class="reading-card-copy"><span class="level-badge">{{ text.level }}</span><strong>{{ text.title }}{% if text.saved %} ★{% endif %}</strong><small>{{ text.description }}</small><span>◷ {{ text.minutes }} мин · Читать →</span></span>
+        <span class="reading-cover">{{ text.emoji|default:"📖"|ui_text }}</span>
+        <span class="reading-card-copy"><span class="level-badge">{{ text.level|ui_text }}</span><strong>{{ text.title|ui_text }}{% if text.saved %} ★{% endif %}</strong><small>{{ text.description|ui_text }}</small><span>◷ {{ text.minutes|ui_text }} {% translate "мин · Читать →" %}</span></span>
       </a>
     {% empty %}
-      <div class="card empty-state"><span>📚</span><h3>{% if reading_filters_active %}Подходящих текстов не найдено{% else %}Для уровня {{ selected_reading_level }} тексты скоро появятся{% endif %}</h3><p class="muted">{% if reading_filters_active %}Измени запрос или сбрось фильтры.{% else %}Выбери другой уровень или загляни позже.{% endif %}</p></div>
+      <div class="card empty-state"><span>📚</span><h3>{% if reading_filters_active %}{% translate "Подходящих текстов не найдено" %}{% else %}{% translate "Для уровня" %} {{ selected_reading_level|ui_text }} {% translate "тексты скоро появятся" %}{% endif %}</h3><p class="muted">{% if reading_filters_active %}{% translate "Измени запрос или сбрось фильтры." %}{% else %}{% translate "Выбери другой уровень или загляни позже." %}{% endif %}</p></div>
     {% endfor %}
     </div>
   </section>

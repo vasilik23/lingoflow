@@ -602,7 +602,7 @@ class LessonViewsTests(TestCase):
         self.assertContains(response, "История показывает исходный план, неожиданное изменение, реакцию и итог.")
         self.assertContains(response, '<label><input type="checkbox">', count=28)
         self.assertContains(response, 'localStorage.setItem(key, textarea.value)')
-        self.assertContains(response, 'window.confirm("Удалить черновик этого задания?')
+        self.assertContains(response, 'window.confirm(ui("Удалить черновик этого задания?')
         self.assertContains(response, "Проверить по критериям", count=7)
         self.assertContains(response, 'data-min-words="80"')
         self.assertContains(response, 'data-min-paragraphs="2"')

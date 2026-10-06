@@ -1,4 +1,6 @@
 (() => {
+  const ui = (typeof window !== "undefined" && window.PolskiFlowI18n?.t) || ((text, ...values) => Array.isArray(text) ? text.map((part, i) => part + (values[i] ?? "")).join("") : text);
+
   const panel = document.querySelector('[data-run-recorder]');
   if (!panel) return;
   const root = document.querySelector('[data-b1-run]');
@@ -43,11 +45,11 @@
   start.addEventListener('click', async () => {
     if (pending || recordingBusy || preparing || expired || disposed) return;
     if (!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder) {
-      status.textContent = 'Запись недоступна в этом браузере. Можно ответить вслух без записи.';
+      status.textContent = ui('Запись недоступна в этом браузере. Можно ответить вслух без записи.');
       return;
     }
     clearClip(); pending = true; update();
-    status.textContent = 'Ожидаем разрешение на микрофон…';
+    status.textContent = ui('Ожидаем разрешение на микрофон…');
     try {
       stream = await navigator.mediaDevices.getUserMedia({audio: true});
       if (disposed || expired) { release(); return; }
@@ -59,32 +61,32 @@
       recording.addEventListener('dataavailable', event => { if (!disposed && event.data.size) chunks.push(event.data); });
       recording.addEventListener('error', () => {
         failed = true; stopRecording(); update();
-        status.textContent = 'Не удалось записать ответ. Можно продолжить без записи.';
+        status.textContent = ui('Не удалось записать ответ. Можно продолжить без записи.');
       });
       recording.addEventListener('stop', () => {
         release(); recordingBusy = false; update();
         if (disposed || failed) return;
-        if (!chunks.length) { status.textContent = 'Запись пуста. Можно попробовать ещё раз.'; return; }
+        if (!chunks.length) { status.textContent = ui('Запись пуста. Можно попробовать ещё раз.'); return; }
         const blob = new Blob(chunks, {type: recording.mimeType || chunks[0].type});
         audioUrl = URL.createObjectURL(blob); audio.src = audioUrl;
         audio.hidden = false; remove.hidden = false;
         status.textContent = expired
-          ? 'Время истекло, микрофон выключен. Можно прослушать запись перед пропуском части.'
-          : 'Микрофон выключен. Прослушай ответ и выполни самопроверку.';
+          ? ui('Время истекло, микрофон выключен. Можно прослушать запись перед пропуском части.')
+          : ui('Микрофон выключен. Прослушай ответ и выполни самопроверку.');
         if (!expired) audio.focus();
       });
       stream.getTracks().forEach(track => track.addEventListener('ended', stopRecording));
       recording.start();
-      status.textContent = 'Ответ записывается только на этом устройстве.';
+      status.textContent = ui('Ответ записывается только на этом устройстве.');
     } catch (_) {
       release(); recorder = null; recordingBusy = false;
-      if (!disposed) status.textContent = 'Микрофон недоступен или разрешение не получено. Можно продолжить без записи.';
+      if (!disposed) status.textContent = ui('Микрофон недоступен или разрешение не получено. Можно продолжить без записи.');
     } finally {
       pending = false; update();
     }
   });
   stop.addEventListener('click', stopRecording);
-  remove.addEventListener('click', () => { clearClip(); status.textContent = 'Запись удалена. Аудио нигде не сохранено.'; });
+  remove.addEventListener('click', () => { clearClip(); status.textContent = ui('Запись удалена. Аудио нигде не сохранено.'); });
   root.addEventListener('b1-run-expired', () => {
     expired = true; stopRecording(); update();
   });

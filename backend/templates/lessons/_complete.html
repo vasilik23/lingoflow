@@ -1,30 +1,31 @@
+{% load i18n ui %}
 <div class="card complete-card">
   <div class="complete-icon">🎉</div>
   <p class="eyebrow">Świetna robota!</p>
-  <h1>Урок завершён</h1>
-  <div class="score">{{ score }} / {{ total }}</div>
-  <p class="muted">{% if saved %}Результат сохранён — дневная цель стала ближе.{% elif offline_result_json %}Урок завершён. Сохраним результат в этом браузере и повторим отправку.{% else %}Урок завершён, но сейчас не удалось сохранить прогресс.{% endif %}</p>
+  <h1>{% translate "Урок завершён" %}</h1>
+  <div class="score">{{ score|ui_text }} / {{ total|ui_text }}</div>
+  <p class="muted">{% if saved %}{% translate "Результат сохранён — дневная цель стала ближе." %}{% elif offline_result_json %}{% translate "Урок завершён. Сохраним результат в этом браузере и повторим отправку." %}{% else %}{% translate "Урок завершён, но сейчас не удалось сохранить прогресс." %}{% endif %}</p>
   {% if offline_result_json %}
     <div class="lesson-sync" data-lesson-result-sync data-queue-namespace="{{ offline_queue_namespace }}" data-result-payload="{{ offline_result_json }}" data-csrf-token="{{ csrf_token }}">
-      <p class="lesson-sync-status" data-sync-status role="status" aria-live="polite">Подготавливаем результат к повторной отправке…</p>
-      <button class="button button-secondary" type="button" data-sync-retry hidden>Повторить отправку</button>
+      <p class="lesson-sync-status" data-sync-status role="status" aria-live="polite">{% translate "Подготавливаем результат к повторной отправке…" %}</p>
+      <button class="button button-secondary" type="button" data-sync-retry hidden>{% translate "Повторить отправку" %}</button>
     </div>
   {% endif %}
   {% if lesson_navigation.next_lesson %}
     <a class="complete-next" href="{% url 'lesson' lesson_navigation.next_lesson.id %}">
-      <span aria-hidden="true">{{ lesson_navigation.next_lesson.emoji }}</span>
-      <span><small>Следующий урок темы</small><strong>{{ lesson_navigation.next_lesson.title }}</strong><small>{{ lesson_navigation.next_lesson.description }} · ~{{ lesson_navigation.next_lesson.minutes }} мин</small></span>
+      <span aria-hidden="true">{{ lesson_navigation.next_lesson.emoji|ui_text }}</span>
+      <span><small>{% translate "Следующий урок темы" %}</small><strong>{{ lesson_navigation.next_lesson.title|ui_text }}</strong><small>{{ lesson_navigation.next_lesson.description|ui_text }} · ~{{ lesson_navigation.next_lesson.minutes|ui_text }} {% translate "мин" %}</small></span>
       <span aria-hidden="true">→</span>
     </a>
   {% else %}
     <a class="complete-next" href="{% url 'course' %}?level={{ lesson_navigation.level }}#topic-{{ lesson_navigation.topic_id }}">
       <span aria-hidden="true">✓</span>
-      <span><small>Тема завершена</small><strong>{{ lesson_navigation.topic_title }}</strong><small>Вернуться к темам уровня {{ lesson_navigation.level }}</small></span>
+      <span><small>{% translate "Тема завершена" %}</small><strong>{{ lesson_navigation.topic_title|ui_text }}</strong><small>{% translate "Вернуться к темам уровня" %} {{ lesson_navigation.level|ui_text }}</small></span>
       <span aria-hidden="true">→</span>
     </a>
   {% endif %}
   <div class="complete-actions">
-    <a class="button" href="{% url 'home' %}">Вернуться к плану</a>
-    {% if lesson_navigation.next_lesson %}<a class="button secondary" href="{% url 'lesson' lesson_navigation.next_lesson.id %}">Продолжить тему →</a>{% endif %}
+    <a class="button" href="{% url 'home' %}">{% translate "Вернуться к плану" %}</a>
+    {% if lesson_navigation.next_lesson %}<a class="button secondary" href="{% url 'lesson' lesson_navigation.next_lesson.id %}">{% translate "Продолжить тему →" %}</a>{% endif %}
   </div>
 </div>

@@ -1,143 +1,145 @@
 {% extends "base.html" %}
-{% load static %}
-{% block title %}Аудирование · PolskiFlow{% endblock %}
+{% load static i18n ui %}
+{% block title %}{% translate "Аудирование · PolskiFlow" %}{% endblock %}
 {% block content %}
   <header class="content-header">
-    <div><p class="eyebrow">Аудирование · A1–B2</p><h1>Пойми слова, диалог и связную речь</h1><p class="muted">Выбери уровень: короткий диалог A1–A2 или связная речь B1/B2. Результат не влияет на прогресс.</p></div>
-    <a class="compact-button" href="{% url 'course' %}">К курсу →</a>
+    <div><p class="eyebrow">{% translate "Аудирование · A1–B2" %}</p><h1>{% translate "Пойми слова, диалог и связную речь" %}</h1><p class="muted">{% translate "Выбери уровень: короткий диалог A1–A2 или связная речь B1/B2. Результат не влияет на прогресс." %}</p></div>
+    <a class="compact-button" href="{% url 'course' %}">{% translate "К курсу →" %}</a>
   </header>
-  <nav class="reading-audio-actions" aria-label="Уровни аудирования">
-    <a class="compact-button" href="#a1-a2-listening">A1–A2 · диалог</a>
-    <a class="compact-button" href="#b1-listening">B1 · связная речь</a>
-    <a class="compact-button" href="#b2-listening">B2 · связная речь</a>
-    <a class="compact-button" href="#listening-words">A1 · отдельные слова</a>
+  <nav class="reading-audio-actions" aria-label="{% translate "Уровни аудирования" %}">
+    <a class="compact-button" href="#a1-a2-listening">{% translate "A1–A2 · диалог" %}</a>
+    <a class="compact-button" href="#b1-listening">{% translate "B1 · связная речь" %}</a>
+    <a class="compact-button" href="#b2-listening">{% translate "B2 · связная речь" %}</a>
+    <a class="compact-button" href="#listening-words">{% translate "A1 · отдельные слова" %}</a>
   </nav>
   {% if submitted %}
-    <section class="card listening-result" aria-live="polite"><strong>{{ score }} / {{ listening_items|length }}</strong><span>{% if score == listening_items|length %}Все слова распознаны{% else %}Можно прослушать ещё раз и повторить{% endif %}</span></section>
+    <section class="card listening-result" aria-live="polite"><strong>{{ score|ui_text }} / {{ listening_items|length|ui_text }}</strong><span>{% if score == listening_items|length %}{% translate "Все слова распознаны" %}{% else %}{% translate "Можно прослушать ещё раз и повторить" %}{% endif %}</span></section>
   {% endif %}
   <form method="post" class="listening-list">
     {% csrf_token %}
     <section class="card listening-dialogue" id="a1-a2-listening" tabindex="-1" aria-labelledby="dialogue-title">
-      <p class="eyebrow">Мини-диалог · {{ dialogue.level }}</p>
-      <h2 id="dialogue-title">{{ dialogue.title }}</h2>
+      <p class="eyebrow">{% translate "Мини-диалог ·" %} {{ dialogue.level|ui_text }}</p>
+      <h2 id="dialogue-title">{{ dialogue.title|ui_text }}</h2>
       {{ dialogue.lines|json_script:"listening-dialogue-lines" }}
       <div class="listening-dialogue-player" data-dialogue-player hidden>
-        <p class="muted" data-dialogue-status aria-live="polite">Готово к воспроизведению</p>
+        <p class="muted" data-dialogue-status aria-live="polite">{% translate "Готово к воспроизведению" %}</p>
         <div class="reading-audio-actions">
-          <button type="button" data-dialogue-play>▶ Весь диалог</button>
-          <button type="button" data-dialogue-repeat disabled>↻ Повторить фрагмент</button>
-          <label><span>Скорость</span><select data-dialogue-rate><option value="0.75">0,75×</option><option value="1" selected>1×</option><option value="1.15">1,15×</option></select></label>
+          <button type="button" data-dialogue-play>{% translate "▶ Весь диалог" %}</button>
+          <button type="button" data-dialogue-repeat disabled>{% translate "↻ Повторить фрагмент" %}</button>
+          <label><span>{% translate "Скорость" %}</span><select data-dialogue-rate><option value="0.75">0,75×</option><option value="1" selected>1×</option><option value="1.15">1,15×</option></select></label>
         </div>
-        <div class="listening-fragments" aria-label="Фрагменты диалога">
-          {% for line in dialogue.lines %}<button type="button" class="compact-button" data-dialogue-fragment="{{ forloop.counter0 }}">Фрагмент {{ forloop.counter }}</button>{% endfor %}
+        <div class="listening-fragments" aria-label="{% translate "Фрагменты диалога" %}">
+          {% for line in dialogue.lines %}<button type="button" class="compact-button" data-dialogue-fragment="{{ forloop.counter0 }}">{% translate "Фрагмент" %} {{ forloop.counter|ui_text }}</button>{% endfor %}
         </div>
       </div>
-      <noscript><p class="muted">Для воспроизведения нужен JavaScript; полный текст доступен ниже.</p></noscript>
+      <noscript><p class="muted">{% translate "Для воспроизведения нужен JavaScript; полный текст доступен ниже." %}</p></noscript>
       <details class="audio-transcript">
-        <summary>Показать транскрипт — текстовую альтернативу</summary>
-        {% for line in dialogue.lines %}<p lang="pl">{{ line }}</p>{% endfor %}
+        <summary>{% translate "Показать транскрипт — текстовую альтернативу" %}</summary>
+        {% for line in dialogue.lines %}<p lang="pl">{{ line|ui_text }}</p>{% endfor %}
       </details>
-      {% if dialogue_submitted %}<section class="listening-result" aria-live="polite"><strong>{{ dialogue_score }} / {{ dialogue.questions|length }}</strong><span>Ответы по диалогу</span></section>{% endif %}
+      {% if dialogue_submitted %}<section class="listening-result" aria-live="polite"><strong>{{ dialogue_score|ui_text }} / {{ dialogue.questions|length|ui_text }}</strong><span>{% translate "Ответы по диалогу" %}</span></section>{% endif %}
       {% for question in dialogue.questions %}
         <fieldset class="listening-card">
-          <legend>{{ question.prompt }}</legend>
+          <legend>{{ question.prompt|ui_text }}</legend>
           <div class="listening-options">
-            {% for option in question.options %}<label><input type="radio" name="{{ question.id }}" value="{{ option }}" {% if question.selected == option %}checked{% endif %} required> {{ option }}</label>{% endfor %}
+            {% for option in question.options %}<label><input type="radio" name="{{ question.id }}" value="{{ option|ui_text }}" {% if question.selected == option %}checked{% endif %} required> {{ option|ui_text }}</label>{% endfor %}
           </div>
-          {% if dialogue_submitted %}<p class="listening-feedback {% if question.is_correct %}is-correct{% else %}is-wrong{% endif %}">{% if question.is_correct %}Верно.{% else %}Правильный ответ: <strong>{{ question.answer }}</strong>.{% endif %} {{ question.explanation }}</p>{% endif %}
+          {% if dialogue_submitted %}<p class="listening-feedback {% if question.is_correct %}is-correct{% else %}is-wrong{% endif %}">{% if question.is_correct %}{% translate "Верно." %}{% else %}{% translate "Правильный ответ:" %} <strong>{{ question.answer|ui_text }}</strong>.{% endif %} {{ question.explanation|ui_text }}</p>{% endif %}
         </fieldset>
       {% endfor %}
-      <p class="muted listening-audio-note">Звук создаёт системный польский голос браузера из оригинального текста PolskiFlow; доступность и тембр голоса зависят от устройства.</p>
+      <p class="muted listening-audio-note">{% translate "Звук создаёт системный польский голос браузера из оригинального текста PolskiFlow; доступность и тембр голоса зависят от устройства." %}</p>
     </section>
     <section class="card listening-dialogue" id="b1-listening" tabindex="-1" aria-labelledby="b1-listening-title">
-      <p class="eyebrow">Связная речь · {{ b1_listening.level }}</p>
-      <h2 id="b1-listening-title">{{ b1_listening.title }}</h2>
+      <p class="eyebrow">{% translate "Связная речь ·" %} {{ b1_listening.level|ui_text }}</p>
+      <h2 id="b1-listening-title">{{ b1_listening.title|ui_text }}</h2>
       {{ b1_listening.lines|json_script:"b1-listening-lines" }}
       <div class="listening-dialogue-player" data-b1-player hidden>
-        <p class="muted" data-b1-status aria-live="polite">Готово к воспроизведению</p>
+        <p class="muted" data-b1-status aria-live="polite">{% translate "Готово к воспроизведению" %}</p>
         <div class="reading-audio-actions">
-          <button type="button" data-b1-play>▶ Прослушать</button>
-          <button type="button" data-b1-repeat disabled>↻ Повторить</button>
-          <label><span>Скорость</span><select data-b1-rate><option value="0.75">0,75×</option><option value="1" selected>1×</option><option value="1.15">1,15×</option></select></label>
+          <button type="button" data-b1-play>{% translate "▶ Прослушать" %}</button>
+          <button type="button" data-b1-repeat disabled>{% translate "↻ Повторить" %}</button>
+          <label><span>{% translate "Скорость" %}</span><select data-b1-rate><option value="0.75">0,75×</option><option value="1" selected>1×</option><option value="1.15">1,15×</option></select></label>
         </div>
       </div>
-      <noscript><p class="muted">Для воспроизведения нужен JavaScript; постоянный транскрипт доступен ниже.</p></noscript>
-      <div class="audio-transcript" aria-label="Постоянный транскрипт B1">
-        <strong>Транскрипт</strong>
-        {% for line in b1_listening.lines %}<p lang="pl">{{ line }}</p>{% endfor %}
+      <noscript><p class="muted">{% translate "Для воспроизведения нужен JavaScript; постоянный транскрипт доступен ниже." %}</p></noscript>
+      <div class="audio-transcript" aria-label="{% translate "Постоянный транскрипт B1" %}">
+        <strong>{% translate "Транскрипт" %}</strong>
+        {% for line in b1_listening.lines %}<p lang="pl">{{ line|ui_text }}</p>{% endfor %}
       </div>
-      {% if b1_submitted %}<section class="listening-result" aria-live="polite"><strong>{{ b1_score }} / {{ b1_listening.questions|length }}</strong><span>Ответы по записи B1</span></section>{% endif %}
+      {% if b1_submitted %}<section class="listening-result" aria-live="polite"><strong>{{ b1_score|ui_text }} / {{ b1_listening.questions|length|ui_text }}</strong><span>{% translate "Ответы по записи B1" %}</span></section>{% endif %}
       {% for question in b1_listening.questions %}
         <fieldset class="listening-card">
-          <legend>{{ question.prompt }}</legend>
+          <legend>{{ question.prompt|ui_text }}</legend>
           <div class="listening-options">
-            {% for option in question.options %}<label><input type="radio" name="{{ question.id }}" value="{{ option }}" {% if question.selected == option %}checked{% endif %}> {{ option }}</label>{% endfor %}
+            {% for option in question.options %}<label><input type="radio" name="{{ question.id }}" value="{{ option|ui_text }}" {% if question.selected == option %}checked{% endif %}> {{ option|ui_text }}</label>{% endfor %}
           </div>
-          {% if b1_submitted %}<p class="listening-feedback {% if question.is_correct %}is-correct{% else %}is-wrong{% endif %}">{% if question.is_correct %}Верно.{% else %}Правильный ответ: <strong>{{ question.answer }}</strong>.{% endif %} {{ question.explanation }}</p>{% endif %}
+          {% if b1_submitted %}<p class="listening-feedback {% if question.is_correct %}is-correct{% else %}is-wrong{% endif %}">{% if question.is_correct %}{% translate "Верно." %}{% else %}{% translate "Правильный ответ:" %} <strong>{{ question.answer|ui_text }}</strong>.{% endif %} {{ question.explanation|ui_text }}</p>{% endif %}
         </fieldset>
       {% endfor %}
-      <p class="muted listening-audio-note">Звук создаёт системный голос <span lang="pl">pl-PL</span> из оригинального текста PolskiFlow. Голос, тембр и доступность зависят от браузера и устройства; это не студийная запись.</p>
+      <p class="muted listening-audio-note">{% translate "Звук создаёт системный голос" %} <span lang="pl">pl-PL</span> {% translate "из оригинального текста PolskiFlow. Голос, тембр и доступность зависят от браузера и устройства; это не студийная запись." %}</p>
     </section>
     <section class="card listening-dialogue" id="b2-listening" tabindex="-1" aria-labelledby="b2-listening-title">
-      <p class="eyebrow">Связная речь · {{ b2_listening.level }}</p>
-      <h2 id="b2-listening-title">{{ b2_listening.title }}</h2>
+      <p class="eyebrow">{% translate "Связная речь ·" %} {{ b2_listening.level|ui_text }}</p>
+      <h2 id="b2-listening-title">{{ b2_listening.title|ui_text }}</h2>
       {{ b2_listening.lines|json_script:"b2-listening-lines" }}
       <div class="listening-dialogue-player" data-b2-player hidden>
-        <p class="muted" data-b2-status aria-live="polite">Готово к воспроизведению</p>
+        <p class="muted" data-b2-status aria-live="polite">{% translate "Готово к воспроизведению" %}</p>
         <div class="reading-audio-actions">
-          <button type="button" data-b2-play>▶ Прослушать</button>
-          <button type="button" data-b2-repeat disabled>↻ Повторить</button>
-          <label><span>Скорость</span><select data-b2-rate><option value="0.75">0,75×</option><option value="1" selected>1×</option><option value="1.15">1,15×</option></select></label>
+          <button type="button" data-b2-play>{% translate "▶ Прослушать" %}</button>
+          <button type="button" data-b2-repeat disabled>{% translate "↻ Повторить" %}</button>
+          <label><span>{% translate "Скорость" %}</span><select data-b2-rate><option value="0.75">0,75×</option><option value="1" selected>1×</option><option value="1.15">1,15×</option></select></label>
         </div>
       </div>
-      <noscript><p class="muted">Для воспроизведения нужен JavaScript; постоянный транскрипт доступен ниже.</p></noscript>
-      <div class="audio-transcript" aria-label="Постоянный транскрипт B2">
-        <strong>Транскрипт</strong>
-        {% for line in b2_listening.lines %}<p lang="pl">{{ line }}</p>{% endfor %}
+      <noscript><p class="muted">{% translate "Для воспроизведения нужен JavaScript; постоянный транскрипт доступен ниже." %}</p></noscript>
+      <div class="audio-transcript" aria-label="{% translate "Постоянный транскрипт B2" %}">
+        <strong>{% translate "Транскрипт" %}</strong>
+        {% for line in b2_listening.lines %}<p lang="pl">{{ line|ui_text }}</p>{% endfor %}
       </div>
-      {% if b2_submitted %}<section class="listening-result" aria-live="polite"><strong>{{ b2_score }} / {{ b2_listening.questions|length }}</strong><span>Ответы по записи B2</span></section>{% endif %}
+      {% if b2_submitted %}<section class="listening-result" aria-live="polite"><strong>{{ b2_score|ui_text }} / {{ b2_listening.questions|length|ui_text }}</strong><span>{% translate "Ответы по записи B2" %}</span></section>{% endif %}
       {% for question in b2_listening.questions %}
         <fieldset class="listening-card">
-          <legend>{{ question.prompt }}</legend>
+          <legend>{{ question.prompt|ui_text }}</legend>
           <div class="listening-options">
-            {% for option in question.options %}<label><input type="radio" name="{{ question.id }}" value="{{ option }}" {% if question.selected == option %}checked{% endif %}> {{ option }}</label>{% endfor %}
+            {% for option in question.options %}<label><input type="radio" name="{{ question.id }}" value="{{ option|ui_text }}" {% if question.selected == option %}checked{% endif %}> {{ option|ui_text }}</label>{% endfor %}
           </div>
-          {% if b2_submitted %}<p class="listening-feedback {% if question.is_correct %}is-correct{% else %}is-wrong{% endif %}">{% if question.is_correct %}Верно.{% else %}Правильный ответ: <strong>{{ question.answer }}</strong>.{% endif %} {{ question.explanation }}</p>{% endif %}
+          {% if b2_submitted %}<p class="listening-feedback {% if question.is_correct %}is-correct{% else %}is-wrong{% endif %}">{% if question.is_correct %}{% translate "Верно." %}{% else %}{% translate "Правильный ответ:" %} <strong>{{ question.answer|ui_text }}</strong>.{% endif %} {{ question.explanation|ui_text }}</p>{% endif %}
         </fieldset>
       {% endfor %}
-      <p class="muted listening-audio-note">Звук создаёт системный голос <span lang="pl">pl-PL</span> из оригинального текста PolskiFlow. Это тренировка понимания связной речи, но не студийная запись: голос и тембр зависят от браузера и устройства.</p>
+      <p class="muted listening-audio-note">{% translate "Звук создаёт системный голос" %} <span lang="pl">pl-PL</span> {% translate "из оригинального текста PolskiFlow. Это тренировка понимания связной речи, но не студийная запись: голос и тембр зависят от браузера и устройства." %}</p>
     </section>
-    <h2 id="listening-words" tabindex="-1">Отдельные слова · A1</h2>
+    <h2 id="listening-words" tabindex="-1">{% translate "Отдельные слова · A1" %}</h2>
     {% for item in listening_items %}
       <fieldset class="card listening-card">
-        <legend>Запись {{ forloop.counter }}</legend>
-        <audio controls preload="metadata"><source src="{% static item.audio %}" type="audio/ogg">Браузер не поддерживает аудио OGG.</audio>
+        <legend>{% translate "Запись" %} {{ forloop.counter|ui_text }}</legend>
+        <audio controls preload="metadata"><source src="{% static item.audio %}" type="audio/ogg">{% translate "Браузер не поддерживает аудио OGG." %}</audio>
         <details class="audio-transcript">
-          <summary>Текстовая альтернатива записи {{ forloop.counter }}</summary>
-          <p><span lang="pl">{{ item.answer }}</span>. {{ item.hint }}</p>
+          <summary>{% translate "Текстовая альтернатива записи" %} {{ forloop.counter|ui_text }}</summary>
+          <p><span lang="pl">{{ item.answer|ui_text }}</span>. {{ item.hint|ui_text }}</p>
         </details>
         <div class="listening-options">
           {% for option in item.options %}
-            <label><input type="radio" name="{{ item.id }}" value="{{ option }}" {% if item.selected == option %}checked{% endif %} required> <span lang="pl">{{ option }}</span></label>
+            <label><input type="radio" name="{{ item.id }}" value="{{ option|ui_text }}" {% if item.selected == option %}checked{% endif %} required> <span lang="pl">{{ option|ui_text }}</span></label>
           {% endfor %}
         </div>
         {% if submitted %}
           <p class="listening-feedback {% if item.is_correct %}is-correct{% else %}is-wrong{% endif %}">
-            {% if item.is_correct %}Верно.{% else %}Правильный ответ: <strong lang="pl">{{ item.answer }}</strong>.{% endif %} {{ item.hint }}
+            {% if item.is_correct %}{% translate "Верно." %}{% else %}{% translate "Правильный ответ:" %} <strong lang="pl">{{ item.answer|ui_text }}</strong>.{% endif %} {{ item.hint|ui_text }}
           </p>
         {% endif %}
       </fieldset>
     {% endfor %}
-    <button class="primary-button" type="submit">Проверить ответы</button>
+    <button class="primary-button" type="submit">{% translate "Проверить ответы" %}</button>
   </form>
   <aside class="card audio-attribution" aria-labelledby="audio-sources-title">
-    <h2 id="audio-sources-title">Источники записей</h2>
-    <p>Произношения <a href="https://commons.wikimedia.org/wiki/File:Pl-t%C4%99cza.ogg" rel="external noopener">tęcza — Wyksztalcioch</a>, <a href="https://commons.wikimedia.org/wiki/File:Pl-wr%C3%B3bel.ogg" rel="external noopener">wróbel — tsca</a> и <a href="https://commons.wikimedia.org/wiki/File:Pl-mysz.ogg" rel="external noopener">mysz — Tsca</a>. Собственные записи авторов, переданы в public domain; локальные копии не изменены.</p>
+    <h2 id="audio-sources-title">{% translate "Источники записей" %}</h2>
+    <p>{% translate "Произношения" %} <a href="https://commons.wikimedia.org/wiki/File:Pl-t%C4%99cza.ogg" rel="external noopener">tęcza — Wyksztalcioch</a>, <a href="https://commons.wikimedia.org/wiki/File:Pl-wr%C3%B3bel.ogg" rel="external noopener">wróbel — tsca</a> {% translate "и" %} <a href="https://commons.wikimedia.org/wiki/File:Pl-mysz.ogg" rel="external noopener">mysz — Tsca</a>{% translate ". Собственные записи авторов, переданы в public domain; локальные копии не изменены." %}</p>
   </aside>
 {% endblock %}
 {% block scripts %}
   <script>
     (() => {
+  const ui = (typeof window !== "undefined" && window.PolskiFlowI18n?.t) || ((text, ...values) => Array.isArray(text) ? text.map((part, i) => part + (values[i] ?? "")).join("") : text);
+
       const player = document.querySelector('[data-dialogue-player]');
       if (!player || !('speechSynthesis' in window) || !('SpeechSynthesisUtterance' in window)) return;
       player.hidden = false;
@@ -153,17 +155,17 @@
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'pl-PL';
         utterance.rate = Number(rate.value);
-        utterance.onend = () => { status.textContent = 'Прослушано: ' + label; };
-        utterance.onerror = () => { status.textContent = 'Не удалось запустить системный польский голос'; };
+        utterance.onend = () => { status.textContent = ui('Прослушано: ') + label; };
+        utterance.onerror = () => { status.textContent = ui('Не удалось запустить системный польский голос'); };
         speechSynthesis.speak(utterance);
         repeat.disabled = false;
-        status.textContent = 'Воспроизведение: ' + label;
+        status.textContent = ui('Воспроизведение: ') + label;
       };
-      play.addEventListener('click', () => speak(lines.join(' '), 'весь диалог'));
-      repeat.addEventListener('click', () => speak(lastText, 'последний фрагмент'));
+      play.addEventListener('click', () => speak(lines.join(' '), ui('весь диалог')));
+      repeat.addEventListener('click', () => speak(lastText, ui('последний фрагмент')));
       player.querySelectorAll('[data-dialogue-fragment]').forEach((button) => button.addEventListener('click', () => {
         const index = Number(button.dataset.dialogueFragment);
-        speak(lines[index], `фрагмент ${index + 1}`);
+        speak(lines[index], ui`фрагмент ${index + 1}`);
       }));
       window.addEventListener('pagehide', () => speechSynthesis.cancel());
 
@@ -178,11 +180,11 @@
           const utterance = new SpeechSynthesisUtterance(b1Lines.join(' '));
           utterance.lang = 'pl-PL';
           utterance.rate = Number(b1Player.querySelector('[data-b1-rate]').value);
-          utterance.onend = () => { b1Status.textContent = 'Запись B1 прослушана'; };
-          utterance.onerror = () => { b1Status.textContent = 'Не удалось запустить системный польский голос'; };
+          utterance.onend = () => { b1Status.textContent = ui('Запись B1 прослушана'); };
+          utterance.onerror = () => { b1Status.textContent = ui('Не удалось запустить системный польский голос'); };
           speechSynthesis.speak(utterance);
           b1Repeat.disabled = false;
-          b1Status.textContent = 'Воспроизведение записи B1';
+          b1Status.textContent = ui('Воспроизведение записи B1');
         };
         b1Player.querySelector('[data-b1-play]').addEventListener('click', speakB1);
         b1Repeat.addEventListener('click', speakB1);
@@ -199,11 +201,11 @@
           const utterance = new SpeechSynthesisUtterance(b2Lines.join(' '));
           utterance.lang = 'pl-PL';
           utterance.rate = Number(b2Player.querySelector('[data-b2-rate]').value);
-          utterance.onend = () => { b2Status.textContent = 'Запись B2 прослушана'; };
-          utterance.onerror = () => { b2Status.textContent = 'Не удалось запустить системный польский голос'; };
+          utterance.onend = () => { b2Status.textContent = ui('Запись B2 прослушана'); };
+          utterance.onerror = () => { b2Status.textContent = ui('Не удалось запустить системный польский голос'); };
           speechSynthesis.speak(utterance);
           b2Repeat.disabled = false;
-          b2Status.textContent = 'Воспроизведение записи B2';
+          b2Status.textContent = ui('Воспроизведение записи B2');
         };
         b2Player.querySelector('[data-b2-play]').addEventListener('click', speakB2);
         b2Repeat.addEventListener('click', speakB2);

@@ -1,73 +1,74 @@
 {% extends "base.html" %}
-{% block title %}Письменная практика {{ selected_writing_level }} · PolskiFlow{% endblock %}
+{% load i18n ui %}
+{% block title %}{% translate "Письменная практика" %} {{ selected_writing_level|ui_text }} · PolskiFlow{% endblock %}
 {% block content %}
   <header class="content-header writing-header">
-    <div><p class="eyebrow">Практика {{ selected_writing_level }}</p><h1>Письменные ответы</h1><p class="muted">Напиши черновик и проверь наблюдаемые признаки текста. Подсказка не оценивает грамотность, уровень или качество ответа.</p></div>
-    <a class="compact-button" href="{% url 'course' %}?level={{ selected_writing_level }}">К темам {{ selected_writing_level }} →</a>
+    <div><p class="eyebrow">{% translate "Практика" %} {{ selected_writing_level|ui_text }}</p><h1>{% translate "Письменные ответы" %}</h1><p class="muted">{% translate "Напиши черновик и проверь наблюдаемые признаки текста. Подсказка не оценивает грамотность, уровень или качество ответа." %}</p></div>
+    <a class="compact-button" href="{% url 'course' %}?level={{ selected_writing_level }}">{% translate "К темам" %} {{ selected_writing_level|ui_text }} →</a>
   </header>
 
-  <nav class="course-levels writing-levels" aria-label="Уровень письменной практики">
-    {% for level in writing_levels %}<a href="?level={{ level.id }}"{% if level.id == selected_writing_level %} aria-current="page"{% endif %}><strong>{{ level.id }}</strong><small>{{ level.prompt_count }} заданий</small></a>{% endfor %}
+  <nav class="course-levels writing-levels" aria-label="{% translate "Уровень письменной практики" %}">
+    {% for level in writing_levels %}<a href="?level={{ level.id }}"{% if level.id == selected_writing_level %} aria-current="page"{% endif %}><strong>{{ level.id|ui_text }}</strong><small>{{ level.prompt_count|ui_text }} {% translate "заданий" %}</small></a>{% endfor %}
   </nav>
 
   <section class="card writing-focus-summary" aria-labelledby="writing-focus-title" data-writing-focus-summary>
     <div>
-      <p class="eyebrow">Персональное закрепление</p>
-      <h2 id="writing-focus-title">Что повторить после самопроверки</h2>
-      <p class="muted" data-writing-focus-empty>Отметь замеченные языковые ошибки после черновика — здесь появится короткий план без отправки текста на сервер.</p>
+      <p class="eyebrow">{% translate "Персональное закрепление" %}</p>
+      <h2 id="writing-focus-title">{% translate "Что повторить после самопроверки" %}</h2>
+      <p class="muted" data-writing-focus-empty>{% translate "Отметь замеченные языковые ошибки после черновика — здесь появится короткий план без отправки текста на сервер." %}</p>
       <ol data-writing-focus-list hidden></ol>
     </div>
-    <a class="compact-button" href="{% url 'course' %}?level={{ selected_writing_level }}&kind=grammar">Открыть грамматику {{ selected_writing_level }}</a>
+    <a class="compact-button" href="{% url 'course' %}?level={{ selected_writing_level }}&kind=grammar">{% translate "Открыть грамматику" %} {{ selected_writing_level|ui_text }}</a>
   </section>
 
-  <section class="card writing-workspace" aria-label="Редактор письменного ответа">
-    <label for="writing-prompt">Выбери задание</label>
+  <section class="card writing-workspace" aria-label="{% translate "Редактор письменного ответа" %}">
+    <label for="writing-prompt">{% translate "Выбери задание" %}</label>
     <select id="writing-prompt" class="writing-prompt-select">
-      {% for prompt in writing_prompts %}<option value="{{ prompt.id }}">{{ prompt.title }}</option>{% endfor %}
+      {% for prompt in writing_prompts %}<option value="{{ prompt.id }}">{{ prompt.title|ui_text }}</option>{% endfor %}
     </select>
 
     {% for prompt in writing_prompts %}
       <div class="writing-prompt" data-writing-prompt="{{ prompt.id }}" data-min-words="{{ prompt.min_words }}" data-min-paragraphs="{{ prompt.min_paragraphs }}" data-markers="{{ prompt.markers|join:'|' }}"{% if not forloop.first %} hidden{% endif %}>
-        <p class="eyebrow">Задание {{ forloop.counter }}{% if prompt.genre %} · <span lang="pl">{{ prompt.genre }}</span>{% endif %}</p>
-        <h2>{{ prompt.title }}</h2>
-        <p>{{ prompt.task }}</p>
+        <p class="eyebrow">{% translate "Задание" %} {{ forloop.counter|ui_text }}{% if prompt.genre %} · <span lang="pl">{{ prompt.genre|ui_text }}</span>{% endif %}</p>
+        <h2>{{ prompt.title|ui_text }}</h2>
+        <p>{{ prompt.task|ui_text }}</p>
         {% if prompt.requirements %}
           <section class="writing-task-points" aria-labelledby="points-{{ prompt.id }}">
-            <h3 id="points-{{ prompt.id }}">Что обязательно раскрыть</h3>
-            <ul>{% for requirement in prompt.requirements %}<li>{{ requirement }}</li>{% endfor %}</ul>
+            <h3 id="points-{{ prompt.id }}">{% translate "Что обязательно раскрыть" %}</h3>
+            <ul>{% for requirement in prompt.requirements %}<li>{{ requirement|ui_text }}</li>{% endfor %}</ul>
           </section>
         {% endif %}
-        <p class="writing-hint"><strong>Ориентир:</strong> {{ prompt.hint }}</p>
-        <label for="draft-{{ prompt.id }}">Твой черновик</label>
+        <p class="writing-hint"><strong>{% translate "Ориентир:" %}</strong> {{ prompt.hint|ui_text }}</p>
+        <label for="draft-{{ prompt.id }}">{% translate "Твой черновик" %}</label>
         <textarea id="draft-{{ prompt.id }}" rows="12" data-writing-draft="{{ prompt.id }}" aria-describedby="draft-help-{{ prompt.id }}"></textarea>
         <div class="writing-draft-meta" id="draft-help-{{ prompt.id }}">
-          <span data-word-count aria-live="polite">0 слов</span>
-          <span data-save-status role="status">Черновик сохраняется только в этом браузере</span>
+          <span data-word-count aria-live="polite">{% translate "0 слов" %}</span>
+          <span data-save-status role="status">{% translate "Черновик сохраняется только в этом браузере" %}</span>
         </div>
         <fieldset class="writing-checklist">
-          <legend>Самопроверка для этого жанра</legend>
-          {% for criterion in prompt.checklist %}<label><input type="checkbox"> {{ criterion }}</label>{% endfor %}
+          <legend>{% translate "Самопроверка для этого жанра" %}</legend>
+          {% for criterion in prompt.checklist %}<label><input type="checkbox"> {{ criterion|ui_text }}</label>{% endfor %}
         </fieldset>
         <div class="writing-feedback-actions">
-          <button type="button" data-check-draft>Проверить по критериям</button>
-          <button class="secondary writing-reset" type="button" data-reset-draft>Удалить этот черновик</button>
+          <button type="button" data-check-draft>{% translate "Проверить по критериям" %}</button>
+          <button class="secondary writing-reset" type="button" data-reset-draft>{% translate "Удалить этот черновик" %}</button>
         </div>
         <div class="writing-feedback" data-writing-feedback role="status" aria-live="polite" hidden></div>
         {% if prompt.requirements %}
           <section class="writing-revision" data-writing-revision hidden aria-labelledby="revision-{{ prompt.id }}">
-            <h3 id="revision-{{ prompt.id }}">Разбор после черновика</h3>
-            <p class="muted">Сначала отметь выполненные пункты, затем выбери зоны, где сам заметил ошибки. Эти отметки остаются только в этом браузере.</p>
+            <h3 id="revision-{{ prompt.id }}">{% translate "Разбор после черновика" %}</h3>
+            <p class="muted">{% translate "Сначала отметь выполненные пункты, затем выбери зоны, где сам заметил ошибки. Эти отметки остаются только в этом браузере." %}</p>
             <div class="writing-review-grid">
               <fieldset>
-                <legend>Все пункты задания</legend>
-                {% for requirement in prompt.requirements %}<label><input type="checkbox" data-writing-requirement> {{ requirement }}</label>{% endfor %}
+                <legend>{% translate "Все пункты задания" %}</legend>
+                {% for requirement in prompt.requirements %}<label><input type="checkbox" data-writing-requirement> {{ requirement|ui_text }}</label>{% endfor %}
               </fieldset>
               <fieldset>
-                <legend>Что проверить в языке</legend>
-                {% for focus in prompt.grammar_recommendations %}<label><input type="checkbox" data-writing-error value="{{ focus.label }}" data-writing-href="{% url 'lesson' focus.lesson_id %}" data-writing-lesson-title="{{ focus.lesson_title }}"> {{ focus.label }}</label>{% endfor %}
+                <legend>{% translate "Что проверить в языке" %}</legend>
+                {% for focus in prompt.grammar_recommendations %}<label><input type="checkbox" data-writing-error value="{{ focus.label }}" data-writing-href="{% url 'lesson' focus.lesson_id %}" data-writing-lesson-title="{{ focus.lesson_title|ui_text }}"> {{ focus.label|ui_text }}</label>{% endfor %}
               </fieldset>
             </div>
-            <details class="writing-sample"><summary>Показать пример ответа после своей попытки</summary><p lang="pl">{{ prompt.sample_answer }}</p><p class="muted">Это один возможный ответ. Сравни структуру и выполнение пунктов, а не копируй текст.</p></details>
+            <details class="writing-sample"><summary>{% translate "Показать пример ответа после своей попытки" %}</summary><p lang="pl">{{ prompt.sample_answer|ui_text }}</p><p class="muted">{% translate "Это один возможный ответ. Сравни структуру и выполнение пунктов, а не копируй текст." %}</p></details>
           </section>
         {% endif %}
       </div>
@@ -77,6 +78,8 @@
 {% block scripts %}
   <script>
     (function () {
+  const ui = (typeof window !== "undefined" && window.PolskiFlowI18n?.t) || ((text, ...values) => Array.isArray(text) ? text.map((part, i) => part + (values[i] ?? "")).join("") : text);
+
       const select = document.querySelector("#writing-prompt");
       const panels = Array.from(document.querySelectorAll("[data-writing-prompt]"));
       const storagePrefix = "polskiflow-writing-{{ selected_writing_level|lower }}:{{ request.supabase_user.id|escapejs }}:";
@@ -96,7 +99,7 @@
           });
         });
         const priorities = Array.from(counts.entries()).sort(function (left, right) {
-          return right[1].count - left[1].count || left[0].localeCompare(right[0], "ru");
+          return right[1].count - left[1].count || left[0].localeCompare(right[0], document.documentElement.lang);
         }).slice(0, 3);
         const list = focusSummary.querySelector("[data-writing-focus-list]");
         const empty = focusSummary.querySelector("[data-writing-focus-empty]");
@@ -105,9 +108,9 @@
           const item = document.createElement("li");
           const title = document.createElement("strong");
           const action = document.createElement("a");
-          title.textContent = priority[0];
+          title.textContent = ui(priority[0]);
           action.href = priority[1].href;
-          action.textContent = "Открыть урок: " + priority[1].lessonTitle + " →";
+          action.textContent = ui("Открыть урок: ") + priority[1].lessonTitle + " →";
           item.append(title, action);
           list.append(item);
         });
@@ -121,7 +124,7 @@
       }
 
       function updateCount(panel, value) {
-        panel.querySelector("[data-word-count]").textContent = words(value) + " слов";
+        panel.querySelector("[data-word-count]").textContent = words(value) + ui(" слов");
       }
 
       function paragraphs(value) {
@@ -135,14 +138,14 @@
         const markers = panel.dataset.markers.split("|").filter(Boolean);
         const foundMarkers = markers.filter(function (marker) { return normalized.includes(marker.toLocaleLowerCase("pl-PL")); });
         const checks = [
-          { passed: words(value) >= minimumWords, text: "Минимум " + minimumWords + " слов" },
-          { passed: paragraphs(value) >= minimumParagraphs, text: "Минимум " + minimumParagraphs + " абзаца" },
-          { passed: foundMarkers.length === markers.length, text: "Маркеры задания: " + markers.join(", ") }
+          { passed: words(value) >= minimumWords, text: ui("Минимум ") + minimumWords + ui(" слов") },
+          { passed: paragraphs(value) >= minimumParagraphs, text: ui("Минимум ") + minimumParagraphs + ui(" абзаца") },
+          { passed: foundMarkers.length === markers.length, text: ui("Маркеры задания: ") + markers.join(", ") }
         ];
         const result = panel.querySelector("[data-writing-feedback]");
-        result.innerHTML = "<strong>Проверка видимых признаков</strong><ul>" + checks.map(function (check) {
-          return "<li class=\"" + (check.passed ? "passed" : "missing") + "\">" + (check.passed ? "✓ " : "Нужно проверить: ") + check.text + "</li>";
-        }).join("") + "</ul><p>Это техническая подсказка, а не оценка преподавателя: перечитай текст и отдельно проверь грамматику, смысл и стиль.</p>";
+        result.innerHTML = ui("<strong>Проверка видимых признаков</strong><ul>") + checks.map(function (check) {
+          return "<li class=\"" + (check.passed ? "passed" : "missing") + "\">" + (check.passed ? "✓ " : ui("Нужно проверить: ")) + check.text + "</li>";
+        }).join("") + ui("</ul><p>Это техническая подсказка, а не оценка преподавателя: перечитай текст и отдельно проверь грамматику, смысл и стиль.</p>");
         result.hidden = false;
         const revision = panel.querySelector("[data-writing-revision]");
         if (revision) revision.hidden = false;
@@ -157,12 +160,12 @@
         const status = panel.querySelector("[data-save-status]");
         const key = storagePrefix + textarea.dataset.writingDraft;
         const reviewKey = key + ":review";
-        try { textarea.value = localStorage.getItem(key) || ""; } catch (error) { status.textContent = "Локальное сохранение недоступно"; }
+        try { textarea.value = localStorage.getItem(key) || ""; } catch (error) { status.textContent = ui("Локальное сохранение недоступно"); }
         updateCount(panel, textarea.value);
         textarea.addEventListener("input", function () {
           updateCount(panel, textarea.value);
-          try { localStorage.setItem(key, textarea.value); status.textContent = "Черновик сохранён в этом браузере"; }
-          catch (error) { status.textContent = "Не удалось сохранить черновик локально"; }
+          try { localStorage.setItem(key, textarea.value); status.textContent = ui("Черновик сохранён в этом браузере"); }
+          catch (error) { status.textContent = ui("Не удалось сохранить черновик локально"); }
         });
         const reviewInputs = Array.from(panel.querySelectorAll("[data-writing-requirement], [data-writing-error]"));
         try {
@@ -173,13 +176,13 @@
           input.addEventListener("change", function () {
             const checked = reviewInputs.flatMap(function (item, index) { return item.checked ? [index] : []; });
             try { localStorage.setItem(reviewKey, JSON.stringify(checked)); }
-            catch (error) { status.textContent = "Не удалось сохранить отметки локально"; }
+            catch (error) { status.textContent = ui("Не удалось сохранить отметки локально"); }
             updateFocusSummary();
           });
         });
         panel.querySelector("[data-check-draft]").addEventListener("click", function () { checkDraft(panel, textarea.value); });
         panel.querySelector("[data-reset-draft]").addEventListener("click", function () {
-          if (!window.confirm("Удалить черновик этого задания? Восстановить его не получится.")) return;
+          if (!window.confirm(ui("Удалить черновик этого задания? Восстановить его не получится."))) return;
           textarea.value = "";
           panel.querySelectorAll('input[type="checkbox"]').forEach(function (checkbox) { checkbox.checked = false; });
           try { localStorage.removeItem(key); } catch (error) { /* Поле всё равно очищено. */ }
@@ -188,7 +191,7 @@
           panel.querySelector("[data-writing-feedback]").hidden = true;
           const revision = panel.querySelector("[data-writing-revision]");
           if (revision) revision.hidden = true;
-          status.textContent = "Черновик удалён";
+          status.textContent = ui("Черновик удалён");
           updateFocusSummary();
           textarea.focus();
         });

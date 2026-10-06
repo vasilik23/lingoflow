@@ -1,10 +1,11 @@
 {% extends "base.html" %}
-{% block title %}Работа над ошибками · PolskiFlow{% endblock %}
+{% load i18n ui %}
+{% block title %}{% translate "Работа над ошибками · PolskiFlow" %}{% endblock %}
 {% block content %}
-<header class="content-header"><div><p class="eyebrow">Личная практика</p><h1>Работа над ошибками</h1><p class="muted">Здесь остаются задания, в которых последний ответ был неверным. Правильный ответ при следующем прохождении уберёт запись автоматически.</p></div><a class="compact-button secondary-link" href="{% url 'practice-hub' %}">К тренажёрам</a></header>
+<header class="content-header"><div><p class="eyebrow">{% translate "Личная практика" %}</p><h1>{% translate "Работа над ошибками" %}</h1><p class="muted">{% translate "Здесь остаются задания, в которых последний ответ был неверным. Правильный ответ при следующем прохождении уберёт запись автоматически." %}</p></div><a class="compact-button secondary-link" href="{% url 'practice-hub' %}">{% translate "К тренажёрам" %}</a></header>
 {% include "partials/personal_learning_nav.html" %}
-{% if not mistakes_available %}<p class="data-notice" role="status">Список временно недоступен. Уроки продолжают работать.</p>
-{% elif mistakes %}<p><a class="compact-button" href="{% url 'mistake-practice' %}">Начать тренировку · {{ mistakes|length }}</a></p><ul class="mistake-list" aria-label="Задания для повторения">{% for item in mistakes %}<li class="card mistake-item"><span aria-hidden="true">{{ item.emoji }}</span><div><strong>{{ item.title }}</strong><small>{{ item.level }}</small><p>{{ item.prompt }}</p></div><a class="compact-button secondary-link" href="{% url 'lesson' item.lesson_id %}">Весь урок</a></li>{% endfor %}</ul>
-{% else %}<div class="card empty-state"><h2>Ошибок для повторения пока нет</h2><p>Неверные ответы из грамматики и тестов появятся здесь автоматически.</p><a class="compact-button" href="{% url 'home' %}#daily-tasks">К плану на сегодня</a></div>{% endif %}
-<p class="profile-note">Мы сохраняем только урок и номер задания — не выбранный тобой ответ.</p>
+{% if not mistakes_available %}<p class="data-notice" role="status">{% translate "Список временно недоступен. Уроки продолжают работать." %}</p>
+{% elif mistakes %}<p><a class="compact-button" href="{% url 'mistake-practice' %}">{% translate "Начать тренировку ·" %} {{ mistakes|length|ui_text }}</a></p><ul class="mistake-list" aria-label="{% translate "Задания для повторения" %}">{% for item in mistakes %}<li class="card mistake-item"><span aria-hidden="true">{{ item.emoji|ui_text }}</span><div><strong>{{ item.title|ui_text }}</strong><small>{{ item.level|ui_text }}</small><p>{{ item.prompt|ui_text }}</p></div><a class="compact-button secondary-link" href="{% url 'lesson' item.lesson_id %}">{% translate "Весь урок" %}</a></li>{% endfor %}</ul>
+{% else %}<div class="card empty-state"><h2>{% translate "Ошибок для повторения пока нет" %}</h2><p>{% translate "Неверные ответы из грамматики и тестов появятся здесь автоматически." %}</p><a class="compact-button" href="{% url 'home' %}#daily-tasks">{% translate "К плану на сегодня" %}</a></div>{% endif %}
+<p class="profile-note">{% translate "Мы сохраняем только урок и номер задания — не выбранный тобой ответ." %}</p>
 {% endblock %}

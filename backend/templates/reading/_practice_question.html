@@ -1,28 +1,29 @@
-{% if review_saved == False %}<div class="card feedback save-error" role="alert">Расписание предыдущего слова не сохранилось. Можно продолжить тренировку.</div>{% endif %}
-<div class="progress-label">Слово {{ index|add:1 }} из {{ total }}</div>
+{% load i18n ui %}
+{% if review_saved == False %}<div class="card feedback save-error" role="alert">{% translate "Расписание предыдущего слова не сохранилось. Можно продолжить тренировку." %}</div>{% endif %}
+<div class="progress-label">{% translate "Слово" %} {{ index|add:1|ui_text }} {% translate "из" %} {{ total|ui_text }}</div>
 <div class="lesson-progress"><span style="--value: {% widthratio index|add:1 total 100 %}%"></span></div>
 <section class="card question-card practice-card">
-  <p class="eyebrow">{{ question.instruction }}</p>
+  <p class="eyebrow">{{ question.instruction|ui_text }}</p>
   <h1>{{ question.prompt }}</h1>
   {% if question.context %}<p class="practice-context">“{{ question.context|truncatechars:180 }}”</p>{% endif %}
 </section>
 {% if not answered %}
   <form class="options" method="post" action="{% url 'dictionary-practice-step' %}">
     {% csrf_token %}<input type="hidden" name="action" value="answer"><input type="hidden" name="index" value="{{ index }}"><input type="hidden" name="score" value="{{ score }}">
-    {% if question.typed %}<label class="typed-answer"><span>Польская лемма</span><input type="text" name="answer" autocomplete="off" autocapitalize="none" spellcheck="false" required autofocus></label><button class="button" type="submit">Проверить</button>{% else %}{% for option in question.options %}<button type="submit" name="choice" value="{{ forloop.counter0 }}">{{ option }}</button>{% endfor %}{% endif %}
+    {% if question.typed %}<label class="typed-answer"><span>{% translate "Польская лемма" %}</span><input type="text" name="answer" autocomplete="off" autocapitalize="none" spellcheck="false" required autofocus></label><button class="button" type="submit">{% translate "Проверить" %}</button>{% else %}{% for option in question.options %}<button type="submit" name="choice" value="{{ forloop.counter0 }}">{{ option }}</button>{% endfor %}{% endif %}
   </form>
 {% else %}
   {% if not question.typed %}<div class="options practice-answered">
     {% for option in question.options %}<button type="button" disabled class="{% if forloop.counter0 == question.correct %}correct{% elif forloop.counter0 == selected %}wrong{% endif %}">{{ option }}</button>{% endfor %}
   </div>{% endif %}
-  <div class="card feedback" aria-live="polite"><strong>{% if answer_correct or selected == question.correct %}Верно! 🎉{% else %}Правильный ответ: {{ question.correct_answer }}{% endif %}</strong>{% if question.typed and submitted_answer %}<p class="muted">Твой ответ: {{ submitted_answer }}</p>{% endif %}</div>
+  <div class="card feedback" aria-live="polite"><strong>{% if answer_correct or selected == question.correct %}{% translate "Верно! 🎉" %}{% else %}{% translate "Правильный ответ:" %} {{ question.correct_answer|ui_text }}{% endif %}</strong>{% if question.typed and submitted_answer %}<p class="muted">{% translate "Твой ответ:" %} {{ submitted_answer|ui_text }}</p>{% endif %}</div>
   <form method="post" action="{% url 'dictionary-practice-step' %}">
     {% csrf_token %}<input type="hidden" name="action" value="next"><input type="hidden" name="index" value="{{ index }}"><input type="hidden" name="score" value="{{ score }}">{% if not question.typed %}<input type="hidden" name="selected" value="{{ selected }}">{% endif %}
-    <fieldset class="review-quality"><legend>{% if answer_correct or selected == question.correct %}Насколько легко вспомнилось слово?{% else %}Это слово вернётся завтра{% endif %}</legend>
+    <fieldset class="review-quality"><legend>{% if answer_correct or selected == question.correct %}{% translate "Насколько легко вспомнилось слово?" %}{% else %}{% translate "Это слово вернётся завтра" %}{% endif %}</legend>
       {% if answer_correct or selected == question.correct %}
-        <button type="submit" name="quality" value="again">Снова · 1 день</button><button type="submit" name="quality" value="hard">Трудно</button><button type="submit" name="quality" value="good">Хорошо</button><button type="submit" name="quality" value="easy">Легко</button>
+        <button type="submit" name="quality" value="again">{% translate "Снова · 1 день" %}</button><button type="submit" name="quality" value="hard">{% translate "Трудно" %}</button><button type="submit" name="quality" value="good">{% translate "Хорошо" %}</button><button type="submit" name="quality" value="easy">{% translate "Легко" %}</button>
       {% else %}
-        <button type="submit" name="quality" value="again">{% if index|add:1 == total %}Завершить{% else %}Следующее слово →{% endif %}</button>
+        <button type="submit" name="quality" value="again">{% if index|add:1 == total %}{% translate "Завершить" %}{% else %}{% translate "Следующее слово →" %}{% endif %}</button>
       {% endif %}
     </fieldset>
   </form>

@@ -39,7 +39,7 @@ class PwaPrototypeTests(SimpleTestCase):
     def test_service_worker_only_precaches_public_shell_assets(self):
         source = self.client.get(reverse("service-worker")).content.decode()
 
-        self.assertIn(f'const OFFLINE_URL = "/offline/?shell={PWA_SHELL_VERSION}"', source)
+        self.assertIn(f'const OFFLINE_URL = "/offline/?shell={PWA_SHELL_VERSION}&language=ru"', source)
         self.assertIn(f'"/static/polskiflow/app.css?shell={PWA_SHELL_VERSION}"', source)
         self.assertIn(f'"/static/polskiflow/favicon.svg?shell={PWA_SHELL_VERSION}"', source)
         self.assertIn('if (request.method !== "GET") return', source)
