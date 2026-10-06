@@ -1,7 +1,11 @@
 (() => {
   const ui = (typeof window !== "undefined" && window.PolskiFlowI18n?.t) || ((text, ...values) => Array.isArray(text) ? text.map((part, i) => part + (values[i] ?? "")).join("") : text);
 
-  const root = document.querySelector('[data-b1-run]');
+  const main = document.querySelector('[data-b1-run]');
+  if (!main) return;
+  let stopActive = null;
+  const players = main.dataset.multiListening ? Array.from(document.querySelectorAll('[data-run-listening-block]')) : [main];
+  players.forEach(root => {
   const play = root?.querySelector('[data-run-play]');
   if (!play) return;
   const stop = root.querySelector('[data-run-audio-stop]');
@@ -12,7 +16,7 @@
     status.textContent = ui('Запись этого прогона недоступна. Можно пропустить часть или начать новый прогон.');
     return;
   }
-  const key = `polskiflow-b1-run-listening:${root.dataset.namespace}`;
+  const key = `polskiflow-b1-run-listening:${root.dataset.namespace}${root.dataset.blockId ? `:${root.dataset.blockId}` : ""}`;
   const limit = 2, pauseMs = 30000;
   let state = {runId: root.dataset.runId, used: 0, cooldownUntil: 0};
   let unavailableStorage = false;
@@ -59,6 +63,8 @@
   }
   play.addEventListener('click', () => {
     if (busy || expired || disposed || state.used >= limit || Date.now() < state.cooldownUntil) return;
+    stopActive?.();
+    stopActive = () => { if (busy) cancel(ui('Воспроизведение остановлено. Начатое прослушивание учтено; перед повтором — пауза 30 секунд.')); };
     if (audio) {
       busy = true; started = false; update();
       status.textContent = ui('Подготавливаем аудиозапись…');
@@ -91,10 +97,11 @@
     catch (_) { cancel(ui('Системный голос недоступен; прослушивание не потрачено.')); }
   });
   stop.addEventListener('click', () => cancel(ui('Воспроизведение остановлено. Начатое прослушивание учтено; перед повтором — пауза 30 секунд.')));
-  root.addEventListener('b1-run-expired', () => { expired = true; cancel(ui('Время части истекло. Можно пропустить её без балла.')); update(); });
+  main.addEventListener('b1-run-expired', () => { expired = true; cancel(ui('Время части истекло. Можно пропустить её без балла.')); update(); });
   const leave = () => { disposed = true; cancel(''); update(); };
   document.getElementById('b1-run-form').addEventListener('submit', leave);
   window.addEventListener('pagehide', leave);
   const tick = () => { if (disposed) return; update(); setTimeout(tick, 1000); };
   save(); tick();
+  });
 })();

@@ -33,6 +33,9 @@ RUN_GRAMMAR_QUESTIONS = (
 
 
 def _extra_questions(part_id, content_version):
+    if part_id == "listening" and content_version >= 10:
+        from polskiflow.domain.b1_training_listening_draft import LISTENING_DRAFTS
+        return tuple(q for block in LISTENING_DRAFTS for q in block.questions)
     if part_id == "grammar" and content_version >= 2:
         if content_version >= 7:
             return (*RUN_GRAMMAR_QUESTIONS, *GRAMMAR_EXTENSION[:10], *WRITTEN_GRAMMAR)

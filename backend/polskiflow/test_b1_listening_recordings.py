@@ -115,3 +115,42 @@ class B1RecordingChecksTests(SimpleTestCase):
         self.assertEqual(json.loads(artifact.read_text()), json.loads(output.getvalue()))
         self.assertEqual(CONTENT_VERSION, 9)
         self.assertTrue(all(len(training_questions(v, 'listening')) == 5 for v in VARIANTS))
+
+    def block_items(self):
+        from dataclasses import asdict
+        from polskiflow.domain.b1_listening_recordings import BlockRecording, expanded_listening_blocks
+        return tuple(BlockRecording(**dict(asdict(self.item), id=f'test-{b.id}',
+                     variant_id=self.variant.id if b.id == 'variant' else '*',
+                     static_path=f'polskiflow/audio/b1/test-{b.id}.wav',
+                     transcript_sha256=transcript_checksum(b.transcript)), block_id=b.id)
+                     for b in expanded_listening_blocks(self.variant))
+
+    def test_multiblock_selection_requires_complete_set_and_keeps_pinned_ids(self):
+        from polskiflow.domain.b1_listening_recordings import block_recordings_for_variant, block_recordings_for_run
+        items = self.block_items()
+        with patch('polskiflow.domain.b1_listening_recordings.BLOCK_RECORDINGS', items[:-1]):
+            self.assertEqual(block_recordings_for_variant(self.variant), {})
+        with patch('polskiflow.domain.b1_listening_recordings.BLOCK_RECORDINGS', items):
+            pinned = block_recordings_for_variant(self.variant)
+            self.assertEqual(len(pinned), 4)
+            self.assertEqual(block_recordings_for_variant(VARIANTS[1]), {})
+        newer = replace(items[0], id='new-variant-recording', static_path='polskiflow/audio/b1/new.wav')
+        with patch('polskiflow.domain.b1_listening_recordings.BLOCK_RECORDINGS', (*items, newer)):
+            self.assertEqual(block_recordings_for_run({'listening_recording_ids': pinned}, self.variant)[0]['recording'], items[0])
+        with patch('polskiflow.domain.b1_listening_recordings.BLOCK_RECORDINGS', items[1:]):
+            restored = block_recordings_for_run({'listening_recording_ids': pinned}, self.variant)
+            self.assertTrue(restored[0]['missing'])
+            self.assertTrue(all(not b['missing'] for b in restored[1:]))
+
+    def test_multiblock_release_checks_validate_scope_checksums_and_provenance(self):
+        items = self.block_items()
+        with TemporaryDirectory() as directory:
+            file = Path(directory) / 'clip.wav'
+            file.write_bytes(self.file)
+            with patch('polskiflow.learning.recording_checks.finders.find', return_value=str(file)):
+                with patch('polskiflow.domain.b1_listening_recordings.BLOCK_RECORDINGS', items):
+                    self.assertEqual(check_b1_recordings(None), [])
+                for fields in ({'variant_id': self.variant.id}, {'block_id': 'unknown'},
+                               {'transcript_sha256': '0' * 64}, {'reviewed_by': ''}, {'sha256': '0' * 64}):
+                    with patch('polskiflow.domain.b1_listening_recordings.BLOCK_RECORDINGS', (replace(items[1], **fields),)):
+                        self.assertTrue(check_b1_recordings(None), fields)

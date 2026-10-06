@@ -6,8 +6,8 @@ const source = fs.readFileSync(path.join(__dirname, 'learning/static/polskiflow/
 let now = 100000;
 class Element {
   constructor() { this.events = {}; this.dataset = {namespace: 'owner', runId: 'run-one'}; }
-  addEventListener(event, callback) { this.events[event] = callback; }
-  emit(event) { return this.events[event]?.(); }
+  addEventListener(event, callback) { (this.events[event] ||= []).push(callback); }
+  emit(event) { let result; for (const callback of this.events[event] || []) result = callback(); return result; }
 }
 function page(storage = new Map(), {runId = 'run-one', failStorage = false, unavailable = false, recorded = false} = {}) {
   const root = new Element(), play = new Element(), stop = new Element(), status = new Element(), form = new Element(), window = new Element();
@@ -95,3 +95,31 @@ console.log('Recorded audio: plays, reload, errors, watchdog and cleanup PASS');
   assert.equal(fixture.audio.pauses, 1);
   console.log('Recorded audio promise rejection and stale attempt: PASS');
 })().catch(error => { console.error(error); process.exitCode = 1; });
+
+function multiPage(storage = new Map()) {
+  const main = new Element(), form = new Element(), win = new Element(); main.dataset.multiListening = '1';
+  const players = ['variant', 'station'].map(id => {
+    const root = new Element(), play = new Element(), stop = new Element(), status = new Element(), audio = new Element();
+    root.dataset.blockId = id;
+    Object.assign(audio, {pauses: 0, currentTime: 0, play() {}, pause() {this.pauses++;}});
+    root.querySelector = selector => selector === 'audio[data-run-audio]' ? audio : selector.includes('audio-stop') ? stop : selector.includes('audio-status') ? status : play;
+    return {root, play, stop, status, audio};
+  });
+  vm.runInNewContext(source, {
+    document: {querySelector: () => main, querySelectorAll: () => players.map(p => p.root), getElementById: () => form}, window: win,
+    Date: {now: () => now}, sessionStorage: {getItem: key => storage.get(key), setItem: (key,value) => storage.set(key,value)},
+    setTimeout: () => 1, clearTimeout() {},
+  });
+  return {main, form, players, storage};
+}
+now = 100000; const multiStore = new Map(); let multi = multiPage(multiStore);
+multi.players[0].play.emit('click'); multi.players[0].audio.emit('playing');
+multi.players[1].play.emit('click'); assert.ok(multi.players[0].audio.pauses > 0, 'only one block plays at a time');
+multi.players[1].audio.emit('playing'); multi.players[1].audio.emit('ended');
+assert.equal(multiStore.size, 2, 'independent counter keys');
+multi = multiPage(multiStore); assert.ok(multi.players.every(p => p.play.disabled), 'reload retains both cooldowns');
+now += 30001; multi = multiPage(multiStore); multi.players[0].play.emit('click'); multi.players[0].audio.emit('playing'); multi.players[0].audio.emit('ended');
+assert.equal(JSON.parse(multiStore.get('polskiflow-b1-run-listening:owner:variant')).used, 2);
+assert.equal(JSON.parse(multiStore.get('polskiflow-b1-run-listening:owner:station')).used, 1);
+multi.main.emit('b1-run-expired'); assert.ok(multi.players.every(p => p.play.disabled), 'main timer disables all blocks');
+console.log('Multi-block counters, cooldown restore, exclusive playback and common deadline: PASS');

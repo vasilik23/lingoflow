@@ -17,7 +17,7 @@ from polskiflow.domain.b1_training_writing import training_writing_tasks
 from polskiflow.domain.b1_training_speaking import PREPARATION_SECONDS, training_speaking_tasks
 from polskiflow.domain.b1_weekly_mock import get_mock_variant, weekly_mock_variant
 from polskiflow.practice_preferences import excluded_practice_topics
-from polskiflow.domain.b1_listening_recordings import recording_for_variant, recording_for_run
+from polskiflow.domain.b1_listening_recordings import recording_for_variant, recording_for_run, block_recordings_for_variant, block_recordings_for_run
 
 RUN_SALT = "polskiflow.b1-training-run.v1"
 RUN_MAX_AGE = 4 * 60 * 60
@@ -26,6 +26,8 @@ TRAINING_MINUTES = {"listening": 8, "reading": 45, "grammar": 45, "writing": 35,
 
 
 def _minutes(state, part_id):
+    if part_id == "listening" and state.get("content_version", 1) >= 10:
+        return 25
     if part_id == "speaking" and state.get("content_version", 1) < 5:
         return 3
     if part_id == "writing" and state.get("content_version", 1) < 4:
@@ -44,12 +46,14 @@ def _minutes(state, part_id):
 def _new_state(request):
     variant = weekly_mock_variant(timezone.localdate(), excluded_practice_topics(request))
     recording = recording_for_variant(variant)
+    block_ids = block_recordings_for_variant(variant)
     return {
         "user_id": request.supabase_user.id, "run_id": str(uuid4()),
         "variant_id": variant.id, "phase": "intro", "step": 0, "results": [],
         "created_at": int(time.time()),
-        "content_version": CONTENT_VERSION,
-        "listening_recording_id": recording.id if recording else None,
+        "content_version": 10 if block_ids else CONTENT_VERSION,
+        "listening_recording_ids": block_ids,
+        "listening_recording_id": recording.id if recording and not block_ids else None,
     }
 
 
@@ -155,6 +159,7 @@ def b1_training_run(request):
         "speaking_preparation_seconds": max(0, state.get("speaking_ready_at", now) - now) if part and part["id"] == "speaking" else 0,
         "instruction": instruction,
         "listening_recording": listening_recording,
+        "listening_blocks": block_recordings_for_run(state, variant) if part and part["id"] == "listening" and state.get("content_version", 1) >= 10 else (),
         "missing_recording": bool(part and part["id"] == "listening" and state.get("listening_recording_id") and not listening_recording),
         "run_token": token, "error": error, "report": report,
         "timer_seconds": max(0, state.get("deadline", state.get("break_until", now)) - now),
