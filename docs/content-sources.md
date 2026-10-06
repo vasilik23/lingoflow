@@ -232,3 +232,12 @@ status: approved | review | blocked
 [WSJP PAN: pomóc](https://wsjp.pl/haslo/podglad/25624/pomoc/4616433/w-nauce)
 и [ZPE: dopełnienie](https://zpe.gov.pl/a/o-innych-czesciach-zdania---dopelnienie-okolicznik-przydawka/D1E4MWzfQ).
 Примеры этих источников не импортировались.
+
+### Письменные ответы B1 — 06.10.2026
+
+Задания tw31–tw40 — оригинальные примеры PolskiFlow (origin: original;
+created_for: PolskiFlow; verified_at: 2026-10-06, внутренняя проверка).
+Пять заданий на форму и пять преобразований ограничены одним пропуском
+и явным контекстом лица, рода и аспекта. Управление и условная форма
+проверены по [WSJP PAN: pomóc](https://wsjp.pl/haslo/podglad/25624/pomoc/4616433/w-nauce).
+Внешние примеры не копировались. Независимая редакторская проверка ещё требуется.

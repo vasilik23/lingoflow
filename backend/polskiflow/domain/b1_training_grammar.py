@@ -1,8 +1,10 @@
-"""Original additional B1 grammar items for guided-run version six.
+"""Original B1 grammar items for guided-run versions six and seven.
 
-Created for PolskiFlow; internally reviewed 2026-10-06. These multiple-choice
-items practise form recognition, not all formats of an official examination.
+Created for PolskiFlow; internally reviewed 2026-10-06. These items practise
+form recognition and constrained production, not a complete official examination.
 """
+from dataclasses import dataclass
+
 from polskiflow.domain.b1_weekly_mock import MockQuestion
 
 GRAMMAR_EXTENSION = (
@@ -26,4 +28,30 @@ GRAMMAR_EXTENSION = (
     MockQuestion('tg38', 'grammar', 'Na spotkanie przyszło pięć ___.', ('osobami', 'osoby', 'osób'), 2, 'Po liczebniku „pięć” potrzebny jest dopełniacz liczby mnogiej: „pięć osób”.'),
     MockQuestion('tg39', 'grammar', 'Które zdanie jest poprawne?', ('Te dwie kobiety był zmęczony.', 'Te dwie kobiety były zmęczone.', 'Te dwie kobiety byli zmęczeni.'), 1, 'Podmiot „dwie kobiety” wymaga niemęskoosobowych form „były zmęczone”.'),
     MockQuestion('tg40', 'grammar', 'Wybierz poprawną odpowiedź: Czy możesz mi pomóc? — Tak, ___ pomogę.', ('chętnie', 'chętny', 'chętna'), 0, 'Przysłówek „chętnie” określa sposób wykonania czynności „pomogę”.'),
+)
+
+
+@dataclass(frozen=True)
+class WrittenGrammarQuestion:
+    id: str
+    module: str
+    prompt: str
+    correct: str
+    explanation: str
+    options: tuple = ()
+    written: bool = True
+
+
+# Original constrained gaps: each has one grammatical answer in its context.
+WRITTEN_GRAMMAR = (
+    WrittenGrammarQuestion('tw31', 'grammar', 'Uzupełnij lukę odpowiednią formą wyrazu w nawiasie: Nie mam dziś ___ (czas).', 'czasu', 'Po „nie mam” używamy dopełniacza: „czasu”.'),
+    WrittenGrammarQuestion('tw32', 'grammar', 'Uzupełnij lukę odpowiednią formą wyrazu w nawiasie: Pomagam ___ (siostra) w nauce.', 'siostrze', '„Pomagać” wymaga celownika: „siostrze”.'),
+    WrittenGrammarQuestion('tw33', 'grammar', 'Uzupełnij lukę odpowiednią formą wyrazu w nawiasie: Jedziemy do ___ (Kraków).', 'Krakowa', '„Do” wymaga dopełniacza: „Krakowa”.'),
+    WrittenGrammarQuestion('tw34', 'grammar', 'Uzupełnij lukę odpowiednią formą wyrazu w nawiasie: Rozmawiam z ___ (nauczyciel).', 'nauczycielem', '„Z” oznaczające towarzystwo wymaga narzędnika.'),
+    WrittenGrammarQuestion('tw35', 'grammar', 'Uzupełnij lukę odpowiednią formą wyrazu w nawiasie: My wczoraj ___ (być) w kinie. Mówią Anna i Maria.', 'byłyśmy', 'Anna i Maria używają niemęskoosobowej formy pierwszej osoby liczby mnogiej: „byłyśmy”.'),
+    WrittenGrammarQuestion('tw36', 'grammar', 'Zmień zdanie, wpisując tylko brakującą formę: Lubię kawę. → Nie lubię ___.', 'kawy', 'Przeczenie zmienia biernik „kawę” na dopełniacz „kawy”.'),
+    WrittenGrammarQuestion('tw37', 'grammar', 'Zmień zdanie, wpisując tylko brakującą formę: To jest nowy dom. → Mieszkam w ___ domu.', 'nowym', 'Po „w” oznaczającym miejsce przymiotnik ma formę miejscownika: „nowym”.'),
+    WrittenGrammarQuestion('tw38', 'grammar', 'Zmień zdanie, wpisując tylko brakującą formę: Piotr czyta książkę. → Wczoraj Piotr ___ książkę. Zachowaj aspekt niedokonany.', 'czytał', 'Męska forma przeszła czasownika niedokonanego „czytać” to „czytał”.'),
+    WrittenGrammarQuestion('tw39', 'grammar', 'Zmień zdanie, wpisując tylko brakującą formę: Anna jest zmęczona. → Anna i Maria są ___.', 'zmęczone', 'Dwie kobiety wymagają niemęskoosobowej formy liczby mnogiej: „zmęczone”.'),
+    WrittenGrammarQuestion('tw40', 'grammar', 'Zmień zdanie, wpisując tylko brakującą formę: Masz czas i pomożesz mi. → Gdybyś miał czas, ___ mi. Użyj czasownika „pomóc”. Zwracasz się do Piotra.', 'pomógłbyś', 'Warunek z „gdybyś” łączy się tutaj z formą „pomógłbyś”.'),
 )

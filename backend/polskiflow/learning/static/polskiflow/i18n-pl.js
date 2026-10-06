@@ -283,6 +283,7 @@ window.PolskiFlowPolishMessages = {
   "Войти в PolskiFlow": "Zaloguj się do PolskiFlow",
   "Вопрос": "Pytanie",
   "Восемь блоков по пять ответов. Выбор формы — один из экзаменационных форматов; ввод форм и преобразования предложений ещё не включены.": "Osiem bloków po pięć odpowiedzi. Wybór formy to jeden z formatów egzaminacyjnych; wpisywanie form i przekształcanie zdań nie są jeszcze uwzględnione.",
+  "Восемь блоков: шесть на выбор, один на ввод формы и один на преобразование предложения. Вводи только пропущенную форму с польскими буквами.": "Osiem bloków: sześć bloków wyboru, jeden blok odmiany wyrazów i jeden blok przekształcania zdań. Wpisuj tylko brakującą formę, używając polskich znaków.",
   "Восприятие": "Rozumienie",
   "Воспроизведение": "Odtwarzanie",
   "Воспроизведение записи B1": "Odtwarzanie nagrania B1",

@@ -1128,3 +1128,5 @@ button.secondary { background: white; color: var(--text); border: 1px solid #dcd
 
 .language-settings { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin: 1rem 0; }
 .language-settings select, .language-settings button { width: auto; min-width: 0; }
+
+.mock-question [data-run-written] { display: block; width: 100%; max-width: 28rem; min-height: 2.75rem; padding: .75rem; border: 1px solid var(--line); border-radius: .7rem; background: var(--surface); color: var(--text); }

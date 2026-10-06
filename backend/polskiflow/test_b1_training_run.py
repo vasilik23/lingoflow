@@ -303,7 +303,7 @@ class B1TrainingRunTests(TestCase):
 
     def test_version_six_groups_all_answers_and_preserves_them_on_resume(self):
         for variant in VARIANTS:
-            state = dict(self.client.get('/exam/b1/run/').context['state'], variant_id=variant.id,
+            state = dict(self.client.get('/exam/b1/run/').context['state'], variant_id=variant.id, content_version=6,
                          phase='break', step=2, break_until=self.now)
             response = self.client.post('/exam/b1/run/', {'run_token': signing.dumps(state, salt=RUN_SALT), 'action': 'start'})
             blocks = response.context['grammar_blocks']
@@ -324,3 +324,30 @@ class B1TrainingRunTests(TestCase):
             result = self.advance(restored, 'finish', **fields)
             self.assertEqual(result.context['state']['results'][-1]['total'], 40)
             self.assertEqual(result.context['state']['results'][-1]['percent'], 100)
+
+
+    def test_written_grammar_validation_and_private_aggregate(self):
+        state = dict(self.client.get('/exam/b1/run/').context['state'], phase='break', step=2, break_until=self.now)
+        response = self.client.post('/exam/b1/run/', {'run_token': signing.dumps(state, salt=RUN_SALT), 'action': 'start'})
+        questions = response.context['questions']
+        self.assertEqual(sum(bool(getattr(q, 'written', False)) for q in questions), 10)
+        self.assertContains(response, 'data-run-written', count=10)
+        self.assertNotContains(response, 'value="pomógłbyś"')
+        fields = {f'answer_{q.id}': q.correct for q in questions}
+        for invalid in ('', '   ', 'x' * 121):
+            self.assertEqual(self.advance(response, 'finish', **dict(fields, answer_tw31=invalid)).status_code, 400)
+        self.assertEqual(self.advance(response, 'finish', **dict(fields, answer_unknown='test')).status_code, 400)
+        result = self.advance(response, 'finish', **dict(fields, answer_tw31='  CZASU  ', answer_tw40='pomoglbyś'))
+        aggregate = result.context['state']['results'][-1]
+        self.assertEqual(aggregate, {'id': 'grammar', 'status': 'scored', 'correct': 39, 'total': 40, 'percent': 98})
+        self.assertNotIn('pomoglbyś', str(result.context['state']))
+
+    def test_written_answers_normalize_unicode_but_not_polish_letters(self):
+        import unicodedata
+        from polskiflow.domain.b1_training_content import score_training_part, training_questions
+        variant = VARIANTS[0]
+        answers = {q.id: q.correct for q in training_questions(variant, 'grammar')}
+        answers['tw40'] = unicodedata.normalize('NFD', 'POMÓGŁBYŚ')
+        self.assertEqual(score_training_part(variant, 'grammar', answers)['correct'], 40)
+        answers['tw40'] = 'pomoglbyś'
+        self.assertEqual(score_training_part(variant, 'grammar', answers)['correct'], 39)
