@@ -85,18 +85,18 @@ class B1TrainingRunTests(TestCase):
 
     def test_extended_reading_has_four_grouped_texts_and_twenty_questions(self):
         for variant in VARIANTS:
-            blocks = training_reading_blocks(variant)
-            questions = training_questions(variant, "reading")
+            blocks = training_reading_blocks(variant, 7)
+            questions = training_questions(variant, "reading", 7)
             self.assertEqual(len(blocks), 4)
             self.assertEqual([len(block.questions) for block in blocks], [5] * 4)
             self.assertEqual(tuple(q for block in blocks for q in block.questions), questions)
             self.assertEqual(len({q.id for q in questions}), 20)
             self.assertTrue(all(block.text and block.title for block in blocks))
             correct = {q.id: q.correct for q in questions}
-            score = score_training_part(variant, "reading", correct)
+            score = score_training_part(variant, "reading", correct, 7)
             self.assertEqual((score["correct"], score["total"], score["percent"]), (20, 20, 100))
             with self.assertRaises(ValueError):
-                score_training_part(variant, "reading", dict(list(correct.items())[:-1]))
+                score_training_part(variant, "reading", dict(list(correct.items())[:-1]), 7)
             for version in (1, 2):
                 self.assertEqual(len(training_questions(variant, "reading", version)), 5)
                 self.assertEqual(len(training_reading_blocks(variant, version)), 1)
@@ -190,7 +190,7 @@ class B1TrainingRunTests(TestCase):
             if part["id"] == "grammar":
                 self.assertEqual(response.context["timer_seconds"], 45 * 60)
             if part["id"] == "reading":
-                self.assertEqual(response.context["timer_seconds"], 22 * 60)
+                self.assertEqual(response.context["timer_seconds"], 45 * 60)
                 self.assertContains(response, "Ogłoszenie biblioteki")
             fields = {f"answer_{q.id}": q.correct for q in response.context["questions"]}
             if part["mode"] == "self_review":
@@ -207,7 +207,7 @@ class B1TrainingRunTests(TestCase):
         self.assertEqual(response.context["state"]["run_id"], run_id)
         report = response.context["report"]
         self.assertEqual([item["status"] for item in report], ["scored"] * 3 + ["self_review"] * 2)
-        self.assertEqual([item["total"] for item in report[:3]], [5, 20, 40])
+        self.assertEqual([item["total"] for item in report[:3]], [5, 30, 40])
         self.assertTrue(all(item["percent"] == 100 for item in report[:3]))
         self.assertTrue(all("percent" not in item for item in report[3:]))
         self.assertTrue(all("details" not in item for item in response.context["state"]["results"]))
@@ -351,3 +351,41 @@ class B1TrainingRunTests(TestCase):
         self.assertEqual(score_training_part(variant, 'grammar', answers)['correct'], 40)
         answers['tw40'] = 'pomoglbyś'
         self.assertEqual(score_training_part(variant, 'grammar', answers)['correct'], 39)
+
+    def test_reading_matching_version_eight_and_legacy_deadlines(self):
+        for version in range(3, 9):
+            state = dict(self.client.get('/exam/b1/run/').context['state'], content_version=version,
+                         phase='break', step=1, break_until=self.now)
+            response = self.client.post('/exam/b1/run/', {'run_token': signing.dumps(state, salt=RUN_SALT), 'action': 'start'})
+            total, minutes, blocks = (30, 45, 5) if version == 8 else (20, 22, 4)
+            self.assertEqual(len(response.context['questions']), total)
+            self.assertEqual(len(response.context['reading_blocks']), blocks)
+            self.assertEqual(response.context['timer_seconds'], minutes * 60)
+            self.now += 13
+            restored = self.advance(response, 'resume')
+            self.assertEqual(restored.context['timer_seconds'], minutes * 60 - 13)
+            self.assertEqual(restored.context['run_token'], response.context['run_token'])
+            fields = {f'answer_{q.id}': q.correct for q in restored.context['questions']}
+            self.assertEqual(self.advance(restored, 'finish', **dict(list(fields.items())[:-1])).status_code, 400)
+            if version == 8:
+                self.assertContains(restored, 'id="reading-matching"')
+                self.assertContains(restored, 'name="answer_tr30"', count=6)
+                self.assertEqual(self.advance(restored, 'finish', **dict(fields, answer_tr30=6)).status_code, 400)
+            finished = self.advance(restored, 'finish', **fields)
+            self.assertEqual(finished.context['state']['results'][-1],
+                             {'id': 'reading', 'status': 'scored', 'correct': total, 'total': total, 'percent': 100})
+
+    def test_reading_matching_order_and_distractor_for_each_variant(self):
+        for variant in VARIANTS:
+            blocks = training_reading_blocks(variant)
+            questions = training_questions(variant, 'reading')
+            self.assertEqual([len(b.questions) for b in blocks], [5, 5, 5, 5, 10])
+            self.assertEqual(tuple(q for b in blocks for q in b.questions), questions)
+            self.assertEqual(len({q.id for q in questions}), 30)
+            matching = blocks[-1]
+            self.assertEqual([q.correct for q in matching.questions], [0, 1, 2, 3, 4] * 2)
+            self.assertTrue(all(q.options == ('A', 'B', 'C', 'D', 'E', 'F') for q in matching.questions))
+            self.assertIn('To samo ogłoszenie może pasować do kilku osób.', matching.text)
+            answers = {q.id: q.correct for q in questions}
+            answers['tr30'] = 5
+            self.assertEqual(score_training_part(variant, 'reading', answers)['correct'], 29)

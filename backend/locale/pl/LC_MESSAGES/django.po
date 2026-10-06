@@ -6852,3 +6852,6 @@ msgstr "Osiem bloków po pięć odpowiedzi. Wybór formy to jeden z formatów eg
 
 msgid "Восемь блоков: шесть на выбор, один на ввод формы и один на преобразование предложения. Вводи только пропущенную форму с польскими буквами."
 msgstr "Osiem bloków: sześć bloków wyboru, jeden blok odmiany wyrazów i jeden blok przekształcania zdań. Wpisuj tylko brakującą formę, używając polskich znaków."
+
+msgid "Пять блоков, 30 ответов и 45 минут. В объявлениях одну букву можно выбрать несколько раз; одно объявление лишнее. Это учебный набор, не полная симуляция."
+msgstr "Pięć bloków, 30 odpowiedzi i 45 minut. W ogłoszeniach tę samą literę można wybrać kilka razy; jedno ogłoszenie jest zbędne. To zestaw treningowy, nie pełna symulacja."

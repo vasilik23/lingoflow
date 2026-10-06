@@ -18,6 +18,7 @@
         {% endif %}
         {% if part.mode == 'objective' %}
           {% if part.id == 'reading' %}
+            {% if state.content_version >= 8 %}<p class="muted">{% translate "Пять блоков, 30 ответов и 45 минут. В объявлениях одну букву можно выбрать несколько раз; одно объявление лишнее. Это учебный набор, не полная симуляция." %}</p>{% endif %}
             {% for block in reading_blocks %}<section aria-labelledby="reading-{{ block.id }}"><h3 id="reading-{{ block.id }}" lang="pl">{{ block.title|ui_text }}</h3><p class="mock-source-text" lang="pl">{{ block.text|ui_text }}</p>{% for question in block.questions %}{% include "partials/b1_mock_question.html" %}{% endfor %}</section>{% endfor %}
           {% elif grammar_blocks %}
             <p class="muted">{% if state.content_version >= 7 %}{% translate "Восемь блоков: шесть на выбор, один на ввод формы и один на преобразование предложения. Вводи только пропущенную форму с польскими буквами." %}{% else %}{% translate "Восемь блоков по пять ответов. Выбор формы — один из экзаменационных форматов; ввод форм и преобразования предложений ещё не включены." %}{% endif %}</p>
