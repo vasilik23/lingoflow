@@ -1537,6 +1537,7 @@ window.PolskiFlowPolishMessages = {
   "Публикация и источник": "Publikacja i źródło",
   "Публичная дискуссия": "Dyskusja publiczna",
   "Путешествия": "Podróże",
+  "Пять блоков, 30 ответов и 45 минут. В объявлениях одну букву можно выбрать несколько раз; одно объявление лишнее. Это учебный набор, не полная симуляция.": "Pięć bloków, 30 odpowiedzi i 45 minut. W ogłoszeniach tę samą literę można wybrać kilka razy; jedno ogłoszenie jest zbędne. To zestaw treningowy, nie pełna symulacja.",
   "Пять модулей": "Pięć modułów",
   "Пять частей по порядку": "Pięć części po kolei",
   "Работа": "Praca",

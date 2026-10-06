@@ -22,7 +22,7 @@ from polskiflow.domain.b1_listening_recordings import recording_for_variant, rec
 RUN_SALT = "polskiflow.b1-training-run.v1"
 RUN_MAX_AGE = 4 * 60 * 60
 BREAK_SECONDS = 120
-TRAINING_MINUTES = {"listening": 8, "reading": 22, "grammar": 45, "writing": 35, "speaking": 11}
+TRAINING_MINUTES = {"listening": 8, "reading": 45, "grammar": 45, "writing": 35, "speaking": 11}
 
 
 def _minutes(state, part_id):
@@ -32,6 +32,8 @@ def _minutes(state, part_id):
         return 15
     if part_id == "reading" and state.get("content_version", 1) < 3:
         return 7
+    if part_id == "reading" and state.get("content_version", 1) < 8:
+        return 22
     if part_id == "grammar" and state.get("content_version", 1) < 2:
         return 6
     if part_id == "grammar" and state.get("content_version", 1) < 6:

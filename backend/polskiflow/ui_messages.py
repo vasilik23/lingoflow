@@ -1183,3 +1183,18 @@ B1_WRITTEN_GRAMMAR_MESSAGES = (
 )
 
 B1_WRITTEN_INSTRUCTION = gettext_noop("Восемь блоков: шесть на выбор, один на ввод формы и один на преобразование предложения. Вводи только пропущенную форму с польскими буквами.")
+
+B1_READING_MATCHING_MESSAGES = (
+    gettext_noop("Warsztat A uczy naprawy hamulców z pomocą mechanika."),
+    gettext_noop("Klub B spotyka się w środę o 18 i pozwala bezpłatnie ćwiczyć rozmowę."),
+    gettext_noop("Pracownia C zaprasza w niedzielę dzieci w wieku 7–12 lat z opiekunem."),
+    gettext_noop("Spacer D odbywa się w piątek wieczorem i nie obejmuje muzeów."),
+    gettext_noop("Pomoc E obejmuje wysłanie e-maila i udostępnia komputer na miejscu."),
+    gettext_noop("W warsztacie A udział jest bezpłatny, a uczestnik płaci tylko za części."),
+    gettext_noop("Klub B prowadzi środowe rozmowy bez ocen i egzaminów."),
+    gettext_noop("Cena zajęć C obejmuje glinę, narzędzia i wypalenie prac; dzieci uczestniczą z opiekunem."),
+    gettext_noop("Bilet na piątkowy spacer D można kupić najpóźniej dzień wcześniej, czyli w czwartek."),
+    gettext_noop("Pomoc E jest indywidualna, odbywa się we wtorek rano i wymaga rezerwacji telefonicznej."),
+)
+
+B1_READING_MATCHING_INSTRUCTION = gettext_noop("Пять блоков, 30 ответов и 45 минут. В объявлениях одну букву можно выбрать несколько раз; одно объявление лишнее. Это учебный набор, не полная симуляция.")

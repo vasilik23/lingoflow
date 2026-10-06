@@ -73,3 +73,41 @@ READING_BLOCKS = (
         ),
     ),
 )
+
+
+# Original PolskiFlow matching task, internally reviewed 2026-10-06.
+# The same advertisement may be chosen more than once; F is a distractor.
+MATCHING_BLOCK = ReadingBlock(
+    "matching", "Dobierz ogłoszenie do potrzeb osoby",
+    "Przeczytaj ogłoszenia A–F. Dla każdej osoby wybierz jedno pasujące ogłoszenie. "
+    "To samo ogłoszenie może pasować do kilku osób. Jedno ogłoszenie nie pasuje do żadnej osoby.\n\n"
+    "A. Warsztat rowerowy: W soboty od 10 do 13 pokazujemy, jak naprawić przebitą oponę i ustawić hamulce. "
+    "Przyjdź z własnym rowerem. Mechanik pomaga, ale naprawę wykonujesz sam. Udział jest bezpłatny; płacisz tylko za nowe części. "
+    "Nie sprzedajemy rowerów i nie przyjmujemy sprzętu na naprawę bez właściciela.\n\n"
+    "B. Klub rozmów: W każdą środę o 18 spotykamy się w bibliotece. Rozmawiamy po polsku o codziennym życiu. "
+    "Zapraszamy osoby, które potrafią już prowadzić prostą rozmowę. Nie ma ocen ani egzaminów. "
+    "Udział jest bezpłatny, a zapis wystarczy na cały miesiąc. Nie prowadzimy lekcji dla osób zaczynających od zera.\n\n"
+    "C. Pracownia ceramiki: Niedzielne zajęcia rodzinne od 11 do 13. Dzieci w wieku 7–12 lat pracują z dorosłym opiekunem. "
+    "Cena obejmuje glinę, narzędzia i wypalenie gotowych prac. Nie trzeba nic przynosić ani mieć doświadczenia. "
+    "Gotowe naczynia odbiera się tydzień później.\n\n"
+    "D. Wieczorny spacer: W piątki o 19 przewodniczka oprowadza dorosłych po starym mieście. "
+    "Trasa trwa dwie godziny i kończy się przy dworcu. Bilet kupuje się przez internet najpóźniej dzień wcześniej. "
+    "Spacer odbywa się także podczas lekkiego deszczu; nie wchodzimy do muzeów.\n\n"
+    "E. Pomoc cyfrowa: We wtorki rano w domu kultury wolontariusze pomagają dorosłym wysłać pierwszy e-mail "
+    "i załatwić prostą sprawę przez internet. Pracujemy indywidualnie. Można przynieść własny laptop lub skorzystać "
+    "z komputera na miejscu. Trzeba telefonicznie zarezerwować półgodzinne spotkanie. Pomoc jest bezpłatna.\n\n"
+    "F. Kurs fotografii: Sześć sobotnich spotkań dla osób mających własny aparat. Uczymy ustawiania światła "
+    "i robienia portretów. Kurs jest płatny, nie wypożyczamy aparatów i nie zajmujemy się ich naprawą.",
+    (
+        MockQuestion('tr21', 'reading', 'Marek chce nauczyć się naprawiać hamulce w swoim rowerze.', ('A', 'B', 'C', 'D', 'E', 'F'), 0, 'Warsztat A uczy naprawy hamulców z pomocą mechanika.'),
+        MockQuestion('tr22', 'reading', 'Irina mówi już trochę po polsku i chce bezpłatnie ćwiczyć rozmowę wieczorem w tygodniu.', ('A', 'B', 'C', 'D', 'E', 'F'), 1, 'Klub B spotyka się w środę o 18 i pozwala bezpłatnie ćwiczyć rozmowę.'),
+        MockQuestion('tr23', 'reading', 'Tomasz szuka niedzielnych zajęć ręcznych dla siebie i dziewięcioletniej córki.', ('A', 'B', 'C', 'D', 'E', 'F'), 2, 'Pracownia C zaprasza w niedzielę dzieci w wieku 7–12 lat z opiekunem.'),
+        MockQuestion('tr24', 'reading', 'Olga chce w piątek wieczorem poznać stare miasto z przewodniczką, bez zwiedzania muzeów.', ('A', 'B', 'C', 'D', 'E', 'F'), 3, 'Spacer D odbywa się w piątek wieczorem i nie obejmuje muzeów.'),
+        MockQuestion('tr25', 'reading', 'Jan chce wysłać pierwszy e-mail, ale nie ma własnego komputera.', ('A', 'B', 'C', 'D', 'E', 'F'), 4, 'Pomoc E obejmuje wysłanie e-maila i udostępnia komputer na miejscu.'),
+        MockQuestion('tr26', 'reading', 'Ewa chce samodzielnie naprawić przebitą oponę i może zapłacić za części, ale nie za udział.', ('A', 'B', 'C', 'D', 'E', 'F'), 0, 'W warsztacie A udział jest bezpłatny, a uczestnik płaci tylko za części.'),
+        MockQuestion('tr27', 'reading', 'Oleg nie chce kursu z ocenami. Może przychodzić w środę na rozmowy po polsku.', ('A', 'B', 'C', 'D', 'E', 'F'), 1, 'Klub B prowadzi środowe rozmowy bez ocen i egzaminów.'),
+        MockQuestion('tr28', 'reading', 'Basia chce zrobić naczynie z ośmioletnim synem i szuka zajęć zapewniających wszystkie materiały.', ('A', 'B', 'C', 'D', 'E', 'F'), 2, 'Cena zajęć C obejmuje glinę, narzędzia i wypalenie prac; dzieci uczestniczą z opiekunem.'),
+        MockQuestion('tr29', 'reading', 'Adam przyjedzie w piątek. Chce wieczorem spacerować z przewodniczką i kupić bilet w czwartek.', ('A', 'B', 'C', 'D', 'E', 'F'), 3, 'Bilet na piątkowy spacer D można kupić najpóźniej dzień wcześniej, czyli w czwartek.'),
+        MockQuestion('tr30', 'reading', 'Maria potrzebuje indywidualnej pomocy w prostej sprawie internetowej we wtorek rano i może zapisać się telefonicznie.', ('A', 'B', 'C', 'D', 'E', 'F'), 4, 'Pomoc E jest indywidualna, odbywa się we wtorek rano i wymaga rezerwacji telefonicznej.'),
+    ),
+)

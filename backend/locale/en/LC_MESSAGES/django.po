@@ -16534,3 +16534,36 @@ msgstr "The condition with “gdybyś” takes the form “pomógłbyś” here.
 
 msgid "Восемь блоков: шесть на выбор, один на ввод формы и один на преобразование предложения. Вводи только пропущенную форму с польскими буквами."
 msgstr "Eight blocks: six multiple-choice blocks, one for entering forms and one for transforming sentences. Enter only the missing form, using Polish characters."
+
+msgid "Warsztat A uczy naprawy hamulców z pomocą mechanika."
+msgstr "Workshop A teaches brake repairs with help from a mechanic."
+
+msgid "Klub B spotyka się w środę o 18 i pozwala bezpłatnie ćwiczyć rozmowę."
+msgstr "Club B meets on Wednesday at 18:00 and offers free conversation practice."
+
+msgid "Pracownia C zaprasza w niedzielę dzieci w wieku 7–12 lat z opiekunem."
+msgstr "Studio C welcomes children aged 7–12 with a guardian on Sundays."
+
+msgid "Spacer D odbywa się w piątek wieczorem i nie obejmuje muzeów."
+msgstr "Walk D takes place on Friday evening and does not include museums."
+
+msgid "Pomoc E obejmuje wysłanie e-maila i udostępnia komputer na miejscu."
+msgstr "Service E helps with sending email and provides a computer on site."
+
+msgid "W warsztacie A udział jest bezpłatny, a uczestnik płaci tylko za części."
+msgstr "Workshop A is free to attend; participants pay only for parts."
+
+msgid "Klub B prowadzi środowe rozmowy bez ocen i egzaminów."
+msgstr "Club B offers Wednesday conversations without grades or exams."
+
+msgid "Cena zajęć C obejmuje glinę, narzędzia i wypalenie prac; dzieci uczestniczą z opiekunem."
+msgstr "The price of activity C includes clay, tools and firing; children attend with a guardian."
+
+msgid "Bilet na piątkowy spacer D można kupić najpóźniej dzień wcześniej, czyli w czwartek."
+msgstr "Tickets for Friday walk D must be bought by the day before, which is Thursday."
+
+msgid "Pomoc E jest indywidualna, odbywa się we wtorek rano i wymaga rezerwacji telefonicznej."
+msgstr "Service E provides individual help on Tuesday morning and requires a telephone booking."
+
+msgid "Пять блоков, 30 ответов и 45 минут. В объявлениях одну букву можно выбрать несколько раз; одно объявление лишнее. Это учебный набор, не полная симуляция."
+msgstr "Five blocks, 30 answers and 45 minutes. For the advertisements, you may choose the same letter more than once; one advertisement is unused. This is a training set, not a complete simulation."
