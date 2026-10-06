@@ -1,0 +1,879 @@
+{
+  "created_for": "PolskiFlow",
+  "origin": "original",
+  "verified_at": "2026-10-06",
+  "review_scope": "internal text review only; independent Polish review pending",
+  "format": "expanded-draft-v1",
+  "status": "awaiting_recording_and_review",
+  "enabled_in_guided_run": false,
+  "instructions": [
+    "Record each block separately; read the exact Polish transcript, never titles, questions or voice notes.",
+    "For dialogues and interviews alternate voices at blank lines. Preserve all numbers, corrections and negations.",
+    "Use a natural clear pace. Text ownership does not establish rights to a narrator voice or recording.",
+    "Deliver rights-cleared MP3, OGG or WAV with author, license URL, reviewer, date and final file SHA-256.",
+    "A Polish-speaking reviewer must listen to every complete file and verify all correct and incorrect options.",
+    "The three extension blocks are shared across variants: record each once, retain its checksum and immutable ID.",
+    "These drafts are not compatible with the current single-recording run registry. Add versioned multi-block playback and reviewed asset selection before enabling them.",
+    "Do not claim full exam equivalence until duration, difficulty and formats are independently validated."
+  ],
+  "variants": [
+    {
+      "id": "b1-weekly-v1",
+      "blocks": [
+        {
+          "id": "variant",
+          "title": "Вариант 1",
+          "genre": "short_message",
+          "transcript": "Dzień dobry. Informujemy, że sobotnie warsztaty fotograficzne rozpoczną się o jedenastej, a nie o dziesiątej. Spotykamy się przy głównym wejściu do domu kultury. Prosimy przynieść telefon lub aparat oraz coś do picia. W razie deszczu pierwsza część zajęć odbędzie się w sali numer dwanaście.",
+          "transcript_sha256": "755b6813c30c3b7ecca5b41f0cbb4eefaf73a630351cf7a9fff4bac6710e21a8",
+          "voice_notes": "One voice. Read only the exact transcript, not questions or titles.",
+          "answer_checks": [
+            {
+              "id": "l1",
+              "question": "O której rozpoczną się warsztaty?",
+              "options": [
+                "O 10:00",
+                "O 11:00",
+                "O 12:00"
+              ],
+              "correct_index": 1,
+              "correct_answer": "O 11:00",
+              "explanation": "Nagranie mówi, że warsztaty rozpoczną się o jedenastej."
+            },
+            {
+              "id": "l2",
+              "question": "Co trzeba przynieść?",
+              "options": [
+                "Tylko dokumenty",
+                "Własne krzesło",
+                "Aparat lub telefon i napój"
+              ],
+              "correct_index": 2,
+              "correct_answer": "Aparat lub telefon i napój",
+              "explanation": "Organizator prosi o telefon lub aparat oraz coś do picia."
+            },
+            {
+              "id": "sl3",
+              "question": "Gdzie uczestnicy mają się spotkać?",
+              "options": [
+                "Przy wejściu do domu kultury",
+                "W sali numer dwanaście",
+                "Na przystanku obok parku"
+              ],
+              "correct_index": 0,
+              "correct_answer": "Przy wejściu do domu kultury",
+              "explanation": "Komunikat wyraźnie wskazuje główne wejście do domu kultury jako miejsce spotkania."
+            },
+            {
+              "id": "sl4",
+              "question": "Co zmieni się w razie deszczu?",
+              "options": [
+                "Warsztaty zostaną odwołane",
+                "Pierwsza część odbędzie się w sali",
+                "Trzeba przyjść godzinę później"
+              ],
+              "correct_index": 1,
+              "correct_answer": "Pierwsza część odbędzie się w sali",
+              "explanation": "Deszcz zmienia jedynie miejsce pierwszej części zajęć, a nie godzinę ani termin."
+            },
+            {
+              "id": "sl5",
+              "question": "Jaki jest główny cel komunikatu?",
+              "options": [
+                "Sprzedać aparaty fotograficzne",
+                "Zaprosić na wystawę zdjęć",
+                "Przekazać organizacyjne szczegóły warsztatów"
+              ],
+              "correct_index": 2,
+              "correct_answer": "Przekazać organizacyjne szczegóły warsztatów",
+              "explanation": "Nagranie podaje nową godzinę, miejsce spotkania oraz listę potrzebnych rzeczy."
+            }
+          ]
+        },
+        {
+          "id": "station",
+          "title": "Zmiana planu podróży",
+          "genre": "announcement",
+          "transcript": "Uwaga, podróżni. Pociąg do Torunia, który miał odjechać o godzinie czternastej dwadzieścia, odjedzie dziś o czternastej pięćdziesiąt. Przyczyną opóźnienia jest awaria na wcześniejszym odcinku trasy. Prosimy nie przechodzić na peron drugi. Pociąg zostanie podstawiony na peron czwarty. Bilety zachowują ważność i nie trzeba ich wymieniać. Osoby, które rezygnują z podróży, mogą zgłosić się do kasy po zwrot pieniędzy. Kasa znajduje się w głównym budynku, obok informacji. Przypominamy, że wejście od ulicy Ogrodowej jest dziś zamknięte z powodu remontu. Do budynku można wejść od placu przed dworcem. Kolejna informacja o odjeździe zostanie podana za dziesięć minut.",
+          "transcript_sha256": "cd65b5f3ebb339fc7b06d3eb00cf7da187c0f3bed5c75539a3dd5f0c0d2f6509",
+          "voice_notes": "One announcer. Preserve the correction of the time and platform; do not emphasize answers artificially.",
+          "answer_checks": [
+            {
+              "id": "tl06",
+              "question": "O której ma dziś odjechać pociąg?",
+              "options": [
+                "14:20",
+                "14:50",
+                "15:20"
+              ],
+              "correct_index": 1,
+              "correct_answer": "14:50",
+              "explanation": "Nowa godzina odjazdu to 14:50, a nie pierwotna 14:20."
+            },
+            {
+              "id": "tl07",
+              "question": "Z którego peronu odjedzie pociąg?",
+              "options": [
+                "Z czwartego",
+                "Z drugiego",
+                "Z pierwszego"
+              ],
+              "correct_index": 0,
+              "correct_answer": "Z czwartego",
+              "explanation": "Komunikat odwołuje peron drugi i wskazuje peron czwarty."
+            },
+            {
+              "id": "tl08",
+              "question": "Co musi zrobić osoba, która nadal chce jechać?",
+              "options": [
+                "Wymienić bilet",
+                "Kupić dopłatę",
+                "Zachować obecny bilet"
+              ],
+              "correct_index": 2,
+              "correct_answer": "Zachować obecny bilet",
+              "explanation": "Bilety zachowują ważność i nie wymagają wymiany."
+            },
+            {
+              "id": "tl09",
+              "question": "Gdzie można otrzymać zwrot pieniędzy?",
+              "options": [
+                "Na peronie",
+                "W kasie obok informacji",
+                "Przy zamkniętym wejściu"
+              ],
+              "correct_index": 1,
+              "correct_answer": "W kasie obok informacji",
+              "explanation": "Zwrot pieniędzy jest dostępny w kasie w głównym budynku obok informacji."
+            },
+            {
+              "id": "tl10",
+              "question": "Którym wejściem można wejść do budynku?",
+              "options": [
+                "Od placu przed dworcem",
+                "Od ulicy Ogrodowej",
+                "Tylko przez peron drugi"
+              ],
+              "correct_index": 0,
+              "correct_answer": "Od placu przed dworcem",
+              "explanation": "Wejście od ulicy Ogrodowej jest zamknięte; dostępne jest wejście od placu."
+            }
+          ]
+        },
+        {
+          "id": "course",
+          "title": "Telefon do pracowni",
+          "genre": "dialogue",
+          "transcript": "Dzień dobry, chciałbym zapisać się na warsztaty gotowania. Czy są jeszcze miejsca w sobotę?\n\nDzień dobry. Sobotnia grupa jest już pełna. Mamy dwa wolne miejsca w niedzielę od jedenastej do czternastej.\n\nNiedziela mi odpowiada. Czy trzeba przynieść produkty albo własny fartuch?\n\nProdukty i fartuchy zapewniamy. Proszę tylko zabrać pojemnik, jeśli chce pan zabrać przygotowane danie do domu. Udział kosztuje osiemdziesiąt złotych.\n\nChętnie przyjdę. Mogę zapłacić na miejscu? I czy muszę już teraz podać, że nie jem mięsa?\n\nPłatność przyjmujemy przelewem najpóźniej do piątku. Rezerwację potwierdzimy po otrzymaniu pieniędzy. Informację o diecie proszę wpisać w formularzu zgłoszeniowym, żebyśmy mogli wcześniej przygotować odpowiednie produkty.",
+          "transcript_sha256": "5098c1827b8d5b69103231c66ce5c2c911a0b57ee72df8514dfbfb3344a2c65c",
+          "voice_notes": "Two voices, alternating at each blank line: male customer, staff member. Paragraph boundaries are speaker changes; do not read role labels.",
+          "answer_checks": [
+            {
+              "id": "tl11",
+              "question": "Dlaczego klient wybiera niedzielę?",
+              "options": [
+                "W sobotę nie ma już miejsc",
+                "W niedzielę jest taniej",
+                "W sobotę pracownia jest zamknięta"
+              ],
+              "correct_index": 0,
+              "correct_answer": "W sobotę nie ma już miejsc",
+              "explanation": "Sobotnia grupa jest pełna, a w niedzielnej są wolne miejsca."
+            },
+            {
+              "id": "tl12",
+              "question": "Co uczestnik ma przynieść, aby zabrać danie do domu?",
+              "options": [
+                "Produkty",
+                "Fartuch",
+                "Pojemnik"
+              ],
+              "correct_index": 2,
+              "correct_answer": "Pojemnik",
+              "explanation": "Pracownia zapewnia produkty i fartuch, ale prosi o własny pojemnik."
+            },
+            {
+              "id": "tl13",
+              "question": "Jak trzeba zapłacić?",
+              "options": [
+                "Gotówką po zajęciach",
+                "Przelewem do piątku",
+                "Kartą w niedzielę"
+              ],
+              "correct_index": 1,
+              "correct_answer": "Przelewem do piątku",
+              "explanation": "Płatność jest przelewem najpóźniej do piątku, a nie na miejscu."
+            },
+            {
+              "id": "tl14",
+              "question": "Kiedy rezerwacja zostanie potwierdzona?",
+              "options": [
+                "Po otrzymaniu pieniędzy",
+                "Od razu po telefonie",
+                "Po zakończeniu warsztatów"
+              ],
+              "correct_index": 0,
+              "correct_answer": "Po otrzymaniu pieniędzy",
+              "explanation": "Potwierdzenie nastąpi po otrzymaniu płatności."
+            },
+            {
+              "id": "tl15",
+              "question": "Po co trzeba wcześniej podać informację o diecie?",
+              "options": [
+                "Żeby dostać niższą cenę",
+                "Żeby zmienić godzinę zajęć",
+                "Żeby pracownia przygotowała odpowiednie produkty"
+              ],
+              "correct_index": 2,
+              "correct_answer": "Żeby pracownia przygotowała odpowiednie produkty",
+              "explanation": "Informacja w formularzu pozwala wcześniej przygotować produkty odpowiednie dla uczestnika."
+            }
+          ]
+        },
+        {
+          "id": "interview",
+          "title": "Rozmowa o wymianie książek",
+          "genre": "interview",
+          "transcript": "Pani Marto, od czego zaczęła się sąsiedzka wymiana książek?\n\nPo przeprowadzce znalazłam w kartonach wiele książek, do których już nie wracałam. Nie chciałam ich sprzedawać, więc zaprosiłam sąsiadów do wymiany. Pierwsze spotkanie odbyło się na podwórku.\n\nCzy trzeba przynieść książkę, żeby coś wybrać?\n\nNie, można też przyjść bez niej. Prosimy jednak o zabieranie tylko dwóch książek podczas jednego spotkania, żeby wystarczyło dla innych. Przyjmujemy wyłącznie książki w dobrym stanie, bez brakujących stron.\n\nJak organizujecie spotkania zimą i kto zajmuje się książkami, które zostają?\n\nOd listopada spotykamy się w sali domu kultury w ostatnią sobotę miesiąca. Nie zwiększamy częstotliwości spotkań. Książki, które zostają, przechowujemy do kolejnego spotkania; nie przekazujemy ich automatycznie bibliotece. Dwóch wolontariuszy pomaga nam je uporządkować. Najbardziej cieszy mnie to, że sąsiedzi, którzy wcześniej się nie znali, zaczęli ze sobą rozmawiać.",
+          "transcript_sha256": "fa77d331a0aee2291837f8d0a8d50d2088762e55dff7ed23b8efda1c6af4921f",
+          "voice_notes": "Two voices alternating at blank lines: interviewer and Marta. Natural interview pace; keep explicit negations and limits.",
+          "answer_checks": [
+            {
+              "id": "tl16",
+              "question": "Co było powodem zorganizowania pierwszej wymiany?",
+              "options": [
+                "Prośba biblioteki",
+                "Znalezienie własnych nieużywanych książek po przeprowadzce",
+                "Zamknięcie domu kultury"
+              ],
+              "correct_index": 1,
+              "correct_answer": "Znalezienie własnych nieużywanych książek po przeprowadzce",
+              "explanation": "Marta znalazła po przeprowadzce książki, do których już nie wracała."
+            },
+            {
+              "id": "tl17",
+              "question": "Ile książek można zabrać na jednym spotkaniu?",
+              "options": [
+                "Dwie",
+                "Dowolną liczbę",
+                "Tylko jedną"
+              ],
+              "correct_index": 0,
+              "correct_answer": "Dwie",
+              "explanation": "Limit wynosi dwie książki, aby wystarczyło dla innych."
+            },
+            {
+              "id": "tl18",
+              "question": "Co zmienia się od listopada?",
+              "options": [
+                "Spotkania odbywają się co tydzień",
+                "Trzeba kupić bilet",
+                "Spotkania przenoszą się do sali domu kultury"
+              ],
+              "correct_index": 2,
+              "correct_answer": "Spotkania przenoszą się do sali domu kultury",
+              "explanation": "Od listopada zmienia się miejsce, ale nie częstotliwość spotkań."
+            },
+            {
+              "id": "tl19",
+              "question": "Co dzieje się z książkami, które zostają?",
+              "options": [
+                "Są automatycznie oddawane bibliotece",
+                "Czekają na kolejne spotkanie",
+                "Są sprzedawane przez wolontariuszy"
+              ],
+              "correct_index": 1,
+              "correct_answer": "Czekają na kolejne spotkanie",
+              "explanation": "Pozostałe książki są przechowywane do kolejnego spotkania."
+            },
+            {
+              "id": "tl20",
+              "question": "Co Marta uważa za najważniejszy efekt wymiany?",
+              "options": [
+                "Nowe rozmowy i znajomości między sąsiadami",
+                "Zarobione pieniądze",
+                "Większą liczbę spotkań w miesiącu"
+              ],
+              "correct_index": 0,
+              "correct_answer": "Nowe rozmowy i znajomości między sąsiadami",
+              "explanation": "Marta najbardziej cieszy się z rozmów między sąsiadami, którzy wcześniej się nie znali."
+            }
+          ]
+        }
+      ],
+      "answer_count": 20
+    },
+    {
+      "id": "b1-weekly-v2",
+      "blocks": [
+        {
+          "id": "variant",
+          "title": "Вариант 2",
+          "genre": "short_message",
+          "transcript": "Uwaga, uczestnicy klubu książki. Najbliższe spotkanie odbędzie się w czwartek o osiemnastej trzydzieści, a nie w środę. Czekamy w czytelni na drugim piętrze biblioteki. Każdy uczestnik powinien przynieść książkę i zaznaczyć krótki fragment, o którym chce porozmawiać. Po spotkaniu będzie można zapisać się na listopadowe warsztaty.",
+          "transcript_sha256": "0032910aa4d1d3ba6d3dd89d86cbe2e29ca13ed0583b0491071aa1b8d04988f7",
+          "voice_notes": "One voice. Read only the exact transcript, not questions or titles.",
+          "answer_checks": [
+            {
+              "id": "l1",
+              "question": "Kiedy odbędzie się spotkanie?",
+              "options": [
+                "W środę o 18:30",
+                "W czwartek o 18:30",
+                "W czwartek o 17:30"
+              ],
+              "correct_index": 1,
+              "correct_answer": "W czwartek o 18:30",
+              "explanation": "Komunikat przenosi spotkanie na czwartek na godzinę osiemnastą trzydzieści."
+            },
+            {
+              "id": "l2",
+              "question": "Co powinien przygotować uczestnik?",
+              "options": [
+                "Gotową prezentację",
+                "Formularz na warsztaty",
+                "Książkę z zaznaczonym fragmentem"
+              ],
+              "correct_index": 2,
+              "correct_answer": "Książkę z zaznaczonym fragmentem",
+              "explanation": "Każdy ma przynieść książkę i zaznaczyć fragment do rozmowy."
+            },
+            {
+              "id": "sl3",
+              "question": "Gdzie odbędzie się spotkanie klubu?",
+              "options": [
+                "W księgarni",
+                "W czytelni na drugim piętrze",
+                "W sali warsztatowej"
+              ],
+              "correct_index": 1,
+              "correct_answer": "W czytelni na drugim piętrze",
+              "explanation": "Uczestnicy mają przyjść do czytelni znajdującej się na drugim piętrze biblioteki."
+            },
+            {
+              "id": "sl4",
+              "question": "O czym uczestnik ma porozmawiać?",
+              "options": [
+                "O wybranym fragmencie książki",
+                "O listopadowej pogodzie",
+                "O pracy bibliotekarza"
+              ],
+              "correct_index": 0,
+              "correct_answer": "O wybranym fragmencie książki",
+              "explanation": "Każdy zaznacza krótki fragment książki, który chce omówić podczas spotkania."
+            },
+            {
+              "id": "sl5",
+              "question": "Co będzie możliwe po spotkaniu?",
+              "options": [
+                "Wypożyczenie dowolnej nowości",
+                "Zmiana terminu klubu",
+                "Zapisanie się na listopadowe warsztaty"
+              ],
+              "correct_index": 2,
+              "correct_answer": "Zapisanie się na listopadowe warsztaty",
+              "explanation": "Końcowa informacja dotyczy zapisów na warsztaty organizowane w listopadzie."
+            }
+          ]
+        },
+        {
+          "id": "station",
+          "title": "Zmiana planu podróży",
+          "genre": "announcement",
+          "transcript": "Uwaga, podróżni. Pociąg do Torunia, który miał odjechać o godzinie czternastej dwadzieścia, odjedzie dziś o czternastej pięćdziesiąt. Przyczyną opóźnienia jest awaria na wcześniejszym odcinku trasy. Prosimy nie przechodzić na peron drugi. Pociąg zostanie podstawiony na peron czwarty. Bilety zachowują ważność i nie trzeba ich wymieniać. Osoby, które rezygnują z podróży, mogą zgłosić się do kasy po zwrot pieniędzy. Kasa znajduje się w głównym budynku, obok informacji. Przypominamy, że wejście od ulicy Ogrodowej jest dziś zamknięte z powodu remontu. Do budynku można wejść od placu przed dworcem. Kolejna informacja o odjeździe zostanie podana za dziesięć minut.",
+          "transcript_sha256": "cd65b5f3ebb339fc7b06d3eb00cf7da187c0f3bed5c75539a3dd5f0c0d2f6509",
+          "voice_notes": "One announcer. Preserve the correction of the time and platform; do not emphasize answers artificially.",
+          "answer_checks": [
+            {
+              "id": "tl06",
+              "question": "O której ma dziś odjechać pociąg?",
+              "options": [
+                "14:20",
+                "14:50",
+                "15:20"
+              ],
+              "correct_index": 1,
+              "correct_answer": "14:50",
+              "explanation": "Nowa godzina odjazdu to 14:50, a nie pierwotna 14:20."
+            },
+            {
+              "id": "tl07",
+              "question": "Z którego peronu odjedzie pociąg?",
+              "options": [
+                "Z czwartego",
+                "Z drugiego",
+                "Z pierwszego"
+              ],
+              "correct_index": 0,
+              "correct_answer": "Z czwartego",
+              "explanation": "Komunikat odwołuje peron drugi i wskazuje peron czwarty."
+            },
+            {
+              "id": "tl08",
+              "question": "Co musi zrobić osoba, która nadal chce jechać?",
+              "options": [
+                "Wymienić bilet",
+                "Kupić dopłatę",
+                "Zachować obecny bilet"
+              ],
+              "correct_index": 2,
+              "correct_answer": "Zachować obecny bilet",
+              "explanation": "Bilety zachowują ważność i nie wymagają wymiany."
+            },
+            {
+              "id": "tl09",
+              "question": "Gdzie można otrzymać zwrot pieniędzy?",
+              "options": [
+                "Na peronie",
+                "W kasie obok informacji",
+                "Przy zamkniętym wejściu"
+              ],
+              "correct_index": 1,
+              "correct_answer": "W kasie obok informacji",
+              "explanation": "Zwrot pieniędzy jest dostępny w kasie w głównym budynku obok informacji."
+            },
+            {
+              "id": "tl10",
+              "question": "Którym wejściem można wejść do budynku?",
+              "options": [
+                "Od placu przed dworcem",
+                "Od ulicy Ogrodowej",
+                "Tylko przez peron drugi"
+              ],
+              "correct_index": 0,
+              "correct_answer": "Od placu przed dworcem",
+              "explanation": "Wejście od ulicy Ogrodowej jest zamknięte; dostępne jest wejście od placu."
+            }
+          ]
+        },
+        {
+          "id": "course",
+          "title": "Telefon do pracowni",
+          "genre": "dialogue",
+          "transcript": "Dzień dobry, chciałbym zapisać się na warsztaty gotowania. Czy są jeszcze miejsca w sobotę?\n\nDzień dobry. Sobotnia grupa jest już pełna. Mamy dwa wolne miejsca w niedzielę od jedenastej do czternastej.\n\nNiedziela mi odpowiada. Czy trzeba przynieść produkty albo własny fartuch?\n\nProdukty i fartuchy zapewniamy. Proszę tylko zabrać pojemnik, jeśli chce pan zabrać przygotowane danie do domu. Udział kosztuje osiemdziesiąt złotych.\n\nChętnie przyjdę. Mogę zapłacić na miejscu? I czy muszę już teraz podać, że nie jem mięsa?\n\nPłatność przyjmujemy przelewem najpóźniej do piątku. Rezerwację potwierdzimy po otrzymaniu pieniędzy. Informację o diecie proszę wpisać w formularzu zgłoszeniowym, żebyśmy mogli wcześniej przygotować odpowiednie produkty.",
+          "transcript_sha256": "5098c1827b8d5b69103231c66ce5c2c911a0b57ee72df8514dfbfb3344a2c65c",
+          "voice_notes": "Two voices, alternating at each blank line: male customer, staff member. Paragraph boundaries are speaker changes; do not read role labels.",
+          "answer_checks": [
+            {
+              "id": "tl11",
+              "question": "Dlaczego klient wybiera niedzielę?",
+              "options": [
+                "W sobotę nie ma już miejsc",
+                "W niedzielę jest taniej",
+                "W sobotę pracownia jest zamknięta"
+              ],
+              "correct_index": 0,
+              "correct_answer": "W sobotę nie ma już miejsc",
+              "explanation": "Sobotnia grupa jest pełna, a w niedzielnej są wolne miejsca."
+            },
+            {
+              "id": "tl12",
+              "question": "Co uczestnik ma przynieść, aby zabrać danie do domu?",
+              "options": [
+                "Produkty",
+                "Fartuch",
+                "Pojemnik"
+              ],
+              "correct_index": 2,
+              "correct_answer": "Pojemnik",
+              "explanation": "Pracownia zapewnia produkty i fartuch, ale prosi o własny pojemnik."
+            },
+            {
+              "id": "tl13",
+              "question": "Jak trzeba zapłacić?",
+              "options": [
+                "Gotówką po zajęciach",
+                "Przelewem do piątku",
+                "Kartą w niedzielę"
+              ],
+              "correct_index": 1,
+              "correct_answer": "Przelewem do piątku",
+              "explanation": "Płatność jest przelewem najpóźniej do piątku, a nie na miejscu."
+            },
+            {
+              "id": "tl14",
+              "question": "Kiedy rezerwacja zostanie potwierdzona?",
+              "options": [
+                "Po otrzymaniu pieniędzy",
+                "Od razu po telefonie",
+                "Po zakończeniu warsztatów"
+              ],
+              "correct_index": 0,
+              "correct_answer": "Po otrzymaniu pieniędzy",
+              "explanation": "Potwierdzenie nastąpi po otrzymaniu płatności."
+            },
+            {
+              "id": "tl15",
+              "question": "Po co trzeba wcześniej podać informację o diecie?",
+              "options": [
+                "Żeby dostać niższą cenę",
+                "Żeby zmienić godzinę zajęć",
+                "Żeby pracownia przygotowała odpowiednie produkty"
+              ],
+              "correct_index": 2,
+              "correct_answer": "Żeby pracownia przygotowała odpowiednie produkty",
+              "explanation": "Informacja w formularzu pozwala wcześniej przygotować produkty odpowiednie dla uczestnika."
+            }
+          ]
+        },
+        {
+          "id": "interview",
+          "title": "Rozmowa o wymianie książek",
+          "genre": "interview",
+          "transcript": "Pani Marto, od czego zaczęła się sąsiedzka wymiana książek?\n\nPo przeprowadzce znalazłam w kartonach wiele książek, do których już nie wracałam. Nie chciałam ich sprzedawać, więc zaprosiłam sąsiadów do wymiany. Pierwsze spotkanie odbyło się na podwórku.\n\nCzy trzeba przynieść książkę, żeby coś wybrać?\n\nNie, można też przyjść bez niej. Prosimy jednak o zabieranie tylko dwóch książek podczas jednego spotkania, żeby wystarczyło dla innych. Przyjmujemy wyłącznie książki w dobrym stanie, bez brakujących stron.\n\nJak organizujecie spotkania zimą i kto zajmuje się książkami, które zostają?\n\nOd listopada spotykamy się w sali domu kultury w ostatnią sobotę miesiąca. Nie zwiększamy częstotliwości spotkań. Książki, które zostają, przechowujemy do kolejnego spotkania; nie przekazujemy ich automatycznie bibliotece. Dwóch wolontariuszy pomaga nam je uporządkować. Najbardziej cieszy mnie to, że sąsiedzi, którzy wcześniej się nie znali, zaczęli ze sobą rozmawiać.",
+          "transcript_sha256": "fa77d331a0aee2291837f8d0a8d50d2088762e55dff7ed23b8efda1c6af4921f",
+          "voice_notes": "Two voices alternating at blank lines: interviewer and Marta. Natural interview pace; keep explicit negations and limits.",
+          "answer_checks": [
+            {
+              "id": "tl16",
+              "question": "Co było powodem zorganizowania pierwszej wymiany?",
+              "options": [
+                "Prośba biblioteki",
+                "Znalezienie własnych nieużywanych książek po przeprowadzce",
+                "Zamknięcie domu kultury"
+              ],
+              "correct_index": 1,
+              "correct_answer": "Znalezienie własnych nieużywanych książek po przeprowadzce",
+              "explanation": "Marta znalazła po przeprowadzce książki, do których już nie wracała."
+            },
+            {
+              "id": "tl17",
+              "question": "Ile książek można zabrać na jednym spotkaniu?",
+              "options": [
+                "Dwie",
+                "Dowolną liczbę",
+                "Tylko jedną"
+              ],
+              "correct_index": 0,
+              "correct_answer": "Dwie",
+              "explanation": "Limit wynosi dwie książki, aby wystarczyło dla innych."
+            },
+            {
+              "id": "tl18",
+              "question": "Co zmienia się od listopada?",
+              "options": [
+                "Spotkania odbywają się co tydzień",
+                "Trzeba kupić bilet",
+                "Spotkania przenoszą się do sali domu kultury"
+              ],
+              "correct_index": 2,
+              "correct_answer": "Spotkania przenoszą się do sali domu kultury",
+              "explanation": "Od listopada zmienia się miejsce, ale nie częstotliwość spotkań."
+            },
+            {
+              "id": "tl19",
+              "question": "Co dzieje się z książkami, które zostają?",
+              "options": [
+                "Są automatycznie oddawane bibliotece",
+                "Czekają na kolejne spotkanie",
+                "Są sprzedawane przez wolontariuszy"
+              ],
+              "correct_index": 1,
+              "correct_answer": "Czekają na kolejne spotkanie",
+              "explanation": "Pozostałe książki są przechowywane do kolejnego spotkania."
+            },
+            {
+              "id": "tl20",
+              "question": "Co Marta uważa za najważniejszy efekt wymiany?",
+              "options": [
+                "Nowe rozmowy i znajomości między sąsiadami",
+                "Zarobione pieniądze",
+                "Większą liczbę spotkań w miesiącu"
+              ],
+              "correct_index": 0,
+              "correct_answer": "Nowe rozmowy i znajomości między sąsiadami",
+              "explanation": "Marta najbardziej cieszy się z rozmów między sąsiadami, którzy wcześniej się nie znali."
+            }
+          ]
+        }
+      ],
+      "answer_count": 20
+    },
+    {
+      "id": "b1-weekly-v3",
+      "blocks": [
+        {
+          "id": "variant",
+          "title": "Вариант 3",
+          "genre": "short_message",
+          "transcript": "Pociąg do Gdańska odjedzie dziś z peronu piątego zamiast trzeciego. Z powodu prac na torach wyjazd jest opóźniony o dwadzieścia minut. Podróżni z rowerami powinni zająć miejsca w ostatnim wagonie. Bilety zachowują ważność i nie trzeba ich wymieniać. Przepraszamy za zmianę i prosimy uważnie słuchać kolejnych komunikatów.",
+          "transcript_sha256": "6abe8c2d5010984a5f5c8fab2f7303c3bbf3767014dec551bbb241198e7abed6",
+          "voice_notes": "One voice. Read only the exact transcript, not questions or titles.",
+          "answer_checks": [
+            {
+              "id": "l1",
+              "question": "Z którego peronu odjedzie pociąg?",
+              "options": [
+                "Z trzeciego",
+                "Z czwartego",
+                "Z piątego"
+              ],
+              "correct_index": 2,
+              "correct_answer": "Z piątego",
+              "explanation": "Komunikat zmienia peron z trzeciego na piąty."
+            },
+            {
+              "id": "l2",
+              "question": "Co mają zrobić osoby z rowerami?",
+              "options": [
+                "Wymienić bilet",
+                "Wsiąść do ostatniego wagonu",
+                "Poczekać na inny pociąg"
+              ],
+              "correct_index": 1,
+              "correct_answer": "Wsiąść do ostatniego wagonu",
+              "explanation": "Dla podróżnych z rowerami wskazano ostatni wagon."
+            },
+            {
+              "id": "sl3",
+              "question": "Dlaczego pociąg jest opóźniony?",
+              "options": [
+                "Z powodu prac na torach",
+                "Z powodu złej pogody",
+                "Z powodu kontroli biletów"
+              ],
+              "correct_index": 0,
+              "correct_answer": "Z powodu prac na torach",
+              "explanation": "Komunikat bezpośrednio łączy dwudziestominutowe opóźnienie z pracami na torach."
+            },
+            {
+              "id": "sl4",
+              "question": "O ile później odjedzie pociąg?",
+              "options": [
+                "O dziesięć minut",
+                "O dwadzieścia minut",
+                "O trzydzieści minut"
+              ],
+              "correct_index": 1,
+              "correct_answer": "O dwadzieścia minut",
+              "explanation": "Zapowiedziane w komunikacie opóźnienie pociągu wynosi dokładnie dwadzieścia minut."
+            },
+            {
+              "id": "sl5",
+              "question": "Co trzeba zrobić z biletem?",
+              "options": [
+                "Wymienić go w kasie",
+                "Dopłacić za zmianę peronu",
+                "Zachować go, ponieważ nadal jest ważny"
+              ],
+              "correct_index": 2,
+              "correct_answer": "Zachować go, ponieważ nadal jest ważny",
+              "explanation": "Bilety zachowują ważność, więc podróżni nie muszą ich wymieniać."
+            }
+          ]
+        },
+        {
+          "id": "station",
+          "title": "Zmiana planu podróży",
+          "genre": "announcement",
+          "transcript": "Uwaga, podróżni. Pociąg do Torunia, który miał odjechać o godzinie czternastej dwadzieścia, odjedzie dziś o czternastej pięćdziesiąt. Przyczyną opóźnienia jest awaria na wcześniejszym odcinku trasy. Prosimy nie przechodzić na peron drugi. Pociąg zostanie podstawiony na peron czwarty. Bilety zachowują ważność i nie trzeba ich wymieniać. Osoby, które rezygnują z podróży, mogą zgłosić się do kasy po zwrot pieniędzy. Kasa znajduje się w głównym budynku, obok informacji. Przypominamy, że wejście od ulicy Ogrodowej jest dziś zamknięte z powodu remontu. Do budynku można wejść od placu przed dworcem. Kolejna informacja o odjeździe zostanie podana za dziesięć minut.",
+          "transcript_sha256": "cd65b5f3ebb339fc7b06d3eb00cf7da187c0f3bed5c75539a3dd5f0c0d2f6509",
+          "voice_notes": "One announcer. Preserve the correction of the time and platform; do not emphasize answers artificially.",
+          "answer_checks": [
+            {
+              "id": "tl06",
+              "question": "O której ma dziś odjechać pociąg?",
+              "options": [
+                "14:20",
+                "14:50",
+                "15:20"
+              ],
+              "correct_index": 1,
+              "correct_answer": "14:50",
+              "explanation": "Nowa godzina odjazdu to 14:50, a nie pierwotna 14:20."
+            },
+            {
+              "id": "tl07",
+              "question": "Z którego peronu odjedzie pociąg?",
+              "options": [
+                "Z czwartego",
+                "Z drugiego",
+                "Z pierwszego"
+              ],
+              "correct_index": 0,
+              "correct_answer": "Z czwartego",
+              "explanation": "Komunikat odwołuje peron drugi i wskazuje peron czwarty."
+            },
+            {
+              "id": "tl08",
+              "question": "Co musi zrobić osoba, która nadal chce jechać?",
+              "options": [
+                "Wymienić bilet",
+                "Kupić dopłatę",
+                "Zachować obecny bilet"
+              ],
+              "correct_index": 2,
+              "correct_answer": "Zachować obecny bilet",
+              "explanation": "Bilety zachowują ważność i nie wymagają wymiany."
+            },
+            {
+              "id": "tl09",
+              "question": "Gdzie można otrzymać zwrot pieniędzy?",
+              "options": [
+                "Na peronie",
+                "W kasie obok informacji",
+                "Przy zamkniętym wejściu"
+              ],
+              "correct_index": 1,
+              "correct_answer": "W kasie obok informacji",
+              "explanation": "Zwrot pieniędzy jest dostępny w kasie w głównym budynku obok informacji."
+            },
+            {
+              "id": "tl10",
+              "question": "Którym wejściem można wejść do budynku?",
+              "options": [
+                "Od placu przed dworcem",
+                "Od ulicy Ogrodowej",
+                "Tylko przez peron drugi"
+              ],
+              "correct_index": 0,
+              "correct_answer": "Od placu przed dworcem",
+              "explanation": "Wejście od ulicy Ogrodowej jest zamknięte; dostępne jest wejście od placu."
+            }
+          ]
+        },
+        {
+          "id": "course",
+          "title": "Telefon do pracowni",
+          "genre": "dialogue",
+          "transcript": "Dzień dobry, chciałbym zapisać się na warsztaty gotowania. Czy są jeszcze miejsca w sobotę?\n\nDzień dobry. Sobotnia grupa jest już pełna. Mamy dwa wolne miejsca w niedzielę od jedenastej do czternastej.\n\nNiedziela mi odpowiada. Czy trzeba przynieść produkty albo własny fartuch?\n\nProdukty i fartuchy zapewniamy. Proszę tylko zabrać pojemnik, jeśli chce pan zabrać przygotowane danie do domu. Udział kosztuje osiemdziesiąt złotych.\n\nChętnie przyjdę. Mogę zapłacić na miejscu? I czy muszę już teraz podać, że nie jem mięsa?\n\nPłatność przyjmujemy przelewem najpóźniej do piątku. Rezerwację potwierdzimy po otrzymaniu pieniędzy. Informację o diecie proszę wpisać w formularzu zgłoszeniowym, żebyśmy mogli wcześniej przygotować odpowiednie produkty.",
+          "transcript_sha256": "5098c1827b8d5b69103231c66ce5c2c911a0b57ee72df8514dfbfb3344a2c65c",
+          "voice_notes": "Two voices, alternating at each blank line: male customer, staff member. Paragraph boundaries are speaker changes; do not read role labels.",
+          "answer_checks": [
+            {
+              "id": "tl11",
+              "question": "Dlaczego klient wybiera niedzielę?",
+              "options": [
+                "W sobotę nie ma już miejsc",
+                "W niedzielę jest taniej",
+                "W sobotę pracownia jest zamknięta"
+              ],
+              "correct_index": 0,
+              "correct_answer": "W sobotę nie ma już miejsc",
+              "explanation": "Sobotnia grupa jest pełna, a w niedzielnej są wolne miejsca."
+            },
+            {
+              "id": "tl12",
+              "question": "Co uczestnik ma przynieść, aby zabrać danie do domu?",
+              "options": [
+                "Produkty",
+                "Fartuch",
+                "Pojemnik"
+              ],
+              "correct_index": 2,
+              "correct_answer": "Pojemnik",
+              "explanation": "Pracownia zapewnia produkty i fartuch, ale prosi o własny pojemnik."
+            },
+            {
+              "id": "tl13",
+              "question": "Jak trzeba zapłacić?",
+              "options": [
+                "Gotówką po zajęciach",
+                "Przelewem do piątku",
+                "Kartą w niedzielę"
+              ],
+              "correct_index": 1,
+              "correct_answer": "Przelewem do piątku",
+              "explanation": "Płatność jest przelewem najpóźniej do piątku, a nie na miejscu."
+            },
+            {
+              "id": "tl14",
+              "question": "Kiedy rezerwacja zostanie potwierdzona?",
+              "options": [
+                "Po otrzymaniu pieniędzy",
+                "Od razu po telefonie",
+                "Po zakończeniu warsztatów"
+              ],
+              "correct_index": 0,
+              "correct_answer": "Po otrzymaniu pieniędzy",
+              "explanation": "Potwierdzenie nastąpi po otrzymaniu płatności."
+            },
+            {
+              "id": "tl15",
+              "question": "Po co trzeba wcześniej podać informację o diecie?",
+              "options": [
+                "Żeby dostać niższą cenę",
+                "Żeby zmienić godzinę zajęć",
+                "Żeby pracownia przygotowała odpowiednie produkty"
+              ],
+              "correct_index": 2,
+              "correct_answer": "Żeby pracownia przygotowała odpowiednie produkty",
+              "explanation": "Informacja w formularzu pozwala wcześniej przygotować produkty odpowiednie dla uczestnika."
+            }
+          ]
+        },
+        {
+          "id": "interview",
+          "title": "Rozmowa o wymianie książek",
+          "genre": "interview",
+          "transcript": "Pani Marto, od czego zaczęła się sąsiedzka wymiana książek?\n\nPo przeprowadzce znalazłam w kartonach wiele książek, do których już nie wracałam. Nie chciałam ich sprzedawać, więc zaprosiłam sąsiadów do wymiany. Pierwsze spotkanie odbyło się na podwórku.\n\nCzy trzeba przynieść książkę, żeby coś wybrać?\n\nNie, można też przyjść bez niej. Prosimy jednak o zabieranie tylko dwóch książek podczas jednego spotkania, żeby wystarczyło dla innych. Przyjmujemy wyłącznie książki w dobrym stanie, bez brakujących stron.\n\nJak organizujecie spotkania zimą i kto zajmuje się książkami, które zostają?\n\nOd listopada spotykamy się w sali domu kultury w ostatnią sobotę miesiąca. Nie zwiększamy częstotliwości spotkań. Książki, które zostają, przechowujemy do kolejnego spotkania; nie przekazujemy ich automatycznie bibliotece. Dwóch wolontariuszy pomaga nam je uporządkować. Najbardziej cieszy mnie to, że sąsiedzi, którzy wcześniej się nie znali, zaczęli ze sobą rozmawiać.",
+          "transcript_sha256": "fa77d331a0aee2291837f8d0a8d50d2088762e55dff7ed23b8efda1c6af4921f",
+          "voice_notes": "Two voices alternating at blank lines: interviewer and Marta. Natural interview pace; keep explicit negations and limits.",
+          "answer_checks": [
+            {
+              "id": "tl16",
+              "question": "Co było powodem zorganizowania pierwszej wymiany?",
+              "options": [
+                "Prośba biblioteki",
+                "Znalezienie własnych nieużywanych książek po przeprowadzce",
+                "Zamknięcie domu kultury"
+              ],
+              "correct_index": 1,
+              "correct_answer": "Znalezienie własnych nieużywanych książek po przeprowadzce",
+              "explanation": "Marta znalazła po przeprowadzce książki, do których już nie wracała."
+            },
+            {
+              "id": "tl17",
+              "question": "Ile książek można zabrać na jednym spotkaniu?",
+              "options": [
+                "Dwie",
+                "Dowolną liczbę",
+                "Tylko jedną"
+              ],
+              "correct_index": 0,
+              "correct_answer": "Dwie",
+              "explanation": "Limit wynosi dwie książki, aby wystarczyło dla innych."
+            },
+            {
+              "id": "tl18",
+              "question": "Co zmienia się od listopada?",
+              "options": [
+                "Spotkania odbywają się co tydzień",
+                "Trzeba kupić bilet",
+                "Spotkania przenoszą się do sali domu kultury"
+              ],
+              "correct_index": 2,
+              "correct_answer": "Spotkania przenoszą się do sali domu kultury",
+              "explanation": "Od listopada zmienia się miejsce, ale nie częstotliwość spotkań."
+            },
+            {
+              "id": "tl19",
+              "question": "Co dzieje się z książkami, które zostają?",
+              "options": [
+                "Są automatycznie oddawane bibliotece",
+                "Czekają na kolejne spotkanie",
+                "Są sprzedawane przez wolontariuszy"
+              ],
+              "correct_index": 1,
+              "correct_answer": "Czekają na kolejne spotkanie",
+              "explanation": "Pozostałe książki są przechowywane do kolejnego spotkania."
+            },
+            {
+              "id": "tl20",
+              "question": "Co Marta uważa za najważniejszy efekt wymiany?",
+              "options": [
+                "Nowe rozmowy i znajomości między sąsiadami",
+                "Zarobione pieniądze",
+                "Większą liczbę spotkań w miesiącu"
+              ],
+              "correct_index": 0,
+              "correct_answer": "Nowe rozmowy i znajomości między sąsiadami",
+              "explanation": "Marta najbardziej cieszy się z rozmów między sąsiadami, którzy wcześniej się nie znali."
+            }
+          ]
+        }
+      ],
+      "answer_count": 20
+    }
+  ]
+}

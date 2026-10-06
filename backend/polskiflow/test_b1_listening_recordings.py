@@ -80,3 +80,38 @@ class B1RecordingChecksTests(SimpleTestCase):
             self.assertEqual(item["transcript"], variant.listening_transcript)
             self.assertEqual(item["transcript_sha256"], transcript_checksum(variant.listening_transcript))
             self.assertEqual(len(item["answer_checks"]), 5)
+
+    def test_expanded_packet_has_reviewable_blocks_without_enabling_audio(self):
+        from polskiflow.domain.b1_training_listening_draft import LISTENING_DRAFTS
+        output = StringIO()
+        call_command('b1_recording_packet', expanded=True, stdout=output)
+        packet = json.loads(output.getvalue())
+        self.assertFalse(packet['enabled_in_guided_run'])
+        self.assertEqual(packet['status'], 'awaiting_recording_and_review')
+        self.assertEqual(packet['origin'], 'original')
+        for variant, item in zip(VARIANTS, packet['variants']):
+            self.assertEqual(len(item['blocks']), 4)
+            self.assertEqual(item['answer_count'], 20)
+            self.assertEqual(item['blocks'][0]['transcript'], variant.listening_transcript)
+            checks = [q for b in item['blocks'] for q in b['answer_checks']]
+            self.assertEqual(len(checks), 20)
+            self.assertEqual(len({q['id'] for q in checks}), 20)
+            for block in item['blocks']:
+                self.assertEqual(block['transcript_sha256'], transcript_checksum(block['transcript']))
+                self.assertEqual(len(block['answer_checks']), 5)
+                for q in block['answer_checks']:
+                    self.assertEqual(q['correct_answer'], q['options'][q['correct_index']])
+            for draft, block in zip(LISTENING_DRAFTS, item['blocks'][1:]):
+                self.assertEqual(block['transcript'], draft.transcript)
+                self.assertEqual(block['voice_notes'], draft.voice_notes)
+        self.assertEqual(packet['variants'][0]['blocks'][1:], packet['variants'][2]['blocks'][1:])
+
+    def test_expanded_packet_artifact_is_current_and_legacy_packet_stays_compatible(self):
+        from pathlib import Path
+        from polskiflow.domain.b1_training_content import CONTENT_VERSION, training_questions
+        output = StringIO()
+        call_command('b1_recording_packet', expanded=True, stdout=output)
+        artifact = Path(__file__).resolve().parents[2] / 'docs/b1-expanded-recording-packet.json'
+        self.assertEqual(json.loads(artifact.read_text()), json.loads(output.getvalue()))
+        self.assertEqual(CONTENT_VERSION, 9)
+        self.assertTrue(all(len(training_questions(v, 'listening')) == 5 for v in VARIANTS))
