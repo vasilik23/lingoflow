@@ -125,10 +125,10 @@ class B1TrainingRunTests(TestCase):
     def test_extended_grammar_all_variants_and_existing_short_sets(self):
         for variant in VARIANTS:
             questions = training_questions(variant, "grammar")
-            self.assertEqual(len(questions), 20)
-            self.assertEqual(len({q.id for q in questions}), 20)
+            self.assertEqual(len(questions), 40)
+            self.assertEqual(len({q.id for q in questions}), 40)
             score = score_training_part(variant, "grammar", {q.id: q.correct for q in questions})
-            self.assertEqual((score["correct"], score["total"], score["percent"]), (20, 20, 100))
+            self.assertEqual((score["correct"], score["total"], score["percent"]), (40, 40, 100))
             self.assertEqual(len(training_questions(variant, "grammar", 1)), 6)
             self.assertEqual(len(variant.questions), 7)
             with self.assertRaises(ValueError):
@@ -188,7 +188,7 @@ class B1TrainingRunTests(TestCase):
             self.assertEqual(response.context["state"]["step"], index)
             part = response.context["part"]
             if part["id"] == "grammar":
-                self.assertEqual(response.context["timer_seconds"], 20 * 60)
+                self.assertEqual(response.context["timer_seconds"], 45 * 60)
             if part["id"] == "reading":
                 self.assertEqual(response.context["timer_seconds"], 22 * 60)
                 self.assertContains(response, "Ogłoszenie biblioteki")
@@ -207,7 +207,7 @@ class B1TrainingRunTests(TestCase):
         self.assertEqual(response.context["state"]["run_id"], run_id)
         report = response.context["report"]
         self.assertEqual([item["status"] for item in report], ["scored"] * 3 + ["self_review"] * 2)
-        self.assertEqual([item["total"] for item in report[:3]], [5, 20, 20])
+        self.assertEqual([item["total"] for item in report[:3]], [5, 20, 40])
         self.assertTrue(all(item["percent"] == 100 for item in report[:3]))
         self.assertTrue(all("percent" not in item for item in report[3:]))
         self.assertTrue(all("details" not in item for item in response.context["state"]["results"]))
@@ -283,3 +283,44 @@ class B1TrainingRunTests(TestCase):
         self.assertEqual(csrf.post("/exam/b1/run/", {"action": "start"}).status_code, 403)
         self.client.cookies.clear()
         self.assertEqual(self.client.get("/exam/b1/run/").status_code, 302)
+
+    def test_versions_two_to_five_keep_their_original_grammar_and_deadline(self):
+        for version in (2, 3, 4, 5):
+            state = dict(self.client.get('/exam/b1/run/').context['state'], content_version=version,
+                         phase='break', step=2, break_until=self.now)
+            response = self.client.post('/exam/b1/run/', {'run_token': signing.dumps(state, salt=RUN_SALT), 'action': 'start'})
+            self.assertEqual(len(response.context['questions']), 20)
+            self.assertEqual(response.context['grammar_blocks'], ())
+            self.assertEqual(response.context['timer_seconds'], 1200)
+            deadline = response.context['state']['deadline']
+            self.now += 19
+            resumed = self.advance(response, 'resume')
+            self.assertEqual(resumed.context['state']['deadline'], deadline)
+            self.assertEqual(resumed.context['timer_seconds'], 1181)
+            fields = {f'answer_{q.id}': q.correct for q in resumed.context['questions']}
+            finished = self.advance(resumed, 'finish', **fields)
+            self.assertEqual(finished.context['state']['results'][-1]['total'], 20)
+
+    def test_version_six_groups_all_answers_and_preserves_them_on_resume(self):
+        for variant in VARIANTS:
+            state = dict(self.client.get('/exam/b1/run/').context['state'], variant_id=variant.id,
+                         phase='break', step=2, break_until=self.now)
+            response = self.client.post('/exam/b1/run/', {'run_token': signing.dumps(state, salt=RUN_SALT), 'action': 'start'})
+            blocks = response.context['grammar_blocks']
+            self.assertEqual([len(block) for block in blocks], [5] * 8)
+            self.assertEqual(tuple(q for block in blocks for q in block), response.context['questions'])
+            self.assertEqual(response.context['timer_seconds'], 2700)
+            self.assertContains(response, 'id="grammar-block-', count=8)
+            self.assertContains(response, 'name="answer_tg40"', count=3)
+            self.now += 11
+            restored = self.advance(response, 'resume')
+            self.assertEqual(restored.context['timer_seconds'], 2689)
+            self.assertEqual(restored.context['run_token'], response.context['run_token'])
+            self.assertEqual(restored.context['grammar_blocks'], blocks)
+            fields = {f'answer_{q.id}': q.correct for q in restored.context['questions']}
+            rejected = self.advance(restored, 'finish', **dict(list(fields.items())[:-1]))
+            self.assertEqual(rejected.status_code, 400)
+            self.assertEqual(rejected.context['state']['results'], [])
+            result = self.advance(restored, 'finish', **fields)
+            self.assertEqual(result.context['state']['results'][-1]['total'], 40)
+            self.assertEqual(result.context['state']['results'][-1]['percent'], 100)

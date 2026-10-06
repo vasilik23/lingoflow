@@ -1142,3 +1142,28 @@ MESSAGES = (
     gettext_noop("New password should be different from the old password."),
     gettext_noop("Email rate limit exceeded"),
 )
+
+B1_GRAMMAR_EXTENSION_MESSAGES = (
+    gettext_noop("Po „kupić” bez przeczenia używamy biernika: „kupić bilet”."),
+    gettext_noop("Rzeczownik „adres” łączy się tu z dopełniaczem osoby: „adres koleżanki”."),
+    gettext_noop("„Z” w znaczeniu towarzystwa wymaga narzędnika; przymiotnik zgadza się z „sąsiadem”: „nowym”."),
+    gettext_noop("Przyimek „dla” wymaga dopełniacza: „dla mojej siostry”."),
+    gettext_noop("Czasownik „pomagać” wymaga celownika osoby: „pomagałem nauczycielowi”."),
+    gettext_noop("„Będzie” z bezokolicznikiem tworzy czas przyszły złożony: „będzie zaczynać”."),
+    gettext_noop("Czynność trwającą w chwili innego zdarzenia w przeszłości wyraża „gotowałem”."),
+    gettext_noop("Zdanie z „gdybym” wymaga trybu przypuszczającego: „powiedziałbym”."),
+    gettext_noop("W prośbie „proszę” łączy się z bezokolicznikiem: „proszę wypełnić”."),
+    gettext_noop("„Jeszcze nie skończyłem” oznacza, że zadanie nadal nie jest ukończone."),
+    gettext_noop("Zaimek jest dopełnieniem „poleciła”; dla „książka” potrzebny jest biernik: „którą”."),
+    gettext_noop("„Kiedy” wprowadza zdanie określające czas wyjścia na spacer."),
+    gettext_noop("„Ale” łączy przeciwstawne informacje: zmęczenie i ukończenie pracy."),
+    gettext_noop("„Żeby” z bezokolicznikiem wyraża cel zapisania numeru."),
+    gettext_noop("„Ponieważ” wprowadza przyczynę; brak biletów wyjaśnia rezygnację z koncertu."),
+    gettext_noop("Opisujemy sposób jazdy, więc potrzebny jest stopień wyższy przysłówka: „szybciej”."),
+    gettext_noop("Przy liczebniku „dwa” i rzeczowniku „fotele” używamy formy „wygodne”."),
+    gettext_noop("Po liczebniku „pięć” potrzebny jest dopełniacz liczby mnogiej: „pięć osób”."),
+    gettext_noop("Podmiot „dwie kobiety” wymaga niemęskoosobowych form „były zmęczone”."),
+    gettext_noop("Przysłówek „chętnie” określa sposób wykonania czynności „pomogę”."),
+    gettext_noop("Блок"),
+    gettext_noop("Восемь блоков по пять ответов. Выбор формы — один из экзаменационных форматов; ввод форм и преобразования предложений ещё не включены."),
+)

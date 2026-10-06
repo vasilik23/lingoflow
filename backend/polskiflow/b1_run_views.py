@@ -12,7 +12,7 @@ from django.views.decorators.http import require_http_methods
 from polskiflow.auth_views import require_browser_user
 from polskiflow.domain.b1_exam_instructions import B1_INSTRUCTIONS, B1_RUN_LISTENING_INSTRUCTION, B1_RUN_READING_INSTRUCTION, B1_RUN_WRITING_INSTRUCTION, B1_RUN_SPEAKING_INSTRUCTION
 from polskiflow.domain.b1_exam_simulation import B1_SIMULATION_PARTS
-from polskiflow.domain.b1_training_content import CONTENT_VERSION, score_training_part, training_questions, training_reading_blocks
+from polskiflow.domain.b1_training_content import CONTENT_VERSION, score_training_part, training_questions, training_reading_blocks, training_grammar_blocks
 from polskiflow.domain.b1_training_writing import training_writing_tasks
 from polskiflow.domain.b1_training_speaking import PREPARATION_SECONDS, training_speaking_tasks
 from polskiflow.domain.b1_weekly_mock import get_mock_variant, weekly_mock_variant
@@ -22,7 +22,7 @@ from polskiflow.domain.b1_listening_recordings import recording_for_variant, rec
 RUN_SALT = "polskiflow.b1-training-run.v1"
 RUN_MAX_AGE = 4 * 60 * 60
 BREAK_SECONDS = 120
-TRAINING_MINUTES = {"listening": 8, "reading": 22, "grammar": 20, "writing": 35, "speaking": 11}
+TRAINING_MINUTES = {"listening": 8, "reading": 22, "grammar": 45, "writing": 35, "speaking": 11}
 
 
 def _minutes(state, part_id):
@@ -34,6 +34,8 @@ def _minutes(state, part_id):
         return 7
     if part_id == "grammar" and state.get("content_version", 1) < 2:
         return 6
+    if part_id == "grammar" and state.get("content_version", 1) < 6:
+        return 20
     return TRAINING_MINUTES[part_id]
 
 
@@ -145,6 +147,7 @@ def b1_training_run(request):
         "state": state, "variant": variant, "part": part,
         "questions": training_questions(variant, part["id"], state.get("content_version", 1)) if part else (),
         "reading_blocks": training_reading_blocks(variant, state.get("content_version", 1)) if part and part["id"] == "reading" else (),
+        "grammar_blocks": training_grammar_blocks(variant, state.get("content_version", 1)) if part and part["id"] == "grammar" else (),
         "writing_tasks": training_writing_tasks(variant, state.get("content_version", 1)) if part and part["id"] == "writing" else (),
         "speaking_tasks": training_speaking_tasks(variant, state.get("content_version", 1)) if part and part["id"] == "speaking" else (),
         "speaking_preparation_seconds": max(0, state.get("speaking_ready_at", now) - now) if part and part["id"] == "speaking" else 0,

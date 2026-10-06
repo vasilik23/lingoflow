@@ -5,11 +5,12 @@ from datetime import date
 from polskiflow.domain.b1_weekly_mock import MockQuestion
 from polskiflow.domain.b1_exam_simulation import simulation_questions, score_simulation_part
 from polskiflow.domain.b1_training_reading import READING_BLOCKS, ReadingBlock
+from polskiflow.domain.b1_training_grammar import GRAMMAR_EXTENSION
 
-CONTENT_VERSION = 5
+CONTENT_VERSION = 6
 ORIGIN = "original"
 CREATED_FOR = "PolskiFlow"
-VERIFIED_AT = date(2026, 10, 5)  # Internal editorial review, not independent validation.
+VERIFIED_AT = date(2026, 10, 6)  # Internal editorial review, not independent validation.
 
 # Shared extension across the three variants; the first six items remain variant-specific.
 RUN_GRAMMAR_QUESTIONS = (
@@ -32,7 +33,7 @@ RUN_GRAMMAR_QUESTIONS = (
 
 def _extra_questions(part_id, content_version):
     if part_id == "grammar" and content_version >= 2:
-        return RUN_GRAMMAR_QUESTIONS
+        return (*RUN_GRAMMAR_QUESTIONS, *GRAMMAR_EXTENSION) if content_version >= 6 else RUN_GRAMMAR_QUESTIONS
     if part_id == "reading" and content_version >= 3:
         return tuple(question for block in READING_BLOCKS for question in block.questions)
     return ()
@@ -47,6 +48,13 @@ def training_reading_blocks(variant, content_version=CONTENT_VERSION):
 def training_questions(variant, part_id, content_version=CONTENT_VERSION):
     extra = _extra_questions(part_id, content_version)
     return (*simulation_questions(variant, part_id), *extra)
+
+
+def training_grammar_blocks(variant, content_version=CONTENT_VERSION):
+    if content_version < 6:
+        return ()
+    questions = training_questions(variant, "grammar", content_version)
+    return tuple(questions[start:start + 5] for start in range(0, len(questions), 5))
 
 
 def score_training_part(variant, part_id, answers, content_version=CONTENT_VERSION):
