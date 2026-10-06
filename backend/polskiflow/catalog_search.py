@@ -1,6 +1,10 @@
 """Bounded public-content search for the authenticated web application."""
 
+import json
+from pathlib import Path
+
 from django.db.models import Q
+from django.utils.translation import gettext, get_language
 
 from polskiflow.learning.models import Lesson, ReadingText, Topic
 
@@ -12,6 +16,7 @@ LESSON_KIND_LABELS = {
     "quiz": "Тест",
     "reading-check": "Чтение",
 }
+CATALOG_MESSAGE_IDS = json.loads((Path(__file__).resolve().parent / "localization/catalog_messages.json").read_text())
 
 
 def search_learning_catalog(query: str, limit: int = 12) -> dict:
@@ -32,6 +37,10 @@ def search_learning_catalog(query: str, limit: int = 12) -> dict:
             | Q(plan_title__icontains=variant)
             | Q(description__icontains=variant)
         )
+    if get_language() == "pl":
+        localized_matches = [message for message in CATALOG_MESSAGE_IDS if query.casefold() in gettext(message).casefold()]
+        lookup |= Q(title__in=localized_matches) | Q(description__in=localized_matches)
+        lesson_lookup |= Q(title__in=localized_matches) | Q(plan_title__in=localized_matches) | Q(description__in=localized_matches)
 
     topics = [
         {

@@ -1,4 +1,6 @@
 (() => {
+  const ui = (typeof window !== "undefined" && window.PolskiFlowI18n?.t) || ((text, ...values) => Array.isArray(text) ? text.map((part, i) => part + (values[i] ?? "")).join("") : text);
+
   const root = document.querySelector('[data-b1-run]');
   const timer = root?.querySelector('[data-speaking-prep-timer]');
   if (!timer) return;
@@ -12,7 +14,7 @@
     if (left === 0) {
       root.dataset.preparingSpeaking = '0';
       root.dispatchEvent(new Event('b1-speaking-ready'));
-      status.textContent = root.dataset.expired === '1' ? 'Время части истекло.' : 'Подготовка завершена. Ответь на три задания; запись добровольная.';
+      status.textContent = root.dataset.expired === '1' ? ui('Время части истекло.') : ui('Подготовка завершена. Ответь на три задания; запись добровольная.');
       return;
     }
     window.setTimeout(tick, 1000);

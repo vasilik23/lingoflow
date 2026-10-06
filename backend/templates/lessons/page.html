@@ -1,42 +1,43 @@
 {% extends "base.html" %}
-{% block title %}{{ task.plan_title }} — PolskiFlow{% endblock %}
+{% load i18n ui %}
+{% block title %}{{ task.plan_title|ui_text }} — PolskiFlow{% endblock %}
 {% block content %}
   <div class="lesson-shell">
-    <header class="lesson-header"><a class="back-button" href="{% url 'home' %}" aria-label="Вернуться на главную">←</a><strong>{{ task.plan_title }}</strong>{% if lesson_bookmarks_available %}<form method="post" action="{% url 'toggle-lesson-bookmark' lesson_id %}">{% csrf_token %}<input type="hidden" name="saved" value="{% if is_bookmarked %}0{% else %}1{% endif %}"><input type="hidden" name="next" value="{{ request.path }}"><button class="lesson-save-button{% if is_bookmarked %} is-saved{% endif %}" type="submit" aria-label="{% if is_bookmarked %}Убрать урок из сохранённого{% else %}Сохранить урок{% endif %}">{% if is_bookmarked %}★{% else %}☆{% endif %}</button></form>{% else %}<span></span>{% endif %}</header>
+    <header class="lesson-header"><a class="back-button" href="{% url 'home' %}" aria-label="{% translate "Вернуться на главную" %}">←</a><strong>{{ task.plan_title|ui_text }}</strong>{% if lesson_bookmarks_available %}<form method="post" action="{% url 'toggle-lesson-bookmark' lesson_id %}">{% csrf_token %}<input type="hidden" name="saved" value="{% if is_bookmarked %}0{% else %}1{% endif %}"><input type="hidden" name="next" value="{{ request.path }}"><button class="lesson-save-button{% if is_bookmarked %} is-saved{% endif %}" type="submit" aria-label="{% if is_bookmarked %}{% translate "Убрать урок из сохранённого" %}{% else %}{% translate "Сохранить урок" %}{% endif %}">{% if is_bookmarked %}★{% else %}☆{% endif %}</button></form>{% else %}<span></span>{% endif %}</header>
     <section id="lesson-flow">
-      {% if resume_notice %}<p class="lesson-resume-notice" role="status">Продолжаем с сохранённого шага. Прогресс синхронизирован между твоими устройствами.</p>{% endif %}
+      {% if resume_notice %}<p class="lesson-resume-notice" role="status">{% translate "Продолжаем с сохранённого шага. Прогресс синхронизирован между твоими устройствами." %}</p>{% endif %}
       {% if lesson_kind == "words" or lesson_kind == "review" %}
         {% include "lessons/_flashcard.html" %}
       {% elif lesson_kind == "grammar" and not resume_practice %}
         <div class="card lesson-card theory-card">
-          <p class="eyebrow">Короткая теория</p>
-          <h1>{{ grammar.title }}</h1>
-          {% for heading, body in grammar.sections %}<div class="theory-section"><h2>{{ heading }}</h2><p class="muted">{{ body }}</p></div>{% endfor %}
+          <p class="eyebrow">{% translate "Короткая теория" %}</p>
+          <h1>{{ grammar.title|ui_text }}</h1>
+          {% for heading, body in grammar.sections %}<div class="theory-section"><h2>{{ heading|ui_text }}</h2><p class="muted">{{ body|ui_text }}</p></div>{% endfor %}
         </div>
         <form method="post" action="{% url 'lesson-step' lesson_id %}">
           {% csrf_token %}<input type="hidden" name="action" value="start"><input type="hidden" name="state" value="{{ lesson_state }}">
-          <button type="submit">Перейти к практике →</button>
+          <button type="submit">{% translate "Перейти к практике →" %}</button>
         </form>
       {% else %}
         {% include "lessons/_question.html" %}
       {% endif %}
     </section>
     <details class="card content-tools" {% if request.GET.collection or request.GET.note %}open{% endif %}>
-      <summary><span><strong>Инструменты урока</strong><small>Подборки и личная заметка</small></span><span class="content-tools-toggle" aria-hidden="true">⌄</span></summary>
+      <summary><span><strong>{% translate "Инструменты урока" %}</strong><small>{% translate "Подборки и личная заметка" %}</small></span><span class="content-tools-toggle" aria-hidden="true">⌄</span></summary>
       <div class="content-tools-grid">
-    <section class="inline-collection content-tool-panel" id="lesson-collection" aria-labelledby="lesson-collection-title"><div><p class="eyebrow">Личный маршрут</p><h2 id="lesson-collection-title">Добавить в подборку</h2></div>{% if request.GET.collection == "added" %}<p class="form-success" role="status">Урок добавлен в подборку.</p>{% elif request.GET.collection == "error" %}<p class="form-error" role="alert">Не удалось добавить урок.</p>{% endif %}{% if collection_choices %}<form method="post" action="{% url 'add-material-to-collection' 'lesson' lesson_id %}">{% csrf_token %}<label for="lesson-collection-select">Подборка</label><div class="filter-search-row"><select id="lesson-collection-select" name="collection_id" required><option value="">Выбери список</option>{% for collection in collection_choices %}<option value="{{ collection.id }}">{{ collection.name }}</option>{% endfor %}</select><button type="submit">Добавить</button></div></form>{% elif collections_available %}<p class="muted">Сначала <a href="{% url 'collections' %}">создай подборку</a>.</p>{% else %}<p class="muted">Подборки временно недоступны.</p>{% endif %}</section>
+    <section class="inline-collection content-tool-panel" id="lesson-collection" aria-labelledby="lesson-collection-title"><div><p class="eyebrow">{% translate "Личный маршрут" %}</p><h2 id="lesson-collection-title">{% translate "Добавить в подборку" %}</h2></div>{% if request.GET.collection == "added" %}<p class="form-success" role="status">{% translate "Урок добавлен в подборку." %}</p>{% elif request.GET.collection == "error" %}<p class="form-error" role="alert">{% translate "Не удалось добавить урок." %}</p>{% endif %}{% if collection_choices %}<form method="post" action="{% url 'add-material-to-collection' 'lesson' lesson_id %}">{% csrf_token %}<label for="lesson-collection-select">{% translate "Подборка" %}</label><div class="filter-search-row"><select id="lesson-collection-select" name="collection_id" required><option value="">{% translate "Выбери список" %}</option>{% for collection in collection_choices %}<option value="{{ collection.id }}">{{ collection.name }}</option>{% endfor %}</select><button type="submit">{% translate "Добавить" %}</button></div></form>{% elif collections_available %}<p class="muted">{% translate "Сначала" %} <a href="{% url 'collections' %}">{% translate "создай подборку" %}</a>.</p>{% else %}<p class="muted">{% translate "Подборки временно недоступны." %}</p>{% endif %}</section>
     <section class="lesson-note-card content-tool-panel" id="lesson-note" aria-labelledby="lesson-note-title">
-      <div class="lesson-note-heading"><div><p class="eyebrow">Личное</p><h2 id="lesson-note-title">Заметка к уроку</h2></div><span class="muted">до 2000 символов</span></div>
-      {% if request.GET.note == "saved" %}<p class="form-success" role="status">Заметка сохранена и доступна на других устройствах.</p>{% elif request.GET.note == "deleted" %}<p class="form-success" role="status">Заметка удалена.</p>{% elif request.GET.note == "error" %}<p class="form-error" role="alert">Не удалось сохранить заметку. Попробуй ещё раз.</p>{% endif %}
+      <div class="lesson-note-heading"><div><p class="eyebrow">{% translate "Личное" %}</p><h2 id="lesson-note-title">{% translate "Заметка к уроку" %}</h2></div><span class="muted">{% translate "до 2000 символов" %}</span></div>
+      {% if request.GET.note == "saved" %}<p class="form-success" role="status">{% translate "Заметка сохранена и доступна на других устройствах." %}</p>{% elif request.GET.note == "deleted" %}<p class="form-success" role="status">{% translate "Заметка удалена." %}</p>{% elif request.GET.note == "error" %}<p class="form-error" role="alert">{% translate "Не удалось сохранить заметку. Попробуй ещё раз." %}</p>{% endif %}
       {% if lesson_note.available %}
         <form method="post" action="{% url 'lesson-note' lesson_id %}" class="lesson-note-form">
           {% csrf_token %}
-          <label for="lesson-note-body">Запиши правило, пример или вопрос</label>
-          <textarea id="lesson-note-body" name="body" maxlength="2000" rows="5" placeholder="Например: после ‘szukać’ нужен родительный падеж.">{{ lesson_note.body }}</textarea>
-          <div class="lesson-note-actions"><button type="submit">Сохранить заметку</button>{% if lesson_note.body %}<button class="secondary danger-soft" type="submit" name="action" value="delete" formnovalidate>Удалить</button>{% endif %}</div>
+          <label for="lesson-note-body">{% translate "Запиши правило, пример или вопрос" %}</label>
+          <textarea id="lesson-note-body" name="body" maxlength="2000" rows="5" placeholder="{% translate "Например: после ‘szukać’ нужен родительный падеж." %}">{{ lesson_note.body }}</textarea>
+          <div class="lesson-note-actions"><button type="submit">{% translate "Сохранить заметку" %}</button>{% if lesson_note.body %}<button class="secondary danger-soft" type="submit" name="action" value="delete" formnovalidate>{% translate "Удалить" %}</button>{% endif %}</div>
         </form>
       {% else %}
-        <p class="muted" role="status">Сервис заметок сейчас недоступен. Сам урок продолжает работать.</p>
+        <p class="muted" role="status">{% translate "Сервис заметок сейчас недоступен. Сам урок продолжает работать." %}</p>
       {% endif %}
     </section>
       </div>
@@ -44,11 +45,13 @@
   </div>
 {% endblock %}
 {% block scripts %}
-{% load static %}
+{% load static i18n ui %}
 <script src="{% static 'polskiflow/result-queue.js' %}?v=1" defer></script>
 <script src="{% static 'polskiflow/lesson-result-sync.js' %}?v=1" defer></script>
 <script>
   (function () {
+  const ui = (typeof window !== "undefined" && window.PolskiFlowI18n?.t) || ((text, ...values) => Array.isArray(text) ? text.map((part, i) => part + (values[i] ?? "")).join("") : text);
+
     function initBuilder(root) {
       const form = root.querySelector?.("[data-sentence-builder]");
       if (!form || form.dataset.ready) return;
@@ -65,7 +68,7 @@
         if (!order.length) {
           const hint = document.createElement("span");
           hint.className = "muted";
-          hint.textContent = "Нажимай на слова в правильном порядке";
+          hint.textContent = ui("Нажимай на слова в правильном порядке");
           answer.append(hint);
         }
         order.forEach(function (tokenIndex) {
@@ -73,7 +76,7 @@
           selected.type = "button";
           selected.className = "sentence-token selected";
           selected.textContent = tokenButtons[tokenIndex].textContent;
-          selected.setAttribute("aria-label", "Убрать слово " + selected.textContent);
+          selected.setAttribute("aria-label", ui("Убрать слово ") + selected.textContent);
           selected.addEventListener("click", function () {
             order = order.filter(function (value) { return value !== tokenIndex; });
             render();

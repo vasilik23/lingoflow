@@ -1,6 +1,7 @@
 {% extends "base.html" %}
+{% load i18n ui %}
 {% block content %}
-  {% if request.GET.welcome %}<p class="save-success welcome-success" role="status">План готов. Начни с первого задания — его результат сразу появится здесь.</p>{% endif %}
+  {% if request.GET.welcome %}<p class="save-success welcome-success" role="status">{% translate "План готов. Начни с первого задания — его результат сразу появится здесь." %}</p>{% endif %}
   <header class="dashboard-header">
     <div class="mobile-brand"><span class="brand-mark">P</span> PolskiFlow</div>
   </header>
@@ -9,64 +10,64 @@
     <p class="eyebrow">Dobry dzień na polski</p>
     <h1>Cześć, {{ dashboard.display_name }}! 👋</h1>
     <div class="hero-meta">
-      <span class="pill">◆ Уровень {{ dashboard.level }}</span>
-      <span class="pill">🔥 {{ dashboard.streak_days }} дн. подряд</span>
+      <span class="pill">{% translate "◆ Уровень" %} {{ dashboard.level|ui_text }}</span>
+      <span class="pill">🔥 {{ dashboard.streak_days|ui_text }} {% translate "дн. подряд" %}</span>
     </div>
   </section>
 
   {% if b1_exam_prep %}
     <aside class="card exam-home-card" aria-labelledby="exam-home-title">
       <div class="exam-home-countdown" aria-hidden="true">
-        {% if b1_exam_prep.countdown.available %}<strong>{{ b1_exam_prep.countdown.days_remaining }}</strong><span>до старта</span>{% else %}<strong>B1</strong><span>экзамен</span>{% endif %}
+        {% if b1_exam_prep.countdown.available %}<strong>{{ b1_exam_prep.countdown.days_remaining|ui_text }}</strong><span>{% translate "до старта" %}</span>{% else %}<strong>B1</strong><span>{% translate "экзамен" %}</span>{% endif %}
       </div>
       <div>
-        <p class="eyebrow">Подготовка к государственному B1</p>
-        <h2 id="exam-home-title">{{ b1_exam_prep.countdown.label }}</h2>
-        <p class="muted">Сегодня — {{ b1_exam_prep.daily_minutes }} минут по трём экзаменационным навыкам.{% if b1_exam_prep.focus %} Фокус: {{ b1_exam_prep.focus.title }} — последние тренировки {{ b1_exam_prep.focus.percent }}%.{% endif %}</p>
+        <p class="eyebrow">{% translate "Подготовка к государственному B1" %}</p>
+        <h2 id="exam-home-title">{{ b1_exam_prep.countdown.label|ui_text }}</h2>
+        <p class="muted">{% translate "Сегодня —" %} {{ b1_exam_prep.daily_minutes|ui_text }} {% translate "минут по трём экзаменационным навыкам." %}{% if b1_exam_prep.focus %} {% translate "Фокус:" %} {{ b1_exam_prep.focus.title|ui_text }} {% translate "— последние тренировки" %} {{ b1_exam_prep.focus.percent|ui_text }}%.{% endif %}</p>
       </div>
-      <a class="compact-button" href="{% url 'b1-exam-prep' %}">Открыть план</a>
+      <a class="compact-button" href="{% url 'b1-exam-prep' %}">{% translate "Открыть план" %}</a>
     </aside>
   {% endif %}
 
   {% if resume_lesson %}
     <aside class="card resume-card" aria-labelledby="resume-title">
-      <span class="resume-card-icon" aria-hidden="true">{{ resume_lesson.emoji }}</span>
-      <div><p class="eyebrow">Незавершённый урок</p><h2 id="resume-title">{{ resume_lesson.title }}</h2><p class="muted">{{ resume_lesson.level }} · продолжим с шага {{ resume_lesson.step }}</p></div>
-      <a class="compact-button" href="{% url 'lesson' resume_lesson.id %}">Продолжить →</a>
+      <span class="resume-card-icon" aria-hidden="true">{{ resume_lesson.emoji|ui_text }}</span>
+      <div><p class="eyebrow">{% translate "Незавершённый урок" %}</p><h2 id="resume-title">{{ resume_lesson.title|ui_text }}</h2><p class="muted">{{ resume_lesson.level|ui_text }} {% translate "· продолжим с шага" %} {{ resume_lesson.step|ui_text }}</p></div>
+      <a class="compact-button" href="{% url 'lesson' resume_lesson.id %}">{% translate "Продолжить →" %}</a>
     </aside>
   {% endif %}
 
   <div class="dashboard-grid home-plan-grid">
     <section class="card daily-card" id="daily-plan">
-      <div class="progress-ring" style="--value: {{ progress_percent }}" role="progressbar" aria-label="Выполнение цели на сегодня" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ progress_percent }}"><strong>{{ progress_percent }}%</strong></div>
+      <div class="progress-ring" style="--value: {{ progress_percent }}" role="progressbar" aria-label="{% translate "Выполнение цели на сегодня" %}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ progress_percent }}"><strong>{{ progress_percent|ui_text }}%</strong></div>
       <div class="daily-copy">
-        <p class="eyebrow">Цель на сегодня</p>
-        <h2>{{ completed_count }} из {{ tasks|length }}</h2>
-        <p class="muted">Небольшой шаг каждый день — большой результат.</p>
+        <p class="eyebrow">{% translate "Цель на сегодня" %}</p>
+        <h2>{{ completed_count|ui_text }} {% translate "из" %} {{ tasks|length|ui_text }}</h2>
+        <p class="muted">{% translate "Небольшой шаг каждый день — большой результат." %}</p>
       </div>
-      {% if not dashboard.available %}<p class="data-notice">Прогресс временно недоступен. Уроки по-прежнему можно проходить.</p>{% endif %}
-      <a class="compact-button daily-action" href="#daily-tasks">{% if completed_count == tasks|length %}Повторить задания{% elif completed_count %}Продолжить занятия{% else %}Начать занятия{% endif %}</a>
+      {% if not dashboard.available %}<p class="data-notice">{% translate "Прогресс временно недоступен. Уроки по-прежнему можно проходить." %}</p>{% endif %}
+      <a class="compact-button daily-action" href="#daily-tasks">{% if completed_count == tasks|length %}{% translate "Повторить задания" %}{% elif completed_count %}{% translate "Продолжить занятия" %}{% else %}{% translate "Начать занятия" %}{% endif %}</a>
     </section>
     <section class="daily-tasks-panel" id="daily-tasks" aria-labelledby="daily-tasks-title">
       <div class="section-heading daily-tasks-heading">
         <div>
-          <p class="eyebrow">План на день</p>
-          <h2 id="daily-tasks-title">Задания на сегодня</h2>
+          <p class="eyebrow">{% translate "План на день" %}</p>
+          <h2 id="daily-tasks-title">{% translate "Задания на сегодня" %}</h2>
         </div>
-        <span>{{ completed_count }} из {{ tasks|length }} выполнено · ~{{ plan_estimated_minutes }} мин</span>
+        <span>{{ completed_count|ui_text }} {% translate "из" %} {{ tasks|length|ui_text }} {% translate "выполнено · ~" %}{{ plan_estimated_minutes|ui_text }} {% translate "мин" %}</span>
       </div>
-      <nav class="daily-time-modes" aria-label="Длительность плана">
-        {% for minutes in plan_time_modes %}<a href="?minutes={{ minutes }}#daily-plan"{% if minutes == plan_minutes %} aria-current="page"{% endif %}>{{ minutes }} минут</a>{% endfor %}
+      <nav class="daily-time-modes" aria-label="{% translate "Длительность плана" %}">
+        {% for minutes in plan_time_modes %}<a href="?minutes={{ minutes }}#daily-plan"{% if minutes == plan_minutes %} aria-current="page"{% endif %}>{{ minutes|ui_text }} {% translate "минут" %}</a>{% endfor %}
       </nav>
       <div class="task-list daily-task-list">
         {% for task in tasks %}
           <a class="task-card" href="{% if task.kind == 'dictionary-review' %}{% url 'dictionary-practice' %}{% else %}{% url 'lesson' task.id %}{% endif %}">
-            <span class="task-icon">{{ task.emoji }}</span>
-            <span class="task-copy"><strong>{{ task.title }}{% if task.completed %} <span class="task-complete">✓</span>{% endif %}</strong><small>{{ task.description }} · ~{{ task.minutes }} мин</small>{% if task.skill %}<small class="task-skill">{{ task.skill.label }}</small>{% endif %}</span>
+            <span class="task-icon">{{ task.emoji|ui_text }}</span>
+            <span class="task-copy"><strong>{{ task.title|ui_text }}{% if task.completed %} <span class="task-complete">✓</span>{% endif %}</strong><small>{{ task.description|ui_text }} · ~{{ task.minutes|ui_text }} {% translate "мин" %}</small>{% if task.skill %}<small class="task-skill">{{ task.skill.label|ui_text }}</small>{% endif %}</span>
             <span class="task-arrow" aria-hidden="true">→</span>
           </a>
         {% empty %}
-          <section class="card empty-state"><span>✓</span><h2>На сегодня всё</h2><p class="muted">Новые задания появятся в вашем плане.</p></section>
+          <section class="card empty-state"><span>✓</span><h2>{% translate "На сегодня всё" %}</h2><p class="muted">{% translate "Новые задания появятся в вашем плане." %}</p></section>
         {% endfor %}
       </div>
     </section>

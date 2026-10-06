@@ -1,11 +1,11 @@
-{% load static %}
+{% load static i18n ui %}
 <!doctype html>
-<html lang="ru">
+<html lang="{{ LANGUAGE_CODE }}">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#6d4aff">
-    <title>Нет подключения — PolskiFlow</title>
+    <title>{% translate "Нет подключения — PolskiFlow" %}</title>
     <link rel="icon" href="{% static 'polskiflow/favicon.svg' %}?shell={{ pwa_shell_version }}" type="image/svg+xml">
     <style>
       :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
@@ -21,9 +21,9 @@
   <body>
     <main>
       <img src="{% static 'polskiflow/favicon.svg' %}?shell={{ pwa_shell_version }}" alt="">
-      <h1>Сейчас нет подключения</h1>
-      <p>Вернитесь в сеть и повторите попытку. PolskiFlow не сохраняет ответы и прогресс офлайн: безопасная синхронизация появится на следующем этапе.</p>
-      <button type="button" onclick="window.location.reload()">Попробовать снова</button>
+      <h1>{% translate "Сейчас нет подключения" %}</h1>
+      <p>{% translate "Вернитесь в сеть и повторите попытку. PolskiFlow не сохраняет ответы и прогресс офлайн: безопасная синхронизация появится на следующем этапе." %}</p>
+      <button type="button" onclick="window.location.reload()">{% translate "Попробовать снова" %}</button>
     </main>
   </body>
 </html>

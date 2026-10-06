@@ -1,17 +1,18 @@
 {% extends "base.html" %}
-{% block title %}Настроим обучение · PolskiFlow{% endblock %}
+{% load i18n ui %}
+{% block title %}{% translate "Настроим обучение · PolskiFlow" %}{% endblock %}
 {% block body_class %}onboarding-page{% endblock %}
 {% block content %}
   <div class="onboarding-shell">
-    <header class="onboarding-intro"><span class="onboarding-step">Первый шаг из одного</span><p class="eyebrow">Witaj w PolskiFlow</p><h1>Настроим твой первый день</h1><p>Выбери комфортную отправную точку. Всё можно изменить позже в профиле.</p></header>
-    {% if onboarding_error %}<p class="save-error" role="alert">{{ onboarding_error }}</p>{% endif %}
+    <header class="onboarding-intro"><span class="onboarding-step">{% translate "Первый шаг из одного" %}</span><p class="eyebrow">Witaj w PolskiFlow</p><h1>{% translate "Настроим твой первый день" %}</h1><p>{% translate "Выбери комфортную отправную точку. Всё можно изменить позже в профиле." %}</p></header>
+    {% if onboarding_error %}<p class="save-error" role="alert">{{ onboarding_error|ui_text }}</p>{% endif %}
     <form class="card onboarding-form" method="post">
       {% csrf_token %}
-      <label for="onboarding-name">Как тебя называть?<input id="onboarding-name" name="display_name" value="{{ onboarding_form.display_name }}" maxlength="80" autocomplete="name" required></label>
-      <fieldset><legend>С какого уровня начать?</legend><p class="field-hint">Не уверен? Начни с A1 или пройди предварительную диагностику позже.</p><div class="onboarding-options level-options">{% for level in onboarding_levels %}<label><input type="radio" name="level" value="{{ level }}"{% if onboarding_form.level == level %} checked{% endif %}><span><strong>{{ level }}</strong><small>{% if level == "A1" %}С самого начала{% elif level == "A2" %}Базовые ситуации{% elif level == "B1" %}Самостоятельное общение{% elif level == "B2" %}Аргументация{% elif level == "C1" %}Точность и стиль{% else %}Мастерство{% endif %}</small></span></label>{% endfor %}</div></fieldset>
-      <fieldset><legend>Сколько уроков в день?</legend><div class="onboarding-options goal-options">{% for value in "1234" %}<label><input type="radio" name="daily_goal_lessons" value="{{ value }}"{% if onboarding_form.daily_goal_lessons == value %} checked{% endif %}><span><strong>{{ value }}</strong><small>{% if value == "1" %}~5 минут{% elif value == "2" %}~10 минут{% elif value == "3" %}~15 минут{% else %}~20 минут{% endif %}</small></span></label>{% endfor %}</div></fieldset>
-      <button type="submit">Собрать мой план →</button>
-      <p class="onboarding-note">Это не тест CEFR: уровень задаёт только стартовую точку каталога.</p>
+      <label for="onboarding-name">{% translate "Как тебя называть?" %}<input id="onboarding-name" name="display_name" value="{{ onboarding_form.display_name }}" maxlength="80" autocomplete="name" required></label>
+      <fieldset><legend>{% translate "С какого уровня начать?" %}</legend><p class="field-hint">{% translate "Не уверен? Начни с A1 или пройди предварительную диагностику позже." %}</p><div class="onboarding-options level-options">{% for level in onboarding_levels %}<label><input type="radio" name="level" value="{{ level }}"{% if onboarding_form.level == level %} checked{% endif %}><span><strong>{{ level|ui_text }}</strong><small>{% if level == "A1" %}{% translate "С самого начала" %}{% elif level == "A2" %}{% translate "Базовые ситуации" %}{% elif level == "B1" %}{% translate "Самостоятельное общение" %}{% elif level == "B2" %}{% translate "Аргументация" %}{% elif level == "C1" %}{% translate "Точность и стиль" %}{% else %}{% translate "Мастерство" %}{% endif %}</small></span></label>{% endfor %}</div></fieldset>
+      <fieldset><legend>{% translate "Сколько уроков в день?" %}</legend><div class="onboarding-options goal-options">{% for value in "1234" %}<label><input type="radio" name="daily_goal_lessons" value="{{ value }}"{% if onboarding_form.daily_goal_lessons == value %} checked{% endif %}><span><strong>{{ value|ui_text }}</strong><small>{% if value == "1" %}{% translate "~5 минут" %}{% elif value == "2" %}{% translate "~10 минут" %}{% elif value == "3" %}{% translate "~15 минут" %}{% else %}{% translate "~20 минут" %}{% endif %}</small></span></label>{% endfor %}</div></fieldset>
+      <button type="submit">{% translate "Собрать мой план →" %}</button>
+      <p class="onboarding-note">{% translate "Это не тест CEFR: уровень задаёт только стартовую точку каталога." %}</p>
     </form>
   </div>
 {% endblock %}

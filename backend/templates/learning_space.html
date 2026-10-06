@@ -1,15 +1,16 @@
 {% extends "base.html" %}
-{% block title %}Мои материалы · PolskiFlow{% endblock %}
+{% load i18n ui %}
+{% block title %}{% translate "Мои материалы · PolskiFlow" %}{% endblock %}
 {% block content %}
   <header class="content-header learning-space-header">
-    <div><p class="eyebrow">Личное пространство</p><h1>Мои материалы</h1><p class="muted">Всё, что ты сохранил, собрал или отметил во время занятий — в одном месте.</p></div>
-    <a class="compact-button" href="{% url 'global-search' %}">Найти материал</a>
+    <div><p class="eyebrow">{% translate "Личное пространство" %}</p><h1>{% translate "Мои материалы" %}</h1><p class="muted">{% translate "Всё, что ты сохранил, собрал или отметил во время занятий — в одном месте." %}</p></div>
+    <a class="compact-button" href="{% url 'global-search' %}">{% translate "Найти материал" %}</a>
   </header>
   {% include "partials/personal_learning_nav.html" %}
-  <section class="learning-space-grid" aria-label="Разделы личных материалов">
-    <a class="card learning-space-card" href="{% url 'saved-learning' %}"><span aria-hidden="true">★</span><div><p class="eyebrow">Быстрый доступ</p><h2>Сохранённое</h2><p>Отмеченные уроки и тексты, к которым хочется вернуться.</p></div><strong>Открыть →</strong></a>
-    <a class="card learning-space-card" href="{% url 'collections' %}"><span aria-hidden="true">▦</span><div><p class="eyebrow">Личные маршруты</p><h2>Подборки</h2><p>Тематические списки материалов с прогрессом и продолжением.</p></div><strong>Открыть →</strong></a>
-    <a class="card learning-space-card" href="{% url 'lesson-notes' %}"><span aria-hidden="true">✎</span><div><p class="eyebrow">База знаний</p><h2>Заметки</h2><p>Твои правила, примеры и вопросы, записанные внутри уроков.</p></div><strong>Открыть →</strong></a>
-    <a class="card learning-space-card" href="{% url 'mistake-notebook' %}"><span aria-hidden="true">↻</span><div><p class="eyebrow">Закрепление</p><h2>Работа над ошибками</h2><p>Задания, которые стоит повторить до уверенного ответа.</p></div><strong>Открыть →</strong></a>
+  <section class="learning-space-grid" aria-label="{% translate "Разделы личных материалов" %}">
+    <a class="card learning-space-card" href="{% url 'saved-learning' %}"><span aria-hidden="true">★</span><div><p class="eyebrow">{% translate "Быстрый доступ" %}</p><h2>{% translate "Сохранённое" %}</h2><p>{% translate "Отмеченные уроки и тексты, к которым хочется вернуться." %}</p></div><strong>{% translate "Открыть →" %}</strong></a>
+    <a class="card learning-space-card" href="{% url 'collections' %}"><span aria-hidden="true">▦</span><div><p class="eyebrow">{% translate "Личные маршруты" %}</p><h2>{% translate "Подборки" %}</h2><p>{% translate "Тематические списки материалов с прогрессом и продолжением." %}</p></div><strong>{% translate "Открыть →" %}</strong></a>
+    <a class="card learning-space-card" href="{% url 'lesson-notes' %}"><span aria-hidden="true">✎</span><div><p class="eyebrow">{% translate "База знаний" %}</p><h2>{% translate "Заметки" %}</h2><p>{% translate "Твои правила, примеры и вопросы, записанные внутри уроков." %}</p></div><strong>{% translate "Открыть →" %}</strong></a>
+    <a class="card learning-space-card" href="{% url 'mistake-notebook' %}"><span aria-hidden="true">↻</span><div><p class="eyebrow">{% translate "Закрепление" %}</p><h2>{% translate "Работа над ошибками" %}</h2><p>{% translate "Задания, которые стоит повторить до уверенного ответа." %}</p></div><strong>{% translate "Открыть →" %}</strong></a>
   </section>
 {% endblock %}

@@ -1,17 +1,18 @@
 {% extends "base.html" %}
-{% block title %}Безопасность аккаунта · PolskiFlow{% endblock %}
+{% load i18n ui %}
+{% block title %}{% translate "Безопасность аккаунта · PolskiFlow" %}{% endblock %}
 {% block content %}
   <header class="content-header">
-    <div><p class="eyebrow">Аккаунт</p><h1>Безопасность</h1><p class="muted">Измени пароль и затем войди снова на этом устройстве.</p></div>
-    <a class="compact-button secondary-link" href="{% url 'profile' %}">К профилю</a>
+    <div><p class="eyebrow">{% translate "Аккаунт" %}</p><h1>{% translate "Безопасность" %}</h1><p class="muted">{% translate "Измени пароль и затем войди снова на этом устройстве." %}</p></div>
+    <a class="compact-button secondary-link" href="{% url 'profile' %}">{% translate "К профилю" %}</a>
   </header>
   <form class="card account-security-form" method="post" autocomplete="off">
     {% csrf_token %}
-    {% if error %}<p class="form-error" role="alert">{{ error }}</p>{% endif %}
-    <label><span>Текущий пароль</span><input type="password" name="current_password" autocomplete="current-password" required></label>
-    <label><span>Новый пароль</span><input type="password" name="password" minlength="10" autocomplete="new-password" aria-describedby="password-help" required><small id="password-help">Не менее 10 символов, строчная и заглавная буквы и цифра.</small></label>
-    <label><span>Повторите новый пароль</span><input type="password" name="password_confirmation" minlength="10" autocomplete="new-password" required></label>
-    <button type="submit">Изменить пароль</button>
-    <p class="muted">После изменения локальная сессия завершится. Пароль не сохраняется в PolskiFlow.</p>
+    {% if error %}<p class="form-error" role="alert">{{ error|ui_text }}</p>{% endif %}
+    <label><span>{% translate "Текущий пароль" %}</span><input type="password" name="current_password" autocomplete="current-password" required></label>
+    <label><span>{% translate "Новый пароль" %}</span><input type="password" name="password" minlength="10" autocomplete="new-password" aria-describedby="password-help" required><small id="password-help">{% translate "Не менее 10 символов, строчная и заглавная буквы и цифра." %}</small></label>
+    <label><span>{% translate "Повторите новый пароль" %}</span><input type="password" name="password_confirmation" minlength="10" autocomplete="new-password" required></label>
+    <button type="submit">{% translate "Изменить пароль" %}</button>
+    <p class="muted">{% translate "После изменения локальная сессия завершится. Пароль не сохраняется в PolskiFlow." %}</p>
   </form>
 {% endblock %}

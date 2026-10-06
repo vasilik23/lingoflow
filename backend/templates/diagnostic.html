@@ -1,40 +1,41 @@
 {% extends "base.html" %}
-{% block title %}Предварительная диагностика · PolskiFlow{% endblock %}
+{% load i18n ui %}
+{% block title %}{% translate "Предварительная диагностика · PolskiFlow" %}{% endblock %}
 {% block content %}
   <header class="content-header diagnostic-header">
     <div>
-      <p class="eyebrow">Карта навыков</p>
-      <h1>Предварительная диагностика</h1>
-      <p class="muted">Оцени, что обычно можешь делать на польском. Это самооценка для выбора старта, а не тест уровня, экзамен или сертификат.</p>
+      <p class="eyebrow">{% translate "Карта навыков" %}</p>
+      <h1>{% translate "Предварительная диагностика" %}</h1>
+      <p class="muted">{% translate "Оцени, что обычно можешь делать на польском. Это самооценка для выбора старта, а не тест уровня, экзамен или сертификат." %}</p>
     </div>
-    <a class="compact-button secondary-link" href="{% url 'course' %}">К курсу</a>
+    <a class="compact-button secondary-link" href="{% url 'course' %}">{% translate "К курсу" %}</a>
   </header>
 
   {% if result %}
     <section class="card diagnostic-result" aria-labelledby="diagnostic-result-title" aria-live="polite">
-      <p class="eyebrow">Предварительная рекомендация</p>
-      <h2 id="diagnostic-result-title">Начни с {{ recommended_level }}</h2>
-      <p>Рекомендация берёт более низкий из двух независимых ориентиров: самооценка <strong>{{ result.level }}</strong> и короткая проверяемая проба <strong>{{ checked_result.level }}</strong>.</p>
-      <p>Удели больше внимания режимам: <strong>{{ result.focus_modes|join:", " }}</strong>.</p>
-      <p class="muted">{{ result.calculation }}</p>
-      <div class="diagnostic-summary" aria-label="Твоя карта навыков">
+      <p class="eyebrow">{% translate "Предварительная рекомендация" %}</p>
+      <h2 id="diagnostic-result-title">{% translate "Начни с" %} {{ recommended_level|ui_text }}</h2>
+      <p>{% translate "Рекомендация берёт более низкий из двух независимых ориентиров: самооценка" %} <strong>{{ result.level|ui_text }}</strong> {% translate "и короткая проверяемая проба" %} <strong>{{ checked_result.level|ui_text }}</strong>.</p>
+      <p>{% translate "Удели больше внимания режимам:" %} <strong>{{ result.focus_modes|ui_items|join:", " }}</strong>.</p>
+      <p class="muted">{{ result.calculation|ui_text }}</p>
+      <div class="diagnostic-summary" aria-label="{% translate "Твоя карта навыков" %}">
         {% for title, level, description in result.answers %}
-          <div><strong>{{ title }}</strong><span>{{ level }}</span><small>{{ description }}</small></div>
+          <div><strong>{{ title|ui_text }}</strong><span>{{ level|ui_text }}</span><small>{{ description|ui_text }}</small></div>
         {% endfor %}
       </div>
       <div class="diagnostic-checked-summary">
-        <h3>Короткая проверяемая проба: {{ checked_result.correct }} из {{ checked_result.total }}</h3>
-        <p class="muted">{{ checked_result.calculation }}</p>
-        <div class="diagnostic-summary" aria-label="Результат проверяемой пробы по режимам">
+        <h3>{% translate "Короткая проверяемая проба:" %} {{ checked_result.correct|ui_text }} {% translate "из" %} {{ checked_result.total|ui_text }}</h3>
+        <p class="muted">{{ checked_result.calculation|ui_text }}</p>
+        <div class="diagnostic-summary" aria-label="{% translate "Результат проверяемой пробы по режимам" %}">
           {% for mode, correct, total in checked_result.mode_scores %}
-            <div><strong>{{ mode }}</strong><span>{{ correct }} из {{ total }}</span><small>верных ответов в короткой пробе</small></div>
+            <div><strong>{{ mode|ui_text }}</strong><span>{{ correct|ui_text }} {% translate "из" %} {{ total|ui_text }}</span><small>{% translate "верных ответов в короткой пробе" %}</small></div>
           {% endfor %}
         </div>
         <ol class="diagnostic-answer-review">
           {% for mode, prompt, is_correct, explanation in checked_result.answers %}
             <li class="{% if is_correct %}is-correct{% else %}is-missing{% endif %}">
-              <strong>{{ mode }} · {% if is_correct %}верно{% else %}нужно повторить{% endif %}</strong>
-              <span>{{ prompt }}</span><small>{{ explanation }}</small>
+              <strong>{{ mode|ui_text }} · {% if is_correct %}{% translate "верно" %}{% else %}{% translate "нужно повторить" %}{% endif %}</strong>
+              <span>{{ prompt|ui_text }}</span><small>{{ explanation|ui_text }}</small>
             </li>
           {% endfor %}
         </ol>
@@ -44,44 +45,44 @@
           {% csrf_token %}
           <input type="hidden" name="action" value="apply-level">
           <input type="hidden" name="recommended_level" value="{{ recommended_level }}">
-          <button class="compact-button" type="submit">Сохранить {{ recommended_level }} в профиле</button>
+          <button class="compact-button" type="submit">{% translate "Сохранить" %} {{ recommended_level|ui_text }} {% translate "в профиле" %}</button>
         </form>
-        <a class="compact-button" href="{% url 'course' %}?level={{ recommended_level }}">Открыть курс {{ recommended_level }}</a>
-        <a class="compact-button secondary-link" href="{% url 'diagnostic' %}">Пройти заново</a>
+        <a class="compact-button" href="{% url 'course' %}?level={{ recommended_level }}">{% translate "Открыть курс" %} {{ recommended_level|ui_text }}</a>
+        <a class="compact-button secondary-link" href="{% url 'diagnostic' %}">{% translate "Пройти заново" %}</a>
       </div>
-      <p class="diagnostic-disclaimer">Ответы не сохраняются. Рекомендованный уровень попадёт в профиль только после твоего подтверждения и не подтверждает владение уровнем CEFR.</p>
+      <p class="diagnostic-disclaimer">{% translate "Ответы не сохраняются. Рекомендованный уровень попадёт в профиль только после твоего подтверждения и не подтверждает владение уровнем CEFR." %}</p>
     </section>
   {% else %}
     <form class="diagnostic-form" method="post" action="{% url 'diagnostic' %}">
       {% csrf_token %}
-      {% if error %}<p class="error" role="alert"><strong>Проверь ответы.</strong> {{ error }}</p>{% endif %}
-      <p class="diagnostic-instruction" id="diagnostic-instruction">Для каждого режима выбери самое высокое описание, которое уверенно подходит в большинстве ситуаций.</p>
+      {% if error %}<p class="error" role="alert"><strong>{% translate "Проверь ответы." %}</strong> {{ error|ui_text }}</p>{% endif %}
+      <p class="diagnostic-instruction" id="diagnostic-instruction">{% translate "Для каждого режима выбери самое высокое описание, которое уверенно подходит в большинстве ситуаций." %}</p>
       {% for mode in mode_fields %}
         <div class="card diagnostic-mode">
-          <label for="diagnostic-{{ mode.key }}"><strong>{{ mode.title }}</strong><small>{{ mode.description }}</small></label>
+          <label for="diagnostic-{{ mode.key }}"><strong>{{ mode.title|ui_text }}</strong><small>{{ mode.description|ui_text }}</small></label>
           <select id="diagnostic-{{ mode.key }}" name="{{ mode.key }}" required aria-describedby="diagnostic-instruction">
-            <option value="">Выбери описание</option>
+            <option value="">{% translate "Выбери описание" %}</option>
             {% for value, label in mode.options %}
-              <option value="{{ value }}"{% if mode.selected == value %} selected{% endif %}>{{ label }}</option>
+              <option value="{{ value }}"{% if mode.selected == value %} selected{% endif %}>{{ label|ui_text }}</option>
             {% endfor %}
           </select>
         </div>
       {% endfor %}
       <section class="diagnostic-checks" aria-labelledby="diagnostic-checks-title">
-        <p class="eyebrow">Короткая проверяемая проба</p>
-        <h2 id="diagnostic-checks-title">Ответь на 8 вопросов</h2>
-        <p class="diagnostic-instruction">Здесь есть однозначно проверяемые ответы по нескольким режимам. Они оцениваются отдельно от самооценки.</p>
+        <p class="eyebrow">{% translate "Короткая проверяемая проба" %}</p>
+        <h2 id="diagnostic-checks-title">{% translate "Ответь на 8 вопросов" %}</h2>
+        <p class="diagnostic-instruction">{% translate "Здесь есть однозначно проверяемые ответы по нескольким режимам. Они оцениваются отдельно от самооценки." %}</p>
         {% for task in check_tasks %}
           <fieldset class="card diagnostic-check">
-            <legend><span>{{ forloop.counter }}. {{ task.mode }}</span>{{ task.prompt }}</legend>
+            <legend><span>{{ forloop.counter|ui_text }}. {{ task.mode|ui_text }}</span>{{ task.prompt|ui_text }}</legend>
             {% for value, label in task.options %}
-              <label><input type="radio" name="{{ task.key }}" value="{{ value }}"{% if task.selected == value %} checked{% endif %} required> <span>{{ label }}</span></label>
+              <label><input type="radio" name="{{ task.key }}" value="{{ value }}"{% if task.selected == value %} checked{% endif %} required> <span>{{ label|ui_text }}</span></label>
             {% endfor %}
           </fieldset>
         {% endfor %}
       </section>
-      <button class="diagnostic-submit" type="submit">Получить предварительную рекомендацию</button>
-      <p class="diagnostic-disclaimer">Ответы обрабатываются только для этого результата и не записываются в профиль. После результата можно отдельно подтвердить сохранение рекомендованного уровня.</p>
+      <button class="diagnostic-submit" type="submit">{% translate "Получить предварительную рекомендацию" %}</button>
+      <p class="diagnostic-disclaimer">{% translate "Ответы обрабатываются только для этого результата и не записываются в профиль. После результата можно отдельно подтвердить сохранение рекомендованного уровня." %}</p>
     </form>
   {% endif %}
 {% endblock %}

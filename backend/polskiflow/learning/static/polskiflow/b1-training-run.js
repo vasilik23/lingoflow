@@ -1,4 +1,6 @@
 (() => {
+  const ui = (typeof window !== "undefined" && window.PolskiFlowI18n?.t) || ((text, ...values) => Array.isArray(text) ? text.map((part, i) => part + (values[i] ?? "")).join("") : text);
+
   const root = document.querySelector('[data-b1-run]');
   if (!root) return;
   const form = document.getElementById('b1-run-form');
@@ -41,7 +43,7 @@
       storageStatus.hidden = true;
     } catch (_) {
       storageStatus.hidden = false;
-      storageStatus.textContent = 'Браузер не сохранил прогресс. Не перезагружай страницу; скопируй текст перед уходом.';
+      storageStatus.textContent = ui('Браузер не сохранил прогресс. Не перезагружай страницу; скопируй текст перед уходом.');
     }
   };
   form.addEventListener('change', save);
@@ -77,7 +79,7 @@
       if (left === 0) {
         if (root.dataset.phase === 'break') {
           root.querySelector('[data-next-part]').disabled = false;
-          timerStatus.textContent = 'Перерыв завершён. Можно начать следующую часть.';
+          timerStatus.textContent = ui('Перерыв завершён. Можно начать следующую часть.');
         } else {
           root.dataset.expired = '1';
           root.dispatchEvent(new Event('b1-run-expired'));
@@ -87,11 +89,11 @@
           if (writing2) writing2.disabled = true;
           root.querySelector('[data-run-play]')?.setAttribute('disabled', '');
           if ('speechSynthesis' in window) speechSynthesis.cancel();
-          timerStatus.textContent = 'Время истекло. Можно пропустить часть без балла.';
+          timerStatus.textContent = ui('Время истекло. Можно пропустить часть без балла.');
         }
         return;
       }
-      if (previous > 60 && left <= 60) timerStatus.textContent = 'Осталась одна минута.';
+      if (previous > 60 && left <= 60) timerStatus.textContent = ui('Осталась одна минута.');
       previous = left;
       window.setTimeout(tick, 1000);
     };

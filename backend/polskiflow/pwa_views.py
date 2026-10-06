@@ -3,20 +3,28 @@ import json
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.templatetags.static import static
+from django.utils.translation import gettext, override
+from django.utils.cache import patch_vary_headers
 from polskiflow.pwa_version import PWA_SHELL_VERSION
 
 
 PWA_CACHE_VERSION = f"polskiflow-shell-{PWA_SHELL_VERSION}"
 
 
-def web_app_manifest(_request):
+def _language(request):
+    explicit = request.GET.get("language")
+    return explicit if explicit in {"ru", "pl"} else getattr(request, "LANGUAGE_CODE", "ru")
+
+
+def web_app_manifest(request):
+    language = _language(request)
     icon_url = f'{static("polskiflow/favicon.svg")}?shell={PWA_SHELL_VERSION}'
     manifest = {
         "id": "/",
         "name": "PolskiFlow",
         "short_name": "PolskiFlow",
         "description": "Практика польского языка от A1 до C2",
-        "lang": "ru",
+        "lang": language,
         "start_url": "/",
         "scope": "/",
         "display": "standalone",
@@ -37,23 +45,27 @@ def web_app_manifest(_request):
             },
         ],
     }
+    with override(language):
+        manifest["description"] = gettext(manifest["description"])
     response = HttpResponse(
         json.dumps(manifest, ensure_ascii=False),
         content_type="application/manifest+json",
     )
-    response["Cache-Control"] = "public, max-age=3600"
+    response["Cache-Control"] = "private, no-store"
+    patch_vary_headers(response, ["Cookie", "Accept-Language"])
     return response
 
 
-def service_worker(_request):
-    offline_url = f"/offline/?shell={PWA_SHELL_VERSION}"
+def service_worker(request):
+    language = _language(request)
+    offline_url = f"/offline/?shell={PWA_SHELL_VERSION}&language={language}"
     public_assets = [
         f'{static("polskiflow/app.css")}?shell={PWA_SHELL_VERSION}',
         f'{static("polskiflow/favicon.svg")}?shell={PWA_SHELL_VERSION}',
     ]
     source = f'''"use strict";
 
-const CACHE_NAME = {json.dumps(PWA_CACHE_VERSION)};
+const CACHE_NAME = {json.dumps(PWA_CACHE_VERSION + '-' + language)};
 const OFFLINE_URL = {json.dumps(offline_url)};
 // This allowlist contains only public, versioned static assets. User data,
 // authenticated HTML, auth/API responses and lesson results are never cached.
@@ -103,6 +115,10 @@ self.addEventListener("fetch", (event) => {{
 
 
 def offline_shell(request):
-    response = render(request, "offline.html")
+    language = _language(request)
+    with override(language):
+        response = render(request, "offline.html")
+    response["Content-Language"] = language
+    patch_vary_headers(response, ["Cookie", "Accept-Language"])
     response["Cache-Control"] = "public, max-age=0, must-revalidate"
     return response

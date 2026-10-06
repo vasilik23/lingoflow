@@ -1,6 +1,6 @@
-{% load static %}
+{% load static i18n ui %}
 <!doctype html>
-<html lang="ru">
+<html lang="{{ LANGUAGE_CODE }}">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -33,92 +33,100 @@
         window.PolskiFlowTheme = { applyTheme, storedTheme, storageKey, media };
       }());
     </script>
+    {% if LANGUAGE_CODE == 'pl' %}<script src="{% static 'polskiflow/i18n-pl.js' %}?shell={{ pwa_shell_version }}"></script>{% endif %}
+    <script src="{% static 'polskiflow/i18n.js' %}?shell={{ pwa_shell_version }}"></script>
     <title>{% block title %}PolskiFlow{% endblock %}</title>
     <link rel="icon" href="{% static 'polskiflow/favicon.svg' %}?shell={{ pwa_shell_version }}" type="image/svg+xml">
-    <link rel="manifest" href="{% url 'web-app-manifest' %}">
+    <link rel="manifest" href="{% url 'web-app-manifest' %}?language={{ LANGUAGE_CODE }}">
     <link rel="stylesheet" href="{% static 'polskiflow/app.css' %}?shell={{ pwa_shell_version }}">
   </head>
   <body class="{% block body_class %}{% endblock %}">
-    <a class="skip-link" href="#main-content">К основному содержимому</a>
+    <a class="skip-link" href="#main-content">{% translate "К основному содержимому" %}</a>
     {% if request.supabase_user %}
-      <nav class="app-nav" aria-label="Основная навигация">
-        <a class="brand" href="{% url 'home' %}" aria-label="PolskiFlow — на главную">
+      <nav class="app-nav" aria-label="{% translate "Основная навигация" %}">
+        <a class="brand" href="{% url 'home' %}" aria-label="{% translate "PolskiFlow — на главную" %}">
           <span class="brand-mark">P</span><span class="brand-name">PolskiFlow</span>
         </a>
         <div class="nav-links">
           <a href="{% url 'home' %}" class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
-            <span class="nav-icon" aria-hidden="true">⌂</span><span>Сегодня</span>
+            <span class="nav-icon" aria-hidden="true">⌂</span><span>{% translate "Сегодня" %}</span>
           </a>
           <a href="{% url 'course' %}" class="nav-link {% if request.resolver_match.url_name == 'course' or request.resolver_match.url_name == 'lesson' %}active{% endif %}">
-            <span class="nav-icon" aria-hidden="true">◫</span><span>Курс</span>
+            <span class="nav-icon" aria-hidden="true">◫</span><span>{% translate "Курс" %}</span>
           </a>
           <a href="{% url 'practice-hub' %}" class="nav-link {% if request.resolver_match.url_name == 'practice-hub' or request.resolver_match.url_name == 'listening-practice' or request.resolver_match.url_name == 'writing-practice' or request.resolver_match.url_name == 'interaction-practice' or request.resolver_match.url_name == 'diagnostic' %}active{% endif %}">
-            <span class="nav-icon" aria-hidden="true">◎</span><span>Практика</span>
+            <span class="nav-icon" aria-hidden="true">◎</span><span>{% translate "Практика" %}</span>
           </a>
           <a href="{% url 'reading-library' %}" class="nav-link {% if request.resolver_match.url_name == 'reading-library' or request.resolver_match.url_name == 'reader' or request.resolver_match.url_name == 'news-library' %}active{% endif %}">
-            <span class="nav-icon" aria-hidden="true">▤</span><span>Читать</span>
+            <span class="nav-icon" aria-hidden="true">▤</span><span>{% translate "Читать" %}</span>
           </a>
           <a href="{% url 'dictionary' %}" class="nav-link {% if request.resolver_match.url_name == 'dictionary' %}active{% endif %}">
-            <span class="nav-icon" aria-hidden="true">◇</span><span>Словарь</span>
+            <span class="nav-icon" aria-hidden="true">◇</span><span>{% translate "Словарь" %}</span>
           </a>
           <a href="{% url 'global-search' %}" class="nav-link nav-link-search {% if request.resolver_match.url_name == 'global-search' %}active{% endif %}">
-            <span class="nav-icon" aria-hidden="true">⌕</span><span>Поиск</span>
+            <span class="nav-icon" aria-hidden="true">⌕</span><span>{% translate "Поиск" %}</span>
           </a>
         </div>
       </nav>
       <details class="user-menu app-user-menu">
-        <summary aria-label="Открыть меню пользователя"><span class="avatar">{{ request.supabase_user.email|first|upper|default:"U" }}</span></summary>
+        <summary aria-label="{% translate "Открыть меню пользователя" %}"><span class="avatar">{{ request.supabase_user.email|first|upper|default:"U" }}</span></summary>
         <div class="user-menu-popover">
           <span class="user-email">{{ request.supabase_user.email|default:"Пользователь" }}</span>
-          <a class="user-menu-link" href="{% url 'profile' %}">Профиль</a>
-          <a class="user-menu-link" href="{% url 'learning-history' %}">Прогресс и история</a>
+          <a class="user-menu-link" href="{% url 'profile' %}">{% translate "Профиль" %}</a>
+          <a class="user-menu-link" href="{% url 'learning-history' %}">{% translate "Прогресс и история" %}</a>
           <details class="user-menu-group">
-            <summary>Учёба и материалы <span aria-hidden="true">⌄</span></summary>
+            <summary>{% translate "Учёба и материалы" %} <span aria-hidden="true">⌄</span></summary>
             <div>
-              <a class="user-menu-link" href="{% url 'learning-space' %}">Мои материалы</a>
-              <a class="user-menu-link" href="{% url 'global-search' %}">Поиск по приложению</a>
+              <a class="user-menu-link" href="{% url 'learning-space' %}">{% translate "Мои материалы" %}</a>
+              <a class="user-menu-link" href="{% url 'global-search' %}">{% translate "Поиск по приложению" %}</a>
             </div>
           </details>
           <details class="user-menu-group">
-            <summary>Настройки и помощь <span aria-hidden="true">⌄</span></summary>
+            <summary>{% translate "Настройки и помощь" %} <span aria-hidden="true">⌄</span></summary>
             <div>
-              <a class="user-menu-link" href="{% url 'account-security' %}">Безопасность</a>
-              <a class="user-menu-link" href="{% url 'sources' %}">Источники</a>
-              <a class="user-menu-link" href="{% url 'privacy' %}">Приватность</a>
-              <a class="user-menu-link" href="{% url 'beta-center' %}">Закрытая beta</a>
-              <a class="user-menu-link" href="{% url 'feedback' %}">Обратная связь</a>
-              <a class="user-menu-link user-menu-link-danger" href="{% url 'account-delete' %}">Удалить аккаунт</a>
+              <a class="user-menu-link" href="{% url 'account-security' %}">{% translate "Безопасность" %}</a>
+              <a class="user-menu-link" href="{% url 'sources' %}">{% translate "Источники" %}</a>
+              <a class="user-menu-link" href="{% url 'privacy' %}">{% translate "Приватность" %}</a>
+              <a class="user-menu-link" href="{% url 'beta-center' %}">{% translate "Закрытая beta" %}</a>
+              <a class="user-menu-link" href="{% url 'feedback' %}">{% translate "Обратная связь" %}</a>
+              <a class="user-menu-link user-menu-link-danger" href="{% url 'account-delete' %}">{% translate "Удалить аккаунт" %}</a>
             </div>
           </details>
           <label class="theme-control">
-            <span>Тема</span>
-            <select data-theme-select aria-label="Цветовая тема">
-              <option value="system">Как в системе</option>
-              <option value="light">Светлая</option>
-              <option value="dark">Тёмная</option>
+            <span>{% translate "Тема" %}</span>
+            <select data-theme-select aria-label="{% translate "Цветовая тема" %}">
+              <option value="system">{% translate "Как в системе" %}</option>
+              <option value="light">{% translate "Светлая" %}</option>
+              <option value="dark">{% translate "Тёмная" %}</option>
             </select>
           </label>
           <form method="post" action="{% url 'logout' %}">
-            {% csrf_token %}<button class="user-menu-action" type="submit">Выйти</button>
+            {% csrf_token %}<button class="user-menu-action" type="submit">{% translate "Выйти" %}</button>
           </form>
         </div>
       </details>
       {% if request.resolver_match.url_name != 'feedback' %}
-        <a class="feedback-launcher" href="{% url 'feedback' %}?from={{ request.path|urlencode }}" aria-label="Сообщить об ошибке на этой странице">
+        <a class="feedback-launcher" href="{% url 'feedback' %}?from={{ request.path|urlencode }}" aria-label="{% translate "Сообщить об ошибке на этой странице" %}">
           <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><path d="M5 5.75A2.75 2.75 0 0 1 7.75 3h8.5A2.75 2.75 0 0 1 19 5.75v6.5A2.75 2.75 0 0 1 16.25 15H11l-4.6 3.45A.88.88 0 0 1 5 17.75V15.5a2.75 2.75 0 0 1-2-2.64V5.75A2.75 2.75 0 0 1 5.75 3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 8.5h8M8 11.5h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <span class="feedback-launcher-label">Сообщить об ошибке</span>
+          <span class="feedback-launcher-label">{% translate "Сообщить об ошибке" %}</span>
         </a>
       {% endif %}
     {% else %}
       <label class="theme-control theme-control-guest">
-        <span class="visually-hidden">Цветовая тема</span>
-        <select data-theme-select aria-label="Цветовая тема">
-          <option value="system">Системная тема</option>
-          <option value="light">Светлая тема</option>
-          <option value="dark">Тёмная тема</option>
+        <span class="visually-hidden">{% translate "Цветовая тема" %}</span>
+        <select data-theme-select aria-label="{% translate "Цветовая тема" %}">
+          <option value="system">{% translate "Системная тема" %}</option>
+          <option value="light">{% translate "Светлая тема" %}</option>
+          <option value="dark">{% translate "Тёмная тема" %}</option>
         </select>
       </label>
     {% endif %}
+    <form method="post" action="{% url 'set-language' %}" class="language-switcher">
+      {% csrf_token %}<input type="hidden" name="next" value="{{ request.get_full_path }}">
+      <label for="interface-language">{% translate "Язык интерфейса" %}</label>
+      <select id="interface-language" name="language"><option value="ru"{% if LANGUAGE_CODE == 'ru' %} selected{% endif %}>Русский</option><option value="pl"{% if LANGUAGE_CODE == 'pl' %} selected{% endif %}>Polski</option></select>
+      <button type="submit">{% translate "Применить" %}</button>
+    </form>
     <main id="main-content" class="page-shell {% if request.supabase_user %}with-nav{% endif %}" tabindex="-1">
       {% block content %}{% endblock %}
     </main>
@@ -150,7 +158,7 @@
     <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", function () {
-          navigator.serviceWorker.register("{% url 'service-worker' %}").catch(function () {
+          navigator.serviceWorker.register("{% url 'service-worker' %}?language={{ LANGUAGE_CODE }}").catch(function () {
             // PWA support is optional; the online application remains unchanged.
           });
         });

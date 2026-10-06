@@ -1,85 +1,86 @@
 {% extends "base.html" %}
-{% block title %}Прогресс и история · PolskiFlow{% endblock %}
+{% load i18n ui %}
+{% block title %}{% translate "Прогресс и история · PolskiFlow" %}{% endblock %}
 {% block content %}
   <header class="content-header">
-    <div><p class="eyebrow">Твой прогресс</p><h1>Прогресс и история</h1><p class="muted">Динамика за последние 28 дней и завершённые уроки доступны только тебе.</p></div>
-    <a class="compact-button secondary-link" href="{% url 'profile' %}">К профилю</a>
+    <div><p class="eyebrow">{% translate "Твой прогресс" %}</p><h1>{% translate "Прогресс и история" %}</h1><p class="muted">{% translate "Динамика за последние 28 дней и завершённые уроки доступны только тебе." %}</p></div>
+    <a class="compact-button secondary-link" href="{% url 'profile' %}">{% translate "К профилю" %}</a>
   </header>
   {% if weekly_review.available %}
     <section class="weekly-review" aria-labelledby="weekly-review-title">
-      <div class="section-heading"><div><p class="eyebrow">Последние 7 дней</p><h2 id="weekly-review-title">Итог недели</h2></div></div>
+      <div class="section-heading"><div><p class="eyebrow">{% translate "Последние 7 дней" %}</p><h2 id="weekly-review-title">{% translate "Итог недели" %}</h2></div></div>
       <div class="weekly-review-summary">
-        <article class="card insight-stat"><span>Активных дней</span><strong>{{ weekly_review.active_days }}</strong><small>из последних 7</small></article>
-        <article class="card insight-stat"><span>Завершено</span><strong>{{ weekly_review.completed_lessons }}</strong><small>{% if weekly_review.completed_delta > 0 %}на {{ weekly_review.completed_delta }} больше прошлой недели{% elif weekly_review.completed_delta < 0 %}на {{ weekly_review.completed_delta|stringformat:"d"|slice:"1:" }} меньше прошлой недели{% else %}как на прошлой неделе{% endif %}</small></article>
-        <article class="card insight-stat"><span>Точность</span><strong>{% if weekly_review.accuracy != None %}{{ weekly_review.accuracy }}%{% else %}—{% endif %}</strong><small>по последнему результату каждого урока</small></article>
+        <article class="card insight-stat"><span>{% translate "Активных дней" %}</span><strong>{{ weekly_review.active_days|ui_text }}</strong><small>{% translate "из последних 7" %}</small></article>
+        <article class="card insight-stat"><span>{% translate "Завершено" %}</span><strong>{{ weekly_review.completed_lessons|ui_text }}</strong><small>{% if weekly_review.completed_delta > 0 %}{% translate "на" %} {{ weekly_review.completed_delta|ui_text }} {% translate "больше прошлой недели" %}{% elif weekly_review.completed_delta < 0 %}{% translate "на" %} {{ weekly_review.completed_delta|stringformat:"d"|slice:"1:" }} {% translate "меньше прошлой недели" %}{% else %}{% translate "как на прошлой неделе" %}{% endif %}</small></article>
+        <article class="card insight-stat"><span>{% translate "Точность" %}</span><strong>{% if weekly_review.accuracy != None %}{{ weekly_review.accuracy|ui_text }}%{% else %}—{% endif %}</strong><small>{% translate "по последнему результату каждого урока" %}</small></article>
       </div>
       {% if weekly_review.has_results %}
         <div class="weekly-review-columns">
           <article class="card weekly-review-card">
-            <p class="eyebrow">Получается уверенно</p><h3>Сильные результаты</h3>
-            {% if weekly_review.strongest %}<ul>{% for item in weekly_review.strongest %}<li><span aria-hidden="true">{{ item.emoji }}</span><div><strong>{{ item.title }}</strong><small>{{ item.level }} · {{ item.known }} из {{ item.total }}</small></div><b>{{ item.accuracy }}%</b></li>{% endfor %}</ul>{% else %}<p class="muted">Здесь появятся уроки с результатом от 80%.</p>{% endif %}
+            <p class="eyebrow">{% translate "Получается уверенно" %}</p><h3>{% translate "Сильные результаты" %}</h3>
+            {% if weekly_review.strongest %}<ul>{% for item in weekly_review.strongest %}<li><span aria-hidden="true">{{ item.emoji|ui_text }}</span><div><strong>{{ item.title|ui_text }}</strong><small>{{ item.level|ui_text }} · {{ item.known|ui_text }} {% translate "из" %} {{ item.total|ui_text }}</small></div><b>{{ item.accuracy|ui_text }}%</b></li>{% endfor %}</ul>{% else %}<p class="muted">{% translate "Здесь появятся уроки с результатом от 80%." %}</p>{% endif %}
           </article>
           <article class="card weekly-review-card weekly-review-focus">
-            <p class="eyebrow">Можно закрепить</p><h3>Фокус на следующую неделю</h3>
-            {% if weekly_review.reinforcement %}<ul>{% for item in weekly_review.reinforcement %}<li><span aria-hidden="true">{{ item.emoji }}</span><div><strong>{{ item.title }}</strong><small>{{ item.level }} · {{ item.known }} из {{ item.total }}</small></div><a href="{% url 'lesson' item.id %}" aria-label="Повторить {{ item.title }}">Повторить</a></li>{% endfor %}</ul>{% else %}<p class="muted">Нет результатов ниже 70%. Продолжай план — это не оценка уровня, а подсказка по недавним ответам.</p>{% endif %}
+            <p class="eyebrow">{% translate "Можно закрепить" %}</p><h3>{% translate "Фокус на следующую неделю" %}</h3>
+            {% if weekly_review.reinforcement %}<ul>{% for item in weekly_review.reinforcement %}<li><span aria-hidden="true">{{ item.emoji|ui_text }}</span><div><strong>{{ item.title|ui_text }}</strong><small>{{ item.level|ui_text }} · {{ item.known|ui_text }} {% translate "из" %} {{ item.total|ui_text }}</small></div><a href="{% url 'lesson' item.id %}" aria-label="{% translate "Повторить" %} {{ item.title|ui_text }}">{% translate "Повторить" %}</a></li>{% endfor %}</ul>{% else %}<p class="muted">{% translate "Нет результатов ниже 70%. Продолжай план — это не оценка уровня, а подсказка по недавним ответам." %}</p>{% endif %}
           </article>
         </div>
       {% else %}
-        <div class="card empty-state"><h3>Для недельного итога нужны результаты</h3><p>Заверши урок с заданиями — после этого здесь появятся сильные стороны и темы для закрепления.</p><a class="compact-button" href="{% url 'home' %}#daily-tasks">К плану на сегодня</a></div>
+        <div class="card empty-state"><h3>{% translate "Для недельного итога нужны результаты" %}</h3><p>{% translate "Заверши урок с заданиями — после этого здесь появятся сильные стороны и темы для закрепления." %}</p><a class="compact-button" href="{% url 'home' %}#daily-tasks">{% translate "К плану на сегодня" %}</a></div>
       {% endif %}
-      <p class="profile-note">Итог использует только твои результаты за 7 дней, не является экзаменом и не определяет уровень CEFR.</p>
+      <p class="profile-note">{% translate "Итог использует только твои результаты за 7 дней, не является экзаменом и не определяет уровень CEFR." %}</p>
     </section>
   {% endif %}
   {% if insights.available %}
-    <section class="insights-summary" aria-label="Итоги за 28 дней">
-      <article class="card insight-stat"><span>Занятий</span><strong>{{ insights.completed_28_days }}</strong><small>завершено за 28 дней</small></article>
-      <article class="card insight-stat"><span>Активных дней</span><strong>{{ insights.active_28_days }}</strong><small>из последних 28</small></article>
-      <article class="card insight-stat"><span>Точность</span><strong>{% if insights.accuracy != None %}{{ insights.accuracy }}%{% else %}—{% endif %}</strong><small>по заданиям с результатом</small></article>
+    <section class="insights-summary" aria-label="{% translate "Итоги за 28 дней" %}">
+      <article class="card insight-stat"><span>{% translate "Занятий" %}</span><strong>{{ insights.completed_28_days|ui_text }}</strong><small>{% translate "завершено за 28 дней" %}</small></article>
+      <article class="card insight-stat"><span>{% translate "Активных дней" %}</span><strong>{{ insights.active_28_days|ui_text }}</strong><small>{% translate "из последних 28" %}</small></article>
+      <article class="card insight-stat"><span>{% translate "Точность" %}</span><strong>{% if insights.accuracy != None %}{{ insights.accuracy|ui_text }}%{% else %}—{% endif %}</strong><small>{% translate "по заданиям с результатом" %}</small></article>
     </section>
     <section class="insights-grid">
       <article class="card activity-panel" aria-labelledby="activity-title">
-        <div><p class="eyebrow">Последние 14 дней</p><h2 id="activity-title">Ритм занятий</h2></div>
-        <div class="activity-chart" role="img" aria-label="Количество завершённых уроков по дням">
-          {% for day in insights.activity %}<span class="activity-column"><span class="activity-bar{% if day.count %} has-value{% endif %}" style="--height: {{ day.height }}%" title="{{ day.date }}: {{ day.count }}"></span><small>{{ day.date }}</small><b class="visually-hidden">{{ day.count }} уроков</b></span>{% endfor %}
+        <div><p class="eyebrow">{% translate "Последние 14 дней" %}</p><h2 id="activity-title">{% translate "Ритм занятий" %}</h2></div>
+        <div class="activity-chart" role="img" aria-label="{% translate "Количество завершённых уроков по дням" %}">
+          {% for day in insights.activity %}<span class="activity-column"><span class="activity-bar{% if day.count %} has-value{% endif %}" style="--height: {{ day.height }}%" title="{{ day.date|ui_text }}: {{ day.count|ui_text }}"></span><small>{{ day.date|ui_text }}</small><b class="visually-hidden">{{ day.count|ui_text }} {% translate "уроков" %}</b></span>{% endfor %}
         </div>
       </article>
       <article class="card recommendation-card">
-        <p class="eyebrow">Следующий шаг</p><h2>{{ insights.recommendation.title }}</h2><p class="muted">{{ insights.recommendation.reason }}</p>
-        <a class="compact-button" href="{{ insights.recommendation.href }}">{{ insights.recommendation.action }} →</a>
+        <p class="eyebrow">{% translate "Следующий шаг" %}</p><h2>{{ insights.recommendation.title|ui_text }}</h2><p class="muted">{{ insights.recommendation.reason|ui_text }}</p>
+        <a class="compact-button" href="{{ insights.recommendation.href }}">{{ insights.recommendation.action|ui_text }} →</a>
       </article>
     </section>
     <section class="skill-breakdown" aria-labelledby="skill-breakdown-title">
-      <div class="section-heading"><div><p class="eyebrow">Последние 30 дней</p><h2 id="skill-breakdown-title">По типам практики</h2></div></div>
-      {% if insights.breakdown %}<div class="skill-breakdown-list">{% for item in insights.breakdown %}<article class="card skill-breakdown-item"><div><strong>{{ item.label }}</strong><small>{{ item.attempts }} заверш.</small></div><div class="skill-meter" role="progressbar" aria-label="{{ item.label }}: {{ item.accuracy }}%" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ item.accuracy }}"><span style="--value: {{ item.accuracy }}%"></span></div><strong>{{ item.accuracy }}%</strong></article>{% endfor %}</div>{% else %}<p class="card muted">Заверши несколько уроков, чтобы увидеть распределение результатов.</p>{% endif %}
+      <div class="section-heading"><div><p class="eyebrow">{% translate "Последние 30 дней" %}</p><h2 id="skill-breakdown-title">{% translate "По типам практики" %}</h2></div></div>
+      {% if insights.breakdown %}<div class="skill-breakdown-list">{% for item in insights.breakdown %}<article class="card skill-breakdown-item"><div><strong>{{ item.label|ui_text }}</strong><small>{{ item.attempts|ui_text }} {% translate "заверш." %}</small></div><div class="skill-meter" role="progressbar" aria-label="{{ item.label|ui_text }}: {{ item.accuracy|ui_text }}%" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ item.accuracy }}"><span style="--value: {{ item.accuracy }}%"></span></div><strong>{{ item.accuracy|ui_text }}%</strong></article>{% endfor %}</div>{% else %}<p class="card muted">{% translate "Заверши несколько уроков, чтобы увидеть распределение результатов." %}</p>{% endif %}
     </section>
   {% else %}
-    <p class="data-notice">Аналитика временно недоступна. История ниже может оставаться доступной.</p>
+    <p class="data-notice">{% translate "Аналитика временно недоступна. История ниже может оставаться доступной." %}</p>
   {% endif %}
-  <div class="section-heading history-heading"><div><p class="eyebrow">Журнал</p><h2>Завершённые занятия</h2></div></div>
-  <nav class="history-periods" aria-label="Период истории">
-    <a href="?period=7"{% if selected_period == "7" %} aria-current="page"{% endif %}>7 дней</a>
-    <a href="?period=30"{% if selected_period == "30" %} aria-current="page"{% endif %}>30 дней</a>
-    <a href="?period=90"{% if selected_period == "90" %} aria-current="page"{% endif %}>90 дней</a>
-    <a href="?period=all"{% if selected_period == "all" %} aria-current="page"{% endif %}>Всё время</a>
+  <div class="section-heading history-heading"><div><p class="eyebrow">{% translate "Журнал" %}</p><h2>{% translate "Завершённые занятия" %}</h2></div></div>
+  <nav class="history-periods" aria-label="{% translate "Период истории" %}">
+    <a href="?period=7"{% if selected_period == "7" %} aria-current="page"{% endif %}>{% translate "7 дней" %}</a>
+    <a href="?period=30"{% if selected_period == "30" %} aria-current="page"{% endif %}>{% translate "30 дней" %}</a>
+    <a href="?period=90"{% if selected_period == "90" %} aria-current="page"{% endif %}>{% translate "90 дней" %}</a>
+    <a href="?period=all"{% if selected_period == "all" %} aria-current="page"{% endif %}>{% translate "Всё время" %}</a>
   </nav>
   {% if not history_available %}
-    <p class="data-notice" role="status">История временно недоступна. Попробуй обновить страницу позже.</p>
+    <p class="data-notice" role="status">{% translate "История временно недоступна. Попробуй обновить страницу позже." %}</p>
   {% elif history_rows %}
-    <ol class="history-list" aria-label="Завершённые занятия">
+    <ol class="history-list" aria-label="{% translate "Завершённые занятия" %}">
       {% for item in history_rows %}
         <li class="card history-item">
-          <span class="history-icon" aria-hidden="true">{{ item.emoji }}</span>
-          <div><strong>{{ item.title }}</strong><small>{{ item.level }} · {{ item.plan_date }}</small></div>
-          <span class="history-score">{{ item.score }}</span>
+          <span class="history-icon" aria-hidden="true">{{ item.emoji|ui_text }}</span>
+          <div><strong>{{ item.title|ui_text }}</strong><small>{{ item.level|ui_text }} · {{ item.plan_date|ui_text }}</small></div>
+          <span class="history-score">{{ item.score|ui_text }}</span>
         </li>
       {% endfor %}
     </ol>
-    <nav class="history-pagination" aria-label="Страницы истории">
-      {% if history_page.has_previous %}<a class="compact-button secondary-link" href="?period={{ selected_period }}&page={{ history_page.page|add:'-1' }}">← Новее</a>{% endif %}
-      <span>Страница {{ history_page.page }}</span>
-      {% if history_page.has_next %}<a class="compact-button secondary-link" href="?period={{ selected_period }}&page={{ history_page.page|add:'1' }}">Старее →</a>{% endif %}
+    <nav class="history-pagination" aria-label="{% translate "Страницы истории" %}">
+      {% if history_page.has_previous %}<a class="compact-button secondary-link" href="?period={{ selected_period }}&page={{ history_page.page|add:'-1' }}">{% translate "← Новее" %}</a>{% endif %}
+      <span>{% translate "Страница" %} {{ history_page.page|ui_text }}</span>
+      {% if history_page.has_next %}<a class="compact-button secondary-link" href="?period={{ selected_period }}&page={{ history_page.page|add:'1' }}">{% translate "Старее →" %}</a>{% endif %}
     </nav>
   {% else %}
-    <div class="card empty-state"><h2>Пока нет завершённых занятий</h2><p>Выбери урок из дневного плана — он появится здесь после завершения.</p><a class="compact-button" href="{% url 'home' %}">Перейти к плану</a></div>
+    <div class="card empty-state"><h2>{% translate "Пока нет завершённых занятий" %}</h2><p>{% translate "Выбери урок из дневного плана — он появится здесь после завершения." %}</p><a class="compact-button" href="{% url 'home' %}">{% translate "Перейти к плану" %}</a></div>
   {% endif %}
 {% endblock %}

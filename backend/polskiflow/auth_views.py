@@ -9,6 +9,7 @@ from django.http import HttpRequest, HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.translation import gettext
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.views.decorators.http import require_http_methods, require_POST
 
@@ -797,7 +798,7 @@ def profile_data_export(request: HttpRequest) -> HttpResponse:
         request.supabase_access_token, request.supabase_user.id
     )
     if not export.available:
-        response = JsonResponse({"error": "Данные временно недоступны. Попробуйте экспорт позже."}, status=503)
+        response = JsonResponse({"error": gettext("Данные временно недоступны. Попробуйте экспорт позже.")}, status=503)
     else:
         response = JsonResponse({
             "schema_version": "2.2",
@@ -1032,6 +1033,7 @@ def course(request: HttpRequest) -> HttpResponse:
         kind=filters["kind"],
         duration=filters["duration"],
         completion=filters["completion"],
+        localize=gettext,
     )
     primary_topic_id = next(
         (topic["id"] for topic in topics if not topic["completed"]),

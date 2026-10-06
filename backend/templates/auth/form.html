@@ -1,38 +1,39 @@
 {% extends "base.html" %}
-{% block title %}{% if mode == "login" %}Вход{% else %}Регистрация{% endif %} — PolskiFlow{% endblock %}
+{% load i18n ui %}
+{% block title %}{% if mode == "login" %}{% translate "Вход" %}{% else %}{% translate "Регистрация" %}{% endif %} — PolskiFlow{% endblock %}
 {% block body_class %}auth-page{% endblock %}
 {% block content %}
   <div class="auth-layout">
     <aside class="auth-brand">
       <span class="brand-mark">P</span>
-      <h2>Польский становится привычкой.</h2>
-      <p>Короткие уроки, живые фразы и понятный прогресс каждый день.</p>
+      <h2>{% translate "Польский становится привычкой." %}</h2>
+      <p>{% translate "Короткие уроки, живые фразы и понятный прогресс каждый день." %}</p>
     </aside>
     <section class="auth-panel">
       <a class="brand" href="{% url 'login' %}"><span class="brand-mark">P</span> PolskiFlow</a>
       <p class="eyebrow" lang="pl">{% if mode == 'login' %}Witaj ponownie{% else %}Załóż konto{% endif %}</p>
-      <h1>{% if mode == "login" %}Рады видеть!{% else %}Начнём учиться{% endif %}</h1>
-      <p class="muted">{% if mode == "login" %}Продолжи с того места, где остановился.{% else %}Создай аккаунт и начни первый урок.{% endif %}</p>
-      {% if error %}<p class="error" role="alert">{{ error }}</p>{% endif %}
-      {% if message %}<p class="message">{{ message }}</p>{% endif %}
+      <h1>{% if mode == "login" %}{% translate "Рады видеть!" %}{% else %}{% translate "Начнём учиться" %}{% endif %}</h1>
+      <p class="muted">{% if mode == "login" %}{% translate "Продолжи с того места, где остановился." %}{% else %}{% translate "Создай аккаунт и начни первый урок." %}{% endif %}</p>
+      {% if error %}<p class="error" role="alert">{{ error|ui_text }}</p>{% endif %}
+      {% if message %}<p class="message">{{ message|ui_text }}</p>{% endif %}
       <form method="post">
         {% csrf_token %}
         <input type="hidden" name="next" value="{{ next }}">
         <label for="email">Email</label>
         <input id="email" name="email" type="email" autocomplete="email" placeholder="name@example.com" value="{{ email|default:'' }}" required>
-        <label for="password">Пароль</label>
-        <input id="password" name="password" type="password" autocomplete="{% if mode == 'login' %}current-password{% else %}new-password{% endif %}"{% if mode == 'register' %} minlength="10" aria-describedby="password-hint"{% endif %} placeholder="{% if mode == 'login' %}Ваш пароль{% else %}Не менее 10 символов{% endif %}" required>
-        {% if mode == 'register' %}<p class="field-hint" id="password-hint">Используйте строчные и заглавные буквы и хотя бы одну цифру.</p>{% endif %}
-        <button type="submit">{% if mode == "login" %}Войти в PolskiFlow{% else %}Создать аккаунт{% endif %}</button>
+        <label for="password">{% translate "Пароль" %}</label>
+        <input id="password" name="password" type="password" autocomplete="{% if mode == 'login' %}current-password{% else %}new-password{% endif %}"{% if mode == 'register' %} minlength="10" aria-describedby="password-hint"{% endif %} placeholder="{% if mode == 'login' %}{% translate "Ваш пароль" %}{% else %}{% translate "Не менее 10 символов" %}{% endif %}" required>
+        {% if mode == 'register' %}<p class="field-hint" id="password-hint">{% translate "Используйте строчные и заглавные буквы и хотя бы одну цифру." %}</p>{% endif %}
+        <button type="submit">{% if mode == "login" %}{% translate "Войти в PolskiFlow" %}{% else %}{% translate "Создать аккаунт" %}{% endif %}</button>
       </form>
       {% if mode == "login" %}
-        {% if request.GET.password_reset or request.GET.password_changed %}<p class="message" role="status">Пароль обновлён. Теперь войдите с новым паролем.</p>{% endif %}
-        {% if request.GET.account_deleted %}<p class="message" role="status">Аккаунт и связанные учебные данные удалены.</p>{% endif %}
-        <p class="auth-switch muted"><a href="{% url 'forgot-password' %}">Не помню пароль</a></p>
-        <p class="auth-switch muted">Нет аккаунта? <a href="{% url 'register' %}">Зарегистрироваться</a></p>
+        {% if request.GET.password_reset or request.GET.password_changed %}<p class="message" role="status">{% translate "Пароль обновлён. Теперь войдите с новым паролем." %}</p>{% endif %}
+        {% if request.GET.account_deleted %}<p class="message" role="status">{% translate "Аккаунт и связанные учебные данные удалены." %}</p>{% endif %}
+        <p class="auth-switch muted"><a href="{% url 'forgot-password' %}">{% translate "Не помню пароль" %}</a></p>
+        <p class="auth-switch muted">{% translate "Нет аккаунта?" %} <a href="{% url 'register' %}">{% translate "Зарегистрироваться" %}</a></p>
       {% else %}
-        <p class="auth-switch muted"><a href="{% url 'resend-confirmation' %}">Отправить подтверждение ещё раз</a></p>
-        <p class="auth-switch muted">Уже есть аккаунт? <a href="{% url 'login' %}">Войти</a></p>
+        <p class="auth-switch muted"><a href="{% url 'resend-confirmation' %}">{% translate "Отправить подтверждение ещё раз" %}</a></p>
+        <p class="auth-switch muted">{% translate "Уже есть аккаунт?" %} <a href="{% url 'login' %}">{% translate "Войти" %}</a></p>
       {% endif %}
     </section>
   </div>

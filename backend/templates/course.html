@@ -1,101 +1,102 @@
 {% extends "base.html" %}
-{% block title %}Курс · PolskiFlow{% endblock %}
+{% load i18n ui %}
+{% block title %}{% translate "Курс · PolskiFlow" %}{% endblock %}
 {% block content %}
   <header class="content-header">
-    <div><p class="eyebrow">Траектория A1 → C2</p><h1>Курс польского</h1><p class="muted">Проходи темы по порядку: слова, грамматика, повторение, чтение и проверка знаний.</p></div>
-    <a class="compact-button" href="{% url 'practice-hub' %}">Все тренажёры →</a>
+    <div><p class="eyebrow">{% translate "Траектория A1 → C2" %}</p><h1>{% translate "Курс польского" %}</h1><p class="muted">{% translate "Проходи темы по порядку: слова, грамматика, повторение, чтение и проверка знаний." %}</p></div>
+    <a class="compact-button" href="{% url 'practice-hub' %}">{% translate "Все тренажёры →" %}</a>
   </header>
   {% if diagnostic_level_applied %}
-    <p class="save-success" role="status">Уровень {{ selected_level }} сохранён в профиле. Курс и библиотека теперь открываются с него.</p>
+    <p class="save-success" role="status">{% translate "Уровень" %} {{ selected_level|ui_text }} {% translate "сохранён в профиле. Курс и библиотека теперь открываются с него." %}</p>
   {% endif %}
-  <nav class="course-levels" aria-label="Уровни курса">
+  <nav class="course-levels" aria-label="{% translate "Уровни курса" %}">
     {% for level in course_levels %}
       <a href="?level={{ level.name }}"{% if level.name == selected_level %} aria-current="page"{% endif %}>
         <strong>{{ level.name }}</strong>
-        <small>{{ level.topic_count_label }}</small>
+        <small>{{ level.topic_count_label|ui_text }}</small>
       </a>
     {% endfor %}
   </nav>
   <form class="card catalog-filters" method="get" action="{% url 'course' %}" role="search">
     <input type="hidden" name="level" value="{{ selected_level }}">
     <div class="catalog-search-field">
-      <label for="catalog-search">Поиск по курсу</label>
-      <input id="catalog-search" type="search" name="q" value="{{ catalog_filters.q }}" placeholder="Например, путешествия или грамматика">
+      <label for="catalog-search">{% translate "Поиск по курсу" %}</label>
+      <input id="catalog-search" type="search" name="q" value="{{ catalog_filters.q }}" placeholder="{% translate "Например, путешествия или грамматика" %}">
     </div>
     <div class="catalog-filter-grid">
-      <label>Тема
+      <label>{% translate "Тема" %}
         <select name="topic">
-          <option value="">Все темы</option>
-          {% for topic in catalog_topic_options %}<option value="{{ topic.id }}"{% if catalog_filters.topic == topic.id %} selected{% endif %}>{{ topic.title }}</option>{% endfor %}
+          <option value="">{% translate "Все темы" %}</option>
+          {% for topic in catalog_topic_options %}<option value="{{ topic.id }}"{% if catalog_filters.topic == topic.id %} selected{% endif %}>{{ topic.title|ui_text }}</option>{% endfor %}
         </select>
       </label>
-      <label>Тип урока
+      <label>{% translate "Тип урока" %}
         <select name="kind">
-          <option value="">Все типы</option>
-          {% for value, label in catalog_kind_options %}<option value="{{ value }}"{% if catalog_filters.kind == value %} selected{% endif %}>{{ label }}</option>{% endfor %}
+          <option value="">{% translate "Все типы" %}</option>
+          {% for value, label in catalog_kind_options %}<option value="{{ value }}"{% if catalog_filters.kind == value %} selected{% endif %}>{{ label|ui_text }}</option>{% endfor %}
         </select>
       </label>
-      <label>Длительность
+      <label>{% translate "Длительность" %}
         <select name="duration">
-          <option value="">Любая</option>
-          <option value="short"{% if catalog_filters.duration == "short" %} selected{% endif %}>До 10 минут</option>
-          <option value="medium"{% if catalog_filters.duration == "medium" %} selected{% endif %}>11–20 минут</option>
-          <option value="long"{% if catalog_filters.duration == "long" %} selected{% endif %}>Больше 20 минут</option>
+          <option value="">{% translate "Любая" %}</option>
+          <option value="short"{% if catalog_filters.duration == "short" %} selected{% endif %}>{% translate "До 10 минут" %}</option>
+          <option value="medium"{% if catalog_filters.duration == "medium" %} selected{% endif %}>{% translate "11–20 минут" %}</option>
+          <option value="long"{% if catalog_filters.duration == "long" %} selected{% endif %}>{% translate "Больше 20 минут" %}</option>
         </select>
       </label>
-      <label>Статус
+      <label>{% translate "Статус" %}
         <select name="completion">
-          <option value="">Любой</option>
-          <option value="not-started"{% if catalog_filters.completion == "not-started" %} selected{% endif %}>Не пройден</option>
-          <option value="completed"{% if catalog_filters.completion == "completed" %} selected{% endif %}>Пройден</option>
+          <option value="">{% translate "Любой" %}</option>
+          <option value="not-started"{% if catalog_filters.completion == "not-started" %} selected{% endif %}>{% translate "Не пройден" %}</option>
+          <option value="completed"{% if catalog_filters.completion == "completed" %} selected{% endif %}>{% translate "Пройден" %}</option>
         </select>
       </label>
     </div>
     <div class="catalog-filter-actions">
-      <button class="compact-button" type="submit">Показать</button>
-      {% if catalog_filters.q or catalog_filters.topic or catalog_filters.kind or catalog_filters.duration or catalog_filters.completion %}<a href="?level={{ selected_level }}">Сбросить</a>{% endif %}
+      <button class="compact-button" type="submit">{% translate "Показать" %}</button>
+      {% if catalog_filters.q or catalog_filters.topic or catalog_filters.kind or catalog_filters.duration or catalog_filters.completion %}<a href="?level={{ selected_level }}">{% translate "Сбросить" %}</a>{% endif %}
     </div>
   </form>
   <div class="section-heading course-level-heading">
-    <div><p class="eyebrow">Уровень {{ selected_level }}</p><h2>Темы и уроки</h2></div>
-    <span>{{ catalog_result_topic_label }} · {{ catalog_result_lesson_label }}</span>
+    <div><p class="eyebrow">{% translate "Уровень" %} {{ selected_level|ui_text }}</p><h2>{% translate "Темы и уроки" %}</h2></div>
+    <span>{{ catalog_result_topic_label|ui_text }} · {{ catalog_result_lesson_label|ui_text }}</span>
   </div>
-  <div class="topic-list" aria-label="Темы курса">
+  <div class="topic-list" aria-label="{% translate "Темы курса" %}">
     {% for topic in course_topics %}
       <details class="topic-card" id="topic-{{ topic.id }}" open data-course-topic{% if topic.id == primary_topic_id %} data-course-topic-primary="true"{% endif %}>
         <summary class="topic-summary">
           <span class="topic-header">
-            <span class="topic-emoji">{{ topic.emoji }}</span>
-            <span><small>{{ selected_level }} · Тема {{ forloop.counter }}</small><strong>{{ topic.title }}</strong><span>{{ topic.description }}</span></span>
+            <span class="topic-emoji">{{ topic.emoji|ui_text }}</span>
+            <span><small>{{ selected_level|ui_text }} {% translate "· Тема" %} {{ forloop.counter|ui_text }}</small><strong>{{ topic.title|ui_text }}</strong><span>{{ topic.description|ui_text }}</span></span>
           </span>
           <span class="topic-progress-row">
-            <span>{{ topic.completed_count }} / {{ topic.lesson_count }} уроков</span>
-            <span>{% if topic.completed %}Тема завершена{% else %}{{ topic.progress_percent }}%{% endif %}</span>
+            <span>{{ topic.completed_count|ui_text }} / {{ topic.lesson_count|ui_text }} {% translate "уроков" %}</span>
+            <span>{% if topic.completed %}{% translate "Тема завершена" %}{% else %}{{ topic.progress_percent|ui_text }}%{% endif %}</span>
           </span>
-          <span class="topic-progress" role="progressbar" aria-label="Прогресс темы «{{ topic.title }}»" aria-valuemin="0" aria-valuemax="{{ topic.lesson_count }}" aria-valuenow="{{ topic.completed_count }}">
+          <span class="topic-progress" role="progressbar" aria-label="{% translate "Прогресс темы «" %}{{ topic.title|ui_text }}»" aria-valuemin="0" aria-valuemax="{{ topic.lesson_count }}" aria-valuenow="{{ topic.completed_count }}">
             <span style="--value: {{ topic.progress_percent }}%"></span>
           </span>
-          <span class="topic-summary-action">Показать уроки <span aria-hidden="true">⌄</span></span>
+          <span class="topic-summary-action">{% translate "Показать уроки" %} <span aria-hidden="true">⌄</span></span>
         </summary>
         <div class="topic-lessons">
           <div class="task-list">
             {% for task in topic.lessons %}
               <div class="task-card-row"><a class="task-card" href="{% url 'lesson' task.id %}">
-                <span class="task-icon">{{ task.emoji }}</span>
-                <span class="task-copy"><strong>{{ task.title }}{% if task.completed %} <span class="task-complete">✓</span>{% endif %}</strong><small>{{ task.description }} · ~{{ task.minutes }} мин</small></span>
+                <span class="task-icon">{{ task.emoji|ui_text }}</span>
+                <span class="task-copy"><strong>{{ task.title|ui_text }}{% if task.completed %} <span class="task-complete">✓</span>{% endif %}</strong><small>{{ task.description|ui_text }} · ~{{ task.minutes|ui_text }} {% translate "мин" %}</small></span>
                 <span class="task-arrow" aria-hidden="true">→</span>
-              </a>{% if lesson_bookmarks_available %}<form method="post" action="{% url 'toggle-lesson-bookmark' task.id %}">{% csrf_token %}<input type="hidden" name="saved" value="{% if task.saved %}0{% else %}1{% endif %}"><input type="hidden" name="next" value="{{ request.get_full_path }}#topic-{{ topic.id }}"><button class="bookmark-icon-button{% if task.saved %} is-saved{% endif %}" type="submit" aria-label="{% if task.saved %}Убрать урок «{{ task.title }}» из сохранённого{% else %}Сохранить урок «{{ task.title }}»{% endif %}">{% if task.saved %}★{% else %}☆{% endif %}</button></form>{% endif %}</div>
+              </a>{% if lesson_bookmarks_available %}<form method="post" action="{% url 'toggle-lesson-bookmark' task.id %}">{% csrf_token %}<input type="hidden" name="saved" value="{% if task.saved %}0{% else %}1{% endif %}"><input type="hidden" name="next" value="{{ request.get_full_path }}#topic-{{ topic.id }}"><button class="bookmark-icon-button{% if task.saved %} is-saved{% endif %}" type="submit" aria-label="{% if task.saved %}{% translate "Убрать урок «" %}{{ task.title|ui_text }}{% translate "» из сохранённого" %}{% else %}{% translate "Сохранить урок «" %}{{ task.title|ui_text }}»{% endif %}">{% if task.saved %}★{% else %}☆{% endif %}</button></form>{% endif %}</div>
             {% endfor %}
           </div>
           {% if topic.next_lesson %}
-            <a class="topic-action" href="{% url 'lesson' topic.next_lesson.id %}">Продолжить <span aria-hidden="true">→</span></a>
+            <a class="topic-action" href="{% url 'lesson' topic.next_lesson.id %}">{% translate "Продолжить" %} <span aria-hidden="true">→</span></a>
           {% else %}
-            <p class="topic-complete-status"><span aria-hidden="true">✓</span> Все уроки пройдены</p>
+            <p class="topic-complete-status"><span aria-hidden="true">✓</span> {% translate "Все уроки пройдены" %}</p>
           {% endif %}
         </div>
       </details>
     {% empty %}
-      <div class="card empty-state"><span>🔎</span><h2>Ничего не найдено</h2><p>Попробуй изменить запрос или сбросить фильтры.</p><a class="compact-button" href="?level={{ selected_level }}">Сбросить фильтры</a></div>
+      <div class="card empty-state"><span>🔎</span><h2>{% translate "Ничего не найдено" %}</h2><p>{% translate "Попробуй изменить запрос или сбросить фильтры." %}</p><a class="compact-button" href="?level={{ selected_level }}">{% translate "Сбросить фильтры" %}</a></div>
     {% endfor %}
   </div>
 {% endblock %}

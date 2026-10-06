@@ -1,7 +1,8 @@
-<nav class="personal-learning-nav" aria-label="Личные материалы">
-  <a href="{% url 'learning-space' %}"{% if request.resolver_match.url_name == 'learning-space' %} aria-current="page"{% endif %}>Обзор</a>
-  <a href="{% url 'saved-learning' %}"{% if request.resolver_match.url_name == 'saved-learning' %} aria-current="page"{% endif %}>Сохранённое</a>
-  <a href="{% url 'collections' %}"{% if request.resolver_match.url_name == 'collections' %} aria-current="page"{% endif %}>Подборки</a>
-  <a href="{% url 'lesson-notes' %}"{% if request.resolver_match.url_name == 'lesson-notes' %} aria-current="page"{% endif %}>Заметки</a>
-  <a href="{% url 'mistake-notebook' %}"{% if request.resolver_match.url_name == 'mistake-notebook' %} aria-current="page"{% endif %}>Ошибки</a>
+{% load i18n ui %}
+<nav class="personal-learning-nav" aria-label="{% translate "Личные материалы" %}">
+  <a href="{% url 'learning-space' %}"{% if request.resolver_match.url_name == 'learning-space' %} aria-current="page"{% endif %}>{% translate "Обзор" %}</a>
+  <a href="{% url 'saved-learning' %}"{% if request.resolver_match.url_name == 'saved-learning' %} aria-current="page"{% endif %}>{% translate "Сохранённое" %}</a>
+  <a href="{% url 'collections' %}"{% if request.resolver_match.url_name == 'collections' %} aria-current="page"{% endif %}>{% translate "Подборки" %}</a>
+  <a href="{% url 'lesson-notes' %}"{% if request.resolver_match.url_name == 'lesson-notes' %} aria-current="page"{% endif %}>{% translate "Заметки" %}</a>
+  <a href="{% url 'mistake-notebook' %}"{% if request.resolver_match.url_name == 'mistake-notebook' %} aria-current="page"{% endif %}>{% translate "Ошибки" %}</a>
 </nav>

@@ -1,49 +1,50 @@
 {% extends "base.html" %}
-{% block title %}Подготовка к экзамену B1 · PolskiFlow{% endblock %}
+{% load i18n ui %}
+{% block title %}{% translate "Подготовка к экзамену B1 · PolskiFlow" %}{% endblock %}
 {% block content %}
   <header class="exam-hero">
     <div class="exam-hero-copy">
       <p class="eyebrow">Państwowy egzamin certyfikatowy</p>
-      <h1>Подготовка к B1</h1>
-      <p>Короткий ежедневный план и пять модулей в формате государственного экзамена для взрослых.</p>
+      <h1>{% translate "Подготовка к B1" %}</h1>
+      <p>{% translate "Короткий ежедневный план и пять модулей в формате государственного экзамена для взрослых." %}</p>
       <div class="exam-hero-meta">
-        <span>минимум {{ exam_prep.pass_percent }}% в каждом модуле</span>
-        <span>{{ exam_prep.written_minutes }} минут письменной части</span>
+        <span>{% translate "минимум" %} {{ exam_prep.pass_percent|ui_text }}{% translate "% в каждом модуле" %}</span>
+        <span>{{ exam_prep.written_minutes|ui_text }} {% translate "минут письменной части" %}</span>
       </div>
     </div>
     <div class="exam-countdown" role="status">
       {% if exam_prep.countdown.available %}
-        <strong>{{ exam_prep.countdown.days_remaining }}</strong>
-        <span>{{ exam_prep.countdown.label }}</span>
-        <small>{{ exam_prep.countdown.starts_on|date:"d.m.Y" }}–{{ exam_prep.countdown.ends_on|date:"d.m.Y" }}</small>
+        <strong>{{ exam_prep.countdown.days_remaining|ui_text }}</strong>
+        <span>{{ exam_prep.countdown.label|ui_text }}</span>
+        <small>{{ exam_prep.countdown.starts_on|date:"d.m.Y"|ui_text }}–{{ exam_prep.countdown.ends_on|date:"d.m.Y"|ui_text }}</small>
       {% else %}
         <strong>B1</strong>
-        <span>{{ exam_prep.countdown.label }}</span>
+        <span>{{ exam_prep.countdown.label|ui_text }}</span>
       {% endif %}
     </div>
   </header>
-  <p><a class="compact-button" href="{% url 'b1-training-run' %}">Учебный прогон пяти частей · перерывы и отчёт →</a></p>
+  <p><a class="compact-button" href="{% url 'b1-training-run' %}">{% translate "Учебный прогон пяти частей · перерывы и отчёт →" %}</a></p>
 
   <section class="card exam-mock-callout" aria-labelledby="exam-mock-title">
-    <div><p class="eyebrow">Раз в неделю</p><h2 id="exam-mock-title">Пробный мини‑модуль</h2><p class="muted">15 минут: 3 проверяемых блока + 2 блока самопроверки. Аудирование и чтение — по 2 вопроса, грамматика — 3; письмо и речь без автоматического балла.</p></div>
-    <a class="compact-button" href="{% url 'b1-weekly-mock' %}">Начать тренировку</a>
+    <div><p class="eyebrow">{% translate "Раз в неделю" %}</p><h2 id="exam-mock-title">{% translate "Пробный мини‑модуль" %}</h2><p class="muted">{% translate "15 минут: 3 проверяемых блока + 2 блока самопроверки. Аудирование и чтение — по 2 вопроса, грамматика — 3; письмо и речь без автоматического балла." %}</p></div>
+    <a class="compact-button" href="{% url 'b1-weekly-mock' %}">{% translate "Начать тренировку" %}</a>
   </section>
   <section class="card exam-mock-callout" aria-labelledby="exam-simulation-title">
-    <div><p class="eyebrow">По частям</p><h2 id="exam-simulation-title">Тренажёр экзаменационного времени</h2><p class="muted">Выбери одну из пяти частей и пройди её с отдельным таймером. Проверяемые ответы не сохраняются.</p></div>
-    <a class="compact-button" href="{% url 'b1-exam-simulation' %}">Выбрать часть</a>
+    <div><p class="eyebrow">{% translate "По частям" %}</p><h2 id="exam-simulation-title">{% translate "Тренажёр экзаменационного времени" %}</h2><p class="muted">{% translate "Выбери одну из пяти частей и пройди её с отдельным таймером. Проверяемые ответы не сохраняются." %}</p></div>
+    <a class="compact-button" href="{% url 'b1-exam-simulation' %}">{% translate "Выбрать часть" %}</a>
   </section>
 
   <section class="exam-today" aria-labelledby="exam-today-title">
     <div class="section-heading exam-section-heading">
-      <div><p class="eyebrow">План на сегодня</p><h2 id="exam-today-title">{{ exam_prep.daily_minutes }} минут подготовки</h2></div>
-      <span>3 коротких шага · все 5 модулей в недельной ротации</span>
+      <div><p class="eyebrow">{% translate "План на сегодня" %}</p><h2 id="exam-today-title">{{ exam_prep.daily_minutes|ui_text }} {% translate "минут подготовки" %}</h2></div>
+      <span>{% translate "3 коротких шага · все 5 модулей в недельной ротации" %}</span>
     </div>
     <ol class="exam-daily-list">
       {% for item in exam_prep.daily_plan %}
         <li class="card exam-daily-item exam-accent-{{ item.accent }}">
-          <span class="exam-step-number">{{ forloop.counter }}</span>
-          <div><small>{{ item.module_title }} · {{ item.minutes }} минут{% if item.is_focus %} · фокус дня{% endif %}</small><strong>{{ item.action }}</strong>{% if item.focus_reason %}<span class="exam-focus-reason">{{ item.focus_reason }}</span>{% endif %}</div>
-          <a href="{{ item.href }}" aria-label="{{ item.action }}">Начать</a>
+          <span class="exam-step-number">{{ forloop.counter|ui_text }}</span>
+          <div><small>{{ item.module_title|ui_text }} · {{ item.minutes|ui_text }} {% translate "минут" %}{% if item.is_focus %} {% translate "· фокус дня" %}{% endif %}</small><strong>{{ item.action|ui_text }}</strong>{% if item.focus_reason %}<span class="exam-focus-reason">{{ item.focus_reason|ui_text }}</span>{% endif %}</div>
+          <a href="{{ item.href }}" aria-label="{{ item.action|ui_text }}">{% translate "Начать" %}</a>
         </li>
       {% endfor %}
     </ol>
@@ -51,17 +52,17 @@
 
   <section aria-labelledby="exam-modules-title">
     <div class="section-heading exam-section-heading">
-      <div><p class="eyebrow">Структура B1</p><h2 id="exam-modules-title">Пять модулей</h2></div>
-      <span>порог — {{ exam_prep.pass_percent }}% отдельно в каждом</span>
+      <div><p class="eyebrow">{% translate "Структура B1" %}</p><h2 id="exam-modules-title">{% translate "Пять модулей" %}</h2></div>
+      <span>{% translate "порог —" %} {{ exam_prep.pass_percent|ui_text }}{% translate "% отдельно в каждом" %}</span>
     </div>
     <div class="exam-module-grid">
       {% for module in exam_prep.modules %}
         <article class="card exam-module-card exam-accent-{{ module.accent }}">
-          <header><span>{{ module.duration_minutes }} мин</span><span>{{ module.points }} баллов</span></header>
-          <p class="eyebrow" lang="pl">{{ module.polish_title }}</p>
-          <h3>{{ module.title }}</h3>
-          <p class="muted">{{ module.task_count }}</p>
-          <a href="{{ module.href }}">{{ module.action }}</a>
+          <header><span>{{ module.duration_minutes|ui_text }} {% translate "мин" %}</span><span>{{ module.points|ui_text }} {% translate "баллов" %}</span></header>
+          <p class="eyebrow" lang="pl">{{ module.polish_title|ui_text }}</p>
+          <h3>{{ module.title|ui_text }}</h3>
+          <p class="muted">{{ module.task_count|ui_text }}</p>
+          <a href="{{ module.href }}">{{ module.action|ui_text }}</a>
         </article>
       {% endfor %}
     </div>
@@ -69,40 +70,40 @@
 
   <section class="exam-results" aria-labelledby="exam-results-title">
     <div class="section-heading exam-section-heading">
-      <div><p class="eyebrow">Последние 30 дней</p><h2 id="exam-results-title">Результаты по модулям</h2></div>
-      <span>это тренировки, не прогноз экзамена</span>
+      <div><p class="eyebrow">{% translate "Последние 30 дней" %}</p><h2 id="exam-results-title">{% translate "Результаты по модулям" %}</h2></div>
+      <span>{% translate "это тренировки, не прогноз экзамена" %}</span>
     </div>
     {% if not results_available %}
-      <p class="card muted">Сейчас история результатов недоступна. План подготовки продолжает работать.</p>
+      <p class="card muted">{% translate "Сейчас история результатов недоступна. План подготовки продолжает работать." %}</p>
     {% endif %}
     <div class="exam-result-grid">
       {% for result in module_results %}
         <article class="card exam-result-card exam-accent-{{ result.accent }}">
-          <div class="exam-result-heading"><h3>{{ result.title }}</h3>
-            {% if result.status == "measured" %}<strong>{{ result.percent }}%</strong>{% else %}<strong aria-hidden="true">—</strong>{% endif %}
+          <div class="exam-result-heading"><h3>{{ result.title|ui_text }}</h3>
+            {% if result.status == "measured" %}<strong>{{ result.percent|ui_text }}%</strong>{% else %}<strong aria-hidden="true">—</strong>{% endif %}
           </div>
           {% if result.status == "measured" %}
-            <div class="exam-result-track" role="progressbar" aria-label="{{ result.title }}: {{ result.percent }}% в тренировках" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ result.percent }}"><span style="width: {{ result.percent }}%"></span></div>
-            <p class="muted">{{ result.detail }}</p>
-            {% if result.trend.status == "improved" or result.trend.status == "declined" or result.trend.status == "stable" %}<p class="exam-result-trend is-{{ result.trend.status }}">{{ result.trend.label }} <span>({{ result.trend.previous_percent }}% → {{ result.trend.current_percent }}%)</span></p>{% elif result.trend.status == "first" %}<p class="exam-result-trend">{{ result.trend.label }}</p>{% endif %}
+            <div class="exam-result-track" role="progressbar" aria-label="{{ result.title|ui_text }}: {{ result.percent|ui_text }}{% translate "% в тренировках" %}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ result.percent }}"><span style="width: {{ result.percent }}%"></span></div>
+            <p class="muted">{{ result.detail|ui_text }}</p>
+            {% if result.trend.status == "improved" or result.trend.status == "declined" or result.trend.status == "stable" %}<p class="exam-result-trend is-{{ result.trend.status }}">{{ result.trend.label|ui_text }} <span>({{ result.trend.previous_percent|ui_text }}% → {{ result.trend.current_percent|ui_text }}%)</span></p>{% elif result.trend.status == "first" %}<p class="exam-result-trend">{{ result.trend.label|ui_text }}</p>{% endif %}
           {% elif result.status == "empty" %}
-            <p class="muted">Ещё нет сохранённых результатов B1 за 30 дней.</p>
+            <p class="muted">{% translate "Ещё нет сохранённых результатов B1 за 30 дней." %}</p>
           {% else %}
-            <p class="muted">Пока без автоматического балла. Выполни практику и оцени себя по чек-листу.</p>
+            <p class="muted">{% translate "Пока без автоматического балла. Выполни практику и оцени себя по чек-листу." %}</p>
           {% endif %}
-          <a href="{{ result.href }}">Перейти к практике</a>
+          <a href="{{ result.href }}">{% translate "Перейти к практике" %}</a>
         </article>
       {% endfor %}
     </div>
-    <p class="exam-results-note">{% if has_mock_result %}Для аудирования, чтения и грамматики показана последняя завершённая мини‑попытка и изменение относительно предыдущей; обычные уроки не смешиваются с ней. Рекомендация в ежедневном плане использует средний балл по 3–5 последним попыткам; до трёх попыток мини‑модуль не меняет приоритет. Выборка мала: 2–3 вопроса на навык, поэтому уверенность в выводах низкая. Процент и изменение не доказывают устойчивое владение навыком.{% else %}Процент считается только по сохранённым заданиям чтения и грамматики B1.{% endif %} Для письма и говорения числовая динамика не создаётся. Результат не подтверждает уровень CEFR и не заменяет официальный пробный экзамен.</p>
+    <p class="exam-results-note">{% if has_mock_result %}{% translate "Для аудирования, чтения и грамматики показана последняя завершённая мини‑попытка и изменение относительно предыдущей; обычные уроки не смешиваются с ней. Рекомендация в ежедневном плане использует средний балл по 3–5 последним попыткам; до трёх попыток мини‑модуль не меняет приоритет. Выборка мала: 2–3 вопроса на навык, поэтому уверенность в выводах низкая. Процент и изменение не доказывают устойчивое владение навыком." %}{% else %}{% translate "Процент считается только по сохранённым заданиям чтения и грамматики B1." %}{% endif %} {% translate "Для письма и говорения числовая динамика не создаётся. Результат не подтверждает уровень CEFR и не заменяет официальный пробный экзамен." %}</p>
   </section>
 
   <aside class="card exam-source-note">
-    <div><p class="eyebrow">Официальные материалы</p><h2>Сверяйся с форматом комиссии</h2><p class="muted">PolskiFlow помогает тренироваться, но не заменяет официальный пробный тест и не подтверждает уровень CEFR.</p></div>
+    <div><p class="eyebrow">{% translate "Официальные материалы" %}</p><h2>{% translate "Сверяйся с форматом комиссии" %}</h2><p class="muted">{% translate "PolskiFlow помогает тренироваться, но не заменяет официальный пробный тест и не подтверждает уровень CEFR." %}</p></div>
     <div class="exam-source-actions">
-      <a class="compact-button secondary-link" href="https://certyfikatpolski.pl/category/terminy/" target="_blank" rel="noopener noreferrer">Официальные даты</a>
-      <a class="compact-button secondary-link" href="https://certyfikatpolski.pl/o-egzaminie/struktura-egzaminu/" target="_blank" rel="noopener noreferrer">Структура экзамена</a>
-      <a class="compact-button secondary-link" href="https://certyfikatpolski.pl/o-egzaminie/zbiory-zadan/" target="_blank" rel="noopener noreferrer">Задания B1</a>
+      <a class="compact-button secondary-link" href="https://certyfikatpolski.pl/category/terminy/" target="_blank" rel="noopener noreferrer">{% translate "Официальные даты" %}</a>
+      <a class="compact-button secondary-link" href="https://certyfikatpolski.pl/o-egzaminie/struktura-egzaminu/" target="_blank" rel="noopener noreferrer">{% translate "Структура экзамена" %}</a>
+      <a class="compact-button secondary-link" href="https://certyfikatpolski.pl/o-egzaminie/zbiory-zadan/" target="_blank" rel="noopener noreferrer">{% translate "Задания B1" %}</a>
     </div>
   </aside>
 {% endblock %}

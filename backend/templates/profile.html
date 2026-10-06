@@ -1,5 +1,6 @@
 {% extends "base.html" %}
-{% block title %}Профиль · PolskiFlow{% endblock %}
+{% load i18n ui %}
+{% block title %}{% translate "Профиль · PolskiFlow" %}{% endblock %}
 {% block content %}
   <header class="profile-header">
     <div class="profile-avatar" aria-hidden="true">{{ dashboard.display_name|first|upper|default:"U" }}</div>
@@ -8,45 +9,45 @@
       <h1>{{ dashboard.display_name }}</h1>
       <p class="muted">{{ email }}</p>
     </div>
-    <span class="profile-level" aria-label="Текущий уровень {{ dashboard.level }}">{{ dashboard.level }}</span>
+    <span class="profile-level" aria-label="{% translate "Текущий уровень" %} {{ dashboard.level|ui_text }}">{{ dashboard.level|ui_text }}</span>
   </header>
 
   {% if not dashboard.available or not dictionary_available %}
-    <p class="data-notice" role="status">Часть статистики временно недоступна. Можно продолжать занятия — новый прогресс сохранится после восстановления соединения.</p>
+    <p class="data-notice" role="status">{% translate "Часть статистики временно недоступна. Можно продолжать занятия — новый прогресс сохранится после восстановления соединения." %}</p>
   {% endif %}
 
   <section aria-labelledby="progress-title">
     <div class="section-heading">
-      <div><p class="eyebrow">Общий результат</p><h2 id="progress-title">Твой прогресс</h2></div>
-      <strong>{{ progress_percent }}%</strong>
+      <div><p class="eyebrow">{% translate "Общий результат" %}</p><h2 id="progress-title">{% translate "Твой прогресс" %}</h2></div>
+      <strong>{{ progress_percent|ui_text }}%</strong>
     </div>
-    <div class="profile-progress" role="progressbar" aria-label="Пройдено уроков курса" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ progress_percent }}">
+    <div class="profile-progress" role="progressbar" aria-label="{% translate "Пройдено уроков курса" %}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ progress_percent }}">
       <span style="--value: {{ progress_percent }}%"></span>
     </div>
     <div class="profile-stats">
-      <article class="card profile-stat"><span aria-hidden="true">✓</span><strong>{{ completed_lessons }} / {{ total_lessons }}</strong><small>уроков пройдено</small></article>
-      <article class="card profile-stat"><span aria-hidden="true">🔥</span><strong>{{ dashboard.streak_days }}</strong><small>дней подряд</small></article>
-      <article class="card profile-stat"><span aria-hidden="true">◷</span><strong>{{ dashboard.active_days }}</strong><small>активных дней</small></article>
-      <article class="card profile-stat"><span aria-hidden="true">◇</span><strong>{{ dictionary_count }}</strong><small>слов в словаре</small></article>
+      <article class="card profile-stat"><span aria-hidden="true">✓</span><strong>{{ completed_lessons|ui_text }} / {{ total_lessons|ui_text }}</strong><small>{% translate "уроков пройдено" %}</small></article>
+      <article class="card profile-stat"><span aria-hidden="true">🔥</span><strong>{{ dashboard.streak_days|ui_text }}</strong><small>{% translate "дней подряд" %}</small></article>
+      <article class="card profile-stat"><span aria-hidden="true">◷</span><strong>{{ dashboard.active_days|ui_text }}</strong><small>{% translate "активных дней" %}</small></article>
+      <article class="card profile-stat"><span aria-hidden="true">◇</span><strong>{{ dictionary_count|ui_text }}</strong><small>{% translate "слов в словаре" %}</small></article>
     </div>
-    <p><a class="compact-button secondary-link" href="{% url 'learning-history' %}">Открыть историю занятий</a></p>
+    <p><a class="compact-button secondary-link" href="{% url 'learning-history' %}">{% translate "Открыть историю занятий" %}</a></p>
   </section>
 
   <section aria-labelledby="achievements-title">
     <div class="section-heading">
-      <div><p class="eyebrow">Мотивация</p><h2 id="achievements-title">Достижения</h2></div>
-      <strong>{{ unlocked_achievements }} / {{ achievements|length }}</strong>
+      <div><p class="eyebrow">{% translate "Мотивация" %}</p><h2 id="achievements-title">{% translate "Достижения" %}</h2></div>
+      <strong>{{ unlocked_achievements|ui_text }} / {{ achievements|length|ui_text }}</strong>
     </div>
     <div class="achievement-grid">
       {% for achievement in achievements %}
         <article class="card achievement-card{% if achievement.unlocked %} is-unlocked{% endif %}">
-          <span class="achievement-icon" aria-hidden="true">{{ achievement.icon }}</span>
-          <div><h3>{{ achievement.title }}</h3><p>{{ achievement.description }}</p></div>
+          <span class="achievement-icon" aria-hidden="true">{{ achievement.icon|ui_text }}</span>
+          <div><h3>{{ achievement.title|ui_text }}</h3><p>{{ achievement.description|ui_text }}</p></div>
           {% if achievement.unlocked %}
-            <strong class="achievement-state">Открыто</strong>
+            <strong class="achievement-state">{% translate "Открыто" %}</strong>
           {% else %}
-            <div class="achievement-progress" role="progressbar" aria-label="{{ achievement.title }}" aria-valuemin="0" aria-valuemax="{{ achievement.target }}" aria-valuenow="{{ achievement.current }}"><span style="--value: {{ achievement.progress_percent }}%"></span></div>
-            <small>{{ achievement.current }} / {{ achievement.target }}</small>
+            <div class="achievement-progress" role="progressbar" aria-label="{{ achievement.title|ui_text }}" aria-valuemin="0" aria-valuemax="{{ achievement.target }}" aria-valuenow="{{ achievement.current }}"><span style="--value: {{ achievement.progress_percent }}%"></span></div>
+            <small>{{ achievement.current|ui_text }} / {{ achievement.target|ui_text }}</small>
           {% endif %}
         </article>
       {% endfor %}
@@ -54,118 +55,118 @@
   </section>
 
   <section aria-labelledby="monthly-title">
-    <div class="section-heading"><div><p class="eyebrow">Последние 30 дней</p><h2 id="monthly-title">Месячный обзор</h2></div></div>
+    <div class="section-heading"><div><p class="eyebrow">{% translate "Последние 30 дней" %}</p><h2 id="monthly-title">{% translate "Месячный обзор" %}</h2></div></div>
     <div class="profile-stats weekly-stats">
-      <article class="card profile-stat"><span aria-hidden="true">✓</span><strong>{{ dashboard.monthly_completed_count }}</strong><small>уникальных уроков</small></article>
-      <article class="card profile-stat"><span aria-hidden="true">●</span><strong>{{ dashboard.monthly_active_days }} / 30</strong><small>активных дней</small></article>
+      <article class="card profile-stat"><span aria-hidden="true">✓</span><strong>{{ dashboard.monthly_completed_count|ui_text }}</strong><small>{% translate "уникальных уроков" %}</small></article>
+      <article class="card profile-stat"><span aria-hidden="true">●</span><strong>{{ dashboard.monthly_active_days|ui_text }} / 30</strong><small>{% translate "активных дней" %}</small></article>
     </div>
-    <p class="muted">Обзор помогает увидеть устойчивость занятий за более длинный период, не заменяя дневной план.</p>
+    <p class="muted">{% translate "Обзор помогает увидеть устойчивость занятий за более длинный период, не заменяя дневной план." %}</p>
   </section>
 
   <section aria-labelledby="weekly-title">
     <div class="section-heading">
-      <div><p class="eyebrow">Последние 7 дней</p><h2 id="weekly-title">Недельная активность</h2></div>
+      <div><p class="eyebrow">{% translate "Последние 7 дней" %}</p><h2 id="weekly-title">{% translate "Недельная активность" %}</h2></div>
     </div>
     <div class="profile-stats weekly-stats">
       <article class="card profile-stat weekly-stat">
-        <span aria-hidden="true">▦</span><strong>{{ dashboard.weekly_completed_count }}</strong><small>уроков завершено</small>
+        <span aria-hidden="true">▦</span><strong>{{ dashboard.weekly_completed_count|ui_text }}</strong><small>{% translate "уроков завершено" %}</small>
         <p class="weekly-compare {% if dashboard.weekly_completed_delta > 0 %}is-positive{% elif dashboard.weekly_completed_delta < 0 %}is-negative{% endif %}">
-          {% if dashboard.weekly_completed_delta > 0 %}↑ на {{ dashboard.weekly_completed_delta }} больше{% elif dashboard.weekly_completed_delta < 0 %}↓ на {{ dashboard.weekly_completed_delta|stringformat:"d"|slice:"1:" }} меньше{% else %}без изменений{% endif %}
+          {% if dashboard.weekly_completed_delta > 0 %}{% translate "↑ на" %} {{ dashboard.weekly_completed_delta|ui_text }} {% translate "больше" %}{% elif dashboard.weekly_completed_delta < 0 %}{% translate "↓ на" %} {{ dashboard.weekly_completed_delta|stringformat:"d"|slice:"1:" }} {% translate "меньше" %}{% else %}{% translate "без изменений" %}{% endif %}
         </p>
       </article>
       <article class="card profile-stat weekly-stat">
-        <span aria-hidden="true">●</span><strong>{{ dashboard.weekly_active_days }} / 7</strong><small>активных дней</small>
+        <span aria-hidden="true">●</span><strong>{{ dashboard.weekly_active_days|ui_text }} / 7</strong><small>{% translate "активных дней" %}</small>
         <p class="weekly-compare {% if dashboard.weekly_active_days_delta > 0 %}is-positive{% elif dashboard.weekly_active_days_delta < 0 %}is-negative{% endif %}">
-          {% if dashboard.weekly_active_days_delta > 0 %}↑ на {{ dashboard.weekly_active_days_delta }} больше{% elif dashboard.weekly_active_days_delta < 0 %}↓ на {{ dashboard.weekly_active_days_delta|stringformat:"d"|slice:"1:" }} меньше{% else %}без изменений{% endif %}
+          {% if dashboard.weekly_active_days_delta > 0 %}{% translate "↑ на" %} {{ dashboard.weekly_active_days_delta|ui_text }} {% translate "больше" %}{% elif dashboard.weekly_active_days_delta < 0 %}{% translate "↓ на" %} {{ dashboard.weekly_active_days_delta|stringformat:"d"|slice:"1:" }} {% translate "меньше" %}{% else %}{% translate "без изменений" %}{% endif %}
         </p>
       </article>
     </div>
-    <p class="muted">Сравниваем сегодня и шесть предыдущих дней с предшествующими семью днями. В прошлый период: {{ dashboard.previous_week_completed_count }} уроков за {{ dashboard.previous_week_active_days }} активных дней.</p>
+    <p class="muted">{% translate "Сравниваем сегодня и шесть предыдущих дней с предшествующими семью днями. В прошлый период:" %} {{ dashboard.previous_week_completed_count|ui_text }} {% translate "уроков за" %} {{ dashboard.previous_week_active_days|ui_text }} {% translate "активных дней." %}</p>
   </section>
 
   <section aria-labelledby="goal-insight-title">
     <div class="section-heading">
-      <div><p class="eyebrow">Текущая цель · 28 дней</p><h2 id="goal-insight-title">Насколько подходит нагрузка</h2></div>
-      <strong>{{ daily_goal_insight.success_rate }}%</strong>
+      <div><p class="eyebrow">{% translate "Текущая цель · 28 дней" %}</p><h2 id="goal-insight-title">{% translate "Насколько подходит нагрузка" %}</h2></div>
+      <strong>{{ daily_goal_insight.success_rate|ui_text }}%</strong>
     </div>
     <div class="card goal-insight" data-goal-status="{{ daily_goal_insight.status }}">
       <div class="goal-insight-metrics">
-        <p><strong>{{ daily_goal_insight.successful_days }} / {{ daily_goal_insight.period_days }}</strong><span>дней с выполненной целью</span></p>
-        <p><strong>{{ daily_goal_insight.typical_active_day_lessons }}</strong><span>типичный темп в активный день</span></p>
+        <p><strong>{{ daily_goal_insight.successful_days|ui_text }} / {{ daily_goal_insight.period_days|ui_text }}</strong><span>{% translate "дней с выполненной целью" %}</span></p>
+        <p><strong>{{ daily_goal_insight.typical_active_day_lessons|ui_text }}</strong><span>{% translate "типичный темп в активный день" %}</span></p>
       </div>
-      <h3>{{ daily_goal_insight.status_label }}</h3>
-      <p>{{ daily_goal_insight.recommendation }}</p>
+      <h3>{{ daily_goal_insight.status_label|ui_text }}</h3>
+      <p>{{ daily_goal_insight.recommendation|ui_text }}</p>
     </div>
-    <p class="profile-note">Сравниваем историю завершений с текущей целью {{ dashboard.daily_goal_lessons }} в день. Изменения цели за прошлые дни не сохраняются, поэтому это ориентир, а не оценка.</p>
+    <p class="profile-note">{% translate "Сравниваем историю завершений с текущей целью" %} {{ dashboard.daily_goal_lessons|ui_text }} {% translate "в день. Изменения цели за прошлые дни не сохраняются, поэтому это ориентир, а не оценка." %}</p>
   </section>
 
   <section class="profile-settings" aria-labelledby="settings-title">
-    <div class="section-heading"><div><p class="eyebrow">Персонализация</p><h2 id="settings-title">Настройки</h2></div></div>
+    <div class="section-heading"><div><p class="eyebrow">{% translate "Персонализация" %}</p><h2 id="settings-title">{% translate "Настройки" %}</h2></div></div>
     <form class="card profile-form" method="post">
       {% csrf_token %}
       <input type="hidden" name="form_action" value="profile">
-      {% if profile_message %}<p class="form-message" role="status">{{ profile_message }}</p>{% endif %}
-      {% if profile_error %}<p class="form-error" role="alert">{{ profile_error }}</p>{% endif %}
+      {% if profile_message %}<p class="form-message" role="status">{{ profile_message|ui_text }}</p>{% endif %}
+      {% if profile_error %}<p class="form-error" role="alert">{{ profile_error|ui_text }}</p>{% endif %}
       <div class="profile-form-fields">
         <label>
-          <span>Имя</span>
+          <span>{% translate "Имя" %}</span>
           <input name="display_name" type="text" value="{{ profile_form.display_name }}" maxlength="80" autocomplete="name" required aria-describedby="display-name-help">
-          <small id="display-name-help">Будет отображаться в профиле и приветствии.</small>
+          <small id="display-name-help">{% translate "Будет отображаться в профиле и приветствии." %}</small>
         </label>
         <label>
-          <span>Цель на день</span>
+          <span>{% translate "Цель на день" %}</span>
           <select name="daily_goal_lessons" aria-describedby="daily-goal-help">
-            {% for goal in "123456789" %}<option value="{{ goal }}"{% if profile_form.daily_goal_lessons|stringformat:"s" == goal %} selected{% endif %}>{{ goal }} урок{% if goal != "1" %}а{% endif %}</option>{% endfor %}
-            <option value="10"{% if profile_form.daily_goal_lessons|stringformat:"s" == "10" %} selected{% endif %}>10 уроков</option>
+            {% for goal in "123456789" %}<option value="{{ goal }}"{% if profile_form.daily_goal_lessons|stringformat:"s" == goal %} selected{% endif %}>{{ goal|ui_text }} {% translate "урок" %}{% if goal != "1" %}{% translate "а" %}{% endif %}</option>{% endfor %}
+            <option value="10"{% if profile_form.daily_goal_lessons|stringformat:"s" == "10" %} selected{% endif %}>{% translate "10 уроков" %}</option>
           </select>
-          <small id="daily-goal-help">От 1 до 10 завершённых уроков в день.</small>
+          <small id="daily-goal-help">{% translate "От 1 до 10 завершённых уроков в день." %}</small>
         </label>
         <label>
-          <span>Уровень курса</span>
+          <span>{% translate "Уровень курса" %}</span>
           <select name="level" aria-describedby="level-help">
             {% for level in profile_levels %}
-              <option value="{{ level }}"{% if profile_form.level == level %} selected{% endif %}>{{ level }}</option>
+              <option value="{{ level }}"{% if profile_form.level == level %} selected{% endif %}>{{ level|ui_text }}</option>
             {% endfor %}
           </select>
-          <small id="level-help">Определяет материалы в плане на день, курсе и библиотеке.</small>
+          <small id="level-help">{% translate "Определяет материалы в плане на день, курсе и библиотеке." %}</small>
         </label>
       </div>
-      <button type="submit">Сохранить профиль</button>
+      <button type="submit">{% translate "Сохранить профиль" %}</button>
     </form>
   </section>
   <section class="profile-settings" aria-labelledby="reminders-title">
-    <div class="section-heading"><div><p class="eyebrow">Ритм занятий</p><h2 id="reminders-title">Напоминания</h2></div></div>
+    <div class="section-heading"><div><p class="eyebrow">{% translate "Ритм занятий" %}</p><h2 id="reminders-title">{% translate "Напоминания" %}</h2></div></div>
     <form class="card profile-form" method="post">
       {% csrf_token %}
       <input type="hidden" name="form_action" value="reminders">
-      {% if reminder_message %}<p class="form-message" role="status">{{ reminder_message }}</p>{% endif %}
-      {% if reminder_error %}<p class="form-error" role="alert">{{ reminder_error }}</p>{% endif %}
-      {% if not reminder_available %}<p class="data-notice" role="status">Настройки напоминаний временно недоступны.</p>{% endif %}
+      {% if reminder_message %}<p class="form-message" role="status">{{ reminder_message|ui_text }}</p>{% endif %}
+      {% if reminder_error %}<p class="form-error" role="alert">{{ reminder_error|ui_text }}</p>{% endif %}
+      {% if not reminder_available %}<p class="data-notice" role="status">{% translate "Настройки напоминаний временно недоступны." %}</p>{% endif %}
       <label>
-        <span><input name="daily_reminder_enabled" type="checkbox"{% if reminder_preferences.daily_reminder_enabled %} checked{% endif %}> Напоминать о занятиях каждый день</span>
-        <small>Напоминания выключены, пока ты сам их не включишь. На этом этапе мы только сохраняем выбор и ещё ничего не отправляем.</small>
+        <span><input name="daily_reminder_enabled" type="checkbox"{% if reminder_preferences.daily_reminder_enabled %} checked{% endif %}> {% translate "Напоминать о занятиях каждый день" %}</span>
+        <small>{% translate "Напоминания выключены, пока ты сам их не включишь. На этом этапе мы только сохраняем выбор и ещё ничего не отправляем." %}</small>
       </label>
       <label>
-        <span>Время</span>
+        <span>{% translate "Время" %}</span>
         <input name="reminder_time" type="time" value="{{ reminder_preferences.reminder_time }}" required aria-describedby="reminder-time-help">
-        <small id="reminder-time-help">Часовой пояс: Europe/Warsaw.</small>
+        <small id="reminder-time-help">{% translate "Часовой пояс: Europe/Warsaw." %}</small>
       </label>
-      <button type="submit">Сохранить напоминания</button>
+      <button type="submit">{% translate "Сохранить напоминания" %}</button>
     </form>
   </section>
   <section class="profile-settings" aria-labelledby="data-export-title">
-    <div class="section-heading"><div><p class="eyebrow">Твои данные</p><h2 id="data-export-title">Экспорт</h2></div></div>
+    <div class="section-heading"><div><p class="eyebrow">{% translate "Твои данные" %}</p><h2 id="data-export-title">{% translate "Экспорт" %}</h2></div></div>
     <div class="card profile-form">
-      <p>Скачай JSON-копию профиля, результатов, черновиков уроков, словаря, закладок, обратной связи и настроек напоминаний.</p>
-      <p class="muted">Файл не кэшируется и не содержит паролей или токенов.</p>
-      <a class="compact-button" href="{% url 'profile-data-export' %}" download>Скачать мои данные</a>
+      <p>{% translate "Скачай JSON-копию профиля, результатов, черновиков уроков, словаря, закладок, обратной связи и настроек напоминаний." %}</p>
+      <p class="muted">{% translate "Файл не кэшируется и не содержит паролей или токенов." %}</p>
+      <a class="compact-button" href="{% url 'profile-data-export' %}" download>{% translate "Скачать мои данные" %}</a>
     </div>
   </section>
   <section class="profile-settings" aria-labelledby="account-security-title">
-    <div class="section-heading"><div><p class="eyebrow">Аккаунт</p><h2 id="account-security-title">Безопасность</h2></div></div>
+    <div class="section-heading"><div><p class="eyebrow">{% translate "Аккаунт" %}</p><h2 id="account-security-title">{% translate "Безопасность" %}</h2></div></div>
     <div class="card profile-form">
-      <p>Обнови пароль и заверши текущую локальную сессию.</p>
-      <a class="compact-button secondary-link" href="{% url 'account-security' %}">Изменить пароль</a>
+      <p>{% translate "Обнови пароль и заверши текущую локальную сессию." %}</p>
+      <a class="compact-button secondary-link" href="{% url 'account-security' %}">{% translate "Изменить пароль" %}</a>
     </div>
   </section>
 {% endblock %}

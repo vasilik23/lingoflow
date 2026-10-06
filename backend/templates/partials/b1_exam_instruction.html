@@ -1,8 +1,9 @@
+{% load i18n ui %}
 <div class="mock-instructions">
   <h3 lang="pl">Polecenie</h3>
-  <p lang="pl">{{ instruction.polish }}</p>
+  <p lang="pl">{{ instruction.polish|ui_text }}</p>
   <details lang="ru">
-    <summary>Пояснение по-русски</summary>
+    <summary>{% translate "Пояснение по-русски" %}</summary>
     <p>{{ instruction.russian }}</p>
   </details>
 </div>

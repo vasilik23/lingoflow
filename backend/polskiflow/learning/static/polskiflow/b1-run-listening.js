@@ -1,4 +1,6 @@
 (() => {
+  const ui = (typeof window !== "undefined" && window.PolskiFlowI18n?.t) || ((text, ...values) => Array.isArray(text) ? text.map((part, i) => part + (values[i] ?? "")).join("") : text);
+
   const root = document.querySelector('[data-b1-run]');
   const play = root?.querySelector('[data-run-play]');
   if (!play) return;
@@ -7,7 +9,7 @@
   const audio = root.querySelector('audio[data-run-audio]');
   if (root.dataset.missingRecording === '1') {
     play.disabled = true; stop.disabled = true;
-    status.textContent = 'Запись этого прогона недоступна. Можно пропустить часть или начать новый прогон.';
+    status.textContent = ui('Запись этого прогона недоступна. Можно пропустить часть или начать новый прогон.');
     return;
   }
   const key = `polskiflow-b1-run-listening:${root.dataset.namespace}`;
@@ -31,14 +33,14 @@
     const left = Math.max(0, Math.ceil((state.cooldownUntil - Date.now()) / 1000));
     play.disabled = busy || expired || disposed || state.used >= limit || left > 0;
     stop.disabled = !busy;
-    play.textContent = busy ? 'Воспроизводится…' : left && state.used < limit ? `Повтор через ${left} с` : `Прослушать · осталось ${limit - state.used} из ${limit}`;
+    play.textContent = busy ? ui('Воспроизводится…') : left && state.used < limit ? ui`Повтор через ${left} с` : ui`Прослушать · осталось ${limit - state.used} из ${limit}`;
   };
   const settled = (message) => {
     if (!busy) return;
     clearTimeout(watchdog); busy = false;
     if (started) state.cooldownUntil = Date.now() + pauseMs;
     save(); update();
-    if (!disposed) status.textContent = message + (unavailableStorage ? ' Счётчик не сохранится при перезагрузке: хранилище браузера недоступно.' : '');
+    if (!disposed) status.textContent = message + (unavailableStorage ? ui(' Счётчик не сохранится при перезагрузке: хранилище браузера недоступно.') : '');
   };
   const cancel = (message) => {
     attempt++;
@@ -50,46 +52,46 @@
     audio.addEventListener('playing', () => {
       if (!busy || disposed || expired || started) return;
       started = true; clearTimeout(watchdog); state.used++; state.cooldownUntil = Date.now() + pauseMs; save(); update();
-      status.textContent = `Прослушивание ${state.used} из ${limit}. Остановка тоже расходует прослушивание.`;
+      status.textContent = ui`Прослушивание ${state.used} из ${limit}. Остановка тоже расходует прослушивание.`;
     });
-    audio.addEventListener('ended', () => settled(state.used < limit ? 'Сообщение завершено. Перед повтором — пауза 30 секунд для ответов.' : 'Два прослушивания использованы. Ответь на вопросы.'));
-    audio.addEventListener('error', () => cancel(started ? 'Запись прервана; начатое прослушивание учтено.' : 'Запись не запустилась; прослушивание не потрачено. Попробуй ещё раз или пропусти часть.'));
+    audio.addEventListener('ended', () => settled(state.used < limit ? ui('Сообщение завершено. Перед повтором — пауза 30 секунд для ответов.') : ui('Два прослушивания использованы. Ответь на вопросы.')));
+    audio.addEventListener('error', () => cancel(started ? ui('Запись прервана; начатое прослушивание учтено.') : ui('Запись не запустилась; прослушивание не потрачено. Попробуй ещё раз или пропусти часть.')));
   }
   play.addEventListener('click', () => {
     if (busy || expired || disposed || state.used >= limit || Date.now() < state.cooldownUntil) return;
     if (audio) {
       busy = true; started = false; update();
-      status.textContent = 'Подготавливаем аудиозапись…';
+      status.textContent = ui('Подготавливаем аудиозапись…');
       const currentAttempt = ++attempt;
-      watchdog = setTimeout(() => { if (!started && currentAttempt === attempt) cancel('Запись не запустилась; прослушивание не потрачено. Можно попробовать ещё раз.'); }, 10000);
+      watchdog = setTimeout(() => { if (!started && currentAttempt === attempt) cancel(ui('Запись не запустилась; прослушивание не потрачено. Можно попробовать ещё раз.')); }, 10000);
       try {
         audio.currentTime = 0;
         const promise = audio.play();
-        promise?.catch(() => { if (currentAttempt === attempt) cancel('Запись недоступна; прослушивание не потрачено. Попробуй ещё раз или пропусти часть.'); });
-      } catch (_) { cancel('Запись недоступна; прослушивание не потрачено.'); }
+        promise?.catch(() => { if (currentAttempt === attempt) cancel(ui('Запись недоступна; прослушивание не потрачено. Попробуй ещё раз или пропусти часть.')); });
+      } catch (_) { cancel(ui('Запись недоступна; прослушивание не потрачено.')); }
       return;
     }
     if (!('speechSynthesis' in window) || !window.SpeechSynthesisUtterance) {
-      status.textContent = 'Системный голос недоступен. Можно пропустить аудирование без балла.'; return;
+      status.textContent = ui('Системный голос недоступен. Можно пропустить аудирование без балла.'); return;
     }
     busy = true; started = false; update();
-    status.textContent = 'Подготавливаем системный польский голос…';
+    status.textContent = ui('Подготавливаем системный польский голос…');
     utterance = new SpeechSynthesisUtterance(JSON.parse(document.getElementById('run-listening-transcript').textContent));
     const current = utterance;
     current.lang = 'pl-PL'; current.rate = .9;
     current.onstart = () => {
       if (!busy || disposed || expired || current !== utterance || started) return;
       started = true; clearTimeout(watchdog); state.used++; state.cooldownUntil = Date.now() + pauseMs; save(); update();
-      status.textContent = `Прослушивание ${state.used} из ${limit}. Остановка тоже расходует прослушивание.`;
+      status.textContent = ui`Прослушивание ${state.used} из ${limit}. Остановка тоже расходует прослушивание.`;
     };
-    current.onend = () => { if (current === utterance) settled(state.used < limit ? 'Сообщение завершено. Перед повтором — пауза 30 секунд для ответов.' : 'Два прослушивания использованы. Ответь на вопросы.'); };
-    current.onerror = () => { if (current === utterance) settled(started ? 'Воспроизведение прервано; начатое прослушивание учтено.' : 'Голос не запустился; прослушивание не потрачено. Попробуй ещё раз или пропусти часть.'); };
-    watchdog = setTimeout(() => { if (!started && current === utterance) cancel('Голос не запустился; прослушивание не потрачено. Можно попробовать ещё раз.'); }, 10000);
+    current.onend = () => { if (current === utterance) settled(state.used < limit ? ui('Сообщение завершено. Перед повтором — пауза 30 секунд для ответов.') : ui('Два прослушивания использованы. Ответь на вопросы.')); };
+    current.onerror = () => { if (current === utterance) settled(started ? ui('Воспроизведение прервано; начатое прослушивание учтено.') : ui('Голос не запустился; прослушивание не потрачено. Попробуй ещё раз или пропусти часть.')); };
+    watchdog = setTimeout(() => { if (!started && current === utterance) cancel(ui('Голос не запустился; прослушивание не потрачено. Можно попробовать ещё раз.')); }, 10000);
     try { speechSynthesis.speak(current); }
-    catch (_) { cancel('Системный голос недоступен; прослушивание не потрачено.'); }
+    catch (_) { cancel(ui('Системный голос недоступен; прослушивание не потрачено.')); }
   });
-  stop.addEventListener('click', () => cancel('Воспроизведение остановлено. Начатое прослушивание учтено; перед повтором — пауза 30 секунд.'));
-  root.addEventListener('b1-run-expired', () => { expired = true; cancel('Время части истекло. Можно пропустить её без балла.'); update(); });
+  stop.addEventListener('click', () => cancel(ui('Воспроизведение остановлено. Начатое прослушивание учтено; перед повтором — пауза 30 секунд.')));
+  root.addEventListener('b1-run-expired', () => { expired = true; cancel(ui('Время части истекло. Можно пропустить её без балла.')); update(); });
   const leave = () => { disposed = true; cancel(''); update(); };
   document.getElementById('b1-run-form').addEventListener('submit', leave);
   window.addEventListener('pagehide', leave);
