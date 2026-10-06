@@ -349,14 +349,29 @@ msgstr "C2 — tworzę swobodną, precyzyjną i subtelną stylistycznie wypowied
 msgid "C2 — точно синтезирую источники, сохраняя оттенки и регистр"
 msgstr "C2 — dokładnie łączę źródła, zachowując odcienie znaczenia i rejestr"
 
+msgid "Email not confirmed"
+msgstr "Potwierdź adres email przed zalogowaniem."
+
+msgid "Email rate limit exceeded"
+msgstr "Zbyt wiele wiadomości. Poczekaj przed ponowną próbą."
+
 msgid "Email не указан"
 msgstr "Nie podano emaila"
 
 msgid "Email, служебные идентификаторы Supabase Auth и данные сессии — для входа и защиты аккаунта."
 msgstr "Email, identyfikatory techniczne Supabase Auth i dane sesji — do logowania i ochrony konta."
 
+msgid "Invalid Refresh Token: Refresh Token Not Found"
+msgstr "Sesja wygasła. Zaloguj się ponownie."
+
+msgid "Invalid login credentials"
+msgstr "Nieprawidłowy email lub hasło."
+
 msgid "Mój, moja, moje — чей это?"
 msgstr "Mój, moja, moje — czyje to jest?"
+
+msgid "New password should be different from the old password."
+msgstr "Nowe hasło musi różnić się od poprzedniego."
 
 msgid "PolskiFlow помогает тренироваться, но не заменяет официальный пробный тест и не подтверждает уровень CEFR."
 msgstr "PolskiFlow pomaga ćwiczyć, ale nie zastępuje oficjalnego testu próbnego i nie potwierdza poziomu CEFR."
@@ -453,6 +468,9 @@ msgstr "Supabase nie jest skonfigurowany"
 
 msgid "Supabase предоставляет аутентификацию и базу данных; Vercel размещает Django-приложение и технические журналы. Новостной раздел показывает ссылки и заголовки внешних источников, но PolskiFlow не проксирует полные статьи."
 msgstr "Supabase zapewnia uwierzytelnianie i bazę danych; Vercel hostuje aplikację Django i dzienniki techniczne. Sekcja wiadomości wyświetla linki i nagłówki zewnętrznych źródeł, ale PolskiFlow nie pośredniczy w pobieraniu pełnych artykułów."
+
+msgid "User already registered"
+msgstr "Konto jest już zarejestrowane. Zaloguj się lub odzyskaj hasło."
 
 msgid "~10 минут"
 msgstr "~10 minut"

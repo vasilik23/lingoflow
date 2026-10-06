@@ -58,6 +58,10 @@ class LocalizationCatalogTests(SimpleTestCase):
         response = self.client.post("/login/", {}, HTTP_ACCEPT_LANGUAGE="pl")
         self.assertContains(response, "Podaj email i hasło")
         self.assertEqual(response["Content-Language"], "pl")
+        from polskiflow.auth import SupabaseAuthError
+        with patch("polskiflow.auth_views.sign_in", side_effect=SupabaseAuthError("Invalid login credentials")):
+            response = self.client.post("/login/", {"email": "locale@example.com", "password": "invalid"}, HTTP_ACCEPT_LANGUAGE="pl")
+        self.assertContains(response, "Nieprawidłowy email lub hasło.")
         response = self.client.get("/login/", HTTP_ACCEPT_LANGUAGE="de")
         self.assertContains(response, '<html lang="ru">')
         self.assertContains(response, "Войти в PolskiFlow")

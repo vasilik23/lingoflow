@@ -1135,4 +1135,10 @@ MESSAGES = (
     gettext_noop("Язык медиа"),
     gettext_noop("Языки общения"),
     gettext_noop("Языковой фокус"),
+    gettext_noop("Invalid login credentials"),
+    gettext_noop("Email not confirmed"),
+    gettext_noop("User already registered"),
+    gettext_noop("Invalid Refresh Token: Refresh Token Not Found"),
+    gettext_noop("New password should be different from the old password."),
+    gettext_noop("Email rate limit exceeded"),
 )
