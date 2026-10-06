@@ -2010,6 +2010,7 @@ window.PolskiFlowPolishMessages = {
   "Черновик сохранён в этом браузере": "Wersja robocza zapisana w tej przeglądarce",
   "Черновик удалён": "Wersja robocza usunięta",
   "Черновики письма и свободных interaction-заданий остаются в локальном хранилище твоего браузера.": "Wersje robocze pisania i swobodnych zadań interakcji pozostają w lokalnej pamięci Twojej przeglądarki.",
+  "Четыре блока, 20 ответов и 25 минут. У каждого блока два прослушивания с паузой 30 секунд. Запуск другого блока останавливает текущий; начатое прослушивание учитывается. Это учебный режим.": "Cztery bloki, 20 odpowiedzi i 25 minut. Każdy blok można odsłuchać dwa razy z przerwą 30 sekund. Uruchomienie innego bloku zatrzymuje bieżący; rozpoczęte odsłuchanie się liczy. To trening.",
   "Четырёхдневную рабочую неделю": "Czterodniowy tydzień pracy",
   "Читай по-польски": "Czytaj po polsku",
   "Читателю понятно, как связаться и что написать в ответ.": "Czytelnik wie, jak się skontaktować i co napisać w odpowiedzi.",

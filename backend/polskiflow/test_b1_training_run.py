@@ -436,3 +436,31 @@ class B1TrainingRunTests(TestCase):
             completed = self.advance(resumed, 'finish', **fields)
             self.assertEqual(completed.context['state']['results'][-1],
                              {'id': 'reading', 'status': 'scored', 'correct': 30, 'total': 30, 'percent': 100})
+
+    def test_complete_audio_collection_enables_version_ten_and_preserves_missing_pin(self):
+        from polskiflow.test_b1_listening_recordings import B1RecordingChecksTests
+        fixture = B1RecordingChecksTests()
+        fixture.setUp()
+        items = fixture.block_items()
+        with patch('polskiflow.b1_run_views.weekly_mock_variant', return_value=fixture.variant), patch(
+            'polskiflow.domain.b1_listening_recordings.BLOCK_RECORDINGS', items
+        ):
+            intro = self.client.get('/exam/b1/run/')
+            self.assertEqual(intro.context['state']['content_version'], 10)
+            opened = self.advance(intro, 'start')
+            self.assertEqual(opened.context['timer_seconds'], 1500)
+            self.assertEqual(len(opened.context['questions']), 20)
+            self.assertContains(opened, 'data-run-listening-block', count=4)
+            self.assertContains(opened, 'data-run-audio preload="none"', count=4)
+            self.assertNotContains(opened, 'Системный польский голос устройства')
+            fields = {f'answer_{q.id}': q.correct for q in opened.context['questions']}
+            self.assertEqual(self.advance(opened, 'finish', **dict(list(fields.items())[:-1])).status_code, 400)
+            completed = self.advance(opened, 'finish', **fields)
+            self.assertEqual(completed.context['state']['results'][-1]['total'], 20)
+        self.now += 9
+        restored = self.advance(opened, 'resume')
+        self.assertEqual(restored.context['timer_seconds'], 1491)
+        self.assertEqual(restored.context['run_token'], opened.context['run_token'])
+        self.assertContains(restored, 'data-missing-recording="1"', count=4)
+        self.assertNotContains(restored, 'Системный польский голос устройства')
+        self.assertEqual(self.client.get('/exam/b1/run/').context['state']['content_version'], 9)

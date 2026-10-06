@@ -13,7 +13,7 @@
     "Deliver rights-cleared MP3, OGG or WAV with author, license URL, reviewer, date and final file SHA-256.",
     "A Polish-speaking reviewer must listen to every complete file and verify all correct and incorrect options.",
     "The three extension blocks are shared across variants: record each once, retain its checksum and immutable ID.",
-    "These drafts are not compatible with the current single-recording run registry. Add versioned multi-block playback and reviewed asset selection before enabling them.",
+    "Register reviewed immutable BlockRecording entries in BLOCK_RECORDINGS, not the legacy RECORDINGS registry. A complete four-block collection enables pinned version-10 playback; partial collections remain disabled.",
     "Do not claim full exam equivalence until duration, difficulty and formats are independently validated."
   ],
   "variants": [

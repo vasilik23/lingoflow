@@ -16,7 +16,7 @@ from polskiflow.domain.b1_weekly_mock import get_mock_variant
 def check_b1_recordings(app_configs, **kwargs):
     errors = []
     ids, paths = set(), set()
-    for item in recordings.RECORDINGS:
+    for item in (*recordings.RECORDINGS, *recordings.BLOCK_RECORDINGS):
         problems = []
         if item.id in ids or item.static_path in paths:
             problems.append("duplicate recording ID or path")
@@ -34,8 +34,12 @@ def check_b1_recordings(app_configs, **kwargs):
             date.fromisoformat(item.verified_at)
         except ValueError:
             problems.append("invalid review date")
-        variant = get_mock_variant(item.variant_id)
-        if not variant or item.transcript_sha256 != recordings.transcript_checksum(variant.listening_transcript):
+        if isinstance(item, recordings.BlockRecording):
+            transcript = recordings.expected_block_transcript(item)
+        else:
+            variant = get_mock_variant(item.variant_id)
+            transcript = variant.listening_transcript if variant else None
+        if not transcript or item.transcript_sha256 != recordings.transcript_checksum(transcript):
             problems.append("recording transcript does not match the variant")
         path = PurePosixPath(item.static_path)
         safe_path = item.static_path.startswith("polskiflow/audio/b1/") and ".." not in path.parts and path.suffix.lower() in {".mp3", ".ogg", ".wav"} and "\\" not in item.static_path

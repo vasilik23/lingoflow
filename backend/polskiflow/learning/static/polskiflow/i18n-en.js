@@ -3468,6 +3468,7 @@ window.PolskiFlowEnglishMessages = {
   "Черновик сохранён в этом браузере": "The draft is saved in this browser",
   "Черновик удалён": "Draft removed",
   "Черновики письма и свободных interaction-заданий остаются в локальном хранилище твоего браузера.": "Drafts of letters and free interaction tasks remain in the local storage of your browser.",
+  "Четыре блока, 20 ответов и 25 минут. У каждого блока два прослушивания с паузой 30 секунд. Запуск другого блока останавливает текущий; начатое прослушивание учитывается. Это учебный режим.": "Four blocks, 20 answers and 25 minutes. Each block allows two plays with a 30-second pause. Starting another block stops the current one; a started play counts. This is training.",
   "Четырёхдневную рабочую неделю": "Four-day working week",
   "Читай по-польски": "Read Polish",
   "Читатель сначала получает опорный вывод, затем его границы.": "The reader first receives a reference conclusion, then its boundaries.",

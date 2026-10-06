@@ -13,9 +13,19 @@
   const storageStatus = root.querySelector('[data-run-storage-status]');
   let savedWriting = '';
   let intentionalLeave = false;
-  const clear = () => { try { sessionStorage.removeItem(key); sessionStorage.removeItem(`polskiflow-b1-run-listening:${root.dataset.namespace}`); } catch (_) {} };
+  const clearListening = () => {
+    try {
+      const prefix = `polskiflow-b1-run-listening:${root.dataset.namespace}`;
+      sessionStorage.removeItem(prefix);
+      for (let i = sessionStorage.length - 1; i >= 0; i--) {
+        const item = sessionStorage.key(i);
+        if (item?.startsWith(prefix + ':')) sessionStorage.removeItem(item);
+      }
+    } catch (_) {}
+  };
+  const clear = () => { try { sessionStorage.removeItem(key); clearListening(); } catch (_) {} };
   if (root.dataset.phase === 'report') {
-    try { sessionStorage.removeItem(`polskiflow-b1-run-listening:${root.dataset.namespace}`); } catch (_) {}
+    clearListening();
   }
   const url = new URL(window.location.href);
   if (url.searchParams.get('restart') === '1' || root.dataset.discard) {
