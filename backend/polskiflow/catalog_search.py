@@ -37,7 +37,7 @@ def search_learning_catalog(query: str, limit: int = 12) -> dict:
             | Q(plan_title__icontains=variant)
             | Q(description__icontains=variant)
         )
-    if get_language() == "pl":
+    if get_language() in {"pl", "en"}:
         localized_matches = [message for message in CATALOG_MESSAGE_IDS if query.casefold() in gettext(message).casefold()]
         lookup |= Q(title__in=localized_matches) | Q(description__in=localized_matches)
         lesson_lookup |= Q(title__in=localized_matches) | Q(plan_title__in=localized_matches) | Q(description__in=localized_matches)

@@ -4,7 +4,7 @@
 {% block content %}
   <header class="exam-hero">
     <div class="exam-hero-copy">
-      <p class="eyebrow">Państwowy egzamin certyfikatowy</p>
+      <p class="eyebrow">{% if LANGUAGE_CODE == 'en' %}State certificate examination{% else %}Państwowy egzamin certyfikatowy{% endif %}</p>
       <h1>{% translate "Подготовка к B1" %}</h1>
       <p>{% translate "Короткий ежедневный план и пять модулей в формате государственного экзамена для взрослых." %}</p>
       <div class="exam-hero-meta">

@@ -13,7 +13,7 @@ PWA_CACHE_VERSION = f"polskiflow-shell-{PWA_SHELL_VERSION}"
 
 def _language(request):
     explicit = request.GET.get("language")
-    return explicit if explicit in {"ru", "pl"} else getattr(request, "LANGUAGE_CODE", "ru")
+    return explicit if explicit in {"ru", "pl", "en"} else getattr(request, "LANGUAGE_CODE", "ru")
 
 
 def web_app_manifest(request):

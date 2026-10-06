@@ -28,6 +28,8 @@ def current_shell_version() -> str:
         "polskiflow/learning/static/polskiflow/i18n.js",
         "polskiflow/learning/static/polskiflow/i18n-pl.js",
         "locale/pl/LC_MESSAGES/django.mo",
+        "polskiflow/learning/static/polskiflow/i18n-en.js",
+        "locale/en/LC_MESSAGES/django.mo",
     )
     return build_shell_version("", tuple((backend / path).read_bytes() for path in assets))
 

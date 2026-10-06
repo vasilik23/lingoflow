@@ -1,7 +1,7 @@
 {% load i18n ui %}
 <div class="card complete-card">
   <div class="complete-icon">🎉</div>
-  <p class="eyebrow">Świetna robota!</p>
+  <p class="eyebrow">{% if LANGUAGE_CODE == 'en' %}Great work!{% else %}Świetna robota!{% endif %}</p>
   <h1>{% translate "Урок завершён" %}</h1>
   <div class="score">{{ score|ui_text }} / {{ total|ui_text }}</div>
   <p class="muted">{% if saved %}{% translate "Результат сохранён — дневная цель стала ближе." %}{% elif offline_result_json %}{% translate "Урок завершён. Сохраним результат в этом браузере и повторим отправку." %}{% else %}{% translate "Урок завершён, но сейчас не удалось сохранить прогресс." %}{% endif %}</p>

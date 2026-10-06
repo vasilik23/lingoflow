@@ -58,7 +58,7 @@ def account_delete(request: HttpRequest) -> HttpResponse:
         password = request.POST.get("current_password", "")
         confirmation = request.POST.get("confirmation", "").strip()
         email = request.supabase_user.email or ""
-        if confirmation not in {"УДАЛИТЬ", "USUŃ"}:
+        if confirmation not in {"УДАЛИТЬ", "USUŃ", "DELETE"}:
             context["error"] = "Введите УДАЛИТЬ без кавычек"
         elif not password:
             context["error"] = "Укажите текущий пароль"

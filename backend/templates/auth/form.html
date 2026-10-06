@@ -11,7 +11,7 @@
     </aside>
     <section class="auth-panel">
       <a class="brand" href="{% url 'login' %}"><span class="brand-mark">P</span> PolskiFlow</a>
-      <p class="eyebrow" lang="pl">{% if mode == 'login' %}Witaj ponownie{% else %}Załóż konto{% endif %}</p>
+      <p class="eyebrow" lang="{% if LANGUAGE_CODE == 'en' %}en{% else %}pl{% endif %}">{% if mode == 'login' %}{% if LANGUAGE_CODE == 'en' %}Welcome back{% else %}Witaj ponownie{% endif %}{% else %}{% if LANGUAGE_CODE == 'en' %}Create an account{% else %}Załóż konto{% endif %}{% endif %}</p>
       <h1>{% if mode == "login" %}{% translate "Рады видеть!" %}{% else %}{% translate "Начнём учиться" %}{% endif %}</h1>
       <p class="muted">{% if mode == "login" %}{% translate "Продолжи с того места, где остановился." %}{% else %}{% translate "Создай аккаунт и начни первый урок." %}{% endif %}</p>
       {% if error %}<p class="error" role="alert">{{ error|ui_text }}</p>{% endif %}
@@ -35,6 +35,7 @@
         <p class="auth-switch muted"><a href="{% url 'resend-confirmation' %}">{% translate "Отправить подтверждение ещё раз" %}</a></p>
         <p class="auth-switch muted">{% translate "Уже есть аккаунт?" %} <a href="{% url 'login' %}">{% translate "Войти" %}</a></p>
       {% endif %}
+      {% include "partials/language_settings.html" %}
     </section>
   </div>
 {% endblock %}

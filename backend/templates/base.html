@@ -34,6 +34,7 @@
       }());
     </script>
     {% if LANGUAGE_CODE == 'pl' %}<script src="{% static 'polskiflow/i18n-pl.js' %}?shell={{ pwa_shell_version }}"></script>{% endif %}
+    {% if LANGUAGE_CODE == 'en' %}<script src="{% static 'polskiflow/i18n-en.js' %}?shell={{ pwa_shell_version }}"></script>{% endif %}
     <script src="{% static 'polskiflow/i18n.js' %}?shell={{ pwa_shell_version }}"></script>
     <title>{% block title %}PolskiFlow{% endblock %}</title>
     <link rel="icon" href="{% static 'polskiflow/favicon.svg' %}?shell={{ pwa_shell_version }}" type="image/svg+xml">
@@ -93,7 +94,7 @@
             </div>
           </details>
           <label class="theme-control">
-            <span>{% translate "Тема" %}</span>
+            <span>{% translate "Цветовая тема" %}</span>
             <select data-theme-select aria-label="{% translate "Цветовая тема" %}">
               <option value="system">{% translate "Как в системе" %}</option>
               <option value="light">{% translate "Светлая" %}</option>
@@ -121,12 +122,6 @@
         </select>
       </label>
     {% endif %}
-    <form method="post" action="{% url 'set-language' %}" class="language-switcher">
-      {% csrf_token %}<input type="hidden" name="next" value="{{ request.get_full_path }}">
-      <label for="interface-language">{% translate "Язык интерфейса" %}</label>
-      <select id="interface-language" name="language"><option value="ru"{% if LANGUAGE_CODE == 'ru' %} selected{% endif %}>Русский</option><option value="pl"{% if LANGUAGE_CODE == 'pl' %} selected{% endif %}>Polski</option></select>
-      <button type="submit">{% translate "Применить" %}</button>
-    </form>
     <main id="main-content" class="page-shell {% if request.supabase_user %}with-nav{% endif %}" tabindex="-1">
       {% block content %}{% endblock %}
     </main>

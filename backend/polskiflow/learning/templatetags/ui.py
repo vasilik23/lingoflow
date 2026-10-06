@@ -2,6 +2,7 @@
 
 import json
 import re
+from functools import lru_cache
 from pathlib import Path
 
 from django import template
@@ -17,7 +18,7 @@ for _message in json.loads((Path(__file__).resolve().parents[2] / "localization/
 
 @register.filter
 def ui_text(value):
-    if not isinstance(value, str) or get_language() != "pl":
+    if not isinstance(value, str) or get_language() not in {"pl", "en"}:
         return value
     translated = gettext(value)
     if translated != value:
@@ -35,7 +36,7 @@ def ui_text(value):
             (("слово", "слова", "слов"), ("слово", "слов")),
             (("попытка", "попытки", "попыток"), ("попытка", "попыток")),
         ) if unit in words)
-        return f"{count} {ngettext(*forms, int(count))}{suffix}"
+        return f"{count} {ngettext(*forms, int(count))}{ui_text(suffix)}"
     for pattern, message in _PATTERNS:
         matched = pattern.fullmatch(value)
         if matched:
@@ -48,3 +49,25 @@ def ui_text(value):
 @register.filter
 def ui_items(values):
     return [ui_text(value) for value in values]
+
+
+@register.filter
+def learning_text(value):
+    """English study support; retain Polish exercises and the Russian course."""
+    return ui_text(value) if get_language() == "en" else value
+
+
+@lru_cache(maxsize=1)
+def _english_readings():
+    return json.loads((Path(__file__).resolve().parents[2] / "localization/reading_english.json").read_text())
+
+
+@register.filter
+def english_reading(paragraphs):
+    """Only show a complete study translation beside the Polish original."""
+    if get_language() != "en" or not isinstance(paragraphs, list):
+        return []
+    translations = _english_readings()
+    if not all(isinstance(paragraph, str) and translations.get(paragraph) for paragraph in paragraphs):
+        return []
+    return [translations[paragraph] for paragraph in paragraphs]

@@ -55,6 +55,7 @@ class LocalizationCatalogTests(SimpleTestCase):
         self.assertContains(response, '<html lang="pl">')
         self.assertContains(response, "Zaloguj się do PolskiFlow")
         self.assertContains(response, "Język interfejsu")
+        self.assertNotContains(response, 'class="language-switcher"')
         response = self.client.post("/login/", {}, HTTP_ACCEPT_LANGUAGE="pl")
         self.assertContains(response, "Podaj email i hasło")
         self.assertEqual(response["Content-Language"], "pl")

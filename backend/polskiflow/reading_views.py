@@ -6,6 +6,7 @@ from datetime import date
 from urllib.parse import urlencode
 
 from django.http import Http404, HttpRequest, HttpResponse, HttpResponseBadRequest
+from django.utils.translation import gettext
 from django.shortcuts import redirect, render
 from django.utils import timezone
 from django.views.decorators.http import require_POST
@@ -276,16 +277,16 @@ def dictionary_practice_step(request: HttpRequest) -> HttpResponse:
         index = int(request.POST.get("index", "0"))
         score = int(request.POST.get("score", "0"))
     except ValueError:
-        return HttpResponseBadRequest("Некорректное состояние тренировки")
+        return HttpResponseBadRequest(gettext("Некорректное состояние тренировки"))
     if not questions or not 0 <= index < len(questions) or not 0 <= score <= index:
-        return HttpResponseBadRequest("Некорректное состояние тренировки")
+        return HttpResponseBadRequest(gettext("Некорректное состояние тренировки"))
     action = request.POST.get("action", "")
     question = questions[index]
     if action == "answer":
         if mode == "context":
             submitted_answer = request.POST.get("answer", "")
             if not submitted_answer.strip():
-                return HttpResponseBadRequest("Введите польскую лемму")
+                return HttpResponseBadRequest(gettext("Введите польскую лемму"))
             answer_correct = _normalize_typed_answer(
                 submitted_answer
             ) == _normalize_typed_answer(question["correct_answer"])
@@ -307,9 +308,9 @@ def dictionary_practice_step(request: HttpRequest) -> HttpResponse:
             try:
                 selected = int(request.POST["choice"])
             except (KeyError, ValueError):
-                return HttpResponseBadRequest("Выберите ответ")
+                return HttpResponseBadRequest(gettext("Выберите ответ"))
             if not 0 <= selected < len(question["options"]):
-                return HttpResponseBadRequest("Некорректный ответ")
+                return HttpResponseBadRequest(gettext("Некорректный ответ"))
             context = _practice_context(
                 questions, index, score, selected, answered=True
             )
@@ -322,20 +323,20 @@ def dictionary_practice_step(request: HttpRequest) -> HttpResponse:
                 or answer_state.get("word_id") != question["id"]
                 or not isinstance(answer_state.get("correct"), bool)
             ):
-                return HttpResponseBadRequest("Сначала ответьте")
+                return HttpResponseBadRequest(gettext("Сначала ответьте"))
             answer_correct = answer_state["correct"]
             request.session.pop(PRACTICE_ANSWER_SESSION_KEY, None)
         else:
             try:
                 selected = int(request.POST["selected"])
             except (KeyError, ValueError):
-                return HttpResponseBadRequest("Сначала ответьте")
+                return HttpResponseBadRequest(gettext("Сначала ответьте"))
             if not 0 <= selected < len(question["options"]):
-                return HttpResponseBadRequest("Некорректный ответ")
+                return HttpResponseBadRequest(gettext("Некорректный ответ"))
             answer_correct = selected == question["correct"]
         quality = request.POST.get("quality", "")
         if quality not in REVIEW_QUALITIES:
-            return HttpResponseBadRequest("Оцените, насколько легко вспомнилось слово")
+            return HttpResponseBadRequest(gettext("Оцените, насколько легко вспомнилось слово"))
         if not answer_correct:
             quality = "again"
         now = timezone.now()
@@ -382,7 +383,7 @@ def dictionary_practice_step(request: HttpRequest) -> HttpResponse:
         context = _practice_context(questions, index + 1, next_score, None)
         context["review_saved"] = review_saved
     else:
-        return HttpResponseBadRequest("Неизвестное действие")
+        return HttpResponseBadRequest(gettext("Неизвестное действие"))
     return _render_practice_step(
         request,
         "reading/_practice_question.html",
@@ -422,7 +423,7 @@ def add_dictionary_word(request: HttpRequest, text_id: str) -> HttpResponse:
         or translation != entry["translation"]
         or len(context) > 500
     ):
-        return HttpResponseBadRequest("Некорректное слово")
+        return HttpResponseBadRequest(gettext("Некорректное слово"))
     word = entry["lemma"]
     saved = save_personal_word(
         request.supabase_access_token,

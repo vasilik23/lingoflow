@@ -4,17 +4,17 @@
 <div class="lesson-progress"><span style="--value: {% widthratio index|add:1 total 100 %}%"></span></div>
 <section class="card question-card practice-card">
   <p class="eyebrow">{{ question.instruction|ui_text }}</p>
-  <h1>{{ question.prompt }}</h1>
+  <h1>{{ question.prompt|learning_text }}</h1>
   {% if question.context %}<p class="practice-context">“{{ question.context|truncatechars:180 }}”</p>{% endif %}
 </section>
 {% if not answered %}
   <form class="options" method="post" action="{% url 'dictionary-practice-step' %}">
     {% csrf_token %}<input type="hidden" name="action" value="answer"><input type="hidden" name="index" value="{{ index }}"><input type="hidden" name="score" value="{{ score }}">
-    {% if question.typed %}<label class="typed-answer"><span>{% translate "Польская лемма" %}</span><input type="text" name="answer" autocomplete="off" autocapitalize="none" spellcheck="false" required autofocus></label><button class="button" type="submit">{% translate "Проверить" %}</button>{% else %}{% for option in question.options %}<button type="submit" name="choice" value="{{ forloop.counter0 }}">{{ option }}</button>{% endfor %}{% endif %}
+    {% if question.typed %}<label class="typed-answer"><span>{% translate "Польская лемма" %}</span><input type="text" name="answer" autocomplete="off" autocapitalize="none" spellcheck="false" required autofocus></label><button class="button" type="submit">{% translate "Проверить" %}</button>{% else %}{% for option in question.options %}<button type="submit" name="choice" value="{{ forloop.counter0 }}">{{ option|learning_text }}</button>{% endfor %}{% endif %}
   </form>
 {% else %}
   {% if not question.typed %}<div class="options practice-answered">
-    {% for option in question.options %}<button type="button" disabled class="{% if forloop.counter0 == question.correct %}correct{% elif forloop.counter0 == selected %}wrong{% endif %}">{{ option }}</button>{% endfor %}
+    {% for option in question.options %}<button type="button" disabled class="{% if forloop.counter0 == question.correct %}correct{% elif forloop.counter0 == selected %}wrong{% endif %}">{{ option|learning_text }}</button>{% endfor %}
   </div>{% endif %}
   <div class="card feedback" aria-live="polite"><strong>{% if answer_correct or selected == question.correct %}{% translate "Верно! 🎉" %}{% else %}{% translate "Правильный ответ:" %} {{ question.correct_answer|ui_text }}{% endif %}</strong>{% if question.typed and submitted_answer %}<p class="muted">{% translate "Твой ответ:" %} {{ submitted_answer|ui_text }}</p>{% endif %}</div>
   <form method="post" action="{% url 'dictionary-practice-step' %}">
