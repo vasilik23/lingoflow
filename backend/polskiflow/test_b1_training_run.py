@@ -377,8 +377,8 @@ class B1TrainingRunTests(TestCase):
 
     def test_reading_matching_order_and_distractor_for_each_variant(self):
         for variant in VARIANTS:
-            blocks = training_reading_blocks(variant)
-            questions = training_questions(variant, 'reading')
+            blocks = training_reading_blocks(variant, 8)
+            questions = training_questions(variant, 'reading', 8)
             self.assertEqual([len(b.questions) for b in blocks], [5, 5, 5, 5, 10])
             self.assertEqual(tuple(q for b in blocks for q in b.questions), questions)
             self.assertEqual(len({q.id for q in questions}), 30)
@@ -388,4 +388,51 @@ class B1TrainingRunTests(TestCase):
             self.assertIn('To samo ogłoszenie może pasować do kilku osób.', matching.text)
             answers = {q.id: q.correct for q in questions}
             answers['tr30'] = 5
-            self.assertEqual(score_training_part(variant, 'reading', answers)['correct'], 29)
+            self.assertEqual(score_training_part(variant, 'reading', answers, 8)['correct'], 29)
+
+    def test_cohesion_version_nine_order_scoring_and_legacy_eight(self):
+        for variant in VARIANTS:
+            current = training_reading_blocks(variant, 9)
+            legacy = training_reading_blocks(variant, 8)
+            self.assertEqual([b.id for b in current], ['variant', 'library', 'trip', 'cohesion', 'matching'])
+            self.assertEqual(legacy[3].id, 'repair')
+            self.assertEqual([len(b.questions) for b in current], [5, 5, 5, 5, 10])
+            questions = training_questions(variant, 'reading', 9)
+            self.assertEqual(tuple(q for b in current for q in b.questions), questions)
+            self.assertEqual(len({q.id for q in questions}), 30)
+            cohesion = current[3]
+            self.assertEqual(len({q.correct for q in cohesion.questions}), 5)
+            self.assertTrue(all(q.options == ('A', 'B', 'C', 'D', 'E', 'F') for q in cohesion.questions))
+            self.assertNotIn(3, [q.correct for q in cohesion.questions])
+            for index in range(1, 6):
+                self.assertIn(f'[{index}]', cohesion.text)
+            answers = {q.id: q.correct for q in questions}
+            self.assertEqual(score_training_part(variant, 'reading', answers, 9)['correct'], 30)
+            answers.update({q.id: 2 for q in cohesion.questions})
+            self.assertEqual(score_training_part(variant, 'reading', answers, 9)['correct'], 26)
+
+    def test_cohesion_run_resume_submission_and_old_content_pin(self):
+        for version in (8, 9):
+            state = dict(self.client.get('/exam/b1/run/').context['state'], content_version=version,
+                         phase='break', step=1, break_until=self.now)
+            opened = self.client.post('/exam/b1/run/', {'run_token': signing.dumps(state, salt=RUN_SALT), 'action': 'start'})
+            self.assertEqual(opened.context['timer_seconds'], 2700)
+            if version == 9:
+                self.assertContains(opened, 'id="reading-cohesion"')
+                self.assertContains(opened, 'name="answer_tc05"', count=6)
+                self.assertNotContains(opened, 'name="answer_tr16"')
+            else:
+                self.assertNotContains(opened, 'id="reading-cohesion"')
+                self.assertContains(opened, 'name="answer_tr16"', count=3)
+            self.now += 17
+            resumed = self.advance(opened, 'resume')
+            self.assertEqual(resumed.context['run_token'], opened.context['run_token'])
+            self.assertEqual(resumed.context['timer_seconds'], 2683)
+            fields = {f'answer_{q.id}': q.correct for q in resumed.context['questions']}
+            if version == 9:
+                self.assertEqual(self.advance(resumed, 'finish', **dict(fields, answer_tc05=6)).status_code, 400)
+                self.assertEqual(self.advance(resumed, 'finish', **dict(fields, answer_tr16=0)).status_code, 400)
+            self.assertEqual(self.advance(resumed, 'finish', **dict(list(fields.items())[:-1])).status_code, 400)
+            completed = self.advance(resumed, 'finish', **fields)
+            self.assertEqual(completed.context['state']['results'][-1],
+                             {'id': 'reading', 'status': 'scored', 'correct': 30, 'total': 30, 'percent': 100})

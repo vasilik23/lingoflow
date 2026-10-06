@@ -5,10 +5,10 @@ import unicodedata
 
 from polskiflow.domain.b1_weekly_mock import MockQuestion
 from polskiflow.domain.b1_exam_simulation import simulation_questions, score_simulation_part
-from polskiflow.domain.b1_training_reading import READING_BLOCKS, ReadingBlock, MATCHING_BLOCK
+from polskiflow.domain.b1_training_reading import READING_BLOCKS, ReadingBlock, MATCHING_BLOCK, COHESION_BLOCK
 from polskiflow.domain.b1_training_grammar import GRAMMAR_EXTENSION, WRITTEN_GRAMMAR
 
-CONTENT_VERSION = 8
+CONTENT_VERSION = 9
 ORIGIN = "original"
 CREATED_FOR = "PolskiFlow"
 VERIFIED_AT = date(2026, 10, 6)  # Internal editorial review, not independent validation.
@@ -38,17 +38,23 @@ def _extra_questions(part_id, content_version):
             return (*RUN_GRAMMAR_QUESTIONS, *GRAMMAR_EXTENSION[:10], *WRITTEN_GRAMMAR)
         return (*RUN_GRAMMAR_QUESTIONS, *GRAMMAR_EXTENSION) if content_version >= 6 else RUN_GRAMMAR_QUESTIONS
     if part_id == "reading" and content_version >= 3:
-        blocks = (*READING_BLOCKS, MATCHING_BLOCK) if content_version >= 8 else READING_BLOCKS
+        blocks = _shared_reading_blocks(content_version)
         return tuple(question for block in blocks for question in block.questions)
     return ()
+
+
+def _shared_reading_blocks(content_version):
+    if content_version >= 9:
+        return (*READING_BLOCKS[:2], COHESION_BLOCK, MATCHING_BLOCK)
+    if content_version >= 8:
+        return (*READING_BLOCKS, MATCHING_BLOCK)
+    return READING_BLOCKS if content_version >= 3 else ()
 
 
 def training_reading_blocks(variant, content_version=CONTENT_VERSION):
     title = {"b1-weekly-v1": "Dojazdy rowerem", "b1-weekly-v2": "Praca w domu i w biurze", "b1-weekly-v3": "Wspólny ogród"}.get(variant.id, "Krótki artykuł")
     first = ReadingBlock("variant", title, variant.reading_text, simulation_questions(variant, "reading"))
-    if content_version >= 8:
-        return (first, *READING_BLOCKS, MATCHING_BLOCK)
-    return (first, *READING_BLOCKS) if content_version >= 3 else (first,)
+    return (first, *_shared_reading_blocks(content_version))
 
 
 def training_questions(variant, part_id, content_version=CONTENT_VERSION):

@@ -6855,3 +6855,6 @@ msgstr "Osiem bloków: sześć bloków wyboru, jeden blok odmiany wyrazów i jed
 
 msgid "Пять блоков, 30 ответов и 45 минут. В объявлениях одну букву можно выбрать несколько раз; одно объявление лишнее. Это учебный набор, не полная симуляция."
 msgstr "Pięć bloków, 30 odpowiedzi i 45 minut. W ogłoszeniach tę samą literę można wybrać kilka razy; jedno ogłoszenie jest zbędne. To zestaw treningowy, nie pełna symulacja."
+
+msgid "В тексте с пропусками каждое предложение используется не более одного раза; одно лишнее. В объявлениях повторный выбор буквы разрешён."
+msgstr "W tekście z lukami każde zdanie można wykorzystać najwyżej raz; jedno jest zbędne. W ogłoszeniach tę samą literę można wybrać kilka razy."

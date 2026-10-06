@@ -111,3 +111,42 @@ MATCHING_BLOCK = ReadingBlock(
         MockQuestion('tr30', 'reading', 'Maria potrzebuje indywidualnej pomocy w prostej sprawie internetowej we wtorek rano i może zapisać się telefonicznie.', ('A', 'B', 'C', 'D', 'E', 'F'), 4, 'Pomoc E jest indywidualna, odbywa się we wtorek rano i wymaga rezerwacji telefonicznej.'),
     ),
 )
+
+
+# Original PolskiFlow cohesion task; internal review 2026-10-06.
+COHESION_BLOCK = ReadingBlock(
+    "cohesion", "Pierwszy dzień wolontariatu — uzupełnij tekst",
+    "Przeczytaj tekst z lukami 1–5 i zdania A–F. Do każdej luki wybierz jedno zdanie, "
+    "tak aby powstał spójny tekst. Każde zdanie pasuje najwyżej do jednej luki; jedno zdanie jest zbędne.\n\n"
+    "W sobotę po raz pierwszy przyszedłem jako wolontariusz do schroniska dla zwierząt. "
+    "Wcześniej brałem udział w spotkaniu informacyjnym, ale nadal trochę się denerwowałem. "
+    "Najpierw trafiłem do recepcji, gdzie czekała koordynatorka. [1] Tę listę miałem zabrać "
+    "ze sobą i zaznaczać na niej, z którymi zwierzętami już wyszedłem.\n\n"
+    "Pierwszy pies, którym miałem się zająć, stał w rogu swojego boksu. [2] Dlatego opiekunka "
+    "poprosiła, żebym przez chwilę spokojnie z nim posiedział. Dopiero potem razem "
+    "wyszliśmy na krótki spacer. Zrozumiałem, że nie wszystko da się zrobić szybko.\n\n"
+    "Początkowo było słonecznie, więc nie zabraliśmy parasola. W drodze powrotnej nad "
+    "schroniskiem pojawiły się jednak ciemne chmury. [3] Mokre kurtki zostawiliśmy przy wejściu, "
+    "a opiekunka przyniosła ręcznik dla psa.\n\n"
+    "Po spacerze zrobiłem zdjęcie zwierzęcia odpoczywającego w swoim boksie. [4] "
+    "Dzięki tej wiadomości koordynatorka mogła uzupełnić informacje dla pozostałych wolontariuszy. "
+    "Sam nie publikowałem zdjęcia w internecie: zgodnie z zasadami schroniska zajmuje się tym wyznaczona osoba.\n\n"
+    "Pod koniec dyżuru rozmawialiśmy o kolejnych spotkaniach. W tygodniu studiuję "
+    "i pracuję, dlatego mogę poświęcić na wolontariat tylko jedną sobotę w miesiącu. [5] "
+    "Ten regularny plan pozwolił koordynatorce wcześniej przygotować grafik, "
+    "a mnie pogodzić pomoc zwierzętom z innymi obowiązkami.\n\n"
+    "Zdania do wyboru:\n"
+    "A. Zanim dotarliśmy do bramy, zaczął padać deszcz.\n"
+    "B. Ustaliliśmy, że będę przychodził w pierwszą sobotę każdego miesiąca.\n"
+    "C. Koordynatorka podała mi listę psów przeznaczonych na spacer.\n"
+    "D. Po roku pracy zostałem kierownikiem całego schroniska.\n"
+    "E. Nie chciał wyjść z boksu, mimo że drzwi były otwarte.\n"
+    "F. Wysłałem je do koordynatorki wraz z krótkim opisem zachowania psa.",
+    (
+        MockQuestion('tc01', 'reading', 'Które zdanie pasuje do luki 1?', ('A', 'B', 'C', 'D', 'E', 'F'), 2, '„Tę listę” odnosi się do listy psów przekazanej przez koordynatorkę w zdaniu C.'),
+        MockQuestion('tc02', 'reading', 'Które zdanie pasuje do luki 2?', ('A', 'B', 'C', 'D', 'E', 'F'), 4, 'Zdanie E wyjaśnia, dlaczego opiekunka poprosiła o spokojne posiedzenie z psem.'),
+        MockQuestion('tc03', 'reading', 'Które zdanie pasuje do luki 3?', ('A', 'B', 'C', 'D', 'E', 'F'), 0, 'Deszcz w zdaniu A łączy ciemne chmury z mokrymi kurtkami po powrocie.'),
+        MockQuestion('tc04', 'reading', 'Które zdanie pasuje do luki 4?', ('A', 'B', 'C', 'D', 'E', 'F'), 5, '„Je” w zdaniu F odnosi się do zdjęcia, a „tej wiadomości” do jego wysłania koordynatorce.'),
+        MockQuestion('tc05', 'reading', 'Które zdanie pasuje do luki 5?', ('A', 'B', 'C', 'D', 'E', 'F'), 1, 'Zdanie B ustala regularny termin jednej soboty w miesiącu, do którego odnosi się „ten regularny plan”.'),
+    ),
+)

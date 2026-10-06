@@ -1198,3 +1198,13 @@ B1_READING_MATCHING_MESSAGES = (
 )
 
 B1_READING_MATCHING_INSTRUCTION = gettext_noop("Пять блоков, 30 ответов и 45 минут. В объявлениях одну букву можно выбрать несколько раз; одно объявление лишнее. Это учебный набор, не полная симуляция.")
+
+B1_READING_COHESION_MESSAGES = (
+    gettext_noop("„Tę listę” odnosi się do listy psów przekazanej przez koordynatorkę w zdaniu C."),
+    gettext_noop("Zdanie E wyjaśnia, dlaczego opiekunka poprosiła o spokojne posiedzenie z psem."),
+    gettext_noop("Deszcz w zdaniu A łączy ciemne chmury z mokrymi kurtkami po powrocie."),
+    gettext_noop("„Je” w zdaniu F odnosi się do zdjęcia, a „tej wiadomości” do jego wysłania koordynatorce."),
+    gettext_noop("Zdanie B ustala regularny termin jednej soboty w miesiącu, do którego odnosi się „ten regularny plan”."),
+)
+
+B1_READING_COHESION_INSTRUCTION = gettext_noop("В тексте с пропусками каждое предложение используется не более одного раза; одно лишнее. В объявлениях повторный выбор буквы разрешён.")
