@@ -73,7 +73,7 @@ if database_url := os.environ.get("DATABASE_URL"):
     }
 
 LANGUAGE_CODE = "ru"
-LANGUAGES = [("ru", "Русский"), ("pl", "Polski")]
+LANGUAGES = [("ru", "Русский"), ("pl", "Polski"), ("en", "English")]
 LOCALE_PATHS = [BASE_DIR / "locale"]
 LANGUAGE_COOKIE_AGE = 365 * 24 * 60 * 60
 LANGUAGE_COOKIE_HTTPONLY = True

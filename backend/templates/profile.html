@@ -5,12 +5,17 @@
   <header class="profile-header">
     <div class="profile-avatar" aria-hidden="true">{{ dashboard.display_name|first|upper|default:"U" }}</div>
     <div>
-      <p class="eyebrow">Twój profil</p>
+      <p class="eyebrow">{% if LANGUAGE_CODE == 'en' %}Your profile{% else %}Twój profil{% endif %}</p>
       <h1>{{ dashboard.display_name }}</h1>
       <p class="muted">{{ email }}</p>
     </div>
     <span class="profile-level" aria-label="{% translate "Текущий уровень" %} {{ dashboard.level|ui_text }}">{{ dashboard.level|ui_text }}</span>
   </header>
+
+  <section class="card" aria-labelledby="interface-language-title">
+    <h2 id="interface-language-title">{% translate "Язык интерфейса" %}</h2>
+    {% include "partials/language_settings.html" %}
+  </section>
 
   {% if not dashboard.available or not dictionary_available %}
     <p class="data-notice" role="status">{% translate "Часть статистики временно недоступна. Можно продолжать занятия — новый прогресс сохранится после восстановления соединения." %}</p>

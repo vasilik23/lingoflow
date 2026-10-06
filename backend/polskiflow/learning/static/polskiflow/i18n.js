@@ -1,5 +1,5 @@
 (() => {
-  const translations = document.documentElement.lang === 'pl' ? window.PolskiFlowPolishMessages || {} : {};
+  const translations = ({pl: window.PolskiFlowPolishMessages, en: window.PolskiFlowEnglishMessages})[document.documentElement.lang] || {};
   const t = (text, ...values) => {
     if (!Array.isArray(text)) return translations[text] || text;
     const key = text.map((part, i) => part + (i < values.length ? `%(v${i})s` : '')).join('');

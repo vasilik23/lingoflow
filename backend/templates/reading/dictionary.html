@@ -35,7 +35,7 @@
   <section class="dictionary-list" aria-live="polite">
     {% for word in words %}
       <article class="dictionary-word" id="word-{{ word.id }}">
-        <div><strong>{{ word.word }}</strong><span>{{ word.translation }}</span>{% if word.context %}<small>“{{ word.context|truncatechars:150 }}”</small>{% endif %}</div>
+        <div><strong>{{ word.word }}</strong><span>{{ word.translation|learning_text }}</span>{% if word.context %}<small>“{{ word.context|truncatechars:150 }}”</small>{% endif %}</div>
         <form method="post" action="{% url 'remove-dictionary-word' word.id %}">{% csrf_token %}<button class="word-delete" type="submit" aria-label="{% translate "Удалить" %} {{ word.word }}">×</button></form>
       </article>
     {% empty %}

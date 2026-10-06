@@ -1,7 +1,7 @@
 {% load i18n ui %}
 <div class="progress-label">{% translate "Вопрос" %} {{ index|add:1|ui_text }} {% translate "из" %} {{ total|ui_text }}</div>
 <div class="lesson-progress"><span style="--value: {% widthratio index|add:1 total 100 %}%; width: var(--value)"></span></div>
-<div class="card question-card"><p class="eyebrow">{% if sentence_builder %}{% translate "Составь предложение" %}{% else %}{% translate "Выбери ответ" %}{% endif %}</p><h2>{{ question.prompt }}</h2></div>
+<div class="card question-card"><p class="eyebrow">{% if sentence_builder %}{% translate "Составь предложение" %}{% else %}{% translate "Выбери ответ" %}{% endif %}</p><h2>{{ question.prompt|learning_text }}</h2></div>
 {% if sentence_builder %}
   {% if builder_answer == None %}
     <form class="sentence-builder" data-sentence-builder method="post" action="{% url 'lesson-step' lesson_id %}">
@@ -19,7 +19,7 @@
       <p class="assembled-sentence">{% for word in builder_answer_words %}{{ word|ui_text }}{% if not forloop.last %} {% endif %}{% endfor %}</p>
       {% if not builder_correct %}<p class="correct-sentence">{% translate "Правильно:" %} <strong>{{ builder_correct_sentence|ui_text }}</strong></p>{% endif %}
     </div>
-    <p class="card feedback">{{ question.explanation }}</p>
+    <p class="card feedback">{{ question.explanation|learning_text }}</p>
     <form method="post" action="{% url 'lesson-step' lesson_id %}">
       {% csrf_token %}<input type="hidden" name="action" value="next"><input type="hidden" name="state" value="{{ lesson_state }}"><input type="hidden" name="answer_order" value="{{ builder_answer_json }}"><button>{% if index|add:1 == total %}{% translate "Завершить урок" %}{% else %}{% translate "Следующий вопрос →" %}{% endif %}</button>
     </form>
@@ -27,13 +27,13 @@
 {% elif selected == None %}
   <form class="options" method="post" action="{% url 'lesson-step' lesson_id %}">
     {% csrf_token %}<input type="hidden" name="action" value="answer"><input type="hidden" name="state" value="{{ lesson_state }}">
-    {% for option in question.options %}<button type="submit" name="choice" value="{{ forloop.counter0 }}"><span>{{ forloop.counter|ui_text }}.</span>&nbsp; {{ option }}</button>{% endfor %}
+    {% for option in question.options %}<button type="submit" name="choice" value="{{ forloop.counter0 }}"><span>{{ forloop.counter|ui_text }}.</span>&nbsp; {{ option|learning_text }}</button>{% endfor %}
   </form>
 {% else %}
   <div class="options">
-    {% for option in question.options %}<button disabled class="{% if forloop.counter0 == question.correct %}correct{% elif forloop.counter0 == selected %}wrong{% endif %}">{{ option }}</button>{% endfor %}
+    {% for option in question.options %}<button disabled class="{% if forloop.counter0 == question.correct %}correct{% elif forloop.counter0 == selected %}wrong{% endif %}">{{ option|learning_text }}</button>{% endfor %}
   </div>
-  <p class="card feedback">{{ question.explanation }}</p>
+  <p class="card feedback">{{ question.explanation|learning_text }}</p>
   <form method="post" action="{% url 'lesson-step' lesson_id %}">
     {% csrf_token %}<input type="hidden" name="action" value="next"><input type="hidden" name="state" value="{{ lesson_state }}"><button>{% if index|add:1 == total %}{% translate "Завершить урок" %}{% else %}{% translate "Следующий вопрос →" %}{% endif %}</button>
   </form>

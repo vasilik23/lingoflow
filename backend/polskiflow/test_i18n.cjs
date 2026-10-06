@@ -7,6 +7,7 @@ function catalog(lang) {
   const window = {};
   const context = {window, document: {documentElement: {lang}}};
   vm.runInNewContext(fs.readFileSync(path.join(directory, 'i18n-pl.js'), 'utf8'), context);
+  vm.runInNewContext(fs.readFileSync(path.join(directory, 'i18n-en.js'), 'utf8'), context);
   vm.runInNewContext(fs.readFileSync(path.join(directory, 'i18n.js'), 'utf8'), context);
   return window.PolskiFlowI18n.t;
 }
@@ -18,3 +19,7 @@ assert.equal(pl`Уникальный текст ${'<script>'}`, 'Уникаль�
 assert.equal(ru`Осталось ${3} минут.`, 'Осталось 3 минут.');
 assert.equal(pl('окончания падежей'), 'końcówki przypadków');
 console.log('Polish and Russian browser catalogues and interpolation: PASS');
+
+const en = catalog('en');
+assert.equal(en('Словарь'), 'Dictionary');
+assert.equal(en`Слов: ${12} · ориентир ${50}–${80} · ${'minimum'}`, 'Words: 12 · target 50–80 · minimum');

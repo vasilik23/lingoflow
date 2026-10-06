@@ -8,11 +8,11 @@
     <section class="auth-panel">
       <a class="brand" href="{% url 'login' %}"><span class="brand-mark">P</span> PolskiFlow</a>
       {% if mode == "forgot" %}
-        <p class="eyebrow">Odzyskiwanie dostępu</p><h1>{% translate "Забыли пароль?" %}</h1><p class="muted">{% translate "Укажите email аккаунта. Мы не сообщаем, зарегистрирован ли такой адрес." %}</p>
+        <p class="eyebrow">{% if LANGUAGE_CODE == 'en' %}Recover your account{% else %}Odzyskiwanie dostępu{% endif %}</p><h1>{% translate "Забыли пароль?" %}</h1><p class="muted">{% translate "Укажите email аккаунта. Мы не сообщаем, зарегистрирован ли такой адрес." %}</p>
       {% elif mode == "reset" %}
-        <p class="eyebrow">Nowe hasło</p><h1>{% translate "Создайте новый пароль" %}</h1><p class="muted">{% translate "Ссылка одноразовая. После сохранения войдите заново." %}</p>
+        <p class="eyebrow">{% if LANGUAGE_CODE == 'en' %}New password{% else %}Nowe hasło{% endif %}</p><h1>{% translate "Создайте новый пароль" %}</h1><p class="muted">{% translate "Ссылка одноразовая. После сохранения войдите заново." %}</p>
       {% else %}
-        <p class="eyebrow">Potwierdzenie email</p><h1>{% translate "Отправить письмо ещё раз" %}</h1><p class="muted">{% translate "Используйте тот же email, с которым регистрировались." %}</p>
+        <p class="eyebrow">{% if LANGUAGE_CODE == 'en' %}Confirm your email{% else %}Potwierdzenie email{% endif %}</p><h1>{% translate "Отправить письмо ещё раз" %}</h1><p class="muted">{% translate "Используйте тот же email, с которым регистрировались." %}</p>
       {% endif %}
       {% if error %}<p class="error" role="alert">{{ error|ui_text }}</p>{% endif %}
       {% if message %}<p class="message" role="status">{{ message|ui_text }}</p>{% endif %}
@@ -34,6 +34,7 @@
         {% endif %}
       </form>
       <p class="auth-switch muted"><a href="{% url 'login' %}">{% translate "Вернуться ко входу" %}</a></p>
+      {% include "partials/language_settings.html" %}
     </section>
   </div>
   {% if mode == "reset" %}

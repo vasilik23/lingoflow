@@ -7,8 +7,8 @@
   </header>
 
   <section class="hero">
-    <p class="eyebrow">Dobry dzień na polski</p>
-    <h1>Cześć, {{ dashboard.display_name }}! 👋</h1>
+    <p class="eyebrow">{% if LANGUAGE_CODE == 'en' %}A good day to learn Polish{% else %}Dobry dzień na polski{% endif %}</p>
+    <h1>{% if LANGUAGE_CODE == 'en' %}Hi,{% else %}Cześć,{% endif %} {{ dashboard.display_name }}! 👋</h1>
     <div class="hero-meta">
       <span class="pill">{% translate "◆ Уровень" %} {{ dashboard.level|ui_text }}</span>
       <span class="pill">🔥 {{ dashboard.streak_days|ui_text }} {% translate "дн. подряд" %}</span>

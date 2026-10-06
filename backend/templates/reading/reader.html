@@ -27,9 +27,17 @@
       </section>
       <div class="reading-paper">
         {% for paragraph in paragraphs %}
-          <p>{% for token in paragraph %}{% if token.translation %}<button type="button" class="reader-word" data-word="{{ token.word }}" data-lemma="{{ token.lemma }}" data-translation="{{ token.translation }}" data-part-of-speech="{{ token.part_of_speech }}">{{ token.text }}</button>{% else %}{{ token.text }}{% endif %}{% endfor %}</p>
+          <p>{% for token in paragraph %}{% if token.translation %}<button type="button" class="reader-word" data-word="{{ token.word }}" data-lemma="{{ token.lemma }}" data-translation="{{ token.translation|learning_text }}" data-source-translation="{{ token.translation }}" data-part-of-speech="{{ token.part_of_speech }}">{{ token.text }}</button>{% else %}{{ token.text }}{% endif %}{% endfor %}</p>
         {% endfor %}
       </div>
+      {% with english_paragraphs=text.paragraphs|english_reading %}
+        {% if english_paragraphs %}
+          <details class="card reading-translation">
+            <summary>English translation</summary>
+            {% for paragraph in english_paragraphs %}<p lang="en">{{ paragraph }}</p>{% endfor %}
+          </details>
+        {% endif %}
+      {% endwith %}
       {% if comprehension_task %}
         <section class="card reading-check-card" aria-labelledby="reading-check-title">
           <span class="reading-check-icon" aria-hidden="true">✓</span>
@@ -99,7 +107,7 @@
       document.querySelector('#selected-word').textContent = label;
       document.querySelector('#selected-translation').textContent = button.dataset.translation;
       document.querySelector('#word-input').value = button.dataset.word;
-      document.querySelector('#translation-input').value = button.dataset.translation;
+      document.querySelector('#translation-input').value = button.dataset.sourceTranslation;
       document.querySelector('#context-input').value = button.closest('p').textContent.trim();
       document.querySelector('#dictionary-status').textContent = '';
       if (window.innerWidth < 850) document.querySelector('#word-panel').scrollIntoView({behavior: 'smooth', block: 'nearest'});
