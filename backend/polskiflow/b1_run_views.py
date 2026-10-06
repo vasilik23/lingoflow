@@ -113,7 +113,7 @@ def b1_training_run(request):
                     error, status = "Подготовка ещё не закончилась. Прочитай задания и составь план ответов.", 400
                 elif part["mode"] == "objective":
                     try:
-                        answers = {question.id: int(request.POST[f"answer_{question.id}"]) for question in questions}
+                        answers = {question.id: request.POST[f"answer_{question.id}"] if getattr(question, "written", False) else int(request.POST[f"answer_{question.id}"]) for question in questions}
                         score = score_training_part(variant, part["id"], answers, state.get("content_version", 1))
                     except (KeyError, TypeError, ValueError):
                         error, status = "Ответь на все вопросы этой части.", 400

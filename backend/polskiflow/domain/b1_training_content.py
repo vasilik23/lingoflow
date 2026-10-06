@@ -1,13 +1,14 @@
 """Versioned original question sets for the guided B1 run."""
 
 from datetime import date
+import unicodedata
 
 from polskiflow.domain.b1_weekly_mock import MockQuestion
 from polskiflow.domain.b1_exam_simulation import simulation_questions, score_simulation_part
 from polskiflow.domain.b1_training_reading import READING_BLOCKS, ReadingBlock
-from polskiflow.domain.b1_training_grammar import GRAMMAR_EXTENSION
+from polskiflow.domain.b1_training_grammar import GRAMMAR_EXTENSION, WRITTEN_GRAMMAR
 
-CONTENT_VERSION = 6
+CONTENT_VERSION = 7
 ORIGIN = "original"
 CREATED_FOR = "PolskiFlow"
 VERIFIED_AT = date(2026, 10, 6)  # Internal editorial review, not independent validation.
@@ -33,6 +34,8 @@ RUN_GRAMMAR_QUESTIONS = (
 
 def _extra_questions(part_id, content_version):
     if part_id == "grammar" and content_version >= 2:
+        if content_version >= 7:
+            return (*RUN_GRAMMAR_QUESTIONS, *GRAMMAR_EXTENSION[:10], *WRITTEN_GRAMMAR)
         return (*RUN_GRAMMAR_QUESTIONS, *GRAMMAR_EXTENSION) if content_version >= 6 else RUN_GRAMMAR_QUESTIONS
     if part_id == "reading" and content_version >= 3:
         return tuple(question for block in READING_BLOCKS for question in block.questions)
@@ -57,6 +60,30 @@ def training_grammar_blocks(variant, content_version=CONTENT_VERSION):
     return tuple(questions[start:start + 5] for start in range(0, len(questions), 5))
 
 
+def _normalize_written_answer(text):
+    return " ".join(unicodedata.normalize("NFC", text).casefold().split())
+
+
 def score_training_part(variant, part_id, answers, content_version=CONTENT_VERSION):
+    if part_id == "grammar" and content_version >= 7:
+        questions = training_questions(variant, part_id, content_version)
+        if set(answers) != {q.id for q in questions}:
+            raise ValueError("Missing answers")
+        details = []
+        for q in questions:
+            selected = answers[q.id]
+            if getattr(q, "written", False):
+                if not isinstance(selected, str) or not selected.strip() or len(selected) > 120:
+                    raise ValueError("Invalid written answer")
+                correct = _normalize_written_answer(selected) == _normalize_written_answer(q.correct)
+                selected_text, correct_text = selected, q.correct
+            else:
+                if type(selected) is not int or selected not in range(len(q.options)):
+                    raise ValueError("Invalid choice")
+                correct = selected == q.correct
+                selected_text, correct_text = q.options[selected], q.options[q.correct]
+            details.append(dict(question=q, selected=selected, selected_text=selected_text, correct_text=correct_text, is_correct=correct))
+        correct = sum(d["is_correct"] for d in details)
+        return dict(correct=correct, total=len(questions), percent=round(correct / len(questions) * 100), details=details)
     extra = _extra_questions(part_id, content_version)
     return score_simulation_part(variant, part_id, answers, extra_questions=extra)

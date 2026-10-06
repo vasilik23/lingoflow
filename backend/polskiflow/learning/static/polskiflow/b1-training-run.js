@@ -9,7 +9,7 @@
   const writing = document.getElementById('run-writing');
   const writing2 = document.getElementById('run-writing-2');
   const writingSnapshot = () => JSON.stringify([writing?.value || '', writing2?.value || '']);
-  const fields = Array.from(form.querySelectorAll('input[type="radio"], input[type="checkbox"]'));
+  const fields = Array.from(form.querySelectorAll('input[type="radio"], input[type="checkbox"], input[data-run-written]'));
   const storageStatus = root.querySelector('[data-run-storage-status]');
   let savedWriting = '';
   let intentionalLeave = false;
@@ -30,13 +30,13 @@
     form.appendChild(action); form.submit(); return;
   }
   if (draft?.token === token.value) {
-    fields.forEach(input => { input.checked = draft.answers?.[input.name] === input.value; });
+    fields.forEach(input => { if (input.matches('[data-run-written]')) input.value = typeof draft.answers?.[input.name] === 'string' ? draft.answers[input.name].slice(0, 120) : ''; else input.checked = draft.answers?.[input.name] === input.value; });
     if (writing && typeof draft.writing === 'string') writing.value = draft.writing;
     if (writing2 && typeof draft.writing2 === 'string') writing2.value = draft.writing2;
   }
   const save = () => {
     const answers = {};
-    fields.forEach(input => { if (input.checked) answers[input.name] = input.value; });
+    fields.forEach(input => { if (input.checked || input.matches('[data-run-written]')) answers[input.name] = input.value; });
     try {
       sessionStorage.setItem(key, JSON.stringify({token: token.value, answers, writing: writing?.value || '', writing2: writing2?.value || ''}));
       savedWriting = writingSnapshot();
@@ -47,6 +47,7 @@
     }
   };
   form.addEventListener('change', save);
+  fields.filter(input => input.matches('[data-run-written]')).forEach(input => input.addEventListener('input', save));
   writing?.addEventListener('input', save);
   writing2?.addEventListener('input', save);
   root.querySelector('[data-clear-run-writing]')?.addEventListener('click', () => {

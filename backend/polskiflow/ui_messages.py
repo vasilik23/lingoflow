@@ -1167,3 +1167,19 @@ B1_GRAMMAR_EXTENSION_MESSAGES = (
     gettext_noop("Блок"),
     gettext_noop("Восемь блоков по пять ответов. Выбор формы — один из экзаменационных форматов; ввод форм и преобразования предложений ещё не включены."),
 )
+
+
+B1_WRITTEN_GRAMMAR_MESSAGES = (
+    gettext_noop("Po „nie mam” używamy dopełniacza: „czasu”."),
+    gettext_noop("„Pomagać” wymaga celownika: „siostrze”."),
+    gettext_noop("„Do” wymaga dopełniacza: „Krakowa”."),
+    gettext_noop("„Z” oznaczające towarzystwo wymaga narzędnika."),
+    gettext_noop("Anna i Maria używają niemęskoosobowej formy pierwszej osoby liczby mnogiej: „byłyśmy”."),
+    gettext_noop("Przeczenie zmienia biernik „kawę” na dopełniacz „kawy”."),
+    gettext_noop("Po „w” oznaczającym miejsce przymiotnik ma formę miejscownika: „nowym”."),
+    gettext_noop("Męska forma przeszła czasownika niedokonanego „czytać” to „czytał”."),
+    gettext_noop("Dwie kobiety wymagają niemęskoosobowej formy liczby mnogiej: „zmęczone”."),
+    gettext_noop("Warunek z „gdybyś” łączy się tutaj z formą „pomógłbyś”."),
+)
+
+B1_WRITTEN_INSTRUCTION = gettext_noop("Восемь блоков: шесть на выбор, один на ввод формы и один на преобразование предложения. Вводи только пропущенную форму с польскими буквами.")

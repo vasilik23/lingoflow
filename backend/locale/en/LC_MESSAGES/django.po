@@ -16501,3 +16501,36 @@ msgstr "Block"
 
 msgid "Восемь блоков по пять ответов. Выбор формы — один из экзаменационных форматов; ввод форм и преобразования предложений ещё не включены."
 msgstr "Eight blocks of five answers. Choosing a form is one exam format; entering forms and transforming sentences are not included yet."
+
+msgid "Po „nie mam” używamy dopełniacza: „czasu”."
+msgstr "After “nie mam”, use the genitive: “czasu”."
+
+msgid "„Pomagać” wymaga celownika: „siostrze”."
+msgstr "“Pomagać” requires the dative: “siostrze”."
+
+msgid "„Do” wymaga dopełniacza: „Krakowa”."
+msgstr "“Do” requires the genitive: “Krakowa”."
+
+msgid "„Z” oznaczające towarzystwo wymaga narzędnika."
+msgstr "“Z” expressing accompaniment requires the instrumental."
+
+msgid "Anna i Maria używają niemęskoosobowej formy pierwszej osoby liczby mnogiej: „byłyśmy”."
+msgstr "Anna and Maria use the non-masculine-personal first-person plural form: “byłyśmy”."
+
+msgid "Przeczenie zmienia biernik „kawę” na dopełniacz „kawy”."
+msgstr "Negation changes the accusative “kawę” to the genitive “kawy”."
+
+msgid "Po „w” oznaczającym miejsce przymiotnik ma formę miejscownika: „nowym”."
+msgstr "After “w” expressing location, the adjective takes the locative: “nowym”."
+
+msgid "Męska forma przeszła czasownika niedokonanego „czytać” to „czytał”."
+msgstr "The masculine past form of the imperfective verb “czytać” is “czytał”."
+
+msgid "Dwie kobiety wymagają niemęskoosobowej formy liczby mnogiej: „zmęczone”."
+msgstr "Two women require the non-masculine-personal plural form: “zmęczone”."
+
+msgid "Warunek z „gdybyś” łączy się tutaj z formą „pomógłbyś”."
+msgstr "The condition with “gdybyś” takes the form “pomógłbyś” here."
+
+msgid "Восемь блоков: шесть на выбор, один на ввод формы и один на преобразование предложения. Вводи только пропущенную форму с польскими буквами."
+msgstr "Eight blocks: six multiple-choice blocks, one for entering forms and one for transforming sentences. Enter only the missing form, using Polish characters."

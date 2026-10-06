@@ -6,11 +6,12 @@ const source = fs.readFileSync(path.join(__dirname, 'learning/static/polskiflow/
 const storage = new Map();
 function page({normalize = false, fresh = false, failStorage = false, tokenValue = 'signed-part-token', withWriting = false} = {}) {
   const token = {value: tokenValue}, status = {hidden: true};
-  const answer = {name: 'answer_tg07', value: '1', checked: false};
+  const answer = {name: 'answer_tg07', value: '1', checked: false, matches: () => false};
   const events = {}; let replacement = null;
   const editor = () => ({value: '', events: {}, addEventListener(name, callback) {this.events[name] = callback;}, focus() {}, dispatchEvent(event) {this.events[event.type]?.();}});
   const writing = editor(), writing2 = editor();
-  const form = {querySelector: () => token, querySelectorAll: () => [answer], addEventListener: (event, callback) => {events[event] = callback;}, appendChild: input => {form.actionInput = input;}, submit: () => {form.submitted = true;}};
+  const written = {...editor(), name: 'answer_tw31', matches: () => true};
+  const form = {querySelector: () => token, querySelectorAll: () => [answer, written], addEventListener: (event, callback) => {events[event] = callback;}, appendChild: input => {form.actionInput = input;}, submit: () => {form.submitted = true;}};
   const root = {dataset: {namespace: 'owner', phase: 'part', ...(normalize ? {normalizeNavigation: '1'} : {}), ...(fresh ? {fresh: '1'} : {})}, querySelector: selector => selector.includes('storage-status') ? status : selector.includes('clear-run-writing') && withWriting ? {addEventListener(name, callback) {events[selector] = callback;}} : selector.includes('restart') ? {addEventListener() {}} : null};
   vm.runInNewContext(source, {
     document: {querySelector: () => root, getElementById: id => id === 'b1-run-form' ? form : withWriting && id === 'run-writing' ? writing : withWriting && id === 'run-writing-2' ? writing2 : null, createElement: () => ({})},
@@ -18,7 +19,7 @@ function page({normalize = false, fresh = false, failStorage = false, tokenValue
     URL, Date, Event,
     window: {location: {href: 'https://example.test/exam/b1/run/', replace: url => {replacement = String(url);}}, addEventListener(name, callback) {events[name] = callback;}, history: {replaceState() {}}},
   });
-  return {token, answer, form, events, status, replacement, writing, writing2};
+  return {token, answer, form, events, status, replacement, writing, writing2, written};
 }
 let f = page({normalize: true});
 assert.equal(f.replacement, 'https://example.test/exam/b1/run/');
@@ -61,3 +62,9 @@ editors.long.value = 'zdanie '.repeat(171); editors.long.update();
 assert.match(counters[1].textContent, /Слов: 171.*выше ориентира/);
 editors.long.value = '  '; editors.long.update(); assert.match(counters[1].textContent, /Слов: 0/);
 console.log('Independent word counts and editorial range boundaries: PASS');
+
+storage.clear();
+f = page(); f.written.value = 'czasu'; f.written.events.input();
+f = page(); assert.equal(f.written.value, 'czasu');
+f = page({tokenValue: 'different-token'}); assert.equal(f.written.value, '');
+console.log('Written grammar input saves on typing, resumes and clears across signed states: PASS');

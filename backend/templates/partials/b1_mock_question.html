@@ -1,6 +1,8 @@
 {% load i18n ui %}
 <fieldset class="mock-question">
   <legend>{{ question.prompt|ui_text }}</legend>
+  {% if question.written %}<input type="text" name="answer_{{ question.id }}" aria-label="{{ question.prompt|ui_text }}" lang="pl" maxlength="120" autocomplete="off" spellcheck="false" data-run-written {% if not result %}required{% else %}disabled{% endif %}>{% else %}
   {% for option in question.options %}<label><input type="radio" name="answer_{{ question.id }}" value="{{ forloop.counter0 }}" {% if not result %}required{% else %}disabled{% endif %}> <span lang="pl">{{ option|ui_text }}</span></label>{% endfor %}
+  {% endif %}
   {% if result %}{% for detail in result.details %}{% if detail.question.id == question.id %}<div class="mock-feedback {% if detail.is_correct %}correct{% else %}wrong{% endif %}"><strong>{% if detail.is_correct %}{% translate "Верно:" %} {{ detail.correct_text|ui_text }}{% else %}{% translate "Твой ответ:" %} {{ detail.selected_text|ui_text }} {% translate "· верно:" %} {{ detail.correct_text|ui_text }}{% endif %}</strong><span>{{ question.explanation|ui_text }}</span></div>{% endif %}{% endfor %}{% endif %}
 </fieldset>
