@@ -7,9 +7,6 @@
       <p class="eyebrow">{% translate "Тренируй отдельные навыки" %}</p>
       <h1 id="practice-title">{% translate "Практика без лишнего" %}</h1>
       <p>{% translate "Выбери навык под сегодняшнюю задачу: повтори слова, потренируй слух, письмо или живое общение." %}</p>
-      <div class="practice-hero-meta" aria-label="{% translate "Возможности практики" %}">
-        <span>{% translate "7 форматов" %}</span><span>{% translate "от 5 минут" %}</span><span>{% translate "результаты в профиле" %}</span>
-      </div>
     </div>
     <a class="practice-course-link" href="{% url 'course' %}"><span>{% translate "Последовательный курс" %}</span><strong>{% translate "Вернуться к темам →" %}</strong></a>
   </section>
@@ -20,17 +17,6 @@
       <p><a href="{{ recommendation.href }}">{{ recommendation.title|ui_text }} →</a></p>
     </section>
   {% endif %}
-  <p><a class="compact-button" href="{% url 'b1-training-run' %}">{% translate "Учебный прогон B1 · пять частей с перерывами →" %}</a></p>
-  <section class="profile-settings" aria-labelledby="practice-topics-title">
-    <h2 id="practice-topics-title">{% translate "Темы персональной практики" %}</h2>
-    <form class="card profile-form" method="post">
-      {% csrf_token %}
-      <label><span><input type="checkbox" name="exclude_remote_work"{% if exclude_remote_work %} checked{% endif %}> {% translate "Не предлагать удалённую и гибридную работу" %}</span></label>
-      <p class="muted">{% translate "Применяется к новым B1 mini-mock и timed-частям, а также рекомендации B2 на этом экране. Начатая попытка сохраняется. Общий каталог и тренажёры ниже не скрываются." %}</p>
-      <p class="muted">{% translate "Выбор хранится в cookie этого браузера до 90 дней, отдельно для аккаунта, и не синхронизируется с другими устройствами. Сними отметку и сохрани, чтобы удалить настройку." %}</p>
-      <button type="submit">{% translate "Сохранить выбор тем" %}</button>
-    </form>
-  </section>
   <div class="section-heading practice-section-heading">
     <div><p class="eyebrow">{% translate "Все тренажёры" %}</p><h2>{% translate "Что хочешь прокачать?" %}</h2></div>
     <span>{% translate "Выбирай один формат или сочетай несколько" %}</span>
@@ -62,9 +48,9 @@
     </a>
     <a class="practice-hub-card practice-card--green" href="{% url 'interaction-practice' %}">
       <span class="practice-card-icon" aria-hidden="true">↔</span>
-      <span class="practice-card-badge">{% translate "B1–B2 · ситуации" %}</span>
-      <div><h3>{% translate "Общение и медиация" %}</h3><p>{% translate "Реплики, аргументы и сценарии, где важно договориться или точно передать смысл." %}</p></div>
-      <span class="practice-card-action">{% translate "Выбрать сценарий" %} <b aria-hidden="true">→</b></span>
+      <span class="practice-card-badge">{% translate "Общение и медиация" %}</span>
+      <div><h3>{% translate "Говорение" %}</h3><p>{% translate "Реплики, аргументы и сценарии, где важно договориться или точно передать смысл." %}</p></div>
+      <span class="practice-card-action">{% translate "Записать ответ" %} <b aria-hidden="true">→</b></span>
     </a>
     <a class="practice-hub-card practice-card--amber" href="{% url 'diagnostic' %}">
       <span class="practice-card-icon" aria-hidden="true">◎</span>
@@ -79,4 +65,14 @@
       <span class="practice-card-action">{% translate "Посмотреть прогресс" %} <b aria-hidden="true">→</b></span>
     </a>
   </section>
+  <details class="card practice-preferences">
+    <summary>{% translate "Темы персональной практики" %}</summary>
+    <form class="profile-form" method="post">
+      {% csrf_token %}
+      <label><span><input type="checkbox" name="exclude_remote_work"{% if exclude_remote_work %} checked{% endif %}> {% translate "Не предлагать удалённую и гибридную работу" %}</span></label>
+      <p class="muted">{% translate "Применяется к новым B1 mini-mock и timed-частям, а также рекомендации B2 на этом экране. Начатая попытка сохраняется. Общий каталог и тренажёры ниже не скрываются." %}</p>
+      <p class="muted">{% translate "Выбор хранится в cookie этого браузера до 90 дней, отдельно для аккаунта, и не синхронизируется с другими устройствами. Сними отметку и сохрани, чтобы удалить настройку." %}</p>
+      <button type="submit">{% translate "Сохранить выбор тем" %}</button>
+    </form>
+  </details>
 {% endblock %}

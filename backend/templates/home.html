@@ -15,20 +15,6 @@
     </div>
   </section>
 
-  {% if b1_exam_prep %}
-    <aside class="card exam-home-card" aria-labelledby="exam-home-title">
-      <div class="exam-home-countdown" aria-hidden="true">
-        {% if b1_exam_prep.countdown.available %}<strong>{{ b1_exam_prep.countdown.days_remaining|ui_text }}</strong><span>{% translate "до старта" %}</span>{% else %}<strong>B1</strong><span>{% translate "экзамен" %}</span>{% endif %}
-      </div>
-      <div>
-        <p class="eyebrow">{% translate "Подготовка к государственному B1" %}</p>
-        <h2 id="exam-home-title">{{ b1_exam_prep.countdown.label|ui_text }}</h2>
-        <p class="muted">{% translate "Сегодня —" %} {{ b1_exam_prep.daily_minutes|ui_text }} {% translate "минут по трём экзаменационным навыкам." %}{% if b1_exam_prep.focus %} {% translate "Фокус:" %} {{ b1_exam_prep.focus.title|ui_text }} {% translate "— последние тренировки" %} {{ b1_exam_prep.focus.percent|ui_text }}%.{% endif %}</p>
-      </div>
-      <a class="compact-button" href="{% url 'b1-exam-prep' %}">{% translate "Открыть план" %}</a>
-    </aside>
-  {% endif %}
-
   {% if resume_lesson %}
     <aside class="card resume-card" aria-labelledby="resume-title">
       <span class="resume-card-icon" aria-hidden="true">{{ resume_lesson.emoji|ui_text }}</span>
@@ -72,4 +58,18 @@
       </div>
     </section>
   </div>
+  {% if b1_exam_prep %}
+    <aside class="card exam-home-card" aria-labelledby="exam-home-title">
+      <div class="exam-home-countdown" aria-hidden="true">
+        {% if b1_exam_prep.countdown.available %}<strong>{{ b1_exam_prep.countdown.days_remaining|ui_text }}</strong><span>{% translate "до старта" %}</span>{% else %}<strong>B1</strong><span>{% translate "экзамен" %}</span>{% endif %}
+      </div>
+      <div>
+        <p class="eyebrow">{% translate "Подготовка к государственному B1" %}</p>
+        <h2 id="exam-home-title">{{ b1_exam_prep.countdown.label|ui_text }}</h2>
+        <p class="muted">{% translate "Сегодня —" %} {{ b1_exam_prep.daily_minutes|ui_text }} {% translate "минут по трём экзаменационным навыкам." %}{% if b1_exam_prep.focus %} {% translate "Фокус:" %} {{ b1_exam_prep.focus.title|ui_text }} {% translate "— последние тренировки" %} {{ b1_exam_prep.focus.percent|ui_text }}%.{% endif %}</p>
+      </div>
+      <a class="compact-button" href="{% url 'b1-exam-prep' %}">{% translate "Открыть план" %}</a>
+    </aside>
+  {% endif %}
+
 {% endblock %}

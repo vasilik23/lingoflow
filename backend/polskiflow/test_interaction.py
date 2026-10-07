@@ -64,7 +64,7 @@ class InteractionScenarioTests(TestCase):
         self.assertContains(response, "Аудио не загружается на сервер")
         self.assertContains(response, "data-speaking-card data-preparation", count=2)
         self.assertContains(response, "navigator.mediaDevices.getUserMedia")
-        self.assertContains(response, "new MediaRecorder(stream)")
+        self.assertContains(response, "MediaRecorder.isTypeSupported(type)")
         self.assertContains(response, "История устных ответов")
         self.assertContains(response, 'data-save-recording hidden', count=2)
         self.assertContains(response, 'indexedDB.open("polskiflow-speaking", 1)')

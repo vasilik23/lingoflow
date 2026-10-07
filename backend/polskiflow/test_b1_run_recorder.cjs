@@ -11,7 +11,7 @@ class Element {
   pause() {} load() {} focus() {}
   removeAttribute(name) { delete this[name]; }
 }
-function fixture({denied = false, delayed = false, broken = false, preparing = false} = {}) {
+function fixture({denied = false, delayed = false, broken = false, preparing = false, mp4Only = false} = {}) {
   const nodes = Object.fromEntries(['start', 'stop', 'delete', 'audio', 'status', 'finish', 'restart', 'form', 'root', 'window', 'panel'].map(name => [name, new Element()]));
   if (preparing) nodes.root.dataset.preparingSpeaking = '1';
   nodes.panel.querySelector = selector => nodes[selector === 'audio' ? 'audio' : selector.match(/record-(.*?)\]/)[1]];
@@ -20,7 +20,8 @@ function fixture({denied = false, delayed = false, broken = false, preparing = f
   const stream = {getTracks: () => [track]};
   let calls = 0, resolvePermission, recording, revoked = [];
   class Recorder extends Element {
-    constructor() { super(); this.state = 'inactive'; this.mimeType = 'audio/webm'; recording = this; }
+    static isTypeSupported(type) { return mp4Only ? type === 'audio/mp4' : type === 'audio/webm;codecs=opus'; }
+    constructor(stream, options) { super(); if(mp4Only) assert.equal(options.mimeType, 'audio/mp4'); this.state = 'inactive'; this.mimeType = mp4Only ? 'audio/mp4' : 'audio/webm'; recording = this; }
     start() { if (broken) throw new Error('start failed'); this.state = 'recording'; }
     stop() { this.state = 'inactive'; }
     complete() { this.emit('dataavailable', {data: new Blob(['audio'])}); this.emit('stop'); }
@@ -34,6 +35,10 @@ function fixture({denied = false, delayed = false, broken = false, preparing = f
   return {nodes, track, calls: () => calls, recorder: () => recording, resolve: () => resolvePermission(stream), revoked};
 }
 (async () => {
+  const safari = fixture({mp4Only: true});
+  await safari.nodes.start.emit('click'); safari.nodes.stop.emit('click'); safari.recorder().complete();
+  assert.equal(safari.recorder().mimeType, 'audio/mp4');
+  assert.equal(safari.nodes.audio.hidden, false);
   const f = fixture(); assert.equal(f.calls(), 0, 'no automatic permission request');
   await f.nodes.start.emit('click'); assert.equal(f.track.readyState, 'live'); assert.equal(f.nodes.finish.disabled, true);
   f.nodes.stop.emit('click'); assert.equal(f.track.readyState, 'ended');
