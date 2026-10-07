@@ -1,4 +1,4 @@
-# Миграция PolskiFlow на Python
+# Миграция LingoFlow на Python
 
 Этот документ фиксирует поведение текущего MVP и служит контрактом для
 поэтапного переноса приложения. Новая версия не считается совместимой, пока
@@ -10,7 +10,7 @@
 | Сервис | Ресурс | Роль |
 | --- | --- | --- |
 | GitHub | `vasilik23/polish-learn`, ветка `main` | исходный код и запуск деплоя |
-| Vercel | проект `polskiflow-python` | Django production и preview-деплои |
+| Vercel | проект `lingoflow-learn` | Django production и preview-деплои |
 | Supabase | проект `vasilik23's Project`, `eu-west-1` | Auth и PostgreSQL |
 
 Секреты не хранятся в репозитории. Локально Django использует

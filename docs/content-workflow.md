@@ -20,8 +20,8 @@ Manifest версии 1 содержит стабильный `id`, уровен
   "status": "draft",
   "source": {
     "origin": "original",
-    "created_for": "PolskiFlow",
-    "license": "PolskiFlow original content",
+    "created_for": "LingoFlow",
+    "license": "LingoFlow original content",
     "verified_at": "2026-09-01"
   },
   "content": {

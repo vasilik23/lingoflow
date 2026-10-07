@@ -25,6 +25,7 @@ from polskiflow.auth import (
     update_password,
 )
 from polskiflow.b1_mock_store import load_b1_mock_attempts
+from polskiflow.canonical_host import email_callback_url
 from polskiflow.practice_preferences import excluded_practice_topics, set_practice_topics
 from polskiflow.domain.practice_recommendations import practice_recommendation
 from polskiflow.content import course_topics, tasks
@@ -400,7 +401,7 @@ def register_view(request: HttpRequest) -> HttpResponse:
             return _auth_rate_limit_response(request, context, "auth/form.html", rate[1])
         else:
             try:
-                welcome_login = request.build_absolute_uri(
+                welcome_login = email_callback_url(request,
                     f"{reverse('login')}?{urlencode({'next': reverse('onboarding')})}"
                 )
                 session = sign_up(
@@ -432,7 +433,7 @@ def forgot_password(request: HttpRequest) -> HttpResponse:
             return _auth_rate_limit_response(request, context, "auth/recovery.html", rate[1])
         else:
             try:
-                request_password_reset(email, request.build_absolute_uri(reverse("reset-password")))
+                request_password_reset(email, email_callback_url(request, reverse("reset-password")))
             except SupabaseAuthError:
                 pass
             context["message"] = "Если аккаунт существует, ссылка для сброса уже отправлена."
@@ -478,7 +479,7 @@ def resend_confirmation(request: HttpRequest) -> HttpResponse:
             return _auth_rate_limit_response(request, context, "auth/recovery.html", rate[1])
         else:
             try:
-                welcome_login = request.build_absolute_uri(
+                welcome_login = email_callback_url(request,
                     f"{reverse('login')}?{urlencode({'next': reverse('onboarding')})}"
                 )
                 resend_signup_confirmation(email, welcome_login)

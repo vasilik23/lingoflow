@@ -10,6 +10,13 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "unsafe-local-development-key")
 DEBUG = os.environ.get("DJANGO_DEBUG", "true").lower() == "true"
 ALLOWED_HOSTS = [host for host in os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1,.vercel.app").split(",") if host]
 
+PUBLIC_APP_ORIGIN = os.environ.get("PUBLIC_APP_ORIGIN", "https://lingoflow-learn.vercel.app").rstrip("/")
+LEGACY_APP_HOSTS = frozenset(os.environ.get(
+    "LEGACY_APP_HOSTS",
+    "polish-learn.vercel.app,polskiflow-python.vercel.app,polskiflow-python-vasili-s-projects1.vercel.app,polskiflow-python-git-main-vasili-s-projects1.vercel.app",
+).split(","))
+AUTH_EMAIL_CALLBACK_ORIGIN = os.environ.get("AUTH_EMAIL_CALLBACK_ORIGIN", "https://polish-learn.vercel.app").rstrip("/")
+
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -21,6 +28,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "polskiflow.canonical_host.CanonicalHostMiddleware",
     "polskiflow.auth_cache.AuthFormCacheMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "polskiflow.request_id.RequestIdMiddleware",

@@ -1,7 +1,7 @@
 # Performance baseline
 
 Дата первого замера: 31 августа 2026. Production:
-`https://polish-learn.vercel.app`.
+`https://lingoflow-learn.vercel.app`.
 
 ## Цели
 
@@ -54,7 +54,7 @@ Chrome за CPU искусственно увеличивает TBT. Кажды�
 ## Воспроизводимый запуск
 
 ```bash
-npx --yes lighthouse https://polish-learn.vercel.app/login/ \
+npx --yes lighthouse https://lingoflow-learn.vercel.app/login/ \
   --only-categories=performance \
   --form-factor=mobile \
   --screenEmulation.mobile=true \

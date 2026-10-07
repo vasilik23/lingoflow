@@ -143,8 +143,8 @@ def validate_manifest(manifest: dict[str, Any]) -> ValidationResult:
     if not _valid_iso_date(verified_at):
         raise ManifestError("source.verified_at: ожидается дата YYYY-MM-DD.")
     if origin == "original":
-        if _require_text(source, "created_for", "source") != "PolskiFlow":
-            raise ManifestError("source.created_for: оригинал должен быть создан для PolskiFlow.")
+        if _require_text(source, "created_for", "source") not in {"LingoFlow", "PolskiFlow"}:
+            raise ManifestError("source.created_for: оригинал должен быть создан для LingoFlow.")
     else:
         for key in (
             "source_url",

@@ -1,6 +1,6 @@
 # Production operations baseline
 
-PolskiFlow provides two unauthenticated, privacy-safe probes:
+LingoFlow provides two unauthenticated, privacy-safe probes:
 
 - `GET /health/` is a liveness check. It only confirms that Django can respond and
   never calls the database or Supabase Auth.
@@ -21,8 +21,8 @@ exception class. `REQUEST_SLOW_THRESHOLD_MS` defaults to 1500 ms.
 Minimal production checks:
 
 ```shell
-curl --fail --max-time 10 https://polish-learn.vercel.app/health/
-curl --fail --max-time 10 https://polish-learn.vercel.app/ready/
+curl --fail --max-time 10 https://lingoflow-learn.vercel.app/health/
+curl --fail --max-time 10 https://lingoflow-learn.vercel.app/ready/
 ```
 
 Use the returned `X-Request-ID` to correlate a failed client request with Vercel
@@ -41,7 +41,7 @@ Use a short-lived token belonging to a dedicated non-privileged smoke account:
 ```shell
 export POLSKIFLOW_SMOKE_ACCESS_TOKEN='short-lived-token'
 backend/.venv/bin/python backend/manage.py production_smoke \
-  https://polskiflow-python.vercel.app
+  https://lingoflow-learn.vercel.app
 ```
 
 The token is accepted only through an environment variable, not a CLI argument.
@@ -58,7 +58,7 @@ set -a
 . backend/.env.smoke.local
 set +a
 backend/.venv/bin/python backend/manage.py production_smoke \
-  https://polish-learn.vercel.app
+  https://lingoflow-learn.vercel.app
 unset POLSKIFLOW_SMOKE_ACCESS_TOKEN
 ```
 

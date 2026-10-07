@@ -140,9 +140,9 @@ statements. Для локальных migrations удобнее Direct или Se
 ## CI и Vercel
 
 GitHub Actions запускает тесты, system check и проверку миграций при каждом PR,
-затрагивающем `backend/`. Vercel-проект `polskiflow-python` использует Root
+затрагивающем `backend/`. Vercel-проект `lingoflow-learn` использует Root
 Directory `backend`; платформа автоматически определяет Django по `manage.py`,
-а основной production-адрес — `https://polish-learn.vercel.app`.
+а основной production-адрес — `https://lingoflow-learn.vercel.app`.
 
 Обязательные переменные для Preview и Production перечислены в `.env.example`.
 Секреты (`DJANGO_SECRET_KEY`, `DATABASE_URL`) задаются только в Vercel Dashboard. Привилегированное удаление аккаунта выполняет JWT-защищённая Supabase Edge Function; service-role credential не хранится в Vercel и не передаётся в HTML или клиентский JavaScript.

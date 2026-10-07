@@ -1,19 +1,24 @@
 {
   "expo": {
-    "name": "PolskiFlow",
-    "slug": "polskiflow",
+    "name": "LingoFlow",
+    "slug": "lingoflow",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "scheme": "polskiflow",
+    "scheme": [
+      "lingoflow",
+      "polskiflow"
+    ],
     "userInterfaceStyle": "automatic",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.polskiflow.mobile",
-      "config": { "usesNonExemptEncryption": false }
+      "bundleIdentifier": "com.lingoflow.mobile",
+      "config": {
+        "usesNonExemptEncryption": false
+      }
     },
     "android": {
-      "package": "com.polskiflow.mobile",
+      "package": "com.lingoflow.mobile",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/android-icon-foreground.png",

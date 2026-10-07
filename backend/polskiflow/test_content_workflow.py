@@ -99,6 +99,13 @@ def sample_manifest(*, status="draft", origin="original"):
 
 
 class ContentWorkflowDomainTests(SimpleTestCase):
+    def test_new_brand_and_legacy_original_manifests_remain_supported(self):
+        for brand in ("LingoFlow", "PolskiFlow"):
+            manifest = sample_manifest()
+            manifest["source"]["created_for"] = brand
+            validate_manifest(manifest)
+
+
     def test_draft_preview_is_validated_but_not_publishable(self):
         result = validate_manifest(sample_manifest())
         preview = build_preview(result)

@@ -1,9 +1,9 @@
 ---
 name: polskiflow-testing
-description: Verify PolskiFlow changes locally, in Supabase, and on Vercel. Use for Django tests, system and migration checks, regression coverage, browser testing, accessibility smoke checks, database assertions, RLS review, production smoke tests, and deployment log scans.
+description: Verify LingoFlow changes locally, in Supabase, and on Vercel. Use for Django tests, system and migration checks, regression coverage, browser testing, accessibility smoke checks, database assertions, RLS review, production smoke tests, and deployment log scans.
 ---
 
-# PolskiFlow testing
+# LingoFlow testing
 
 Run checks proportional to risk, with this full release baseline:
 

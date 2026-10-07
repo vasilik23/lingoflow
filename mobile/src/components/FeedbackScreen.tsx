@@ -24,7 +24,7 @@ export function FeedbackScreen({ session, colors, onClose }: { session: Session;
     finally { setBusy(false); }
   }
 
-  if (sent) return <View style={styles.center}><Text style={styles.emoji}>💚</Text><Text style={[styles.title, { color: colors.text }]}>Спасибо!</Text><Text style={[styles.copy, { color: colors.muted }]}>Сообщение сохранено. Мы используем его только для улучшения PolskiFlow.</Text><Button title="Вернуться в Сегодня" colors={colors} onPress={onClose} /></View>;
+  if (sent) return <View style={styles.center}><Text style={styles.emoji}>💚</Text><Text style={[styles.title, { color: colors.text }]}>Спасибо!</Text><Text style={[styles.copy, { color: colors.muted }]}>Сообщение сохранено. Мы используем его только для улучшения LingoFlow.</Text><Button title="Вернуться в Сегодня" colors={colors} onPress={onClose} /></View>;
 
   return <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{ flex: 1 }}><ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={styles.page}>
     <Pressable accessibilityRole="button" onPress={onClose}><Text style={[styles.back, { color: colors.primary }]}>‹ Сегодня</Text></Pressable>

@@ -1,4 +1,4 @@
-# PolskiFlow development rules
+# LingoFlow development rules
 
 - The production application is Python/Django in `backend/`.
 - Keep secrets out of Git; use local environment files and Vercel environment variables.

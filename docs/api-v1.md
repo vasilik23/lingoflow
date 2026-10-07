@@ -1,4 +1,4 @@
-# PolskiFlow API v1
+# LingoFlow API v1
 
 Машиночитаемый OpenAPI 3.1 контракт доступен по
 `GET /api/v1/openapi.json`. Он детерминирован, публично кэшируется и описывает

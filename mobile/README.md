@@ -1,4 +1,4 @@
-# PolskiFlow Mobile
+# LingoFlow Mobile
 
 Первый Expo/React Native vertical slice для iOS и Android: Supabase email/password auth, защищённое хранение сессии и owner-scoped `GET /api/v1/me/bootstrap/` с экраном «Сегодня».
 
