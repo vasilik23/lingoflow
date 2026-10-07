@@ -99,3 +99,24 @@ def score_training_part(variant, part_id, answers, content_version=CONTENT_VERSI
         return dict(correct=correct, total=len(questions), percent=round(correct / len(questions) * 100), details=details)
     extra = _extra_questions(part_id, content_version)
     return score_simulation_part(variant, part_id, answers, extra_questions=extra)
+
+
+TRAINING_MINUTES = {"listening": 8, "reading": 45, "grammar": 45, "writing": 35, "speaking": 11}
+
+
+def training_minutes(content_version, part_id):
+    if part_id == "listening" and content_version >= 10:
+        return 25
+    if part_id == "speaking" and content_version < 5:
+        return 3
+    if part_id == "writing" and content_version < 4:
+        return 15
+    if part_id == "reading" and content_version < 3:
+        return 7
+    if part_id == "reading" and content_version < 8:
+        return 22
+    if part_id == "grammar" and content_version < 2:
+        return 6
+    if part_id == "grammar" and content_version < 6:
+        return 20
+    return TRAINING_MINUTES[part_id]
