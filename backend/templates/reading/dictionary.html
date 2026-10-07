@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load i18n ui %}
-{% block title %}{% translate "Мой словарь · PolskiFlow" %}{% endblock %}
+{% block title %}{% translate "Мой словарь · LingoFlow" %}{% endblock %}
 {% block toolbar_title %}<h1>{% translate "Личный словарь" %}</h1>{% endblock %}
 {% block content %}
   <header class="content-header">
@@ -12,7 +12,9 @@
   </header>
   {% if not available %}<p class="data-notice">{% translate "Словарь временно недоступен. Попробуйте обновить страницу." %}</p>{% endif %}
   {% if available and word_count %}
-    <form class="card catalog-filters dictionary-filters" method="get" action="{% url 'dictionary' %}" role="search">
+    <details class="card filter-panel"{% if filters_active %} open{% endif %}>
+      <summary>{% translate "Фильтры" %}</summary>
+    <form class="catalog-filters dictionary-filters" method="get" action="{% url 'dictionary' %}" role="search">
       <div class="catalog-search-field">
         <label for="dictionary-search">{% translate "Поиск по словарю" %}</label>
         <input id="dictionary-search" type="search" name="q" value="{{ dictionary_query }}" maxlength="80" placeholder="{% translate "Слово, перевод или контекст" %}">
@@ -31,6 +33,7 @@
         {% if filters_active %}<a href="{% url 'dictionary' %}">{% translate "Сбросить" %}</a>{% endif %}
       </div>
     </form>
+    </details>
     <p class="reading-result-summary" aria-live="polite">{% translate "Найдено слов:" %} <strong>{{ result_count|ui_text }}</strong> {% translate "из" %} {{ word_count|ui_text }}</p>
   {% endif %}
   <section class="dictionary-list" aria-live="polite">

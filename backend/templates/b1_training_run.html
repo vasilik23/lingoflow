@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% load static i18n ui %}
-{% block title %}{% translate "Учебный прогон B1 · PolskiFlow" %}{% endblock %}
+{% block title %}{% translate "Учебный прогон B1 · LingoFlow" %}{% endblock %}
 {% block content %}
 <div class="mock-shell" data-b1-run{% if listening_blocks %} data-multi-listening="1"{% endif %}{% if missing_recording %} data-missing-recording="1"{% endif %} data-namespace="{{ run_namespace }}" data-run-id="{{ state.run_id }}" data-phase="{{ state.phase }}" data-seconds="{{ timer_seconds }}" data-preparation-seconds="{{ speaking_preparation_seconds }}"{% if speaking_preparation_seconds %} data-preparing-speaking="1"{% endif %}{% if fresh %} data-fresh="1"{% endif %}{% if discard_draft %} data-discard="1"{% endif %}{% if normalize_navigation %} data-normalize-navigation="1"{% endif %}>
-  <header class="mock-header"><div><p class="eyebrow">B1 · {{ variant.label|ui_text }}</p><h1>{% translate "Учебный прогон пяти частей" %}</h1><p>{% translate "Оригинальные учебные задания PolskiFlow. Это учебный маршрут, не полная симуляция и не оценка государственного экзамена." %}</p></div></header>
+  <header class="mock-header"><div><p class="eyebrow">B1 · {{ variant.label|ui_text }}</p><h1>{% translate "Учебный прогон пяти частей" %}</h1><p>{% translate "Оригинальные учебные задания LingoFlow. Это учебный маршрут, не полная симуляция и не оценка государственного экзамена." %}</p></div></header>
   <p><a href="{% url 'b1-exam-prep' %}">{% translate "← К подготовке B1" %}</a></p>
   {% if error %}<p class="form-message error" role="alert">{{ error|ui_text }}</p>{% endif %}
   <p class="form-message warning" data-run-storage-status role="status" hidden></p>

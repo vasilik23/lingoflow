@@ -126,7 +126,7 @@ class B1ExamSimulationViewTests(TestCase):
         self.assertContains(opened, '<main ', count=1)
         self.assertContains(opened, 'role="timer" aria-live="off"')
         self.assertContains(opened, 'id="simulation-timer-status" role="status"')
-        self.assertContains(opened, "Объём этого оригинального набора PolskiFlow меньше")
+        self.assertContains(opened, "Объём этого оригинального набора LingoFlow меньше")
         questions = opened.context["questions"]
         payload = {"simulation_token": opened.context["simulation_token"]}
         payload.update({f"answer_{question.id}": question.correct for question in questions})

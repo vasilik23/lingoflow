@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% load i18n ui %}
-{% block title %}{% translate "Обратная связь · PolskiFlow" %}{% endblock %}
+{% block title %}{% translate "Обратная связь · LingoFlow" %}{% endblock %}
 {% block content %}
-  <header class="content-header"><div><p class="eyebrow">{% translate "Помоги улучшить PolskiFlow" %}</p><h1>{% translate "Обратная связь" %}</h1><p class="muted">{% translate "Сообщи об ошибке или предложи улучшение. Мы сохраним только текст, категорию и указанный путь страницы." %}</p></div></header>
+  <header class="content-header"><div><p class="eyebrow">{% translate "Помоги улучшить LingoFlow" %}</p><h1>{% translate "Обратная связь" %}</h1><p class="muted">{% translate "Сообщи об ошибке или предложи улучшение. Мы сохраним только текст, категорию и указанный путь страницы." %}</p></div></header>
   <div class="feedback-layout">
     <form class="card profile-form feedback-form" method="post">
       {% csrf_token %}

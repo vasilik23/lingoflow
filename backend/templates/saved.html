@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load i18n ui %}
-{% block title %}{% translate "Сохранённое · PolskiFlow" %}{% endblock %}
+{% block title %}{% translate "Сохранённое · LingoFlow" %}{% endblock %}
 {% block content %}
   <header class="content-header saved-header"><div><p class="eyebrow">{% translate "Личная подборка" %}</p><h1>{% translate "Сохранённое" %}</h1><p class="muted">{% translate "Уроки и тексты, к которым хочется вернуться. Подборка синхронизируется между устройствами." %}</p></div><a class="compact-button" href="{% url 'global-search' %}">{% translate "Найти материалы" %}</a></header>
   {% include "partials/personal_learning_nav.html" %}

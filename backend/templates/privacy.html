@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% load i18n ui %}
-{% block title %}{% translate "Приватность и данные · PolskiFlow" %}{% endblock %}
+{% block title %}{% translate "Приватность и данные · LingoFlow" %}{% endblock %}
 {% block content %}
-  <header class="content-header"><div><p class="eyebrow">{% translate "Прозрачность" %}</p><h1>{% translate "Приватность и данные" %}</h1><p class="muted">{% translate "Какие данные использует PolskiFlow, зачем они нужны и чем ты можешь управлять." %}</p></div></header>
+  <header class="content-header"><div><p class="eyebrow">{% translate "Прозрачность" %}</p><h1>{% translate "Приватность и данные" %}</h1><p class="muted">{% translate "Какие данные использует LingoFlow, зачем они нужны и чем ты можешь управлять." %}</p></div></header>
 
   <section class="card reading-copy" aria-labelledby="privacy-summary">
     <h2 id="privacy-summary">{% translate "Коротко" %}</h2>
@@ -41,7 +41,7 @@
 
   <section class="card reading-copy" aria-labelledby="privacy-services">
     <h2 id="privacy-services">{% translate "Инфраструктура и права" %}</h2>
-    <p>{% translate "Supabase предоставляет аутентификацию и базу данных; Vercel размещает Django-приложение и технические журналы. Новостной раздел показывает ссылки и заголовки внешних источников, но PolskiFlow не проксирует полные статьи." %}</p>
+    <p>{% translate "Supabase предоставляет аутентификацию и базу данных; Vercel размещает Django-приложение и технические журналы. Новостной раздел показывает ссылки и заголовки внешних источников, но LingoFlow не проксирует полные статьи." %}</p>
     <p>{% translate "Права на доступ, исправление, переносимость, ограничение, возражение и удаление зависят от применимых условий GDPR/RODO и не всегда абсолютны. Официальные разъяснения:" %} <a href="https://commission.europa.eu/law/law-topic/data-protection/information-individuals_en" rel="noopener noreferrer">{% translate "Европейская комиссия" %}</a> {% translate "и" %} <a href="https://uodo.gov.pl/pl/493/4098" rel="noopener noreferrer">UODO</a>.</p>
     <p><small>{% translate "Обновлено 1 октября 2026 года. Перед широким публичным запуском владелец сервиса должен опубликовать юридическое имя контролёра, прямой контакт и утверждённые сроки хранения." %}</small></p>
   </section>

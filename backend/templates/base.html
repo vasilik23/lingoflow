@@ -36,7 +36,7 @@
     {% if LANGUAGE_CODE == 'pl' %}<script src="{% static 'polskiflow/i18n-pl.js' %}?shell={{ pwa_shell_version }}"></script>{% endif %}
     {% if LANGUAGE_CODE == 'en' %}<script src="{% static 'polskiflow/i18n-en.js' %}?shell={{ pwa_shell_version }}"></script>{% endif %}
     <script src="{% static 'polskiflow/i18n.js' %}?shell={{ pwa_shell_version }}"></script>
-    <title>{% block title %}PolskiFlow{% endblock %}</title>
+    <title>{% block title %}LingoFlow{% endblock %}</title>
     <link rel="icon" href="{% static 'polskiflow/favicon.svg' %}?shell={{ pwa_shell_version }}" type="image/svg+xml">
     <link rel="manifest" href="{% url 'web-app-manifest' %}?language={{ LANGUAGE_CODE }}">
     <link rel="stylesheet" href="{% static 'polskiflow/app.css' %}?shell={{ pwa_shell_version }}">
@@ -45,8 +45,8 @@
     <a class="skip-link" href="#main-content">{% translate "К основному содержимому" %}</a>
     {% if request.supabase_user %}
       <nav class="app-nav" aria-label="{% translate "Основная навигация" %}">
-        <a class="brand" href="{% url 'home' %}" aria-label="{% translate "PolskiFlow — на главную" %}">
-          <span class="brand-mark">P</span><span class="brand-name">PolskiFlow</span>
+        <a class="brand" href="{% url 'home' %}" aria-label="{% translate "LingoFlow — на главную" %}">
+          <span class="brand-mark">L</span><span class="brand-name">LingoFlow</span>
         </a>
         <div class="nav-links">
           <a href="{% url 'home' %}" class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
@@ -70,7 +70,7 @@
         </div>
       </nav>
       <header class="app-toolbar">
-        <a class="toolbar-brand" href="{% url 'home' %}" aria-label="{% translate "PolskiFlow — на главную" %}"><span class="brand-mark" aria-hidden="true">P</span>{% block toolbar_title %}<span>PolskiFlow</span>{% endblock %}</a>
+        <a class="toolbar-brand" href="{% url 'home' %}" aria-label="{% translate "LingoFlow — на главную" %}"><span class="brand-mark" aria-hidden="true">L</span>{% block toolbar_title %}<span>LingoFlow</span>{% endblock %}</a>
       <a class="mobile-search-shortcut" href="{% url 'global-search' %}" aria-label="{% translate "Поиск по приложению" %}">
         <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="m15.5 15.5 5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
       </a>

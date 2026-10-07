@@ -20,6 +20,8 @@ class PwaPrototypeTests(SimpleTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response["Content-Type"], "application/manifest+json")
         manifest = json.loads(response.content)
+        self.assertEqual(manifest["name"], "LingoFlow")
+        self.assertEqual(manifest["short_name"], "LingoFlow")
         self.assertEqual(manifest["id"], "/")
         self.assertEqual(manifest["start_url"], "/")
         self.assertEqual(manifest["scope"], "/")

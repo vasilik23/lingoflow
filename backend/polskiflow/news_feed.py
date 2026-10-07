@@ -72,7 +72,7 @@ def latest_official_news(limit: int = 12, category: str | None = None) -> list[d
 
 def _load_feed(feed: dict) -> list[dict]:
     try:
-        request = Request(feed["url"], headers={"User-Agent": "PolskiFlow/1.0 RSS reader"})
+        request = Request(feed["url"], headers={"User-Agent": "LingoFlow/1.0 RSS reader"})
         with urlopen(request, timeout=4, context=HTTPS_CONTEXT) as response:
             body = response.read(MAX_RESPONSE_BYTES + 1)
         if len(body) > MAX_RESPONSE_BYTES:

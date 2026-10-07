@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static i18n ui %}
-{% block title %}{% translate "Аудирование · PolskiFlow" %}{% endblock %}
+{% block title %}{% translate "Аудирование · LingoFlow" %}{% endblock %}
 {% block content %}
   <header class="content-header">
     <div><p class="eyebrow">{% translate "Аудирование · A1–B2" %}</p><h1>{% translate "Пойми слова, диалог и связную речь" %}</h1><p class="muted">{% translate "Выбери уровень: короткий диалог A1–A2 или связная речь B1/B2. Результат не влияет на прогресс." %}</p></div>
@@ -47,7 +47,7 @@
           {% if dialogue_submitted %}<p class="listening-feedback {% if question.is_correct %}is-correct{% else %}is-wrong{% endif %}">{% if question.is_correct %}{% translate "Верно." %}{% else %}{% translate "Правильный ответ:" %} <strong>{{ question.answer|ui_text }}</strong>.{% endif %} {{ question.explanation|ui_text }}</p>{% endif %}
         </fieldset>
       {% endfor %}
-      <p class="muted listening-audio-note">{% translate "Звук создаёт системный польский голос браузера из оригинального текста PolskiFlow; доступность и тембр голоса зависят от устройства." %}</p>
+      <p class="muted listening-audio-note">{% translate "Звук создаёт системный польский голос браузера из оригинального текста LingoFlow; доступность и тембр голоса зависят от устройства." %}</p>
     </section>
     <section class="card listening-dialogue" id="b1-listening" tabindex="-1" aria-labelledby="b1-listening-title">
       <p class="eyebrow">{% translate "Связная речь ·" %} {{ b1_listening.level|ui_text }}</p>
@@ -76,7 +76,7 @@
           {% if b1_submitted %}<p class="listening-feedback {% if question.is_correct %}is-correct{% else %}is-wrong{% endif %}">{% if question.is_correct %}{% translate "Верно." %}{% else %}{% translate "Правильный ответ:" %} <strong>{{ question.answer|ui_text }}</strong>.{% endif %} {{ question.explanation|ui_text }}</p>{% endif %}
         </fieldset>
       {% endfor %}
-      <p class="muted listening-audio-note">{% translate "Звук создаёт системный голос" %} <span lang="pl">pl-PL</span> {% translate "из оригинального текста PolskiFlow. Голос, тембр и доступность зависят от браузера и устройства; это не студийная запись." %}</p>
+      <p class="muted listening-audio-note">{% translate "Звук создаёт системный голос" %} <span lang="pl">pl-PL</span> {% translate "из оригинального текста LingoFlow. Голос, тембр и доступность зависят от браузера и устройства; это не студийная запись." %}</p>
     </section>
     <section class="card listening-dialogue" id="b2-listening" tabindex="-1" aria-labelledby="b2-listening-title">
       <p class="eyebrow">{% translate "Связная речь ·" %} {{ b2_listening.level|ui_text }}</p>
@@ -105,7 +105,7 @@
           {% if b2_submitted %}<p class="listening-feedback {% if question.is_correct %}is-correct{% else %}is-wrong{% endif %}">{% if question.is_correct %}{% translate "Верно." %}{% else %}{% translate "Правильный ответ:" %} <strong>{{ question.answer|ui_text }}</strong>.{% endif %} {{ question.explanation|ui_text }}</p>{% endif %}
         </fieldset>
       {% endfor %}
-      <p class="muted listening-audio-note">{% translate "Звук создаёт системный голос" %} <span lang="pl">pl-PL</span> {% translate "из оригинального текста PolskiFlow. Это тренировка понимания связной речи, но не студийная запись: голос и тембр зависят от браузера и устройства." %}</p>
+      <p class="muted listening-audio-note">{% translate "Звук создаёт системный голос" %} <span lang="pl">pl-PL</span> {% translate "из оригинального текста LingoFlow. Это тренировка понимания связной речи, но не студийная запись: голос и тембр зависят от браузера и устройства." %}</p>
     </section>
     <h2 id="listening-words" tabindex="-1">{% translate "Отдельные слова · A1" %}</h2>
     {% for item in listening_items %}

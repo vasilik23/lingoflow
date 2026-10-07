@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% load i18n ui %}
-{% block title %}{% if mode == "forgot" %}{% translate "Восстановление пароля" %}{% elif mode == "reset" %}{% translate "Новый пароль" %}{% else %}{% translate "Подтверждение email" %}{% endif %} — PolskiFlow{% endblock %}
+{% block title %}{% if mode == "forgot" %}{% translate "Восстановление пароля" %}{% elif mode == "reset" %}{% translate "Новый пароль" %}{% else %}{% translate "Подтверждение email" %}{% endif %} — LingoFlow{% endblock %}
 {% block body_class %}auth-page{% endblock %}
 {% block content %}
   <div class="auth-layout">
-    <aside class="auth-brand"><span class="brand-mark">P</span><h2>{% translate "Вернём доступ к занятиям." %}</h2><p>{% translate "Безопасная ссылка приходит на email и действует ограниченное время." %}</p></aside>
+    <aside class="auth-brand"><span class="brand-mark">L</span><h2>{% translate "Вернём доступ к занятиям." %}</h2><p>{% translate "Безопасная ссылка приходит на email и действует ограниченное время." %}</p></aside>
     <section class="auth-panel">
-      <a class="brand" href="{% url 'login' %}"><span class="brand-mark">P</span> PolskiFlow</a>
+      <a class="brand" href="{% url 'login' %}"><span class="brand-mark">L</span> LingoFlow</a>
       {% if mode == "forgot" %}
         <p class="eyebrow">{% if LANGUAGE_CODE == 'en' %}Recover your account{% else %}Odzyskiwanie dostępu{% endif %}</p><h1>{% translate "Забыли пароль?" %}</h1><p class="muted">{% translate "Укажите email аккаунта. Мы не сообщаем, зарегистрирован ли такой адрес." %}</p>
       {% elif mode == "reset" %}

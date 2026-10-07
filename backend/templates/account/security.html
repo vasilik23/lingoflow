@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load i18n ui %}
-{% block title %}{% translate "Безопасность аккаунта · PolskiFlow" %}{% endblock %}
+{% block title %}{% translate "Безопасность аккаунта · LingoFlow" %}{% endblock %}
 {% block content %}
   <header class="content-header">
     <div><p class="eyebrow">{% translate "Аккаунт" %}</p><h1>{% translate "Безопасность" %}</h1><p class="muted">{% translate "Измени пароль и затем войди снова на этом устройстве." %}</p></div>
@@ -13,6 +13,6 @@
     <label><span>{% translate "Новый пароль" %}</span><input type="password" name="password" minlength="10" autocomplete="new-password" aria-describedby="password-help" required><small id="password-help">{% translate "Не менее 10 символов, строчная и заглавная буквы и цифра." %}</small></label>
     <label><span>{% translate "Повторите новый пароль" %}</span><input type="password" name="password_confirmation" minlength="10" autocomplete="new-password" required></label>
     <button type="submit">{% translate "Изменить пароль" %}</button>
-    <p class="muted">{% translate "После изменения локальная сессия завершится. Пароль не сохраняется в PolskiFlow." %}</p>
+    <p class="muted">{% translate "После изменения локальная сессия завершится. Пароль не сохраняется в LingoFlow." %}</p>
   </form>
 {% endblock %}
