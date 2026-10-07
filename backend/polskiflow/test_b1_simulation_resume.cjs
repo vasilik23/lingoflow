@@ -16,11 +16,12 @@ function page({part = 'reading', restart = false, duration = 60, result} = {}) {
   const clearButton = {addEventListener: (name, fn) => {listeners.clear = fn;}};
   const status = {};
   const announcements = [];
+  const expiredEvents = [];
   const timerStatus = {set textContent(value) {announcements.push(value);}};
   const writing = {value: '', focus() {}, addEventListener: (name, fn) => { listeners[name] = fn; }};
   const timer = {parentElement: {classList: {add() {}}}};
   const complete = {addEventListener: (name, fn) => { listeners.complete = fn; }};
-  const root = {dataset: {storageNamespace: 'owner', variantId: 'v1', partId: part, timingMode: part === 'writing' ? 'full' : 'short', durationSeconds: String(duration), ...(result === undefined ? {} : {resultPercent: String(result)})}};
+  const root = {dispatchEvent: event => expiredEvents.push(event.type), dataset: {storageNamespace: 'owner', variantId: 'v1', partId: part, timingMode: part === 'writing' ? 'full' : 'short', durationSeconds: String(duration), ...(result === undefined ? {} : {resultPercent: String(result)})}};
   const callbacks = [];
   vm.runInNewContext(source, {
     document: {
@@ -29,10 +30,10 @@ function page({part = 'reading', restart = false, duration = 60, result} = {}) {
       getElementById: id => ({'simulation-form': form, 'simulation-writing': part === 'writing' ? writing : null, 'simulation-timer': timer, 'simulation-clear-writing': clearButton, 'simulation-draft-status': status, 'simulation-timer-status': timerStatus}[id] || null),
     },
     localStorage: storage(local), sessionStorage: {...storage(session), setItem: (key, value) => {if (failStorage) throw Error("quota"); session.set(key, value);}},
-    Date: {now: () => now}, URL, URLSearchParams,
+    Date: {now: () => now}, Event, URL, URLSearchParams,
     window: {addEventListener: (name, fn) => {listeners[name] = fn;}, location: {search: restart ? '?restart=1' : '', href: 'https://example.test/?restart=1', assign() {}}, history: {replaceState() {}}, setTimeout: fn => callbacks.push(fn)},
   });
-  return {announcements, status, answers, token, writing, timer, listeners, callbacks};
+  return {expiredEvents, announcements, status, answers, token, writing, timer, listeners, callbacks};
 }
 let first = page();
 first.answers[1].checked = true;
@@ -85,5 +86,6 @@ assert.equal(checkpoints.announcements.at(-1), 'Осталась одна мин
 now += 60000; checkpoints.callbacks[4]();
 assert.equal(checkpoints.announcements.at(-1), 'Время истекло.');
 assert.equal(checkpoints.announcements.length, 4);
+assert.deepEqual(checkpoints.expiredEvents, ['b1-run-expired'], 'timer must stop the shared listening controller');
 assert.ok(!fs.readFileSync(path.join(__dirname, '../templates/b1_exam_simulation.html'), 'utf8').includes('<main'));
 console.log('Timer announces checkpoints only');

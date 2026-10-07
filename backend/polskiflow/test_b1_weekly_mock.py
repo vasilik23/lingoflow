@@ -60,6 +60,17 @@ class B1WeeklyMockDomainTests(SimpleTestCase):
 
 
 class B1WeeklyMockViewTests(TestCase):
+    def test_listening_uses_shared_controls_and_attempt_identity(self):
+        response = self.client.get("/exam/b1/mock/")
+        self.assertContains(response, 'data-b1-listening')
+        self.assertContains(response, 'data-listening-form="mock-form"')
+        self.assertContains(response, 'data-listening-transcript="mock-listening-transcript"')
+        self.assertContains(response, 'data-run-audio-stop disabled')
+        self.assertContains(response, 'root.dataset.runId = draft.token')
+        self.assertContains(response, 'b1-run-listening.js')
+        self.assertContains(response, 'два прослушивания и пауза 30 секунд')
+        self.assertNotContains(response, 'id="mock-play"')
+
     def setUp(self):
         self.client.cookies[ACCESS_COOKIE] = "access"
         auth = patch(

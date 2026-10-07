@@ -1,0 +1,8 @@
+{% load i18n %}
+<div class="speaking-controls">
+  <button type="button" class="compact-button" data-run-play{% if error %} disabled{% endif %}>{% translate "Прослушать · осталось 2 из 2" %}</button>
+  <button type="button" class="compact-button secondary" data-run-audio-stop disabled>{% translate "Остановить прослушивание" %}</button>
+</div>
+<p class="muted">{% translate "Системный польский голос устройства, не проверенная запись диктора." %}</p>
+<p class="muted">{% translate "Учебное правило: два прослушивания и пауза 30 секунд между ними; начатое прослушивание считается использованным даже при остановке. Счётчик хранится в текущей вкладке. Это не защита от обхода и не официальный экзаменационный режим." %}</p>
+<p class="muted" data-run-audio-status role="status">{% translate "Прочитай вопросы перед прослушиванием." %}</p>

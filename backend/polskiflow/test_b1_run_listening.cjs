@@ -9,9 +9,15 @@ class Element {
   addEventListener(event, callback) { (this.events[event] ||= []).push(callback); }
   emit(event) { let result; for (const callback of this.events[event] || []) result = callback(); return result; }
 }
-function page(storage = new Map(), {runId = 'run-one', failStorage = false, unavailable = false, recorded = false} = {}) {
+function page(storage = new Map(), {runId = 'run-one', failStorage = false, unavailable = false, recorded = false, screen = null, expired = false} = {}) {
   const root = new Element(), play = new Element(), stop = new Element(), status = new Element(), form = new Element(), window = new Element();
   root.dataset.runId = runId;
+  if (screen) {
+    root.dataset.listeningForm = `${screen}-form`;
+    root.dataset.listeningTranscript = `${screen}-listening-transcript`;
+    root.dataset.namespace = `${screen}:owner`;
+  }
+  if (expired) root.dataset.expired = '1';
   const audio = recorded ? new Element() : null;
   if (audio) Object.assign(audio, {plays: 0, pauses: 0, currentTime: 0, play() { this.plays++; }, pause() { this.pauses++; }});
   root.querySelector = selector => selector === 'audio[data-run-audio]' ? audio : selector.includes('audio-stop') ? stop : selector.includes('audio-status') ? status : play;
@@ -20,7 +26,11 @@ function page(storage = new Map(), {runId = 'run-one', failStorage = false, unav
   const synthesis = {speak: utterance => spoken.push(utterance), cancel: () => {cancels++;}};
   if (!unavailable) Object.assign(window, {speechSynthesis: synthesis, SpeechSynthesisUtterance: function(text) {this.text = text;}});
   vm.runInNewContext(source, {
-    document: {querySelector: () => root, getElementById: id => id === 'b1-run-form' ? form : {textContent: '"Polski komunikat"'}},
+    document: {querySelector: () => root, getElementById: id => {
+      if (id === (screen ? `${screen}-form` : 'b1-run-form')) return form;
+      assert.equal(id, screen ? `${screen}-listening-transcript` : 'run-listening-transcript');
+      return {textContent: '"Polski komunikat"'};
+    }},
     window, speechSynthesis: synthesis, SpeechSynthesisUtterance: window.SpeechSynthesisUtterance,
     Date: {now: () => now},
     sessionStorage: {getItem: key => storage.get(key), setItem: (key, value) => {if (failStorage) throw Error('quota'); storage.set(key, value);}},
@@ -29,6 +39,20 @@ function page(storage = new Map(), {runId = 'run-one', failStorage = false, unav
   return {root, play, stop, status, form, window, audio, spoken, tasks, cancels: () => cancels, state: () => JSON.parse([...storage.values()][0])};
 }
 const storage = new Map();
+for (const screen of ['mock', 'simulation']) {
+  const store = new Map();
+  let player = page(store, {screen});
+  player.play.emit('click'); player.spoken[0].onstart(); player.spoken[0].onend();
+  player = page(store, {screen});
+  assert.equal(player.play.disabled, true, `${screen} reload retains cooldown`);
+  now += 30000;
+  player.play.emit('click'); player.spoken[0].onstart(); player.form.emit('submit');
+  assert.equal(player.play.disabled, true); assert.equal(player.cancels(), 1);
+  player = page(store, {screen, runId: 'restart'});
+  assert.equal(player.state().used, 0, `${screen} restart resets the counter`);
+  player = page(store, {screen, expired: true}); player.play.emit('click');
+  assert.equal(player.spoken.length, 0, `${screen} expired page cannot start speech`);
+}
 let f = page(storage);
 assert.equal(f.spoken.length, 0, 'no autoplay');
 f.play.emit('click'); f.play.emit('click'); assert.equal(f.spoken.length, 1, 'ignore duplicate starts');

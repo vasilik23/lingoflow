@@ -1,7 +1,7 @@
 (() => {
   const ui = (typeof window !== "undefined" && window.PolskiFlowI18n?.t) || ((text, ...values) => Array.isArray(text) ? text.map((part, i) => part + (values[i] ?? "")).join("") : text);
 
-  const main = document.querySelector('[data-b1-run]');
+  const main = document.querySelector('[data-b1-run], [data-b1-listening]');
   if (!main) return;
   let stopActive = null;
   const players = main.dataset.multiListening ? Array.from(document.querySelectorAll('[data-run-listening-block]')) : [main];
@@ -82,7 +82,7 @@
     }
     busy = true; started = false; update();
     status.textContent = ui('Подготавливаем системный польский голос…');
-    utterance = new SpeechSynthesisUtterance(JSON.parse(document.getElementById('run-listening-transcript').textContent));
+    utterance = new SpeechSynthesisUtterance(JSON.parse(document.getElementById(main.dataset.listeningTranscript || 'run-listening-transcript').textContent));
     const current = utterance;
     current.lang = 'pl-PL'; current.rate = .9;
     current.onstart = () => {
@@ -99,7 +99,7 @@
   stop.addEventListener('click', () => cancel(ui('Воспроизведение остановлено. Начатое прослушивание учтено; перед повтором — пауза 30 секунд.')));
   main.addEventListener('b1-run-expired', () => { expired = true; cancel(ui('Время части истекло. Можно пропустить её без балла.')); update(); });
   const leave = () => { disposed = true; cancel(''); update(); };
-  document.getElementById('b1-run-form').addEventListener('submit', leave);
+  document.getElementById(main.dataset.listeningForm || 'b1-run-form').addEventListener('submit', leave);
   window.addEventListener('pagehide', leave);
   const tick = () => { if (disposed) return; update(); setTimeout(tick, 1000); };
   save(); tick();
