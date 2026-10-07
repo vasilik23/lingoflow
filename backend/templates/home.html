@@ -8,7 +8,6 @@
     <h1>{% if LANGUAGE_CODE == 'en' %}Hi,{% else %}Cześć,{% endif %} {{ dashboard.display_name }}! 👋</h1>
     <div class="hero-meta">
       <span class="pill">{% translate "◆ Уровень" %} {{ dashboard.level|ui_text }}</span>
-      <span class="pill">🔥 {{ dashboard.streak_days|ui_text }} {% translate "дн. подряд" %}</span>
     </div>
   </section>
 

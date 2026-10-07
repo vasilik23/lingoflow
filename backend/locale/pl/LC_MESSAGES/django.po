@@ -6867,3 +6867,9 @@ msgstr "Filtruje nowe warianty B1 i rekomendacje B2. Ustawienie jest zapisywane 
 
 msgid "Фильтры"
 msgstr "Filtry"
+
+msgid "Системные настройки"
+msgstr "Ustawienia systemowe"
+
+msgid "Помощь"
+msgstr "Pomoc"

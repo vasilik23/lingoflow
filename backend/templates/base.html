@@ -80,44 +80,16 @@
           <span class="user-email">{{ request.supabase_user.email|default:"Пользователь" }}</span>
           <a class="user-menu-link" href="{% url 'profile' %}">{% translate "Профиль" %}</a>
           <a class="user-menu-link" href="{% url 'learning-history' %}">{% translate "Прогресс и история" %}</a>
-          <details class="user-menu-group">
-            <summary>{% translate "Учёба и материалы" %} <span aria-hidden="true">⌄</span></summary>
-            <div>
-              <a class="user-menu-link" href="{% url 'learning-space' %}">{% translate "Мои материалы" %}</a>
-              <a class="user-menu-link" href="{% url 'global-search' %}">{% translate "Поиск по приложению" %}</a>
-            </div>
-          </details>
-          <details class="user-menu-group">
-            <summary>{% translate "Настройки и помощь" %} <span aria-hidden="true">⌄</span></summary>
-            <div>
-              <a class="user-menu-link" href="{% url 'account-security' %}">{% translate "Безопасность" %}</a>
-              <a class="user-menu-link" href="{% url 'sources' %}">{% translate "Источники" %}</a>
-              <a class="user-menu-link" href="{% url 'privacy' %}">{% translate "Приватность" %}</a>
-              <a class="user-menu-link" href="{% url 'beta-center' %}">{% translate "Закрытая beta" %}</a>
-              <a class="user-menu-link" href="{% url 'feedback' %}">{% translate "Обратная связь" %}</a>
-              <a class="user-menu-link user-menu-link-danger" href="{% url 'account-delete' %}">{% translate "Удалить аккаунт" %}</a>
-            </div>
-          </details>
-          <label class="theme-control">
-            <span>{% translate "Цветовая тема" %}</span>
-            <select data-theme-select aria-label="{% translate "Цветовая тема" %}">
-              <option value="system">{% translate "Как в системе" %}</option>
-              <option value="light">{% translate "Светлая" %}</option>
-              <option value="dark">{% translate "Тёмная" %}</option>
-            </select>
-          </label>
+          <a class="user-menu-link" href="{% url 'learning-space' %}">{% translate "Мои материалы" %}</a>
+          <a class="user-menu-link" href="{% url 'system-settings' %}">{% translate "Системные настройки" %}</a>
+          <a class="user-menu-link" href="{% url 'account-security' %}">{% translate "Безопасность" %}</a>
+          <a class="user-menu-link" href="{% url 'help-center' %}?from={{ request.path|urlencode }}">{% translate "Помощь" %}</a>
           <form method="post" action="{% url 'logout' %}">
             {% csrf_token %}<button class="user-menu-action" type="submit">{% translate "Выйти" %}</button>
           </form>
         </div>
       </details>
       </header>
-      {% if request.resolver_match.url_name != 'feedback' %}
-        <a class="feedback-launcher" href="{% url 'feedback' %}?from={{ request.path|urlencode }}" aria-label="{% translate "Сообщить об ошибке на этой странице" %}">
-          <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><path d="M5 5.75A2.75 2.75 0 0 1 7.75 3h8.5A2.75 2.75 0 0 1 19 5.75v6.5A2.75 2.75 0 0 1 16.25 15H11l-4.6 3.45A.88.88 0 0 1 5 17.75V15.5a2.75 2.75 0 0 1-2-2.64V5.75A2.75 2.75 0 0 1 5.75 3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 8.5h8M8 11.5h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <span class="feedback-launcher-label">{% translate "Сообщить об ошибке" %}</span>
-        </a>
-      {% endif %}
     {% else %}
       <label class="theme-control theme-control-guest">
         <span class="visually-hidden">{% translate "Цветовая тема" %}</span>

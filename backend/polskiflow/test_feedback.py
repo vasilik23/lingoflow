@@ -13,15 +13,15 @@ class FeedbackTests(TestCase):
         response = self.client.get("/feedback/?from=/lesson/words/")
         self.assertContains(response, "Обратная связь")
         self.assertContains(response, 'value="/lesson/words/"')
-        self.assertContains(self.client.get("/"), 'href="/feedback/"')
+        self.assertContains(self.client.get("/help/?from=/"), 'href="/feedback/?from=/"')
 
     @patch("polskiflow.feedback_views.load_feedback", return_value=[])
     def test_authenticated_pages_offer_contextual_feedback_link(self, _load):
         response = self.client.get("/course/?level=B1")
 
-        self.assertContains(response, 'href="/feedback/?from=/course/"')
-        self.assertContains(response, 'aria-label="Сообщить об ошибке на этой странице"')
-        self.assertContains(response, 'class="feedback-launcher-label">Сообщить об ошибке</span>')
+        self.assertContains(response, 'href="/help/?from=/course/"')
+        self.assertNotContains(response, 'class="feedback-launcher')
+        self.assertContains(self.client.get("/help/?from=/course/"), 'href="/feedback/?from=/course/"')
 
     @patch(
         "polskiflow.feedback_views.load_feedback",

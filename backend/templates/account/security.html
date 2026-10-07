@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% load i18n ui %}
 {% block title %}{% translate "Безопасность аккаунта · LingoFlow" %}{% endblock %}
+{% block toolbar_title %}<h1>{% translate "Безопасность" %}</h1>{% endblock %}
 {% block content %}
   <header class="content-header">
-    <div><p class="eyebrow">{% translate "Аккаунт" %}</p><h1>{% translate "Безопасность" %}</h1><p class="muted">{% translate "Измени пароль и затем войди снова на этом устройстве." %}</p></div>
+    <div><p class="eyebrow">{% translate "Аккаунт" %}</p><p class="muted">{% translate "Измени пароль и затем войди снова на этом устройстве." %}</p></div>
     <a class="compact-button secondary-link" href="{% url 'profile' %}">{% translate "К профилю" %}</a>
   </header>
   <form class="card account-security-form" method="post" autocomplete="off">
@@ -15,4 +16,18 @@
     <button type="submit">{% translate "Изменить пароль" %}</button>
     <p class="muted">{% translate "После изменения локальная сессия завершится. Пароль не сохраняется в LingoFlow." %}</p>
   </form>
+  <section class="profile-settings" aria-labelledby="data-export-title">
+    <div class="section-heading"><div><p class="eyebrow">{% translate "Твои данные" %}</p><h2 id="data-export-title">{% translate "Экспорт" %}</h2></div></div>
+    <div class="card profile-form">
+      <p>{% translate "Скачай JSON-копию профиля, результатов, черновиков уроков, словаря, закладок, обратной связи и настроек напоминаний." %}</p>
+      <p class="muted">{% translate "Файл не кэшируется и не содержит паролей или токенов." %}</p>
+      <a class="compact-button" href="{% url 'profile-data-export' %}" download>{% translate "Скачать мои данные" %}</a>
+    </div>
+  </section>
+  <section class="card danger-zone" aria-labelledby="account-delete-title">
+    <h2 id="account-delete-title">{% translate "Удалить аккаунт" %}</h2>
+    <p class="muted">{% translate "Это необратимое действие." %}</p>
+    <a class="compact-button secondary-link" href="{% url 'account-delete' %}">{% translate "Удалить аккаунт" %}</a>
+  </section>
+  <p><a href="{% url 'privacy' %}">{% translate "Приватность" %}</a></p>
 {% endblock %}
