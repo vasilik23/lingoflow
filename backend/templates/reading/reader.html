@@ -87,14 +87,25 @@
       const rate = panel.querySelector('[data-audio-rate]');
       const status = panel.querySelector('[data-audio-status]');
       let utterance = null;
+      const cancel = () => {
+        if (utterance) { utterance.onend = null; utterance.onerror = null; }
+        utterance = null;
+        speechSynthesis.cancel();
+      };
       const reset = (message = ui('Готово к воспроизведению')) => { play.textContent = ui('▶ Слушать'); pause.textContent = ui('Ⅱ Пауза'); pause.disabled = true; stop.disabled = true; status.textContent = message; utterance = null; };
       play.addEventListener('click', () => {
         if (speechSynthesis.paused) { speechSynthesis.resume(); pause.textContent = ui('Ⅱ Пауза'); status.textContent = ui('Воспроизведение'); return; }
-        speechSynthesis.cancel(); utterance = new SpeechSynthesisUtterance(text); utterance.lang = 'pl-PL'; utterance.rate = Number(rate.value); utterance.onend = () => reset(ui('Текст прослушан')); utterance.onerror = () => reset(ui('Не удалось запустить системный польский голос')); speechSynthesis.speak(utterance); play.textContent = ui('↻ Сначала'); pause.disabled = false; stop.disabled = false; status.textContent = ui('Воспроизведение');
+        cancel();
+        const current = new SpeechSynthesisUtterance(text);
+        utterance = current; current.lang = 'pl-PL'; current.rate = Number(rate.value);
+        current.onend = () => { if (utterance === current) reset(ui('Текст прослушан')); };
+        current.onerror = () => { if (utterance === current) reset(ui('Не удалось запустить системный польский голос')); };
+        play.textContent = ui('↻ Сначала'); pause.disabled = false; stop.disabled = false; status.textContent = ui('Воспроизведение');
+        speechSynthesis.speak(current);
       });
       pause.addEventListener('click', () => { if (speechSynthesis.paused) { speechSynthesis.resume(); pause.textContent = ui('Ⅱ Пауза'); status.textContent = ui('Воспроизведение'); } else { speechSynthesis.pause(); pause.textContent = ui('▶ Продолжить'); status.textContent = ui('Пауза'); } });
-      stop.addEventListener('click', () => { speechSynthesis.cancel(); reset(ui('Воспроизведение остановлено')); });
-      window.addEventListener('pagehide', () => speechSynthesis.cancel());
+      stop.addEventListener('click', () => { cancel(); reset(ui('Воспроизведение остановлено')); });
+      window.addEventListener('pagehide', () => { cancel(); reset(); });
     })();
     document.querySelectorAll('.reader-word').forEach((button) => button.addEventListener('click', () => {
       document.querySelectorAll('.reader-word.selected').forEach((word) => word.classList.remove('selected'));
@@ -109,7 +120,8 @@
       document.querySelector('#word-input').value = button.dataset.word;
       document.querySelector('#translation-input').value = button.dataset.sourceTranslation;
       document.querySelector('#context-input').value = button.closest('p').textContent.trim();
-      document.querySelector('#dictionary-status').textContent = '';
+      const dictionaryStatus = document.querySelector('#dictionary-status');
+      if (dictionaryStatus) dictionaryStatus.textContent = '';
       if (window.innerWidth < 850) document.querySelector('#word-panel').scrollIntoView({behavior: 'smooth', block: 'nearest'});
     }));
   </script>
