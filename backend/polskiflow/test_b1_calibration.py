@@ -79,3 +79,38 @@ class CalibrationTests(SimpleTestCase):
                 call_command('b1_calibration_report', str(path), minimum_participants=1, stdout=StringIO())
             with self.assertRaisesRegex(CommandError, 'Cannot read the local calibration CSV'):
                 call_command('b1_calibration_report', str(path.parent / 'missing.csv'))
+
+    def test_coverage_exposes_missing_skipped_and_underrepresented_cells(self):
+        rows = [self.row('p001'), self.row('p002'),
+                self.row('p003', version=7, correct=15, total=20),
+                ['p001', 9, 'b1-weekly-v2', 'speaking', 0, 'skipped', '', '']]
+        report = calibration_report(read_observations(self.csv(rows)), 2)
+        old, current = report['coverage']
+        self.assertEqual([old['content_version'], current['content_version']], [7, 9])
+        self.assertEqual(current['expected_groups'], 15)
+        self.assertEqual(current['groups_at_threshold'], 1)
+        self.assertEqual(current['status'], 'incomplete_coverage')
+        cells = {(c['variant_id'], c['part_id']): c for c in current['cells']}
+        self.assertEqual(cells['b1-weekly-v1', 'reading']['additional_participants'], 0)
+        self.assertEqual(cells['b1-weekly-v2', 'speaking']['status'], 'insufficient_observations')
+        self.assertEqual(cells['b1-weekly-v2', 'speaking']['additional_participants'], 2)
+        self.assertEqual(cells['b1-weekly-v3', 'grammar']['status'], 'missing_observations')
+        self.assertEqual(old['groups_at_threshold'], 0)
+        self.assertNotIn('p001', json.dumps(report))
+        self.assertEqual(calibration_report([])['coverage'], [])
+
+    def test_full_coverage_requires_every_cell_and_remains_editorial_review(self):
+        from polskiflow.domain.b1_calibration import PARTS
+        from polskiflow.domain.b1_training_content import training_questions
+        from polskiflow.domain.b1_weekly_mock import VARIANTS
+        rows = []
+        for variant in VARIANTS:
+            for part in PARTS:
+                total = len(training_questions(variant, part, 9)) if part in {'reading', 'grammar', 'listening'} else ''
+                for participant in ('p001', 'p002'):
+                    rows.append([participant, 9, variant.id, part, 60, 'completed', total, total])
+        report = calibration_report(read_observations(self.csv(rows)), 2)
+        coverage = report['coverage'][0]
+        self.assertEqual(coverage['groups_at_threshold'], 15)
+        self.assertEqual(coverage['status'], 'needs_editorial_review')
+        self.assertFalse(report['automatic_limit_changes'])

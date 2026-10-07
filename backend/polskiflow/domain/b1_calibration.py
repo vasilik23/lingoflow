@@ -75,12 +75,30 @@ def calibration_report(observations, minimum_participants=10):
                            completed_duration_p90=durations[math.ceil(.9 * len(durations)) - 1] if durations else None,
                            completed_score_median=round(median(scores), 1) if scores else None,
                            status='needs_editorial_review' if participants >= minimum_participants else 'insufficient_observations'))
+    # Missing cells must remain visible: a populated CSV is not full coverage.
+    by_key = {(g['content_version'], g['variant_id'], g['part_id']): g for g in groups}
+    coverage = []
+    for version in sorted({r['version'] for r in observations}):
+        cells = []
+        for variant in VARIANTS:
+            for part in PARTS:
+                group = by_key.get((version, variant.id, part))
+                participants = group['participants'] if group else 0
+                cells.append(dict(variant_id=variant.id, part_id=part,
+                                  participants=participants,
+                                  additional_participants=max(0, minimum_participants - participants),
+                                  status=group['status'] if group else 'missing_observations'))
+        ready = sum(c['status'] == 'needs_editorial_review' for c in cells)
+        coverage.append(dict(content_version=version, expected_groups=len(cells),
+                             groups_at_threshold=ready, cells=cells,
+                             status='needs_editorial_review' if ready == len(cells) else 'incomplete_coverage'))
     return dict(format='b1-calibration-v1', minimum_participants=minimum_participants,
-                automatic_limit_changes=False, groups=groups,
+                automatic_limit_changes=False, groups=groups, coverage=coverage,
                 limitations=[
                     'Descriptive observations only; thresholds do not establish statistical power or CEFR/exam validity.',
                     'Duration percentiles include completed attempts only and exclude timeouts; inspect both together.',
                     'Skipped parts do not count as attempts. Repeated participant/version/variant/part rows are rejected.',
                     'Input requires consent and pseudonyms. Output omits participant identifiers and individual rows.',
                     'Writing and speaking never receive automatic scores. No scores are inferred for incomplete parts.',
+                    'Coverage includes all variants and parts for observed versions only; reaching the threshold is not validation.',
                 ])
