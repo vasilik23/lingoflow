@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Помощь" %} · LingoFlow{% endblock %}
+{% block toolbar_title %}<h1>{% translate "Помощь" %}</h1>{% endblock %}
+{% block content %}
+  <nav class="settings-links" aria-label="{% translate "Помощь" %}">
+    <a class="card" href="{% url 'feedback' %}?from={{ request.GET.from|default:request.path|urlencode }}">{% translate "Обратная связь" %}</a>
+    <a class="card" href="{% url 'sources' %}">{% translate "Источники" %}</a>
+    <a class="card" href="{% url 'beta-center' %}">{% translate "Закрытая beta" %}</a>
+  </nav>
+{% endblock %}

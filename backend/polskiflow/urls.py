@@ -6,7 +6,7 @@ from django.views.i18n import set_language
 from polskiflow.api_views import catalog_v1, learner_account_v1, learner_achievements_v1, learner_bootstrap_v1, learner_data_export_v1, learner_feedback_v1, learner_history_v1, learner_latest_lesson_draft_v1, learner_lesson_draft_v1, learner_profile_v1, learner_progress_v1, learner_reading_bookmark_v1, learner_reading_bookmarks_v1, learner_reminder_preferences_v1, learner_sm2_review_v1, learner_sm2_v1, learner_today_v1, lesson_results_session_v1, lesson_results_v1, native_diagnostic_evaluate_v1, native_diagnostic_v1, native_dictionary_word_v1, native_interaction_answer_v1, native_interaction_v1, native_lesson_answer_v1, native_lesson_v1, native_listening_answer_v1, native_listening_v1, native_reading_detail_v1, native_reading_dictionary_v1, native_reading_library_v1, native_writing_check_v1, native_writing_v1, news_v1, openapi_v1
 from polskiflow.account_views import account_delete, account_security
 from polskiflow.auth import require_supabase_user
-from polskiflow.auth_views import b1_exam_prep, course, daily_tasks, forgot_password, home, listening_practice, login_view, logout_view, onboarding, practice_hub, privacy, profile, profile_data_export, register_view, resend_confirmation, reset_password, sources, writing_practice
+from polskiflow.auth_views import b1_exam_prep, course, daily_tasks, forgot_password, help_center, home, listening_practice, login_view, logout_view, onboarding, practice_hub, privacy, profile, profile_data_export, register_view, resend_confirmation, reset_password, sources, writing_practice
 from polskiflow.diagnostic_views import diagnostic
 from polskiflow.feedback_views import feedback
 from polskiflow.history_views import learning_history
@@ -72,6 +72,8 @@ urlpatterns = [
     path("collections/add/<str:content_type>/<slug:content_id>/", add_material_to_collection, name="add-material-to-collection"),
     path("diagnostic/", diagnostic, name="diagnostic"),
     path("profile/", profile, name="profile"),
+    path("settings/", profile, {"section": "settings"}, name="system-settings"),
+    path("help/", help_center, name="help-center"),
     path("account/security/", account_security, name="account-security"),
     path("account/delete/", account_delete, name="account-delete"),
     path("feedback/", feedback, name="feedback"),

@@ -1,7 +1,7 @@
 {% load i18n %}
 <form method="post" action="{% url 'set-language' %}" class="language-settings">
   {% csrf_token %}<input type="hidden" name="next" value="{{ request.get_full_path }}">
-  <label for="interface-language">{% translate "Язык интерфейса" %}</label>
+  <label for="interface-language"{% if hide_label %} class="visually-hidden"{% endif %}>{% translate "Язык интерфейса" %}</label>
   <select id="interface-language" name="language">
     <option value="ru"{% if LANGUAGE_CODE == 'ru' %} selected{% endif %}>Русский</option>
     <option value="pl"{% if LANGUAGE_CODE == 'pl' %} selected{% endif %}>Polski</option>

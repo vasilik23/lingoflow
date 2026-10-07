@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load i18n ui %}
+{% block title %}{% translate "Системные настройки" %} · LingoFlow{% endblock %}
+{% block toolbar_title %}<h1>{% translate "Системные настройки" %}</h1>{% endblock %}
+{% block content %}
+  <div class="settings-page">
+  <section class="card" aria-labelledby="interface-language-title">
+    <h2 id="interface-language-title">{% translate "Язык интерфейса" %}</h2>
+    {% include "partials/language_settings.html" with hide_label=True %}
+  </section>
+  <section class="card" aria-labelledby="theme-title">
+    <h2 id="theme-title">{% translate "Цветовая тема" %}</h2>
+    <label class="theme-control"><span class="visually-hidden">{% translate "Цветовая тема" %}</span>
+      <select data-theme-select aria-label="{% translate "Цветовая тема" %}">
+        <option value="system">{% translate "Как в системе" %}</option>
+        <option value="light">{% translate "Светлая" %}</option>
+        <option value="dark">{% translate "Тёмная" %}</option>
+      </select>
+    </label>
+  </section>
+  <section class="profile-settings" aria-labelledby="reminders-title">
+    <div class="section-heading"><div><p class="eyebrow">{% translate "Ритм занятий" %}</p><h2 id="reminders-title">{% translate "Напоминания" %}</h2></div></div>
+    <form class="card profile-form" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="form_action" value="reminders">
+      {% if reminder_message %}<p class="form-message" role="status">{{ reminder_message|ui_text }}</p>{% endif %}
+      {% if reminder_error %}<p class="form-error" role="alert">{{ reminder_error|ui_text }}</p>{% endif %}
+      {% if not reminder_available %}<p class="data-notice" role="status">{% translate "Настройки напоминаний временно недоступны." %}</p>{% endif %}
+      <label>
+        <span><input name="daily_reminder_enabled" type="checkbox"{% if reminder_preferences.daily_reminder_enabled %} checked{% endif %}> {% translate "Напоминать о занятиях каждый день" %}</span>
+        <small>{% translate "Напоминания выключены, пока ты сам их не включишь. На этом этапе мы только сохраняем выбор и ещё ничего не отправляем." %}</small>
+      </label>
+      <label>
+        <span>{% translate "Время" %}</span>
+        <input name="reminder_time" type="time" value="{{ reminder_preferences.reminder_time }}" required aria-describedby="reminder-time-help">
+        <small id="reminder-time-help">{% translate "Часовой пояс: Europe/Warsaw." %}</small>
+      </label>
+      <button type="submit">{% translate "Сохранить напоминания" %}</button>
+    </form>
+  </section>
+  </div>
+{% endblock %}

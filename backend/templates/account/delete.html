@@ -4,14 +4,13 @@
 {% block content %}
   <header class="content-header">
     <div><p class="eyebrow">{% translate "Аккаунт" %}</p><h1>{% translate "Удаление аккаунта" %}</h1><p class="muted">{% translate "Это необратимое действие." %}</p></div>
-    <a class="compact-button secondary-link" href="{% url 'profile' %}">{% translate "Отмена" %}</a>
+    <a class="compact-button secondary-link" href="{% url 'account-security' %}">{% translate "Отмена" %}</a>
   </header>
   <form class="card account-security-form danger-zone" method="post" autocomplete="off">
     {% csrf_token %}
     {% if error %}<p class="form-error" role="alert">{{ error|ui_text }}</p>{% endif %}
     <h2>{% translate "Что будет удалено" %}</h2>
     <p>{% translate "Supabase Auth-аккаунт, профиль, прогресс, словарь, повторения, закладки, черновики, обратная связь и настройки напоминаний, связанные с этим аккаунтом." %}</p>
-    <p>{% translate "Перед удалением при необходимости" %} <a href="{% url 'profile-data-export' %}">{% translate "скачайте экспорт данных" %}</a>.</p>
     <label><span>{% translate "Текущий пароль" %}</span><input type="password" name="current_password" autocomplete="current-password" required></label>
     <label><span>{% translate "Введите УДАЛИТЬ" %}</span><input type="text" name="confirmation" autocomplete="off" spellcheck="false" required></label>
     <button class="danger-button" type="submit">{% translate "Удалить аккаунт безвозвратно" %}</button>

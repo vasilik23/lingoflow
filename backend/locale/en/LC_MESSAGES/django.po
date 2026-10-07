@@ -16594,3 +16594,9 @@ msgstr "Filters new B1 variants and B2 recommendations. Saved only in this brows
 
 msgid "Фильтры"
 msgstr "Filters"
+
+msgid "Системные настройки"
+msgstr "System settings"
+
+msgid "Помощь"
+msgstr "Help"

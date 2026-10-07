@@ -5,7 +5,7 @@ from datetime import datetime
 from functools import wraps
 from urllib.parse import urlencode
 
-from django.http import HttpRequest, HttpResponse, JsonResponse
+from django.http import HttpRequest, HttpResponse, HttpResponseNotAllowed, JsonResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils import timezone
@@ -31,11 +31,9 @@ from polskiflow.content import course_topics, tasks
 from polskiflow.dictionary_store import load_personal_words
 from polskiflow.lesson_draft_store import load_latest_lesson_draft
 from polskiflow.lesson_bookmark_store import load_lesson_bookmarks
-from polskiflow.domain.achievements import build_achievements
 from polskiflow.domain.auth_rate_limit import consume_auth_attempt
 from polskiflow.domain.b1_exam_prep import attach_b1_mock_trends, build_b1_exam_prep, build_b1_module_results, overlay_latest_b1_mock
 from polskiflow.domain.daily_plan import DAILY_TIME_MODES, build_daily_plan
-from polskiflow.domain.daily_goal_insights import build_daily_goal_insight
 from polskiflow.domain.password_policy import password_error
 from polskiflow.domain.writing_reinforcement import enrich_writing_prompts
 from polskiflow.domain.course_catalog import (
@@ -649,29 +647,14 @@ def onboarding(request: HttpRequest) -> HttpResponse:
 
 @require_browser_user
 @require_http_methods(["GET", "POST"])
-def profile(request: HttpRequest) -> HttpResponse:
+def profile(request: HttpRequest, section: str = "profile") -> HttpResponse:
+    if section == "settings" and request.method == "POST" and request.POST.get("form_action") != "reminders":
+        return HttpResponseNotAllowed(["GET", "POST"])
     fallback_name = (request.supabase_user.email or "ученик").split("@", 1)[0]
     dashboard = load_dashboard_progress(
         request.supabase_access_token,
         request.supabase_user.id,
         fallback_name,
-    )
-    lesson_ids = {lesson_task["id"] for lesson_task in tasks()}
-    completed_lessons = len(dashboard.all_completed_lesson_ids & lesson_ids)
-    total_lessons = len(lesson_ids)
-    progress_percent = (
-        round(completed_lessons / total_lessons * 100) if total_lessons else 0
-    )
-    personal_words = load_personal_words(
-        request.supabase_access_token,
-        request.supabase_user.id,
-    )
-    dictionary_count = len(personal_words or [])
-    achievements = build_achievements(
-        completed_lessons=completed_lessons,
-        streak_days=dashboard.streak_days,
-        dictionary_count=dictionary_count,
-        active_days=dashboard.active_days,
     )
     profile_form = {
         "display_name": dashboard.display_name,
@@ -717,7 +700,7 @@ def profile(request: HttpRequest) -> HttpResponse:
                 reminder_available = True
             else:
                 reminder_error = "Не удалось сохранить настройки напоминаний. Попробуйте ещё раз."
-    elif request.method == "POST":
+    elif request.method == "POST" and section == "profile":
         profile_form = {
             "display_name": request.POST.get("display_name", "").strip(),
             "level": request.POST.get("level", "").upper(),
@@ -747,29 +730,17 @@ def profile(request: HttpRequest) -> HttpResponse:
             profile_message = "Профиль сохранён"
         else:
             profile_error = "Не удалось сохранить профиль. Попробуйте ещё раз."
-    daily_goal_insight = build_daily_goal_insight(
-        dashboard.recent_daily_completion_counts,
-        dashboard.daily_goal_lessons,
-    )
     response = render(
         request,
-        "profile.html",
+        "settings.html" if section == "settings" or form_action == "reminders" else "profile.html",
         {
             "dashboard": dashboard,
             "email": request.supabase_user.email or "Email не указан",
-            "completed_lessons": completed_lessons,
-            "total_lessons": total_lessons,
-            "progress_percent": progress_percent,
-            "dictionary_count": dictionary_count,
-            "dictionary_available": personal_words is not None,
-            "achievements": achievements,
-            "unlocked_achievements": sum(item.unlocked for item in achievements),
             "profile_levels": PROFILE_LEVELS,
             "profile_form": profile_form,
             "exclude_remote_work": request.POST.get("exclude_remote_work") == "on" if request.method == "POST" and request.POST.get("practice_topics_present") == "1" and request.POST.get("form_action") != "reminders" else "remote-work" in excluded_practice_topics(request),
             "profile_message": profile_message,
             "profile_error": profile_error,
-            "daily_goal_insight": daily_goal_insight,
             "reminder_preferences": reminder_preferences,
             "reminder_available": reminder_available,
             "reminder_message": reminder_message,
@@ -779,6 +750,12 @@ def profile(request: HttpRequest) -> HttpResponse:
     if profile_message and request.POST.get("practice_topics_present") == "1":
         set_practice_topics(response, request, exclude_remote_work=request.POST.get("exclude_remote_work") == "on")
     return response
+
+
+@require_browser_user
+@require_http_methods(["GET"])
+def help_center(request: HttpRequest) -> HttpResponse:
+    return render(request, "help.html")
 
 
 def sources(request: HttpRequest) -> HttpResponse:

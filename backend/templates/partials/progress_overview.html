@@ -1,0 +1,87 @@
+{% load i18n ui %}
+  {% if not dashboard.available or not dictionary_available %}
+    <p class="data-notice" role="status">{% translate "Часть статистики временно недоступна. Можно продолжать занятия — новый прогресс сохранится после восстановления соединения." %}</p>
+  {% endif %}
+
+  <section aria-labelledby="progress-title">
+    <div class="section-heading">
+      <div><p class="eyebrow">{% translate "Общий результат" %}</p><h2 id="progress-title">{% translate "Твой прогресс" %}</h2></div>
+      <strong>{{ progress_percent|ui_text }}%</strong>
+    </div>
+    <div class="profile-progress" role="progressbar" aria-label="{% translate "Пройдено уроков курса" %}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ progress_percent }}">
+      <span style="--value: {{ progress_percent }}%"></span>
+    </div>
+    <div class="profile-stats">
+      <article class="card profile-stat"><span aria-hidden="true">✓</span><strong>{{ completed_lessons|ui_text }} / {{ total_lessons|ui_text }}</strong><small>{% translate "уроков пройдено" %}</small></article>
+      <article class="card profile-stat"><span aria-hidden="true">🔥</span><strong>{{ dashboard.streak_days|ui_text }}</strong><small>{% translate "дней подряд" %}</small></article>
+      <article class="card profile-stat"><span aria-hidden="true">◷</span><strong>{{ dashboard.active_days|ui_text }}</strong><small>{% translate "активных дней" %}</small></article>
+      <article class="card profile-stat"><span aria-hidden="true">◇</span><strong>{{ dictionary_count|ui_text }}</strong><small>{% translate "слов в словаре" %}</small></article>
+    </div>
+  </section>
+
+  <section aria-labelledby="achievements-title">
+    <div class="section-heading">
+      <div><p class="eyebrow">{% translate "Мотивация" %}</p><h2 id="achievements-title">{% translate "Достижения" %}</h2></div>
+      <strong>{{ unlocked_achievements|ui_text }} / {{ achievements|length|ui_text }}</strong>
+    </div>
+    <div class="achievement-grid">
+      {% for achievement in achievements %}
+        <article class="card achievement-card{% if achievement.unlocked %} is-unlocked{% endif %}">
+          <span class="achievement-icon" aria-hidden="true">{{ achievement.icon|ui_text }}</span>
+          <div><h3>{{ achievement.title|ui_text }}</h3><p>{{ achievement.description|ui_text }}</p></div>
+          {% if achievement.unlocked %}
+            <strong class="achievement-state">{% translate "Открыто" %}</strong>
+          {% else %}
+            <div class="achievement-progress" role="progressbar" aria-label="{{ achievement.title|ui_text }}" aria-valuemin="0" aria-valuemax="{{ achievement.target }}" aria-valuenow="{{ achievement.current }}"><span style="--value: {{ achievement.progress_percent }}%"></span></div>
+            <small>{{ achievement.current|ui_text }} / {{ achievement.target|ui_text }}</small>
+          {% endif %}
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section aria-labelledby="monthly-title">
+    <div class="section-heading"><div><p class="eyebrow">{% translate "Последние 30 дней" %}</p><h2 id="monthly-title">{% translate "Месячный обзор" %}</h2></div></div>
+    <div class="profile-stats weekly-stats">
+      <article class="card profile-stat"><span aria-hidden="true">✓</span><strong>{{ dashboard.monthly_completed_count|ui_text }}</strong><small>{% translate "уникальных уроков" %}</small></article>
+      <article class="card profile-stat"><span aria-hidden="true">●</span><strong>{{ dashboard.monthly_active_days|ui_text }} / 30</strong><small>{% translate "активных дней" %}</small></article>
+    </div>
+    <p class="muted">{% translate "Обзор помогает увидеть устойчивость занятий за более длинный период, не заменяя дневной план." %}</p>
+  </section>
+
+  <section aria-labelledby="weekly-title">
+    <div class="section-heading">
+      <div><p class="eyebrow">{% translate "Последние 7 дней" %}</p><h2 id="weekly-title">{% translate "Недельная активность" %}</h2></div>
+    </div>
+    <div class="profile-stats weekly-stats">
+      <article class="card profile-stat weekly-stat">
+        <span aria-hidden="true">▦</span><strong>{{ dashboard.weekly_completed_count|ui_text }}</strong><small>{% translate "уроков завершено" %}</small>
+        <p class="weekly-compare {% if dashboard.weekly_completed_delta > 0 %}is-positive{% elif dashboard.weekly_completed_delta < 0 %}is-negative{% endif %}">
+          {% if dashboard.weekly_completed_delta > 0 %}{% translate "↑ на" %} {{ dashboard.weekly_completed_delta|ui_text }} {% translate "больше" %}{% elif dashboard.weekly_completed_delta < 0 %}{% translate "↓ на" %} {{ dashboard.weekly_completed_delta|stringformat:"d"|slice:"1:" }} {% translate "меньше" %}{% else %}{% translate "без изменений" %}{% endif %}
+        </p>
+      </article>
+      <article class="card profile-stat weekly-stat">
+        <span aria-hidden="true">●</span><strong>{{ dashboard.weekly_active_days|ui_text }} / 7</strong><small>{% translate "активных дней" %}</small>
+        <p class="weekly-compare {% if dashboard.weekly_active_days_delta > 0 %}is-positive{% elif dashboard.weekly_active_days_delta < 0 %}is-negative{% endif %}">
+          {% if dashboard.weekly_active_days_delta > 0 %}{% translate "↑ на" %} {{ dashboard.weekly_active_days_delta|ui_text }} {% translate "больше" %}{% elif dashboard.weekly_active_days_delta < 0 %}{% translate "↓ на" %} {{ dashboard.weekly_active_days_delta|stringformat:"d"|slice:"1:" }} {% translate "меньше" %}{% else %}{% translate "без изменений" %}{% endif %}
+        </p>
+      </article>
+    </div>
+    <p class="muted">{% translate "Сравниваем сегодня и шесть предыдущих дней с предшествующими семью днями. В прошлый период:" %} {{ dashboard.previous_week_completed_count|ui_text }} {% translate "уроков за" %} {{ dashboard.previous_week_active_days|ui_text }} {% translate "активных дней." %}</p>
+  </section>
+
+  <section aria-labelledby="goal-insight-title">
+    <div class="section-heading">
+      <div><p class="eyebrow">{% translate "Текущая цель · 28 дней" %}</p><h2 id="goal-insight-title">{% translate "Насколько подходит нагрузка" %}</h2></div>
+      <strong>{{ daily_goal_insight.success_rate|ui_text }}%</strong>
+    </div>
+    <div class="card goal-insight" data-goal-status="{{ daily_goal_insight.status }}">
+      <div class="goal-insight-metrics">
+        <p><strong>{{ daily_goal_insight.successful_days|ui_text }} / {{ daily_goal_insight.period_days|ui_text }}</strong><span>{% translate "дней с выполненной целью" %}</span></p>
+        <p><strong>{{ daily_goal_insight.typical_active_day_lessons|ui_text }}</strong><span>{% translate "типичный темп в активный день" %}</span></p>
+      </div>
+      <h3>{{ daily_goal_insight.status_label|ui_text }}</h3>
+      <p>{{ daily_goal_insight.recommendation|ui_text }}</p>
+    </div>
+    <p class="profile-note">{% translate "Сравниваем историю завершений с текущей целью" %} {{ dashboard.daily_goal_lessons|ui_text }} {% translate "в день. Изменения цели за прошлые дни не сохраняются, поэтому это ориентир, а не оценка." %}</p>
+  </section>

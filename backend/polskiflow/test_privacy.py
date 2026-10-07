@@ -28,5 +28,5 @@ class PrivacyPageTests(SimpleTestCase):
     def test_authenticated_controls_are_private_and_not_cached(self, _authenticate):
         self.client.cookies[ACCESS_COOKIE] = "access"
         response = self.client.get("/privacy/")
-        self.assertContains(response, 'href="/account/delete/"')
+        self.assertContains(response, 'href="/account/security/#account-delete-title"')
         self.assertEqual(response["Cache-Control"], "private, no-store")

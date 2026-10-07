@@ -434,9 +434,9 @@ class LessonViewsTests(TestCase):
         self.assertContains(response, 'class="user-menu app-user-menu"')
         self.assertContains(response, 'action="/logout/"')
         self.assertContains(response, 'href="/profile/"')
-        self.assertContains(response, 'class="user-menu-group"', count=2)
-        self.assertContains(response, "Учёба и материалы")
-        self.assertContains(response, "Настройки и помощь")
+        self.assertNotContains(response, 'class="user-menu-group"')
+        self.assertContains(response, 'href="/settings/"')
+        self.assertContains(response, 'href="/help/?from=/"')
         self.assertGreater(content.index("</nav>"), content.index('class="nav-links"'))
         self.assertLess(content.index("</nav>"), content.index('class="user-menu app-user-menu"'))
 
@@ -450,7 +450,7 @@ class LessonViewsTests(TestCase):
         self.assertContains(practice, 'href="/practice/" class="nav-link active"')
 
     def test_base_template_offers_persisted_accessible_theme_selection(self):
-        response = self.client.get("/")
+        response = self.client.get("/settings/")
 
         self.assertContains(response, 'data-theme-select')
         self.assertContains(response, 'aria-label="Цветовая тема"')
@@ -505,7 +505,9 @@ class LessonViewsTests(TestCase):
         )
         mocked_words.return_value = [{"word": "dom"}, {"word": "dzień"}]
 
-        response = self.client.get("/profile/")
+        from polskiflow.progress_store import CompletionHistoryPage
+        with patch("polskiflow.history_views.load_dashboard_progress", return_value=mocked_progress.return_value), patch("polskiflow.history_views.load_personal_words", return_value=mocked_words.return_value), patch("polskiflow.history_views.load_completion_history", return_value=CompletionHistoryPage((), True, False, False, 1)):
+            response = self.client.get("/history/")
         self.assertContains(response, "Недельная активность")
         self.assertContains(response, "Месячный обзор")
         self.assertContains(response, "6")
@@ -521,8 +523,6 @@ class LessonViewsTests(TestCase):
         self.assertContains(response, 'data-goal-status="sustainable"')
 
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Василий")
-        self.assertContains(response, "learner@example.com")
         self.assertContains(response, "2 / 4")
         self.assertContains(response, "50%")
         self.assertContains(response, "7")
@@ -532,8 +532,11 @@ class LessonViewsTests(TestCase):
         self.assertContains(response, "Три дня подряд")
         self.assertContains(response, "4 / 7")
         self.assertContains(response, 'aria-label="Неделя в ритме"')
+        response = self.client.get("/profile/")
+        self.assertContains(response, "Василий")
+        self.assertContains(response, "learner@example.com")
+        self.assertNotContains(response, 'id="progress-title"')
         self.assertContains(response, "Настройки")
-        self.assertContains(response, 'role="progressbar"')
         self.assertContains(response, 'name="csrfmiddlewaretoken"')
         self.assertContains(response, 'name="display_name"')
         self.assertContains(response, 'name="level"')
@@ -541,6 +544,8 @@ class LessonViewsTests(TestCase):
         self.assertContains(response, "плане на день, курсе и библиотеке")
         self.assertNotContains(response, "Сейчас используется светлая тема")
         self.assertNotContains(response, 'class="settings-list"')
+        self.assertNotContains(response, 'name="daily_reminder_enabled"')
+        response = self.client.get("/settings/")
         self.assertContains(response, "Напоминания")
         self.assertContains(response, "ещё ничего не отправляем")
         self.assertContains(response, 'name="daily_reminder_enabled"')
@@ -777,7 +782,7 @@ class LessonViewsTests(TestCase):
 
         self.assertContains(response, "Cześć, Василий!")
         self.assertContains(response, "Уровень A2")
-        self.assertContains(response, "4 дн. подряд")
+        self.assertNotContains(response, "4 дн. подряд")
         self.assertContains(response, "2 из 4")
 
         self.assertContains(response, 'class="task-complete"', count=2)

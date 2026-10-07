@@ -1,11 +1,13 @@
 {% extends "base.html" %}
 {% load i18n ui %}
 {% block title %}{% translate "Прогресс и история · LingoFlow" %}{% endblock %}
+{% block toolbar_title %}<h1>{% translate "Прогресс и история" %}</h1>{% endblock %}
 {% block content %}
   <header class="content-header">
-    <div><p class="eyebrow">{% translate "Твой прогресс" %}</p><h1>{% translate "Прогресс и история" %}</h1><p class="muted">{% translate "Динамика за последние 28 дней и завершённые уроки доступны только тебе." %}</p></div>
+    <div><p class="eyebrow">{% translate "Твой прогресс" %}</p><p class="muted">{% translate "Динамика за последние 28 дней и завершённые уроки доступны только тебе." %}</p></div>
     <a class="compact-button secondary-link" href="{% url 'profile' %}">{% translate "К профилю" %}</a>
   </header>
+  {% include "partials/progress_overview.html" %}
   {% if weekly_review.available %}
     <section class="weekly-review" aria-labelledby="weekly-review-title">
       <div class="section-heading"><div><p class="eyebrow">{% translate "Последние 7 дней" %}</p><h2 id="weekly-review-title">{% translate "Итог недели" %}</h2></div></div>

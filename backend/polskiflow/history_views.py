@@ -6,6 +6,8 @@ from django.views.decorators.http import require_GET
 
 from polskiflow.auth_views import require_browser_user
 from polskiflow.content import tasks
+from polskiflow.dictionary_store import load_personal_words
+from polskiflow.domain.progress_overview import build_progress_overview
 from polskiflow.domain.learning_insights import build_learning_insights
 from polskiflow.domain.weekly_review import build_weekly_review
 from polskiflow.progress_store import load_completion_history, load_dashboard_progress
@@ -51,6 +53,9 @@ def learning_history(request: HttpRequest) -> HttpResponse:
         fallback_name,
     )
     return render(request, "history.html", {
+        **build_progress_overview(dashboard, lesson_tasks, load_personal_words(
+            request.supabase_access_token, request.supabase_user.id,
+        )),
         "history_rows": rows,
         "history_available": page.available,
         "history_page": page,
