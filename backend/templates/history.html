@@ -42,8 +42,8 @@
     <section class="insights-grid">
       <article class="card activity-panel" aria-labelledby="activity-title">
         <div><p class="eyebrow">{% translate "Последние 14 дней" %}</p><h2 id="activity-title">{% translate "Ритм занятий" %}</h2></div>
-        <div class="activity-chart" role="img" aria-label="{% translate "Количество завершённых уроков по дням" %}">
-          {% for day in insights.activity %}<span class="activity-column"><span class="activity-bar{% if day.count %} has-value{% endif %}" style="--height: {{ day.height }}%" title="{{ day.date|ui_text }}: {{ day.count|ui_text }}"></span><small>{{ day.date|ui_text }}</small><b class="visually-hidden">{{ day.count|ui_text }} {% translate "уроков" %}</b></span>{% endfor %}
+        <div class="activity-chart" role="list" aria-label="{% translate "Количество завершённых уроков по дням" %}">
+          {% for day in insights.activity %}<span class="activity-column" role="listitem" aria-label="{{ day.date|ui_text }}: {{ day.count|ui_text }} {% translate "уроков" %}"><span class="activity-bar{% if day.count %} has-value{% endif %}" style="--height: {{ day.height }}%" title="{{ day.date|ui_text }}: {{ day.count|ui_text }}" aria-hidden="true"></span><small aria-hidden="true">{{ day.date|ui_text }}</small></span>{% endfor %}
         </div>
       </article>
       <article class="card recommendation-card">
@@ -77,11 +77,11 @@
         </li>
       {% endfor %}
     </ol>
-    <nav class="history-pagination" aria-label="{% translate "Страницы истории" %}">
+    {% if history_page.has_previous or history_page.has_next %}<nav class="history-pagination" aria-label="{% translate "Страницы истории" %}">
       {% if history_page.has_previous %}<a class="compact-button secondary-link" href="?period={{ selected_period }}&page={{ history_page.page|add:'-1' }}">{% translate "← Новее" %}</a>{% endif %}
       <span>{% translate "Страница" %} {{ history_page.page|ui_text }}</span>
       {% if history_page.has_next %}<a class="compact-button secondary-link" href="?period={{ selected_period }}&page={{ history_page.page|add:'1' }}">{% translate "Старее →" %}</a>{% endif %}
-    </nav>
+    </nav>{% endif %}
   {% else %}
     <div class="card empty-state"><h2>{% translate "Пока нет завершённых занятий" %}</h2><p>{% translate "Выбери урок из дневного плана — он появится здесь после завершения." %}</p><a class="compact-button" href="{% url 'home' %}">{% translate "Перейти к плану" %}</a></div>
   {% endif %}

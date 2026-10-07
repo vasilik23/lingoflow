@@ -973,9 +973,12 @@ button.secondary { background: var(--surface); border-color: var(--line); }
 .insight-stat strong { font-size: clamp(1.6rem, 5vw, 2.15rem); }
 .insights-grid { display: grid; gap: 1rem; margin-bottom: 1.5rem; }
 .activity-panel { min-width: 0; }
-.activity-chart { display: grid; grid-template-columns: repeat(14, minmax(1rem, 1fr)); gap: .35rem; align-items: end; height: 10rem; margin-top: 1rem; overflow-x: auto; }
-.activity-column { display: grid; grid-template-rows: 7rem auto; align-items: end; justify-items: center; gap: .35rem; min-width: 1.25rem; height: 100%; }
-.activity-column small { color: var(--muted); font-size: .58rem; transform: rotate(-45deg); transform-origin: center; white-space: nowrap; }
+.activity-chart { display: grid; grid-template-columns: repeat(14, minmax(0, 1fr)); gap: clamp(.15rem, 1vw, .35rem); align-items: end; height: 10rem; margin-top: 1rem; }
+.activity-column { position: relative; display: grid; grid-template-rows: minmax(0, 1fr) 1.5rem; align-items: end; justify-items: center; gap: .5rem; min-width: 0; height: 100%; }
+.activity-column small { display: none; position: absolute; bottom: 0; color: var(--muted); font-size: .65rem; white-space: nowrap; }
+.activity-column:nth-child(1) small, .activity-column:nth-child(4) small, .activity-column:nth-child(7) small, .activity-column:nth-child(10) small, .activity-column:nth-child(14) small { display: block; }
+.activity-column:first-child small { left: 0; }
+.activity-column:last-child small { right: 0; }
 .activity-bar { width: min(100%, 1.2rem); min-height: .25rem; height: max(.25rem, var(--height)); border-radius: .4rem .4rem .15rem .15rem; background: var(--line); }
 .activity-bar.has-value { background: linear-gradient(180deg, var(--primary), var(--primary-dark)); }
 .recommendation-card { display: grid; align-content: start; }
@@ -996,7 +999,7 @@ button.secondary { background: var(--surface); border-color: var(--line); }
 .history-item small { color: var(--muted); }
 .history-icon { display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: .8rem; background: var(--primary-soft); }
 .history-score { color: var(--muted); white-space: nowrap; }
-.history-pagination { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 1.25rem; }
+.history-pagination { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .75rem; margin-top: 1.25rem; padding-bottom: .5rem; }
 .mistake-list { display: grid; gap: .75rem; margin: 0; padding: 0; list-style: none; }
 .mistake-item { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 1rem; }
 .mistake-item > span { font-size: 1.4rem; }
