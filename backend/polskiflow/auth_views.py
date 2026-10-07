@@ -751,7 +751,7 @@ def profile(request: HttpRequest) -> HttpResponse:
         dashboard.recent_daily_completion_counts,
         dashboard.daily_goal_lessons,
     )
-    return render(
+    response = render(
         request,
         "profile.html",
         {
@@ -766,6 +766,7 @@ def profile(request: HttpRequest) -> HttpResponse:
             "unlocked_achievements": sum(item.unlocked for item in achievements),
             "profile_levels": PROFILE_LEVELS,
             "profile_form": profile_form,
+            "exclude_remote_work": request.POST.get("exclude_remote_work") == "on" if request.method == "POST" and request.POST.get("practice_topics_present") == "1" and request.POST.get("form_action") != "reminders" else "remote-work" in excluded_practice_topics(request),
             "profile_message": profile_message,
             "profile_error": profile_error,
             "daily_goal_insight": daily_goal_insight,
@@ -775,6 +776,9 @@ def profile(request: HttpRequest) -> HttpResponse:
             "reminder_error": reminder_error,
         },
     )
+    if profile_message and request.POST.get("practice_topics_present") == "1":
+        set_practice_topics(response, request, exclude_remote_work=request.POST.get("exclude_remote_work") == "on")
+    return response
 
 
 def sources(request: HttpRequest) -> HttpResponse:

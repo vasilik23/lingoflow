@@ -672,6 +672,10 @@ button.secondary { background: var(--surface); border-color: var(--line); }
 .practice-preferences { margin-top: 1.5rem; }
 .practice-preferences > summary { cursor: pointer; font-weight: 700; }
 .practice-preferences .profile-form { margin-top: 1rem; }
+.practice-recommendation { margin-bottom: 1.5rem; }
+.practice-recommendation h2 { margin: 0; font-size: 1.17rem; line-height: 1.4; }
+.practice-topic-setting span { display: flex; align-items: flex-start; gap: .65rem; }
+.practice-topic-setting input[type="checkbox"] { flex: 0 0 1.1rem; width: 1.1rem; height: 1.1rem; margin: .1rem 0 0; padding: 0; accent-color: var(--primary); }
 .practice-hero { padding: 1.25rem; background: var(--surface); box-shadow: none; border-color: var(--line); }
 .practice-hero::after { display: none; }
 .practice-hero h1 { max-width: none; font-size: 1.9rem; }

@@ -85,3 +85,22 @@ class PracticePreferenceViewTests(TestCase):
         self.assertNotIn(PREFERENCE_COOKIE, denied.cookies)
         self.client.cookies.clear()
         self.assertEqual(self.client.post("/practice/", {}).status_code, 302)
+
+    def test_profile_saves_filter_only_with_valid_profile_and_preserves_it_on_failure(self):
+        fields = {"display_name": "Anna", "level": "B1", "daily_goal_lessons": "2", "exclude_remote_work": "on", "practice_topics_present": "1"}
+        with patch("polskiflow.auth_views.save_profile_settings", return_value=True):
+            saved = self.client.post("/profile/", fields)
+            self.assertEqual(saved.status_code, 200)
+            self.assertIn(PREFERENCE_COOKIE, saved.cookies)
+            self.assertTrue(self.client.get("/profile/").context["exclude_remote_work"])
+            old_form = self.client.post("/profile/", {k: v for k, v in fields.items() if k not in {"practice_topics_present", "exclude_remote_work"}})
+            self.assertNotIn(PREFERENCE_COOKIE, old_form.cookies)
+            invalid = self.client.post("/profile/", {**fields, "display_name": ""})
+            self.assertNotIn(PREFERENCE_COOKIE, invalid.cookies)
+            self.assertTrue(self.client.get("/profile/").context["exclude_remote_work"])
+            with patch("polskiflow.auth_views.save_profile_settings", return_value=False):
+                failed = self.client.post("/profile/", {**fields, "exclude_remote_work": ""})
+                self.assertNotIn(PREFERENCE_COOKIE, failed.cookies)
+            reset = self.client.post("/profile/", {**fields, "exclude_remote_work": ""})
+            self.assertEqual(reset.cookies[PREFERENCE_COOKIE]["max-age"], 0)
+            self.assertFalse(self.client.get("/profile/").context["exclude_remote_work"])
