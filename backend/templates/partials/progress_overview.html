@@ -79,10 +79,10 @@
     <div class="card goal-insight" data-goal-status="{{ daily_goal_insight.status }}">
       <div class="goal-insight-metrics">
         <p><strong>{{ daily_goal_insight.successful_days|ui_text }} / {{ daily_goal_insight.period_days|ui_text }}</strong><span>{% translate "дней с выполненной целью" %}</span></p>
-        <p><strong>{{ daily_goal_insight.typical_active_day_lessons|ui_text }}</strong><span>{% translate "типичный темп в активный день" %}</span></p>
+        <p><strong>~{{ daily_goal_insight.typical_active_day_lessons|ui_text }} {% translate "минут" %}</strong><span>{% translate "типичный темп в активный день" %}</span></p>
       </div>
       <h3>{{ daily_goal_insight.status_label|ui_text }}</h3>
       <p>{{ daily_goal_insight.recommendation|ui_text }}</p>
     </div>
-    <p class="profile-note">{% translate "Сравниваем историю завершений с текущей целью" %} {{ dashboard.daily_goal_lessons|ui_text }} {% translate "в день. Изменения цели за прошлые дни не сохраняются, поэтому это ориентир, а не оценка." %}</p>
+    <p class="profile-note">{% translate "Сравниваем историю завершений с текущей целью" %} {{ dashboard.daily_goal_minutes|ui_text }} {% translate "минут" %} {% translate "в день. Изменения цели за прошлые дни не сохраняются, поэтому это ориентир, а не оценка." %} {% translate "Используем длительность уроков, а не измеренное время занятий." %}</p>
   </section>

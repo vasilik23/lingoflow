@@ -6,6 +6,13 @@ from polskiflow.domain.daily_plan import build_daily_plan
 
 
 class DailyPlanTests(SimpleTestCase):
+    def test_minutes_override_legacy_lesson_cap_and_keep_completed_work(self):
+        lessons = [{"id": str(i), "kind": "words", "level": "A1", "minutes": 5} for i in range(8)]
+        plan = build_daily_plan(lessons, level="A1", completed_all_time=frozenset({"0"}), completed_today=frozenset({"0"}), personal_words=[], today=date(2026, 10, 7), daily_task_limit=1, time_budget_minutes=30)
+        self.assertEqual(len(plan), 6)
+        self.assertTrue(plan[0]["completed"])
+        self.assertEqual(sum(item["minutes"] for item in plan), 30)
+
     def setUp(self):
         self.lessons = [
             {

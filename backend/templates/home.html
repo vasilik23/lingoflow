@@ -38,9 +38,7 @@
         </div>
         <span>{{ completed_count|ui_text }} {% translate "из" %} {{ tasks|length|ui_text }} {% translate "выполнено · ~" %}{{ plan_estimated_minutes|ui_text }} {% translate "мин" %}</span>
       </div>
-      <nav class="daily-time-modes" aria-label="{% translate "Длительность плана" %}">
-        {% for minutes in plan_time_modes %}<a href="?minutes={{ minutes }}#daily-plan"{% if minutes == plan_minutes %} aria-current="page"{% endif %}>{{ minutes|ui_text }} {% translate "минут" %}</a>{% endfor %}
-      </nav>
+      <p class="muted daily-goal-summary">{% translate "Цель на день" %} · {{ plan_minutes|ui_text }} {% translate "минут" %} · <a href="{% url 'profile' %}">{% translate "К профилю" %}</a></p>
       <div class="task-list daily-task-list">
         {% for task in tasks %}
           <a class="task-card" href="{% if task.kind == 'dictionary-review' %}{% url 'dictionary-practice' %}{% else %}{% url 'lesson' task.id %}{% endif %}">

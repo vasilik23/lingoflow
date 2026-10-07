@@ -49,6 +49,14 @@ class WeeklyReviewTests(SimpleTestCase):
 
 
 class ProgressOverviewTests(SimpleTestCase):
+    def test_goal_insight_uses_estimated_minutes_and_ignores_repeated_or_unknown_results(self):
+        today = datetime.date.today().isoformat()
+        results = ({"lesson_id": "known", "plan_date": today}, {"lesson_id": "known", "plan_date": today}, {"lesson_id": "unknown", "plan_date": today})
+        dashboard = DashboardProgress("Learner", "B1", 0, frozenset(), True, daily_goal_minutes=30, recent_completion_results=results)
+        overview = build_progress_overview(dashboard, [{"id": "known", "level": "B1", "minutes": 15}], [])
+        self.assertEqual(overview["daily_goal_insight"].successful_days, 0)
+        self.assertEqual(overview["daily_goal_insight"].typical_active_day_lessons, 15)
+
     def test_primary_progress_uses_selected_level_and_achievements_use_all_levels(self):
         lessons = [{"id": "a1", "level": "A1"}, {"id": "b1-one", "level": "B1"}, {"id": "b1-two", "level": "B1"}]
         completed = frozenset({"a1", "b1-one", "dictionary-practice", "removed"})

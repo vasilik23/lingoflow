@@ -2,6 +2,7 @@
 
 from polskiflow.domain.achievements import build_achievements
 from polskiflow.domain.daily_goal_insights import build_daily_goal_insight
+from datetime import date, timedelta
 
 
 def build_progress_overview(dashboard, lesson_tasks, personal_words):
@@ -15,6 +16,18 @@ def build_progress_overview(dashboard, lesson_tasks, personal_words):
         dictionary_count=len(personal_words or []),
         active_days=dashboard.active_days,
     )
+    # Duration is the published lesson estimate, not measured time on task.
+    minutes_by_id = {lesson["id"]: lesson.get("minutes") or 5 for lesson in lesson_tasks}
+    daily_minutes = {}
+    seen = set()
+    for result in dashboard.recent_completion_results:
+        day, lesson_id = result.get("plan_date"), result.get("lesson_id")
+        if (day, lesson_id) in seen:
+            continue
+        seen.add((day, lesson_id))
+        minutes = 5 if lesson_id == "dictionary-practice" else minutes_by_id.get(lesson_id, 0)
+        daily_minutes[day] = daily_minutes.get(day, 0) + minutes
+    minute_counts = [daily_minutes.get((date.today() - timedelta(days=offset)).isoformat(), 0) for offset in range(27, -1, -1)]
     return {
         "dashboard": dashboard,
         "completed_lessons": level_completed,
@@ -28,6 +41,6 @@ def build_progress_overview(dashboard, lesson_tasks, personal_words):
         "achievements": achievements,
         "unlocked_achievements": sum(item.unlocked for item in achievements),
         "daily_goal_insight": build_daily_goal_insight(
-            dashboard.recent_daily_completion_counts, dashboard.daily_goal_lessons
+            minute_counts, dashboard.daily_goal_minutes
         ),
     }

@@ -34,6 +34,7 @@ from polskiflow.domain.sm2 import Sm2State, sm2_next
 from polskiflow.learning.models import Lesson, Level
 from polskiflow.lesson_draft_store import delete_lesson_draft, load_latest_lesson_draft_result, save_lesson_draft
 from polskiflow.news_feed import CATEGORIES, CATEGORY_IDS, latest_official_news
+from polskiflow.domain.daily_goal import DAILY_GOAL_MINUTES, minutes_from_legacy_lessons, legacy_lessons_from_minutes
 from polskiflow.progress_store import load_completion_history, load_dashboard_progress, record_lesson_result_event, save_profile_settings
 from polskiflow.privacy_export_store import load_privacy_export
 from polskiflow.reading_bookmark_store import load_reading_bookmarks, set_reading_bookmark
@@ -415,7 +416,7 @@ def learner_progress_v1(request):
     return _private_response(
         "learner-progress",
         {
-            "profile": {"display_name": progress.display_name, "level": progress.level, "daily_goal_lessons": progress.daily_goal_lessons},
+            "profile": {"display_name": progress.display_name, "level": progress.level, "daily_goal_lessons": progress.daily_goal_lessons, "daily_goal_minutes": progress.daily_goal_minutes},
             "streak_days": progress.streak_days,
             "active_days": progress.active_days,
             "completed_lesson_ids": sorted(progress.all_completed_lesson_ids),
@@ -446,7 +447,7 @@ def learner_profile_v1(request):
     profile = {
         "display_name": progress.display_name,
         "level": progress.level,
-        "daily_goal_lessons": progress.daily_goal_lessons,
+        "daily_goal_lessons": progress.daily_goal_lessons, "daily_goal_minutes": progress.daily_goal_minutes,
     }
     if request.method in {"GET", "HEAD"}:
         return _private_response("learner-profile", {"profile": profile})
@@ -458,7 +459,7 @@ def learner_profile_v1(request):
         payload = json.loads(request.body)
     except (json.JSONDecodeError, UnicodeDecodeError):
         return _error_response("invalid_json", "Request body must be valid JSON", 400)
-    allowed = {"display_name", "level", "daily_goal_lessons"}
+    allowed = {"display_name", "level", "daily_goal_lessons", "daily_goal_minutes"}
     if not isinstance(payload, dict) or not payload or not set(payload) <= allowed:
         return _error_response("validation_error", "Use one or more supported profile fields", 400)
     display_name = payload.get("display_name", profile["display_name"])
@@ -470,10 +471,23 @@ def learner_profile_v1(request):
         return _error_response("validation_error", "level must be A1, A2, B1, B2, C1, or C2", 400)
     if isinstance(daily_goal, bool) or not isinstance(daily_goal, int) or not 1 <= daily_goal <= 10:
         return _error_response("validation_error", "daily_goal_lessons must be an integer from 1 to 10", 400)
-    profile = {"display_name": display_name.strip(), "level": level, "daily_goal_lessons": daily_goal}
+    minute_goal = payload.get("daily_goal_minutes", minutes_from_legacy_lessons(daily_goal) if "daily_goal_lessons" in payload else progress.daily_goal_minutes)
+    if isinstance(minute_goal, bool) or not isinstance(minute_goal, int) or minute_goal not in DAILY_GOAL_MINUTES:
+        return _error_response("validation_error", "daily_goal_minutes must be one of 10, 15, 30", 400)
+    if "daily_goal_minutes" in payload and "daily_goal_lessons" in payload:
+        legacy_changed = daily_goal != progress.daily_goal_lessons
+        minutes_changed = minute_goal != progress.daily_goal_minutes
+        if legacy_changed and minutes_changed and daily_goal != legacy_lessons_from_minutes(minute_goal):
+            return _error_response("validation_error", "Conflicting daily goal fields", 400)
+        if legacy_changed and not minutes_changed:
+            minute_goal = minutes_from_legacy_lessons(daily_goal)
+    if "daily_goal_minutes" in payload:
+        daily_goal = legacy_lessons_from_minutes(minute_goal)
+    profile = {"display_name": display_name.strip(), "level": level, "daily_goal_lessons": daily_goal, "daily_goal_minutes": minute_goal}
     if not save_profile_settings(
         request.supabase_access_token, user.id,
         profile["display_name"], profile["level"], profile["daily_goal_lessons"],
+        **({"daily_goal_minutes": minute_goal} if "daily_goal_lessons" not in payload else {}),
     ):
         return _unavailable_response("learner-profile")
     return _private_response("learner-profile", {"profile": profile})
@@ -587,10 +601,10 @@ def learner_today_v1(request):
     """Return one canonical daily plan for browser and separate clients."""
     if not _valid_bearer(request):
         return _error_response("bearer_required", "A valid Bearer token is required", 401)
-    raw_minutes = request.GET.get("minutes", "15")
-    if raw_minutes not in {str(value) for value in DAILY_TIME_MODES}:
+    raw_minutes = request.GET.get("minutes")
+    if raw_minutes is not None and raw_minutes not in {str(value) for value in DAILY_TIME_MODES}:
         return _error_response("validation_error", "minutes must be one of 10, 15, 30", 400)
-    plan_minutes = int(raw_minutes)
+    plan_minutes = int(raw_minutes) if raw_minutes is not None else None
     user = request.supabase_user
     progress = load_dashboard_progress(
         request.supabase_access_token, user.id, (user.email or "learner").split("@", 1)[0]
@@ -603,10 +617,11 @@ def learner_today_v1(request):
     return _private_response("learner-today", data)
 
 
-def _build_today_data(progress, words, draft_result, *, time_budget_minutes=15):
+def _build_today_data(progress, words, draft_result, *, time_budget_minutes=None):
     """Build the canonical plan from already loaded owner-scoped state."""
     if not progress.available or words is None or not draft_result.available:
         return None
+    time_budget_minutes = progress.daily_goal_minutes if time_budget_minutes is None else time_budget_minutes
     lesson_rows = tasks()
     plan = build_daily_plan(
         lesson_rows,
@@ -638,7 +653,7 @@ def _build_today_data(progress, words, draft_result, *, time_budget_minutes=15):
     return {
         "date": timezone.localdate().isoformat(),
         "level": progress.level,
-        "daily_goal_lessons": progress.daily_goal_lessons,
+        "daily_goal_lessons": progress.daily_goal_lessons, "daily_goal_minutes": progress.daily_goal_minutes,
         "time_budget_minutes": time_budget_minutes,
         "estimated_minutes": sum(item.get("minutes") or 5 for item in serialized_tasks),
         "completed_count": completed_count,
@@ -673,7 +688,7 @@ def learner_bootstrap_v1(request):
             "profile": {
                 "display_name": progress.display_name,
                 "level": progress.level,
-                "daily_goal_lessons": progress.daily_goal_lessons,
+                "daily_goal_lessons": progress.daily_goal_lessons, "daily_goal_minutes": progress.daily_goal_minutes,
             },
             "progress": {
                 "streak_days": progress.streak_days,

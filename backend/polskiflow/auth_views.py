@@ -28,6 +28,7 @@ from polskiflow.b1_mock_store import load_b1_mock_attempts
 from polskiflow.canonical_host import email_callback_url
 from polskiflow.practice_preferences import excluded_practice_topics, set_practice_topics
 from polskiflow.domain.practice_recommendations import practice_recommendation
+from polskiflow.domain.daily_goal import DAILY_GOAL_MINUTES, minutes_from_legacy_lessons, legacy_lessons_from_minutes
 from polskiflow.content import course_topics, tasks
 from polskiflow.dictionary_store import load_personal_words
 from polskiflow.lesson_draft_store import load_latest_lesson_draft
@@ -605,6 +606,7 @@ def onboarding(request: HttpRequest) -> HttpResponse:
         request.supabase_access_token, request.supabase_user.id, fallback_name
     )
     form = {
+        "daily_goal_minutes": request.POST.get("daily_goal_minutes", str(dashboard.daily_goal_minutes)),
         "display_name": request.POST.get("display_name", dashboard.display_name).strip(),
         "level": request.POST.get("level", dashboard.level).upper(),
         "daily_goal_lessons": request.POST.get(
@@ -622,7 +624,10 @@ def onboarding(request: HttpRequest) -> HttpResponse:
                 daily_goal = int(form["daily_goal_lessons"])
             except (TypeError, ValueError):
                 daily_goal = 0
-            if daily_goal not in (1, 2, 3, 4):
+            minute_goal = form["daily_goal_minutes"]
+            if "daily_goal_minutes" in request.POST and minute_goal not in {str(value) for value in DAILY_GOAL_MINUTES}:
+                error = "Выбери цель 10, 15 или 30 минут."
+            elif "daily_goal_minutes" not in request.POST and daily_goal not in (1, 2, 3, 4):
                 error = "Выбери дневную цель от одного до четырёх уроков."
             elif save_profile_settings(
                 request.supabase_access_token,
@@ -630,6 +635,7 @@ def onboarding(request: HttpRequest) -> HttpResponse:
                 form["display_name"],
                 form["level"],
                 daily_goal,
+                **({"daily_goal_minutes": int(minute_goal)} if "daily_goal_minutes" in request.POST else {}),
             ):
                 return redirect(f"{reverse('home')}?welcome=1")
             else:
@@ -640,6 +646,7 @@ def onboarding(request: HttpRequest) -> HttpResponse:
         {
             "onboarding_form": form,
             "onboarding_levels": PROFILE_LEVELS,
+            "daily_goal_minutes_options": DAILY_GOAL_MINUTES,
             "onboarding_error": error,
         },
         status=400 if error else 200,
@@ -661,6 +668,7 @@ def profile(request: HttpRequest, section: str = "profile") -> HttpResponse:
         "display_name": dashboard.display_name,
         "level": dashboard.level,
         "daily_goal_lessons": dashboard.daily_goal_lessons,
+        "daily_goal_minutes": str(dashboard.daily_goal_minutes),
     }
     profile_message = ""
     profile_error = ""
@@ -706,6 +714,7 @@ def profile(request: HttpRequest, section: str = "profile") -> HttpResponse:
             "display_name": request.POST.get("display_name", "").strip(),
             "level": request.POST.get("level", "").upper(),
             "daily_goal_lessons": request.POST.get("daily_goal_lessons", str(dashboard.daily_goal_lessons)),
+            "daily_goal_minutes": request.POST.get("daily_goal_minutes", str(dashboard.daily_goal_minutes)),
         }
         if not profile_form["display_name"]:
             profile_error = "Укажите имя"
@@ -713,6 +722,8 @@ def profile(request: HttpRequest, section: str = "profile") -> HttpResponse:
             profile_error = "Имя должно быть не длиннее 80 символов"
         elif profile_form["level"] not in PROFILE_LEVELS:
             profile_error = "Выберите уровень от A1 до C2"
+        elif "daily_goal_minutes" in request.POST and profile_form["daily_goal_minutes"] not in {str(value) for value in DAILY_GOAL_MINUTES}:
+            profile_error = "Выбери цель 10, 15 или 30 минут."
         elif not profile_form["daily_goal_lessons"].isdigit() or not 1 <= int(profile_form["daily_goal_lessons"]) <= 10:
             profile_error = "Цель должна быть от 1 до 10 уроков в день"
         elif save_profile_settings(
@@ -721,12 +732,14 @@ def profile(request: HttpRequest, section: str = "profile") -> HttpResponse:
             profile_form["display_name"],
             profile_form["level"],
             int(profile_form["daily_goal_lessons"]),
+            **({"daily_goal_minutes": int(profile_form["daily_goal_minutes"])} if "daily_goal_minutes" in request.POST else {}),
         ):
             dashboard = replace(
                 dashboard,
                 display_name=profile_form["display_name"],
                 level=profile_form["level"],
-                daily_goal_lessons=int(profile_form["daily_goal_lessons"]),
+                daily_goal_lessons=legacy_lessons_from_minutes(int(profile_form["daily_goal_minutes"])) if "daily_goal_minutes" in request.POST else int(profile_form["daily_goal_lessons"]),
+                daily_goal_minutes=int(profile_form["daily_goal_minutes"]) if "daily_goal_minutes" in request.POST else minutes_from_legacy_lessons(int(profile_form["daily_goal_lessons"])),
             )
             profile_message = "Профиль сохранён"
         else:
@@ -738,6 +751,7 @@ def profile(request: HttpRequest, section: str = "profile") -> HttpResponse:
             "dashboard": dashboard,
             "email": request.supabase_user.email or "Email не указан",
             "profile_levels": PROFILE_LEVELS,
+            "daily_goal_minutes_options": DAILY_GOAL_MINUTES,
             "profile_form": profile_form,
             "exclude_remote_work": request.POST.get("exclude_remote_work") == "on" if request.method == "POST" and request.POST.get("practice_topics_present") == "1" and request.POST.get("form_action") != "reminders" else "remote-work" in excluded_practice_topics(request),
             "profile_message": profile_message,
@@ -928,13 +942,13 @@ def _daily_plan(request: HttpRequest):
         today=timezone.localdate(),
         daily_task_limit=dashboard.daily_goal_lessons,
         recent_completion_results=dashboard.recent_completion_results,
-        time_budget_minutes=plan_minutes,
+        time_budget_minutes=plan_minutes if "minutes" in request.GET else dashboard.daily_goal_minutes,
     )
     completed_count = sum(task["completed"] for task in lesson_tasks)
     progress_percent = (
         round(completed_count / len(lesson_tasks) * 100) if lesson_tasks else 0
     )
-    return dashboard, lesson_tasks, completed_count, progress_percent, plan_minutes
+    return dashboard, lesson_tasks, completed_count, progress_percent, plan_minutes if "minutes" in request.GET else dashboard.daily_goal_minutes
 
 
 def _no_store(response: HttpResponse) -> HttpResponse:

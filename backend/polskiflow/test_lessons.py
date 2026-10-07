@@ -1,3 +1,4 @@
+from datetime import date, timedelta
 from unittest.mock import patch
 
 from django.test import TestCase
@@ -91,8 +92,8 @@ class LessonViewsTests(TestCase):
         self.assertContains(response, 'aria-label="Выполнение цели на сегодня"')
         self.assertContains(response, 'aria-valuenow="0"')
         self.assertContains(response, "Задания на сегодня")
-        self.assertContains(response, 'aria-label="Длительность плана"')
-        self.assertContains(response, 'href="?minutes=15#daily-plan" aria-current="page"')
+        self.assertContains(response, 'class="muted daily-goal-summary"')
+        self.assertNotContains(response, 'href="?minutes=15#daily-plan"')
         self.assertContains(response, "Słówka dnia")
         self.assertContains(response, "Gramatyka")
         self.assertContains(response, "Powtórka")
@@ -242,8 +243,8 @@ class LessonViewsTests(TestCase):
 
         response = self.client.get("/?minutes=30")
 
-        self.assertContains(response, "0 из 4")
-        self.assertNotContains(response, "Новая тема")
+        self.assertContains(response, f"0 из {len(response.context['tasks'])}")
+        self.assertNotContains(response, 'class="course-topic"')
         self.assertContains(response, "Задания на сегодня")
 
         course_page = self.client.get("/course/")
@@ -502,6 +503,8 @@ class LessonViewsTests(TestCase):
             previous_week_completed_count=3,
             daily_goal_lessons=2,
             recent_daily_completion_counts=(2,) * 14 + (0,) * 14,
+            daily_goal_minutes=10,
+            recent_completion_results=tuple({"lesson_id": lesson_id, "plan_date": (date.today() - timedelta(days=offset)).isoformat()} for offset in range(14) for lesson_id in ("words", "grammar")),
         )
         mocked_words.return_value = [{"word": "dom"}, {"word": "dzień"}]
 

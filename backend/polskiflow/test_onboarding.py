@@ -7,6 +7,15 @@ from polskiflow.progress_store import DashboardProgress
 
 
 class OnboardingTests(TestCase):
+    @patch("polskiflow.auth_views.save_profile_settings", return_value=True)
+    def test_minute_goal_uses_same_owner_profile_and_rejects_invalid_duration(self, save):
+        response = self.client.post("/welcome/", {"display_name": "Anna", "level": "B1", "daily_goal_minutes": "30"})
+        self.assertRedirects(response, "/?welcome=1", fetch_redirect_response=False)
+        self.assertEqual(save.call_args.kwargs, {"daily_goal_minutes": 30})
+        save.reset_mock()
+        self.assertContains(self.client.post("/welcome/", {"display_name": "Anna", "level": "B1", "daily_goal_minutes": "20"}), "Выбери цель 10, 15 или 30 минут.", status_code=400)
+        save.assert_not_called()
+
     def setUp(self):
         self.client.cookies[ACCESS_COOKIE] = "access"
         auth = patch(
@@ -33,10 +42,10 @@ class OnboardingTests(TestCase):
         response = self.client.get("/welcome/")
         self.assertContains(response, "Первый шаг из одного")
         self.assertContains(response, 'name="level"', count=6)
-        self.assertContains(response, 'name="daily_goal_lessons"', count=4)
+        self.assertContains(response, 'name="daily_goal_minutes"', count=3)
         self.assertContains(response, "Это не тест CEFR")
         self.assertContains(response, 'value="A1" checked')
-        self.assertContains(response, 'value="2" checked')
+        self.assertContains(response, 'value="15" checked')
 
     @patch("polskiflow.auth_views.save_profile_settings", return_value=True)
     def test_valid_setup_updates_existing_owner_profile(self, save):

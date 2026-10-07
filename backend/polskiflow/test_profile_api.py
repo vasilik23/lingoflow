@@ -9,6 +9,25 @@ from polskiflow.progress_store import DashboardProgress
 
 @override_settings(SUPABASE_URL="https://example.supabase.co", SUPABASE_ANON_KEY="anon")
 class ProfileApiTests(TestCase):
+    def test_older_client_roundtrip_can_change_legacy_goal_without_losing_minutes(self):
+        with self._auth(), patch("polskiflow.api_views.load_dashboard_progress", return_value=self._progress()), patch("polskiflow.api_views.save_profile_settings", return_value=True):
+            response = self.client.patch("/api/v1/me/profile/", data=json.dumps({"display_name": "Ada", "level": "A2", "daily_goal_lessons": 6, "daily_goal_minutes": 15}), content_type="application/json", **self.authorization)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()["data"]["profile"]["daily_goal_minutes"], 30)
+
+    def test_minutes_patch_persists_canonical_goal_and_rejects_competing_fields(self):
+        with self._auth(), patch("polskiflow.api_views.load_dashboard_progress", return_value=self._progress()), patch("polskiflow.api_views.save_profile_settings", return_value=True) as save:
+            response = self.client.patch("/api/v1/me/profile/", data=json.dumps({"daily_goal_minutes": 30}), content_type="application/json", **self.authorization)
+            self.assertEqual(response.json()["data"]["profile"]["daily_goal_minutes"], 30)
+            save.assert_called_once_with("owner-token", "owner-1", "Ada", "A2", 6, daily_goal_minutes=30)
+            save.reset_mock()
+            for value in (True, "30", 0, 20, 31):
+                invalid = self.client.patch("/api/v1/me/profile/", data=json.dumps({"daily_goal_minutes": value}), content_type="application/json", **self.authorization)
+                self.assertEqual(invalid.status_code, 400)
+            conflicting = self.client.patch("/api/v1/me/profile/", data=json.dumps({"daily_goal_minutes": 10, "daily_goal_lessons": 6}), content_type="application/json", **self.authorization)
+            self.assertEqual(conflicting.status_code, 400)
+            save.assert_not_called()
+
     authorization = {"HTTP_AUTHORIZATION": "Bearer owner-token"}
 
     def _auth(self):
@@ -27,7 +46,7 @@ class ProfileApiTests(TestCase):
         with self._auth(), patch("polskiflow.api_views.load_dashboard_progress", return_value=self._progress()) as load:
             response = self.client.get("/api/v1/me/profile/", **self.authorization)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json()["data"]["profile"], {"display_name": "Ada", "level": "A2", "daily_goal_lessons": 4})
+        self.assertEqual(response.json()["data"]["profile"], {"display_name": "Ada", "level": "A2", "daily_goal_lessons": 4, "daily_goal_minutes": 15})
         load.assert_called_once_with("owner-token", "owner-1", "ada")
         self.assertNotIn("owner-1", str(response.json()))
         self.assertNotIn("email", response.json()["data"]["profile"])
@@ -41,7 +60,7 @@ class ProfileApiTests(TestCase):
                 content_type="application/json", **self.authorization,
             )
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json()["data"]["profile"], {"display_name": "Anna", "level": "A2", "daily_goal_lessons": 6})
+        self.assertEqual(response.json()["data"]["profile"], {"display_name": "Anna", "level": "A2", "daily_goal_lessons": 6, "daily_goal_minutes": 30})
         save.assert_called_once_with("owner-token", "owner-1", "Anna", "A2", 6)
 
     def test_patch_accepts_all_curriculum_levels(self):

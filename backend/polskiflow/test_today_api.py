@@ -10,6 +10,17 @@ from polskiflow.progress_store import DashboardProgress
 
 @override_settings(SUPABASE_URL="https://example.supabase.co", SUPABASE_ANON_KEY="anon")
 class TodayApiTests(TestCase):
+    def test_today_and_bootstrap_use_saved_minutes_without_query_override(self):
+        progress = DashboardProgress("Ada", "A2", 0, frozenset(), True, daily_goal_lessons=1, daily_goal_minutes=30)
+        lessons = [{"id": str(i), "kind": "words", "title": str(i), "minutes": 5, "level": "A2"} for i in range(8)]
+        with self._auth(), patch("polskiflow.api_views.load_dashboard_progress", return_value=progress), patch("polskiflow.api_views.load_personal_words", return_value=[]), patch("polskiflow.api_views.load_latest_lesson_draft_result", return_value=LessonDraftLoadResult(True)), patch("polskiflow.api_views.tasks", return_value=lessons):
+            today = self.client.get("/api/v1/me/today/", **self.authorization).json()["data"]
+            bootstrap = self.client.get("/api/v1/me/bootstrap/", **self.authorization).json()["data"]
+        self.assertEqual(today["time_budget_minutes"], 30)
+        self.assertEqual(today["task_count"], 6)
+        self.assertEqual(bootstrap["today"]["tasks"], today["tasks"])
+        self.assertEqual(bootstrap["profile"]["daily_goal_minutes"], 30)
+
     authorization = {"HTTP_AUTHORIZATION": "Bearer owner-token"}
 
     def _auth(self):
