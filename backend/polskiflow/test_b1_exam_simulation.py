@@ -81,6 +81,18 @@ class B1ExamSimulationDomainTests(SimpleTestCase):
 
 
 class B1ExamSimulationViewTests(TestCase):
+    def test_shared_listening_is_scoped_to_the_active_listening_part(self):
+        response = self.client.get("/exam/b1/simulation/", {"part": "listening"})
+        self.assertContains(response, 'data-b1-listening')
+        self.assertContains(response, 'data-listening-form="simulation-form"')
+        self.assertContains(response, 'data-listening-transcript="simulation-listening-transcript"')
+        self.assertContains(response, 'data-run-audio-stop disabled')
+        self.assertContains(response, 'root.dataset.runId = String(state.startedAt)')
+        self.assertContains(response, 'два прослушивания и пауза 30 секунд')
+        self.assertNotContains(response, 'id="simulation-play"')
+        for part in ("reading", "grammar", "writing", "speaking"):
+            self.assertNotContains(self.client.get("/exam/b1/simulation/", {"part": part}), 'data-b1-listening')
+
     def setUp(self):
         self.client.cookies[ACCESS_COOKIE] = "access"
         auth = patch(

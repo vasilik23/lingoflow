@@ -1,8 +1,8 @@
 {% extends "base.html" %}
-{% load i18n ui %}
+{% load i18n ui static %}
 {% block title %}{% translate "Недельный пробный модуль B1 · LingoFlow" %}{% endblock %}
 {% block content %}
-<div class="mock-shell" data-mock-root data-storage-namespace="{{ mock_storage_namespace }}" data-variant-id="{{ variant.id }}" data-duration-seconds="{{ duration_seconds }}"{% if result %} data-completed="true"{% endif %}{% if error %} data-error="true"{% endif %}>
+<div class="mock-shell" data-mock-root{% if not result and not error %} data-b1-listening data-namespace="mock:{{ mock_storage_namespace }}" data-listening-form="mock-form" data-listening-transcript="mock-listening-transcript"{% endif %} data-storage-namespace="{{ mock_storage_namespace }}" data-variant-id="{{ variant.id }}" data-duration-seconds="{{ duration_seconds }}"{% if result %} data-completed="true"{% endif %}{% if error %} data-error="true"{% endif %}>
   <header class="mock-header">
     <div><p class="eyebrow">{% translate "B1 · недельная тренировка ·" %} {{ variant.label|ui_text }}</p><h1>{% translate "Пробный мини‑модуль" %}</h1><p>{% translate "15 минут: 3 проверяемых блока + 2 блока самопроверки. Аудирование и чтение — по 2 вопроса, грамматика — 3. Письмо и речь не получают автоматического балла. Вариант меняется раз в неделю. Это тренировка LingoFlow, не официальный тест и не прогноз результата." %}</p></div>
     {% if not result %}<div class="mock-timer" role="timer" aria-live="off"><strong id="mock-timer">15:00</strong><span>{% translate "осталось" %}</span></div><p class="visually-hidden" id="mock-timer-status" role="status" aria-live="polite" aria-atomic="true"></p>{% endif %}
@@ -26,7 +26,7 @@
     <section class="card mock-section" aria-labelledby="mock-listening-title">
       <div class="mock-section-heading"><span>1</span><div><p class="eyebrow">Rozumienie ze słuchu</p><h2 id="mock-listening-title">{% translate "Аудирование" %}</h2></div></div>
       {% if not result %}{% include "partials/b1_exam_instruction.html" with instruction=instructions.listening %}{% endif %}
-      {% if not result %}<button class="compact-button" type="button" id="mock-play">{% translate "▶ Прослушать сообщение" %}</button><p class="muted" id="mock-audio-status" aria-live="polite">{% translate "Системный польский голос устройства; можно прослушать повторно." %}</p>{% else %}<p lang="pl" class="mock-source-text">{{ listening_transcript|ui_text }}</p>{% endif %}
+      {% if not result %}{% include "partials/b1_listening_controls.html" %}{% else %}<p lang="pl" class="mock-source-text">{{ listening_transcript|ui_text }}</p>{% endif %}
       {% for question in questions %}{% if question.module == "listening" %}{% include "partials/b1_mock_question.html" %}{% endif %}{% endfor %}
     </section>
 
@@ -95,6 +95,7 @@
     form.appendChild(resume); form.submit(); return;
   }
   token.value = draft.token;
+  root.dataset.runId = draft.token;
   answers.forEach(input => { input.checked = draft.answers?.[input.name] === input.value; });
   if (writing && typeof draft.writing === 'string') writing.value = draft.writing;
   const save = () => {
@@ -132,15 +133,10 @@
     const minutes = String(Math.floor(left / 60)).padStart(2, '0');
     const seconds = String(left % 60).padStart(2, '0');
     timer.textContent = `${minutes}:${seconds}`;
-    if (left <= 0) { form.querySelectorAll('input, button, textarea').forEach(el => el.disabled = true); timer.parentElement.classList.add('expired'); return; }
+    if (left <= 0) { root.dataset.expired = '1'; root.dispatchEvent(new Event('b1-run-expired')); form.querySelectorAll('input, button, textarea').forEach(el => el.disabled = true); timer.parentElement.classList.add('expired'); return; }
     window.setTimeout(tick, 1000);
   }; tick();
-  document.getElementById('mock-play')?.addEventListener('click', () => {
-    const status = document.getElementById('mock-audio-status');
-    if (!('speechSynthesis' in window)) { status.textContent = ui('На этом устройстве системное воспроизведение недоступно.'); return; }
-    speechSynthesis.cancel(); const utterance = new SpeechSynthesisUtterance(JSON.parse(document.getElementById('mock-listening-transcript').textContent));
-    utterance.lang = 'pl-PL'; utterance.rate = .9; utterance.onstart = () => status.textContent = ui('Воспроизводится…'); utterance.onend = () => status.textContent = ui('Сообщение завершено. Можно прослушать ещё раз.'); speechSynthesis.speak(utterance);
-  });
 })();
 </script>
+<script src="{% static 'polskiflow/b1-run-listening.js' %}?shell={{ pwa_shell_version }}" defer></script>
 {% endblock %}

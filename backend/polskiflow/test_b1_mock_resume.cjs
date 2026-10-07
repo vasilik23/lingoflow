@@ -13,19 +13,20 @@ function page({variant = 'v1', completed = false, restart = false, error = false
   const clearButton = {addEventListener: (name, fn) => {events.clear = fn;}};
   const status = {};
   const announcements = [];
+  const expiredEvents = [];
   const timerStatus = {set textContent(value) {announcements.push(value);}};
   const writing = {value: '', focus() {}, addEventListener: (name, fn) => {events[name] = fn;}};
   const timer = {parentElement: {classList: {add() {}}}};
   const form = {querySelector: () => token, querySelectorAll: () => answers,
     addEventListener: (name, fn) => {events[name] = fn;}, appendChild: input => {form.resume = input;}, submit: () => {form.submitted = true;}};
   vm.runInNewContext(source, {
-    document: {querySelector: () => ({dataset: {storageNamespace: 'owner', variantId: variant, durationSeconds: '900', ...(completed ? {completed: 'true'} : {}), ...(error ? {error: 'true'} : {})}}),
+    document: {querySelector: () => ({dispatchEvent: event => expiredEvents.push(event.type), dataset: {storageNamespace: 'owner', variantId: variant, durationSeconds: '900', ...(completed ? {completed: 'true'} : {}), ...(error ? {error: 'true'} : {})}}),
       getElementById: id => ({'mock-form': form, 'mock-writing': writing, 'mock-timer': timer, 'mock-clear-writing': clearButton, 'mock-draft-status': status, 'mock-timer-status': timerStatus}[id] || null), createElement: () => ({})},
     sessionStorage: {getItem: key => storage.get(key) || null, setItem: (key, value) => {if (failStorage) throw Error("quota"); storage.set(key, value);}, removeItem: key => storage.delete(key)},
-    Date: {now: () => now}, URL,
+    Date: {now: () => now}, Event, URL,
     window: {addEventListener: (name, fn) => {events[name] = fn;}, location: {href: `https://example.test/mock/${restart ? '?restart=1' : ''}`}, history: {replaceState() {}}, setTimeout: fn => tasks.push(fn)},
   });
-  return {announcements, status, answers, token, writing, timer, form, events, tasks};
+  return {expiredEvents, announcements, status, answers, token, writing, timer, form, events, tasks};
 }
 let first = page();
 const originalToken = first.token.value;
@@ -82,5 +83,6 @@ assert.equal(checkpoints.announcements.at(-1), 'Осталась одна мин
 now += 60000; checkpoints.tasks[4]();
 assert.equal(checkpoints.announcements.at(-1), 'Время истекло.');
 assert.equal(checkpoints.announcements.length, 4);
+assert.deepEqual(checkpoints.expiredEvents, ['b1-run-expired'], 'timer must stop the shared listening controller');
 assert.ok(!fs.readFileSync(path.join(__dirname, '../templates/b1_weekly_mock.html'), 'utf8').includes('<main'));
 console.log('Timer announces checkpoints only');

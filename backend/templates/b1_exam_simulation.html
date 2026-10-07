@@ -1,8 +1,8 @@
 {% extends "base.html" %}
-{% load i18n ui %}
+{% load i18n ui static %}
 {% block title %}{% translate "Тренажёр частей B1 · LingoFlow" %}{% endblock %}
 {% block content %}
-<div class="mock-shell" data-simulation-root data-storage-namespace="{{ simulation_storage_namespace }}" data-variant-id="{{ variant.id }}" data-timing-mode="{{ timing_mode|default:'short' }}"{% if part %} data-part-id="{{ part.id }}" data-duration-seconds="{{ duration_seconds }}"{% endif %}{% if result %} data-result-percent="{{ result.percent }}"{% endif %}>
+<div class="mock-shell" data-simulation-root{% if not result and not error %}{% if part.id == 'listening' %} data-b1-listening data-namespace="simulation:{{ simulation_storage_namespace }}:{{ timing_mode }}" data-listening-form="simulation-form" data-listening-transcript="simulation-listening-transcript"{% endif %}{% endif %} data-storage-namespace="{{ simulation_storage_namespace }}" data-variant-id="{{ variant.id }}" data-timing-mode="{{ timing_mode|default:'short' }}"{% if part %} data-part-id="{{ part.id }}" data-duration-seconds="{{ duration_seconds }}"{% endif %}{% if result %} data-result-percent="{{ result.percent }}"{% endif %}>
   <header class="mock-header">
     <div><p class="eyebrow">B1 · {{ variant.label|ui_text }}</p><h1>{% if part %}{{ part.title|ui_text }} {% translate "на время" %}{% else %}{% translate "Тренажёр частей экзамена" %}{% endif %}</h1><p>{% if part %}{% if timing_mode == 'short' %}{% translate "Короткая тренировка:" %} {{ timer_minutes|ui_text }} {% translate "мин. Учебный ориентир — минута на вопрос" %}{% if part.id == 'listening' %} {% translate "и три минуты на прослушивание" %}{% elif part.id == 'reading' %} {% translate "и две минуты на чтение" %}{% endif %}{% translate "; это не официальный норматив." %}{% else %}{% translate "Полный лимит:" %} {{ part.minutes|ui_text }} {% translate "мин." %}{% endif %} {% translate "Объём этого оригинального набора LingoFlow меньше официального экзамена." %}{% else %}{% translate "Для коротких наборов доступен учебный таймер и отдельный полный лимит части." %}{% endif %}</p></div>
     {% if part and not result %}<div class="mock-timer" role="timer" aria-live="off"><strong id="simulation-timer">{{ timer_minutes|ui_text }}:00</strong><span>{% translate "осталось" %}</span></div><p class="visually-hidden" id="simulation-timer-status" role="status" aria-live="polite" aria-atomic="true"></p>{% endif %}
@@ -35,7 +35,7 @@
       <form method="post" class="mock-form" id="simulation-form">{% csrf_token %}<input type="hidden" name="simulation_token" value="{{ simulation_token }}">
         <section class="card mock-section">
           <div class="mock-section-heading"><span>{{ question_count|ui_text }}</span><div><p class="eyebrow" lang="pl">{{ part.polish_title|ui_text }}</p><h2>{{ part.title|ui_text }}</h2><p class="muted">{{ question_count|ui_text }} {% translate "оригинальных заданий" %}</p></div></div>
-          {% if part.id == "listening" %}{% if result %}<p lang="pl" class="mock-source-text">{{ variant.listening_transcript|ui_text }}</p>{% else %}<button class="compact-button" type="button" id="simulation-play">{% translate "▶ Прослушать сообщение" %}</button><p class="muted" id="simulation-audio-status" aria-live="polite">{% translate "Системный польский голос устройства; запись можно повторить." %}</p>{% endif %}{% elif part.id == "reading" %}<p lang="pl" class="mock-source-text">{{ variant.reading_text|ui_text }}</p>{% endif %}
+          {% if part.id == "listening" %}{% if result %}<p lang="pl" class="mock-source-text">{{ variant.listening_transcript|ui_text }}</p>{% else %}{% include "partials/b1_listening_controls.html" %}{% endif %}{% elif part.id == "reading" %}<p lang="pl" class="mock-source-text">{{ variant.reading_text|ui_text }}</p>{% endif %}
           {% for question in questions %}{% include "partials/b1_mock_question.html" %}{% endfor %}
         </section>
         {% if not result and not error %}<button class="primary-button mock-submit" type="submit">{% translate "Завершить часть и проверить" %}</button>{% endif %}
@@ -97,6 +97,7 @@
       window.history.replaceState({}, '', cleanUrl);
     }
   }
+  root.dataset.runId = String(state.startedAt);
   const resultPercent = Number(root.dataset.resultPercent);
   if (Number.isInteger(resultPercent)) {
     clearDraft();
@@ -163,15 +164,10 @@
     }
     previousLeft = left;
     timer.textContent = `${String(Math.floor(left / 60)).padStart(2, '0')}:${String(left % 60).padStart(2, '0')}`;
-    if (left <= 0) { document.querySelectorAll('#simulation-form input, #simulation-form button, #simulation-writing').forEach(el => el.disabled = true); timer.parentElement.classList.add('expired'); return; }
+    if (left <= 0) { root.dataset.expired = '1'; root.dispatchEvent(new Event('b1-run-expired')); document.querySelectorAll('#simulation-form input, #simulation-form button, #simulation-writing').forEach(el => el.disabled = true); timer.parentElement.classList.add('expired'); return; }
     window.setTimeout(tick, 1000);
   }; tick();
-  document.getElementById('simulation-play')?.addEventListener('click', () => {
-    const status = document.getElementById('simulation-audio-status');
-    if (!('speechSynthesis' in window)) { status.textContent = ui('На этом устройстве системное воспроизведение недоступно.'); return; }
-    speechSynthesis.cancel(); const utterance = new SpeechSynthesisUtterance(JSON.parse(document.getElementById('simulation-listening-transcript').textContent));
-    utterance.lang = 'pl-PL'; utterance.rate = .9; utterance.onstart = () => status.textContent = ui('Воспроизводится…'); utterance.onend = () => status.textContent = ui('Сообщение завершено.'); speechSynthesis.speak(utterance);
-  });
 })();
 </script>
+<script src="{% static 'polskiflow/b1-run-listening.js' %}?shell={{ pwa_shell_version }}" defer></script>
 {% endblock %}
