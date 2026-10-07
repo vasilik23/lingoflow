@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% load i18n ui %}
 {% block title %}{% translate "Мой словарь · PolskiFlow" %}{% endblock %}
+{% block toolbar_title %}<h1>{% translate "Личный словарь" %}</h1>{% endblock %}
 {% block content %}
   <header class="content-header">
-    <div><p class="eyebrow">Moje słowa</p><h1>{% translate "Личный словарь" %}</h1><p class="muted">{% translate "Слова, которые встретились тебе во время чтения." %}</p></div>
+    <div><p class="eyebrow">Moje słowa</p><p class="muted">{% translate "Слова, которые встретились тебе во время чтения." %}</p></div>
     <div class="header-actions">
       {% if can_practice %}<a class="compact-button green-button" href="{% url 'dictionary-practice' %}">{% translate "▶ Тренировать" %}</a>{% endif %}
       <a class="compact-button" href="{% url 'reading-library' %}">{% translate "＋ Читать тексты" %}</a>

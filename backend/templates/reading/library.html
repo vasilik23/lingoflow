@@ -1,19 +1,22 @@
 {% extends "base.html" %}
 {% load i18n ui %}
 {% block title %}{% translate "Чтение · PolskiFlow" %}{% endblock %}
+{% block toolbar_title %}<h1>{% translate "Читай по-польски" %}</h1>{% endblock %}
 {% block content %}
   <header class="content-header">
-    <div><p class="eyebrow">Czytelnia</p><h1>{% translate "Читай по-польски" %}</h1><p class="muted">{% translate "Короткие адаптированные истории с переводом слов по нажатию." %}</p></div>
-    <a class="compact-button secondary-link" href="{% url 'news-library' %}">{% translate "Свежие новости →" %}</a>
+    <div><p class="eyebrow">Czytelnia</p><p class="muted">{% translate "Короткие адаптированные истории с переводом слов по нажатию." %}</p></div>
+    <a class="compact-button news-entry" href="{% url 'news-library' %}">{% translate "Свежие новости →" %}</a>
   </header>
   <section aria-labelledby="texts-title">
     <div class="section-heading"><div><p class="eyebrow">{% translate "По уровню" %}</p><h2 id="texts-title">{% translate "Учебные тексты" %}</h2></div></div>
+    <details class="card filter-panel"{% if reading_filters_active %} open{% endif %}>
+      <summary>{% translate "Фильтры" %}<span class="level-badge">{{ selected_reading_level|ui_text }}</span></summary>
     <nav class="reading-level-tabs" aria-label="{% translate "Уровень учебных текстов" %}">
       {% for level in reading_levels %}
         <a href="{{ level.href }}"{% if selected_reading_level == level.id %} aria-current="page"{% endif %}>{{ level.id|ui_text }}</a>
       {% endfor %}
     </nav>
-    <form class="card catalog-filters reading-filters" method="get" action="{% url 'reading-library' %}" role="search">
+    <form class="catalog-filters reading-filters" method="get" action="{% url 'reading-library' %}" role="search">
       <input type="hidden" name="level" value="{{ selected_reading_level }}">
       <div class="catalog-search-field">
         <label for="reading-search">{% translate "Поиск по текстам" %}</label>
@@ -41,6 +44,7 @@
         {% if reading_filters_active %}<a href="?level={{ selected_reading_level }}#texts-title">{% translate "Сбросить" %}</a>{% endif %}
       </div>
     </form>
+    </details>
     <p class="reading-result-summary" aria-live="polite">{% translate "Найдено учебных текстов:" %} <strong>{{ reading_result_count|ui_text }}</strong></p>
     <div class="reading-grid" aria-live="polite">
     {% for text in texts %}

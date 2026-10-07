@@ -1,14 +1,17 @@
 {% extends "base.html" %}
 {% load i18n ui %}
 {% block title %}{% translate "Курс · PolskiFlow" %}{% endblock %}
+{% block toolbar_title %}<h1>{% translate "Курс польского" %}</h1>{% endblock %}
 {% block content %}
   <header class="content-header">
-    <div><p class="eyebrow">{% translate "Траектория A1 → C2" %}</p><h1>{% translate "Курс польского" %}</h1><p class="muted">{% translate "Проходи темы по порядку: слова, грамматика, повторение, чтение и проверка знаний." %}</p></div>
+    <div><p class="eyebrow">{% translate "Траектория A1 → C2" %}</p><p class="muted">{% translate "Проходи темы по порядку: слова, грамматика, повторение, чтение и проверка знаний." %}</p></div>
     <a class="compact-button" href="{% url 'practice-hub' %}">{% translate "Все тренажёры →" %}</a>
   </header>
   {% if diagnostic_level_applied %}
     <p class="save-success" role="status">{% translate "Уровень" %} {{ selected_level|ui_text }} {% translate "сохранён в профиле. Курс и библиотека теперь открываются с него." %}</p>
   {% endif %}
+  <details class="card filter-panel"{% if catalog_filters.q or catalog_filters.topic or catalog_filters.kind or catalog_filters.duration or catalog_filters.completion %} open{% endif %}>
+    <summary>{% translate "Фильтры" %}<span class="level-badge">{{ selected_level|ui_text }}</span></summary>
   <nav class="course-levels" aria-label="{% translate "Уровни курса" %}">
     {% for level in course_levels %}
       <a href="?level={{ level.name }}"{% if level.name == selected_level %} aria-current="page"{% endif %}>
@@ -17,7 +20,7 @@
       </a>
     {% endfor %}
   </nav>
-  <form class="card catalog-filters" method="get" action="{% url 'course' %}" role="search">
+  <form class="catalog-filters" method="get" action="{% url 'course' %}" role="search">
     <input type="hidden" name="level" value="{{ selected_level }}">
     <div class="catalog-search-field">
       <label for="catalog-search">{% translate "Поиск по курсу" %}</label>
@@ -57,6 +60,7 @@
       {% if catalog_filters.q or catalog_filters.topic or catalog_filters.kind or catalog_filters.duration or catalog_filters.completion %}<a href="?level={{ selected_level }}">{% translate "Сбросить" %}</a>{% endif %}
     </div>
   </form>
+  </details>
   <div class="section-heading course-level-heading">
     <div><p class="eyebrow">{% translate "Уровень" %} {{ selected_level|ui_text }}</p><h2>{% translate "Темы и уроки" %}</h2></div>
     <span>{{ catalog_result_topic_label|ui_text }} · {{ catalog_result_lesson_label|ui_text }}</span>

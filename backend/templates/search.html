@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% load i18n ui %}
 {% block title %}{% translate "Поиск · PolskiFlow" %}{% endblock %}
+{% block toolbar_title %}<h1 id="search-title">{% translate "Что хочешь найти?" %}</h1>{% endblock %}
 {% block content %}
   <section class="search-hero" aria-labelledby="search-title">
-    <div><p class="eyebrow">{% translate "Весь PolskiFlow" %}</p><h1 id="search-title">{% translate "Что хочешь найти?" %}</h1><p class="muted">{% translate "Темы, отдельные уроки и учебные тексты — в одном месте." %}</p></div>
+    <div><p class="eyebrow">{% translate "Весь PolskiFlow" %}</p><p class="muted">{% translate "Темы, отдельные уроки и учебные тексты — в одном месте." %}</p></div>
     <form class="global-search-form" method="get" role="search">
       <label class="visually-hidden" for="global-search-query">{% translate "Поиск по приложению" %}</label>
       <span aria-hidden="true">⌕</span>

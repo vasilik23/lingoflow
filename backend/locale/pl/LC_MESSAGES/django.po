@@ -6864,3 +6864,6 @@ msgstr "Cztery bloki, 20 odpowiedzi i 25 minut. Każdy blok można odsłuchać d
 
 msgid "Фильтрует новые варианты B1 и рекомендации B2. Сохраняется только в этом браузере."
 msgstr "Filtruje nowe warianty B1 i rekomendacje B2. Ustawienie jest zapisywane tylko w tej przeglądarce."
+
+msgid "Фильтры"
+msgstr "Filtry"

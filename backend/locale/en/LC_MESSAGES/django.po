@@ -16591,3 +16591,6 @@ msgstr "Four blocks, 20 answers and 25 minutes. Each block allows two plays with
 
 msgid "Фильтрует новые варианты B1 и рекомендации B2. Сохраняется только в этом браузере."
 msgstr "Filters new B1 variants and B2 recommendations. Saved only in this browser."
+
+msgid "Фильтры"
+msgstr "Filters"

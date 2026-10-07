@@ -2,9 +2,6 @@
 {% load i18n ui %}
 {% block content %}
   {% if request.GET.welcome %}<p class="save-success welcome-success" role="status">{% translate "План готов. Начни с первого задания — его результат сразу появится здесь." %}</p>{% endif %}
-  <header class="dashboard-header">
-    <div class="mobile-brand"><span class="brand-mark">P</span> PolskiFlow</div>
-  </header>
 
   <section class="hero">
     <p class="eyebrow">{% if LANGUAGE_CODE == 'en' %}A good day to learn Polish{% else %}Dobry dzień na polski{% endif %}</p>
