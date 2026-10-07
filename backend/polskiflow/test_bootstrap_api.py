@@ -52,7 +52,7 @@ class BootstrapApiTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         data = response.json()["data"]
-        self.assertEqual(data["profile"], {"display_name": "Ada", "level": "A2", "daily_goal_lessons": 3})
+        self.assertEqual(data["profile"], {"display_name": "Ada", "level": "A2", "daily_goal_lessons": 3, "daily_goal_minutes": 15})
         self.assertEqual(data["progress"]["completed_lesson_count"], 2)
         self.assertEqual(data["progress"]["week"], {"active_days": 4, "completed_lessons": 6})
         self.assertEqual(data["today"]["date"], "2026-09-18")

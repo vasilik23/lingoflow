@@ -17,6 +17,18 @@ from polskiflow.domain.lesson_results import validate_lesson_result
 
 
 class ProgressStoreTests(SimpleTestCase):
+    @override_settings(SUPABASE_URL="https://project.supabase.co", SUPABASE_ANON_KEY="public-key")
+    @patch("polskiflow.progress_store.urlopen")
+    def test_minute_goal_is_saved_with_derived_legacy_count(self, urlopen):
+        response = MagicMock()
+        response.status = 204
+        urlopen.return_value.__enter__.return_value = response
+        self.assertTrue(save_profile_settings("access", "owner", "Ada", "B1", 4, daily_goal_minutes=30))
+        request = urlopen.call_args.args[0]
+        self.assertEqual(json.loads(request.data), {"display_name": "Ada", "level": "B1", "daily_goal_lessons": 6, "daily_goal_minutes": 30})
+        self.assertIn("id=eq.owner", request.full_url)
+        self.assertEqual(request.headers["Authorization"], "Bearer access")
+
     @override_settings(
         SUPABASE_URL="https://project.supabase.co",
         SUPABASE_ANON_KEY="public-key",
@@ -71,7 +83,7 @@ class ProgressStoreTests(SimpleTestCase):
         self.assertEqual(request.method, "PATCH")
         self.assertEqual(request.headers["Authorization"], "Bearer access")
         self.assertEqual(
-            json.loads(request.data), {"display_name": "Anna", "level": "B1", "daily_goal_lessons": 4}
+            json.loads(request.data), {"display_name": "Anna", "level": "B1", "daily_goal_lessons": 4, "daily_goal_minutes": 15}
         )
         self.assertIn("profiles?id=eq.user-123", request.full_url)
 

@@ -98,6 +98,14 @@ that the catalog is permanently immutable.
 
 ## Learner contracts
 
+`daily_goal_minutes` is the canonical saved budget in profile, bootstrap,
+progress and Today responses. `daily_goal_lessons` remains deprecated for
+older clients: 1–2 maps to 10 minutes, 3–4 to 15, and 5–10 to 30. New clients
+should PATCH only `daily_goal_minutes`. A valid explicit Today `?minutes=`
+overrides this request's plan without changing the saved goal. When both goal
+fields are supplied, a single changed field wins; conflicting changes to both
+are rejected with 400. Minute changes derive the compatibility count as 2/3/6.
+
 The owner-scoped learner API provides the state needed by a separate client:
 
 - `GET /api/v1/me/bootstrap/` — one cold-start snapshot with profile settings,
@@ -108,7 +116,7 @@ The owner-scoped learner API provides the state needed by a separate client:
 - `GET /api/v1/me/progress/` — profile level and daily goal, streak, active
   days, deterministic completed lesson IDs, and week/month aggregates;
 - `GET /api/v1/me/profile/` and strict `PATCH` — display name, curriculum
-  target A1–C2 and daily goal from 1 to 10. Partial updates merge with the
+  target A1–C2 and `daily_goal_minutes` (10, 15 or 30). Partial updates merge with the
   current owner-scoped profile; user IDs and unknown fields are rejected;
 - `DELETE /api/v1/me/account/` — permanently deletes only the authenticated
   caller after password reauthentication. The strict payload contains only

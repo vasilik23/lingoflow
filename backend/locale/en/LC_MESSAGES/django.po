@@ -16600,3 +16600,12 @@ msgstr "System settings"
 
 msgid "Помощь"
 msgstr "Help"
+
+msgid "Количество заданий подбирается по длительности уроков."
+msgstr "The number of tasks is based on lesson duration."
+
+msgid "Используем длительность уроков, а не измеренное время занятий."
+msgstr "We use lesson duration estimates, not measured study time."
+
+msgid "Выбери цель 10, 15 или 30 минут."
+msgstr "Choose a goal of 10, 15, or 30 minutes."

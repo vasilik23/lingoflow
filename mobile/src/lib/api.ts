@@ -5,12 +5,12 @@ export type LessonStep = { position: number; type: 'flashcard' | 'choice' | 'sen
 export type NativeLesson = { lesson: { id: string; kind: string; title: string; description?: string }; theory: { title: string; sections: unknown[] } | null; steps: LessonStep[]; step_count: number };
 export type AnswerResult = { correct: boolean; correct_index?: number; correct_sentence?: string; explanation: string };
 export type BootstrapData = {
-  profile: { display_name: string; level: string; daily_goal_lessons: number };
+  profile: { display_name: string; level: string; daily_goal_lessons: number; daily_goal_minutes: number };
   progress: { streak_days: number; active_days: number; completed_lesson_count: number };
   today: { date: string; completed_count: number; task_count: number; progress_percent: number; tasks: TodayTask[]; resume: { lesson_id: string; title: string; kind: string; step: number } | null };
 };
 export type LessonDraft = { lesson_id: string; lesson_kind: string; step_index: number; score: number };
-export type LearnerProfile = { display_name: string; level: string; daily_goal_lessons: number };
+export type LearnerProfile = { display_name: string; level: string; daily_goal_lessons: number; daily_goal_minutes: number };
 export type ReminderPreferences = { daily_reminder_enabled: boolean; reminder_time: string; timezone: string };
 export type Achievement = {
   id: string;
@@ -34,7 +34,7 @@ export async function loadLearnerProfile(accessToken: string): Promise<LearnerPr
 }
 
 export async function updateLearnerProfile(profile: LearnerProfile, accessToken: string): Promise<LearnerProfile> {
-  const result = await apiRequest<{ profile: LearnerProfile }>('/api/v1/me/profile/', accessToken, profile, 'PATCH');
+  const result = await apiRequest<{ profile: LearnerProfile }>('/api/v1/me/profile/', accessToken, { display_name: profile.display_name, level: profile.level, daily_goal_minutes: profile.daily_goal_minutes }, 'PATCH');
   return result.profile;
 }
 

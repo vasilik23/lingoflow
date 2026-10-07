@@ -24,7 +24,7 @@ export function ProfileScreen({ session, colors, onClose }: { session: Session; 
     Promise.all([loadLearnerProfile(session.access_token), loadReminderPreferences(session.access_token)])
       .then(([nextProfile, reminder]) => {
         if (!mounted) return;
-        setProfile(nextProfile); setGoal(String(nextProfile.daily_goal_lessons));
+        setProfile(nextProfile); setGoal(String(nextProfile.daily_goal_minutes));
         setReminderEnabled(reminder.preferences.daily_reminder_enabled);
         setReminderTime(reminder.preferences.reminder_time);
         setDeliveryActive(reminder.delivery_active);
@@ -38,15 +38,15 @@ export function ProfileScreen({ session, colors, onClose }: { session: Session; 
     if (!profile) return;
     const dailyGoal = Number(goal);
     if (!profile.display_name.trim() || profile.display_name.trim().length > 80) return setError('Имя должно содержать от 1 до 80 символов.');
-    if (!Number.isInteger(dailyGoal) || dailyGoal < 1 || dailyGoal > 10) return setError('Дневная цель должна быть от 1 до 10 уроков.');
+    if (![10, 15, 30].includes(dailyGoal)) return setError('Выберите цель 10, 15 или 30 минут.');
     if (!/^(?:[01]\d|2[0-3]):[0-5]\d$/.test(reminderTime)) return setError('Введите время в формате ЧЧ:ММ, например 19:00.');
     setSaving(true); setError(''); setMessage('');
     let profileSaved = false;
     try {
-      const savedProfile = await updateLearnerProfile({ ...profile, display_name: profile.display_name.trim(), daily_goal_lessons: dailyGoal }, session.access_token);
+      const savedProfile = await updateLearnerProfile({ ...profile, display_name: profile.display_name.trim(), daily_goal_minutes: dailyGoal }, session.access_token);
       profileSaved = true;
       const reminder = await updateReminderPreferences({ daily_reminder_enabled: reminderEnabled, reminder_time: reminderTime }, session.access_token);
-      setProfile(savedProfile); setGoal(String(savedProfile.daily_goal_lessons)); setDeliveryActive(reminder.delivery_active);
+      setProfile(savedProfile); setGoal(String(savedProfile.daily_goal_minutes)); setDeliveryActive(reminder.delivery_active);
       setMessage('Настройки сохранены.');
     } catch { setError(profileSaved ? 'Профиль сохранён, но настройку напоминаний обновить не удалось.' : 'Не удалось сохранить настройки. Попробуйте снова.'); }
     finally { setSaving(false); }
@@ -62,8 +62,8 @@ export function ProfileScreen({ session, colors, onClose }: { session: Session; 
       <TextInput accessibilityLabel="Имя" maxLength={80} value={profile.display_name} onChangeText={(display_name) => setProfile({ ...profile, display_name })} style={[styles.input, { color: colors.text, borderColor: colors.border, backgroundColor: colors.surface }]} />
       <Text style={[styles.label, { color: colors.text }]}>Уровень обучения</Text>
       <View accessibilityRole="radiogroup" style={styles.levels}>{levels.map((level) => <Pressable key={level} accessibilityRole="radio" accessibilityState={{ checked: profile.level === level }} onPress={() => setProfile({ ...profile, level })} style={[styles.chip, { borderColor: profile.level === level ? colors.primary : colors.border, backgroundColor: profile.level === level ? colors.surface : 'transparent' }]}><Text style={{ color: profile.level === level ? colors.primary : colors.text, fontWeight: '800' }}>{level}</Text></Pressable>)}</View>
-      <Text style={[styles.label, { color: colors.text }]}>Уроков в день</Text>
-      <TextInput accessibilityLabel="Дневная цель" value={goal} onChangeText={setGoal} keyboardType="number-pad" maxLength={2} style={[styles.input, styles.shortInput, { color: colors.text, borderColor: colors.border, backgroundColor: colors.surface }]} />
+      <Text style={[styles.label, { color: colors.text }]}>Цель на день</Text>
+      <View accessibilityRole="radiogroup" style={styles.levels}>{[10, 15, 30].map((minutes) => <Pressable key={minutes} accessibilityRole="radio" accessibilityState={{ checked: goal === String(minutes), disabled: saving }} disabled={saving} onPress={() => setGoal(String(minutes))} style={[styles.chip, { borderColor: goal === String(minutes) ? colors.primary : colors.border }]}><Text style={{ color: colors.text, fontWeight: '800' }}>{minutes} минут</Text></Pressable>)}</View>
       <View style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.border }]}>
         <View style={styles.switchRow}><View style={styles.switchCopy}><Text style={[styles.cardTitle, { color: colors.text }]}>Напоминать о занятии</Text><Text style={[styles.copy, { color: colors.muted }]}>Ежедневно, часовой пояс Europe/Warsaw</Text></View><Switch accessibilityLabel="Ежедневные напоминания" value={reminderEnabled} onValueChange={setReminderEnabled} trackColor={{ true: colors.primary }} /></View>
         <Text style={[styles.label, { color: colors.text }]}>Время</Text>

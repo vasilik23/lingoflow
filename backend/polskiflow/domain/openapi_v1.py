@@ -378,7 +378,8 @@ def build_openapi_v1():
                     "properties": {
                         "display_name": {"type": "string", "minLength": 1, "maxLength": 80},
                         "level": {"type": "string", "enum": ["A1", "A2", "B1", "B2", "C1", "C2"]},
-                        "daily_goal_lessons": {"type": "integer", "minimum": 1, "maximum": 10},
+                        "daily_goal_lessons": {"type": "integer", "minimum": 1, "maximum": 10, "deprecated": True},
+                        "daily_goal_minutes": {"type": "integer", "enum": [10, 15, 30]},
                     },
                 },
                 "ReminderPreferencesPatchRequest": {

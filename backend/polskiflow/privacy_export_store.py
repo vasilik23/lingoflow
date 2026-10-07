@@ -13,7 +13,7 @@ PAGE_SIZE = 500
 MAX_PAGES = 100
 
 DATASETS = {
-    "profile": ("profiles", "display_name,level,daily_goal_lessons,streak_days,last_active_date,created_at", "created_at.asc"),
+    "profile": ("profiles", "display_name,level,daily_goal_lessons,daily_goal_minutes,streak_days,last_active_date,created_at", "created_at.asc"),
     "lesson_completions": ("lesson_completions", "lesson_id,plan_date,cards_total,cards_known,completed_at", "plan_date.asc,lesson_id.asc"),
     "lesson_result_events": ("lesson_result_events", "event_id,lesson_id,plan_date,completed_at,cards_total,cards_known,contract_version,client_instance_id,created_at", "created_at.asc,event_id.asc"),
     "lesson_drafts": ("lesson_drafts", "lesson_id,lesson_kind,step_index,score,updated_at", "updated_at.asc,lesson_id.asc"),

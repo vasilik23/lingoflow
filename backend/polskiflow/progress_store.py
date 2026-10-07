@@ -11,6 +11,7 @@ from django.conf import settings
 
 from polskiflow.domain.progress import current_streak
 from polskiflow.domain.lesson_results import LessonResult
+from polskiflow.domain.daily_goal import minutes_from_legacy_lessons, legacy_lessons_from_minutes
 
 
 @dataclass(frozen=True)
@@ -31,6 +32,7 @@ class DashboardProgress:
     daily_goal_lessons: int = 4
     recent_daily_completion_counts: tuple[int, ...] = ()
     recent_completion_results: tuple[dict, ...] = ()
+    daily_goal_minutes: int = 15
 
     @property
     def completed_count(self) -> int:
@@ -72,7 +74,7 @@ def load_dashboard_progress(
 
     profile = _get_rows(
         "profiles",
-        {"select": "display_name,level,daily_goal_lessons", "id": f"eq.{user_id}", "limit": "1"},
+        {"select": "display_name,level,daily_goal_lessons,daily_goal_minutes", "id": f"eq.{user_id}", "limit": "1"},
         access_token,
     )
     completions = _get_rows(
@@ -161,6 +163,7 @@ def load_dashboard_progress(
         monthly_active_days=len(monthly_dates),
         monthly_completed_count=len(monthly_lesson_ids),
         daily_goal_lessons=profile_row.get("daily_goal_lessons") or 4,
+        daily_goal_minutes=profile_row.get("daily_goal_minutes") or minutes_from_legacy_lessons(profile_row.get("daily_goal_lessons") or 4),
         recent_daily_completion_counts=tuple(
             len(recent_lessons_by_date[today - timedelta(days=offset)])
             for offset in range(27, -1, -1)
@@ -299,6 +302,8 @@ def save_profile_settings(
     display_name: str,
     level: str,
     daily_goal_lessons: int = 4,
+    *,
+    daily_goal_minutes: int | None = None,
 ) -> bool:
     """Update the authenticated learner's existing profile through RLS."""
 
@@ -307,7 +312,9 @@ def save_profile_settings(
     request = Request(
         f"{settings.SUPABASE_URL.rstrip('/')}/rest/v1/profiles?"
         f"{urlencode({'id': f'eq.{user_id}'})}",
-        data=json.dumps({"display_name": display_name, "level": level, "daily_goal_lessons": daily_goal_lessons}).encode(),
+        data=json.dumps({"display_name": display_name, "level": level,
+            "daily_goal_lessons": legacy_lessons_from_minutes(daily_goal_minutes) if daily_goal_minutes is not None else daily_goal_lessons,
+            "daily_goal_minutes": daily_goal_minutes if daily_goal_minutes is not None else minutes_from_legacy_lessons(daily_goal_lessons)}).encode(),
         method="PATCH",
         headers={
             "apikey": settings.SUPABASE_ANON_KEY,

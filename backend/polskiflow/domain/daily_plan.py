@@ -47,7 +47,7 @@ def build_daily_plan(
 
     due_count = _due_word_count(personal_words, today)
     can_review = personal_words is not None and len(personal_words) >= 4 and due_count > 0
-    lesson_limit = max(1, min(10, daily_task_limit)) - int(can_review)
+    lesson_limit = len(candidates) if time_budget_minutes in DAILY_TIME_MODES else max(1, min(10, daily_task_limit)) - int(can_review)
     plan = [_with_skill(lesson) for lesson in ordered[:lesson_limit]]
 
     reinforcement = _reinforcement_task(

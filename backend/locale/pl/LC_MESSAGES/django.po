@@ -6873,3 +6873,12 @@ msgstr "Ustawienia systemowe"
 
 msgid "Помощь"
 msgstr "Pomoc"
+
+msgid "Количество заданий подбирается по длительности уроков."
+msgstr "Liczba zadań zależy od czasu trwania lekcji."
+
+msgid "Используем длительность уроков, а не измеренное время занятий."
+msgstr "Korzystamy z czasu trwania lekcji, a nie zmierzonego czasu nauki."
+
+msgid "Выбери цель 10, 15 или 30 минут."
+msgstr "Wybierz cel: 10, 15 lub 30 minut."

@@ -1036,6 +1036,7 @@ button.secondary { background: var(--surface); border-color: var(--line); }
 /* B1 exam preparation */
 .exam-home-card { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 1rem; align-items: center; margin-bottom: 1.25rem; border-color: color-mix(in srgb, var(--primary) 24%, var(--line)); background: linear-gradient(135deg, var(--surface), var(--primary-soft)); }
 .exam-home-card h2, .exam-home-card p { margin-bottom: .3rem; }
+.exam-home-card > div { min-width: 0; overflow-wrap: anywhere; }
 .exam-home-card > .compact-button { grid-column: 1 / -1; justify-self: start; }
 .exam-home-countdown { display: grid; place-items: center; min-width: 5.2rem; padding: .7rem; border-radius: 1rem; background: var(--primary); color: white; text-align: center; }
 .exam-home-countdown strong { font-size: 1.7rem; line-height: 1; }

@@ -27,11 +27,10 @@
         </label>
         <label>
           <span>{% translate "Цель на день" %}</span>
-          <select name="daily_goal_lessons" aria-describedby="daily-goal-help">
-            {% for goal in "123456789" %}<option value="{{ goal }}"{% if profile_form.daily_goal_lessons|stringformat:"s" == goal %} selected{% endif %}>{{ goal|ui_text }} {% translate "урок" %}{% if goal != "1" %}{% translate "а" %}{% endif %}</option>{% endfor %}
-            <option value="10"{% if profile_form.daily_goal_lessons|stringformat:"s" == "10" %} selected{% endif %}>{% translate "10 уроков" %}</option>
+          <select name="daily_goal_minutes" aria-describedby="daily-goal-help">
+            {% for goal in daily_goal_minutes_options %}<option value="{{ goal }}"{% if profile_form.daily_goal_minutes == goal|stringformat:"s" %} selected{% endif %}>{{ goal|ui_text }} {% translate "минут" %}</option>{% endfor %}
           </select>
-          <small id="daily-goal-help">{% translate "От 1 до 10 завершённых уроков в день." %}</small>
+          <small id="daily-goal-help">{% translate "Количество заданий подбирается по длительности уроков." %}</small>
         </label>
         <label>
           <span>{% translate "Уровень курса" %}</span>
