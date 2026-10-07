@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 {% load i18n ui %}
 {% block title %}{% translate "Практика · PolskiFlow" %}{% endblock %}
+{% block toolbar_title %}<h1 id="practice-title">{% translate "Практика без лишнего" %}</h1>{% endblock %}
 {% block content %}
   <section class="practice-hero" aria-labelledby="practice-title">
     <div class="practice-hero-copy">
       <p class="eyebrow">{% translate "Тренируй отдельные навыки" %}</p>
-      <h1 id="practice-title">{% translate "Практика без лишнего" %}</h1>
+
       <p>{% translate "Выбери навык под сегодняшнюю задачу: повтори слова, потренируй слух, письмо или живое общение." %}</p>
     </div>
     <a class="practice-course-link" href="{% url 'course' %}"><span>{% translate "Последовательный курс" %}</span><strong>{% translate "Вернуться к темам →" %}</strong></a>

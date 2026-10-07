@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% load i18n ui %}
 {% block title %}{% translate "Новости · PolskiFlow" %}{% endblock %}
+{% block toolbar_title %}<h1>{% translate "Новости на польском" %}</h1>{% endblock %}
 {% block content %}
   <header class="content-header">
-    <div><p class="eyebrow">Żywy polski</p><h1>{% translate "Новости на польском" %}</h1><p class="muted">{% translate "Свежие заголовки из польских RSS по разным темам." %}</p></div>
+    <div><p class="eyebrow">Żywy polski</p><p class="muted">{% translate "Свежие заголовки из польских RSS по разным темам." %}</p></div>
     <div class="content-header-actions"><a class="compact-button secondary-link" href="{% url 'reading-library' %}">{% translate "Учебные тексты" %}</a><a class="compact-button" href="{% url 'dictionary' %}">{% translate "Мой словарь →" %}</a></div>
   </header>
   <section aria-labelledby="news-title">
