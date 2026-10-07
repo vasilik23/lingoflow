@@ -1,1 +1,1 @@
-"""Python application package for the PolskiFlow migration."""
+"""Python application package for the LingoFlow migration."""

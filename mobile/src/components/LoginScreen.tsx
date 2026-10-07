@@ -15,7 +15,7 @@ export function LoginScreen({ colors, booting }: { colors: Colors; booting: bool
   }
   return <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={styles.center}>
     <View style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.border }]}>
-      <Text style={[styles.brand, { color: colors.primary }]}>PolskiFlow</Text>
+      <Text style={[styles.brand, { color: colors.primary }]}>LingoFlow</Text>
       <Text style={[styles.title, { color: colors.text }]}>Продолжим польский?</Text>
       <Text style={[styles.copy, { color: colors.muted }]}>Первый мобильный клиент: вход и персональный план на сегодня.</Text>
       <Text style={[styles.label, { color: colors.text }]}>Email</Text>

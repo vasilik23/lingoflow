@@ -1,9 +1,9 @@
 ---
 name: polskiflow-content
-description: Create, edit, and publish PolskiFlow course content from A1 through C1. Use for complete topics containing vocabulary, grammar, flashcards, quizzes, readings, glossaries, source metadata, Django seeds, and Supabase data migrations.
+description: Create, edit, and publish LingoFlow course content from A1 through C1. Use for complete topics containing vocabulary, grammar, flashcards, quizzes, readings, glossaries, source metadata, Django seeds, and Supabase data migrations.
 ---
 
-# PolskiFlow content
+# LingoFlow content
 
 1. Read `docs/content-roadmap.md` and `docs/content-sources.md`; use `$polskiflow-material-research` for external foundations.
 2. Build a vertical topic: 12–20 active units, two card sets, concise grammar, at least five explained exercises, a reading appropriate to the level, glossary, and eight-question final quiz.

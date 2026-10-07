@@ -30,7 +30,7 @@ jobs:
       - name: Check production public contracts
         run: >-
           python manage.py production_smoke
-          https://polish-learn.vercel.app
+          https://lingoflow-learn.vercel.app
           --public-only
           --timeout 15
       - name: Explain failure response

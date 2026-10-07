@@ -1,9 +1,9 @@
 ---
 name: polskiflow-development
-description: Implement and review PolskiFlow frontend and backend changes in the Python/Django application. Use for Django models, views, templates, HTMX, CSS, routing, admin, Supabase-backed repositories, UI modernization, accessibility, and application architecture.
+description: Implement and review LingoFlow frontend and backend changes in the Python/Django application. Use for Django models, views, templates, HTMX, CSS, routing, admin, Supabase-backed repositories, UI modernization, accessibility, and application architecture.
 ---
 
-# PolskiFlow development
+# LingoFlow development
 
 1. Read `AGENTS.md`, relevant models, views, templates, tests, and migrations before editing.
 2. Treat `backend/` as the production application. Do not revive removed legacy frontend code.

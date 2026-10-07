@@ -1,9 +1,9 @@
 ---
 name: polskiflow-git
-description: Run the PolskiFlow Git and GitHub delivery workflow. Use for branches, commits, pull requests, CI checks, merges, repository cleanup, release coordination, and synchronizing Supabase migrations with Vercel deployments.
+description: Run the LingoFlow Git and GitHub delivery workflow. Use for branches, commits, pull requests, CI checks, merges, repository cleanup, release coordination, and synchronizing Supabase migrations with Vercel deployments.
 ---
 
-# PolskiFlow Git workflow
+# LingoFlow Git workflow
 
 1. Start from a clean, current `main`; preserve unrelated user changes.
 2. Create one `agent/<purpose>` branch per coherent change.

@@ -12,7 +12,7 @@ An Expo account and an EAS project are external prerequisites. From `mobile/`:
 ```bash
 npx eas-cli@latest login
 npx eas-cli@latest init
-npx eas-cli@latest env:create preview --name EXPO_PUBLIC_API_BASE_URL --value https://polskiflow-python.vercel.app --visibility plaintext
+npx eas-cli@latest env:create preview --name EXPO_PUBLIC_API_BASE_URL --value https://lingoflow-learn.vercel.app --visibility plaintext
 npx eas-cli@latest env:create preview --name EXPO_PUBLIC_SUPABASE_URL --value https://YOUR_PROJECT.supabase.co --visibility plaintext
 npx eas-cli@latest env:create preview --name EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY --value YOUR_PUBLIC_PUBLISHABLE_KEY --visibility plaintext
 ```
