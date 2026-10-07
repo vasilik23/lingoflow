@@ -10,6 +10,7 @@ class Element {
   dispatchEvent(event) { return this.emit(event.type, event); }
   pause() {} load() {} focus() {}
   removeAttribute(name) { delete this[name]; }
+  setAttribute(name, value) { this[name] = value; }
 }
 function fixture({denied = false, delayed = false, broken = false, preparing = false, mp4Only = false} = {}) {
   const nodes = Object.fromEntries(['start', 'stop', 'delete', 'audio', 'status', 'finish', 'restart', 'form', 'root', 'window', 'panel'].map(name => [name, new Element()]));
@@ -26,21 +27,28 @@ function fixture({denied = false, delayed = false, broken = false, preparing = f
     stop() { this.state = 'inactive'; }
     complete() { this.emit('dataavailable', {data: new Blob(['audio'])}); this.emit('stop'); }
   }
-  vm.runInNewContext(source, {
-    document: {querySelector: selector => nodes[selector.includes('recorder') ? 'panel' : 'root'], getElementById: () => nodes.form},
+  const context = vm.createContext({
+    document: {addEventListener() {}, querySelector: selector => nodes[selector.includes('recorder') ? 'panel' : 'root'], getElementById: () => nodes.form},
     navigator: {mediaDevices: {getUserMedia: () => { calls++; return denied ? Promise.reject(new Error('denied')) : delayed ? new Promise(resolve => { resolvePermission = resolve; }) : Promise.resolve(stream); }}},
     window: Object.assign(nodes.window, {MediaRecorder: Recorder}), MediaRecorder: Recorder, Blob,
     URL: {createObjectURL: blob => { assert.ok(blob.size > 0); return 'blob:local'; }, revokeObjectURL: url => revoked.push(url)},
   });
-  return {nodes, track, calls: () => calls, recorder: () => recording, resolve: () => resolvePermission(stream), revoked};
+  context.navigator.audioSession = {type: 'auto'};
+  vm.runInContext(fs.readFileSync(path.join(__dirname, 'learning/static/polskiflow/audio-session.js'), 'utf8'), context);
+  vm.runInContext(source, context);
+  return {nodes, track, session: context.navigator.audioSession, calls: () => calls, recorder: () => recording, resolve: () => resolvePermission(stream), revoked};
 }
 (async () => {
   const safari = fixture({mp4Only: true});
   await safari.nodes.start.emit('click'); safari.nodes.stop.emit('click'); safari.recorder().complete();
   assert.equal(safari.recorder().mimeType, 'audio/mp4');
   assert.equal(safari.nodes.audio.hidden, false);
+  assert.equal(safari.session.type, 'playback');
+  assert.equal(safari.nodes.audio.muted, false);
+  assert.equal(safari.nodes.audio.volume, 1);
   const f = fixture(); assert.equal(f.calls(), 0, 'no automatic permission request');
   await f.nodes.start.emit('click'); assert.equal(f.track.readyState, 'live'); assert.equal(f.nodes.finish.disabled, true);
+  assert.equal(f.session.type, 'play-and-record');
   f.nodes.stop.emit('click'); assert.equal(f.track.readyState, 'ended');
   assert.equal(f.nodes.start.disabled, true, 'wait for final chunks before another recording');
   await f.nodes.start.emit('click'); assert.equal(f.calls(), 1);
@@ -57,10 +65,12 @@ function fixture({denied = false, delayed = false, broken = false, preparing = f
     const f = fixture({delayed: true}); const pending = f.nodes.start.emit('click');
     f.nodes[event === 'pagehide' ? 'window' : 'root'].emit(event); f.resolve(); await pending;
     assert.equal(f.track.readyState, 'ended'); assert.equal(f.recorder(), undefined);
+    assert.equal(f.session.type, 'playback');
   }
   for (const options of [{denied: true}, {broken: true}]) {
     const f = fixture(options); await f.nodes.start.emit('click');
     assert.equal(f.nodes.finish.disabled, false, 'self review remains available');
+    assert.equal(f.session.type, 'playback');
     if (options.broken) assert.equal(f.track.readyState, 'ended');
   }
   const preparing = fixture({preparing: true});

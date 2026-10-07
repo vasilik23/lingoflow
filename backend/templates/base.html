@@ -36,6 +36,7 @@
     {% if LANGUAGE_CODE == 'pl' %}<script src="{% static 'polskiflow/i18n-pl.js' %}?shell={{ pwa_shell_version }}"></script>{% endif %}
     {% if LANGUAGE_CODE == 'en' %}<script src="{% static 'polskiflow/i18n-en.js' %}?shell={{ pwa_shell_version }}"></script>{% endif %}
     <script src="{% static 'polskiflow/i18n.js' %}?shell={{ pwa_shell_version }}"></script>
+    <script src="{% static 'polskiflow/audio-session.js' %}?shell={{ pwa_shell_version }}"></script>
     <title>{% block title %}LingoFlow{% endblock %}</title>
     <link rel="icon" href="{% static 'polskiflow/favicon.svg' %}?shell={{ pwa_shell_version }}" type="image/svg+xml">
     <link rel="manifest" href="{% url 'web-app-manifest' %}?language={{ LANGUAGE_CODE }}">

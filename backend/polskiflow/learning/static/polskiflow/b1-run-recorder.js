@@ -12,6 +12,7 @@
   const status = panel.querySelector('[data-record-status]');
   const finish = root.querySelector('[data-finish-part]');
   let stream = null;
+  let endCapture = null;
   let recorder = null;
   let audioUrl = null;
   let pending = false;
@@ -23,6 +24,7 @@
   const release = () => {
     stream?.getTracks().forEach(track => track.stop());
     stream = null;
+    endCapture?.(); endCapture = null;
   };
   const clearClip = () => {
     audio.pause(); audio.removeAttribute('src'); audio.load();
@@ -51,6 +53,7 @@
     clearClip(); pending = true; update();
     status.textContent = ui('Ожидаем разрешение на микрофон…');
     try {
+      endCapture = window.PolskiFlowAudioSession.beginCapture();
       stream = await navigator.mediaDevices.getUserMedia({audio: true});
       if (disposed || expired) { release(); return; }
       const mimeType = ['audio/mp4', 'audio/webm;codecs=opus', 'audio/webm', 'audio/ogg;codecs=opus']
@@ -72,6 +75,7 @@
         const blob = new Blob(chunks, {type: recording.mimeType || chunks[0].type});
         audioUrl = URL.createObjectURL(blob); audio.src = audioUrl;
         audio.hidden = false; remove.hidden = false;
+        window.PolskiFlowAudioSession.prepare(audio);
         status.textContent = expired
           ? ui('Время истекло, микрофон выключен. Можно прослушать запись перед пропуском части.')
           : ui('Микрофон выключен. Прослушай ответ и выполни самопроверку.');

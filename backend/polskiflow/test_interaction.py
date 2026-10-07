@@ -1,4 +1,6 @@
 from unittest.mock import patch
+import subprocess
+from pathlib import Path
 
 from django.test import TestCase
 
@@ -14,6 +16,10 @@ from polskiflow.domain.interaction_scenarios import (
 
 
 class InteractionScenarioTests(TestCase):
+    def test_audio_session_compatibility(self):
+        result = subprocess.run(["node", str(Path(__file__).with_name("test_audio_session.cjs"))], capture_output=True, text=True, timeout=15)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
     def setUp(self):
         self.client.cookies[ACCESS_COOKIE] = "access"
         self.auth_patch = patch(
@@ -65,6 +71,8 @@ class InteractionScenarioTests(TestCase):
         self.assertContains(response, "data-speaking-card data-preparation", count=2)
         self.assertContains(response, "navigator.mediaDevices.getUserMedia")
         self.assertContains(response, "MediaRecorder.isTypeSupported(type)")
+        self.assertContains(response, "PolskiFlowAudioSession.beginCapture()")
+        self.assertContains(response, "PolskiFlowAudioSession.prepare(audio)")
         self.assertContains(response, "История устных ответов")
         self.assertContains(response, 'data-save-recording hidden', count=2)
         self.assertContains(response, 'indexedDB.open("polskiflow-speaking", 1)')

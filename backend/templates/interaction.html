@@ -304,6 +304,7 @@
         let intervalId = null;
         let recorder = null;
         let stream = null;
+        let endCapture = null;
         let chunks = [];
         let audioUrl = null;
         let currentBlob = null;
@@ -340,6 +341,7 @@
           startRecording.disabled = true;
           status.textContent = ui("Ожидаем разрешение на микрофон…");
           try {
+            endCapture = window.PolskiFlowAudioSession.beginCapture();
             stream = await navigator.mediaDevices.getUserMedia({ audio: true });
             chunks = [];
             const mimeType = ['audio/mp4', 'audio/webm;codecs=opus', 'audio/webm', 'audio/ogg;codecs=opus']
@@ -348,12 +350,14 @@
             recorder.addEventListener("dataavailable", function (event) { if (event.data.size) chunks.push(event.data); });
             recorder.addEventListener("stop", function () {
               stream.getTracks().forEach(function (track) { track.stop(); });
+              endCapture?.(); endCapture = null;
               if (audioUrl) URL.revokeObjectURL(audioUrl);
               if (!chunks.length) { startRecording.disabled = false; stopRecording.disabled = true; status.textContent = ui("Запись пуста. Можно попробовать ещё раз."); return; }
               currentBlob = new Blob(chunks, { type: recorder.mimeType || chunks[0]?.type || "" });
               audioUrl = URL.createObjectURL(currentBlob);
               audio.src = audioUrl;
               audio.hidden = false;
+              window.PolskiFlowAudioSession.prepare(audio);
               review.hidden = false;
               stopRecording.disabled = true;
               startRecording.disabled = false;
@@ -369,6 +373,7 @@
             beginCountdown(Number(card.dataset.responseSeconds), function () { if (recorder && recorder.state === "recording") recorder.stop(); });
           } catch (error) {
             stream?.getTracks().forEach(track => track.stop());
+            endCapture?.(); endCapture = null;
             startRecording.disabled = false; stopRecording.disabled = true;
             status.textContent = ui("Нет доступа к микрофону. Разреши его в браузере или используй диктофон устройства.");
             review.hidden = false;
@@ -400,6 +405,7 @@
         });
         window.addEventListener("pagehide", function () {
           if (stream) stream.getTracks().forEach(function (track) { track.stop(); });
+          endCapture?.(); endCapture = null;
           if (audioUrl) URL.revokeObjectURL(audioUrl);
         });
       });
