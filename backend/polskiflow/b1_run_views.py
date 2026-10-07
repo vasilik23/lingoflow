@@ -12,7 +12,7 @@ from django.views.decorators.http import require_http_methods
 from polskiflow.auth_views import require_browser_user
 from polskiflow.domain.b1_exam_instructions import B1_INSTRUCTIONS, B1_RUN_LISTENING_INSTRUCTION, B1_RUN_READING_INSTRUCTION, B1_RUN_WRITING_INSTRUCTION, B1_RUN_SPEAKING_INSTRUCTION
 from polskiflow.domain.b1_exam_simulation import B1_SIMULATION_PARTS
-from polskiflow.domain.b1_training_content import CONTENT_VERSION, score_training_part, training_questions, training_reading_blocks, training_grammar_blocks
+from polskiflow.domain.b1_training_content import CONTENT_VERSION, TRAINING_MINUTES, training_minutes, score_training_part, training_questions, training_reading_blocks, training_grammar_blocks
 from polskiflow.domain.b1_training_writing import training_writing_tasks
 from polskiflow.domain.b1_training_speaking import PREPARATION_SECONDS, training_speaking_tasks
 from polskiflow.domain.b1_weekly_mock import get_mock_variant, weekly_mock_variant
@@ -22,25 +22,10 @@ from polskiflow.domain.b1_listening_recordings import recording_for_variant, rec
 RUN_SALT = "polskiflow.b1-training-run.v1"
 RUN_MAX_AGE = 4 * 60 * 60
 BREAK_SECONDS = 120
-TRAINING_MINUTES = {"listening": 8, "reading": 45, "grammar": 45, "writing": 35, "speaking": 11}
 
 
 def _minutes(state, part_id):
-    if part_id == "listening" and state.get("content_version", 1) >= 10:
-        return 25
-    if part_id == "speaking" and state.get("content_version", 1) < 5:
-        return 3
-    if part_id == "writing" and state.get("content_version", 1) < 4:
-        return 15
-    if part_id == "reading" and state.get("content_version", 1) < 3:
-        return 7
-    if part_id == "reading" and state.get("content_version", 1) < 8:
-        return 22
-    if part_id == "grammar" and state.get("content_version", 1) < 2:
-        return 6
-    if part_id == "grammar" and state.get("content_version", 1) < 6:
-        return 20
-    return TRAINING_MINUTES[part_id]
+    return training_minutes(state.get("content_version", 1), part_id)
 
 
 def _new_state(request):
