@@ -1122,7 +1122,8 @@ button.secondary { background: var(--surface); border-color: var(--line); }
 .app-toolbar .app-user-menu { position: relative; top: auto; right: auto; flex: 0 0 auto; }
 .app-toolbar .app-user-menu > summary { display: grid; place-items: center; width: 44px; height: 44px; }
 .page-shell.with-nav { padding-top: .5rem; }
-.filter-panel { margin-bottom: 1.5rem; }
+.filter-panel { margin-bottom: 1rem; padding: 0 .85rem; border-radius: .85rem; box-shadow: none; }
+.filter-panel[open] { padding-bottom: .85rem; }
 .filter-panel > summary { cursor: pointer; font-weight: 800; min-height: 44px; align-content: center; }
 .filter-panel > summary .level-badge { margin-left: .75rem; }
 .filter-panel .catalog-filters { margin-top: 1rem; padding: 0; border: 0; box-shadow: none; }

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load i18n ui %}
-{% block title %}{{ task.plan_title|ui_text }} — PolskiFlow{% endblock %}
+{% block title %}{{ task.plan_title|ui_text }} — LingoFlow{% endblock %}
 {% block content %}
   <div class="lesson-shell">
     <header class="lesson-header"><a class="back-button" href="{% url 'home' %}" aria-label="{% translate "Вернуться на главную" %}">←</a><strong>{{ task.plan_title|ui_text }}</strong>{% if lesson_bookmarks_available %}<form method="post" action="{% url 'toggle-lesson-bookmark' lesson_id %}">{% csrf_token %}<input type="hidden" name="saved" value="{% if is_bookmarked %}0{% else %}1{% endif %}"><input type="hidden" name="next" value="{{ request.path }}"><button class="lesson-save-button{% if is_bookmarked %} is-saved{% endif %}" type="submit" aria-label="{% if is_bookmarked %}{% translate "Убрать урок из сохранённого" %}{% else %}{% translate "Сохранить урок" %}{% endif %}">{% if is_bookmarked %}★{% else %}☆{% endif %}</button></form>{% else %}<span></span>{% endif %}</header>

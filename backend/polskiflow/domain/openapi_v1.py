@@ -12,10 +12,10 @@ def build_openapi_v1():
     return {
         "openapi": "3.1.0",
         "info": {
-            "title": "PolskiFlow API",
+            "title": "LingoFlow API",
             "version": "1.0.0",
             "description": (
-                "Versioned contracts for the PolskiFlow curriculum and learner-owned state. "
+                "Versioned contracts for the LingoFlow curriculum and learner-owned state. "
                 "Curriculum levels are targets, not official CEFR certification."
             ),
         },
@@ -364,7 +364,7 @@ def build_openapi_v1():
                     "type": "apiKey",
                     "in": "cookie",
                     "name": "polskiflow_access_token",
-                    "description": "HttpOnly browser session cookie managed by PolskiFlow.",
+                    "description": "HttpOnly browser session cookie managed by LingoFlow.",
                 },
                 "csrfHeader": {
                     "type": "apiKey",

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load i18n ui %}
-{% block title %}{% translate "Мои заметки · PolskiFlow" %}{% endblock %}
+{% block title %}{% translate "Мои заметки · LingoFlow" %}{% endblock %}
 {% block content %}
   <header class="content-header notes-header"><div><p class="eyebrow">{% translate "Личная база знаний" %}</p><h1>{% translate "Мои заметки" %}</h1><p class="muted">{% translate "Правила, примеры и вопросы, сохранённые внутри уроков." %}</p></div><span class="result-count">{{ total_count|ui_text }} {% translate "заметок" %}</span></header>
   {% include "partials/personal_learning_nav.html" %}

@@ -21,8 +21,8 @@ def web_app_manifest(request):
     icon_url = f'{static("polskiflow/favicon.svg")}?shell={PWA_SHELL_VERSION}'
     manifest = {
         "id": "/",
-        "name": "PolskiFlow",
-        "short_name": "PolskiFlow",
+        "name": "LingoFlow",
+        "short_name": "LingoFlow",
         "description": "Практика польского языка от A1 до C2",
         "lang": language,
         "start_url": "/",

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load i18n ui %}
-{% block title %}{% translate "Тренировка ошибок · PolskiFlow" %}{% endblock %}
+{% block title %}{% translate "Тренировка ошибок · LingoFlow" %}{% endblock %}
 {% block content %}<div class="lesson-shell mistake-practice-shell">
 <header class="lesson-header"><a class="back-button" href="{% url 'mistake-notebook' %}" aria-label="{% translate "Вернуться к списку ошибок" %}">←</a><strong>{% translate "Тренировка ошибок" %}</strong><span>{{ remaining|default:0|ui_text }}</span></header>
 {% if not available %}<p class="data-notice" role="alert">{% translate "Тренировка временно недоступна. Попробуй позже." %}</p>

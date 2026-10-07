@@ -20,7 +20,7 @@ class EnglishInterfaceTests(SimpleTestCase):
     def test_english_auth_cookie_and_no_global_menu_selector(self):
         page = self.client.get('/login/', HTTP_ACCEPT_LANGUAGE='en-US,en;q=0.9')
         self.assertContains(page, '<html lang="en">')
-        self.assertContains(page, 'Sign in to PolskiFlow')
+        self.assertContains(page, 'Sign in to LingoFlow')
         self.assertContains(page, '<option value="en" selected>English</option>')
         self.assertNotContains(page, 'class="language-switcher"')
         response = self.client.post('/language/', {'language': 'en', 'next': '/login/'})

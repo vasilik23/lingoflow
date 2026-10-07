@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n ui %}{% block title %}{% translate "Учебные подборки · PolskiFlow" %}{% endblock %}{% block content %}
+{% load i18n ui %}{% block title %}{% translate "Учебные подборки · LingoFlow" %}{% endblock %}{% block content %}
 <header class="content-header"><div><p class="eyebrow">{% translate "Твой учебный маршрут" %}</p><h1>{% translate "Подборки" %}</h1><p class="muted">{% translate "Объединяй сохранённые уроки и тексты по своим целям." %}</p></div></header>
 {% include "partials/personal_learning_nav.html" %}
 {% if request.GET.status == "error" %}<p class="form-error" role="alert">{% translate "Не удалось изменить подборку." %}</p>{% elif request.GET.status %}<p class="form-success" role="status">{% translate "Подборки обновлены." %}</p>{% endif %}

@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% load i18n ui %}
-{% block title %}{% translate "Недельный пробный модуль B1 · PolskiFlow" %}{% endblock %}
+{% block title %}{% translate "Недельный пробный модуль B1 · LingoFlow" %}{% endblock %}
 {% block content %}
 <div class="mock-shell" data-mock-root data-storage-namespace="{{ mock_storage_namespace }}" data-variant-id="{{ variant.id }}" data-duration-seconds="{{ duration_seconds }}"{% if result %} data-completed="true"{% endif %}{% if error %} data-error="true"{% endif %}>
   <header class="mock-header">
-    <div><p class="eyebrow">{% translate "B1 · недельная тренировка ·" %} {{ variant.label|ui_text }}</p><h1>{% translate "Пробный мини‑модуль" %}</h1><p>{% translate "15 минут: 3 проверяемых блока + 2 блока самопроверки. Аудирование и чтение — по 2 вопроса, грамматика — 3. Письмо и речь не получают автоматического балла. Вариант меняется раз в неделю. Это тренировка PolskiFlow, не официальный тест и не прогноз результата." %}</p></div>
+    <div><p class="eyebrow">{% translate "B1 · недельная тренировка ·" %} {{ variant.label|ui_text }}</p><h1>{% translate "Пробный мини‑модуль" %}</h1><p>{% translate "15 минут: 3 проверяемых блока + 2 блока самопроверки. Аудирование и чтение — по 2 вопроса, грамматика — 3. Письмо и речь не получают автоматического балла. Вариант меняется раз в неделю. Это тренировка LingoFlow, не официальный тест и не прогноз результата." %}</p></div>
     {% if not result %}<div class="mock-timer" role="timer" aria-live="off"><strong id="mock-timer">15:00</strong><span>{% translate "осталось" %}</span></div><p class="visually-hidden" id="mock-timer-status" role="status" aria-live="polite" aria-atomic="true"></p>{% endif %}
   </header>
 

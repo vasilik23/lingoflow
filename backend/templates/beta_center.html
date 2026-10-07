@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% load i18n ui %}
-{% block title %}{% translate "Закрытая beta · PolskiFlow" %}{% endblock %}
+{% block title %}{% translate "Закрытая beta · LingoFlow" %}{% endblock %}
 {% block content %}
   <header class="beta-hero">
-    <div><p class="eyebrow">{% translate "Закрытая beta" %}</p><h1>{% translate "Помоги проверить PolskiFlow в реальной учёбе" %}</h1><p>{% translate "Пройди несколько обычных сценариев. Если что-то мешает заниматься, отправь сообщение прямо с проблемной страницы." %}</p></div>
+    <div><p class="eyebrow">{% translate "Закрытая beta" %}</p><h1>{% translate "Помоги проверить LingoFlow в реальной учёбе" %}</h1><p>{% translate "Пройди несколько обычных сценариев. Если что-то мешает заниматься, отправь сообщение прямо с проблемной страницы." %}</p></div>
     <div class="beta-progress" aria-label="{% translate "Прогресс знакомства с beta" %}"><strong>{{ milestones_done|ui_text }} / {{ milestones|length|ui_text }}</strong><span>{% translate "учебных рубежей" %}</span></div>
   </header>
   {% if not dashboard.available %}<p class="data-notice">{% translate "Прогресс временно недоступен, но все сценарии можно проверить." %}</p>{% endif %}

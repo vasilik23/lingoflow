@@ -53,7 +53,7 @@ class LocalizationCatalogTests(SimpleTestCase):
     def test_polish_auth_and_validation_and_russian_fallback(self):
         response = self.client.get("/login/", HTTP_ACCEPT_LANGUAGE="pl-PL,pl;q=0.9")
         self.assertContains(response, '<html lang="pl">')
-        self.assertContains(response, "Zaloguj się do PolskiFlow")
+        self.assertContains(response, "Zaloguj się do LingoFlow")
         self.assertContains(response, "Język interfejsu")
         self.assertNotContains(response, 'class="language-switcher"')
         response = self.client.post("/login/", {}, HTTP_ACCEPT_LANGUAGE="pl")
@@ -65,7 +65,7 @@ class LocalizationCatalogTests(SimpleTestCase):
         self.assertContains(response, "Nieprawidłowy email lub hasło.")
         response = self.client.get("/login/", HTTP_ACCEPT_LANGUAGE="de")
         self.assertContains(response, '<html lang="ru">')
-        self.assertContains(response, "Войти в PolskiFlow")
+        self.assertContains(response, "Войти в LingoFlow")
 
     def test_language_choice_persists_and_overrides_browser_header(self):
         response = self.client.post("/language/", {"language": "pl", "next": "/practice/?level=B1"})

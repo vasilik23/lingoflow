@@ -745,7 +745,7 @@ class LessonViewsTests(TestCase):
         response = self.client.get("/sources/")
 
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "создаются специально для PolskiFlow")
+        self.assertContains(response, "создаются специально для LingoFlow")
         self.assertContains(response, "Внешние новостные ленты")
         self.assertContains(response, "Główny Urząd Statystyczny")
         self.assertContains(response, "RMF24")

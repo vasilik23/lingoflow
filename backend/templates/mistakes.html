@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load i18n ui %}
-{% block title %}{% translate "Работа над ошибками · PolskiFlow" %}{% endblock %}
+{% block title %}{% translate "Работа над ошибками · LingoFlow" %}{% endblock %}
 {% block content %}
 <header class="content-header"><div><p class="eyebrow">{% translate "Личная практика" %}</p><h1>{% translate "Работа над ошибками" %}</h1><p class="muted">{% translate "Здесь остаются задания, в которых последний ответ был неверным. Правильный ответ при следующем прохождении уберёт запись автоматически." %}</p></div><a class="compact-button secondary-link" href="{% url 'practice-hub' %}">{% translate "К тренажёрам" %}</a></header>
 {% include "partials/personal_learning_nav.html" %}

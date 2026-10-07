@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "polskiflow"
 version = "0.1.0"
-description = "Python/Django implementation of PolskiFlow"
+description = "Python/Django implementation of LingoFlow"
 requires-python = ">=3.11"
 dependencies = [
   "certifi>=2026.7,<2027",
