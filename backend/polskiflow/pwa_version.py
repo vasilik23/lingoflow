@@ -26,6 +26,7 @@ def current_shell_version() -> str:
         "polskiflow/learning/static/polskiflow/app.css",
         "polskiflow/learning/static/polskiflow/favicon.svg",
         "polskiflow/learning/static/polskiflow/i18n.js",
+        "polskiflow/learning/static/polskiflow/audio-session.js",
         "polskiflow/learning/static/polskiflow/i18n-pl.js",
         "locale/pl/LC_MESSAGES/django.mo",
         "polskiflow/learning/static/polskiflow/i18n-en.js",
