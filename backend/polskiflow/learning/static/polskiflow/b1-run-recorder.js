@@ -53,7 +53,9 @@
     try {
       stream = await navigator.mediaDevices.getUserMedia({audio: true});
       if (disposed || expired) { release(); return; }
-      recorder = new MediaRecorder(stream);
+      const mimeType = ['audio/mp4', 'audio/webm;codecs=opus', 'audio/webm', 'audio/ogg;codecs=opus']
+        .find(type => typeof MediaRecorder.isTypeSupported === 'function' && MediaRecorder.isTypeSupported(type));
+      recorder = new MediaRecorder(stream, mimeType ? {mimeType} : undefined);
       recordingBusy = true;
       const recording = recorder;
       const chunks = [];

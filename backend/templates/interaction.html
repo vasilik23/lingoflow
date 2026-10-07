@@ -336,15 +336,21 @@
             review.hidden = false;
             return;
           }
+          if (startRecording.disabled) return;
+          startRecording.disabled = true;
+          status.textContent = ui("Ожидаем разрешение на микрофон…");
           try {
             stream = await navigator.mediaDevices.getUserMedia({ audio: true });
             chunks = [];
-            recorder = new MediaRecorder(stream);
+            const mimeType = ['audio/mp4', 'audio/webm;codecs=opus', 'audio/webm', 'audio/ogg;codecs=opus']
+              .find(type => typeof MediaRecorder.isTypeSupported === 'function' && MediaRecorder.isTypeSupported(type));
+            recorder = new MediaRecorder(stream, mimeType ? {mimeType} : undefined);
             recorder.addEventListener("dataavailable", function (event) { if (event.data.size) chunks.push(event.data); });
             recorder.addEventListener("stop", function () {
               stream.getTracks().forEach(function (track) { track.stop(); });
               if (audioUrl) URL.revokeObjectURL(audioUrl);
-              currentBlob = new Blob(chunks, { type: recorder.mimeType || "audio/webm" });
+              if (!chunks.length) { startRecording.disabled = false; stopRecording.disabled = true; status.textContent = ui("Запись пуста. Можно попробовать ещё раз."); return; }
+              currentBlob = new Blob(chunks, { type: recorder.mimeType || chunks[0]?.type || "" });
               audioUrl = URL.createObjectURL(currentBlob);
               audio.src = audioUrl;
               audio.hidden = false;
@@ -362,6 +368,8 @@
             status.textContent = ui("Идёт запись. Говори свободно, не читай готовый текст.");
             beginCountdown(Number(card.dataset.responseSeconds), function () { if (recorder && recorder.state === "recording") recorder.stop(); });
           } catch (error) {
+            stream?.getTracks().forEach(track => track.stop());
+            startRecording.disabled = false; stopRecording.disabled = true;
             status.textContent = ui("Нет доступа к микрофону. Разреши его в браузере или используй диктофон устройства.");
             review.hidden = false;
           }
