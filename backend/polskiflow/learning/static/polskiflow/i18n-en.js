@@ -3403,6 +3403,7 @@ window.PolskiFlowEnglishMessages = {
   "Фиксируем первоисточник, автора, лицензию, дату получения, изменения и требуемую атрибуцию. Материалы с неясными правами не публикуются.": "We record the source, author, license, date of receipt, modification and required attribution. Material with unclear rights is not published.",
   "Фиксируй decyzję, osobę odpowiedzialną и termin, используя bezosobowe ustalono/uzgodniono.": "Fix decyzję, osobę odpowiedzialną and termin using bezosobowe ustalono/uzgodniono.",
   "Фиксируй области согласия и разногласия, проверяй перефразирование у сторон и ищи варианты по интересам. Медиатор организует понимание, но не присваивает себе право решения.": "Figure areas of agreement and disagreement, check the paraphrasing of the parties, and look for options of interest. The mediator organizes the understanding, but does not assume the right to decide.",
+  "Фильтрует новые варианты B1 и рекомендации B2. Сохраняется только в этом браузере.": "Filters new B1 variants and B2 recommendations. Saved only in this browser.",
   "Финал определяет голос как систему решений.": "The final defines the vote as a system of decisions.",
   "Финал определяет редактуру как управление пониманием структуры.": "The final defines editing as managing the understanding of structure.",
   "Финал подчёркивает одновременно обоснованность и открытость пересмотру.": "The finale emphasizes both the validity and openness of the revision.",

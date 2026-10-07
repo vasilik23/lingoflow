@@ -1978,6 +1978,7 @@ window.PolskiFlowPolishMessages = {
   "Файл не кэшируется и не содержит паролей или токенов.": "Plik nie jest buforowany i nie zawiera haseł ani tokenów.",
   "Факты, оценки источников и мой осторожный вывод явно разделены.": "Fakty, oceny źródeł i mój ostrożny wniosek są wyraźnie oddzielone.",
   "Фиксируем первоисточник, автора, лицензию, дату получения, изменения и требуемую атрибуцию. Материалы с неясными правами не публикуются.": "Zapisujemy źródło pierwotne, autora, licencję, datę pobrania, zmiany i wymaganą atrybucję. Materiały o niejasnych prawach nie są publikowane.",
+  "Фильтрует новые варианты B1 и рекомендации B2. Сохраняется только в этом браузере.": "Filtruje nowe warianty B1 i rekomendacje B2. Ustawienie jest zapisywane tylko w tej przeglądarce.",
   "Финальный шипящий sz отличает mysz от my и miś.": "Końcowe sz odróżnia mysz od my i miś.",
   "Фокус на следующую неделю": "Cel na następny tydzień",
   "Фокус:": "Cel:",

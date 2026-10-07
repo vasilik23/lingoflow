@@ -136,6 +136,11 @@
           <small id="level-help">{% translate "Определяет материалы в плане на день, курсе и библиотеке." %}</small>
         </label>
       </div>
+      <label class="practice-topic-setting">
+        <input type="hidden" name="practice_topics_present" value="1">
+        <span><input type="checkbox" name="exclude_remote_work"{% if exclude_remote_work %} checked{% endif %}> {% translate "Не предлагать удалённую и гибридную работу" %}</span>
+        <small>{% translate "Фильтрует новые варианты B1 и рекомендации B2. Сохраняется только в этом браузере." %}</small>
+      </label>
       <button type="submit">{% translate "Сохранить профиль" %}</button>
     </form>
   </section>
