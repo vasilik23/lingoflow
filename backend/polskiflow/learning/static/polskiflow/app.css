@@ -1100,9 +1100,11 @@ button.secondary { background: var(--surface); border-color: var(--line); }
 .mock-section-heading > span { display: grid; place-items: center; width: 2.4rem; aspect-ratio: 1; border-radius: .8rem; background: var(--primary-soft); color: var(--primary-dark); font-weight: 900; }
 .mock-section-heading h2, .mock-section-heading p { margin: 0; }
 .mock-source-text { white-space: pre-line; margin: 0; padding: 1rem; border-radius: .8rem; background: var(--surface-soft); line-height: 1.7; }
-.mock-question { display: grid; gap: .55rem; min-width: 0; margin: 0; padding: 1rem 0 0; border: 0; border-top: 1px solid var(--line); }
-.mock-question legend { margin-bottom: .65rem; font-weight: 800; }
-.mock-question label { display: flex; gap: .65rem; align-items: flex-start; padding: .72rem; border: 1px solid var(--line); border-radius: .75rem; cursor: pointer; }
+.mock-question { display: block; min-width: 0; margin: 0; padding: 1rem 0 0; border: 0; border-top: 1px solid var(--line); }
+.mock-question legend { width: 100%; padding: 0; margin-bottom: .65rem; font-weight: 800; line-height: 1.45; }
+.mock-question label { display: flex; gap: .65rem; align-items: flex-start; min-width: 0; min-height: 44px; margin: .55rem 0 0; padding: .72rem; border: 1px solid var(--line); border-radius: .75rem; cursor: pointer; }
+.mock-question input[type="radio"] { flex: 0 0 1.1rem; width: 1.1rem; height: 1.1rem; min-height: 0; margin: .1rem 0 0; padding: 0; accent-color: var(--primary); }
+.mock-question label span { flex: 1; min-width: 0; overflow-wrap: anywhere; line-height: 1.45; }
 .mock-question label:has(input:checked) { border-color: var(--primary); background: var(--primary-soft); }
 .mock-feedback { display: grid; gap: .2rem; padding: .75rem; border-radius: .75rem; font-size: .86rem; }
 .mock-feedback.correct { background: var(--green-soft); }
