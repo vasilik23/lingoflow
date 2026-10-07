@@ -74,6 +74,7 @@ p { line-height: 1.65; }
 .nav-link.active { color: var(--primary); background: var(--primary-soft); }
 .nav-icon { font-size: 1.35rem; line-height: 1; }
 .nav-link-search { display: none; }
+.mobile-search-shortcut { position: fixed; z-index: 40; top: max(1rem, env(safe-area-inset-top)); right: calc(max(1rem, env(safe-area-inset-right)) + 3.25rem); display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border: 1px solid var(--line); border-radius: 50%; color: var(--text); background: var(--surface); }
 
 .dashboard-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.8rem; }
 .mobile-brand { display: flex; align-items: center; gap: .65rem; font-weight: 800; }
@@ -789,7 +790,7 @@ button.secondary { background: white; color: var(--text); border: 1px solid #dcd
 .saved-card h3, .saved-card p { margin: 0; }
 .saved-card p, .saved-card small { color: var(--muted); }
 .saved-card-icon { font-size: 1.75rem; }
-.search-lesson-result { display: grid; gap: .8rem; }
+.search-lesson-result { display: grid; grid-template-columns: minmax(0, 1fr); gap: .8rem; }
 .search-lesson-result > a { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: .8rem; align-items: start; color: inherit; text-decoration: none; }
 .onboarding-page .page-shell { max-width: 68rem; }
 .onboarding-shell { display: grid; gap: 1.25rem; max-width: 58rem; margin: 0 auto; }
@@ -912,6 +913,7 @@ button.secondary { background: white; color: var(--text); border: 1px solid #dcd
   .nav-links { display: grid; grid-template-columns: 1fr; gap: .4rem; }
   .nav-link { grid-template-columns: 2rem 1fr; justify-items: start; align-items: center; padding: .8rem; font-size: .86rem; }
   .nav-link-search { display: grid; }
+  .mobile-search-shortcut { display: none; }
   .page-shell.with-nav { width: min(calc(100% - 18rem), 70rem); margin-left: max(17rem, calc((100% + 13rem - 70rem) / 2)); padding: 5rem 0 4rem; }
   .feedback-launcher { right: auto; left: 1.2rem; bottom: 1.5rem; width: 12.6rem; min-width: 3rem; padding: 0 .95rem; border-radius: 999px; gap: .5rem; }
   .feedback-launcher-label { position: static; overflow: visible; width: auto; height: auto; clip: auto; color: var(--text); font-size: .74rem; font-weight: 800; }

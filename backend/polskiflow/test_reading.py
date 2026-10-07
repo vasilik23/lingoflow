@@ -1,3 +1,5 @@
+import subprocess
+from pathlib import Path
 from unittest.mock import patch
 
 from django.test import TestCase
@@ -8,6 +10,13 @@ from polskiflow.progress_store import DashboardProgress
 
 
 class ReadingViewsTests(TestCase):
+    def test_reader_audio_and_word_selection_browser_regressions(self):
+        result = subprocess.run(
+            ["node", str(Path(__file__).with_name("test_reader_audio.cjs"))],
+            capture_output=True, text=True, timeout=15,
+        )
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
     @classmethod
     def setUpTestData(cls):
         course = Course.objects.create(
