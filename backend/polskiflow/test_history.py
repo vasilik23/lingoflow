@@ -6,6 +6,7 @@ from django.test import SimpleTestCase, TestCase, override_settings
 
 from polskiflow.auth import ACCESS_COOKIE, SupabaseUser
 from polskiflow.domain.weekly_review import build_weekly_review
+from polskiflow.domain.progress_overview import build_progress_overview
 from polskiflow.progress_store import CompletionHistoryPage, DashboardProgress, load_completion_history
 
 
@@ -47,6 +48,23 @@ class WeeklyReviewTests(SimpleTestCase):
         self.assertFalse(review["has_results"])
 
 
+class ProgressOverviewTests(SimpleTestCase):
+    def test_primary_progress_uses_selected_level_and_achievements_use_all_levels(self):
+        lessons = [{"id": "a1", "level": "A1"}, {"id": "b1-one", "level": "B1"}, {"id": "b1-two", "level": "B1"}]
+        completed = frozenset({"a1", "b1-one", "dictionary-practice", "removed"})
+        b1 = build_progress_overview(DashboardProgress("Learner", "B1", 0, completed, True, all_completed_lesson_ids=completed), lessons, [])
+        a1 = build_progress_overview(DashboardProgress("Learner", "A1", 0, completed, True, all_completed_lesson_ids=completed), lessons, [])
+        self.assertEqual((b1["completed_lessons"], b1["total_lessons"], b1["progress_percent"]), (1, 2, 50))
+        self.assertEqual((a1["completed_lessons"], a1["total_lessons"], a1["progress_percent"]), (1, 1, 100))
+        self.assertEqual((b1["course_completed_lessons"], b1["course_total_lessons"], b1["course_progress_percent"]), (2, 3, 67))
+        self.assertEqual(b1["achievements"], a1["achievements"])
+
+    def test_empty_selected_level_does_not_inherit_other_level_progress(self):
+        overview = build_progress_overview(DashboardProgress("Learner", "B1", 0, frozenset({"a1"}), True, all_completed_lesson_ids=frozenset({"a1"})), [{"id": "a1", "level": "A1"}], [])
+        self.assertEqual((overview["completed_lessons"], overview["total_lessons"], overview["progress_percent"]), (0, 0, 0))
+        self.assertEqual(overview["course_progress_percent"], 100)
+
+
 class CompletionHistoryStoreTests(SimpleTestCase):
     @override_settings(SUPABASE_URL="https://project.supabase.co", SUPABASE_ANON_KEY="public", SUPABASE_AUTH_TIMEOUT=2)
     @patch("polskiflow.progress_store.urlopen")
@@ -77,6 +95,30 @@ class LearningHistoryViewTests(TestCase):
         auth = patch("polskiflow.auth.authenticate_access_token", return_value=SupabaseUser("user-1", "a@example.com"))
         auth.start()
         self.addCleanup(auth.stop)
+
+    @patch("polskiflow.history_views.load_personal_words", return_value=[])
+    @patch("polskiflow.history_views.load_dashboard_progress", return_value=DashboardProgress("Learner", "B1", 0, frozenset(), True))
+    @patch("polskiflow.history_views.tasks", return_value=[])
+    @patch("polskiflow.history_views.load_completion_history")
+    def test_single_page_hides_pagination_and_dictionary_has_a_readable_title(self, load, *_):
+        load.return_value = CompletionHistoryPage(({"lesson_id": "dictionary-practice", "plan_date": "2026-10-07", "cards_known": 3, "cards_total": 4},), True, False, False, 1)
+        response = self.client.get("/history/")
+        self.assertContains(response, "Повторение словаря")
+        self.assertNotContains(response, "dictionary-practice")
+        self.assertNotContains(response, 'class="history-pagination"')
+        self.assertContains(response, 'class="activity-column" role="listitem"', count=14)
+        self.assertContains(response, "Твой прогресс · B1")
+
+    @patch("polskiflow.history_views.load_personal_words", return_value=[])
+    @patch("polskiflow.history_views.load_dashboard_progress", return_value=DashboardProgress("Learner", "B1", 0, frozenset(), True))
+    @patch("polskiflow.history_views.tasks", return_value=[])
+    @patch("polskiflow.history_views.load_completion_history")
+    def test_last_page_keeps_previous_link_and_selected_period(self, load, *_):
+        load.return_value = CompletionHistoryPage(({"lesson_id": "dictionary-practice", "plan_date": "2026-10-07"},), True, True, False, 2)
+        response = self.client.get("/history/?period=90&page=2")
+        self.assertContains(response, 'class="history-pagination"')
+        self.assertContains(response, '?period=90&page=1')
+        self.assertNotContains(response, "Старее →")
 
     @patch("polskiflow.history_views.load_dashboard_progress")
     @patch("polskiflow.history_views.tasks", return_value=[{"id": "words", "kind": "words", "title": "Первые слова", "emoji": "💬", "level": "A1"}])

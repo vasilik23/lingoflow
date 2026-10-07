@@ -5,12 +5,13 @@
 
   <section aria-labelledby="progress-title">
     <div class="section-heading">
-      <div><p class="eyebrow">{% translate "Общий результат" %}</p><h2 id="progress-title">{% translate "Твой прогресс" %}</h2></div>
+      <div><p class="eyebrow">{{ dashboard.level|ui_text }}</p><h2 id="progress-title">{% translate "Твой прогресс" %} · {{ dashboard.level|ui_text }}</h2></div>
       <strong>{{ progress_percent|ui_text }}%</strong>
     </div>
-    <div class="profile-progress" role="progressbar" aria-label="{% translate "Пройдено уроков курса" %}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ progress_percent }}">
+    <div class="profile-progress" role="progressbar" aria-label="{% translate "Пройдено уроков курса" %} · {{ dashboard.level|ui_text }}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ progress_percent }}">
       <span style="--value: {{ progress_percent }}%"></span>
     </div>
+    <p class="muted course-progress-summary">{% translate "Общий результат" %} · A1–C2: {{ course_completed_lessons|ui_text }} / {{ course_total_lessons|ui_text }} · {{ course_progress_percent|ui_text }}%</p>
     <div class="profile-stats">
       <article class="card profile-stat"><span aria-hidden="true">✓</span><strong>{{ completed_lessons|ui_text }} / {{ total_lessons|ui_text }}</strong><small>{% translate "уроков пройдено" %}</small></article>
       <article class="card profile-stat"><span aria-hidden="true">🔥</span><strong>{{ dashboard.streak_days|ui_text }}</strong><small>{% translate "дней подряд" %}</small></article>

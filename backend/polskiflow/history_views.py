@@ -37,6 +37,8 @@ def learning_history(request: HttpRequest) -> HttpResponse:
     rows = []
     for completion in page.rows:
         lesson = lesson_map.get(completion.get("lesson_id"), {})
+        if completion.get("lesson_id") == "dictionary-practice":
+            lesson = {"title": "Повторение словаря", "emoji": "🔁"}
         total = completion.get("cards_total") or 0
         known = completion.get("cards_known") or 0
         rows.append({
