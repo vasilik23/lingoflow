@@ -29,5 +29,5 @@
     <p class="muted">{% translate "Это необратимое действие." %}</p>
     <a class="compact-button secondary-link" href="{% url 'account-delete' %}">{% translate "Удалить аккаунт" %}</a>
   </section>
-  <p><a href="{% url 'privacy' %}">{% translate "Приватность" %}</a></p>
+  <a class="card account-privacy-link" href="{% url 'privacy' %}"><span>{% translate "Приватность" %}</span><span aria-hidden="true">→</span></a>
 {% endblock %}

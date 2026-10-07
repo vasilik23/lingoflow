@@ -1183,3 +1183,11 @@ button.secondary { background: var(--surface); border-color: var(--line); }
 .settings-page .language-settings select { width: 100%; min-height: 44px; padding: .65rem .8rem; border: 1px solid var(--line); border-radius: .75rem; background: var(--surface); color: var(--text); font: inherit; }
 .settings-page .theme-control { margin: 0; padding: 0; border: 0; }
 .settings-page .theme-control select { min-height: 44px; }
+
+.profile-form { grid-template-columns: minmax(0, 1fr); min-width: 0; }
+.profile-form label, .settings-page > * { min-width: 0; }
+.profile-form input[type="time"] { display: block; min-width: 0; max-width: 100%; width: 100%; -webkit-appearance: none; appearance: none; text-align: left; }
+.profile-form input[type="time"]::-webkit-date-and-time-value { min-width: 0; text-align: left; }
+.profile-form button { max-width: 100%; white-space: normal; }
+.account-privacy-link { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 1.25rem; color: var(--text); text-decoration: none; font-weight: 800; }
+.account-privacy-link:hover { border-color: var(--primary); color: var(--primary); }
