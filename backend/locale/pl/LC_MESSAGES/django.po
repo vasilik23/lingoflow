@@ -6891,3 +6891,115 @@ msgstr "Zapisz preferencję codziennych przypomnień"
 
 msgid "Сохранить предпочтение"
 msgstr "Zapisz preferencję"
+
+msgid "Проверка стартового уровня"
+msgstr "Sprawdzenie poziomu startowego"
+
+msgid "Около трёх минут · 12 вопросов · можно пропустить"
+msgstr "Około trzech minut · 12 pytań · można pominąć"
+
+msgid "Это ориентир для начала курса, а не оценка CEFR. Проверяем только лексику и грамматику A1–B2; аудирование, речь и письмо здесь не оцениваются."
+msgstr "To wskazówka, od czego zacząć kurs, a nie ocena CEFR. Sprawdzamy tylko słownictwo i gramatykę A1–B2; nie oceniamy słuchania, mówienia ani pisania."
+
+msgid "Задания проверки временно недоступны. Выбери уровень самостоятельно."
+msgstr "Zadania są chwilowo niedostępne. Wybierz poziom samodzielnie."
+
+msgid "Рекомендуем начать с"
+msgstr "Zacznij od poziomu"
+
+msgid "В каждом блоке нужно минимум два верных ответа из трёх. Предлагаем первый блок, где основа ещё неуверенная; ответы сложнее не перекрывают пробелы ниже."
+msgstr "W każdym bloku potrzeba co najmniej dwóch poprawnych odpowiedzi z trzech. Proponujemy pierwszy blok, w którym podstawy są jeszcze niepewne; trudniejsze odpowiedzi nie zastępują brakujących podstaw."
+
+msgid "Основы до B2 в этой проверке уверенные. Уровни C1–C2 здесь не проверяются; их можно выбрать самостоятельно."
+msgstr "Podstawy do B2 w tym sprawdzeniu są mocne. Poziomy C1–C2 nie są tu sprawdzane; możesz wybrać je samodzielnie."
+
+msgid "Продолжить с рекомендацией"
+msgstr "Kontynuuj z rekomendacją"
+
+msgid "Профиль ещё не изменён. На следующем шаге можно выбрать любой уровень."
+msgstr "Profil nie został jeszcze zmieniony. W następnym kroku możesz wybrać dowolny poziom."
+
+msgid "Ответы и объяснения"
+msgstr "Odpowiedzi i wyjaśnienia"
+
+msgid "Выбрать уровень самостоятельно"
+msgstr "Wybierz poziom samodzielnie"
+
+msgid "Следующий блок"
+msgstr "Następny blok"
+
+msgid "Показать рекомендацию"
+msgstr "Pokaż rekomendację"
+
+msgid "Не уверен? Пройди короткую проверку или выбери уровень самостоятельно."
+msgstr "Nie masz pewności? Sprawdź się lub wybierz poziom samodzielnie."
+
+msgid "Проверить стартовый уровень"
+msgstr "Sprawdź poziom startowy"
+
+msgid "Проверка не принята. Начни заново: выбери ответ на каждый вопрос."
+msgstr "Nie udało się przyjąć odpowiedzi. Zacznij ponownie i wybierz odpowiedź na każde pytanie."
+
+msgid "Не знаю"
+msgstr "Nie wiem"
+
+
+msgid "Что значит «Mam na imię Lena»?"
+msgstr "Co znaczy „Mam na imię Lena”?"
+
+msgid "Мне нравится Лена"
+msgstr "Lubię Lenę"
+
+msgid "Меня зовут Лена"
+msgstr "Nazywam się Lena"
+
+msgid "Я вижу Лену"
+msgstr "Widzę Lenę"
+
+msgid "Это Лена"
+msgstr "To Lena"
+
+msgid "Mam na imię… — стандартная конструкция «Меня зовут…»."
+msgstr "Mam na imię… to standardowa konstrukcja służąca do przedstawiania się."
+
+msgid "Выберите ответ на «Jak się masz?»"
+msgstr "Wybierz odpowiedź na „Jak się masz?”."
+
+msgid "Dobrze, dziękuję — естественный короткий ответ: «Хорошо, спасибо»."
+msgstr "Dobrze, dziękuję to naturalna, krótka odpowiedź na pytanie o samopoczucie."
+
+msgid "Как сказать «Я из Украины»?"
+msgstr "Jak powiedzieć, że pochodzisz z Ukrainy, używając „ja”?"
+
+msgid "Для «я» нужна форма jestem: Jestem z Ukrainy."
+msgstr "Z zaimkiem ja używamy formy jestem: Jestem z Ukrainy."
+
+msgid "С ja употребляем mogę."
+msgstr "Z ja używamy formy mogę."
+
+msgid "Для on форма — musi."
+msgstr "Forma dla on to musi."
+
+msgid "Как сказать «я работаю в офисе»?"
+msgstr "Jak powiedzieć, że pracujesz w biurze, używając „ja”?"
+
+msgid "Естественная конструкция: pracuję w biurze."
+msgstr "Naturalna konstrukcja to: pracuję w biurze."
+
+msgid "Rozpocząć karierę — начать профессиональный путь."
+msgstr "Rozpocząć karierę oznacza zacząć swoją drogę zawodową."
+
+msgid "Osiągnął обозначает полученный результат."
+msgstr "Osiągnął oznacza uzyskany rezultat."
+
+msgid "Jeździłem передаёт повторявшееся действие."
+msgstr "Jeździłem opisuje powtarzające się działanie."
+
+msgid "Wprawdzie naturalnie łączy się z ale lub jednak."
+msgstr "Wprawdzie naturalnie łączy się z ale lub jednak."
+
+msgid "Z drugiej strony sygnalizuje kontrastującą perspektywę."
+msgstr "Z drugiej strony sygnalizuje kontrastującą perspektywę."
+
+msgid "Choć wskazuje ograniczenie bez odrzucania całej propozycji."
+msgstr "Choć wskazuje ograniczenie bez odrzucania całej propozycji."
