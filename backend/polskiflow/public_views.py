@@ -14,7 +14,7 @@ DEMO_SALT = "lingoflow-public-demo-v1"
 
 @require_GET
 def public_intro(request):
-    return render(request, "public/intro.html")
+    return render(request, "public_intro.html")
 
 
 def load_demo_question():
@@ -46,6 +46,6 @@ def public_demo(request):
             except (signing.BadSignature, ValueError, TypeError):
                 context["demo_error"] = "Не удалось проверить ответ. Попробуй ещё раз."
                 status = 400
-    response = render(request, "public/demo.html", context, status=status)
+    response = render(request, "public_demo.html", context, status=status)
     response["Cache-Control"] = "private, no-store"
     return response
