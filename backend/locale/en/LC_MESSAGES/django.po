@@ -16762,3 +16762,27 @@ msgstr "Progress"
 
 msgid "Настройки обучения"
 msgstr "Learning preferences"
+
+msgid "Правильных:"
+msgstr "Correct:"
+
+msgid "Неправильных:"
+msgstr "Incorrect:"
+
+msgid "Без ответа:"
+msgstr "Unanswered:"
+
+msgid "Без ответа"
+msgstr "Unanswered"
+
+msgid "Время истекло"
+msgstr "Time is up"
+
+msgid "Время истекло. Проверяем текущие ответы; незаполненные считаются пропущенными."
+msgstr "Time is up. Checking your current answers; blanks count as unanswered."
+
+msgid "Время истекло. Заверши самопроверку или пропусти часть."
+msgstr "Time is up. Complete the self-review or skip this part."
+
+msgid "Прогон восстанавливается в текущей вкладке до 4 часов. При истечении времени проверяемой части текущие ответы отправляются автоматически, пустые считаются пропущенными. Письмо и речь не отправляются на сервер и не оцениваются автоматически. Итог хранится в этой вкладке, не добавляется в историю аккаунта."
+msgstr "The run can be resumed in this tab for up to 4 hours. When an objective section times out, current answers are submitted automatically and blanks count as unanswered. Writing and speech are not sent to the server or graded automatically. The result stays in this tab and is not added to account history."

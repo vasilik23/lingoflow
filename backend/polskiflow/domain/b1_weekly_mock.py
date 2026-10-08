@@ -5,6 +5,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import date
 
+from polskiflow.domain.objective_scoring import score_with_missing
+
 
 @dataclass(frozen=True)
 class MockQuestion:
@@ -113,10 +115,12 @@ def get_mock_variant(variant_id: str) -> MockVariant | None:
     return next((variant for variant in VARIANTS if variant.id == variant_id), None)
 
 
-def score_mock_answers(answers: dict[str, int], variant: MockVariant | None = None) -> dict:
+def score_mock_answers(answers: dict[str, int], variant: MockVariant | None = None, *, allow_missing: bool = False) -> dict:
     """Score only the three objectively checked modules."""
     variant = variant or VARIANTS[0]
     questions = variant.questions
+    if allow_missing:
+        return score_with_missing(questions, answers, lambda complete: score_mock_answers(complete, variant))
     expected_ids = {question.id for question in questions}
     if set(answers) != expected_ids:
         raise ValueError("Ответь на все проверяемые вопросы.")

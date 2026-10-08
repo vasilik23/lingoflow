@@ -71,6 +71,33 @@ class B1WeeklyMockViewTests(TestCase):
         self.assertContains(response, 'два прослушивания и пауза 30 секунд')
         self.assertNotContains(response, 'id="mock-play"')
 
+    @patch("polskiflow.b1_mock_views.save_b1_mock_attempt", return_value=True)
+    def test_timeout_scores_partial_and_empty_without_awarding_missing_answers(self, save_attempt):
+        from types import SimpleNamespace
+        opened = self.client.get("/exam/b1/mock/")
+        token = opened.context["attempt_token"]
+        questions = opened.context["questions"]
+        deadline = opened.context["attempt_started_at_ms"] / 1000 + opened.context["duration_seconds"]
+        fields = {"attempt_token": token, f"answer_{questions[0].id}": questions[0].correct,
+                  f"answer_{questions[1].id}": (questions[1].correct + 1) % len(questions[1].options)}
+        with patch("polskiflow.b1_mock_views.time", SimpleNamespace(time=lambda: deadline - 1)):
+            early = self.client.post("/exam/b1/mock/", fields)
+            self.assertEqual(early.status_code, 400)
+            save_attempt.assert_not_called()
+        with patch("polskiflow.b1_mock_views.time", SimpleNamespace(time=lambda: deadline)):
+            response = self.client.post("/exam/b1/mock/", fields)
+            self.assertEqual(response.status_code, 200)
+            score = response.context["result"]
+            self.assertEqual((score["correct"], score["incorrect"], score["unanswered"]), (1, 1, len(questions) - 2))
+            self.assertTrue(score["timed_out"])
+            self.assertContains(response, "Без ответа")
+            self.assertEqual(sum(module["correct"] for module in score["modules"]), 1)
+            empty = self.client.post("/exam/b1/mock/", {"attempt_token": token})
+            self.assertEqual(empty.context["result"]["unanswered"], len(questions))
+            self.assertEqual(empty.context["result"]["correct"], 0)
+            invalid = self.client.post("/exam/b1/mock/", {"attempt_token": token, f"answer_{questions[0].id}": 999})
+            self.assertEqual(invalid.status_code, 400)
+
     def setUp(self):
         self.client.cookies[ACCESS_COOKIE] = "access"
         auth = patch(

@@ -15,6 +15,57 @@ from polskiflow.domain.b1_training_speaking import PREPARATION_SECONDS, training
 
 
 class B1TrainingRunTests(TestCase):
+    def test_timeout_browser_freezes_and_submits_current_answers_once(self):
+        result = subprocess.run(["node", str(Path(__file__).with_name("test_b1_run_timeout.cjs"))], capture_output=True, text=True, timeout=15)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+    def test_timeout_scores_partial_and_empty_answers_and_keeps_break(self):
+        opened = self.advance(self.client.get("/exam/b1/run/"), "start")
+        questions = opened.context["questions"]
+        self.assertEqual(self.advance(opened, "timeout").status_code, 400)
+        self.now = opened.context["state"]["deadline"]
+        result = self.advance(opened, "timeout", **{f"answer_{questions[0].id}": questions[0].correct, f"answer_{questions[1].id}": (questions[1].correct + 1) % len(questions[1].options)})
+        self.assertEqual(result.status_code, 200)
+        score = result.context["report"][-1]
+        self.assertEqual((score["correct"], score["incorrect"], score["unanswered"]), (1, 1, len(questions) - 2))
+        self.assertTrue(score["timed_out"])
+        self.assertEqual(result.context["state"]["phase"], "break")
+        self.assertContains(result, "Без ответа:")
+        empty = self.advance(opened, "finish")
+        self.assertEqual(empty.context["report"][-1]["percent"], 0)
+        self.assertEqual(empty.context["report"][-1]["unanswered"], len(questions))
+        self.assertEqual(self.advance(opened, "timeout", **{f"answer_{questions[0].id}": 999}).status_code, 400)
+
+    def test_timeout_all_correct_and_legacy_version_remain_scored(self):
+        intro = self.client.get("/exam/b1/run/")
+        for version in (1, 9):
+            state = dict(intro.context["state"], content_version=version, phase="part", deadline=self.now, step=0)
+            questions = training_questions(VARIANTS[0], "listening", version)
+            state["variant_id"] = VARIANTS[0].id
+            response = self.client.post("/exam/b1/run/", {"run_token": signing.dumps(state, salt=RUN_SALT), "action": "timeout", **{f"answer_{q.id}": q.correct for q in questions}})
+            self.assertEqual(response.context["report"][-1]["percent"], 100)
+            self.assertEqual(response.context["report"][-1]["unanswered"], 0)
+
+    def test_partial_grammar_scores_written_blank_without_awarding_points(self):
+        variant = VARIANTS[0]
+        questions = training_questions(variant, "grammar")
+        written = next(q for q in questions if getattr(q, "written", False))
+        choice = next(q for q in questions if not getattr(q, "written", False))
+        score = score_training_part(variant, "grammar", {written.id: "   ", choice.id: choice.correct}, allow_missing=True)
+        self.assertEqual((score["correct"], score["incorrect"], score["unanswered"]), (1, 0, len(questions) - 1))
+        missing = next(item for item in score["details"] if item["question"].id == written.id)
+        self.assertIsNone(missing["selected"])
+        self.assertFalse(missing["is_correct"])
+        with self.assertRaises(ValueError):
+            score_training_part(variant, "grammar", {"unknown": 0}, allow_missing=True)
+
+    def test_expired_free_production_still_requires_self_review_without_percent(self):
+        state = dict(self.client.get("/exam/b1/run/").context["state"], phase="part", step=3, deadline=self.now)
+        response = self.client.post("/exam/b1/run/", {"run_token": signing.dumps(state, salt=RUN_SALT), "action": "finish", "reviewed": "on"})
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response.context["report"][-1]["timed_out"])
+        self.assertNotIn("percent", response.context["report"][-1])
+
     def test_recording_metadata_and_pinned_asset_are_rendered_only_for_matching_run(self):
         from polskiflow.test_b1_listening_recordings import B1RecordingChecksTests
         fixture = B1RecordingChecksTests()
@@ -221,8 +272,9 @@ class B1TrainingRunTests(TestCase):
         fields = {f"answer_{q.id}": q.correct for q in opened.context["questions"]}
         self.now = opened.context["state"]["deadline"]
         late = self.advance(opened, "finish", **fields)
-        self.assertEqual(late.status_code, 400)
-        self.assertEqual(late.context["state"]["results"], [])
+        self.assertEqual(late.status_code, 200)
+        self.assertEqual(late.context["state"]["results"][0]["percent"], 100)
+        self.assertTrue(late.context["state"]["results"][0]["timed_out"])
         skipped = self.advance(opened, "skip", **fields)
         self.assertEqual(skipped.context["state"]["results"][0]["status"], "skipped")
         early = self.advance(skipped, "start")
@@ -269,7 +321,7 @@ class B1TrainingRunTests(TestCase):
         self.assertEqual(self.advance(response, "finish", reviewed="on", writing="private text").status_code, 400)
         self.assertEqual(self.advance(response, "finish", reviewed="on", writing2="private text").status_code, 400)
         completed = self.advance(response, "finish", reviewed="on")
-        self.assertEqual(completed.context["state"]["results"][-1], {"id": "writing", "status": "self_review"})
+        self.assertEqual(completed.context["state"]["results"][-1], {"id": "writing", "status": "self_review", "timed_out": False})
         self.now += BREAK_SECONDS
         speaking = self.advance(completed, "start")
         self.assertContains(speaking, "data-run-recorder")
@@ -339,7 +391,7 @@ class B1TrainingRunTests(TestCase):
         self.assertEqual(self.advance(response, 'finish', **dict(fields, answer_unknown='test')).status_code, 400)
         result = self.advance(response, 'finish', **dict(fields, answer_tw31='  CZASU  ', answer_tw40='pomoglbyś'))
         aggregate = result.context['state']['results'][-1]
-        self.assertEqual(aggregate, {'id': 'grammar', 'status': 'scored', 'correct': 39, 'total': 40, 'percent': 98})
+        self.assertEqual(aggregate, {'id': 'grammar', 'status': 'scored', 'correct': 39, 'total': 40, 'percent': 98, 'timed_out': False, 'incorrect': 1, 'unanswered': 0})
         self.assertNotIn('pomoglbyś', str(result.context['state']))
 
     def test_written_answers_normalize_unicode_but_not_polish_letters(self):
@@ -373,7 +425,8 @@ class B1TrainingRunTests(TestCase):
                 self.assertEqual(self.advance(restored, 'finish', **dict(fields, answer_tr30=6)).status_code, 400)
             finished = self.advance(restored, 'finish', **fields)
             self.assertEqual(finished.context['state']['results'][-1],
-                             {'id': 'reading', 'status': 'scored', 'correct': total, 'total': total, 'percent': 100})
+                             {'id': 'reading', 'status': 'scored', 'correct': total, 'total': total, 'percent': 100,
+                              'timed_out': False, 'incorrect': 0, 'unanswered': 0})
 
     def test_reading_matching_order_and_distractor_for_each_variant(self):
         for variant in VARIANTS:
@@ -435,7 +488,7 @@ class B1TrainingRunTests(TestCase):
             self.assertEqual(self.advance(resumed, 'finish', **dict(list(fields.items())[:-1])).status_code, 400)
             completed = self.advance(resumed, 'finish', **fields)
             self.assertEqual(completed.context['state']['results'][-1],
-                             {'id': 'reading', 'status': 'scored', 'correct': 30, 'total': 30, 'percent': 100})
+                             {'id': 'reading', 'status': 'scored', 'correct': 30, 'total': 30, 'percent': 100, 'timed_out': False, 'incorrect': 0, 'unanswered': 0})
 
     def test_complete_audio_collection_enables_version_ten_and_preserves_missing_pin(self):
         from polskiflow.test_b1_listening_recordings import B1RecordingChecksTests

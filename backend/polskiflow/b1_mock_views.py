@@ -1,3 +1,4 @@
+import time
 from uuid import UUID, uuid4
 
 from django.core import signing
@@ -36,6 +37,15 @@ def _attempt_token(user_id: str, variant_id: str, attempt_id: str | None = None)
     }, salt=ATTEMPT_SALT)
 
 
+def _token_started_at(token: str) -> int:
+    # Read the timestamp only after signature verification for scoring.
+    # Rendering an invalid token must still return the existing form error.
+    try:
+        return signing.b62_decode(token.rsplit(":", 2)[1])
+    except (ValueError, IndexError):
+        return int(time.time())
+
+
 @require_browser_user
 @require_http_methods(["GET", "POST"])
 def b1_weekly_mock(request: HttpRequest) -> HttpResponse:
@@ -58,11 +68,13 @@ def b1_weekly_mock(request: HttpRequest) -> HttpResponse:
             allowed = {"csrfmiddlewaretoken", "attempt_token", *(f"answer_{item.id}" for item in variant.questions)}
             if request.POST.get("resume") == "1" and set(request.POST) <= {"csrfmiddlewaretoken", "attempt_token", "resume"}:
                 pass  # Restore the signed variant without scoring or writing history.
-            elif set(request.POST) - allowed:
+            elif set(request.POST) - allowed or any(len(values) != 1 for _, values in request.POST.lists()):
                 error, status = "Форма содержит неизвестные поля. Начни попытку заново.", 400
             else:
-                answers = {item.id: int(request.POST[f"answer_{item.id}"]) for item in variant.questions}
-                result = score_mock_answers(answers, variant)
+                timed_out = time.time() >= _token_started_at(token) + 15 * 60
+                answers = {item.id: int(request.POST[f"answer_{item.id}"]) for item in variant.questions if f"answer_{item.id}" in request.POST}
+                result = score_mock_answers(answers, variant, allow_missing=timed_out)
+                result.update(timed_out=timed_out, unanswered=result.get("unanswered", 0), incorrect=result.get("incorrect", result["total"] - result["correct"]))
                 saved = save_b1_mock_attempt(
                     request.supabase_access_token,
                     request.supabase_user.id,
@@ -83,6 +95,7 @@ def b1_weekly_mock(request: HttpRequest) -> HttpResponse:
         "listening_transcript": variant.listening_transcript,
         "reading_text": variant.reading_text,
         "attempt_token": token,
+        "attempt_started_at_ms": _token_started_at(token) * 1000,
         "duration_seconds": 15 * 60,
         "result": result,
         "saved": saved,
@@ -125,11 +138,13 @@ def b1_exam_simulation(request: HttpRequest) -> HttpResponse:
             attempt_id = str(UUID(payload.get("attempt_id", "")))
             questions = simulation_questions(variant, part["id"])
             allowed = {"csrfmiddlewaretoken", "simulation_token", *(f"answer_{item.id}" for item in questions)}
-            if set(request.POST) - allowed:
+            if set(request.POST) - allowed or any(len(values) != 1 for _, values in request.POST.lists()):
                 error, status = "Форма содержит неизвестные поля. Начни часть заново.", 400
             else:
-                answers = {item.id: int(request.POST[f"answer_{item.id}"]) for item in questions}
-                result = score_simulation_part(variant, part["id"], answers)
+                timed_out = time.time() >= _token_started_at(token) + simulation_timing(variant, part, timing_mode)["duration_seconds"]
+                answers = {item.id: int(request.POST[f"answer_{item.id}"]) for item in questions if f"answer_{item.id}" in request.POST}
+                result = score_simulation_part(variant, part["id"], answers, allow_missing=timed_out)
+                result.update(timed_out=timed_out, unanswered=result.get("unanswered", 0), incorrect=result.get("incorrect", result["total"] - result["correct"]))
                 saved = save_b1_section_attempt(
                     request.supabase_access_token,
                     request.supabase_user.id,
@@ -166,6 +181,7 @@ def b1_exam_simulation(request: HttpRequest) -> HttpResponse:
         "questions": questions,
         "question_count": len(questions),
         "simulation_token": token,
+        "attempt_started_at_ms": _token_started_at(token) * 1000,
         **(simulation_timing(variant, part, timing_mode) if part else {}),
         "result": result,
         "saved": saved,

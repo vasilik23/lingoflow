@@ -81,7 +81,7 @@ assert.equal(checkpoints.announcements.at(-1), 'Осталось 5 минут.')
 now += 240000; checkpoints.tasks[3]();
 assert.equal(checkpoints.announcements.at(-1), 'Осталась одна минута.');
 now += 60000; checkpoints.tasks[4]();
-assert.equal(checkpoints.announcements.at(-1), 'Время истекло.');
+assert.equal(checkpoints.announcements.at(-1), 'Время истекло. Проверяем текущие ответы; незаполненные считаются пропущенными.');
 assert.equal(checkpoints.announcements.length, 4);
 assert.deepEqual(checkpoints.expiredEvents, ['b1-run-expired'], 'timer must stop the shared listening controller');
 assert.ok(!fs.readFileSync(path.join(__dirname, '../templates/b1_weekly_mock.html'), 'utf8').includes('<main'));

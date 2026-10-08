@@ -12,7 +12,8 @@ function page({part = 'reading', restart = false, duration = 60, result} = {}) {
   const listeners = {};
   const answers = [{name: 'answer_q1', value: '0', checked: false}, {name: 'answer_q1', value: '1', checked: false}];
   const token = {value: 'new-token'};
-  const form = {querySelector: () => token, addEventListener: (name, fn) => { listeners[name] = fn; }};
+  const snapshots = [];
+  const form = {appendChild: input => snapshots.push(input), querySelectorAll: () => [], submit() {this.submitted = true;}, querySelector: () => token, addEventListener: (name, fn) => { listeners[name] = fn; }};
   const clearButton = {addEventListener: (name, fn) => {listeners.clear = fn;}};
   const status = {};
   const announcements = [];
@@ -25,15 +26,16 @@ function page({part = 'reading', restart = false, duration = 60, result} = {}) {
   const callbacks = [];
   vm.runInNewContext(source, {
     document: {
+      createElement: () => ({}),
       querySelector: selector => selector === '[data-simulation-root]' ? root : complete,
       querySelectorAll: selector => selector.includes('radio') ? answers : [],
-      getElementById: id => ({'simulation-form': form, 'simulation-writing': part === 'writing' ? writing : null, 'simulation-timer': timer, 'simulation-clear-writing': clearButton, 'simulation-draft-status': status, 'simulation-timer-status': timerStatus}[id] || null),
+      getElementById: id => ({'simulation-form': part === 'writing' ? null : form, 'simulation-writing': part === 'writing' ? writing : null, 'simulation-timer': timer, 'simulation-clear-writing': clearButton, 'simulation-draft-status': status, 'simulation-timer-status': timerStatus}[id] || null),
     },
     localStorage: storage(local), sessionStorage: {...storage(session), setItem: (key, value) => {if (failStorage) throw Error("quota"); session.set(key, value);}},
     Date: {now: () => now}, Event, URL, URLSearchParams,
     window: {addEventListener: (name, fn) => {listeners[name] = fn;}, location: {search: restart ? '?restart=1' : '', href: 'https://example.test/?restart=1', assign() {}}, history: {replaceState() {}}, setTimeout: fn => callbacks.push(fn)},
   });
-  return {expiredEvents, announcements, status, answers, token, writing, timer, listeners, callbacks};
+  return {form, snapshots, expiredEvents, announcements, status, answers, token, writing, timer, listeners, callbacks};
 }
 let first = page();
 first.answers[1].checked = true;
@@ -84,7 +86,9 @@ assert.equal(checkpoints.announcements.at(-1), 'Осталось 5 минут.')
 now += 240000; checkpoints.callbacks[3]();
 assert.equal(checkpoints.announcements.at(-1), 'Осталась одна минута.');
 now += 60000; checkpoints.callbacks[4]();
-assert.equal(checkpoints.announcements.at(-1), 'Время истекло.');
+assert.equal(checkpoints.announcements.at(-1), 'Время истекло. Проверяем текущие ответы; незаполненные считаются пропущенными.');
+assert.equal(checkpoints.form.submitted, true);
+assert.equal(checkpoints.form.noValidate, true);
 assert.equal(checkpoints.announcements.length, 4);
 assert.deepEqual(checkpoints.expiredEvents, ['b1-run-expired'], 'timer must stop the shared listening controller');
 assert.ok(!fs.readFileSync(path.join(__dirname, '../templates/b1_exam_simulation.html'), 'utf8').includes('<main'));
