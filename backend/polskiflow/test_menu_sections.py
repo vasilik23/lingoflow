@@ -7,6 +7,20 @@ from polskiflow.progress_store import CompletionHistoryPage, DashboardProgress
 
 
 class MenuSectionTests(TestCase):
+    def test_account_navigation_links_existing_owner_pages_and_marks_current_page(self):
+        import re
+        paths = ("/profile/", "/history/", "/settings/", "/account/security/")
+        for language in ("ru", "pl", "en"):
+            self.client.cookies["django_language"] = language
+            for path in paths:
+                with self.subTest(language=language, path=path):
+                    response = self.client.get(path)
+                    navigation = re.search(r'<nav class="account-navigation".*?</nav>', response.content.decode(), re.S).group()
+                    self.assertEqual(navigation.count('aria-current="page"'), 1)
+                    self.assertIn(f'href="{path}" aria-current="page"', navigation)
+                    for target in paths:
+                        self.assertEqual(navigation.count(f'href="{target}"'), 1)
+
     def setUp(self):
         self.client.cookies[ACCESS_COOKIE] = "access"
         dashboard = DashboardProgress("Learner", "A1", 2, frozenset(), True)

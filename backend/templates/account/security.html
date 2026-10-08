@@ -3,9 +3,9 @@
 {% block title %}{% translate "Безопасность аккаунта · LingoFlow" %}{% endblock %}
 {% block toolbar_title %}<h1>{% translate "Безопасность" %}</h1>{% endblock %}
 {% block content %}
+  {% include "partials/account_navigation.html" with active="security" %}
   <header class="content-header">
     <div><p class="eyebrow">{% translate "Аккаунт" %}</p><p class="muted">{% translate "Измени пароль и затем войди снова на этом устройстве." %}</p></div>
-    <a class="compact-button secondary-link" href="{% url 'profile' %}">{% translate "К профилю" %}</a>
   </header>
   <form class="card account-security-form" method="post" autocomplete="off">
     {% csrf_token %}

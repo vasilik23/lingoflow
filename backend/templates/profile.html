@@ -1,19 +1,21 @@
 {% extends "base.html" %}
 {% load i18n ui %}
 {% block title %}{% translate "Профиль · LingoFlow" %}{% endblock %}
+{% block toolbar_title %}<h1>{% translate "Профиль" %}</h1>{% endblock %}
 {% block content %}
+  {% include "partials/account_navigation.html" with active="profile" %}
   <header class="profile-header">
     <div class="profile-avatar" aria-hidden="true">{{ dashboard.display_name|first|upper|default:"U" }}</div>
     <div>
-      <p class="eyebrow">{% if LANGUAGE_CODE == 'en' %}Your profile{% else %}Twój profil{% endif %}</p>
-      <h1>{{ dashboard.display_name }}</h1>
+      <p class="eyebrow">{% translate "Твой профиль" %}</p>
+      <h2>{{ dashboard.display_name }}</h2>
       <p class="muted">{{ email }}</p>
     </div>
     <span class="profile-level" aria-label="{% translate "Текущий уровень" %} {{ dashboard.level|ui_text }}">{{ dashboard.level|ui_text }}</span>
   </header>
 
   <section class="profile-settings" aria-labelledby="settings-title">
-    <div class="section-heading"><div><p class="eyebrow">{% translate "Персонализация" %}</p><h2 id="settings-title">{% translate "Настройки" %}</h2></div></div>
+    <div class="section-heading"><div><p class="eyebrow">{% translate "Персонализация" %}</p><h2 id="settings-title">{% translate "Настройки обучения" %}</h2></div></div>
     <form class="card profile-form" method="post">
       {% csrf_token %}
       <input type="hidden" name="form_action" value="profile">

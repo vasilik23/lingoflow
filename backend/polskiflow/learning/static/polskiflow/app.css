@@ -1212,3 +1212,14 @@ button.secondary { background: var(--surface); border-color: var(--line); }
 .public-steps { padding-left: 1.4rem; display: grid; gap: .8rem; }
 .public-steps p { margin-block: .3rem 0; }
 .public-demo-form fieldset { margin-bottom: 1rem; }
+
+.account-navigation { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .35rem; padding: .35rem; margin-bottom: 1.25rem; border: 1px solid var(--line); border-radius: 1rem; background: var(--surface); }
+.account-navigation a { display: flex; align-items: center; justify-content: center; min-height: 42px; padding: .5rem .65rem; border-radius: .7rem; color: var(--muted); text-decoration: none; font-size: .85rem; font-weight: 700; overflow-wrap: anywhere; }
+.account-navigation a:hover { color: var(--text); background: var(--surface-soft); }
+.account-navigation a[aria-current=page] { color: var(--primary); background: var(--primary-soft); }
+.profile-header h2 { margin: 0 0 .35rem; font-size: clamp(1.5rem, 4vw, 2rem); overflow-wrap: anywhere; }
+@media (max-width: 480px) { .account-navigation { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 480px) {
+  .profile-header { grid-template-columns: minmax(0, 1fr) auto; }
+  .profile-header .profile-avatar { display: none; }
+}

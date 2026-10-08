@@ -16750,3 +16750,15 @@ msgstr "Correct!"
 
 msgid "Продолжить обучение"
 msgstr "Continue learning"
+
+msgid "Разделы аккаунта"
+msgstr "Account sections"
+
+msgid "Твой профиль"
+msgstr "Your profile"
+
+msgid "Прогресс"
+msgstr "Progress"
+
+msgid "Настройки обучения"
+msgstr "Learning preferences"
