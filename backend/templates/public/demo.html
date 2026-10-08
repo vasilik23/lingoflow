@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load i18n ui %}
+{% block title %}{% translate "Пробное задание" %} · LingoFlow{% endblock %}
+{% block body_class %}public-page{% endblock %}
+{% block content %}
+<div class="public-shell">
+  <header class="public-heading"><a class="brand" href="{% url 'public-intro' %}"><span class="brand-mark">L</span> LingoFlow</a><a href="{% url 'login' %}">{% translate "Войти" %}</a></header>
+  <section class="card onboarding-form">
+    <p class="eyebrow">A1 · {% translate "Знакомство" %}</p>
+    <h1>{% translate "Пробное задание" %}</h1>
+    <p class="muted">{% translate "Один вопрос из курса. Ответ не сохраняется в прогресс; аккаунт не нужен." %}</p>
+    {% if unavailable %}<p role="alert">{% translate "Пробное задание временно недоступно. Можно вернуться к знакомству с приложением." %}</p>
+    {% else %}
+      {% if demo_error %}<p role="alert" class="save-error">{{ demo_error|ui_text }}</p>{% endif %}
+      {% if answered %}
+        <div role="status"><h2>{% if correct %}{% translate "Верно!" %}{% else %}{% translate "Попробуем разобраться" %}{% endif %}</h2></div>
+        <p>{{ question.prompt|ui_text }}</p>
+        <p>{% translate "Твой ответ:" %} {{ selected_text|ui_text }}</p>
+        <p><strong>{% translate "Правильный ответ:" %} {{ correct_text|ui_text }}</strong></p>
+        <p>{{ question.explanation|ui_text }}</p>
+        <p class="muted">{% translate "В полном уроке есть больше заданий. Создай аккаунт, чтобы выбрать уровень и сохранять результаты." %}</p>
+        {% if request.supabase_user %}<a class="compact-button" href="{% url 'home' %}">{% translate "Продолжить обучение" %}</a>{% else %}<a class="compact-button" href="{% url 'register' %}">{% translate "Создать аккаунт" %}</a>{% endif %}
+        <a href="{% url 'public-demo' %}">{% translate "Попробовать ещё раз" %}</a>
+      {% else %}
+        <form method="post" class="public-demo-form">
+          {% csrf_token %}<input type="hidden" name="state" value="{{ state }}">
+          <fieldset class="placement-question"><legend>{{ question.prompt|ui_text }}</legend>
+            {% for option in question.options %}<label class="placement-option"><input type="radio" name="answer" value="{{ forloop.counter0 }}" required><span>{{ option|ui_text }}</span></label>{% endfor %}
+          </fieldset>
+          <button type="submit">{% translate "Проверить ответ" %}</button>
+        </form>
+      {% endif %}
+    {% endif %}
+  </section>
+  <p><a href="{% url 'public-intro' %}">{% translate "О приложении" %}</a></p>
+</div>
+{% endblock %}

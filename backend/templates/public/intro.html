@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}LingoFlow · {% translate "Познакомься с обучением" %}{% endblock %}
+{% block body_class %}public-page{% endblock %}
+{% block content %}
+<div class="public-shell">
+  <header class="public-heading"><a class="brand" href="{% url 'public-intro' %}"><span class="brand-mark">L</span> LingoFlow</a><a href="{% url 'login' %}">{% translate "Войти" %}</a></header>
+  <section class="hero">
+    <p class="eyebrow">{% translate "Сейчас учим польский" %}</p>
+    <h1>{% translate "Польский шаг за шагом" %}</h1>
+    <p>{% translate "Короткие задания, объяснения ответов и план под твою дневную цель. Посмотри, как это работает, прежде чем создавать аккаунт." %}</p>
+    <a class="compact-button" href="{% url 'public-demo' %}">{% translate "Попробовать без регистрации" %}</a>
+  </section>
+  <section class="card"><h2>{% translate "Как проходит обучение" %}</h2>
+    <ol class="public-steps">
+      <li><strong>{% translate "Выбери старт" %}</strong><p>{% translate "Выбери уровень самостоятельно или пройди необязательную короткую проверку после регистрации." %}</p></li>
+      <li><strong>{% translate "Задай ритм" %}</strong><p>{% translate "Цель 10, 15 или 30 минут помогает подобрать задания по длительности материалов." %}</p></li>
+      <li><strong>{% translate "Учись и возвращайся" %}</strong><p>{% translate "Проходи уроки, читай тексты и повторяй словарь. В аккаунте сохраняются результаты и место продолжения." %}</p></li>
+    </ol>
+    <a class="compact-button" href="{% url 'register' %}">{% translate "Создать аккаунт" %}</a>
+  </section>
+  <p class="muted">{% translate "Уровни A1–C2 — ориентиры курса. Приложение не выдаёт сертификаты CEFR." %}</p>
+  <footer class="public-heading"><a href="{% url 'privacy' %}">{% translate "Приватность" %}</a><a href="{% url 'public-demo' %}">{% translate "Пробное задание" %}</a></footer>
+</div>
+{% endblock %}

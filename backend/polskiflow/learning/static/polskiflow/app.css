@@ -1204,3 +1204,11 @@ button.secondary { background: var(--surface); border-color: var(--line); }
 .placement-review { padding-block: .75rem; border-bottom: 1px solid var(--line); }
 .placement-page .app-nav { display: none; }
 .placement-page .page-shell.with-nav { width: min(calc(100% - 2rem), 68rem); margin-inline: auto; padding-top: .5rem; }
+.public-page .page-shell:not(.with-nav) { display: block; min-height: auto; padding-block: 1.5rem; }
+.public-shell { width: min(100%, 48rem); margin-inline: auto; display: grid; gap: 1.25rem; }
+.public-heading { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.public-heading .brand { display: flex; align-items: center; gap: .7rem; margin: 0; color: var(--text); font-weight: 800; text-decoration: none; }
+.public-page .theme-control-guest { display: none; }
+.public-steps { padding-left: 1.4rem; display: grid; gap: .8rem; }
+.public-steps p { margin-block: .3rem 0; }
+.public-demo-form fieldset { margin-bottom: 1rem; }

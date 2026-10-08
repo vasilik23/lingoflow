@@ -36,6 +36,7 @@
         <p class="auth-switch muted">{% translate "Уже есть аккаунт?" %} <a href="{% url 'login' %}">{% translate "Войти" %}</a></p>
       {% endif %}
       {% include "partials/language_settings.html" %}
+      <p class="auth-switch"><a href="{% url 'public-intro' %}">{% translate "О приложении" %}</a> · <a href="{% url 'public-demo' %}">{% translate "Попробовать без регистрации" %}</a></p>
     </section>
   </div>
 {% endblock %}

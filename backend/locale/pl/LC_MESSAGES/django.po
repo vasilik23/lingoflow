@@ -7003,3 +7003,74 @@ msgstr "Z drugiej strony sygnalizuje kontrastującą perspektywę."
 
 msgid "Choć wskazuje ograniczenie bez odrzucania całej propozycji."
 msgstr "Choć wskazuje ograniczenie bez odrzucania całej propozycji."
+
+msgid "Познакомься с обучением"
+msgstr "Poznaj naukę w aplikacji"
+
+msgid "Сейчас учим польский"
+msgstr "Teraz uczymy się polskiego"
+
+msgid "Польский шаг за шагом"
+msgstr "Polski krok po kroku"
+
+msgid "Короткие задания, объяснения ответов и план под твою дневную цель. Посмотри, как это работает, прежде чем создавать аккаунт."
+msgstr "Krótkie zadania, wyjaśnienia odpowiedzi i plan dopasowany do dziennego celu. Zobacz, jak to działa, zanim utworzysz konto."
+
+msgid "Попробовать без регистрации"
+msgstr "Wypróbuj bez rejestracji"
+
+msgid "Как проходит обучение"
+msgstr "Jak wygląda nauka"
+
+msgid "Выбери старт"
+msgstr "Wybierz punkt startowy"
+
+msgid "Выбери уровень самостоятельно или пройди необязательную короткую проверку после регистрации."
+msgstr "Wybierz poziom samodzielnie lub skorzystaj z krótkiego, opcjonalnego sprawdzenia po rejestracji."
+
+msgid "Задай ритм"
+msgstr "Ustal rytm"
+
+msgid "Цель 10, 15 или 30 минут помогает подобрать задания по длительности материалов."
+msgstr "Cel 10, 15 lub 30 minut pomaga dobrać zadania według czasu potrzebnego na materiały."
+
+msgid "Учись и возвращайся"
+msgstr "Ucz się i wracaj"
+
+msgid "Проходи уроки, читай тексты и повторяй словарь. В аккаунте сохраняются результаты и место продолжения."
+msgstr "Przechodź lekcje, czytaj teksty i powtarzaj słownictwo. Konto zapisuje wyniki i miejsce, w którym możesz kontynuować."
+
+msgid "Уровни A1–C2 — ориентиры курса. Приложение не выдаёт сертификаты CEFR."
+msgstr "Poziomy A1–C2 są punktami odniesienia kursu. Aplikacja nie wydaje certyfikatów CEFR."
+
+msgid "Пробное задание"
+msgstr "Zadanie próbne"
+
+msgid "Один вопрос из курса. Ответ не сохраняется в прогресс; аккаунт не нужен."
+msgstr "Jedno pytanie z kursu. Odpowiedź nie jest zapisywana w postępach; konto nie jest potrzebne."
+
+msgid "Пробное задание временно недоступно. Можно вернуться к знакомству с приложением."
+msgstr "Zadanie próbne jest chwilowo niedostępne. Możesz wrócić do opisu aplikacji."
+
+msgid "Попробуем разобраться"
+msgstr "Sprawdźmy wyjaśnienie"
+
+msgid "В полном уроке есть больше заданий. Создай аккаунт, чтобы выбрать уровень и сохранять результаты."
+msgstr "Pełna lekcja zawiera więcej zadań. Utwórz konto, aby wybrać poziom i zapisywać wyniki."
+
+msgid "О приложении"
+msgstr "O aplikacji"
+
+msgid "Не удалось проверить ответ. Попробуй ещё раз."
+msgstr "Nie udało się sprawdzić odpowiedzi. Spróbuj ponownie."
+
+msgid "Как неформально поздороваться?"
+msgstr "Jak przywitać się nieformalnie?"
+
+msgid "Cześć — неформальное приветствие; оно также может означать «пока»."
+msgstr "Cześć to nieformalne powitanie; może też oznaczać pożegnanie."
+msgid "Верно!"
+msgstr "Dobrze!"
+
+msgid "Продолжить обучение"
+msgstr "Kontynuuj naukę"
