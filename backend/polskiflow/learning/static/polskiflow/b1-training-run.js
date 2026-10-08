@@ -61,7 +61,7 @@
   writing?.addEventListener('input', save);
   writing2?.addEventListener('input', save);
   root.querySelector('[data-clear-run-writing]')?.addEventListener('click', () => {
-    writing.value = ''; save(); writing.focus();
+    writing.value = ''; save(); writing.focus(); writing.dispatchEvent(new Event('input', {bubbles: true}));
   });
   root.querySelector('[data-clear-run-writing2]')?.addEventListener('click', () => {
     writing2.value = ''; save(); writing2.focus(); writing2.dispatchEvent(new Event('input', {bubbles: true}));
