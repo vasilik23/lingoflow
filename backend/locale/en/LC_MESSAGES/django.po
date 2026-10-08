@@ -526,7 +526,7 @@ msgid "Czasem означает «иногда»."
 msgstr "Czasem means \"sometimes.\""
 
 msgid "Cześć — неформальное приветствие; оно также может означать «пока»."
-msgstr "Cześć is an informal greeting; it can also mean \"bye.\""
+msgstr "Cześć is an informal greeting; it can also mean goodbye."
 
 msgid "Czuć się описывает самочувствие: źle się czuję."
 msgstr "Czuć się Describes how you feel: źle się czuję."
@@ -4156,7 +4156,7 @@ msgid "Как мы создаём учебные материалы и испо�
 msgstr "How do we create learning materials and use external sources?"
 
 msgid "Как неформально поздороваться?"
-msgstr "How do you say hello informally?"
+msgstr "How do you greet someone informally?"
 
 msgid "Как обозначить обе позиции и следующий шаг?"
 msgstr "How do you define both positions and the next step?"
@@ -16685,3 +16685,68 @@ msgstr "Z drugiej strony introduces a contrasting perspective."
 
 msgid "Choć wskazuje ograniczenie bez odrzucania całej propozycji."
 msgstr "Choć expresses a limitation without rejecting the entire proposal."
+
+msgid "Познакомься с обучением"
+msgstr "Explore learning in the app"
+
+msgid "Сейчас учим польский"
+msgstr "Currently teaching Polish"
+
+msgid "Польский шаг за шагом"
+msgstr "Polish, step by step"
+
+msgid "Короткие задания, объяснения ответов и план под твою дневную цель. Посмотри, как это работает, прежде чем создавать аккаунт."
+msgstr "Short exercises, explained answers and a plan built around your daily goal. See how it works before creating an account."
+
+msgid "Попробовать без регистрации"
+msgstr "Try without signing up"
+
+msgid "Как проходит обучение"
+msgstr "How learning works"
+
+msgid "Выбери старт"
+msgstr "Choose where to start"
+
+msgid "Выбери уровень самостоятельно или пройди необязательную короткую проверку после регистрации."
+msgstr "Choose your own level or take an optional short check after signing up."
+
+msgid "Задай ритм"
+msgstr "Set your pace"
+
+msgid "Цель 10, 15 или 30 минут помогает подобрать задания по длительности материалов."
+msgstr "A goal of 10, 15 or 30 minutes helps select tasks based on the estimated duration of the materials."
+
+msgid "Учись и возвращайся"
+msgstr "Learn and return"
+
+msgid "Проходи уроки, читай тексты и повторяй словарь. В аккаунте сохраняются результаты и место продолжения."
+msgstr "Complete lessons, read texts and review vocabulary. Your account saves results and where to resume."
+
+msgid "Уровни A1–C2 — ориентиры курса. Приложение не выдаёт сертификаты CEFR."
+msgstr "A1–C2 are curriculum targets. The app does not issue CEFR certificates."
+
+msgid "Пробное задание"
+msgstr "Sample exercise"
+
+msgid "Один вопрос из курса. Ответ не сохраняется в прогресс; аккаунт не нужен."
+msgstr "One question from the course. Your answer is not saved as progress; no account is needed."
+
+msgid "Пробное задание временно недоступно. Можно вернуться к знакомству с приложением."
+msgstr "The sample exercise is temporarily unavailable. You can return to the app introduction."
+
+msgid "Попробуем разобраться"
+msgstr "Let's look at the explanation"
+
+msgid "В полном уроке есть больше заданий. Создай аккаунт, чтобы выбрать уровень и сохранять результаты."
+msgstr "The full lesson has more exercises. Create an account to choose your level and save results."
+
+msgid "О приложении"
+msgstr "About the app"
+
+msgid "Не удалось проверить ответ. Попробуй ещё раз."
+msgstr "The answer could not be checked. Please try again."
+msgid "Верно!"
+msgstr "Correct!"
+
+msgid "Продолжить обучение"
+msgstr "Continue learning"
