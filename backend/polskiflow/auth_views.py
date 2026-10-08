@@ -813,7 +813,8 @@ def profile_data_export(request: HttpRequest) -> HttpResponse:
 
 @require_browser_user
 def writing_practice(request: HttpRequest) -> HttpResponse:
-    """Offer honest, browser-local B1/B2 writing practice without auto-grading."""
+    """Browser-local writing practice with optional, explicit AI feedback."""
+    from polskiflow.ai_writing import assignment_token, practice_assignment, writing_ai_available
     selected_level = request.GET.get("level", "B1").upper()
     if selected_level not in WRITING_PROMPTS:
         selected_level = "B1"
@@ -821,7 +822,8 @@ def writing_practice(request: HttpRequest) -> HttpResponse:
         request,
         "writing.html",
         {
-            "writing_prompts": enrich_writing_prompts(WRITING_PROMPTS[selected_level]),
+            "writing_prompts": tuple({**prompt, "ai_token": assignment_token(request.supabase_user.id, practice_assignment(prompt, selected_level))} for prompt in enrich_writing_prompts(WRITING_PROMPTS[selected_level])),
+            "writing_ai_available": writing_ai_available(),
             "writing_levels": tuple(
                 {"id": level, "prompt_count": len(prompts)}
                 for level, prompts in WRITING_PROMPTS.items()

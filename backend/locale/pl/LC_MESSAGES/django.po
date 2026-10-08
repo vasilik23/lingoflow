@@ -7110,3 +7110,96 @@ msgstr "Czas minął. Zakończ samoocenę lub pomiń część."
 
 msgid "Прогон восстанавливается в текущей вкладке до 4 часов. При истечении времени проверяемой части текущие ответы отправляются автоматически, пустые считаются пропущенными. Письмо и речь не отправляются на сервер и не оцениваются автоматически. Итог хранится в этой вкладке, не добавляется в историю аккаунта."
 msgstr "Próbę można wznowić w tej karcie przez 4 godziny. Gdy upłynie czas części sprawdzanej, dotychczasowe odpowiedzi są wysyłane automatycznie, a puste liczą się jako pominięte. Teksty i wypowiedzi nie są wysyłane na serwer ani oceniane automatycznie. Wynik pozostaje w tej karcie i nie trafia do historii konta."
+
+msgid "Проверка письма с ИИ"
+msgstr "Ocena pisania przez AI"
+
+msgid "Учебная оценка ИИ может ошибаться и не заменяет экзаменатора. Текст и задание отправляются в Groq только по твоему выбору. LingoFlow не сохраняет текст или разбор в аккаунте."
+msgstr "Ocena AI może być błędna i nie zastępuje egzaminatora. Tekst i zadanie są wysyłane do Groq tylko za Twoją zgodą. LingoFlow nie zapisuje tekstu ani analizy na koncie."
+
+msgid "Обработка данных"
+msgstr "Przetwarzanie danych"
+
+msgid "Разрешаю отправить этот текст и задание в Groq для проверки."
+msgstr "Zgadzam się na przesłanie tego tekstu i zadania do Groq w celu oceny."
+
+msgid "Проверить с ИИ"
+msgstr "Sprawdź z AI"
+
+msgid "До 6000 символов · 10 проверок за 24 часа на аккаунт."
+msgstr "Do 6000 znaków · 10 ocen na konto w ciągu 24 godzin."
+
+msgid "ИИ пока не подключён. Самопроверка и черновики доступны."
+msgstr "AI nie jest jeszcze podłączona. Samoocena i szkice są dostępne."
+
+msgid "Сначала разреши отправку текста в Groq."
+msgstr "Najpierw wyraź zgodę na przesłanie tekstu do Groq."
+
+msgid "Для проверки напиши от 1 до 6000 символов."
+msgstr "Do oceny wpisz od 1 do 6000 znaków."
+
+msgid "Обнови страницу перед проверкой текста."
+msgstr "Odśwież stronę przed oceną tekstu."
+
+msgid "ИИ проверяет текст…"
+msgstr "AI ocenia tekst…"
+
+msgid "ИИ временно недоступен или квота исчерпана. Черновик остался в редакторе; продолжи самопроверку."
+msgstr "AI jest chwilowo niedostępna lub limit został wyczerpany. Szkic pozostał w edytorze; kontynuuj samoocenę."
+
+msgid "Выполнение задания"
+msgstr "Realizacja zadania"
+
+msgid "Структура и стиль"
+msgstr "Struktura i styl"
+
+msgid "Учебная оценка ИИ"
+msgstr "Orientacyjna ocena AI"
+
+msgid "Это оценка текущего текста, не официальный балл B1."
+msgstr "To ocena obecnego tekstu, a nie oficjalny wynik B1."
+
+msgid "Ошибки и исправления"
+msgstr "Błędy i poprawki"
+
+msgid "ИИ не выделил конкретных ошибок. Перечитай текст самостоятельно."
+msgstr "AI nie wskazała konkretnych błędów. Przeczytaj tekst samodzielnie."
+
+msgid "Разбор готов. Он исчезнет при изменении текста или уходе со страницы."
+msgstr "Analiza jest gotowa. Zniknie po zmianie tekstu lub opuszczeniu strony."
+
+msgid "Проверка прервана. Черновик остался в редакторе."
+msgstr "Ocena została przerwana. Szkic pozostał w edytorze."
+
+msgid "Не удалось проверить текст. Черновик остался в редакторе; попробуй позже."
+msgstr "Nie udało się ocenić tekstu. Szkic pozostał w edytorze; spróbuj później."
+
+msgid "Войди снова, чтобы проверить текст с ИИ."
+msgstr "Zaloguj się ponownie, aby ocenić tekst z AI."
+
+msgid "Некорректный запрос проверки."
+msgstr "Nieprawidłowe żądanie oceny."
+
+msgid "Подтверди отправку текста и обнови страницу задания."
+msgstr "Potwierdź wysłanie tekstu i odśwież stronę zadania."
+
+msgid "Лимит проверок ИИ достигнут. Продолжи самопроверку и попробуй позже."
+msgstr "Osiągnięto limit ocen AI. Kontynuuj samoocenę i spróbuj później."
+
+msgid "Добровольная проверка письма с ИИ"
+msgstr "Dobrowolna ocena pisania z AI"
+
+msgid "По твоему согласию текст и задание передаются через сервер LingoFlow в Groq. Идентификатор аккаунта и e-mail не передаются. LingoFlow не сохраняет текст и разбор в базе или журналах; разбор остаётся на странице до изменения текста или ухода. Учебная оценка ИИ может ошибаться и не влияет на экзаменационный балл или прогресс."
+msgstr "Za Twoją zgodą tekst i zadanie są przesyłane przez serwer LingoFlow do Groq. Identyfikator konta i e-mail nie są przesyłane. LingoFlow nie zapisuje tekstu ani analizy w bazie czy logach; analiza pozostaje na stronie do zmiany tekstu lub jej opuszczenia. Orientacyjna ocena AI może być błędna i nie wpływa na wynik egzaminu ani postępy."
+
+msgid "Groq обрабатывает данные по своим условиям, включая возможное хранение для диагностики и защиты от злоупотреблений. Владелец подключения может включить Zero Data Retention. Не включай личные или чувствительные данные в учебный текст."
+msgstr "Groq przetwarza dane zgodnie ze swoimi warunkami, w tym może przechowywać je do diagnostyki i ochrony przed nadużyciami. Właściciel integracji może włączyć Zero Data Retention. Nie umieszczaj danych osobowych ani wrażliwych w tekście ćwiczenia."
+
+msgid "Тексты отправляются в Groq только по выбору «Проверить с ИИ». Счётчик — ориентир объёма, не оценка качества. Проверь выполнение всех пунктов каждого задания, связность, стиль и языковую правильность. Завершение или пропуск части удаляет черновики."
+msgstr "Teksty są wysyłane do Groq tylko po wybraniu „Sprawdź z AI”. Licznik wskazuje długość, a nie jakość. Sprawdź realizację każdego punktu zadania, spójność, styl i poprawność językową. Zakończenie lub pominięcie części usuwa szkice."
+
+msgid "Прогон восстанавливается в текущей вкладке до 4 часов. При истечении времени проверяемой части текущие ответы отправляются автоматически, пустые считаются пропущенными. Письмо отправляется только по отдельному выбору «Проверить с ИИ»; речь не отправляется на сервер. Прогон не выставляет автоматический балл за письмо и речь. Итог хранится в этой вкладке, не добавляется в историю аккаунта."
+msgstr "Próbę można wznowić w tej karcie przez 4 godziny. Po upływie czasu części sprawdzanej dotychczasowe odpowiedzi są wysyłane automatycznie; puste liczą się jako pominięte. Pisanie jest wysyłane tylko po wybraniu „Sprawdź z AI”; wypowiedzi nie są wysyłane na serwer. Próba nie wystawia automatycznego wyniku za pisanie i mówienie. Wynik pozostaje w tej karcie, poza historią konta."
+
+msgid "Учебный прогон B1 хранит в текущей вкладке подписанный прогресс и текущие ответы/черновик до завершения части. Письменный текст отправляется в Groq только по отдельному выбору «Проверить с ИИ», речь не отправляется на сервер; после проверки остаются только агрегаты в подписанном состоянии. Добровольная запись речи остаётся в памяти страницы и удаляется при перезагрузке, завершении части или уходе. Микрофон выключается при остановке записи, истечении таймера и уходе со страницы. Прогон действителен до 4 часов, не входит в историю аккаунта и серверный экспорт; его можно удалить ссылкой «Новый прогон» или закрытием вкладки."
+msgstr "Próba B1 przechowuje w tej karcie podpisany postęp oraz odpowiedzi i szkice do zakończenia części. Tekst pisemny jest wysyłany do Groq tylko po wybraniu „Sprawdź z AI”; wypowiedzi nie są wysyłane na serwer. Po ocenie pozostają jedynie zbiorcze wyniki w podpisanym stanie. Dobrowolne nagranie jest przechowywane w pamięci strony i usuwane po przeładowaniu, zakończeniu części lub opuszczeniu strony. Mikrofon wyłącza się po zatrzymaniu, upływie czasu i opuszczeniu strony. Próba jest ważna do 4 godzin, poza historią konta i eksportem serwera; można ją usunąć linkiem „Nowa próba” lub zamykając kartę."

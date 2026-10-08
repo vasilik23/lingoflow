@@ -11,6 +11,7 @@ from polskiflow.diagnostic_views import diagnostic
 from polskiflow.placement_views import placement_check
 from polskiflow.public_views import public_intro, public_demo
 from polskiflow.feedback_views import feedback
+from polskiflow.ai_writing_views import ai_writing_review
 from polskiflow.history_views import learning_history
 from polskiflow.lesson_views import lesson, lesson_note, lesson_step
 from polskiflow.interaction_views import interaction_practice
@@ -85,6 +86,7 @@ urlpatterns = [
     path("beta/", beta_center, name="beta-center"),
     path("history/", learning_history, name="learning-history"),
     path("profile/export/", profile_data_export, name="profile-data-export"),
+    path("writing/ai-review/", ai_writing_review, name="ai-writing-review"),
     path("writing/", writing_practice, name="writing-practice"),
     path("interaction/", interaction_practice, name="interaction-practice"),
     path("listening/", listening_practice, name="listening-practice"),

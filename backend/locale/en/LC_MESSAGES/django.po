@@ -16786,3 +16786,96 @@ msgstr "Time is up. Complete the self-review or skip this part."
 
 msgid "Прогон восстанавливается в текущей вкладке до 4 часов. При истечении времени проверяемой части текущие ответы отправляются автоматически, пустые считаются пропущенными. Письмо и речь не отправляются на сервер и не оцениваются автоматически. Итог хранится в этой вкладке, не добавляется в историю аккаунта."
 msgstr "The run can be resumed in this tab for up to 4 hours. When an objective section times out, current answers are submitted automatically and blanks count as unanswered. Writing and speech are not sent to the server or graded automatically. The result stays in this tab and is not added to account history."
+
+msgid "Проверка письма с ИИ"
+msgstr "AI writing review"
+
+msgid "Учебная оценка ИИ может ошибаться и не заменяет экзаменатора. Текст и задание отправляются в Groq только по твоему выбору. LingoFlow не сохраняет текст или разбор в аккаунте."
+msgstr "AI feedback can be wrong and does not replace an examiner. Your text and task are sent to Groq only when you choose. LingoFlow does not save the text or review to your account."
+
+msgid "Обработка данных"
+msgstr "Data processing"
+
+msgid "Разрешаю отправить этот текст и задание в Groq для проверки."
+msgstr "I consent to sending this text and task to Groq for review."
+
+msgid "Проверить с ИИ"
+msgstr "Review with AI"
+
+msgid "До 6000 символов · 10 проверок за 24 часа на аккаунт."
+msgstr "Up to 6000 characters · 10 reviews per account per 24 hours."
+
+msgid "ИИ пока не подключён. Самопроверка и черновики доступны."
+msgstr "AI is not connected yet. Self-review and drafts remain available."
+
+msgid "Сначала разреши отправку текста в Groq."
+msgstr "First consent to sending your text to Groq."
+
+msgid "Для проверки напиши от 1 до 6000 символов."
+msgstr "Enter between 1 and 6000 characters for review."
+
+msgid "Обнови страницу перед проверкой текста."
+msgstr "Refresh the page before reviewing your text."
+
+msgid "ИИ проверяет текст…"
+msgstr "AI is reviewing your text…"
+
+msgid "ИИ временно недоступен или квота исчерпана. Черновик остался в редакторе; продолжи самопроверку."
+msgstr "AI is temporarily unavailable or the quota is exhausted. Your draft remains; continue with self-review."
+
+msgid "Выполнение задания"
+msgstr "Task completion"
+
+msgid "Структура и стиль"
+msgstr "Structure and style"
+
+msgid "Учебная оценка ИИ"
+msgstr "AI practice score"
+
+msgid "Это оценка текущего текста, не официальный балл B1."
+msgstr "This assesses your current text, not an official B1 score."
+
+msgid "Ошибки и исправления"
+msgstr "Errors and corrections"
+
+msgid "ИИ не выделил конкретных ошибок. Перечитай текст самостоятельно."
+msgstr "AI did not identify specific errors. Read the text again yourself."
+
+msgid "Разбор готов. Он исчезнет при изменении текста или уходе со страницы."
+msgstr "The review is ready. It disappears when you edit the text or leave the page."
+
+msgid "Проверка прервана. Черновик остался в редакторе."
+msgstr "Review interrupted. Your draft remains in the editor."
+
+msgid "Не удалось проверить текст. Черновик остался в редакторе; попробуй позже."
+msgstr "Could not review the text. Your draft remains in the editor; try again later."
+
+msgid "Войди снова, чтобы проверить текст с ИИ."
+msgstr "Sign in again to review your text with AI."
+
+msgid "Некорректный запрос проверки."
+msgstr "Invalid review request."
+
+msgid "Подтверди отправку текста и обнови страницу задания."
+msgstr "Consent to sending your text and refresh the task page."
+
+msgid "Лимит проверок ИИ достигнут. Продолжи самопроверку и попробуй позже."
+msgstr "The AI review limit has been reached. Continue with self-review and try again later."
+
+msgid "Добровольная проверка письма с ИИ"
+msgstr "Optional AI writing review"
+
+msgid "По твоему согласию текст и задание передаются через сервер LingoFlow в Groq. Идентификатор аккаунта и e-mail не передаются. LingoFlow не сохраняет текст и разбор в базе или журналах; разбор остаётся на странице до изменения текста или ухода. Учебная оценка ИИ может ошибаться и не влияет на экзаменационный балл или прогресс."
+msgstr "With your consent, your text and task are sent through the LingoFlow server to Groq. Account ID and email are not sent. LingoFlow does not save the text or review in its database or logs; the review stays on the page until you edit the text or leave. AI feedback can be wrong and does not affect exam scores or progress."
+
+msgid "Groq обрабатывает данные по своим условиям, включая возможное хранение для диагностики и защиты от злоупотреблений. Владелец подключения может включить Zero Data Retention. Не включай личные или чувствительные данные в учебный текст."
+msgstr "Groq processes data under its own terms, including possible retention for troubleshooting and abuse prevention. The integration owner can enable Zero Data Retention. Do not include personal or sensitive data in practice texts."
+
+msgid "Тексты отправляются в Groq только по выбору «Проверить с ИИ». Счётчик — ориентир объёма, не оценка качества. Проверь выполнение всех пунктов каждого задания, связность, стиль и языковую правильность. Завершение или пропуск части удаляет черновики."
+msgstr "Texts are sent to Groq only when you choose “Review with AI”. The counter indicates length, not quality. Check every task requirement, coherence, style and language accuracy. Completing or skipping the section deletes drafts."
+
+msgid "Прогон восстанавливается в текущей вкладке до 4 часов. При истечении времени проверяемой части текущие ответы отправляются автоматически, пустые считаются пропущенными. Письмо отправляется только по отдельному выбору «Проверить с ИИ»; речь не отправляется на сервер. Прогон не выставляет автоматический балл за письмо и речь. Итог хранится в этой вкладке, не добавляется в историю аккаунта."
+msgstr "The run can be resumed in this tab for up to 4 hours. When an objective section times out, current answers are submitted automatically; blanks count as unanswered. Writing is sent only when you choose “Review with AI”; speech is not sent to the server. The run does not assign an automatic writing or speaking score. Results stay in this tab, outside account history."
+
+msgid "Учебный прогон B1 хранит в текущей вкладке подписанный прогресс и текущие ответы/черновик до завершения части. Письменный текст отправляется в Groq только по отдельному выбору «Проверить с ИИ», речь не отправляется на сервер; после проверки остаются только агрегаты в подписанном состоянии. Добровольная запись речи остаётся в памяти страницы и удаляется при перезагрузке, завершении части или уходе. Микрофон выключается при остановке записи, истечении таймера и уходе со страницы. Прогон действителен до 4 часов, не входит в историю аккаунта и серверный экспорт; его можно удалить ссылкой «Новый прогон» или закрытием вкладки."
+msgstr "The B1 run keeps signed progress and current answers/drafts in this tab until the section ends. Written text is sent to Groq only when you choose “Review with AI”; speech is not sent to the server. After grading, only aggregates remain in the signed state. Optional speech recordings stay in page memory and are deleted on refresh, completion or leaving. The microphone stops on stop, timeout and leaving. Runs last up to 4 hours, outside account history and server export; delete one using “New run” or by closing the tab."

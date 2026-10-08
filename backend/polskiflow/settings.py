@@ -159,3 +159,8 @@ LOGGING = {
         }
     },
 }
+
+# Explicit opt-in pilot. Configure the key only in server environment variables.
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "")
+GROQ_WRITING_ENABLED = os.environ.get("GROQ_WRITING_ENABLED", "false").lower() == "true"
+GROQ_WRITING_MODEL = os.environ.get("GROQ_WRITING_MODEL", "openai/gpt-oss-120b")

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n ui %}
+{% load i18n ui static %}
 {% block title %}{% translate "Письменная практика" %} {{ selected_writing_level|ui_text }} · LingoFlow{% endblock %}
 {% block content %}
   <header class="content-header writing-header">
@@ -45,6 +45,7 @@
           <span data-word-count aria-live="polite">{% translate "0 слов" %}</span>
           <span data-save-status role="status">{% translate "Черновик сохраняется только в этом браузере" %}</span>
         </div>
+        {% include "partials/ai_writing_review.html" with ai_token=prompt.ai_token ai_editor="draft-"|add:prompt.id %}
         <fieldset class="writing-checklist">
           <legend>{% translate "Самопроверка для этого жанра" %}</legend>
           {% for criterion in prompt.checklist %}<label><input type="checkbox"> {{ criterion|ui_text }}</label>{% endfor %}
@@ -76,6 +77,8 @@
   </section>
 {% endblock %}
 {% block scripts %}
+  {% csrf_token %}
+  <script src="{% static 'polskiflow/ai-writing.js' %}?shell={{ pwa_shell_version }}" defer></script>
   <script>
     (function () {
   const ui = (typeof window !== "undefined" && window.PolskiFlowI18n?.t) || ((text, ...values) => Array.isArray(text) ? text.map((part, i) => part + (values[i] ?? "")).join("") : text);
