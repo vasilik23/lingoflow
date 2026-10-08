@@ -1,0 +1,29 @@
+{% load i18n ui %}
+<details class="card mock-section run-review"{% if latest_review %} open{% endif %}>
+  <summary><strong>{% translate "Разбор" %} · {{ review.title|ui_text }}</strong></summary>
+  {% if review.status == 'scored' and review.details %}
+    <p class="muted">{% translate "Сравни ответы и прочитай объяснения. Теория открывается в новой вкладке, прогон остаётся здесь." %}</p>
+    {% if review.sources %}<details class="run-review-source"><summary>{% translate "Текст задания / расшифровка" %}</summary>{% for source in review.sources %}<h3 lang="pl">{{ source.title|ui_text }}</h3><p class="mock-source-text" lang="pl">{{ source.text|ui_text }}</p>{% endfor %}</details>{% endif %}
+    <ol class="run-review-list">
+    {% for detail in review.details %}
+      <li class="run-review-answer{% if detail.unanswered %} is-unanswered{% elif detail.is_correct %} is-correct{% else %} is-incorrect{% endif %}">
+        <p><strong>{{ detail.question.prompt|ui_text }}</strong></p>
+        <p>{% if detail.unanswered %}<strong>{% translate "Без ответа" %}</strong>{% elif detail.is_correct %}<strong>{% translate "Верно" %}</strong>{% else %}<strong>{% translate "Неверно" %}</strong>{% endif %}</p>
+        {% if not detail.unanswered %}<p>{% translate "Твой ответ:" %} <span lang="pl">{% if detail.question.written %}{{ detail.selected_text }}{% else %}{{ detail.selected_text|ui_text }}{% endif %}</span></p>{% endif %}
+        <p>{% translate "Правильный ответ:" %} <strong lang="pl">{{ detail.correct_text|ui_text }}</strong></p>
+        <p>{{ detail.question.explanation|ui_text }}</p>
+        <a href="{% url 'lesson' detail.theory_lesson %}" target="_blank" rel="noopener">{% translate "Повторить теорию" %} ↗</a>
+      </li>
+    {% endfor %}
+    </ol>
+  {% elif review.status == 'self_review' %}
+    <p>{% translate "Самопроверка завершена. Для письма и речи нет единственного правильного ответа и автоматического балла прогона." %}</p>
+    {% for task in review.tasks %}<h3>{{ task.title|ui_text }}</h3><p lang="pl">{{ task.prompt|ui_text }}</p>{% if task.checklist %}<ul>{% for point in task.checklist %}<li lang="pl">{{ point|ui_text }}</li>{% endfor %}</ul>{% endif %}{% endfor %}
+    <p>{% translate "Проверь выполнение всех пунктов, связность и языковую правильность. Текст и запись в разборе не сохраняются." %}</p>
+    <a href="{% url 'lesson' review.theory_lesson %}" target="_blank" rel="noopener">{% translate "Повторить теорию" %} ↗</a>
+  {% elif review.status == 'skipped' %}
+    <p>{% translate "Часть пропущена без оценки. Ответы этой части не проверялись." %}</p>
+  {% else %}
+    <p>{% translate "В этом старом прогоне сохранён только итог. Ответы для разбора недоступны." %}</p>
+  {% endif %}
+</details>
