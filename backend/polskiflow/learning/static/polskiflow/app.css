@@ -1223,3 +1223,10 @@ button.secondary { background: var(--surface); border-color: var(--line); }
   .profile-header { grid-template-columns: minmax(0, 1fr) auto; }
   .profile-header .profile-avatar { display: none; }
 }
+
+.ai-writing-review { margin-block: 1rem; padding: .8rem 1rem; border: 1px solid var(--line); border-radius: 12px; }
+.ai-writing-review summary { cursor: pointer; font-weight: 600; }
+.ai-writing-consent { display: flex; align-items: flex-start; gap: .6rem; margin-block: .8rem; }
+.ai-writing-consent input { width: 18px; height: 18px; min-height: 18px; padding: 0; flex: 0 0 18px; margin-top: .25rem; }
+.ai-writing-review .writing-feedback { overflow-wrap: anywhere; }
+.ai-writing-review .writing-feedback h4 { margin-bottom: .35rem; }

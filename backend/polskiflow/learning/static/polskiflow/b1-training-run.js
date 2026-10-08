@@ -9,7 +9,7 @@
   const writing = document.getElementById('run-writing');
   const writing2 = document.getElementById('run-writing-2');
   const writingSnapshot = () => JSON.stringify([writing?.value || '', writing2?.value || '']);
-  const fields = Array.from(form.querySelectorAll('input[type="radio"], input[type="checkbox"], input[data-run-written]'));
+  const fields = Array.from(form.querySelectorAll('input[type="radio"], input[type="checkbox"]:not([data-ai-consent]), input[data-run-written]'));
   const storageStatus = root.querySelector('[data-run-storage-status]');
   let savedWriting = '';
   let intentionalLeave = false;
@@ -61,7 +61,7 @@
   writing?.addEventListener('input', save);
   writing2?.addEventListener('input', save);
   root.querySelector('[data-clear-run-writing]')?.addEventListener('click', () => {
-    writing.value = ''; save(); writing.focus();
+    writing.value = ''; save(); writing.focus(); writing.dispatchEvent(new Event('input', {bubbles: true}));
   });
   root.querySelector('[data-clear-run-writing2]')?.addEventListener('click', () => {
     writing2.value = ''; save(); writing2.focus(); writing2.dispatchEvent(new Event('input', {bubbles: true}));
