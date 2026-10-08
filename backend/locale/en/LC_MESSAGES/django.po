@@ -16609,3 +16609,12 @@ msgstr "We use lesson duration estimates, not measured study time."
 
 msgid "Выбери цель 10, 15 или 30 минут."
 msgstr "Choose a goal of 10, 15, or 30 minutes."
+
+msgid "Будущие напоминания"
+msgstr "Future reminders"
+
+msgid "Сохранить предпочтение ежедневных напоминаний"
+msgstr "Save a preference for daily reminders"
+
+msgid "Сохранить предпочтение"
+msgstr "Save preference"

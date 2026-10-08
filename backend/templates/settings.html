@@ -19,7 +19,7 @@
     </label>
   </section>
   <section class="profile-settings" aria-labelledby="reminders-title">
-    <div class="section-heading"><div><p class="eyebrow">{% translate "Ритм занятий" %}</p><h2 id="reminders-title">{% translate "Напоминания" %}</h2></div></div>
+    <div class="section-heading"><div><p class="eyebrow">{% translate "Ритм занятий" %}</p><h2 id="reminders-title">{% translate "Будущие напоминания" %}</h2></div></div>
     <form class="card profile-form" method="post">
       {% csrf_token %}
       <input type="hidden" name="form_action" value="reminders">
@@ -27,7 +27,7 @@
       {% if reminder_error %}<p class="form-error" role="alert">{{ reminder_error|ui_text }}</p>{% endif %}
       {% if not reminder_available %}<p class="data-notice" role="status">{% translate "Настройки напоминаний временно недоступны." %}</p>{% endif %}
       <label>
-        <span><input name="daily_reminder_enabled" type="checkbox"{% if reminder_preferences.daily_reminder_enabled %} checked{% endif %}> {% translate "Напоминать о занятиях каждый день" %}</span>
+        <span><input name="daily_reminder_enabled" type="checkbox"{% if reminder_preferences.daily_reminder_enabled %} checked{% endif %}> {% translate "Сохранить предпочтение ежедневных напоминаний" %}</span>
         <small>{% translate "Напоминания выключены, пока ты сам их не включишь. На этом этапе мы только сохраняем выбор и ещё ничего не отправляем." %}</small>
       </label>
       <label>
@@ -35,7 +35,7 @@
         <input name="reminder_time" type="time" value="{{ reminder_preferences.reminder_time }}" required aria-describedby="reminder-time-help">
         <small id="reminder-time-help">{% translate "Часовой пояс: Europe/Warsaw." %}</small>
       </label>
-      <button type="submit">{% translate "Сохранить напоминания" %}</button>
+      <button type="submit">{% translate "Сохранить предпочтение" %}</button>
     </form>
   </section>
   </div>
