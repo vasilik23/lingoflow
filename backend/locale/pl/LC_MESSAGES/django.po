@@ -7074,3 +7074,15 @@ msgstr "Dobrze!"
 
 msgid "Продолжить обучение"
 msgstr "Kontynuuj naukę"
+
+msgid "Разделы аккаунта"
+msgstr "Sekcje konta"
+
+msgid "Твой профиль"
+msgstr "Twój profil"
+
+msgid "Прогресс"
+msgstr "Postępy"
+
+msgid "Настройки обучения"
+msgstr "Ustawienia nauki"

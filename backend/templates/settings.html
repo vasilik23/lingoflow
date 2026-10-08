@@ -3,6 +3,7 @@
 {% block title %}{% translate "Системные настройки" %} · LingoFlow{% endblock %}
 {% block toolbar_title %}<h1>{% translate "Системные настройки" %}</h1>{% endblock %}
 {% block content %}
+  {% include "partials/account_navigation.html" with active="settings" %}
   <div class="settings-page">
   <section class="card" aria-labelledby="interface-language-title">
     <h2 id="interface-language-title">{% translate "Язык интерфейса" %}</h2>

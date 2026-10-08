@@ -1,0 +1,7 @@
+{% load i18n %}
+<nav class="account-navigation" aria-label="{% translate "Разделы аккаунта" %}">
+  <a href="{% url 'profile' %}"{% if active == 'profile' %} aria-current="page"{% endif %}>{% translate "Профиль" %}</a>
+  <a href="{% url 'learning-history' %}"{% if active == 'progress' %} aria-current="page"{% endif %}>{% translate "Прогресс" %}</a>
+  <a href="{% url 'system-settings' %}"{% if active == 'settings' %} aria-current="page"{% endif %}>{% translate "Настройки" %}</a>
+  <a href="{% url 'account-security' %}"{% if active == 'security' %} aria-current="page"{% endif %}>{% translate "Безопасность" %}</a>
+</nav>
