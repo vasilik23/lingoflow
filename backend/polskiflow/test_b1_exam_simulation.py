@@ -93,6 +93,33 @@ class B1ExamSimulationViewTests(TestCase):
         for part in ("reading", "grammar", "writing", "speaking"):
             self.assertNotContains(self.client.get("/exam/b1/simulation/", {"part": part}), 'data-b1-listening')
 
+    @patch("polskiflow.b1_mock_views.save_b1_section_attempt", return_value=True)
+    def test_timeout_scores_partial_and_empty_without_awarding_missing_answers(self, save_attempt):
+        from types import SimpleNamespace
+        opened = self.client.get("/exam/b1/simulation/?part=reading")
+        token = opened.context["simulation_token"]
+        questions = opened.context["questions"]
+        deadline = opened.context["attempt_started_at_ms"] / 1000 + opened.context["duration_seconds"]
+        fields = {"simulation_token": token, f"answer_{questions[0].id}": questions[0].correct,
+                  f"answer_{questions[1].id}": (questions[1].correct + 1) % len(questions[1].options)}
+        with patch("polskiflow.b1_mock_views.time", SimpleNamespace(time=lambda: deadline - 1)):
+            early = self.client.post("/exam/b1/simulation/", fields)
+            self.assertEqual(early.status_code, 400)
+            save_attempt.assert_not_called()
+        with patch("polskiflow.b1_mock_views.time", SimpleNamespace(time=lambda: deadline)):
+            response = self.client.post("/exam/b1/simulation/", fields)
+            self.assertEqual(response.status_code, 200)
+            score = response.context["result"]
+            self.assertEqual((score["correct"], score["incorrect"], score["unanswered"]), (1, 1, len(questions) - 2))
+            self.assertTrue(score["timed_out"])
+            self.assertContains(response, "Без ответа")
+            self.assertEqual(score["percent"], round(100 / len(questions)))
+            empty = self.client.post("/exam/b1/simulation/", {"simulation_token": token})
+            self.assertEqual(empty.context["result"]["unanswered"], len(questions))
+            self.assertEqual(empty.context["result"]["correct"], 0)
+            invalid = self.client.post("/exam/b1/simulation/", {"simulation_token": token, f"answer_{questions[0].id}": 999})
+            self.assertEqual(invalid.status_code, 400)
+
     def setUp(self):
         self.client.cookies[ACCESS_COOKIE] = "access"
         auth = patch(

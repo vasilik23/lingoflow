@@ -1,5 +1,7 @@
 """Timed, original B1 section practice without claiming official assessment."""
 
+from polskiflow.domain.objective_scoring import score_with_missing
+
 from polskiflow.domain.b1_weekly_mock import MockQuestion, MockVariant
 
 
@@ -76,12 +78,16 @@ def simulation_timing(variant: MockVariant, part: dict, timing_mode: str = "shor
     return {"timing_mode": mode, "timer_minutes": minutes, "duration_seconds": minutes * 60}
 
 
-def score_simulation_part(variant: MockVariant, part_id: str, answers: dict[str, int], *, extra_questions: tuple = ()) -> dict:
+def score_simulation_part(variant: MockVariant, part_id: str, answers: dict[str, int], *, extra_questions: tuple = (), allow_missing: bool = False) -> dict:
     """Score exactly one objective section; free production is never graded."""
     part = get_simulation_part(part_id)
     if part is None or part["mode"] != "objective":
         raise ValueError("Эта часть доступна только для самопроверки.")
     questions = (*simulation_questions(variant, part_id), *extra_questions)
+    if allow_missing:
+        return score_with_missing(questions, answers, lambda complete: score_simulation_part(
+            variant, part_id, complete, extra_questions=extra_questions,
+        ))
     if set(answers) != {question.id for question in questions}:
         raise ValueError("Ответь на все вопросы выбранной части.")
     details = []

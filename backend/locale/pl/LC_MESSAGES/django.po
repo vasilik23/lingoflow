@@ -7086,3 +7086,27 @@ msgstr "Postępy"
 
 msgid "Настройки обучения"
 msgstr "Ustawienia nauki"
+
+msgid "Правильных:"
+msgstr "Poprawne:"
+
+msgid "Неправильных:"
+msgstr "Niepoprawne:"
+
+msgid "Без ответа:"
+msgstr "Bez odpowiedzi:"
+
+msgid "Без ответа"
+msgstr "Bez odpowiedzi"
+
+msgid "Время истекло"
+msgstr "Czas minął"
+
+msgid "Время истекло. Проверяем текущие ответы; незаполненные считаются пропущенными."
+msgstr "Czas minął. Sprawdzamy dotychczasowe odpowiedzi; puste liczą się jako pominięte."
+
+msgid "Время истекло. Заверши самопроверку или пропусти часть."
+msgstr "Czas minął. Zakończ samoocenę lub pomiń część."
+
+msgid "Прогон восстанавливается в текущей вкладке до 4 часов. При истечении времени проверяемой части текущие ответы отправляются автоматически, пустые считаются пропущенными. Письмо и речь не отправляются на сервер и не оцениваются автоматически. Итог хранится в этой вкладке, не добавляется в историю аккаунта."
+msgstr "Próbę można wznowić w tej karcie przez 4 godziny. Gdy upłynie czas części sprawdzanej, dotychczasowe odpowiedzi są wysyłane automatycznie, a puste liczą się jako pominięte. Teksty i wypowiedzi nie są wysyłane na serwer ani oceniane automatycznie. Wynik pozostaje w tej karcie i nie trafia do historii konta."

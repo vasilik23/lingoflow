@@ -2,7 +2,7 @@
 {% load i18n ui static %}
 {% block title %}{% translate "Тренажёр частей B1 · LingoFlow" %}{% endblock %}
 {% block content %}
-<div class="mock-shell" data-simulation-root{% if not result and not error %}{% if part.id == 'listening' %} data-b1-listening data-namespace="simulation:{{ simulation_storage_namespace }}:{{ timing_mode }}" data-listening-form="simulation-form" data-listening-transcript="simulation-listening-transcript"{% endif %}{% endif %} data-storage-namespace="{{ simulation_storage_namespace }}" data-variant-id="{{ variant.id }}" data-timing-mode="{{ timing_mode|default:'short' }}"{% if part %} data-part-id="{{ part.id }}" data-duration-seconds="{{ duration_seconds }}"{% endif %}{% if result %} data-result-percent="{{ result.percent }}"{% endif %}>
+<div class="mock-shell" data-simulation-root{% if not result and not error %}{% if part.id == 'listening' %} data-b1-listening data-namespace="simulation:{{ simulation_storage_namespace }}:{{ timing_mode }}" data-listening-form="simulation-form" data-listening-transcript="simulation-listening-transcript"{% endif %}{% endif %} data-storage-namespace="{{ simulation_storage_namespace }}" data-started-at="{{ attempt_started_at_ms }}" data-variant-id="{{ variant.id }}" data-timing-mode="{{ timing_mode|default:'short' }}"{% if part %} data-part-id="{{ part.id }}" data-duration-seconds="{{ duration_seconds }}"{% endif %}{% if result %} data-result-percent="{{ result.percent }}"{% endif %}>
   <header class="mock-header">
     <div><p class="eyebrow">B1 · {{ variant.label|ui_text }}</p><h1>{% if part %}{{ part.title|ui_text }} {% translate "на время" %}{% else %}{% translate "Тренажёр частей экзамена" %}{% endif %}</h1><p>{% if part %}{% if timing_mode == 'short' %}{% translate "Короткая тренировка:" %} {{ timer_minutes|ui_text }} {% translate "мин. Учебный ориентир — минута на вопрос" %}{% if part.id == 'listening' %} {% translate "и три минуты на прослушивание" %}{% elif part.id == 'reading' %} {% translate "и две минуты на чтение" %}{% endif %}{% translate "; это не официальный норматив." %}{% else %}{% translate "Полный лимит:" %} {{ part.minutes|ui_text }} {% translate "мин." %}{% endif %} {% translate "Объём этого оригинального набора LingoFlow меньше официального экзамена." %}{% else %}{% translate "Для коротких наборов доступен учебный таймер и отдельный полный лимит части." %}{% endif %}</p></div>
     {% if part and not result %}<div class="mock-timer" role="timer" aria-live="off"><strong id="simulation-timer">{{ timer_minutes|ui_text }}:00</strong><span>{% translate "осталось" %}</span></div><p class="visually-hidden" id="simulation-timer-status" role="status" aria-live="polite" aria-atomic="true"></p>{% endif %}
@@ -29,7 +29,7 @@
     <p><a href="{% url 'b1-exam-simulation' %}">{% translate "← Выбрать другую часть" %}</a></p>
     {% if error %}<div class="form-message error" role="alert">{{ error|ui_text }}</div>{% endif %}
     {% if not result %}<section class="card mock-section">{% include "partials/b1_exam_instruction.html" %}</section>{% endif %}
-    {% if result %}<section class="card mock-summary"><div><p class="eyebrow">{% translate "Результат этой тренировки" %}</p><h2>{{ result.correct|ui_text }} {% translate "из" %} {{ result.total|ui_text }} · {{ result.percent|ui_text }}%</h2><p class="muted">{% translate "Это результат короткого оригинального набора, не оценка официальной части B1." %}</p>{% if saved %}<p class="form-message success">{% translate "Агрегированный результат сохранён между устройствами." %}</p>{% elif saved is False %}<p class="form-message error">{% translate "Результат показан, но историю сейчас сохранить не удалось." %}</p>{% endif %}<a class="compact-button" href="{% url 'b1-exam-simulation' %}">{% translate "К пяти частям" %}</a></div></section>{% endif %}
+    {% if result %}<section class="card mock-summary"><div><p class="eyebrow">{% translate "Результат этой тренировки" %}</p><h2>{{ result.correct|ui_text }} {% translate "из" %} {{ result.total|ui_text }} · {{ result.percent|ui_text }}%</h2><p>{% translate "Правильных:" %} {{ result.correct|ui_text }} · {% translate "Неправильных:" %} {{ result.incorrect|ui_text }} · {% translate "Без ответа:" %} {{ result.unanswered|ui_text }}{% if result.timed_out %} · {% translate "Время истекло" %}{% endif %}</p><p class="muted">{% translate "Это результат короткого оригинального набора, не оценка официальной части B1." %}</p>{% if saved %}<p class="form-message success">{% translate "Агрегированный результат сохранён между устройствами." %}</p>{% elif saved is False %}<p class="form-message error">{% translate "Результат показан, но историю сейчас сохранить не удалось." %}</p>{% endif %}<a class="compact-button" href="{% url 'b1-exam-simulation' %}">{% translate "К пяти частям" %}</a></div></section>{% endif %}
 
     {% if part.mode == "objective" %}
       <form method="post" class="mock-form" id="simulation-form">{% csrf_token %}<input type="hidden" name="simulation_token" value="{{ simulation_token }}">
@@ -89,7 +89,7 @@
   const storedStart = Number(state?.startedAt);
   if (restart || !state || state.status === 'completed' || !Number.isFinite(storedStart) || storedStart > Date.now()) {
     clearDraft();
-    state = { status: 'started', startedAt: Date.now() };
+    state = { status: 'started', startedAt: Number(root.dataset.startedAt) || Date.now() };
     writeState(partId, state);
     if (restart) {
       const cleanUrl = new URL(window.location.href);
@@ -155,18 +155,40 @@
   const timerStatus = document.getElementById('simulation-timer-status');
   let previousLeft = Math.max(0, duration - Math.floor((Date.now() - state.startedAt) / 1000));
   const tick = () => {
+    if (root.dataset.expired) return;
     const left = Math.max(0, duration - Math.floor((Date.now() - state.startedAt) / 1000));
     const crossed = [600, 300, 60].filter(point => previousLeft > point && left <= point);
-    if (timerStatus && left === 0) timerStatus.textContent = ui('Время истекло.');
-    else if (timerStatus && crossed.length) {
+    if (timerStatus && left > 0 && crossed.length) {
       const checkpoint = crossed[crossed.length - 1] / 60;
       timerStatus.textContent = checkpoint === 1 ? ui('Осталась одна минута.') : ui`Осталось ${checkpoint} минут.`;
     }
     previousLeft = left;
     timer.textContent = `${String(Math.floor(left / 60)).padStart(2, '0')}:${String(left % 60).padStart(2, '0')}`;
-    if (left <= 0) { root.dataset.expired = '1'; root.dispatchEvent(new Event('b1-run-expired')); document.querySelectorAll('#simulation-form input, #simulation-form button, #simulation-writing').forEach(el => el.disabled = true); timer.parentElement.classList.add('expired'); return; }
+    if (left <= 0) {
+      saveDraft(); root.dataset.expired = '1'; root.dispatchEvent(new Event('b1-run-expired'));
+      if (writing) writing.disabled = true;
+      if (!form && timerStatus) timerStatus.textContent = ui('Время истекло.');
+      timer.parentElement.classList.add('expired');
+      if (form) {
+        answers.forEach(input => {
+          if (input.checked) {
+            const snapshot = document.createElement('input');
+            snapshot.type = 'hidden'; snapshot.name = input.name; snapshot.value = input.value;
+            form.appendChild(snapshot);
+          }
+          input.disabled = true;
+        });
+        form.querySelectorAll('button').forEach(el => el.disabled = true);
+        if (timerStatus) timerStatus.textContent = ui('Время истекло. Проверяем текущие ответы; незаполненные считаются пропущенными.');
+        form.noValidate = true;
+        if (form.requestSubmit) form.requestSubmit(); else form.submit();
+      }
+      return;
+    }
     window.setTimeout(tick, 1000);
-  }; tick();
+  };
+  document.addEventListener?.('visibilitychange', () => { if (!document.hidden) tick(); });
+  tick();
 })();
 </script>
 <script src="{% static 'polskiflow/b1-run-listening.js' %}?shell={{ pwa_shell_version }}" defer></script>

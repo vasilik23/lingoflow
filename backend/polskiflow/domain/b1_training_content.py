@@ -3,6 +3,7 @@
 from datetime import date
 import unicodedata
 
+from polskiflow.domain.objective_scoring import score_with_missing
 from polskiflow.domain.b1_weekly_mock import MockQuestion
 from polskiflow.domain.b1_exam_simulation import simulation_questions, score_simulation_part
 from polskiflow.domain.b1_training_reading import READING_BLOCKS, ReadingBlock, MATCHING_BLOCK, COHESION_BLOCK
@@ -76,7 +77,12 @@ def _normalize_written_answer(text):
     return " ".join(unicodedata.normalize("NFC", text).casefold().split())
 
 
-def score_training_part(variant, part_id, answers, content_version=CONTENT_VERSION):
+def score_training_part(variant, part_id, answers, content_version=CONTENT_VERSION, *, allow_missing=False):
+    if allow_missing:
+        return score_with_missing(
+            training_questions(variant, part_id, content_version), answers,
+            lambda complete: score_training_part(variant, part_id, complete, content_version),
+        )
     if part_id == "grammar" and content_version >= 7:
         questions = training_questions(variant, part_id, content_version)
         if set(answers) != {q.id for q in questions}:

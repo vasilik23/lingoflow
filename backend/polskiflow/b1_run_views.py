@@ -77,7 +77,7 @@ def b1_training_run(request):
             part = B1_SIMULATION_PARTS[state["step"]] if state["step"] < 5 else None
             questions = training_questions(variant, part["id"], state.get("content_version", 1)) if part else ()
             allowed = {"csrfmiddlewaretoken", "run_token", "action"}
-            if action in {"finish", "skip"} and state["phase"] == "part":
+            if action in {"finish", "skip", "timeout"} and state["phase"] == "part":
                 allowed |= {f"answer_{question.id}" for question in questions}
                 if part["mode"] == "self_review":
                     allowed.add("reviewed")
@@ -97,33 +97,35 @@ def b1_training_run(request):
             elif action == "skip" and state["phase"] == "part":
                 _finish_part(state, {"id": part["id"], "status": "skipped"}, now)
                 token = ""
-            elif action == "finish" and state["phase"] == "part":
-                if now >= state["deadline"]:
-                    error, status = "Время части истекло. Отметь её как пропущенную и продолжи.", 400
+            elif action in {"finish", "timeout"} and state["phase"] == "part":
+                timed_out = now >= state["deadline"]
+                if action == "timeout" and (not timed_out or part["mode"] != "objective"):
+                    error, status = "Это действие сейчас недоступно.", 400
                 elif part["id"] == "speaking" and now < state.get("speaking_ready_at", now):
                     error, status = "Подготовка ещё не закончилась. Прочитай задания и составь план ответов.", 400
                 elif part["mode"] == "objective":
                     try:
-                        answers = {question.id: request.POST[f"answer_{question.id}"] if getattr(question, "written", False) else int(request.POST[f"answer_{question.id}"]) for question in questions}
-                        score = score_training_part(variant, part["id"], answers, state.get("content_version", 1))
+                        answers = {question.id: request.POST[f"answer_{question.id}"] if getattr(question, "written", False) else int(request.POST[f"answer_{question.id}"]) for question in questions if f"answer_{question.id}" in request.POST}
+                        score = score_training_part(variant, part["id"], answers, state.get("content_version", 1), allow_missing=timed_out)
                     except (KeyError, TypeError, ValueError):
                         error, status = "Ответь на все вопросы этой части.", 400
                     else:
-                        _finish_part(state, {"id": part["id"], "status": "scored", **{
+                        _finish_part(state, {"id": part["id"], "status": "scored", "timed_out": timed_out,
+                            "incorrect": score.get("incorrect", score["total"] - score["correct"]), "unanswered": score.get("unanswered", 0), **{
                             key: score[key] for key in ("correct", "total", "percent")
                         }}, now)
                         token = ""
                 elif request.POST.get("reviewed") != "on":
                     error, status = "Подтверди самопроверку или пропусти часть.", 400
                 else:
-                    _finish_part(state, {"id": part["id"], "status": "self_review"}, now)
+                    _finish_part(state, {"id": part["id"], "status": "self_review", "timed_out": timed_out}, now)
                     token = ""
             else:
                 error, status = "Это действие сейчас недоступно.", 400
     variant = get_mock_variant(state["variant_id"])
     part = B1_SIMULATION_PARTS[state["step"]] if state["step"] < 5 else None
     token = token or signing.dumps(state, salt=RUN_SALT)
-    report = tuple({**part_info, **result} for part_info, result in zip(B1_SIMULATION_PARTS, state["results"]))
+    report = tuple({**part_info, **result, "incorrect": result.get("incorrect", result.get("total", 0) - result.get("correct", 0)), "unanswered": result.get("unanswered", 0)} for part_info, result in zip(B1_SIMULATION_PARTS, state["results"]))
     instruction = B1_INSTRUCTIONS.get(part["id"]) if part else None
     listening_recording = recording_for_run(state, variant) if part and part["id"] == "listening" else None
     if part and part["id"] == "listening":

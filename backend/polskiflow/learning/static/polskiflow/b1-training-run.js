@@ -85,6 +85,7 @@
   let previous = Number(root.dataset.seconds);
   if (timer) {
     const tick = () => {
+      if (root.dataset.expired) return;
       const left = Math.max(0, Math.ceil((endsAt - Date.now()) / 1000));
       timer.textContent = `${String(Math.floor(left / 60)).padStart(2, '0')}:${String(left % 60).padStart(2, '0')}`;
       if (left === 0) {
@@ -92,15 +93,34 @@
           root.querySelector('[data-next-part]').disabled = false;
           timerStatus.textContent = ui('Перерыв завершён. Можно начать следующую часть.');
         } else {
+          save();
+          const snapshot = fields.filter(input => input.name.startsWith('answer_') && (input.checked || input.matches('[data-run-written]'))).map(input => ({name: input.name, value: input.value}));
           root.dataset.expired = '1';
           root.dispatchEvent(new Event('b1-run-expired'));
-          root.querySelector('[data-finish-part]').disabled = true;
-          fields.forEach(input => { input.disabled = true; });
+          const objective = root.dataset.mode === 'objective';
+          root.querySelector('[data-finish-part]').disabled = objective;
+          fields.forEach(input => { input.disabled = input.name !== 'reviewed'; });
           if (writing) writing.disabled = true;
           if (writing2) writing2.disabled = true;
           root.querySelector('[data-run-play]')?.setAttribute('disabled', '');
           if ('speechSynthesis' in window) speechSynthesis.cancel();
-          timerStatus.textContent = ui('Время истекло. Можно пропустить часть без балла.');
+          if (objective) {
+            // Disabled controls are omitted by HTML forms. Freeze the exact
+            // current answers as hidden fields before submitting the timeout.
+            snapshot.forEach(answer => {
+              const input = document.createElement('input');
+              input.type = 'hidden'; input.name = answer.name; input.value = answer.value;
+              form.appendChild(input);
+            });
+            const action = document.createElement('input');
+            action.type = 'hidden'; action.name = 'action'; action.value = 'timeout';
+            form.appendChild(action);
+            form.noValidate = true;
+            timerStatus.textContent = ui('Время истекло. Проверяем текущие ответы; незаполненные считаются пропущенными.');
+            if (form.requestSubmit) form.requestSubmit(); else form.submit();
+          } else {
+            timerStatus.textContent = ui('Время истекло. Заверши самопроверку или пропусти часть.');
+          }
         }
         return;
       }
@@ -109,5 +129,6 @@
       window.setTimeout(tick, 1000);
     };
     tick();
+    document.addEventListener?.('visibilitychange', () => { if (!document.hidden && !root.dataset.expired) tick(); });
   }
 })();

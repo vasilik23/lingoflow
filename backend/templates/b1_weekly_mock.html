@@ -2,7 +2,7 @@
 {% load i18n ui static %}
 {% block title %}{% translate "Недельный пробный модуль B1 · LingoFlow" %}{% endblock %}
 {% block content %}
-<div class="mock-shell" data-mock-root{% if not result and not error %} data-b1-listening data-namespace="mock:{{ mock_storage_namespace }}" data-listening-form="mock-form" data-listening-transcript="mock-listening-transcript"{% endif %} data-storage-namespace="{{ mock_storage_namespace }}" data-variant-id="{{ variant.id }}" data-duration-seconds="{{ duration_seconds }}"{% if result %} data-completed="true"{% endif %}{% if error %} data-error="true"{% endif %}>
+<div class="mock-shell" data-mock-root{% if not result and not error %} data-b1-listening data-namespace="mock:{{ mock_storage_namespace }}" data-listening-form="mock-form" data-listening-transcript="mock-listening-transcript"{% endif %} data-storage-namespace="{{ mock_storage_namespace }}" data-started-at="{{ attempt_started_at_ms }}" data-variant-id="{{ variant.id }}" data-duration-seconds="{{ duration_seconds }}"{% if result %} data-completed="true"{% endif %}{% if error %} data-error="true"{% endif %}>
   <header class="mock-header">
     <div><p class="eyebrow">{% translate "B1 · недельная тренировка ·" %} {{ variant.label|ui_text }}</p><h1>{% translate "Пробный мини‑модуль" %}</h1><p>{% translate "15 минут: 3 проверяемых блока + 2 блока самопроверки. Аудирование и чтение — по 2 вопроса, грамматика — 3. Письмо и речь не получают автоматического балла. Вариант меняется раз в неделю. Это тренировка LingoFlow, не официальный тест и не прогноз результата." %}</p></div>
     {% if not result %}<div class="mock-timer" role="timer" aria-live="off"><strong id="mock-timer">15:00</strong><span>{% translate "осталось" %}</span></div><p class="visually-hidden" id="mock-timer-status" role="status" aria-live="polite" aria-atomic="true"></p>{% endif %}
@@ -12,7 +12,7 @@
 
   {% if result %}
     <section class="card mock-summary" aria-labelledby="mock-result-title">
-      <div><p class="eyebrow">{% translate "Проверяемая часть" %}</p><h2 id="mock-result-title">{{ result.correct|ui_text }} {% translate "из" %} {{ result.total|ui_text }}</h2><p class="muted">{% translate "Баллы относятся только к заданиям ниже и не равны результату государственного экзамена. Выборка мала: 2–3 вопроса на навык. Уверенность в выводах низкая; один ответ меняет результат блока на 33–50 процентных пунктов." %}</p></div>
+      <div><p class="eyebrow">{% translate "Проверяемая часть" %}</p><h2 id="mock-result-title">{{ result.correct|ui_text }} {% translate "из" %} {{ result.total|ui_text }}</h2><p>{% translate "Правильных:" %} {{ result.correct|ui_text }} · {% translate "Неправильных:" %} {{ result.incorrect|ui_text }} · {% translate "Без ответа:" %} {{ result.unanswered|ui_text }}{% if result.timed_out %} · {% translate "Время истекло" %}{% endif %}</p><p class="muted">{% translate "Баллы относятся только к заданиям ниже и не равны результату государственного экзамена. Выборка мала: 2–3 вопроса на навык. Уверенность в выводах низкая; один ответ меняет результат блока на 33–50 процентных пунктов." %}</p></div>
       <div class="mock-module-results">
         {% for module in result.modules %}<div><strong>{{ module.percent|ui_text }}%</strong><span>{{ module.label|ui_text }} · {{ module.correct|ui_text }}/{{ module.total|ui_text }}</span></div>{% endfor %}
       </div>
@@ -84,7 +84,7 @@
     url.searchParams.delete('restart'); window.history.replaceState({}, '', url);
   }
   if (!draft || !Number.isFinite(draft.startedAt) || draft.startedAt <= 0 || draft.startedAt > Date.now() || typeof draft.token !== 'string') {
-    draft = {startedAt: Date.now(), token: token.value, variant: root.dataset.variantId, answers: {}, writing: ''};
+    draft = {startedAt: Number(root.dataset.startedAt) || Date.now(), token: token.value, variant: root.dataset.variantId, answers: {}, writing: ''};
   }
   if (root.dataset.error) { clear(); return; }
   if (draft.variant !== root.dataset.variantId && Date.now() - draft.startedAt < duration * 1000) {
@@ -122,10 +122,10 @@
   const timerStatus = document.getElementById('mock-timer-status');
   let previousLeft = Math.max(0, duration - Math.floor((Date.now() - draft.startedAt) / 1000));
   const tick = () => {
+    if (root.dataset.expired) return;
     const left = Math.max(0, duration - Math.floor((Date.now() - draft.startedAt) / 1000));
     const crossed = [600, 300, 60].filter(point => previousLeft > point && left <= point);
-    if (timerStatus && left === 0) timerStatus.textContent = ui('Время истекло.');
-    else if (timerStatus && crossed.length) {
+    if (timerStatus && left > 0 && crossed.length) {
       const checkpoint = crossed[crossed.length - 1] / 60;
       timerStatus.textContent = checkpoint === 1 ? ui('Осталась одна минута.') : ui`Осталось ${checkpoint} минут.`;
     }
@@ -133,9 +133,27 @@
     const minutes = String(Math.floor(left / 60)).padStart(2, '0');
     const seconds = String(left % 60).padStart(2, '0');
     timer.textContent = `${minutes}:${seconds}`;
-    if (left <= 0) { root.dataset.expired = '1'; root.dispatchEvent(new Event('b1-run-expired')); form.querySelectorAll('input, button, textarea').forEach(el => el.disabled = true); timer.parentElement.classList.add('expired'); return; }
+    if (left <= 0) {
+      save(); root.dataset.expired = '1'; root.dispatchEvent(new Event('b1-run-expired'));
+      answers.forEach(input => {
+        if (input.checked) {
+          const snapshot = document.createElement('input');
+          snapshot.type = 'hidden'; snapshot.name = input.name; snapshot.value = input.value;
+          form.appendChild(snapshot);
+        }
+        input.disabled = true;
+      });
+      form.querySelectorAll('button, textarea').forEach(el => el.disabled = true);
+      timer.parentElement.classList.add('expired');
+      if (timerStatus) timerStatus.textContent = ui('Время истекло. Проверяем текущие ответы; незаполненные считаются пропущенными.');
+      form.noValidate = true;
+      if (form.requestSubmit) form.requestSubmit(); else form.submit();
+      return;
+    }
     window.setTimeout(tick, 1000);
-  }; tick();
+  };
+  document.addEventListener?.('visibilitychange', () => { if (!document.hidden) tick(); });
+  tick();
 })();
 </script>
 <script src="{% static 'polskiflow/b1-run-listening.js' %}?shell={{ pwa_shell_version }}" defer></script>
