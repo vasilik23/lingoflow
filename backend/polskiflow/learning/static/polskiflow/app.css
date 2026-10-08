@@ -1195,3 +1195,12 @@ button.secondary { background: var(--surface); border-color: var(--line); }
 .profile-form button { max-width: 100%; white-space: normal; }
 .account-privacy-link { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 1.25rem; color: var(--text); text-decoration: none; font-weight: 800; }
 .account-privacy-link:hover { border-color: var(--primary); color: var(--primary); }
+
+.placement-question { min-width: 0; }
+.placement-question legend { overflow-wrap: anywhere; }
+.placement-option { display: flex !important; align-items: flex-start; gap: .65rem; padding: .6rem 0; }
+.placement-option input[type=radio] { width: auto; flex: 0 0 auto; margin-top: .25rem; }
+.placement-option span { min-width: 0; overflow-wrap: anywhere; }
+.placement-review { padding-block: .75rem; border-bottom: 1px solid var(--line); }
+.placement-page .app-nav { display: none; }
+.placement-page .page-shell.with-nav { width: min(calc(100% - 2rem), 68rem); margin-inline: auto; padding-top: .5rem; }

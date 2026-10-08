@@ -605,10 +605,13 @@ def onboarding(request: HttpRequest) -> HttpResponse:
     dashboard = load_dashboard_progress(
         request.supabase_access_token, request.supabase_user.id, fallback_name
     )
+    suggested_level = request.GET.get("suggested_level", dashboard.level)
+    if suggested_level not in PROFILE_LEVELS:
+        suggested_level = dashboard.level
     form = {
         "daily_goal_minutes": request.POST.get("daily_goal_minutes", str(dashboard.daily_goal_minutes)),
         "display_name": request.POST.get("display_name", dashboard.display_name).strip(),
-        "level": request.POST.get("level", dashboard.level).upper(),
+        "level": request.POST.get("level", suggested_level).upper(),
         "daily_goal_lessons": request.POST.get(
             "daily_goal_lessons", str(dashboard.daily_goal_lessons)
         ),

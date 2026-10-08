@@ -574,7 +574,7 @@ msgid "Do + родительный задаёт крайний срок: do pię
 msgstr "Do + genitive sets a deadline: do piętnastego maja."
 
 msgid "Dobrze, dziękuję — естественный короткий ответ: «Хорошо, спасибо»."
-msgstr "Dobrze, dziękuję is the natural short answer: \"Okay, thank you.\""
+msgstr "Dobrze, dziękuję is a natural short reply: “Fine, thank you”."
 
 msgid "Dobór słów означает осознанный выбор лексики: одна и та же мысль может звучать нейтрально, официально или разговорно."
 msgstr "Dobór słów means conscious choice of vocabulary: the same thought may sound neutral, official or colloquial."
@@ -784,7 +784,7 @@ msgid "Mam na imię… — базовая форма представления.
 msgstr "Mam na imię... is the basic form of representation."
 
 msgid "Mam na imię… — стандартная конструкция «Меня зовут…»."
-msgstr "Mam na imię... is the standard construction of \"My name is...\""
+msgstr "Mam na imię… is the standard expression for “My name is…”."
 
 msgid "Mam uczulenie na… — стандартная фраза об аллергии."
 msgstr "Mam uczulenie na... is a standard phrase about allergies."
@@ -1231,7 +1231,7 @@ msgid "Rodzice — родители."
 msgstr "Rodzice — parents."
 
 msgid "Rozpocząć karierę — начать профессиональный путь."
-msgstr "Rozpocząć karierę — Start a professional journey."
+msgstr "Rozpocząć karierę means to begin a professional career."
 
 msgid "Rubryka — отдельное поле формы."
 msgstr "Rubryka — Separate form field."
@@ -2770,7 +2770,7 @@ msgid "Выберите ответ"
 msgstr "Select the answer"
 
 msgid "Выберите ответ на «Jak się masz?»"
-msgstr "Select the answer to \"Jak się masz?»"
+msgstr "Choose a reply to “Jak się masz?”."
 
 msgid "Выберите подборку"
 msgstr "Select the selection"
@@ -3115,7 +3115,7 @@ msgid "Для «я» используется форма jestem: Jestem Anna."
 msgstr "For \"I,\" a form is used. jestem: Jestem Anna."
 
 msgid "Для «я» нужна форма jestem: Jestem z Ukrainy."
-msgstr "I need a form for me. jestem: Jestem z Ukrainy."
+msgstr "Use jestem with “I”: Jestem z Ukrainy."
 
 msgid "Для аудирования нужен JavaScript и системный синтез речи."
 msgstr "For listening, you need JavaScript and system speech synthesis."
@@ -3346,7 +3346,7 @@ msgid "Если хочется более спокойного ритма, по�
 msgstr "If you want a more relaxed rhythm, try it temporarily. %(v0)s The current goal can also be left as a reference point."
 
 msgid "Естественная конструкция: pracuję w biurze."
-msgstr "Natural design: pracuję w biurze."
+msgstr "The natural expression is pracuję w biurze."
 
 msgid "Есть более подходящий ответ"
 msgstr "There's a better answer"
@@ -4231,7 +4231,7 @@ msgid "Как сказать «Я говорю по-польски»?"
 msgstr "How do you say \"I speak Polish\"?"
 
 msgid "Как сказать «Я из Украины»?"
-msgstr "How do you say \"I'm from Ukraine\"?"
+msgstr "How do you say “I am from Ukraine”?"
 
 msgid "Как сказать «Я никогда не пью кофе вечером»?"
 msgstr "How do you say, “I never drink coffee at night?”"
@@ -4276,7 +4276,7 @@ msgid "Как сказать «я плохо себя чувствую»?"
 msgstr "How do you say, \"I'm not feeling well\"?"
 
 msgid "Как сказать «я работаю в офисе»?"
-msgstr "How do you say “I work in the office”?"
+msgstr "How do you say “I work in an office”?"
 
 msgid "Как сказать о завершённом образовании?"
 msgstr "How do you talk about completed education?"
@@ -8434,7 +8434,7 @@ msgid "Руководство выбрало трёхмесячный пилот
 msgstr "The management chose a three-month hybrid pilot rather than a completely remote job."
 
 msgid "С ja употребляем mogę."
-msgstr "S. ja usable mogę."
+msgstr "Use mogę with ja."
 
 msgid "С mam называем симптом: mam katar, kaszel; mam gorączkę, temperaturę."
 msgstr "With mam we call the symptom: mam katar, kaszel; mam gorączkę, temperaturę."
@@ -10336,7 +10336,7 @@ msgid "Что должно быть во введении?"
 msgstr "What should be in the introduction?"
 
 msgid "Что значит «Mam na imię Lena»?"
-msgstr "What do you mean?Mam na imię Lena»?"
+msgstr "What does “Mam na imię Lena” mean?"
 
 msgid "Что значит «Trochę znam język polski»?"
 msgstr "What do you mean?Trochę znam język polski»?"
@@ -10588,7 +10588,7 @@ msgid "Эти ресурсы помогают проверять уровни, �
 msgstr "These resources help check levels, vocabulary forms, and grammar, and they are not sources of copied learning texts or exercises."
 
 msgid "Это Лена"
-msgstr "It's Lena"
+msgstr "This is Lena"
 
 msgid "Это действие сейчас недоступно."
 msgstr "That action is not available now."
@@ -16618,3 +16618,70 @@ msgstr "Save a preference for daily reminders"
 
 msgid "Сохранить предпочтение"
 msgstr "Save preference"
+
+msgid "Проверка стартового уровня"
+msgstr "Starting level check"
+
+msgid "Около трёх минут · 12 вопросов · можно пропустить"
+msgstr "About three minutes · 12 questions · optional"
+
+msgid "Это ориентир для начала курса, а не оценка CEFR. Проверяем только лексику и грамматику A1–B2; аудирование, речь и письмо здесь не оцениваются."
+msgstr "This suggests where to start the course, rather than assessing CEFR proficiency. It only checks A1–B2 vocabulary and grammar; listening, speaking and writing are not assessed."
+
+msgid "Задания проверки временно недоступны. Выбери уровень самостоятельно."
+msgstr "Check questions are temporarily unavailable. Choose your own level."
+
+msgid "Рекомендуем начать с"
+msgstr "Suggested starting level:"
+
+msgid "В каждом блоке нужно минимум два верных ответа из трёх. Предлагаем первый блок, где основа ещё неуверенная; ответы сложнее не перекрывают пробелы ниже."
+msgstr "Each block requires at least two correct answers out of three. We suggest the first block where the foundations are uncertain; harder answers do not compensate for earlier gaps."
+
+msgid "Основы до B2 в этой проверке уверенные. Уровни C1–C2 здесь не проверяются; их можно выбрать самостоятельно."
+msgstr "You handled the foundations through B2 in this check. C1–C2 are not assessed here; you can choose them yourself."
+
+msgid "Продолжить с рекомендацией"
+msgstr "Continue with the suggestion"
+
+msgid "Профиль ещё не изменён. На следующем шаге можно выбрать любой уровень."
+msgstr "Your profile has not changed. You can choose any level in the next step."
+
+msgid "Ответы и объяснения"
+msgstr "Answers and explanations"
+
+msgid "Выбрать уровень самостоятельно"
+msgstr "Choose your own level"
+
+msgid "Следующий блок"
+msgstr "Next block"
+
+msgid "Показать рекомендацию"
+msgstr "Show suggestion"
+
+msgid "Не уверен? Пройди короткую проверку или выбери уровень самостоятельно."
+msgstr "Not sure? Take a short check or choose your own level."
+
+msgid "Проверить стартовый уровень"
+msgstr "Check my starting level"
+
+msgid "Проверка не принята. Начни заново: выбери ответ на каждый вопрос."
+msgstr "The check could not be accepted. Start again and choose an answer for each question."
+
+msgid "Не знаю"
+msgstr "I don't know"
+
+
+msgid "Osiągnął обозначает полученный результат."
+msgstr "Osiągnął describes an achieved result."
+
+msgid "Jeździłem передаёт повторявшееся действие."
+msgstr "Jeździłem describes a repeated action."
+
+msgid "Wprawdzie naturalnie łączy się z ale lub jednak."
+msgstr "Wprawdzie naturally pairs with ale or jednak."
+
+msgid "Z drugiej strony sygnalizuje kontrastującą perspektywę."
+msgstr "Z drugiej strony introduces a contrasting perspective."
+
+msgid "Choć wskazuje ograniczenie bez odrzucania całej propozycji."
+msgstr "Choć expresses a limitation without rejecting the entire proposal."

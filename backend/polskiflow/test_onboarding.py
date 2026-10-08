@@ -7,6 +7,17 @@ from polskiflow.progress_store import DashboardProgress
 
 
 class OnboardingTests(TestCase):
+    @patch("polskiflow.auth_views.save_profile_settings")
+    def test_suggestion_only_preselects_and_manual_choice_still_wins(self, save):
+        response = self.client.get("/welcome/?suggested_level=B1")
+        self.assertContains(response, 'value="B1" checked')
+        self.assertContains(response, 'href="/welcome/check/"')
+        self.assertContains(self.client.get("/welcome/?suggested_level=invalid"), 'value="A1" checked')
+        save.assert_not_called()
+        save.return_value = True
+        self.client.post("/welcome/?suggested_level=B1", {"display_name": "Anna", "level": "A2", "daily_goal_minutes": "15"})
+        self.assertEqual(save.call_args.args[3], "A2")
+
     @patch("polskiflow.auth_views.save_profile_settings", return_value=True)
     def test_minute_goal_uses_same_owner_profile_and_rejects_invalid_duration(self, save):
         response = self.client.post("/welcome/", {"display_name": "Anna", "level": "B1", "daily_goal_minutes": "30"})

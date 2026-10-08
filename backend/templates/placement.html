@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load i18n ui %}
+{% block title %}{% translate "Проверка стартового уровня" %} · LingoFlow{% endblock %}
+{% block body_class %}placement-page{% endblock %}
+{% block toolbar_title %}<h1>{% translate "Проверка стартового уровня" %}</h1>{% endblock %}
+{% block content %}
+<div class="onboarding-shell" id="placement-step">
+  <p class="muted">{% translate "Около трёх минут · 12 вопросов · можно пропустить" %}</p>
+  <p>{% translate "Это ориентир для начала курса, а не оценка CEFR. Проверяем только лексику и грамматику A1–B2; аудирование, речь и письмо здесь не оцениваются." %}</p>
+  {% if placement_error %}<p class="save-error" role="alert">{{ placement_error|ui_text }}</p>{% endif %}
+  {% if unavailable %}<p role="alert">{% translate "Задания проверки временно недоступны. Выбери уровень самостоятельно." %}</p>
+  {% elif result %}
+    <section class="card onboarding-form" aria-labelledby="placement-result">
+      <h2 id="placement-result">{% translate "Рекомендуем начать с" %} {{ result.level }}</h2>
+      <p>{% translate "В каждом блоке нужно минимум два верных ответа из трёх. Предлагаем первый блок, где основа ещё неуверенная; ответы сложнее не перекрывают пробелы ниже." %}</p>
+      <ul>{% for level, score in result.blocks %}<li>{{ level }}: {{ score }} / 3</li>{% endfor %}</ul>
+      {% if result.strong_b2 %}<p>{% translate "Основы до B2 в этой проверке уверенные. Уровни C1–C2 здесь не проверяются; их можно выбрать самостоятельно." %}</p>{% endif %}
+      <a class="compact-button" href="{% url 'onboarding' %}?suggested_level={{ result.level }}">{% translate "Продолжить с рекомендацией" %}</a>
+      <p class="muted">{% translate "Профиль ещё не изменён. На следующем шаге можно выбрать любой уровень." %}</p>
+    </section>
+    <details class="card"><summary>{% translate "Ответы и объяснения" %}</summary>
+      {% for question in reviews %}<div class="placement-review"><p>{{ forloop.counter }}. {{ question.prompt|ui_text }} {% if question.passed %}✓{% else %}—{% endif %}</p><p>{{ question.correct_text|ui_text }}</p><p class="muted">{{ question.explanation|ui_text }}</p></div>{% endfor %}
+    </details>
+    <p><a href="{% url 'placement-check' %}">{% translate "Начать заново" %}</a></p>
+  {% else %}
+    <form class="card onboarding-form" method="post" action="{% url 'placement-check' %}#placement-step">
+      {% csrf_token %}<input type="hidden" name="state" value="{{ state }}">
+      <p role="status">{% translate "Блок" %} {{ step }} / 4</p>
+      {% for question in questions %}{% with question_index=forloop.counter0 %}
+        <fieldset class="placement-question"><legend>{{ question.prompt|ui_text }}</legend>
+          {% for option in question.options %}<label class="placement-option"><input type="radio" name="answer_{{ question_index }}" value="{{ forloop.counter0 }}" required><span>{{ option|ui_text }}</span></label>{% endfor %}
+          <label class="placement-option"><input type="radio" name="answer_{{ question_index }}" value="-1" required><span>{% translate "Не знаю" %}</span></label>
+        </fieldset>
+      {% endwith %}{% endfor %}
+      <button type="submit">{% if step == 4 %}{% translate "Показать рекомендацию" %}{% else %}{% translate "Следующий блок" %}{% endif %}</button>
+    </form>
+  {% endif %}
+  <p><a href="{% url 'onboarding' %}">{% translate "Выбрать уровень самостоятельно" %}</a></p>
+</div>
+{% endblock %}
