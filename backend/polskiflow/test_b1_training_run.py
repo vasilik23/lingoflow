@@ -15,6 +15,67 @@ from polskiflow.domain.b1_training_speaking import PREPARATION_SECONDS, training
 
 
 class B1TrainingRunTests(TestCase):
+    def test_review_preserves_correct_wrong_and_missing_responses_on_resume(self):
+        opened = self.advance(self.client.get('/exam/b1/run/'), 'start')
+        questions = opened.context['questions']
+        self.now = opened.context['state']['deadline']
+        finished = self.advance(opened, 'timeout', **{
+            f'answer_{questions[0].id}': questions[0].correct,
+            f'answer_{questions[1].id}': (questions[1].correct + 1) % len(questions[1].options),
+        })
+        resumed = self.advance(finished, 'resume')
+        details = resumed.context['reviews'][0]['details']
+        self.assertTrue(details[0]['is_correct'])
+        self.assertFalse(details[1]['is_correct'])
+        self.assertTrue(details[2]['unanswered'])
+        self.assertEqual(details[1]['selected_text'], finished.context['reviews'][0]['details'][1]['selected_text'])
+        self.assertContains(resumed, questions[1].explanation)
+        self.assertContains(resumed, 'Текст задания / расшифровка')
+        self.assertContains(resumed, 'target="_blank" rel="noopener"')
+        self.assertLess(len(resumed.context['run_token']), 16384)
+        self.now += BREAK_SECONDS
+        next_part = self.advance(resumed, 'start')
+        self.assertEqual(next_part.context['reviews'][0]['details'], details)
+        self.assertEqual(next_part.context['part']['id'], 'reading')
+
+    def test_review_is_pinned_to_all_variants_and_reading_versions(self):
+        for variant in VARIANTS:
+            for version in (1, 7, 8, 9):
+                state = dict(self.client.get('/exam/b1/run/').context['state'], variant_id=variant.id,
+                             content_version=version, phase='part', step=1, deadline=self.now + 60,
+                             results=[{'id': 'listening', 'status': 'skipped'}])
+                questions = training_questions(variant, 'reading', version)
+                result = self.client.post('/exam/b1/run/', {'run_token': signing.dumps(state, salt=RUN_SALT),
+                    'action': 'finish', **{f'answer_{q.id}': q.correct for q in questions}})
+                review = result.context['reviews'][1]
+                self.assertEqual(tuple(d['question'] for d in review['details']), questions)
+                self.assertEqual(review['sources'][0]['text'], variant.reading_text)
+                self.assertEqual(len(review['sources']), 1 if version < 3 else len(training_reading_blocks(variant, version)))
+
+    def test_legacy_review_does_not_invent_responses(self):
+        state = dict(self.client.get('/exam/b1/run/').context['state'], phase='break', step=1,
+                     break_until=self.now, results=[{'id': 'listening', 'status': 'scored', 'correct': 5, 'total': 5, 'percent': 100}])
+        result = self.client.post('/exam/b1/run/', {'run_token': signing.dumps(state, salt=RUN_SALT), 'action': 'resume'})
+        self.assertEqual(result.context['reviews'][0]['details'], ())
+        self.assertContains(result, 'В этом старом прогоне сохранён только итог.')
+
+    def test_theory_links_reference_seeded_grammar_and_user_input_is_escaped(self):
+        from polskiflow.domain.b1_run_review import theory_lesson
+        from polskiflow.learning.models import Lesson
+        for variant in VARIANTS:
+            for part in ('listening', 'reading', 'grammar'):
+                for question in training_questions(variant, part):
+                    lesson = Lesson.objects.get(id=theory_lesson(question))
+                    self.assertTrue(lesson.is_active)
+                    self.assertTrue(lesson.theory_sections)
+        state = dict(self.client.get('/exam/b1/run/').context['state'], phase='part', step=2, deadline=self.now)
+        questions = training_questions(VARIANTS[0], 'grammar')
+        state['variant_id'] = VARIANTS[0].id
+        result = self.client.post('/exam/b1/run/', {'run_token': signing.dumps(state, salt=RUN_SALT), 'action': 'timeout',
+            'answer_tw31': '<script>alert(1)</script>'})
+        self.assertContains(result, '&lt;script&gt;alert(1)&lt;/script&gt;')
+        self.assertNotContains(result, '<script>alert(1)</script>')
+
     def test_timeout_browser_freezes_and_submits_current_answers_once(self):
         result = subprocess.run(["node", str(Path(__file__).with_name("test_b1_run_timeout.cjs"))], capture_output=True, text=True, timeout=15)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
@@ -392,7 +453,9 @@ class B1TrainingRunTests(TestCase):
         result = self.advance(response, 'finish', **dict(fields, answer_tw31='  CZASU  ', answer_tw40='pomoglbyś'))
         aggregate = result.context['state']['results'][-1]
         self.assertEqual(aggregate, {'id': 'grammar', 'status': 'scored', 'correct': 39, 'total': 40, 'percent': 98, 'timed_out': False, 'incorrect': 1, 'unanswered': 0})
-        self.assertNotIn('pomoglbyś', str(result.context['state']))
+        self.assertNotIn('pomoglbyś', str(aggregate))
+        self.assertEqual(result.context['state']['review_answers']['grammar']['tw40'], 'pomoglbyś')
+        self.assertContains(result, 'pomoglbyś')
 
     def test_written_answers_normalize_unicode_but_not_polish_letters(self):
         import unicodedata

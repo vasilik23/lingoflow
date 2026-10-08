@@ -7203,3 +7203,36 @@ msgstr "Próbę można wznowić w tej karcie przez 4 godziny. Po upływie czasu 
 
 msgid "Учебный прогон B1 хранит в текущей вкладке подписанный прогресс и текущие ответы/черновик до завершения части. Письменный текст отправляется в Groq только по отдельному выбору «Проверить с ИИ», речь не отправляется на сервер; после проверки остаются только агрегаты в подписанном состоянии. Добровольная запись речи остаётся в памяти страницы и удаляется при перезагрузке, завершении части или уходе. Микрофон выключается при остановке записи, истечении таймера и уходе со страницы. Прогон действителен до 4 часов, не входит в историю аккаунта и серверный экспорт; его можно удалить ссылкой «Новый прогон» или закрытием вкладки."
 msgstr "Próba B1 przechowuje w tej karcie podpisany postęp oraz odpowiedzi i szkice do zakończenia części. Tekst pisemny jest wysyłany do Groq tylko po wybraniu „Sprawdź z AI”; wypowiedzi nie są wysyłane na serwer. Po ocenie pozostają jedynie zbiorcze wyniki w podpisanym stanie. Dobrowolne nagranie jest przechowywane w pamięci strony i usuwane po przeładowaniu, zakończeniu części lub opuszczeniu strony. Mikrofon wyłącza się po zatrzymaniu, upływie czasu i opuszczeniu strony. Próba jest ważna do 4 godzin, poza historią konta i eksportem serwera; można ją usunąć linkiem „Nowa próba” lub zamykając kartę."
+
+msgid "Разбор"
+msgstr "Omówienie"
+
+msgid "Неверно"
+msgstr "Niepoprawnie"
+
+msgid "Повторить теорию"
+msgstr "Powtórz teorię"
+
+msgid "Сравни ответы и прочитай объяснения. Теория открывается в новой вкладке, прогон остаётся здесь."
+msgstr "Porównaj odpowiedzi i przeczytaj wyjaśnienia. Teoria otwiera się w nowej karcie, a próba pozostaje tutaj."
+
+msgid "Текст задания / расшифровка"
+msgstr "Tekst zadania / transkrypcja"
+
+msgid "Самопроверка завершена. Для письма и речи нет единственного правильного ответа и автоматического балла прогона."
+msgstr "Samoocena zakończona. Pisanie i mówienie nie mają jednej poprawnej odpowiedzi ani automatycznej oceny w tej próbie."
+
+msgid "Проверь выполнение всех пунктов, связность и языковую правильность. Текст и запись в разборе не сохраняются."
+msgstr "Sprawdź wszystkie punkty polecenia, spójność i poprawność językową. Tekst i nagranie nie są zapisywane w omówieniu."
+
+msgid "Часть пропущена без оценки. Ответы этой части не проверялись."
+msgstr "Część pominięta bez oceny. Odpowiedzi w tej części nie zostały sprawdzone."
+
+msgid "В этом старом прогоне сохранён только итог. Ответы для разбора недоступны."
+msgstr "W tej starszej próbie zapisano tylko wynik. Odpowiedzi do omówienia są niedostępne."
+
+msgid "Ответы проверяемых частей сохраняются для разбора в текущей вкладке до 4 часов, не в истории аккаунта. Новый прогон удаляет их."
+msgstr "Odpowiedzi w ocenianych częściach są przechowywane do omówienia w tej karcie przez maksymalnie 4 godziny, poza historią konta. Nowa próba je usuwa."
+
+msgid "Учебный прогон B1 хранит в текущей вкладке подписанный прогресс и текущие ответы/черновик до завершения части. Письменный текст отправляется в Groq только по отдельному выбору «Проверить с ИИ», речь не отправляется на сервер; после проверки ответы объективных частей сохраняются для разбора в подписанном состоянии этой вкладки, без серверной истории. Добровольная запись речи остаётся в памяти страницы и удаляется при перезагрузке, завершении части или уходе. Микрофон выключается при остановке записи, истечении таймера и уходе со страницы. Прогон действителен до 4 часов, не входит в историю аккаунта и серверный экспорт; его можно удалить ссылкой «Новый прогон» или закрытием вкладки."
+msgstr "Próba B1 przechowuje podpisany postęp i bieżące odpowiedzi lub szkice w tej karcie do końca części. Tekst jest przesyłany do Groq tylko po wybraniu „Sprawdź z AI”; mowa nie jest przesyłana na serwer. Po sprawdzeniu odpowiedzi w ocenianych częściach pozostają do omówienia w podpisanym stanie tej karty, poza historią na serwerze. Dobrowolne nagranie pozostaje w pamięci strony i znika po odświeżeniu, ukończeniu części lub opuszczeniu strony. Mikrofon wyłącza się po zatrzymaniu, upływie czasu i opuszczeniu strony. Próba jest ważna do 4 godzin, poza historią konta i eksportem serwera; można ją usunąć przez „Nowa próba” lub zamknięcie karty."

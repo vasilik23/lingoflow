@@ -1230,3 +1230,14 @@ button.secondary { background: var(--surface); border-color: var(--line); }
 .ai-writing-consent input { width: 18px; height: 18px; min-height: 18px; padding: 0; flex: 0 0 18px; margin-top: .25rem; }
 .ai-writing-review .writing-feedback { overflow-wrap: anywhere; }
 .ai-writing-review .writing-feedback h4 { margin-bottom: .35rem; }
+
+/* Completed B1 responses stay compact until the learner opens a part. */
+.run-review > summary { cursor: pointer; padding-block: .35rem; }
+.run-review-list { padding-left: 1.5rem; }
+.run-review-answer { margin-block: 1rem; padding: .75rem; border-inline-start: 3px solid var(--line); overflow-wrap: anywhere; }
+.run-review-answer.is-correct { border-inline-start-color: #25824c; }
+.run-review-answer.is-incorrect { border-inline-start-color: #ba3e3e; }
+.run-review-answer.is-unanswered { border-inline-start-color: #a16b12; }
+.run-review-answer p { margin-block: .4rem; }
+.run-review-source { margin-block: 1rem; }
+.run-review a { display: inline-block; padding-block: .5rem; }

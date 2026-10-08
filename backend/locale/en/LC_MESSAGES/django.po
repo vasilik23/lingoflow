@@ -16879,3 +16879,36 @@ msgstr "The run can be resumed in this tab for up to 4 hours. When an objective 
 
 msgid "Учебный прогон B1 хранит в текущей вкладке подписанный прогресс и текущие ответы/черновик до завершения части. Письменный текст отправляется в Groq только по отдельному выбору «Проверить с ИИ», речь не отправляется на сервер; после проверки остаются только агрегаты в подписанном состоянии. Добровольная запись речи остаётся в памяти страницы и удаляется при перезагрузке, завершении части или уходе. Микрофон выключается при остановке записи, истечении таймера и уходе со страницы. Прогон действителен до 4 часов, не входит в историю аккаунта и серверный экспорт; его можно удалить ссылкой «Новый прогон» или закрытием вкладки."
 msgstr "The B1 run keeps signed progress and current answers/drafts in this tab until the section ends. Written text is sent to Groq only when you choose “Review with AI”; speech is not sent to the server. After grading, only aggregates remain in the signed state. Optional speech recordings stay in page memory and are deleted on refresh, completion or leaving. The microphone stops on stop, timeout and leaving. Runs last up to 4 hours, outside account history and server export; delete one using “New run” or by closing the tab."
+
+msgid "Разбор"
+msgstr "Review"
+
+msgid "Неверно"
+msgstr "Incorrect"
+
+msgid "Повторить теорию"
+msgstr "Review the theory"
+
+msgid "Сравни ответы и прочитай объяснения. Теория открывается в новой вкладке, прогон остаётся здесь."
+msgstr "Compare your answers and read the explanations. Theory opens in a new tab; your run stays here."
+
+msgid "Текст задания / расшифровка"
+msgstr "Task text / transcript"
+
+msgid "Самопроверка завершена. Для письма и речи нет единственного правильного ответа и автоматического балла прогона."
+msgstr "Self-review complete. Writing and speaking have no single correct answer or automatic run score."
+
+msgid "Проверь выполнение всех пунктов, связность и языковую правильность. Текст и запись в разборе не сохраняются."
+msgstr "Check all task requirements, coherence and language accuracy. Your text and recording are not retained in this review."
+
+msgid "Часть пропущена без оценки. Ответы этой части не проверялись."
+msgstr "Part skipped without a score. Responses in this part were not checked."
+
+msgid "В этом старом прогоне сохранён только итог. Ответы для разбора недоступны."
+msgstr "This older run retained only the result. Responses are unavailable for review."
+
+msgid "Ответы проверяемых частей сохраняются для разбора в текущей вкладке до 4 часов, не в истории аккаунта. Новый прогон удаляет их."
+msgstr "Responses in scored parts are retained for review in this tab for up to 4 hours, outside account history. Starting a new run removes them."
+
+msgid "Учебный прогон B1 хранит в текущей вкладке подписанный прогресс и текущие ответы/черновик до завершения части. Письменный текст отправляется в Groq только по отдельному выбору «Проверить с ИИ», речь не отправляется на сервер; после проверки ответы объективных частей сохраняются для разбора в подписанном состоянии этой вкладки, без серверной истории. Добровольная запись речи остаётся в памяти страницы и удаляется при перезагрузке, завершении части или уходе. Микрофон выключается при остановке записи, истечении таймера и уходе со страницы. Прогон действителен до 4 часов, не входит в историю аккаунта и серверный экспорт; его можно удалить ссылкой «Новый прогон» или закрытием вкладки."
+msgstr "The B1 run keeps signed progress and current answers/drafts in this tab until the section ends. Written text is sent to Groq only when you choose “Review with AI”; speech is not sent to the server. After grading, objective responses remain in the signed state of this tab for review, outside server history. Optional speech recordings stay in page memory and are deleted on refresh, completion or leaving. The microphone stops on stop, timeout and leaving. Runs last up to 4 hours, outside account history and server export; delete one using “New run” or by closing the tab."

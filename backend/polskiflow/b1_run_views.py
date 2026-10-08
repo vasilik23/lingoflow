@@ -16,6 +16,7 @@ from polskiflow.domain.b1_exam_simulation import B1_SIMULATION_PARTS
 from polskiflow.domain.b1_training_content import CONTENT_VERSION, TRAINING_MINUTES, training_minutes, score_training_part, training_questions, training_reading_blocks, training_grammar_blocks
 from polskiflow.domain.b1_training_writing import training_writing_tasks
 from polskiflow.domain.b1_training_speaking import PREPARATION_SECONDS, training_speaking_tasks
+from polskiflow.domain.b1_run_review import run_review
 from polskiflow.domain.b1_weekly_mock import get_mock_variant, weekly_mock_variant
 from polskiflow.practice_preferences import excluded_practice_topics
 from polskiflow.domain.b1_listening_recordings import recording_for_variant, recording_for_run, block_recordings_for_variant, block_recordings_for_run
@@ -111,6 +112,12 @@ def b1_training_run(request):
                     except (KeyError, TypeError, ValueError):
                         error, status = "Ответь на все вопросы этой части.", 400
                     else:
+                        # Only completed objective responses travel with the
+                        # owner-bound state in this tab. Never retain essays/audio.
+                        state.setdefault("review_answers", {})[part["id"]] = {
+                            detail["question"].id: detail["selected"]
+                            for detail in score["details"] if detail["selected"] is not None
+                        }
                         _finish_part(state, {"id": part["id"], "status": "scored", "timed_out": timed_out,
                             "incorrect": score.get("incorrect", score["total"] - score["correct"]), "unanswered": score.get("unanswered", 0), **{
                             key: score[key] for key in ("correct", "total", "percent")
@@ -125,7 +132,7 @@ def b1_training_run(request):
                 error, status = "Это действие сейчас недоступно.", 400
     variant = get_mock_variant(state["variant_id"])
     part = B1_SIMULATION_PARTS[state["step"]] if state["step"] < 5 else None
-    token = token or signing.dumps(state, salt=RUN_SALT)
+    token = token or signing.dumps(state, salt=RUN_SALT, compress=True)
     report = tuple({**part_info, **result, "incorrect": result.get("incorrect", result.get("total", 0) - result.get("correct", 0)), "unanswered": result.get("unanswered", 0)} for part_info, result in zip(B1_SIMULATION_PARTS, state["results"]))
     instruction = B1_INSTRUCTIONS.get(part["id"]) if part else None
     listening_recording = recording_for_run(state, variant) if part and part["id"] == "listening" else None
@@ -151,6 +158,7 @@ def b1_training_run(request):
         "listening_blocks": block_recordings_for_run(state, variant) if part and part["id"] == "listening" and state.get("content_version", 1) >= 10 else (),
         "missing_recording": bool(part and part["id"] == "listening" and state.get("listening_recording_id") and not listening_recording),
         "run_token": token, "error": error, "report": report,
+        "reviews": tuple(run_review(state, variant, item) for item in B1_SIMULATION_PARTS[:state["step"]]),
         "timer_seconds": max(0, state.get("deadline", state.get("break_until", now)) - now),
         "run_namespace": salted_hmac(RUN_SALT, request.supabase_user.id).hexdigest()[:32],
         "fresh": request.method == "GET", "discard_draft": bool(error and not request.POST.get("run_token") == token),
