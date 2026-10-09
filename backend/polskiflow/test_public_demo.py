@@ -7,6 +7,20 @@ from polskiflow.public_views import DEMO_SALT, load_demo_question
 
 
 class PublicDemoTests(TestCase):
+    @patch("polskiflow.auth_views._daily_plan")
+    @patch("polskiflow.auth_views.load_latest_lesson_draft")
+    def test_guest_root_is_intro_without_loading_account_data(self, draft, plan):
+        for path in ("/", "/start/"):
+            response = self.client.get(path)
+            self.assertTemplateUsed(response, "public_intro.html")
+            self.assertContains(response, 'href="/demo/"')
+            self.assertContains(response, 'href="/login/"')
+            self.assertEqual(response["Cache-Control"], "private, no-store")
+        draft.assert_not_called()
+        plan.assert_not_called()
+        self.assertEqual(self.client.head("/").status_code, 200)
+        self.assertEqual(self.client.post("/").status_code, 405)
+
     def answer(self, value, **extra):
         response = self.client.get("/demo/")
         return self.client.post("/demo/", {"state": response.context["state"], "answer": value, **extra})

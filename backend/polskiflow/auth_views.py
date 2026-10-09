@@ -502,8 +502,12 @@ def logout_view(request: HttpRequest) -> HttpResponse:
     return response
 
 
-@require_browser_user
+@require_http_methods(["GET", "HEAD"])
 def home(request: HttpRequest) -> HttpResponse:
+    if request.supabase_user is None:
+        from polskiflow.public_views import public_intro
+
+        return public_intro(request)
     dashboard, lesson_tasks, completed_count, progress_percent, plan_minutes = _daily_plan(request)
     b1_module_results = build_b1_module_results(
         dashboard.recent_completion_results, tasks()
@@ -518,7 +522,7 @@ def home(request: HttpRequest) -> HttpResponse:
         except (TypeError, ValueError):
             step = 1
         resume_lesson = {**draft_lesson, "step": step}
-    return render(
+    return _no_store(render(
         request,
         "home.html",
         {
@@ -539,7 +543,7 @@ def home(request: HttpRequest) -> HttpResponse:
             if dashboard.level == "B1"
             else None,
         },
-    )
+    ))
 
 
 @require_browser_user
