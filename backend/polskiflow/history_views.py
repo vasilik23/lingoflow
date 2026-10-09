@@ -11,6 +11,7 @@ from polskiflow.domain.progress_overview import build_progress_overview
 from polskiflow.domain.learning_insights import build_learning_insights
 from polskiflow.domain.weekly_review import build_weekly_review
 from polskiflow.progress_store import load_completion_history, load_dashboard_progress
+from polskiflow.b1_run_store import load_b1_run_attempts
 
 
 PERIODS = {"7": 7, "30": 30, "90": 90, "all": None}
@@ -64,4 +65,5 @@ def learning_history(request: HttpRequest) -> HttpResponse:
         "selected_period": period,
         "insights": build_learning_insights(dashboard, lesson_tasks),
         "weekly_review": build_weekly_review(dashboard, lesson_tasks),
+        "b1_runs": load_b1_run_attempts(request.supabase_access_token, request.supabase_user.id, days=PERIODS[period]),
     })

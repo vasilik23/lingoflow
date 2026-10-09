@@ -65,6 +65,7 @@
     <a href="?period=90"{% if selected_period == "90" %} aria-current="page"{% endif %}>{% translate "90 дней" %}</a>
     <a href="?period=all"{% if selected_period == "all" %} aria-current="page"{% endif %}>{% translate "Всё время" %}</a>
   </nav>
+  {% include "partials/b1_run_history.html" %}
   {% if not history_available %}
     <p class="data-notice" role="status">{% translate "История временно недоступна. Попробуй обновить страницу позже." %}</p>
   {% elif history_rows %}

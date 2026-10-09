@@ -439,3 +439,18 @@ class B1SectionAttempt(models.Model):
                 name="b1_section_attempts_user_attempt_key",
             ),
         ]
+
+
+class B1RunAttempt(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user_id = models.UUIDField()
+    run_id = models.UUIDField()
+    variant_id = models.CharField(max_length=32)
+    content_version = models.PositiveSmallIntegerField()
+    started_at = models.DateTimeField()
+    finished_at = models.DateTimeField()
+    results = models.JSONField()
+
+    class Meta:
+        db_table = "b1_run_attempts"
+        managed = False

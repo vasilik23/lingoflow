@@ -7236,3 +7236,39 @@ msgstr "Odpowiedzi w ocenianych częściach są przechowywane do omówienia w te
 
 msgid "Учебный прогон B1 хранит в текущей вкладке подписанный прогресс и текущие ответы/черновик до завершения части. Письменный текст отправляется в Groq только по отдельному выбору «Проверить с ИИ», речь не отправляется на сервер; после проверки ответы объективных частей сохраняются для разбора в подписанном состоянии этой вкладки, без серверной истории. Добровольная запись речи остаётся в памяти страницы и удаляется при перезагрузке, завершении части или уходе. Микрофон выключается при остановке записи, истечении таймера и уходе со страницы. Прогон действителен до 4 часов, не входит в историю аккаунта и серверный экспорт; его можно удалить ссылкой «Новый прогон» или закрытием вкладки."
 msgstr "Próba B1 przechowuje podpisany postęp i bieżące odpowiedzi lub szkice w tej karcie do końca części. Tekst jest przesyłany do Groq tylko po wybraniu „Sprawdź z AI”; mowa nie jest przesyłana na serwer. Po sprawdzeniu odpowiedzi w ocenianych częściach pozostają do omówienia w podpisanym stanie tej karty, poza historią na serwerze. Dobrowolne nagranie pozostaje w pamięci strony i znika po odświeżeniu, ukończeniu części lub opuszczeniu strony. Mikrofon wyłącza się po zatrzymaniu, upływie czasu i opuszczeniu strony. Próba jest ważna do 4 godzin, poza historią konta i eksportem serwera; można ją usunąć przez „Nowa próba” lub zamknięcie karty."
+
+msgid "История прогонов B1"
+msgstr "Historia prób B1"
+
+msgid "Последние 12 прогонов за выбранный период. Только итоги частей, без ответов, текстов и записей."
+msgstr "Ostatnie 12 prób w wybranym okresie. Tylko wyniki części, bez odpowiedzi, tekstów i nagrań."
+
+msgid "История прогонов временно недоступна."
+msgstr "Historia prób jest chwilowo niedostępna."
+
+msgid "Время не зафиксировано"
+msgstr "Czas nie został zapisany"
+
+msgid "В пределах лимита"
+msgstr "W limicie czasu"
+
+msgid "В этом периоде ещё нет сохранённых прогонов B1."
+msgstr "W tym okresie nie ma jeszcze zapisanych prób B1."
+
+msgid "Итог сохранён в истории аккаунта."
+msgstr "Wynik zapisano w historii konta."
+
+msgid "Итог пока не сохранён. Он остаётся в этой вкладке; попробуй ещё раз до истечения 4 часов."
+msgstr "Wynik nie został jeszcze zapisany. Pozostaje w tej karcie; spróbuj ponownie przed upływem 4 godzin."
+
+msgid "Повторить сохранение"
+msgstr "Spróbuj zapisać ponownie"
+
+msgid "Прогон восстанавливается в текущей вкладке до 4 часов. При истечении времени проверяемой части текущие ответы отправляются автоматически, пустые считаются пропущенными. Письмо отправляется только по отдельному выбору «Проверить с ИИ»; речь не отправляется на сервер. Прогон не выставляет автоматический балл за письмо и речь. После пяти частей в историю аккаунта сохраняются дата, вариант, баллы, пропуски и соблюдение времени; тексты и аудио не сохраняются."
+msgstr "Próba jest przywracana w tej karcie przez maksymalnie 4 godziny. Po upływie czasu ocenianej części bieżące odpowiedzi są wysyłane automatycznie, a puste liczą się jako pominięte. Tekst jest przesyłany tylko po wybraniu „Sprawdź z AI”; mowa nie jest przesyłana na serwer. Próba nie przyznaje automatycznej oceny za pisanie i mówienie. Po pięciu częściach historia konta zapisuje datę, wariant, wyniki, pominięcia i dotrzymanie czasu; teksty i nagrania nie są zapisywane."
+
+msgid "Учебный прогон B1 хранит в текущей вкладке подписанный прогресс и текущие ответы/черновик до завершения части. Письменный текст отправляется в Groq только по отдельному выбору «Проверить с ИИ», речь не отправляется на сервер; после проверки ответы объективных частей сохраняются для разбора в подписанном состоянии этой вкладки, без серверной истории. Добровольная запись речи остаётся в памяти страницы и удаляется при перезагрузке, завершении части или уходе. Микрофон выключается при остановке записи, истечении таймера и уходе со страницы. Прогон действителен до 4 часов, после пяти частей в историю аккаунта и экспорт добавляются только итоговые баллы, пропуски, вариант и соблюдение времени. Закрытие вкладки или «Новый прогон» удаляют локальный разбор; сохранённые итоги удаляются вместе с аккаунтом."
+msgstr "Próba B1 przechowuje podpisany postęp i odpowiedzi w tej karcie do 4 godzin. Tekst trafia do Groq tylko po wybraniu sprawdzania z AI; mowa nie jest przesyłana. Odpowiedzi pozostają w tej karcie do omówienia. Po pięciu częściach historia konta i eksport obejmują tylko wyniki, pominięcia, wariant i dotrzymanie czasu, bez tekstów i audio. Zamknięcie karty lub nowa próba usuwa lokalne omówienie; zapisane wyniki są usuwane wraz z kontem. Dobrowolne audio pozostaje w pamięci strony i znika po odświeżeniu lub opuszczeniu; mikrofon wyłącza się po zatrzymaniu, upływie czasu i opuszczeniu strony."
+
+msgid "Версия"
+msgstr "Wersja"

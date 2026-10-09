@@ -16912,3 +16912,39 @@ msgstr "Responses in scored parts are retained for review in this tab for up to 
 
 msgid "Учебный прогон B1 хранит в текущей вкладке подписанный прогресс и текущие ответы/черновик до завершения части. Письменный текст отправляется в Groq только по отдельному выбору «Проверить с ИИ», речь не отправляется на сервер; после проверки ответы объективных частей сохраняются для разбора в подписанном состоянии этой вкладки, без серверной истории. Добровольная запись речи остаётся в памяти страницы и удаляется при перезагрузке, завершении части или уходе. Микрофон выключается при остановке записи, истечении таймера и уходе со страницы. Прогон действителен до 4 часов, не входит в историю аккаунта и серверный экспорт; его можно удалить ссылкой «Новый прогон» или закрытием вкладки."
 msgstr "The B1 run keeps signed progress and current answers/drafts in this tab until the section ends. Written text is sent to Groq only when you choose “Review with AI”; speech is not sent to the server. After grading, objective responses remain in the signed state of this tab for review, outside server history. Optional speech recordings stay in page memory and are deleted on refresh, completion or leaving. The microphone stops on stop, timeout and leaving. Runs last up to 4 hours, outside account history and server export; delete one using “New run” or by closing the tab."
+
+msgid "История прогонов B1"
+msgstr "B1 run history"
+
+msgid "Последние 12 прогонов за выбранный период. Только итоги частей, без ответов, текстов и записей."
+msgstr "The latest 12 runs in the selected period. Section results only, without responses, essays or recordings."
+
+msgid "История прогонов временно недоступна."
+msgstr "Run history is temporarily unavailable."
+
+msgid "Время не зафиксировано"
+msgstr "Timing not recorded"
+
+msgid "В пределах лимита"
+msgstr "Within the time limit"
+
+msgid "В этом периоде ещё нет сохранённых прогонов B1."
+msgstr "No saved B1 runs in this period yet."
+
+msgid "Итог сохранён в истории аккаунта."
+msgstr "The result was saved to your account history."
+
+msgid "Итог пока не сохранён. Он остаётся в этой вкладке; попробуй ещё раз до истечения 4 часов."
+msgstr "The result has not been saved yet. It remains in this tab; retry before the four-hour limit expires."
+
+msgid "Повторить сохранение"
+msgstr "Retry saving"
+
+msgid "Прогон восстанавливается в текущей вкладке до 4 часов. При истечении времени проверяемой части текущие ответы отправляются автоматически, пустые считаются пропущенными. Письмо отправляется только по отдельному выбору «Проверить с ИИ»; речь не отправляется на сервер. Прогон не выставляет автоматический балл за письмо и речь. После пяти частей в историю аккаунта сохраняются дата, вариант, баллы, пропуски и соблюдение времени; тексты и аудио не сохраняются."
+msgstr "The run resumes in this tab for up to 4 hours. When a scored part times out, current responses are submitted automatically and blanks count as unanswered. Written text is sent only when you choose “Review with AI”; speech is not sent to the server. The run does not automatically grade writing or speaking. After five parts, account history records the date, variant, scores, omissions and timing; essays and audio are not retained."
+
+msgid "Учебный прогон B1 хранит в текущей вкладке подписанный прогресс и текущие ответы/черновик до завершения части. Письменный текст отправляется в Groq только по отдельному выбору «Проверить с ИИ», речь не отправляется на сервер; после проверки ответы объективных частей сохраняются для разбора в подписанном состоянии этой вкладки, без серверной истории. Добровольная запись речи остаётся в памяти страницы и удаляется при перезагрузке, завершении части или уходе. Микрофон выключается при остановке записи, истечении таймера и уходе со страницы. Прогон действителен до 4 часов, после пяти частей в историю аккаунта и экспорт добавляются только итоговые баллы, пропуски, вариант и соблюдение времени. Закрытие вкладки или «Новый прогон» удаляют локальный разбор; сохранённые итоги удаляются вместе с аккаунтом."
+msgstr "The B1 run keeps signed progress and responses in this tab for up to 4 hours. Essays go to Groq only when you choose AI review; audio is not sent. Objective responses stay in this tab for review. After five parts, only scores, omissions, the variant and timing enter account history and data export. Essays and audio are excluded. Closing this tab or starting a new run removes local review; saved aggregates are deleted with the account. Optional audio stays in page memory and disappears on refresh or leaving; the microphone stops on stop, timeout and leaving."
+
+msgid "Версия"
+msgstr "Version"

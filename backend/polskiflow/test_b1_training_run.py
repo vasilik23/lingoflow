@@ -15,6 +15,21 @@ from polskiflow.domain.b1_training_speaking import PREPARATION_SECONDS, training
 
 
 class B1TrainingRunTests(TestCase):
+    @patch("polskiflow.b1_run_views.save_b1_run_attempt")
+    def test_completed_run_retries_failure_then_stops_saving_on_resume(self, saved):
+        state = dict(self.client.get("/exam/b1/run/").context["state"], phase="part", step=4, deadline=self.now+60, started_at=self.now-60, results=[{"id":part,"status":"skipped"} for part in ("listening","reading","grammar","writing")])
+        saved.side_effect = [False, True]
+        finished = self.client.post("/exam/b1/run/", {"run_token":signing.dumps(state,salt=RUN_SALT),"action":"finish","reviewed":"on"})
+        self.assertFalse(finished.context["history_saved"])
+        self.assertContains(finished,"Повторить сохранение")
+        retried = self.advance(finished,"resume")
+        self.assertTrue(retried.context["history_saved"])
+        self.assertContains(retried,"Итог сохранён в истории аккаунта.")
+        resumed = self.advance(retried,"resume")
+        self.assertEqual(saved.call_count,2)
+        self.assertEqual(resumed.context["state"]["finished_at"],finished.context["state"]["finished_at"])
+        self.assertEqual(saved.call_args.args[2]["run_id"],state["run_id"])
+
     def test_review_preserves_correct_wrong_and_missing_responses_on_resume(self):
         opened = self.advance(self.client.get('/exam/b1/run/'), 'start')
         questions = opened.context['questions']
