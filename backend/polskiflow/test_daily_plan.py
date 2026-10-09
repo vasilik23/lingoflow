@@ -174,11 +174,10 @@ class DailyPlanTests(SimpleTestCase):
         self.assertEqual(plan[1]["reinforcement_reason"]["skill"]["group"], "vocabulary")
         self.assertEqual(len(plan), 4)
 
-    def test_reinforcement_is_not_added_for_high_score_today_or_goal_one(self):
+    def test_reinforcement_is_not_added_for_high_score_or_completed_today(self):
         cases = (
             ({"lesson_id": "a2-one", "plan_date": "2026-08-27", "cards_total": 5, "cards_known": 4}, frozenset(), 4),
             ({"lesson_id": "a2-one", "plan_date": "2026-08-27", "cards_total": 5, "cards_known": 2}, frozenset({"a2-one"}), 4),
-            ({"lesson_id": "a2-one", "plan_date": "2026-08-27", "cards_total": 5, "cards_known": 2}, frozenset(), 1),
         )
         for result, completed_today, goal in cases:
             with self.subTest(result=result, completed_today=completed_today, goal=goal):

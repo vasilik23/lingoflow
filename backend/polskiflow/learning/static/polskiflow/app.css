@@ -1316,3 +1316,5 @@ button.secondary { background: var(--surface); border-color: var(--line); }
 }
 .public-example-options .placement-option, .public-demo-form .placement-option { padding: .75rem; margin-top: .5rem; border: 1px solid var(--line); border-radius: .65rem; }
 .public-example-options .public-example-selected, .public-demo-form .placement-option:has(input:checked) { border-color: var(--primary); background: var(--primary-soft); }
+.followup-recheck { max-width: 32rem; margin: .75rem auto 1.25rem; color: var(--muted); font-size: .85rem; overflow-wrap: anywhere; }
+.followup-mistake { max-width: 32rem; margin: 1rem auto; text-align: left; overflow-wrap: anywhere; }

@@ -11,10 +11,19 @@
       <button class="button button-secondary" type="button" data-sync-retry hidden>{% translate "Повторить отправку" %}</button>
     </div>
   {% endif %}
-  {% if lesson_navigation.next_lesson %}
-    <a class="complete-next" href="{% url 'lesson' lesson_navigation.next_lesson.id %}">
-      <span aria-hidden="true">{{ lesson_navigation.next_lesson.emoji|ui_text }}</span>
-      <span><small>{% translate "Следующий урок темы" %}</small><strong>{{ lesson_navigation.next_lesson.title|ui_text }}</strong><small>{{ lesson_navigation.next_lesson.description|ui_text }} · ~{{ lesson_navigation.next_lesson.minutes|ui_text }} {% translate "мин" %}</small></span>
+  {% if followup.kind == "repeat" %}
+    {% if followup.mistake %}<details class="followup-mistake"><summary>{% translate "Что закрепить" %}</summary><p><strong>{{ followup.mistake.prompt|learning_text }}</strong></p><p>{{ followup.mistake.explanation|learning_text }}</p></details>{% endif %}
+    <a class="complete-next" href="{% url 'lesson' followup.lesson.id %}">
+      <span aria-hidden="true">↻</span>
+      <span><small>{% translate "Следующий шаг: закрепить" %}</small><strong>{{ followup.lesson.title|ui_text }}</strong><small>~{{ followup.lesson.minutes }} {% translate "мин" %}</small></span>
+      <span aria-hidden="true">→</span>
+    </a>
+    <p class="followup-recheck" data-followup-saved{% if not saved %} hidden{% endif %}>{% translate "Повторная проверка в плане:" %} <time datetime="{{ followup.due_date|date:'Y-m-d' }}">{{ followup.due_date|date:'d.m.Y' }}</time>. {% translate "Успешная новая попытка отменит это повторение." %}</p>
+    <p class="followup-recheck" data-followup-pending{% if saved %} hidden{% endif %}>{% translate "Повторная проверка появится в плане после сохранения результата. Сейчас она не назначена." %}</p>
+  {% elif followup.lesson %}
+    <a class="complete-next" href="{% url 'lesson' followup.lesson.id %}">
+      <span aria-hidden="true">{{ followup.lesson.emoji|ui_text }}</span>
+      <span><small>{% translate "Следующий урок темы" %}</small><strong>{{ followup.lesson.title|ui_text }}</strong><small>{{ followup.lesson.description|ui_text }} · ~{{ followup.lesson.minutes|ui_text }} {% translate "мин" %}</small></span>
       <span aria-hidden="true">→</span>
     </a>
   {% else %}
@@ -26,6 +35,5 @@
   {% endif %}
   <div class="complete-actions">
     <a class="button" href="{% url 'home' %}">{% translate "Вернуться к плану" %}</a>
-    {% if lesson_navigation.next_lesson %}<a class="button secondary" href="{% url 'lesson' lesson_navigation.next_lesson.id %}">{% translate "Продолжить тему →" %}</a>{% endif %}
   </div>
 </div>

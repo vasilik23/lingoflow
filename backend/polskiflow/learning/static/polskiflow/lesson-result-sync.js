@@ -34,6 +34,11 @@
     const queue = queueApi.createQueue({
       onStatus: function (event) {
         status.textContent = messageFor(event.state);
+        if (event.state === "sent" && event.eventId === payload.event_id) {
+          const card = panel.closest(".complete-card");
+          card?.querySelector("[data-followup-saved]")?.removeAttribute("hidden");
+          card?.querySelector("[data-followup-pending]")?.setAttribute("hidden", "");
+        }
         retry.hidden = event.state === "sent" || event.state === "synced";
       },
     });
@@ -61,4 +66,5 @@
     root.querySelectorAll?.("[data-lesson-result-sync]").forEach(init);
   }
   scan(document);
+  document.addEventListener("htmx:afterSwap", function (event) { scan(event.target); });
 }());

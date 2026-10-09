@@ -6,6 +6,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
+from polskiflow.content import lesson_navigation
 from polskiflow.domain.public_demo import DEMO_SALT, checked_answer, demo_version
 from polskiflow.public_demo_store import DEMO_LESSONS, load_demo_lesson
 
@@ -52,5 +53,8 @@ def public_demo(request):
         except (signing.BadSignature, ValueError, TypeError):
             context['demo_error'] = 'Не удалось проверить ответ. Попробуй ещё раз.'
             step, status = 'exercise', 400
+        if step == 'result':
+            next_lesson = (lesson_navigation(lesson['id']) or {}).get('next_lesson') if context['correct'] else None
+            context['next_material'] = next_lesson or {**lesson, 'title': lesson['theory_title']}
         context.update(step=step, step_number={'theory': 1, 'exercise': 2, 'explanation': 3, 'result': 4}[step])
     return _private(render(request, 'public_demo.html', context, status=status))

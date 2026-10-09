@@ -17,8 +17,9 @@ from polskiflow.progress_store import save_lesson_completion_result
 from polskiflow.lesson_draft_store import delete_lesson_draft, load_lesson_draft, save_lesson_draft
 from polskiflow.lesson_bookmark_store import load_lesson_bookmarks
 from polskiflow.lesson_note_store import load_lesson_note, save_lesson_note
+from polskiflow.domain.lesson_followup import lesson_followup
 from polskiflow.domain.lesson_state import InvalidLessonState, load_lesson_state, sign_lesson_state
-from polskiflow.mistake_store import set_mistake
+from polskiflow.mistake_store import load_mistakes, set_mistake
 from polskiflow.collection_store import load_collection_summaries
 
 
@@ -359,11 +360,22 @@ def _complete(request: HttpRequest, lesson_id: str, score: int, total: int) -> H
         score,
     )
     delete_lesson_draft(request.supabase_access_token, request.supabase_user.id, lesson_id)
+    navigation = lesson_navigation(lesson_id)
+    lesson_task = task(lesson_id)
+    followup = lesson_followup(lesson_task, navigation, score, total, datetime.now(timezone.utc).date())
+    if followup["kind"] == "repeat" and lesson_task["kind"] in {"grammar", "quiz"}:
+        questions = (grammar(lesson_id) or {}).get("questions", []) if lesson_task["kind"] == "grammar" else quiz(lesson_id)
+        mistakes = load_mistakes(request.supabase_access_token, request.supabase_user.id) or []
+        positions = [row.get("question_position") for row in mistakes if isinstance(row, dict) and row.get("lesson_id") == lesson_id]
+        positions = [index for index in positions if type(index) is int and 0 <= index < len(questions)]
+        if positions:
+            followup["mistake"] = questions[min(positions)]
     context = {
+        "followup": followup,
         "score": score,
         "total": total,
         "saved": save_result.saved,
-        "lesson_navigation": lesson_navigation(lesson_id),
+        "lesson_navigation": navigation,
     }
     # Start with one narrowly scoped flow. The browser receives an opaque,
     # stable namespace and an immutable result, never identity or auth tokens.

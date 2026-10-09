@@ -3,6 +3,7 @@
 from datetime import date
 
 from polskiflow.domain.lesson_skills import lesson_skill
+from polskiflow.domain.lesson_followup import latest_completions, recheck_date, RECHECK_THRESHOLD_PERCENT
 
 
 DAILY_TASK_LIMIT = 4
@@ -56,10 +57,14 @@ def build_daily_plan(
         completed_today=completed_today,
         today=today,
     )
-    if reinforcement is not None and lesson_limit >= 2:
+    if reinforcement is not None and lesson_limit >= 1:
         plan = [task for task in plan if task["id"] != reinforcement["id"]]
-        plan.insert(min(1, len(plan)), reinforcement)
+        plan.insert(0 if lesson_limit == 1 else min(1, len(plan)), reinforcement)
         plan = plan[:lesson_limit]
+        # Scheduling must not remove today's already completed lessons.
+        plan = [_with_skill(lesson) for lesson in completed_in_plan] + [
+            item for item in plan if item["id"] not in completed_today
+        ]
 
     if can_review:
         plan.append(
@@ -88,7 +93,7 @@ def _fit_time_budget(plan: list[dict], budget: int) -> list[dict]:
     mandatory = [
         task
         for task in plan
-        if task.get("completed") is True or task.get("kind") == "dictionary-review"
+        if task.get("completed") is True or task.get("kind") == "dictionary-review" or task.get("plan_type") == "reinforcement"
     ]
     selected_ids = {task["id"] for task in mandatory}
     total = sum(task_minutes(task) for task in mandatory)
@@ -129,7 +134,7 @@ def _reinforcement_task(
 ) -> dict | None:
     lesson_by_id = {lesson["id"]: lesson for lesson in lessons}
     candidates = []
-    for result in results:
+    for result in latest_completions(results, today).values():
         lesson_id = result.get("lesson_id")
         lesson = lesson_by_id.get(lesson_id)
         total, known = result.get("cards_total"), result.get("cards_known")
@@ -154,7 +159,8 @@ def _reinforcement_task(
         candidates.append((known / total, -plan_date.toordinal(), lesson_id, lesson, known, total))
     if not candidates:
         return None
-    _, _, _, lesson, known, total = min(candidates)
+    _, negative_date, _, lesson, known, total = min(candidates)
+    plan_date = date.fromordinal(-negative_date)
     task = _with_skill(lesson)
     skill = task["skill"]
     task.update(
@@ -165,7 +171,8 @@ def _reinforcement_task(
             "reinforcement_reason": {
                 "cards_known": known,
                 "cards_total": total,
-                "threshold_percent": 70,
+                "threshold_percent": RECHECK_THRESHOLD_PERCENT,
+                "due_date": recheck_date({"cards_known": known, "cards_total": total, "plan_date": plan_date.isoformat()}).isoformat(),
                 "skill": skill,
             },
         }

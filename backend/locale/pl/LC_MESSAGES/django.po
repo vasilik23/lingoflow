@@ -7554,3 +7554,27 @@ msgstr "Ponieważ wprowadza przyczynę, a chociaż i mimo że — okoliczność,
 
 msgid "Ponieważ вводит реальную причину."
 msgstr "Ponieważ wprowadza rzeczywistą przyczynę."
+
+msgid "Следующий шаг: закрепить"
+msgstr "Następny krok: utrwalenie"
+
+msgid "Повторная проверка в плане:"
+msgstr "Ponowna kontrola w planie:"
+
+msgid "Успешная новая попытка отменит это повторение."
+msgstr "Nowa udana próba anuluje tę powtórkę."
+
+msgid "Повторная проверка появится в плане после сохранения результата. Сейчас она не назначена."
+msgstr "Ponowna kontrola pojawi się w planie po zapisaniu wyniku. Obecnie nie jest zaplanowana."
+
+msgid "Следующий материал"
+msgstr "Następny materiał"
+
+msgid "Закрепить в полном уроке"
+msgstr "Utrwal w pełnej lekcji"
+
+msgid "Для полного урока и сохранения повторений нужен аккаунт."
+msgstr "Pełna lekcja i zapisywanie powtórek wymagają konta."
+
+msgid "Что закрепить"
+msgstr "Co utrwalić"

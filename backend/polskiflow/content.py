@@ -31,6 +31,7 @@ def task(lesson_id: str) -> dict | None:
         "kind": lesson.kind,
         "title": lesson.title,
         "plan_title": lesson.plan_title,
+        "theory_title": lesson.theory_title,
         "subtitle": lesson.subtitle,
         "description": lesson.description,
         "minutes": lesson.minutes,
