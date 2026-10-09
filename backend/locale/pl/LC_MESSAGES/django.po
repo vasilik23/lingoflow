@@ -7461,3 +7461,9 @@ msgstr "Wykonanie planu według szacowanego czasu"
 
 msgid "Оценочная длительность выполненных заданий, не время по таймеру."
 msgstr "Szacowany czas wykonanych zadań, nie czas zmierzony zegarem."
+
+msgid "Повторить задание"
+msgstr "Powtórz zadanie"
+
+msgid "Посмотреть план"
+msgstr "Zobacz plan"

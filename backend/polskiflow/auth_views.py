@@ -525,6 +525,7 @@ def home(request: HttpRequest) -> HttpResponse:
             "user": request.supabase_user,
             "dashboard": dashboard,
             "tasks": lesson_tasks,
+            "daily_start_task": next((task for task in lesson_tasks if not task["completed"]), lesson_tasks[0] if lesson_tasks else None),
             "completed_count": completed_count,
             "progress_percent": progress_percent,
             "plan_minutes": plan_minutes,
