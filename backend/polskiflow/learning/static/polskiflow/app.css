@@ -1284,3 +1284,10 @@ button.secondary { background: var(--surface); border-color: var(--line); }
 .daily-plan-link { grid-column: 1 / -1; justify-self: center; font-size: .85rem; }
 .daily-actions { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; }
 .daily-actions .daily-action { flex: 1; margin: 0; }
+
+.public-heading-actions { display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; }
+.public-languages { display: flex; gap: .125rem; margin: 0; padding: .125rem; border: 1px solid var(--line); border-radius: .65rem; }
+.public-languages button { width: auto; min-width: 2.4rem; min-height: 2.5rem; padding: .35rem .4rem; border: 0; border-radius: .4rem; background: transparent; color: var(--muted); font-size: .75rem; font-weight: 700; box-shadow: none; }
+.public-languages button[aria-pressed="true"] { background: var(--action); color: white; }
+.public-languages button:hover { color: var(--text); background: var(--surface); }
+.public-languages button[aria-pressed="true"]:hover { color: white; background: var(--action-hover); }

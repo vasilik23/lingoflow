@@ -4,7 +4,7 @@
 {% block body_class %}public-page{% endblock %}
 {% block content %}
 <div class="public-shell">
-  <header class="public-heading"><a class="brand" href="{% url 'public-intro' %}"><span class="brand-mark">L</span> LingoFlow</a><a href="{% url 'login' %}">{% translate "Войти" %}</a></header>
+  {% include "partials/public_heading.html" %}
   <section class="hero">
     <p class="eyebrow">{% translate "Сейчас учим польский" %}</p>
     <h1>{% translate "Польский шаг за шагом" %}</h1>
