@@ -1,0 +1,18 @@
+{% load i18n ui %}
+<section class="card mock-section" id="b1-run-history" aria-labelledby="b1-run-history-title">
+  <h2 id="b1-run-history-title">{% translate "История прогонов B1" %}</h2>
+  <p class="muted">{% translate "Последние 12 прогонов за выбранный период. Только итоги частей, без ответов, текстов и записей." %}</p>
+  {% if b1_runs == None %}<p role="status">{% translate "История прогонов временно недоступна." %}</p>
+  {% elif b1_runs %}
+    {% for run in b1_runs %}<details class="run-review">
+      <summary><strong>{{ run.date_display }} · {{ run.variant_label|ui_text }}</strong> · {% translate "Версия" %} {{ run.content_version }}</summary>
+      <ol>{% for item in run.parts %}<li>
+        <strong>{{ item.title|ui_text }}:</strong>
+        {% if item.status == 'scored' %}{{ item.correct }}/{{ item.total }} · {% translate "Неправильных:" %} {{ item.incorrect }} · {% translate "Без ответа:" %} {{ item.unanswered }}
+        {% elif item.status == 'self_review' %}{% translate "самопроверка завершена · без автоматического балла" %}
+        {% else %}{% translate "пропущено · без балла" %}{% endif %}
+        · {% if item.timed_out == None %}{% translate "Время не зафиксировано" %}{% elif item.timed_out %}{% translate "Время истекло" %}{% else %}{% translate "В пределах лимита" %}{% endif %}
+      </li>{% endfor %}</ol>
+    </details>{% endfor %}
+  {% else %}<p class="muted">{% translate "В этом периоде ещё нет сохранённых прогонов B1." %}</p>{% endif %}
+</section>

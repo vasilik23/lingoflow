@@ -28,6 +28,7 @@ DATASETS = {
     "reminder_preferences": ("reminder_preferences", "daily_reminder_enabled,reminder_time,timezone,updated_at", "updated_at.asc"),
     "b1_mock_attempts": ("b1_mock_attempts", "id,attempt_id,attempted_at,attempt_version,listening_correct,reading_correct,grammar_correct", "attempted_at.asc,id.asc"),
     "b1_section_attempts": ("b1_section_attempts", "id,attempt_id,attempted_at,attempt_version,section_id,correct,total", "attempted_at.asc,id.asc"),
+    "b1_run_attempts": ("b1_run_attempts", "run_id,variant_id,content_version,started_at,finished_at,results", "finished_at.asc,run_id.asc"),
 }
 
 

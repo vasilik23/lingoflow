@@ -17,6 +17,7 @@ from polskiflow.domain.b1_training_content import CONTENT_VERSION, TRAINING_MINU
 from polskiflow.domain.b1_training_writing import training_writing_tasks
 from polskiflow.domain.b1_training_speaking import PREPARATION_SECONDS, training_speaking_tasks
 from polskiflow.domain.b1_run_review import run_review
+from polskiflow.b1_run_store import save_b1_run_attempt
 from polskiflow.domain.b1_weekly_mock import get_mock_variant, weekly_mock_variant
 from polskiflow.practice_preferences import excluded_practice_topics
 from polskiflow.domain.b1_listening_recordings import recording_for_variant, recording_for_run, block_recordings_for_variant, block_recordings_for_run
@@ -51,6 +52,8 @@ def _finish_part(state, result, now):
     state["break_until"] = now + BREAK_SECONDS
     state.pop("deadline", None)
     state.pop("speaking_ready_at", None)
+    if state["phase"] == "report":
+        state["finished_at"] = now
 
 
 @require_browser_user
@@ -91,13 +94,14 @@ def b1_training_run(request):
                 if state["phase"] == "break" and now < state["break_until"]:
                     error, status = "Учебный перерыв ещё не закончился.", 400
                 else:
+                    state.setdefault("started_at", now)
                     state["phase"] = "part"
                     state["deadline"] = now + _minutes(state, part["id"]) * 60
                     if part["id"] == "speaking" and state.get("content_version", 1) >= 5:
                         state["speaking_ready_at"] = now + PREPARATION_SECONDS
                     token = ""
             elif action == "skip" and state["phase"] == "part":
-                _finish_part(state, {"id": part["id"], "status": "skipped"}, now)
+                _finish_part(state, {"id": part["id"], "status": "skipped", "timed_out": now >= state["deadline"]}, now)
                 token = ""
             elif action in {"finish", "timeout"} and state["phase"] == "part":
                 timed_out = now >= state["deadline"]
@@ -132,6 +136,12 @@ def b1_training_run(request):
                 error, status = "Это действие сейчас недоступно.", 400
     variant = get_mock_variant(state["variant_id"])
     part = B1_SIMULATION_PARTS[state["step"]] if state["step"] < 5 else None
+    history_saved = state.get("history_saved", False)
+    if not error and state["phase"] == "report" and not history_saved:
+        history_saved = save_b1_run_attempt(request.supabase_access_token, request.supabase_user.id, state)
+        if history_saved:
+            state["history_saved"] = True
+            token = ""
     token = token or signing.dumps(state, salt=RUN_SALT, compress=True)
     report = tuple({**part_info, **result, "incorrect": result.get("incorrect", result.get("total", 0) - result.get("correct", 0)), "unanswered": result.get("unanswered", 0)} for part_info, result in zip(B1_SIMULATION_PARTS, state["results"]))
     instruction = B1_INSTRUCTIONS.get(part["id"]) if part else None
@@ -158,6 +168,7 @@ def b1_training_run(request):
         "listening_blocks": block_recordings_for_run(state, variant) if part and part["id"] == "listening" and state.get("content_version", 1) >= 10 else (),
         "missing_recording": bool(part and part["id"] == "listening" and state.get("listening_recording_id") and not listening_recording),
         "run_token": token, "error": error, "report": report,
+        "history_saved": history_saved,
         "reviews": tuple(run_review(state, variant, item) for item in B1_SIMULATION_PARTS[:state["step"]]),
         "timer_seconds": max(0, state.get("deadline", state.get("break_until", now)) - now),
         "run_namespace": salted_hmac(RUN_SALT, request.supabase_user.id).hexdigest()[:32],
