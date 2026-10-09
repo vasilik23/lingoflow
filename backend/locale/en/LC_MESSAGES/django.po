@@ -17089,3 +17089,42 @@ msgstr "Write a report on a food festival for a school blog: describe the event,
 
 msgid "Пояснение задания"
 msgstr "Task explanation"
+
+msgid "Учебная иллюстрация LingoFlow, создана с ИИ."
+msgstr "LingoFlow learning illustration, created with AI."
+
+msgid "Текстовое описание изображения"
+msgstr "Text description of the picture"
+
+msgid "Ответь вслух, затем нажми «Я ответил». Следующая реплика откроется после твоего подтверждения. Микрофон необязателен; приложение не распознаёт и не оценивает ответ."
+msgstr "Reply aloud, then press “I replied”. The next turn appears after your confirmation. The microphone is optional; the app does not recognise or assess your reply."
+
+msgid "Реплики собеседника"
+msgstr "Partner’s turns"
+
+msgid "Я ответил · следующая реплика"
+msgstr "I replied · next turn"
+
+msgid "Повторить диалог"
+msgstr "Repeat the dialogue"
+
+msgid "Для последовательного диалога нужен JavaScript."
+msgstr "JavaScript is required for the step-by-step dialogue."
+
+msgid "Диалог завершён. Проверь, ответил ли ты на все реплики и задал ли свой вопрос."
+msgstr "Dialogue finished. Check whether you replied to every turn and asked your own question."
+
+msgid "Реплики можно продолжить после подготовки, пока идёт время части."
+msgstr "You can continue the dialogue after preparation, while the part timer is running."
+
+msgid "Ответь на текущую реплику вслух."
+msgstr "Reply to the current turn aloud."
+
+msgid "Браузер не сохранил шаг диалога. После refresh он начнётся заново."
+msgstr "The browser did not save the dialogue step. Refresh will restart it."
+
+msgid "Учебная иллюстрация: подготовка соседской встречи у дома культуры."
+msgstr "Learning illustration: preparing a neighbourhood gathering outside a cultural centre."
+
+msgid "Общий таймер включает 2 минуты подготовки и 9 минут для трёх ответов и самопроверки. Это учебные лимиты. Репетиция диалога самостоятельная; запись добровольная."
+msgstr "The shared timer includes 2 minutes of preparation and 9 minutes for three replies and self-review. These are practice limits. You rehearse the dialogue yourself; recording is optional."

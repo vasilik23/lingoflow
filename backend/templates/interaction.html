@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n ui %}
+{% load i18n ui static %}
 {% block title %}{% translate "Взаимодействие и медиация · LingoFlow" %}{% endblock %}
 {% block content %}
   <header class="content-header interaction-header">
@@ -28,6 +28,7 @@
           <h3>{{ scenario.title|ui_text }}</h3>
           <p lang="pl">{{ scenario.situation|ui_text }}</p>
           <p class="interaction-free-task" lang="pl"><strong>Zadanie:</strong> {{ scenario.task|ui_text }}</p>
+          {% include "partials/speaking_visual_dialogue.html" with task=scenario dialogue_id=scenario.id %}
           <div class="speaking-outline"><strong>{% translate "План ответа" %}</strong><ol>{% for item in scenario.outline %}<li>{{ item|ui_text }}</li>{% endfor %}</ol></div>
           <div class="speaking-timer" role="timer" aria-live="polite"><span data-timer-label>{% translate "Подготовка" %}</span><strong data-timer>00:45</strong></div>
           <div class="speaking-controls">
@@ -41,7 +42,7 @@
           <fieldset class="interaction-self-check speaking-self-check" hidden data-speaking-review>
             <legend>{% translate "Самопроверка после попытки" %}</legend>
             {% for criterion in scenario.checklist %}<label><input type="checkbox"> <span>{{ criterion|ui_text }}</span></label>{% endfor %}
-            <details><summary>{% translate "Показать пример ответа" %}</summary><p lang="pl">{{ scenario.sample_answer|ui_text }}</p><p class="muted">{% translate "Это один возможный ответ, а не текст для заучивания." %}</p></details>
+            {% if scenario.sample_answer %}<details><summary>{% translate "Показать пример ответа" %}</summary><p lang="pl">{{ scenario.sample_answer|ui_text }}</p><p class="muted">{% translate "Это один возможный ответ, а не текст для заучивания." %}</p></details>{% endif %}
           </fieldset>
         </article>
       {% endfor %}
@@ -171,6 +172,7 @@
   </div>
 {% endblock %}
 {% block scripts %}
+<script src="{% static 'polskiflow/speaking-dialogue.js' %}?shell={{ pwa_shell_version }}" defer></script>
   <script>
     (function () {
   const ui = (typeof window !== "undefined" && window.PolskiFlowI18n?.t) || ((text, ...values) => Array.isArray(text) ? text.map((part, i) => part + (values[i] ?? "")).join("") : text);

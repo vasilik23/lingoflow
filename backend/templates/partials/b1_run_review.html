@@ -18,7 +18,7 @@
     </ol>
   {% elif review.status == 'self_review' %}
     <p>{% translate "Самопроверка завершена. Для письма и речи нет единственного правильного ответа и автоматического балла прогона." %}</p>
-    {% for task in review.tasks %}<h3>{{ task.title|ui_text }}</h3><p lang="pl">{{ task.prompt|ui_text }}</p>{% if task.checklist %}<ul>{% for point in task.checklist %}<li lang="pl">{{ point|ui_text }}</li>{% endfor %}</ul>{% endif %}{% endfor %}
+    {% for task in review.tasks %}<h3>{{ task.title|ui_text }}</h3><p lang="pl">{{ task.prompt|ui_text }}</p>{% include "partials/speaking_visual_dialogue.html" with review_mode=True %}{% if task.checklist %}<ul>{% for point in task.checklist %}<li lang="pl">{{ point|ui_text }}</li>{% endfor %}</ul>{% endif %}{% endfor %}
     <p>{% translate "Проверь выполнение всех пунктов, связность и языковую правильность. Текст и запись в разборе не сохраняются." %}</p>
     <a href="{% url 'lesson' review.theory_lesson %}" target="_blank" rel="noopener">{% translate "Повторить теорию" %} ↗</a>
   {% elif review.status == 'skipped' %}

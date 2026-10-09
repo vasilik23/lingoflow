@@ -1272,3 +1272,11 @@ button.secondary { background: var(--surface); border-color: var(--line); }
 .exam-writing-sets { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .exam-writing-sets a { min-width: 0; padding: .65rem .3rem; }
 .exam-writing-sets small { font-size: .72rem; }
+
+.speaking-picture { margin: 1rem 0; }
+.speaking-picture img { display: block; width: 100%; max-width: 52rem; height: auto; border-radius: 1rem; }
+.speaking-picture figcaption { font-size: .75rem; color: var(--muted); margin-top: .4rem; }
+.speaking-picture-description { margin-block: .75rem; }
+.speaking-dialogue { padding: 1rem; margin-block: 1rem; background: var(--surface-soft); border-radius: 1rem; }
+.speaking-dialogue li { padding: .5rem; margin-block: .5rem; }
+.speaking-dialogue li.is-current { border-left: 3px solid var(--primary); font-weight: 700; }

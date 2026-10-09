@@ -1,6 +1,8 @@
 """Static, reviewable scenarios for interaction and mediation practice."""
 
 from dataclasses import dataclass
+from types import SimpleNamespace
+from polskiflow.domain.b1_training_speaking import training_speaking_tasks
 
 
 @dataclass(frozen=True)
@@ -64,6 +66,10 @@ class SpeakingScenario:
     outline: tuple[str, ...]
     checklist: tuple[str, ...]
     sample_answer: str
+    image: str = ""
+    image_alt: str = ""
+    image_description: str = ""
+    dialogue_turns: tuple[str, ...] = ()
 
 
 SCENARIOS = (
@@ -279,6 +285,16 @@ SPEAKING_SCENARIOS = (
             "odpowiedni poziom aktywności, a mimo to spędzimy część dnia razem."
         ),
     ),
+)
+
+
+SPEAKING_SCENARIOS += tuple(
+    SpeakingScenario(id="visual-" + task.id, level="B1", title=task.title,
+        situation="", task=task.prompt, preparation_seconds=45, response_seconds=180,
+        outline=task.checklist, checklist=task.checklist, sample_answer="",
+        image=task.image, image_alt=task.image_alt, image_description=task.image_description,
+        dialogue_turns=task.dialogue_turns)
+    for task in training_speaking_tasks(SimpleNamespace(speaking_prompt=""), 9, interactive=True)[1:]
 )
 
 

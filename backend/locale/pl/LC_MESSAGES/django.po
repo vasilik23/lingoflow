@@ -7416,3 +7416,42 @@ msgstr "Objaśnienie zadania"
 
 msgid "Самопроверка"
 msgstr "Samodzielna ocena"
+
+msgid "Учебная иллюстрация LingoFlow, создана с ИИ."
+msgstr "Ilustracja edukacyjna LingoFlow, utworzona przy użyciu AI."
+
+msgid "Текстовое описание изображения"
+msgstr "Tekstowy opis ilustracji"
+
+msgid "Ответь вслух, затем нажми «Я ответил». Следующая реплика откроется после твоего подтверждения. Микрофон необязателен; приложение не распознаёт и не оценивает ответ."
+msgstr "Odpowiedz na głos, a potem naciśnij „Odpowiedziałem”. Kolejna kwestia pojawi się po Twoim potwierdzeniu. Mikrofon jest opcjonalny; aplikacja nie rozpoznaje ani nie ocenia odpowiedzi."
+
+msgid "Реплики собеседника"
+msgstr "Kwestie rozmówcy"
+
+msgid "Я ответил · следующая реплика"
+msgstr "Odpowiedziałem · następna kwestia"
+
+msgid "Повторить диалог"
+msgstr "Powtórz dialog"
+
+msgid "Для последовательного диалога нужен JavaScript."
+msgstr "Dialog krok po kroku wymaga JavaScript."
+
+msgid "Диалог завершён. Проверь, ответил ли ты на все реплики и задал ли свой вопрос."
+msgstr "Dialog zakończony. Sprawdź, czy odpowiedziałeś na wszystkie kwestie i zadałeś własne pytanie."
+
+msgid "Реплики можно продолжить после подготовки, пока идёт время части."
+msgstr "Możesz kontynuować dialog po przygotowaniu, dopóki trwa czas części."
+
+msgid "Ответь на текущую реплику вслух."
+msgstr "Odpowiedz na bieżącą kwestię na głos."
+
+msgid "Браузер не сохранил шаг диалога. После refresh он начнётся заново."
+msgstr "Przeglądarka nie zapisała kroku dialogu. Po odświeżeniu rozpocznie się on od początku."
+
+msgid "Учебная иллюстрация: подготовка соседской встречи у дома культуры."
+msgstr "Ilustracja edukacyjna: przygotowanie spotkania sąsiedzkiego przed domem kultury."
+
+msgid "Общий таймер включает 2 минуты подготовки и 9 минут для трёх ответов и самопроверки. Это учебные лимиты. Репетиция диалога самостоятельная; запись добровольная."
+msgstr "Wspólny czas obejmuje 2 minuty przygotowania i 9 minut na trzy odpowiedzi oraz samodzielną ocenę. To limity ćwiczeniowe. Dialog ćwiczysz samodzielnie; nagranie jest dobrowolne."

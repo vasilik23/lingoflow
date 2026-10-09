@@ -38,7 +38,7 @@ def _new_state(request):
     return {
         "user_id": request.supabase_user.id, "run_id": str(uuid4()),
         "variant_id": variant.id, "phase": "intro", "step": 0, "results": [],
-        "created_at": int(time.time()),
+        "created_at": int(time.time()), "speaking_version": 2,
         "content_version": 10 if block_ids else CONTENT_VERSION,
         "listening_recording_ids": block_ids,
         "listening_recording_id": recording.id if recording and not block_ids else None,
@@ -161,7 +161,7 @@ def b1_training_run(request):
         "grammar_blocks": training_grammar_blocks(variant, state.get("content_version", 1)) if part and part["id"] == "grammar" else (),
         "writing_ai_available": writing_ai_available(),
         "writing_tasks": run_writing_tasks(request.supabase_user.id, training_writing_tasks(variant, state.get("content_version", 1))) if part and part["id"] == "writing" else (),
-        "speaking_tasks": training_speaking_tasks(variant, state.get("content_version", 1)) if part and part["id"] == "speaking" else (),
+        "speaking_tasks": training_speaking_tasks(variant, state.get("content_version", 1), interactive=state.get("speaking_version") == 2) if part and part["id"] == "speaking" else (),
         "speaking_preparation_seconds": max(0, state.get("speaking_ready_at", now) - now) if part and part["id"] == "speaking" else 0,
         "instruction": instruction,
         "listening_recording": listening_recording,

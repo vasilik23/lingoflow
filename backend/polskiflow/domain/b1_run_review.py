@@ -47,6 +47,6 @@ def run_review(state, variant, part):
         elif part["id"] == "reading":
             review["sources"] = tuple({"title": block.title, "text": block.text} for block in training_reading_blocks(variant, version)) if version >= 3 else ({"title": "Tekst", "text": variant.reading_text},)
     elif result["status"] == "self_review":
-        review["tasks"] = training_writing_tasks(variant, version) if part["id"] == "writing" else training_speaking_tasks(variant, version)
+        review["tasks"] = training_writing_tasks(variant, version) if part["id"] == "writing" else training_speaking_tasks(variant, version, interactive=state.get("speaking_version") == 2)
         review["theory_lesson"] = "b1work-grammar" if part["id"] == "writing" else "b1media-grammar"
     return review

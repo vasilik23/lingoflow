@@ -1,0 +1,13 @@
+{% load static i18n ui %}
+{% if task.image %}<figure class="speaking-picture"><img src="{% static task.image %}" alt="{{ task.image_alt|ui_text }}" loading="lazy" width="1536" height="1024"><figcaption>{% translate "Учебная иллюстрация LingoFlow, создана с ИИ." %}</figcaption></figure><details class="speaking-picture-description"><summary>{% translate "Текстовое описание изображения" %}</summary><p lang="pl">{{ task.image_description|ui_text }}</p></details>{% endif %}
+{% if task.dialogue_turns %}
+{% if review_mode %}<ol>{% for turn in task.dialogue_turns %}<li lang="pl">{{ turn|ui_text }}</li>{% endfor %}</ol>{% else %}
+<div class="speaking-dialogue" data-speaking-dialogue data-dialogue-id="{{ dialogue_id }}" data-dialogue-owner="{{ request.supabase_user.id }}">
+<p class="muted">{% translate "Ответь вслух, затем нажми «Я ответил». Следующая реплика откроется после твоего подтверждения. Микрофон необязателен; приложение не распознаёт и не оценивает ответ." %}</p>
+<ol aria-label="{% translate "Реплики собеседника" %}">{% for turn in task.dialogue_turns %}<li data-dialogue-turn{% if not forloop.first %} hidden{% endif %}><p lang="pl">{{ turn|ui_text }}</p></li>{% endfor %}</ol>
+<p data-dialogue-status role="status" aria-live="polite"></p>
+<button type="button" class="compact-button" data-dialogue-next>{% translate "Я ответил · следующая реплика" %}</button>
+<button type="button" class="compact-button secondary" data-dialogue-restart hidden>{% translate "Повторить диалог" %}</button>
+<noscript><p>{% translate "Для последовательного диалога нужен JavaScript." %}</p></noscript>
+</div>
+{% endif %}{% endif %}
