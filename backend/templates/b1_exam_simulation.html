@@ -9,7 +9,7 @@
   </header>
 
   {% if not part %}
-    <p><a class="compact-button" href="{% url 'b1-training-run' %}">{% translate "Учебный прогон пяти частей с перерывами →" %}</a></p>
+    <p><a href="{% url 'b1-exam-prep' %}?mode=skill#exam-skills-title">{% translate "← К тренировке навыков" %}</a></p>
     <div class="exam-module-grid simulation-part-grid">
       {% for item in parts %}<article class="card exam-module-card exam-accent-{{ item.accent }}" data-simulation-card="{{ item.id }}"><header><span>{{ item.timer_minutes|ui_text }} {% translate "мин" %}</span><span>{% if item.mode == "objective" %}{{ item.question_count|ui_text }} {% translate "заданий" %}{% else %}{% translate "самопроверка" %}{% endif %}</span></header><p class="eyebrow" lang="pl">{{ item.polish_title|ui_text }}</p><h2>{{ item.title|ui_text }}</h2><p class="simulation-progress muted" data-simulation-progress>{% translate "Ещё не начато" %}</p><a href="?part={{ item.id }}{% if item.mode != 'objective' %}&timing=full{% endif %}">{% translate "Начать часть" %}</a>{% if item.mode == 'objective' %}<p><a href="?part={{ item.id }}&timing=full">{% translate "Полный лимит ·" %} {{ item.minutes|ui_text }} {% translate "мин" %}</a></p>{% endif %}</article>{% endfor %}
     </div>

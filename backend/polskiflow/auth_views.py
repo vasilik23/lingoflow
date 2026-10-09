@@ -590,6 +590,7 @@ def b1_exam_prep(request: HttpRequest) -> HttpResponse:
         "b1_exam_prep.html",
         {
             "exam_prep": build_b1_exam_prep(timezone.localdate(), module_results),
+            "b1_mode": request.GET.get("mode") if request.GET.get("mode") in {"today", "skill"} else "",
             "module_results": module_results,
             "results_available": dashboard.available or mock_attempts is not None,
             "has_mock_result": latest_mock is not None,

@@ -62,7 +62,7 @@
         <h2 id="exam-home-title">{{ b1_exam_prep.countdown.label|ui_text }}</h2>
         <p class="muted">{% translate "Сегодня —" %} {{ b1_exam_prep.daily_minutes|ui_text }} {% translate "минут по трём экзаменационным навыкам." %}{% if b1_exam_prep.focus %} {% translate "Фокус:" %} {{ b1_exam_prep.focus.title|ui_text }} {% translate "— последние тренировки" %} {{ b1_exam_prep.focus.percent|ui_text }}%.{% endif %}</p>
       </div>
-      <a class="compact-button" href="{% url 'b1-exam-prep' %}">{% translate "Открыть план" %}</a>
+      <a class="compact-button" href="{% url 'b1-exam-prep' %}">{% translate "Выбрать формат" %}</a>
     </aside>
   {% endif %}
 
