@@ -1,0 +1,14 @@
+{% load i18n %}
+<header class="public-heading">
+  <a class="brand" href="{% url 'public-intro' %}"><span class="brand-mark">L</span> LingoFlow</a>
+  <div class="public-heading-actions">
+    <form method="post" action="{% url 'set-language' %}" class="public-languages" aria-label="{% translate 'Язык интерфейса' %}">
+      {% csrf_token %}<input type="hidden" name="next" value="{{ request.get_full_path }}">
+      {% get_current_language as current_language %}
+      <button type="submit" name="language" value="ru" lang="ru" aria-label="Русский" aria-pressed="{% if current_language == 'ru' %}true{% else %}false{% endif %}">RU</button>
+      <button type="submit" name="language" value="pl" lang="pl" aria-label="Polski" aria-pressed="{% if current_language == 'pl' %}true{% else %}false{% endif %}">PL</button>
+      <button type="submit" name="language" value="en" lang="en" aria-label="English" aria-pressed="{% if current_language == 'en' %}true{% else %}false{% endif %}">EN</button>
+    </form>
+    <a href="{% url 'login' %}">{% translate "Войти" %}</a>
+  </div>
+</header>
