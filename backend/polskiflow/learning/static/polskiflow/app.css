@@ -1261,3 +1261,14 @@ button.secondary { background: var(--surface); border-color: var(--line); }
   .b1-entry-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .b1-skill-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+
+.exam-writing { padding: 1rem; margin-top: 1rem; }
+.exam-writing-bar { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; position: sticky; top: 0; z-index: 2; padding: .5rem; background: var(--surface); border-bottom: 1px solid var(--line); }
+.exam-writing-bar strong { margin-right: auto; }
+.exam-writing textarea { width: 100%; box-sizing: border-box; }
+.exam-writing [data-exam-task] { margin-block: 1.5rem; }
+.exam-writing dialog { max-width: min(32rem, 85vw); background: var(--surface); color: var(--text); border: 1px solid var(--line); border-radius: 1rem; padding: 1rem; }
+.course-levels a[aria-disabled=true] { opacity: .6; cursor: default; }
+.exam-writing-sets { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.exam-writing-sets a { min-width: 0; padding: .65rem .3rem; }
+.exam-writing-sets small { font-size: .72rem; }

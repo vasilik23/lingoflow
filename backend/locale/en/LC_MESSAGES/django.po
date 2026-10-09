@@ -15061,7 +15061,7 @@ msgid "следующий шаг"
 msgstr "step"
 
 msgid "слов"
-msgstr "word-word"
+msgstr "words"
 
 msgid "слов в словаре"
 msgstr "dictionary"
@@ -17002,3 +17002,90 @@ msgstr "A short plan for today, skill practice or a five-part trial run."
 
 msgid "← К тренировке навыков"
 msgstr "← Back to skill practice"
+
+msgid "Экзаменационное письмо B1"
+msgstr "B1 exam writing"
+
+msgid "Выбери один комплект и напиши оба текста за общие 75 минут. Задания оригинальные, LingoFlow; формат и объёмы сверены с официальным образцом для взрослых B1."
+msgstr "Choose one set and write both texts within a shared 75-minute limit. These are original LingoFlow tasks; the format and word targets were checked against the official adult B1 sample."
+
+msgid "Официальный образец"
+msgstr "Official sample"
+
+msgid "Выбор комплекта"
+msgstr "Choose a set"
+
+msgid "Комплект"
+msgstr "Set"
+
+msgid "Начать 75 минут"
+msgstr "Start 75 minutes"
+
+msgid "Таймер начнётся по кнопке. Во время попытки смена комплекта недоступна; refresh и возвращение из фона не останавливают время."
+msgstr "The timer starts when you press the button. You cannot change sets during an attempt; refresh and returning from the background do not pause the timer."
+
+msgid "Тексты и таймер хранятся только в этом браузере. В историю аккаунта этот отдельный режим не записывается."
+msgstr "Texts and the timer stay only in this browser. This separate mode is not saved to your account history."
+
+msgid "Для таймера и сохранения черновиков нужен JavaScript."
+msgstr "JavaScript is required for the timer and draft saving."
+
+msgid "Счётчик помогает следить за объёмом, но не оценивает качество текста."
+msgstr "The counter helps you track length but does not assess writing quality."
+
+msgid "Самопроверка двух текстов"
+msgstr "Review both texts"
+
+msgid "Проверь выполнение задания, жанр и объём, связность, лексику, грамматику, орфографию и пунктуацию. Число слов не является экзаменационным баллом."
+msgstr "Check task completion, genre and length, coherence, vocabulary, grammar, spelling and punctuation. Word count is not an exam score."
+
+msgid "Я написал оба текста одного комплекта и раскрыл все пункты."
+msgstr "I wrote both texts from the same set and covered all points."
+
+msgid "Я проверил жанр, объём и языковые ошибки в обоих текстах."
+msgstr "I checked genre, length and language errors in both texts."
+
+msgid "Новая попытка этого комплекта"
+msgstr "Try this set again"
+
+msgid "Завершить сейчас? Текущие тексты сохранятся в браузере; пустой ответ останется без ответа."
+msgstr "Finish now? Current texts will stay in this browser; an empty text will count as unanswered."
+
+msgid "Сохранение в браузере недоступно. Перед уходом скопируй оба текста; refresh потеряет попытку."
+msgstr "Browser saving is unavailable. Copy both texts before leaving; refresh will lose the attempt."
+
+msgid "Время истекло. Текущие тексты сохранены для самопроверки."
+msgstr "Time is up. Current texts were kept for self-review."
+
+msgid "Попытка завершена. Тексты доступны для самопроверки."
+msgstr "Attempt finished. Texts are available for self-review."
+
+msgid "Без ответа: "
+msgstr "Unanswered: "
+
+msgid "Попытка идёт. Напиши оба текста одного комплекта."
+msgstr "Attempt in progress. Write both texts from the same set."
+
+msgid "Нажатие «Начать 75 минут» заменит тексты этого комплекта новой попыткой."
+msgstr "Pressing “Start 75 minutes” will replace this set’s texts with a new attempt."
+
+msgid "Организуй обмен книгами для соседей: напиши приглашение, укажи место и время, объясни правила и пригласи участвовать."
+msgstr "Organise a neighbourhood book swap: write an invitation with the location and time, explain the rules and encourage people to join."
+
+msgid "Напиши другу в Польше о новом хобби: объясни выбор, опиши первое занятие и трудность, предложи встретиться."
+msgstr "Write to a friend in Poland about your new hobby: explain your choice, describe the first session and a difficulty, and suggest meeting."
+
+msgid "Напиши приветствие знакомому с выходных в горах: назови место, погоду и одну достопримечательность."
+msgstr "Send greetings to a friend from a weekend in the mountains: mention the place, weather and one attraction."
+
+msgid "Опиши человека, который помог тебе после переезда: внешность, черты характера, пример поступка и почему этот человек важен."
+msgstr "Describe someone who helped you after moving: their appearance, character, an example of their behaviour and why they matter to you."
+
+msgid "Напиши объявление о клубе прогулок: место и время первой встречи, маршрут, контакт и кто может присоединиться."
+msgstr "Write a notice about a walking club: where and when the first meeting is, the route, contact details and who can join."
+
+msgid "Напиши для школьного блога репортаж о кулинарном фестивале: ход события, самое интересное впечатление, оценка организации и атмосферы."
+msgstr "Write a report on a food festival for a school blog: describe the event, your most interesting experience, and assess the organisation and atmosphere."
+
+msgid "Пояснение задания"
+msgstr "Task explanation"
