@@ -7,7 +7,7 @@ export type AnswerResult = { correct: boolean; correct_index?: number; correct_s
 export type BootstrapData = {
   profile: { display_name: string; level: string; daily_goal_lessons: number; daily_goal_minutes: number };
   progress: { streak_days: number; active_days: number; completed_lesson_count: number };
-  today: { date: string; completed_count: number; task_count: number; progress_percent: number; tasks: TodayTask[]; resume: { lesson_id: string; title: string; kind: string; step: number } | null };
+  today: { estimated_minutes?: number; completed_estimated_minutes?: number; date: string; completed_count: number; task_count: number; progress_percent: number; tasks: TodayTask[]; resume: { lesson_id: string; title: string; kind: string; step: number } | null };
 };
 export type LessonDraft = { lesson_id: string; lesson_kind: string; step_index: number; score: number };
 export type LearnerProfile = { display_name: string; level: string; daily_goal_lessons: number; daily_goal_minutes: number };

@@ -86,10 +86,10 @@ class LessonViewsTests(TestCase):
     def test_home_combines_daily_goal_with_default_fifteen_minute_plan(self):
         response = self.client.get("/")
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Цель на сегодня")
+        self.assertContains(response, "План на сегодня")
         self.assertContains(response, "Начать занятия")
         self.assertContains(response, 'role="progressbar"')
-        self.assertContains(response, 'aria-label="Выполнение цели на сегодня"')
+        self.assertContains(response, 'aria-label="Выполнение плана по оценочной длительности"')
         self.assertContains(response, 'aria-valuenow="0"')
         self.assertContains(response, "Задания на сегодня")
         self.assertContains(response, 'class="muted daily-goal-summary"')

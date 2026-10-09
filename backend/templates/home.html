@@ -21,11 +21,11 @@
 
   <div class="dashboard-grid home-plan-grid">
     <section class="card daily-card" id="daily-plan">
-      <div class="progress-ring" style="--value: {{ progress_percent }}" role="progressbar" aria-label="{% translate "Выполнение цели на сегодня" %}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ progress_percent }}"><strong>{{ progress_percent|ui_text }}%</strong></div>
+      <div class="progress-ring" style="--value: {{ progress_percent }}" role="progressbar" aria-label="{% translate "Выполнение плана по оценочной длительности" %}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ progress_percent }}"><strong>{{ progress_percent|ui_text }}%</strong></div>
       <div class="daily-copy">
-        <p class="eyebrow">{% translate "Цель на сегодня" %}</p>
-        <h2>{{ completed_count|ui_text }} {% translate "из" %} {{ tasks|length|ui_text }}</h2>
-        <p class="muted">{% translate "Небольшой шаг каждый день — большой результат." %}</p>
+        <p class="eyebrow">{% translate "План на сегодня" %}</p>
+        <h2>~{{ completed_estimated_minutes|ui_text }} {% translate "из" %} {{ plan_estimated_minutes|ui_text }} {% translate "мин" %}</h2>
+        <p class="muted">{% translate "Оценочная длительность выполненных заданий, не время по таймеру." %}</p>
       </div>
       {% if not dashboard.available %}<p class="data-notice">{% translate "Прогресс временно недоступен. Уроки по-прежнему можно проходить." %}</p>{% endif %}
       <a class="compact-button daily-action" href="#daily-tasks">{% if completed_count == tasks|length %}{% translate "Повторить задания" %}{% elif completed_count %}{% translate "Продолжить занятия" %}{% else %}{% translate "Начать занятия" %}{% endif %}</a>
