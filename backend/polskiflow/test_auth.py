@@ -356,8 +356,8 @@ class BrowserAuthTests(SimpleTestCase):
         self.assertContains(response, "Invalid login credentials")
 
     def test_protected_page_redirects_guest_to_login(self):
-        response = self.client.get("/")
-        self.assertRedirects(response, "/login/?next=%2F", fetch_redirect_response=False)
+        response = self.client.get("/course/")
+        self.assertRedirects(response, "/login/?next=%2Fcourse%2F", fetch_redirect_response=False)
 
     @patch("polskiflow.auth_views.sign_up")
     def test_registration_waits_for_email_confirmation(self, signup):

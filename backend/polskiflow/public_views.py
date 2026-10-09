@@ -5,16 +5,18 @@ import json
 
 from django.core import signing
 from django.shortcuts import render
-from django.views.decorators.http import require_GET, require_http_methods
+from django.views.decorators.http import require_http_methods
 
 from polskiflow.learning.models import Question
 
 DEMO_SALT = "lingoflow-public-demo-v1"
 
 
-@require_GET
+@require_http_methods(["GET", "HEAD"])
 def public_intro(request):
-    return render(request, "public_intro.html")
+    response = render(request, "public_intro.html")
+    response["Cache-Control"] = "private, no-store"
+    return response
 
 
 def load_demo_question():
