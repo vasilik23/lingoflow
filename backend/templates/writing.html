@@ -7,6 +7,7 @@
     <a class="compact-button" href="{% url 'course' %}?level={{ selected_writing_level }}">{% translate "К темам" %} {{ selected_writing_level|ui_text }} →</a>
   </header>
 
+  <p><a class="compact-button" href="{% url 'b1-exam-writing' %}">{% translate "Экзаменационное письмо B1" %} →</a></p>
   <nav class="course-levels writing-levels" aria-label="{% translate "Уровень письменной практики" %}">
     {% for level in writing_levels %}<a href="?level={{ level.id }}"{% if level.id == selected_writing_level %} aria-current="page"{% endif %}><strong>{{ level.id|ui_text }}</strong><small>{{ level.prompt_count|ui_text }} {% translate "заданий" %}</small></a>{% endfor %}
   </nav>

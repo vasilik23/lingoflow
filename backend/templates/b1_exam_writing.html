@@ -1,0 +1,24 @@
+{% extends "base.html" %}{% load i18n ui static %}
+{% block title %}{% translate "Экзаменационное письмо B1" %} · LingoFlow{% endblock %}
+{% block toolbar_title %}<h1>{% translate "Экзаменационное письмо B1" %}</h1>{% endblock %}
+{% block content %}
+<p class="muted">{% translate "Выбери один комплект и напиши оба текста за общие 75 минут. Задания оригинальные, LingoFlow; формат и объёмы сверены с официальным образцом для взрослых B1." %}</p>
+<p><a href="{% url 'writing-practice' %}?level=B1">← {% translate "Письменная практика" %}</a> · <a href="{{ writing_source }}#page=22" target="_blank" rel="noopener noreferrer">{% translate "Официальный образец" %} ↗</a></p>
+<nav class="course-levels exam-writing-sets" aria-label="{% translate "Выбор комплекта" %}">{% for set in writing_sets %}<a href="?set={{ set.id }}"{% if set.id == selected_set.id %} aria-current="page"{% endif %}><strong>{% translate "Комплект" %} {{ set.id }}</strong><small>{% for task in set.tasks %}{{ task.words }}{% if not forloop.last %} + {% endif %}{% endfor %} {% translate "слов" %}</small></a>{% endfor %}</nav>
+<section class="card exam-writing" data-exam-writing data-owner="{{ request.supabase_user.id }}" data-set="{{ selected_set.id }}">
+<div class="exam-writing-bar"><strong>{% translate "Комплект" %} {{ selected_set.id }} · <span data-exam-clock>75:00</span></strong><button type="button" data-exam-start>{% translate "Начать 75 минут" %}</button><button type="button" class="secondary" data-exam-finish hidden>{% translate "Завершить" %}</button></div>
+<p role="status" aria-live="polite" data-exam-status>{% translate "Таймер начнётся по кнопке. Во время попытки смена комплекта недоступна; refresh и возвращение из фона не останавливают время." %}</p>
+<p class="muted" data-exam-storage>{% translate "Тексты и таймер хранятся только в этом браузере. В историю аккаунта этот отдельный режим не записывается." %}</p>
+<noscript><p>{% translate "Для таймера и сохранения черновиков нужен JavaScript." %}</p></noscript>
+{% for task in exam_tasks %}<article class="writing-prompt" data-exam-task data-target="{{ task.words }}">
+<h2>{% translate "Задание" %} {% if forloop.first %}a{% else %}b{% endif %} · <span lang="pl">{{ task.genre }}</span></h2>
+<p lang="pl">{{ task.prompt }}</p>{% if request.LANGUAGE_CODE != 'pl' %}<details><summary>{% translate "Пояснение задания" %}</summary><p>{{ task.support|ui_text }}</p></details>{% endif %}<p><strong>{{ task.words }} {% translate "слов" %}</strong> · {% translate "Счётчик помогает следить за объёмом, но не оценивает качество текста." %}</p>
+<label for="{{ task.editor }}">{% translate "Твой черновик" %}</label><textarea id="{{ task.editor }}" data-exam-draft maxlength="20000" rows="8" disabled></textarea>
+<p data-exam-count aria-live="polite">0 / {{ task.words }} {% translate "слов" %}</p>
+<div data-exam-review hidden>{% include "partials/ai_writing_review.html" with ai_token=task.ai_token ai_editor=task.editor %}</div>
+</article>{% endfor %}
+<section data-exam-result hidden><h2>{% translate "Самопроверка двух текстов" %}</h2><p>{% translate "Проверь выполнение задания, жанр и объём, связность, лексику, грамматику, орфографию и пунктуацию. Число слов не является экзаменационным баллом." %}</p><fieldset><legend>{% translate "Самопроверка" %}</legend><label><input type="checkbox"> {% translate "Я написал оба текста одного комплекта и раскрыл все пункты." %}</label><label><input type="checkbox"> {% translate "Я проверил жанр, объём и языковые ошибки в обоих текстах." %}</label></fieldset><button type="button" class="secondary" data-exam-again>{% translate "Новая попытка этого комплекта" %}</button></section>
+<dialog data-exam-dialog><p>{% translate "Завершить сейчас? Текущие тексты сохранятся в браузере; пустой ответ останется без ответа." %}</p><button type="button" data-exam-confirm>{% translate "Завершить" %}</button><button type="button" class="secondary" data-exam-cancel>{% translate "Продолжить" %}</button></dialog>
+</section>
+{% endblock %}
+{% block scripts %}{% csrf_token %}<script src="{% static 'polskiflow/b1-exam-writing.js' %}?shell={{ pwa_shell_version }}" defer></script><script src="{% static 'polskiflow/ai-writing.js' %}?shell={{ pwa_shell_version }}" defer></script>{% endblock %}

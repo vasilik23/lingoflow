@@ -47,6 +47,7 @@
     <div class="b1-skill-grid">
       {% for module in exam_prep.modules %}<a class="card b1-skill-link" href="{{ module.href }}"><h3>{{ module.title|ui_text }}</h3><span>{{ module.action|ui_text }} →</span></a>{% endfor %}
     </div>
+    <p><a class="compact-button" href="{% url 'b1-exam-writing' %}">{% translate "Экзаменационное письмо B1" %} →</a></p>
     <details class="card b1-entry-details"><summary>{% translate "Практика с таймером" %}</summary><p>{% translate "Выбери одну часть: короткий учебный таймер или полный лимит части." %}</p><a class="compact-button" href="{% url 'b1-exam-simulation' %}">{% translate "Выбрать часть" %} →</a></details>
   </section>
   {% endif %}
