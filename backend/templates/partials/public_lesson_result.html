@@ -1,0 +1,4 @@
+{% load i18n ui %}
+<h2>{% translate "Мини-урок завершён" %}</h2>
+<p class="public-demo-score">{% if preview or correct %}1{% else %}0{% endif %} / 1 <span>{% translate "правильных ответов" %}</span></p>
+<p>{{ lesson.theory_title|ui_text }}</p>

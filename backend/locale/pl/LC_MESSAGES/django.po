@@ -7467,3 +7467,90 @@ msgstr "Powtórz zadanie"
 
 msgid "Посмотреть план"
 msgstr "Zobacz plan"
+
+msgid "Выбери уровень"
+msgstr "Wybierz poziom"
+
+msgid "Мини-урок"
+msgstr "Minilekcja"
+
+msgid "Материал из курса: теория, упражнение и разбор. Аккаунт не нужен; ответы не сохраняются в прогресс."
+msgstr "Materiał z kursu: teoria, ćwiczenie i omówienie. Konto nie jest potrzebne; odpowiedzi nie są zapisywane w postępach."
+
+msgid "Шаги мини-урока"
+msgstr "Etapy minilekcji"
+
+msgid "Упражнение"
+msgstr "Ćwiczenie"
+
+msgid "К упражнению"
+msgstr "Przejdź do ćwiczenia"
+
+msgid "К результату"
+msgstr "Zobacz wynik"
+
+msgid "Мини-урок завершён"
+msgstr "Minilekcja ukończona"
+
+msgid "правильных ответов"
+msgstr "poprawnych odpowiedzi"
+
+msgid "Это знакомство с форматом обучения, а не проверка уровня."
+msgstr "To prezentacja sposobu nauki, a nie test poziomu."
+
+msgid "Так выглядит обучение"
+msgstr "Tak wygląda nauka"
+
+msgid "Настоящий материал A2 из курса. Ниже — пример выбранного ответа и его разбора."
+msgstr "Rzeczywisty materiał A2 z kursu. Poniżej przykład wybranej odpowiedzi i jej omówienia."
+
+msgid "Пример урока"
+msgstr "Przykładowa lekcja"
+
+msgid "Пример разбора"
+msgstr "Przykładowe omówienie"
+
+msgid "Попробовать этот урок"
+msgstr "Wypróbuj tę lekcję"
+
+msgid "Пример результата"
+msgstr "Przykładowy wynik"
+
+msgid "Теория"
+msgstr "Teoria"
+
+msgid "Результат"
+msgstr "Wynik"
+
+msgid "Вернуться к теории"
+msgstr "Wróć do teorii"
+
+msgid "Формы настоящего времени"
+msgstr "Formy czasu teraźniejszego"
+
+msgid "Как сказать «Я Анна»?"
+msgstr "Jak powiedzieć „Jestem Anna”?"
+
+msgid "Для «я» используется форма jestem: Jestem Anna."
+msgstr "Dla osoby ja używamy formy jestem: Jestem Anna."
+
+msgid "Он и она"
+msgstr "On i ona"
+
+msgid "В единственном числе форма показывает род: on pracował/był, ona pracowała/była."
+msgstr "W liczbie pojedynczej forma wskazuje rodzaj: on pracował/był, ona pracowała/była."
+
+msgid "В субботу Марек работал дома."
+msgstr "W sobotę Marek pracował w domu."
+
+msgid "В мужском роде прошедшее время имеет окончание -ł: pracował."
+msgstr "W rodzaju męskim czas przeszły ma końcówkę -ł: pracował."
+
+msgid "Причина и уступка"
+msgstr "Przyczyna i przyzwolenie"
+
+msgid "Ponieważ вводит причину, а chociaż и mimo że — обстоятельство, которое не меняет результата."
+msgstr "Ponieważ wprowadza przyczynę, a chociaż i mimo że — okoliczność, która nie zmienia rezultatu."
+
+msgid "Ponieważ вводит реальную причину."
+msgstr "Ponieważ wprowadza rzeczywistą przyczynę."

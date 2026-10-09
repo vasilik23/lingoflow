@@ -1,0 +1,13 @@
+{% load i18n ui %}
+{% if preview %}
+<div class="placement-question public-example-question">
+  <h3>{{ lesson.question.prompt|ui_text }}</h3>
+  <ul class="public-example-options">
+    {% for option in lesson.question.options %}<li class="placement-option{% if forloop.counter0 == lesson.question.correct %} public-example-selected{% endif %}"><span>{{ option|ui_text }}</span>{% if forloop.counter0 == lesson.question.correct %}<strong>✓ <span class="visually-hidden">{% translate "Правильный ответ:" %}</span></strong>{% endif %}</li>{% endfor %}
+  </ul>
+</div>
+{% else %}
+<fieldset class="placement-question"><legend>{{ lesson.question.prompt|ui_text }}</legend>
+  {% for option in lesson.question.options %}<label class="placement-option"><input type="radio" name="answer" value="{{ forloop.counter0 }}" required><span>{{ option|ui_text }}</span></label>{% endfor %}
+</fieldset>
+{% endif %}
