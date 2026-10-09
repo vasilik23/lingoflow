@@ -5,30 +5,45 @@
 {% block content %}
 <div class="public-shell">
   {% include "partials/public_heading.html" %}
+  <nav class="public-levels" aria-label="{% translate 'Выбери уровень' %}">
+    {% for item in levels %}<a href="{% url 'public-demo' %}?level={{ item }}"{% if item == level %} aria-current="page"{% endif %}>{{ item }}</a>{% endfor %}
+  </nav>
   <section class="card onboarding-form">
-    <p class="eyebrow">A1 · {% translate "Знакомство" %}</p>
+    <p class="eyebrow">{{ level }} · {% translate "Мини-урок" %}</p>
     <h1>{% translate "Пробное задание" %}</h1>
-    <p class="muted">{% translate "Один вопрос из курса. Ответ не сохраняется в прогресс; аккаунт не нужен." %}</p>
+    <p class="muted">{% translate "Материал из курса: теория, упражнение и разбор. Аккаунт не нужен; ответы не сохраняются в прогресс." %}</p>
     {% if unavailable %}<p role="alert">{% translate "Пробное задание временно недоступно. Можно вернуться к знакомству с приложением." %}</p>
     {% else %}
+      <ol class="public-demo-steps" aria-label="{% translate 'Шаги мини-урока' %}">
+        <li{% if step == 'theory' %} aria-current="step"{% endif %}>{% translate "Теория" %}</li>
+        <li{% if step == 'exercise' %} aria-current="step"{% endif %}>{% translate "Упражнение" %}</li>
+        <li{% if step == 'explanation' %} aria-current="step"{% endif %}>{% translate "Разбор" %}</li>
+        <li{% if step == 'result' %} aria-current="step"{% endif %}>{% translate "Результат" %}</li>
+      </ol>
       {% if demo_error %}<p role="alert" class="save-error">{{ demo_error|ui_text }}</p>{% endif %}
-      {% if answered %}
-        <div role="status"><h2>{% if correct %}{% translate "Верно!" %}{% else %}{% translate "Попробуем разобраться" %}{% endif %}</h2></div>
-        <p>{{ question.prompt|ui_text }}</p>
-        <p>{% translate "Твой ответ:" %} {{ selected_text|ui_text }}</p>
-        <p><strong>{% translate "Правильный ответ:" %} {{ correct_text|ui_text }}</strong></p>
-        <p>{{ question.explanation|ui_text }}</p>
-        <p class="muted">{% translate "В полном уроке есть больше заданий. Создай аккаунт, чтобы выбрать уровень и сохранять результаты." %}</p>
-        {% if request.supabase_user %}<a class="compact-button" href="{% url 'home' %}">{% translate "Продолжить обучение" %}</a>{% else %}<a class="compact-button" href="{% url 'register' %}">{% translate "Создать аккаунт" %}</a>{% endif %}
-        <a href="{% url 'public-demo' %}">{% translate "Попробовать ещё раз" %}</a>
-      {% else %}
-        <form method="post" class="public-demo-form">
+      {% if step == 'theory' %}
+        {% include "partials/public_lesson_theory.html" %}
+        <a class="compact-button" href="{% url 'public-demo' %}?level={{ level }}&amp;step=exercise">{% translate "К упражнению" %} →</a>
+      {% elif step == 'exercise' %}
+        <h2>{{ lesson.title|ui_text }}</h2>
+        <form method="post" class="public-demo-form" action="{% url 'public-demo' %}?level={{ level }}">
           {% csrf_token %}<input type="hidden" name="state" value="{{ state }}">
-          <fieldset class="placement-question"><legend>{{ question.prompt|ui_text }}</legend>
-            {% for option in question.options %}<label class="placement-option"><input type="radio" name="answer" value="{{ forloop.counter0 }}" required><span>{{ option|ui_text }}</span></label>{% endfor %}
-          </fieldset>
+          {% include "partials/public_lesson_question.html" %}
           <button type="submit">{% translate "Проверить ответ" %}</button>
         </form>
+        <a href="{% url 'public-demo' %}?level={{ level }}">{% translate "Вернуться к теории" %}</a>
+      {% elif step == 'explanation' %}
+        <h2>{% if correct %}{% translate "Верно!" %}{% else %}{% translate "Попробуем разобраться" %}{% endif %}</h2>
+        <p>{{ lesson.question.prompt|ui_text }}</p>
+        {% include "partials/public_lesson_explanation.html" %}
+        <a class="compact-button" href="{% url 'public-demo' %}?level={{ level }}&amp;step=result&amp;review={{ review|urlencode }}">{% translate "К результату" %} →</a>
+      {% else %}
+        {% include "partials/public_lesson_result.html" %}
+        <p class="muted">{% translate "Это знакомство с форматом обучения, а не проверка уровня." %}</p>
+        <details><summary>{% translate "Разбор" %}</summary>{% include "partials/public_lesson_explanation.html" %}</details>
+        <p>{% translate "В полном уроке есть больше заданий. Создай аккаунт, чтобы выбрать уровень и сохранять результаты." %}</p>
+        {% if request.supabase_user %}<a class="compact-button" href="{% url 'home' %}">{% translate "Продолжить обучение" %}</a>{% else %}<a class="compact-button" href="{% url 'register' %}">{% translate "Создать аккаунт" %}</a>{% endif %}
+        <a href="{% url 'public-demo' %}?level={{ level }}">{% translate "Попробовать ещё раз" %}</a>
       {% endif %}
     {% endif %}
   </section>

@@ -1,0 +1,6 @@
+{% load i18n ui %}
+<div class="public-answer-review">
+  {% if not preview %}<p>{% translate "Твой ответ:" %} {{ selected_text|ui_text }}</p>{% endif %}
+  <p><strong>{% translate "Правильный ответ:" %}</strong> {% if preview %}{% for option in lesson.question.options %}{% if forloop.counter0 == lesson.question.correct %}{{ option|ui_text }}{% endif %}{% endfor %}{% else %}{{ correct_text|ui_text }}{% endif %}</p>
+  <p>{{ lesson.question.explanation|ui_text }}</p>
+</div>

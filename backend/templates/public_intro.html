@@ -11,6 +11,25 @@
     <p>{% translate "Короткие задания, объяснения ответов и план под твою дневную цель. Посмотри, как это работает, прежде чем создавать аккаунт." %}</p>
     <a class="compact-button" href="{% url 'public-demo' %}">{% translate "Попробовать без регистрации" %}</a>
   </section>
+  {% if sample %}
+  <section class="public-product-example" aria-labelledby="product-example-title">
+    <h2 id="product-example-title">{% translate "Так выглядит обучение" %}</h2>
+    <p class="muted">{% translate "Настоящий материал A2 из курса. Ниже — пример выбранного ответа и его разбора." %}</p>
+    <div class="public-example-grid">
+      <article class="card public-example-lesson">
+        <p class="eyebrow">A2 · {% translate "Пример урока" %}</p>
+        {% include "partials/public_lesson_theory.html" with lesson=sample %}
+        {% include "partials/public_lesson_question.html" with lesson=sample preview=True %}
+      </article>
+      <article class="card public-example-result">
+        <p class="eyebrow">{% translate "Пример результата" %}</p>
+        {% include "partials/public_lesson_result.html" with lesson=sample preview=True %}
+        {% include "partials/public_lesson_explanation.html" with lesson=sample preview=True %}
+        <a class="compact-button" href="{% url 'public-demo' %}?level=A2">{% translate "Попробовать этот урок" %} →</a>
+      </article>
+    </div>
+  </section>
+  {% endif %}
   <section class="card"><h2>{% translate "Как проходит обучение" %}</h2>
     <ol class="public-steps">
       <li><strong>{% translate "Выбери старт" %}</strong><p>{% translate "Выбери уровень самостоятельно или пройди необязательную короткую проверку после регистрации." %}</p></li>

@@ -17140,3 +17140,63 @@ msgstr "Repeat the task"
 
 msgid "Посмотреть план"
 msgstr "View the plan"
+
+msgid "Выбери уровень"
+msgstr "Choose a level"
+
+msgid "Мини-урок"
+msgstr "Mini-lesson"
+
+msgid "Материал из курса: теория, упражнение и разбор. Аккаунт не нужен; ответы не сохраняются в прогресс."
+msgstr "Course material: theory, an exercise and an explanation. No account is needed; answers are not saved to your progress."
+
+msgid "Шаги мини-урока"
+msgstr "Mini-lesson steps"
+
+msgid "Упражнение"
+msgstr "Exercise"
+
+msgid "К упражнению"
+msgstr "Go to the exercise"
+
+msgid "К результату"
+msgstr "See the result"
+
+msgid "Мини-урок завершён"
+msgstr "Mini-lesson completed"
+
+msgid "правильных ответов"
+msgstr "correct answers"
+
+msgid "Это знакомство с форматом обучения, а не проверка уровня."
+msgstr "This is an introduction to the learning format, not a level assessment."
+
+msgid "Так выглядит обучение"
+msgstr "See what learning looks like"
+
+msgid "Настоящий материал A2 из курса. Ниже — пример выбранного ответа и его разбора."
+msgstr "Actual A2 course material. Below is an example of a selected answer and its explanation."
+
+msgid "Пример урока"
+msgstr "Example lesson"
+
+msgid "Пример разбора"
+msgstr "Example explanation"
+
+msgid "Попробовать этот урок"
+msgstr "Try this lesson"
+
+msgid "Пример результата"
+msgstr "Example result"
+
+msgid "Теория"
+msgstr "Theory"
+
+msgid "Вернуться к теории"
+msgstr "Back to theory"
+
+msgid "Ponieważ вводит реальную причину."
+msgstr "Ponieważ introduces an actual reason."
+
+msgid "Spójnik ponieważ wprowadza rzeczywistą przyczynę regularnej nauki, czyli zamiar zdania egzaminu."
+msgstr "The conjunction ponieważ introduces the actual reason for studying regularly: the intention to pass the exam."

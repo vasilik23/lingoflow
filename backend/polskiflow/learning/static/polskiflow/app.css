@@ -1291,3 +1291,28 @@ button.secondary { background: var(--surface); border-color: var(--line); }
 .public-languages button[aria-pressed="true"] { background: var(--action); color: white; }
 .public-languages button:hover { color: var(--text); background: var(--surface); }
 .public-languages button[aria-pressed="true"]:hover { color: white; background: var(--action-hover); }
+
+.public-levels { display: flex; gap: .5rem; }
+.public-levels a { flex: 1; padding: .65rem; border: 1px solid var(--line); border-radius: .75rem; text-align: center; text-decoration: none; font-weight: 700; background: var(--surface); }
+.public-levels a[aria-current="page"] { background: var(--action); color: white; border-color: var(--action); }
+.public-demo-steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .4rem; list-style: none; padding: 0; margin: 1.25rem 0; counter-reset: demo-step; }
+.public-demo-steps li { counter-increment: demo-step; padding: .5rem .35rem; border-bottom: 2px solid var(--line); color: var(--muted); font-size: .75rem; }
+.public-demo-steps li::before { content: counter(demo-step) ". "; }
+.public-demo-steps li[aria-current="step"] { border-color: var(--primary); color: var(--text); font-weight: 700; }
+.public-theory { padding: 1rem; margin: 1rem 0; background: var(--surface-soft); border-radius: .75rem; }
+.public-theory h3 { font-size: .9rem; }
+.public-theory p:last-child { margin-bottom: 0; }
+.public-demo-score { font-size: 2rem; font-weight: 800; }
+.public-demo-score span { display: block; font-size: .9rem; font-weight: 400; color: var(--muted); }
+.public-example-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 1rem; }
+.public-example-grid .card { min-width: 0; }
+.public-example-options { list-style: none; padding: 0; }
+.public-example-selected { border-color: var(--primary); background: var(--primary-soft); }
+.public-example-selected strong { margin-left: auto; color: var(--primary-dark); }
+.public-answer-review { overflow-wrap: anywhere; }
+@media (max-width: 640px) {
+  .public-example-grid { grid-template-columns: minmax(0, 1fr); }
+  .public-demo-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+.public-example-options .placement-option, .public-demo-form .placement-option { padding: .75rem; margin-top: .5rem; border: 1px solid var(--line); border-radius: .65rem; }
+.public-example-options .public-example-selected, .public-demo-form .placement-option:has(input:checked) { border-color: var(--primary); background: var(--primary-soft); }
