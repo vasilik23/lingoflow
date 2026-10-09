@@ -42,7 +42,8 @@
         <p class="muted">{% translate "Это знакомство с форматом обучения, а не проверка уровня." %}</p>
         <details><summary>{% translate "Разбор" %}</summary>{% include "partials/public_lesson_explanation.html" %}</details>
         <p>{% translate "В полном уроке есть больше заданий. Создай аккаунт, чтобы выбрать уровень и сохранять результаты." %}</p>
-        {% if request.supabase_user %}<a class="compact-button" href="{% url 'home' %}">{% translate "Продолжить обучение" %}</a>{% else %}<a class="compact-button" href="{% url 'register' %}">{% translate "Создать аккаунт" %}</a>{% endif %}
+        <a class="complete-next" href="{% url 'lesson' next_material.id %}"><span><small>{% if correct %}{% translate "Следующий материал" %}{% else %}{% translate "Закрепить в полном уроке" %}{% endif %}</small><strong>{{ next_material.title|ui_text }}</strong><small>~{{ next_material.minutes }} {% translate "мин" %}</small></span><span aria-hidden="true">→</span></a>
+        {% if not request.supabase_user %}<p class="muted">{% translate "Для полного урока и сохранения повторений нужен аккаунт." %} <a href="{% url 'register' %}">{% translate "Создать аккаунт" %}</a></p>{% endif %}
         <a href="{% url 'public-demo' %}?level={{ level }}">{% translate "Попробовать ещё раз" %}</a>
       {% endif %}
     {% endif %}

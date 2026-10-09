@@ -8,7 +8,7 @@ def load_demo_lesson(level):
     lesson = Lesson.objects.filter(
         id=DEMO_LESSONS[level], is_active=True, topic__is_active=True,
         topic__course__is_active=True, topic__course__level=level,
-    ).values('id', 'title', 'theory_title', 'theory_sections').first()
+    ).values('id', 'title', 'theory_title', 'theory_sections', 'minutes').first()
     if not lesson or not lesson['theory_sections']:
         return None
     question = Question.objects.filter(lesson_id=lesson['id'], position=0, is_active=True).values(

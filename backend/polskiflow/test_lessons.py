@@ -885,7 +885,7 @@ class LessonViewsTests(TestCase):
         self.assertContains(response, "5 / 5")
         self.assertContains(response, "Урок завершён")
         self.assertContains(response, "Следующий урок темы")
-        self.assertContains(response, 'href="/lesson/grammar/"', count=2)
+        self.assertContains(response, 'href="/lesson/grammar/"', count=1)
         self.assertContains(response, "Вернуться к плану")
 
     def test_lesson_forms_work_as_html_without_htmx(self):

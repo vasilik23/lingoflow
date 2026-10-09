@@ -17200,3 +17200,27 @@ msgstr "Ponieważ introduces an actual reason."
 
 msgid "Spójnik ponieważ wprowadza rzeczywistą przyczynę regularnej nauki, czyli zamiar zdania egzaminu."
 msgstr "The conjunction ponieważ introduces the actual reason for studying regularly: the intention to pass the exam."
+
+msgid "Следующий шаг: закрепить"
+msgstr "Next step: reinforce"
+
+msgid "Повторная проверка в плане:"
+msgstr "Recheck in your plan:"
+
+msgid "Успешная новая попытка отменит это повторение."
+msgstr "A successful new attempt will cancel this review."
+
+msgid "Повторная проверка появится в плане после сохранения результата. Сейчас она не назначена."
+msgstr "The recheck will appear in your plan after the result is saved. It is not scheduled yet."
+
+msgid "Следующий материал"
+msgstr "Next material"
+
+msgid "Закрепить в полном уроке"
+msgstr "Reinforce in the full lesson"
+
+msgid "Для полного урока и сохранения повторений нужен аккаунт."
+msgstr "An account is needed for the full lesson and saved reviews."
+
+msgid "Что закрепить"
+msgstr "What to reinforce"
