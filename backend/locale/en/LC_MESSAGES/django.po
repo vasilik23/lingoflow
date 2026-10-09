@@ -17128,3 +17128,9 @@ msgstr "Learning illustration: preparing a neighbourhood gathering outside a cul
 
 msgid "Общий таймер включает 2 минуты подготовки и 9 минут для трёх ответов и самопроверки. Это учебные лимиты. Репетиция диалога самостоятельная; запись добровольная."
 msgstr "The shared timer includes 2 minutes of preparation and 9 minutes for three replies and self-review. These are practice limits. You rehearse the dialogue yourself; recording is optional."
+
+msgid "Выполнение плана по оценочной длительности"
+msgstr "Plan completion by estimated duration"
+
+msgid "Оценочная длительность выполненных заданий, не время по таймеру."
+msgstr "Estimated duration of completed tasks, not time measured by a timer."

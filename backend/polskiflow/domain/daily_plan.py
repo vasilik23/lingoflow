@@ -91,11 +91,11 @@ def _fit_time_budget(plan: list[dict], budget: int) -> list[dict]:
         if task.get("completed") is True or task.get("kind") == "dictionary-review"
     ]
     selected_ids = {task["id"] for task in mandatory}
-    total = sum(_task_minutes(task) for task in mandatory)
+    total = sum(task_minutes(task) for task in mandatory)
     for task in plan:
         if task["id"] in selected_ids:
             continue
-        minutes = _task_minutes(task)
+        minutes = task_minutes(task)
         if selected_ids and total + minutes > budget:
             continue
         selected_ids.add(task["id"])
@@ -103,7 +103,7 @@ def _fit_time_budget(plan: list[dict], budget: int) -> list[dict]:
     return [task for task in plan if task["id"] in selected_ids] or plan[:1]
 
 
-def _task_minutes(task: dict) -> int:
+def task_minutes(task: dict) -> int:
     raw_minutes = task.get("minutes")
     if (
         isinstance(raw_minutes, int)
@@ -194,3 +194,15 @@ def _russian_word_label(count: int) -> str:
     if count % 10 in (2, 3, 4) and count % 100 not in (12, 13, 14):
         return "слова"
     return "слов"
+
+
+def daily_plan_progress(plan: list[dict]) -> dict:
+    """Weight completion by planned duration, never by measured study time."""
+    estimated = sum(task_minutes(task) for task in plan)
+    completed = sum(task_minutes(task) for task in plan if task.get("completed") is True)
+    return {
+        "estimated_minutes": estimated,
+        "completed_estimated_minutes": completed,
+        "completed_count": sum(task.get("completed") is True for task in plan),
+        "progress_percent": round(completed / estimated * 100) if estimated else 0,
+    }

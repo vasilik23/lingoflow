@@ -20,7 +20,7 @@ from polskiflow.domain.lesson_results import (
     LessonResultValidationError,
     validate_lesson_result,
 )
-from polskiflow.domain.daily_plan import DAILY_TIME_MODES, build_daily_plan
+from polskiflow.domain.daily_plan import DAILY_TIME_MODES, build_daily_plan, daily_plan_progress, task_minutes
 from polskiflow.domain.achievements import build_achievements
 from polskiflow.domain.api_rate_limit import consume_api_mutation
 from polskiflow.domain.openapi_v1 import build_openapi_v1
@@ -637,7 +637,7 @@ def _build_today_data(progress, words, draft_result, *, time_budget_minutes=None
     serialized_tasks = [
         {
             "id": item["id"], "kind": item["kind"], "title": item["title"],
-            "description": item.get("description") or "", "minutes": item.get("minutes") or 0,
+            "description": item.get("description") or "", "minutes": task_minutes(item),
             "emoji": item.get("emoji") or "", "level": item.get("level") or progress.level,
             "completed": bool(item["completed"]),
             "plan_type": item.get("plan_type", "lesson"),
@@ -648,17 +648,14 @@ def _build_today_data(progress, words, draft_result, *, time_budget_minutes=None
         }
         for item in plan
     ]
-    completed_count = sum(item["completed"] for item in serialized_tasks)
     resume = _today_resume(draft_result.draft, lesson_rows, progress.all_completed_lesson_ids)
     return {
         "date": timezone.localdate().isoformat(),
         "level": progress.level,
         "daily_goal_lessons": progress.daily_goal_lessons, "daily_goal_minutes": progress.daily_goal_minutes,
         "time_budget_minutes": time_budget_minutes,
-        "estimated_minutes": sum(item.get("minutes") or 5 for item in serialized_tasks),
-        "completed_count": completed_count,
+        **daily_plan_progress(plan),
         "task_count": len(serialized_tasks),
-        "progress_percent": round(completed_count / len(serialized_tasks) * 100) if serialized_tasks else 0,
         "tasks": serialized_tasks,
         "resume": resume,
     }

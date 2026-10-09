@@ -35,7 +35,7 @@ from polskiflow.lesson_draft_store import load_latest_lesson_draft
 from polskiflow.lesson_bookmark_store import load_lesson_bookmarks
 from polskiflow.domain.auth_rate_limit import consume_auth_attempt
 from polskiflow.domain.b1_exam_prep import attach_b1_mock_trends, build_b1_exam_prep, build_b1_module_results, overlay_latest_b1_mock
-from polskiflow.domain.daily_plan import DAILY_TIME_MODES, build_daily_plan
+from polskiflow.domain.daily_plan import DAILY_TIME_MODES, build_daily_plan, daily_plan_progress
 from polskiflow.domain.password_policy import password_error
 from polskiflow.domain.writing_reinforcement import enrich_writing_prompts
 from polskiflow.domain.course_catalog import (
@@ -528,7 +528,8 @@ def home(request: HttpRequest) -> HttpResponse:
             "completed_count": completed_count,
             "progress_percent": progress_percent,
             "plan_minutes": plan_minutes,
-            "plan_estimated_minutes": sum(task.get("minutes") or 5 for task in lesson_tasks),
+            "plan_estimated_minutes": daily_plan_progress(lesson_tasks)["estimated_minutes"],
+            "completed_estimated_minutes": daily_plan_progress(lesson_tasks)["completed_estimated_minutes"],
             "plan_time_modes": DAILY_TIME_MODES,
             "resume_lesson": resume_lesson,
             "b1_exam_prep": build_b1_exam_prep(
@@ -951,9 +952,7 @@ def _daily_plan(request: HttpRequest):
         time_budget_minutes=plan_minutes if "minutes" in request.GET else dashboard.daily_goal_minutes,
     )
     completed_count = sum(task["completed"] for task in lesson_tasks)
-    progress_percent = (
-        round(completed_count / len(lesson_tasks) * 100) if lesson_tasks else 0
-    )
+    progress_percent = daily_plan_progress(lesson_tasks)["progress_percent"]
     return dashboard, lesson_tasks, completed_count, progress_percent, plan_minutes if "minutes" in request.GET else dashboard.daily_goal_minutes
 
 

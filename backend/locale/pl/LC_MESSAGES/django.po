@@ -7455,3 +7455,9 @@ msgstr "Ilustracja edukacyjna: przygotowanie spotkania sąsiedzkiego przed domem
 
 msgid "Общий таймер включает 2 минуты подготовки и 9 минут для трёх ответов и самопроверки. Это учебные лимиты. Репетиция диалога самостоятельная; запись добровольная."
 msgstr "Wspólny czas obejmuje 2 minuty przygotowania i 9 minut na trzy odpowiedzi oraz samodzielną ocenę. To limity ćwiczeniowe. Dialog ćwiczysz samodzielnie; nagranie jest dobrowolne."
+
+msgid "Выполнение плана по оценочной длительности"
+msgstr "Wykonanie planu według szacowanego czasu"
+
+msgid "Оценочная длительность выполненных заданий, не время по таймеру."
+msgstr "Szacowany czas wykonanych zadań, nie czas zmierzony zegarem."
