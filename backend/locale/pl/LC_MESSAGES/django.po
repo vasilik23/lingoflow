@@ -7272,3 +7272,57 @@ msgstr "Próba B1 przechowuje podpisany postęp i odpowiedzi w tej karcie do 4 g
 
 msgid "Версия"
 msgstr "Wersja"
+
+msgid "Выбери занятие по времени и цели: короткий план, один навык или пятичастный прогон."
+msgstr "Wybierz naukę według czasu i celu: krótki plan, jeden obszar lub próba z pięciu części."
+
+msgid "Три способа подготовки B1"
+msgstr "Trzy sposoby przygotowania do B1"
+
+msgid "Сегодня · 15 минут"
+msgstr "Dzisiaj · 15 minut"
+
+msgid "Три коротких шага по плану дня. Начни с первого."
+msgstr "Trzy krótkie kroki w planie dnia. Zacznij od pierwszego."
+
+msgid "Тренировать навык"
+msgstr "Ćwicz wybraną umiejętność"
+
+msgid "Выбери аудирование, чтение, грамматику, письмо или речь."
+msgstr "Wybierz słuchanie, czytanie, gramatykę, pisanie lub mówienie."
+
+msgid "Пройти пробный экзамен"
+msgstr "Podejdź do próbnego egzaminu"
+
+msgid "Учебный прогон пяти частей: таймер, перерывы, разбор и итог в истории."
+msgstr "Próba treningowa z pięciu części: zegar, przerwy, omówienie i wynik w historii."
+
+msgid "Это учебная подготовка LingoFlow. Объём прогона отличается от официального экзамена; письмо и речь не получают автоматического балла прогона."
+msgstr "To przygotowanie treningowe LingoFlow. Zakres próby różni się od oficjalnego egzaminu; pisanie i mówienie nie otrzymują automatycznej oceny w próbie."
+
+msgid "Практика без экзаменационного таймера. Выбери то, что хочешь закрепить."
+msgstr "Ćwiczenia bez zegara egzaminacyjnego. Wybierz to, co chcesz utrwalić."
+
+msgid "Практика с таймером"
+msgstr "Ćwiczenia z zegarem"
+
+msgid "Выбери одну часть: короткий учебный таймер или полный лимит части."
+msgstr "Wybierz jedną część: krótki czas treningowy lub pełny limit części."
+
+msgid "О пробном прогоне и коротком варианте"
+msgstr "O próbie i jej krótszym wariancie"
+
+msgid "Пятичастный прогон проверяет текущие ответы по таймеру и сохраняет итог. Для короткой репетиции есть мини-модуль на 15 минут с меньшим числом вопросов."
+msgstr "Próba z pięciu części sprawdza bieżące odpowiedzi po upływie czasu i zapisuje wynik. Na krótką powtórkę dostępny jest 15-minutowy mini-moduł z mniejszą liczbą pytań."
+
+msgid "Структура экзамена и официальные материалы"
+msgstr "Struktura egzaminu i oficjalne materiały"
+
+msgid "Выбрать формат"
+msgstr "Wybierz formę nauki"
+
+msgid "Короткий план на сегодня, практика навыка или пробный прогон пяти частей."
+msgstr "Krótki plan na dziś, ćwiczenie umiejętności lub próba z pięciu części."
+
+msgid "← К тренировке навыков"
+msgstr "← Do ćwiczenia umiejętności"

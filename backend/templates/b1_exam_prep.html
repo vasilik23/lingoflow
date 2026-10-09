@@ -1,42 +1,31 @@
 {% extends "base.html" %}
 {% load i18n ui %}
 {% block title %}{% translate "Подготовка к экзамену B1 · LingoFlow" %}{% endblock %}
+{% block toolbar_title %}<h1>{% translate "Подготовка к B1" %}</h1>{% endblock %}
 {% block content %}
-  <header class="exam-hero">
-    <div class="exam-hero-copy">
-      <p class="eyebrow">{% if LANGUAGE_CODE == 'en' %}State certificate examination{% else %}Państwowy egzamin certyfikatowy{% endif %}</p>
-      <h1>{% translate "Подготовка к B1" %}</h1>
-      <p>{% translate "Короткий ежедневный план и пять модулей в формате государственного экзамена для взрослых." %}</p>
-      <div class="exam-hero-meta">
-        <span>{% translate "минимум" %} {{ exam_prep.pass_percent|ui_text }}{% translate "% в каждом модуле" %}</span>
-        <span>{{ exam_prep.written_minutes|ui_text }} {% translate "минут письменной части" %}</span>
-      </div>
-    </div>
-    <div class="exam-countdown" role="status">
-      {% if exam_prep.countdown.available %}
-        <strong>{{ exam_prep.countdown.days_remaining|ui_text }}</strong>
-        <span>{{ exam_prep.countdown.label|ui_text }}</span>
-        <small>{{ exam_prep.countdown.starts_on|date:"d.m.Y"|ui_text }}–{{ exam_prep.countdown.ends_on|date:"d.m.Y"|ui_text }}</small>
-      {% else %}
-        <strong>B1</strong>
-        <span>{{ exam_prep.countdown.label|ui_text }}</span>
-      {% endif %}
-    </div>
+  <header class="content-header b1-entry-header">
+    <div><p class="muted">{% translate "Выбери занятие по времени и цели: короткий план, один навык или пятичастный прогон." %}</p></div>
+    <p class="muted">{{ exam_prep.countdown.label|ui_text }}{% if exam_prep.countdown.available %} · {{ exam_prep.countdown.starts_on|date:"d.m.Y" }}–{{ exam_prep.countdown.ends_on|date:"d.m.Y" }}{% endif %}</p>
   </header>
-  <p><a class="compact-button" href="{% url 'b1-training-run' %}">{% translate "Учебный прогон пяти частей · перерывы и отчёт →" %}</a></p>
-
-  <section class="card exam-mock-callout" aria-labelledby="exam-mock-title">
-    <div><p class="eyebrow">{% translate "Раз в неделю" %}</p><h2 id="exam-mock-title">{% translate "Пробный мини‑модуль" %}</h2><p class="muted">{% translate "15 минут: 3 проверяемых блока + 2 блока самопроверки. Аудирование и чтение — по 2 вопроса, грамматика — 3; письмо и речь без автоматического балла." %}</p></div>
-    <a class="compact-button" href="{% url 'b1-weekly-mock' %}">{% translate "Начать тренировку" %}</a>
-  </section>
-  <section class="card exam-mock-callout" aria-labelledby="exam-simulation-title">
-    <div><p class="eyebrow">{% translate "По частям" %}</p><h2 id="exam-simulation-title">{% translate "Тренажёр экзаменационного времени" %}</h2><p class="muted">{% translate "Выбери одну из пяти частей и пройди её с отдельным таймером. Проверяемые ответы не сохраняются." %}</p></div>
-    <a class="compact-button" href="{% url 'b1-exam-simulation' %}">{% translate "Выбрать часть" %}</a>
-  </section>
-
+  <nav class="b1-entry-grid" aria-label="{% translate "Три способа подготовки B1" %}">
+    <a class="card b1-entry-action" href="?mode=today#exam-today-title"{% if b1_mode == 'today' %} aria-current="page"{% endif %}>
+      <h2>{% translate "Сегодня · 15 минут" %} <span aria-hidden="true">→</span></h2>
+      <p class="muted">{% translate "Три коротких шага по плану дня. Начни с первого." %}</p>
+    </a>
+    <a class="card b1-entry-action" href="?mode=skill#exam-skills-title"{% if b1_mode == 'skill' %} aria-current="page"{% endif %}>
+      <h2>{% translate "Тренировать навык" %} <span aria-hidden="true">→</span></h2>
+      <p class="muted">{% translate "Выбери аудирование, чтение, грамматику, письмо или речь." %}</p>
+    </a>
+    <a class="card b1-entry-action" href="{% url 'b1-training-run' %}">
+      <h2>{% translate "Пройти пробный экзамен" %} <span aria-hidden="true">→</span></h2>
+      <p class="muted">{% translate "Учебный прогон пяти частей: таймер, перерывы, разбор и итог в истории." %}</p>
+    </a>
+  </nav>
+  <p class="muted b1-entry-note">{% translate "Это учебная подготовка LingoFlow. Объём прогона отличается от официального экзамена; письмо и речь не получают автоматического балла прогона." %}</p>
+  {% if b1_mode == 'today' %}
   <section class="exam-today" aria-labelledby="exam-today-title">
     <div class="section-heading exam-section-heading">
-      <div><p class="eyebrow">{% translate "План на сегодня" %}</p><h2 id="exam-today-title">{{ exam_prep.daily_minutes|ui_text }} {% translate "минут подготовки" %}</h2></div>
+      <div><p class="eyebrow">{% translate "План на сегодня" %}</p><h2 id="exam-today-title" tabindex="-1">{{ exam_prep.daily_minutes|ui_text }} {% translate "минут подготовки" %}</h2></div>
       <span>{% translate "3 коротких шага · все 5 модулей в недельной ротации" %}</span>
     </div>
     <ol class="exam-daily-list">
@@ -50,6 +39,26 @@
     </ol>
   </section>
 
+  {% endif %}
+  {% if b1_mode == 'skill' %}
+  <section aria-labelledby="exam-skills-title" class="b1-skill-section">
+    <h2 id="exam-skills-title" tabindex="-1">{% translate "Тренировать навык" %}</h2>
+    <p class="muted">{% translate "Практика без экзаменационного таймера. Выбери то, что хочешь закрепить." %}</p>
+    <div class="b1-skill-grid">
+      {% for module in exam_prep.modules %}<a class="card b1-skill-link" href="{{ module.href }}"><h3>{{ module.title|ui_text }}</h3><span>{{ module.action|ui_text }} →</span></a>{% endfor %}
+    </div>
+    <details class="card b1-entry-details"><summary>{% translate "Практика с таймером" %}</summary><p>{% translate "Выбери одну часть: короткий учебный таймер или полный лимит части." %}</p><a class="compact-button" href="{% url 'b1-exam-simulation' %}">{% translate "Выбрать часть" %} →</a></details>
+  </section>
+  {% endif %}
+  <details class="card b1-entry-details">
+    <summary>{% translate "О пробном прогоне и коротком варианте" %}</summary>
+    <p class="muted">{% translate "Пятичастный прогон проверяет текущие ответы по таймеру и сохраняет итог. Для короткой репетиции есть мини-модуль на 15 минут с меньшим числом вопросов." %}</p>
+    <p>{% translate "15 минут: 3 проверяемых блока + 2 блока самопроверки. Аудирование и чтение — по 2 вопроса, грамматика — 3; письмо и речь без автоматического балла." %}</p>
+    <a class="compact-button secondary-link" href="{% url 'b1-weekly-mock' %}">{% translate "Пробный мини‑модуль" %} →</a>
+  </details>
+  <details class="card b1-entry-details">
+    <summary>{% translate "Структура экзамена и официальные материалы" %}</summary>
+    <p>{% translate "минимум" %} {{ exam_prep.pass_percent|ui_text }}{% translate "% в каждом модуле" %} · {{ exam_prep.written_minutes|ui_text }} {% translate "минут письменной части" %}</p>
   <section aria-labelledby="exam-modules-title">
     <div class="section-heading exam-section-heading">
       <div><p class="eyebrow">{% translate "Структура B1" %}</p><h2 id="exam-modules-title">{% translate "Пять модулей" %}</h2></div>
@@ -68,6 +77,16 @@
     </div>
   </section>
 
+  <aside class="card exam-source-note">
+    <div><p class="eyebrow">{% translate "Официальные материалы" %}</p><h2>{% translate "Сверяйся с форматом комиссии" %}</h2><p class="muted">{% translate "LingoFlow помогает тренироваться, но не заменяет официальный пробный тест и не подтверждает уровень CEFR." %}</p></div>
+    <div class="exam-source-actions">
+      <a class="compact-button secondary-link" href="https://certyfikatpolski.pl/category/terminy/" target="_blank" rel="noopener noreferrer">{% translate "Официальные даты" %}</a>
+      <a class="compact-button secondary-link" href="https://certyfikatpolski.pl/o-egzaminie/struktura-egzaminu/" target="_blank" rel="noopener noreferrer">{% translate "Структура экзамена" %}</a>
+      <a class="compact-button secondary-link" href="https://certyfikatpolski.pl/o-egzaminie/zbiory-zadan/" target="_blank" rel="noopener noreferrer">{% translate "Задания B1" %}</a>
+    </div>
+  </aside>
+  </details>
+  <details class="card b1-entry-details"><summary>{% translate "Результаты по модулям" %}</summary>
   <section class="exam-results" aria-labelledby="exam-results-title">
     <div class="section-heading exam-section-heading">
       <div><p class="eyebrow">{% translate "Последние 30 дней" %}</p><h2 id="exam-results-title">{% translate "Результаты по модулям" %}</h2></div>
@@ -98,12 +117,6 @@
     <p class="exam-results-note">{% if has_mock_result %}{% translate "Для аудирования, чтения и грамматики показана последняя завершённая мини‑попытка и изменение относительно предыдущей; обычные уроки не смешиваются с ней. Рекомендация в ежедневном плане использует средний балл по 3–5 последним попыткам; до трёх попыток мини‑модуль не меняет приоритет. Выборка мала: 2–3 вопроса на навык, поэтому уверенность в выводах низкая. Процент и изменение не доказывают устойчивое владение навыком." %}{% else %}{% translate "Процент считается только по сохранённым заданиям чтения и грамматики B1." %}{% endif %} {% translate "Для письма и говорения числовая динамика не создаётся. Результат не подтверждает уровень CEFR и не заменяет официальный пробный экзамен." %}</p>
   </section>
 
-  <aside class="card exam-source-note">
-    <div><p class="eyebrow">{% translate "Официальные материалы" %}</p><h2>{% translate "Сверяйся с форматом комиссии" %}</h2><p class="muted">{% translate "LingoFlow помогает тренироваться, но не заменяет официальный пробный тест и не подтверждает уровень CEFR." %}</p></div>
-    <div class="exam-source-actions">
-      <a class="compact-button secondary-link" href="https://certyfikatpolski.pl/category/terminy/" target="_blank" rel="noopener noreferrer">{% translate "Официальные даты" %}</a>
-      <a class="compact-button secondary-link" href="https://certyfikatpolski.pl/o-egzaminie/struktura-egzaminu/" target="_blank" rel="noopener noreferrer">{% translate "Структура экзамена" %}</a>
-      <a class="compact-button secondary-link" href="https://certyfikatpolski.pl/o-egzaminie/zbiory-zadan/" target="_blank" rel="noopener noreferrer">{% translate "Задания B1" %}</a>
-    </div>
-  </aside>
+    <p><a href="{% url 'learning-history' %}#b1-run-history">{% translate "История прогонов B1" %} →</a></p>
+  </details>
 {% endblock %}

@@ -16948,3 +16948,57 @@ msgstr "The B1 run keeps signed progress and responses in this tab for up to 4 h
 
 msgid "Версия"
 msgstr "Version"
+
+msgid "Выбери занятие по времени и цели: короткий план, один навык или пятичастный прогон."
+msgstr "Choose by time and goal: a short plan, one skill or a five-part run."
+
+msgid "Три способа подготовки B1"
+msgstr "Three ways to prepare for B1"
+
+msgid "Сегодня · 15 минут"
+msgstr "Today · 15 minutes"
+
+msgid "Три коротких шага по плану дня. Начни с первого."
+msgstr "Three short steps in today’s plan. Start with the first."
+
+msgid "Тренировать навык"
+msgstr "Practise a skill"
+
+msgid "Выбери аудирование, чтение, грамматику, письмо или речь."
+msgstr "Choose listening, reading, grammar, writing or speaking."
+
+msgid "Пройти пробный экзамен"
+msgstr "Take a practice exam"
+
+msgid "Учебный прогон пяти частей: таймер, перерывы, разбор и итог в истории."
+msgstr "Five-part training run: timer, breaks, review and a result in history."
+
+msgid "Это учебная подготовка LingoFlow. Объём прогона отличается от официального экзамена; письмо и речь не получают автоматического балла прогона."
+msgstr "This is LingoFlow training. The run differs in scope from the official exam; writing and speaking receive no automatic run score."
+
+msgid "Практика без экзаменационного таймера. Выбери то, что хочешь закрепить."
+msgstr "Practice without an exam timer. Choose what you want to strengthen."
+
+msgid "Практика с таймером"
+msgstr "Timed practice"
+
+msgid "Выбери одну часть: короткий учебный таймер или полный лимит части."
+msgstr "Choose one part with a short training timer or the full part limit."
+
+msgid "О пробном прогоне и коротком варианте"
+msgstr "About the run and its shorter option"
+
+msgid "Пятичастный прогон проверяет текущие ответы по таймеру и сохраняет итог. Для короткой репетиции есть мини-модуль на 15 минут с меньшим числом вопросов."
+msgstr "The five-part run checks current responses when time expires and saves the result. A 15-minute mini-module with fewer questions offers a shorter rehearsal."
+
+msgid "Структура экзамена и официальные материалы"
+msgstr "Exam structure and official materials"
+
+msgid "Выбрать формат"
+msgstr "Choose a format"
+
+msgid "Короткий план на сегодня, практика навыка или пробный прогон пяти частей."
+msgstr "A short plan for today, skill practice or a five-part trial run."
+
+msgid "← К тренировке навыков"
+msgstr "← Back to skill practice"

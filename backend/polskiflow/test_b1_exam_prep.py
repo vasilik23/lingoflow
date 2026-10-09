@@ -166,6 +166,35 @@ class B1ExamPrepDomainTests(SimpleTestCase):
 
 
 class B1ExamPrepViewTests(TestCase):
+    @patch("polskiflow.auth_views.load_b1_mock_attempts", return_value=[])
+    @patch("polskiflow.auth_views.load_dashboard_progress")
+    def test_entry_has_three_choices_and_no_open_support_sections(self, progress, attempts):
+        progress.return_value = DashboardProgress("Learner", "B1", 0, frozenset(), True)
+        response = self.client.get("/exam/b1/")
+        self.assertContains(response, 'class="card b1-entry-action"', count=3)
+        self.assertContains(response, 'href="?mode=today#exam-today-title"')
+        self.assertContains(response, 'href="?mode=skill#exam-skills-title"')
+        self.assertContains(response, 'href="/exam/b1/run/"')
+        self.assertNotContains(response, '<details class="card b1-entry-details" open')
+        self.assertNotContains(response, 'class="exam-daily-list"')
+        self.assertNotContains(response, 'class="b1-skill-grid"')
+        self.assertContains(response, 'href="/exam/b1/mock/"')
+        self.assertContains(response, 'письмо и речь не получают автоматического балла')
+        invalid = self.client.get("/exam/b1/?mode=exam")
+        self.assertEqual(invalid.context["b1_mode"], "")
+
+    @patch("polskiflow.auth_views.load_b1_mock_attempts", return_value=[])
+    @patch("polskiflow.auth_views.load_dashboard_progress")
+    def test_skill_entry_routes_to_all_five_skills_and_keeps_timed_option(self, progress, attempts):
+        progress.return_value = DashboardProgress("Learner", "B1", 0, frozenset(), True)
+        response = self.client.get("/exam/b1/?mode=skill")
+        self.assertEqual(response.context["b1_mode"], "skill")
+        self.assertContains(response, 'class="card b1-skill-link"', count=5)
+        self.assertNotContains(response, 'class="exam-daily-list"')
+        self.assertContains(response, 'href="/exam/b1/simulation/"')
+        self.assertContains(response, 'href="?mode=skill#exam-skills-title" aria-current="page"')
+        self.assertContains(response, 'href="/writing/?level=B1"')
+
     def setUp(self):
         self.client.cookies[ACCESS_COOKIE] = "access"
         auth = patch(
@@ -187,7 +216,7 @@ class B1ExamPrepViewTests(TestCase):
             completed_lesson_ids=frozenset(), available=True,
             recent_completion_results=({"lesson_id": "b1-topic-grammar", "cards_known": 4, "cards_total": 5},),
         )
-        response = self.client.get("/exam/b1/")
+        response = self.client.get("/exam/b1/?mode=today")
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "До экзамена осталось 19 дней")
@@ -198,8 +227,7 @@ class B1ExamPrepViewTests(TestCase):
         self.assertContains(response, "минимум 50% в каждом модуле")
         self.assertContains(response, "certyfikatpolski.pl")
         self.assertContains(response, "Официальные даты")
-        self.assertContains(response, "Тренажёр экзаменационного времени")
-        self.assertContains(response, 'href="/exam/b1/simulation/"')
+        self.assertContains(response, "Тренировать навык")
         self.assertContains(response, "Результаты по модулям")
         self.assertContains(response, "80%")
         self.assertContains(response, "Пока без автоматического балла")
@@ -219,7 +247,7 @@ class B1ExamPrepViewTests(TestCase):
             ),
         )
 
-        response = self.client.get("/exam/b1/")
+        response = self.client.get("/exam/b1/?mode=today")
 
         self.assertContains(response, "фокус дня")
         self.assertContains(response, "Последние тренировки: 60% — стоит закрепить")

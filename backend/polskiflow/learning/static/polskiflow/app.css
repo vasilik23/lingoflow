@@ -1241,3 +1241,23 @@ button.secondary { background: var(--surface); border-color: var(--line); }
 .run-review-answer p { margin-block: .4rem; }
 .run-review-source { margin-block: 1rem; }
 .run-review a { display: inline-block; padding-block: .5rem; }
+
+/* Three clear B1 entry points; supporting detail stays optional. */
+.b1-entry-header { margin-bottom: 1rem; }
+.b1-entry-grid, .b1-skill-grid { display: grid; gap: .75rem; margin-block: 1rem; }
+.b1-entry-action { display: block; padding: 1rem; text-decoration: none; color: var(--text); }
+.b1-entry-action h2 { margin: 0 0 .5rem; font-size: 1.2rem; }
+.b1-entry-action h2 span { color: var(--primary); }
+.b1-entry-action p { margin: 0; font-size: .88rem; }
+.b1-entry-action:hover, .b1-entry-action[aria-current=page] { border-color: var(--primary); background: var(--primary-soft); }
+.b1-entry-note { font-size: .85rem; margin-bottom: 1.5rem; }
+.b1-entry-details { padding: .85rem 1rem; margin-block: .75rem; }
+.b1-entry-details > summary { cursor: pointer; font-weight: 700; }
+.b1-entry-details[open] > summary { margin-bottom: 1rem; }
+.b1-skill-link { display: block; text-decoration: none; padding: 1rem; }
+.b1-skill-link h3 { margin: 0 0 .5rem; }
+.b1-skill-link span { color: var(--primary); }
+@media (min-width: 760px) {
+  .b1-entry-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .b1-skill-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
