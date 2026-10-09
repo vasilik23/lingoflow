@@ -1280,3 +1280,7 @@ button.secondary { background: var(--surface); border-color: var(--line); }
 .speaking-dialogue { padding: 1rem; margin-block: 1rem; background: var(--surface-soft); border-radius: 1rem; }
 .speaking-dialogue li { padding: .5rem; margin-block: .5rem; }
 .speaking-dialogue li.is-current { border-left: 3px solid var(--primary); font-weight: 700; }
+.daily-start-title { grid-column: 1 / -1; margin: 0; font-size: .8rem; text-align: center; }
+.daily-plan-link { grid-column: 1 / -1; justify-self: center; font-size: .85rem; }
+.daily-actions { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; }
+.daily-actions .daily-action { flex: 1; margin: 0; }

@@ -17134,3 +17134,9 @@ msgstr "Plan completion by estimated duration"
 
 msgid "Оценочная длительность выполненных заданий, не время по таймеру."
 msgstr "Estimated duration of completed tasks, not time measured by a timer."
+
+msgid "Повторить задание"
+msgstr "Repeat the task"
+
+msgid "Посмотреть план"
+msgstr "View the plan"

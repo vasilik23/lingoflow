@@ -28,7 +28,15 @@
         <p class="muted">{% translate "Оценочная длительность выполненных заданий, не время по таймеру." %}</p>
       </div>
       {% if not dashboard.available %}<p class="data-notice">{% translate "Прогресс временно недоступен. Уроки по-прежнему можно проходить." %}</p>{% endif %}
-      <a class="compact-button daily-action" href="#daily-tasks">{% if completed_count == tasks|length %}{% translate "Повторить задания" %}{% elif completed_count %}{% translate "Продолжить занятия" %}{% else %}{% translate "Начать занятия" %}{% endif %}</a>
+      <div class="daily-actions">
+      {% if daily_start_task %}
+        <a class="compact-button daily-action" href="{% if daily_start_task.kind == 'dictionary-review' %}{% url 'dictionary-practice' %}{% else %}{% url 'lesson' daily_start_task.id %}{% endif %}" aria-describedby="daily-start-title">{% if daily_start_task.completed %}{% translate "Повторить задание" %}{% elif completed_count %}{% translate "Продолжить занятия" %}{% else %}{% translate "Начать занятия" %}{% endif %} →</a>
+      {% else %}
+        <a class="compact-button daily-action" href="{% url 'course' %}">{% translate "К курсу →" %}</a>
+      {% endif %}
+      <a class="daily-plan-link" href="#daily-tasks">{% translate "Посмотреть план" %}</a>
+      </div>
+      {% if daily_start_task %}<p class="muted daily-start-title" id="daily-start-title">{{ daily_start_task.title|ui_text }}</p>{% endif %}
     </section>
     <section class="daily-tasks-panel" id="daily-tasks" aria-labelledby="daily-tasks-title">
       <div class="section-heading daily-tasks-heading">
