@@ -7590,3 +7590,27 @@ msgstr "Lokalne szkice, nagrania i niezsynchronizowane wyniki nie są przenoszon
 
 msgid "Если приложение установлено на домашнем экране, откройте новый адрес в браузере и добавьте LingoFlow на экран заново. Старый значок остаётся связан с прежним адресом."
 msgstr "Jeśli aplikacja jest na ekranie głównym, otwórz nowy adres w przeglądarce i ponownie dodaj LingoFlow do ekranu. Stara ikona pozostaje powiązana z poprzednim adresem."
+
+msgid "отвечено"
+msgstr "odpowiedzi"
+
+msgid "Вопросы без ответа"
+msgstr "Pytania bez odpowiedzi"
+
+msgid "Завершить часть?"
+msgstr "Zakończyć część?"
+
+msgid "Вернуться к заданиям"
+msgstr "Wróć do zadań"
+
+msgid "Подтвердить"
+msgstr "Potwierdź"
+
+msgid "Тексты для чтения"
+msgstr "Teksty do czytania"
+
+msgid "Эта часть останется без балла. Ответы этой части не будут проверены."
+msgstr "Ta część pozostanie bez punktów. Odpowiedzi w tej części nie zostaną sprawdzone."
+
+msgid "После проверки изменить ответы этой части уже нельзя."
+msgstr "Po sprawdzeniu nie można już zmienić odpowiedzi w tej części."

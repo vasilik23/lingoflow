@@ -1,0 +1,13 @@
+{% load i18n ui %}
+<div class="exam-workspace-bar" data-exam-workspace>
+  <strong>{{ part.title|ui_text }}{% if state %} · {{ state.step|add:1|ui_text }}/5{% endif %}</strong>
+  {% if part.mode == 'objective' %}<span><span data-exam-answered>0</span>/<span data-exam-total>{{ questions|length }}</span> {% translate "отвечено" %}</span>{% endif %}
+  {% if state %}<strong data-run-timer role="timer" aria-live="off"></strong>{% else %}<strong id="simulation-timer" role="timer" aria-live="off">{{ timer_minutes|ui_text }}:00</strong>{% endif %}
+</div>
+{% if state %}<p data-run-timer-status role="status" aria-live="polite"></p>{% else %}<p class="visually-hidden" id="simulation-timer-status" role="status" aria-live="polite" aria-atomic="true"></p>{% endif %}
+{% if part.mode == 'objective' %}<details class="exam-question-navigation"><summary>{% translate "Без ответа" %}: <span data-exam-missing-count>—</span></summary><nav data-exam-missing aria-label="{% translate 'Вопросы без ответа' %}"></nav></details>{% endif %}
+<dialog class="exam-finish-dialog" data-exam-confirm aria-labelledby="exam-confirm-title" aria-describedby="exam-confirm-description">
+  <h2 id="exam-confirm-title">{% translate "Завершить часть?" %}</h2>
+  <p id="exam-confirm-description" data-exam-confirm-description></p>
+  <div class="speaking-controls"><button type="button" class="compact-button" data-exam-cancel autofocus>{% translate "Вернуться к заданиям" %}</button><button type="button" class="primary-button" data-exam-accept>{% translate "Подтвердить" %}</button></div>
+</dialog>

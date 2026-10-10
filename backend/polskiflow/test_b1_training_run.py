@@ -15,6 +15,21 @@ from polskiflow.domain.b1_training_speaking import PREPARATION_SECONDS, training
 
 
 class B1TrainingRunTests(TestCase):
+    def test_workspace_submission_and_timeout_controls(self):
+        result = subprocess.run(["node", str(Path(__file__).with_name("test_b1_workspace.cjs"))], capture_output=True, text=True, timeout=15)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+    def test_reading_workspace_has_text_and_question_navigation(self):
+        state = dict(self.client.get("/exam/b1/run/").context["state"], phase="part", step=1, deadline=self.now+600, started_at=self.now-60, results=[{"id":"listening","status":"skipped"}])
+        response = self.client.post("/exam/b1/run/", {"run_token":signing.dumps(state,salt=RUN_SALT),"action":"resume"})
+        self.assertContains(response, "data-exam-workspace")
+        self.assertContains(response, "data-exam-confirm")
+        self.assertContains(response, "data-exam-missing")
+        self.assertContains(response, 'class="exam-text-navigation"')
+        for question in response.context["questions"]:
+            self.assertContains(response, f'id="exam-question-{question.id}"')
+
+
     @patch("polskiflow.b1_run_views.save_b1_run_attempt")
     def test_completed_run_retries_failure_then_stops_saving_on_resume(self, saved):
         state = dict(self.client.get("/exam/b1/run/").context["state"], phase="part", step=4, deadline=self.now+60, started_at=self.now-60, results=[{"id":part,"status":"skipped"} for part in ("listening","reading","grammar","writing")])
