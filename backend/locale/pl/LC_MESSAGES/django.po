@@ -8310,3 +8310,138 @@ msgstr "pracować"
 
 msgid "читать"
 msgstr "czytać"
+
+msgid "Gdzie jest…? — где находится…?"
+msgstr "Gdzie jest…? to pytanie o miejsce, w którym coś się znajduje."
+
+msgid "Jest użyваем с одним предметом: W pokoju jest stół. Są — с несколькими: W pokoju są krzesła."
+msgstr "Jest używamy z jednym przedmiotem: W pokoju jest stół. Są — z kilkoma: W pokoju są krzesła."
+
+msgid "Jest или są"
+msgstr "Jest czy są"
+
+msgid "Kuchnia — кухня."
+msgstr "Kuchnia to pomieszczenie, w którym przygotowujemy jedzenie."
+
+msgid "Na stole, na łóżku, na balkonie. После w/na форма существительного меняется."
+msgstr "Na stole, na łóżku, na balkonie. Po w/na forma rzeczownika się zmienia."
+
+msgid "Sypialnia — спальня."
+msgstr "Sypialnia to pokój, w którym śpimy."
+
+msgid "Szafa — шкаф."
+msgstr "Szafa to mebel, w którym przechowujemy ubrania lub inne rzeczy."
+
+msgid "Внутри: w"
+msgstr "W środku: w"
+
+msgid "Выберите «на балконе»."
+msgstr "Wybierz poprawną formę określającą miejsce na balkonie."
+
+msgid "Выберите правильное описание."
+msgstr "Wybierz poprawny opis."
+
+msgid "Где обычно готовят?"
+msgstr "Gdzie zwykle przygotowujemy jedzenie?"
+
+msgid "Где спят?"
+msgstr "Gdzie śpimy?"
+
+msgid "Для положения внутри кухни используем w: w kuchni."
+msgstr "Aby wskazać miejsce wewnątrz kuchni, używamy w: w kuchni."
+
+msgid "Как спросить «Где ванная?»"
+msgstr "Jak zapytać, gdzie znajduje się łazienka?"
+
+msgid "Как спросить о ключе?"
+msgstr "Jak zapytać o miejsce, w którym znajduje się klucz?"
+
+msgid "Как спросить «Где ключ?»"
+msgstr "Jak zapytać, gdzie znajduje się klucz?"
+
+msgid "Квартира на втором этаже."
+msgstr "Mieszkanie jest na drugim piętrze."
+
+msgid "На вопрос gdzie? говорим: w domu, w pokoju, w kuchni, w łazience, w szafie."
+msgstr "Na pytanie gdzie? odpowiadamy: w domu, w pokoju, w kuchni, w łazience, w szafie."
+
+msgid "На поверхности — na + miejscownik: na stole."
+msgstr "Aby wskazać miejsce na powierzchni, używamy na + miejscownik: na stole."
+
+msgid "На поверхности: na"
+msgstr "Na powierzchni: na"
+
+msgid "Напротив спальни ванная."
+msgstr "Naprzeciwko sypialni jest łazienka."
+
+msgid "О местонахождении спрашиваем Gdzie jest…?"
+msgstr "O miejsce pytamy: Gdzie jest…?"
+
+msgid "Одежда находится внутри шкафа: w szafie."
+msgstr "Ubrania są wewnątrz szafy: w szafie."
+
+msgid "Предмет на поверхности: na stole."
+msgstr "Przedmiot jest na powierzchni: na stole."
+
+msgid "С несколькими предметами употребляется są."
+msgstr "Z kilkoma przedmiotami używamy są."
+
+msgid "С одним предметом употребляется jest."
+msgstr "Z jednym przedmiotem używamy jest."
+
+msgid "Три стула — множественное число, поэтому są."
+msgstr "Trzy krzesła to liczba mnoga, dlatego używamy są."
+
+msgid "Устойчиво: na balkonie."
+msgstr "Używamy wyrażenia na balkonie."
+
+msgid "Что означает szafa?"
+msgstr "Co oznacza szafa?"
+
+msgid "Эти предметы находятся в гостиной."
+msgstr "Te przedmioty znajdują się w salonie."
+
+msgid "балкон"
+msgstr "balkon"
+
+msgid "ванная"
+msgstr "łazienka"
+
+msgid "где?"
+msgstr "gdzie? — pytanie o miejsce"
+
+msgid "гостиная"
+msgstr "salon — pokój do wspólnego odpoczynku"
+
+msgid "дверь"
+msgstr "drzwi"
+
+msgid "дом"
+msgstr "dom"
+
+msgid "квартира"
+msgstr "mieszkanie"
+
+msgid "комната"
+msgstr "pokój"
+
+msgid "кровать"
+msgstr "łóżko"
+
+msgid "кухня"
+msgstr "kuchnia"
+
+msgid "окно"
+msgstr "okno"
+
+msgid "спальня"
+msgstr "sypialnia"
+
+msgid "стол"
+msgstr "stół"
+
+msgid "стул"
+msgstr "krzesło"
+
+msgid "шкаф"
+msgstr "szafa"
