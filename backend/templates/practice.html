@@ -3,14 +3,15 @@
 {% block title %}{% translate "Практика · LingoFlow" %}{% endblock %}
 {% block toolbar_title %}<h1 id="practice-title">{% translate "Практика без лишнего" %}</h1>{% endblock %}
 {% block content %}
-  <section class="practice-hero" aria-labelledby="practice-title">
-    <div class="practice-hero-copy">
-      <p class="eyebrow">{% translate "Тренируй отдельные навыки" %}</p>
-
-      <p>{% translate "Выбери навык под сегодняшнюю задачу: повтори слова, потренируй слух, письмо или живое общение." %}</p>
-    </div>
-    <a class="practice-course-link" href="{% url 'course' %}"><span>{% translate "Последовательный курс" %}</span><strong>{% translate "Вернуться к темам →" %}</strong></a>
-  </section>
+  <div class="practice-intro-row"><p class="muted">{% translate "Тренируй отдельные навыки" %}</p><a href="{% url 'course' %}">{% translate "Вернуться к темам →" %}</a></div>
+  <nav class="practice-quick-links" aria-label="{% translate 'Тренажёры' %}">
+    <a href="{% url 'dictionary-practice' %}"><span aria-hidden="true">◇</span>{% translate "Повторение слов" %}</a>
+    <a href="{% url 'listening-practice' %}"><span aria-hidden="true">◉</span>{% translate "Аудирование" %}</a>
+    <a href="{% url 'writing-practice' %}"><span aria-hidden="true">✎</span>{% translate "Письменная практика" %}</a>
+    <a href="{% url 'interaction-practice' %}"><span aria-hidden="true">↔</span>{% translate "Говорение" %}</a>
+    <a href="{% url 'b1-exam-prep' %}"><span aria-hidden="true">B1</span>{% translate "Подготовка к B1" %}</a>
+    <a href="{% url 'diagnostic' %}"><span aria-hidden="true">◎</span>{% translate "Карта навыков" %}</a>
+  </nav>
 
   {% if recommendation %}
     <a class="practice-hub-card practice-card--violet practice-recommendation" href="{{ recommendation.href }}" aria-labelledby="practice-recommendation-title">
@@ -20,6 +21,8 @@
       <span class="practice-card-action">{% translate "Начать занятия" %} <b aria-hidden="true">→</b></span>
     </a>
   {% endif %}
+  <details class="practice-catalog">
+    <summary>{% translate "Все тренажёры" %}</summary>
   <div class="section-heading practice-section-heading">
     <div><p class="eyebrow">{% translate "Все тренажёры" %}</p><h2>{% translate "Что хочешь прокачать?" %}</h2></div>
     <span>{% translate "Выбирай один формат или сочетай несколько" %}</span>
@@ -68,4 +71,5 @@
       <span class="practice-card-action">{% translate "Посмотреть прогресс" %} <b aria-hidden="true">→</b></span>
     </a>
   </section>
+  </details>
 {% endblock %}

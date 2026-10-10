@@ -1335,3 +1335,18 @@ button.secondary { background: var(--surface); border-color: var(--line); }
 .mock-question label:has(input:checked) { box-shadow: inset 3px 0 var(--primary); font-weight: 700; }
 .exam-finish-dialog { width: min(28rem, calc(100% - 2rem)); max-height: calc(100dvh - 3rem); overflow: auto; padding: 1.25rem; border: 1px solid var(--line); border-radius: 1rem; color: var(--text); background: var(--surface); }
 .exam-finish-dialog::backdrop { background: rgb(0 0 0 / .5); }
+
+/* Compact skill selection, with optional detailed descriptions. */
+.practice-intro-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem 1rem; margin: 0 0 1rem; }
+.practice-intro-row p { margin: 0; }
+.practice-intro-row a { font-size: .85rem; }
+.practice-quick-links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .65rem; margin-bottom: 1rem; }
+.practice-quick-links a { display: flex; align-items: center; gap: .6rem; min-width: 0; min-height: 3.5rem; padding: .75rem; border: 1px solid var(--line); border-radius: .9rem; background: var(--surface); color: var(--text); font-size: .9rem; font-weight: 700; line-height: 1.4; text-decoration: none; overflow-wrap: anywhere; }
+.practice-quick-links a:hover { border-color: var(--primary); background: var(--primary-soft); }
+.practice-quick-links a > span { flex: 0 0 auto; color: var(--primary); font-size: 1rem; }
+.practice-catalog { margin-top: 1rem; }
+.practice-catalog > summary { padding: .8rem 1rem; border: 1px solid var(--line); border-radius: .9rem; background: var(--surface); font-weight: 700; cursor: pointer; }
+.practice-catalog[open] > summary { margin-bottom: 1rem; }
+.practice-recommendation { grid-template-rows: auto auto auto; padding: 1rem; margin-bottom: 1rem; }
+.practice-recommendation h2 { margin: 0; font-size: 1.05rem; }
+@media (min-width: 720px) { .practice-quick-links { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
