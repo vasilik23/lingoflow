@@ -1457,6 +1457,7 @@ window.PolskiFlowEnglishMessages = {
   "Итоговый B2-проект: данные, защита решения и честная самооценка": "The Final B2 Project: Data, Solution Protection, and Self-Esteem",
   "Итоговый проект B2": "Outcome draft B2",
   "Итоговый проект: от чтения источников до письма и обсуждения": "The final project: from reading sources to writing and discussion",
+  "Ищем по названиям и описаниям тем, уроков и текстов.": "Search covers the titles and descriptions of topics, lessons and texts.",
   "К курсу": "On course",
   "К курсу →": "Towards course",
   "К одному собеседнику обращаемся: Czy możesz…?": "One of our interlocutors is: Czy możesz…?",

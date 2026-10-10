@@ -7695,3 +7695,6 @@ msgstr "Próba jest przywracana w bieżącej karcie przez maksymalnie 4 godziny.
 
 msgid "До 6000 символов · письмо и речь вместе: 10 запросов ИИ за 24 часа на аккаунт."
 msgstr "Do 6000 znaków · pisanie i mówienie łącznie: 10 zapytań AI na konto w ciągu 24 godzin."
+
+msgid "Ищем по названиям и описаниям тем, уроков и текстов."
+msgstr "Wyszukujemy w tytułach i opisach tematów, lekcji i tekstów."

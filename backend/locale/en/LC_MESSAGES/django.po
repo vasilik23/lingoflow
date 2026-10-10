@@ -17341,3 +17341,6 @@ msgstr "This practice run can be restored in the current tab for up to 4 hours. 
 
 msgid "До 6000 символов · письмо и речь вместе: 10 запросов ИИ за 24 часа на аккаунт."
 msgstr "Up to 6000 characters · writing and speech share 10 AI requests per account per 24 hours."
+
+msgid "Ищем по названиям и описаниям тем, уроков и текстов."
+msgstr "Search covers the titles and descriptions of topics, lessons and texts."
