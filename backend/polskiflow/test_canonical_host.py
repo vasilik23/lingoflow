@@ -47,3 +47,31 @@ class CanonicalHostTests(SimpleTestCase):
             response = Client().post("/forgot-password/", {"email": "learner@example.com"}, HTTP_HOST="lingoflow-learn.vercel.app", secure=True)
         self.assertEqual(response.status_code, 200)
         recover.assert_called_once_with("learner@example.com", "https://polish-learn.vercel.app/reset-password/")
+
+    def test_migration_notice_is_collapsed_and_only_on_login(self):
+        from django.test import Client
+        login = Client().get('/login/')
+        self.assertContains(login, '<details class="migration-notice">')
+        self.assertNotContains(login, '<details class="migration-notice" open')
+        self.assertContains(login, 'https://lingoflow-learn.vercel.app/')
+        self.assertContains(login, 'не переносятся автоматически')
+        self.assertNotContains(Client().get('/register/'), 'class="migration-notice"')
+
+    def test_manifest_stays_origin_relative_for_existing_installs(self):
+        from django.test import Client
+        for host in ('polish-learn.vercel.app', 'lingoflow-learn.vercel.app'):
+            with self.subTest(host=host):
+                response = Client().get('/manifest.webmanifest', HTTP_HOST=host)
+                self.assertEqual(response.status_code, 200)
+                self.assertEqual(response.json()['id'], '/')
+                self.assertEqual(response.json()['start_url'], '/')
+                self.assertEqual(response.json()['scope'], '/')
+
+    def test_all_legacy_links_and_recovery_queries_keep_their_destination(self):
+        from django.conf import settings
+        for host in settings.LEGACY_APP_HOSTS:
+            with self.subTest(host=host):
+                response = self.middleware(self.factory.get('/reset-password/?next=%2Freading%2F', HTTP_HOST=host))
+                self.assertEqual(response.status_code, 308)
+                self.assertEqual(response['Location'], settings.PUBLIC_APP_ORIGIN + '/reset-password/?next=%2Freading%2F')
+                self.assertNotIn('Set-Cookie', response)
