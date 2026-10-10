@@ -5,7 +5,7 @@
   {% if writing_ai_available %}
     <label class="ai-writing-consent"><input type="checkbox" data-ai-consent> {% translate "Разрешаю отправить этот текст и задание в Groq для проверки." %}</label>
     <button type="button" class="compact-button" data-ai-submit>{% translate "Проверить с ИИ" %}</button>
-    <p class="muted">{% translate "До 6000 символов · 10 проверок за 24 часа на аккаунт." %}</p>
+    <p class="muted">{% translate "До 6000 символов · письмо и речь вместе: 10 запросов ИИ за 24 часа на аккаунт." %}</p>
   {% else %}
     <p class="muted">{% translate "ИИ пока не подключён. Самопроверка и черновики доступны." %}</p>
   {% endif %}

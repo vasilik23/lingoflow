@@ -93,6 +93,11 @@ def review_writing(assignment, text, language):
         "Keep each feedback under 1500 characters and each error field and next_step under 600 characters. "
         "Respond only using the supplied JSON schema."
     )
+    return review_text(assignment, text, instruction)
+
+
+def review_text(assignment, text, instruction):
+    """Bounded structured feedback transport shared by opt-in language pilots."""
     payload = {"model": settings.GROQ_WRITING_MODEL, "temperature": 0.2, "max_completion_tokens": 4000,
                "reasoning_effort": "low", "messages": [{"role": "system", "content": instruction},
                    {"role": "user", "content": json.dumps({"assignment": assignment, "draft": text}, ensure_ascii=False)}],

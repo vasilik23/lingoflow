@@ -27,6 +27,7 @@
     endCapture?.(); endCapture = null;
   };
   const clearClip = () => {
+    panel.dispatchEvent(new CustomEvent("b1-recording-cleared", {bubbles: true}));
     audio.pause(); audio.removeAttribute('src'); audio.load();
     audio.hidden = true; remove.hidden = true;
     if (audioUrl) URL.revokeObjectURL(audioUrl);
@@ -74,6 +75,7 @@
         if (!chunks.length) { status.textContent = ui('Запись пуста. Можно попробовать ещё раз.'); return; }
         const blob = new Blob(chunks, {type: recording.mimeType || chunks[0].type});
         audioUrl = URL.createObjectURL(blob); audio.src = audioUrl;
+        panel.dispatchEvent(new CustomEvent("b1-recording-ready", {detail: {blob}, bubbles: true}));
         audio.hidden = false; remove.hidden = false;
         window.PolskiFlowAudioSession.prepare(audio);
         status.textContent = expired

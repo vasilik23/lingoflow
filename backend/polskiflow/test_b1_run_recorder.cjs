@@ -30,7 +30,7 @@ function fixture({denied = false, delayed = false, broken = false, preparing = f
   const context = vm.createContext({
     document: {addEventListener() {}, querySelector: selector => nodes[selector.includes('recorder') ? 'panel' : 'root'], getElementById: () => nodes.form},
     navigator: {mediaDevices: {getUserMedia: () => { calls++; return denied ? Promise.reject(new Error('denied')) : delayed ? new Promise(resolve => { resolvePermission = resolve; }) : Promise.resolve(stream); }}},
-    window: Object.assign(nodes.window, {MediaRecorder: Recorder}), MediaRecorder: Recorder, Blob,
+    window: Object.assign(nodes.window, {MediaRecorder: Recorder}), MediaRecorder: Recorder, Blob, CustomEvent,
     URL: {createObjectURL: blob => { assert.ok(blob.size > 0); return 'blob:local'; }, revokeObjectURL: url => revoked.push(url)},
   });
   context.navigator.audioSession = {type: 'auto'};

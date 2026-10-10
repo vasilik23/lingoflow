@@ -6,7 +6,7 @@
     const button = panel.querySelector('[data-ai-submit]');
     if (!button) return;
     const editor = document.getElementById(panel.dataset.aiEditor);
-    const consent = panel.querySelector('[data-ai-consent]');
+    const consent = panel.querySelector(panel.dataset.aiSpeech ? '[data-ai-confirmed]' : '[data-ai-consent]');
     const status = panel.querySelector('[data-ai-status]');
     const result = panel.querySelector('[data-ai-result]');
     let pending = false, controller;
@@ -15,6 +15,7 @@
       result.replaceChildren(); result.hidden = true; status.textContent = '';
     };
     editor.addEventListener('input', clear);
+    if (panel.dataset.aiSpeech) consent.addEventListener('change', () => { if (!consent.checked) clear(); });
     // Clear stale feedback when the local draft is explicitly deleted.
     const container = panel.closest('[data-writing-prompt]') || panel.parentElement;
     container.querySelectorAll('[data-reset-draft], [data-clear-run-writing], [data-clear-run-writing2]').forEach(reset => reset.addEventListener('click', () => {
@@ -22,7 +23,8 @@
     }));
     button.addEventListener('click', async () => {
       if (pending) return;
-      if (!consent.checked) { status.textContent = ui('Сначала разреши отправку текста в Groq.'); return; }
+      if (!consent.checked) { status.textContent = panel.dataset.aiSpeech ? ui('Проверь расшифровку и подтверди отправку текста в Groq.') : ui('Сначала разреши отправку текста в Groq.'); return; }
+      if (panel.dataset.aiSpeech && !panel.dataset.aiToken) { status.textContent = ui('Сначала расшифруй запись.'); return; }
       const text = editor.value;
       if (!text.trim() || text.length > 6000) { status.textContent = ui('Для проверки напиши от 1 до 6000 символов.'); return; }
       const token = csrf();
@@ -36,7 +38,7 @@
         const response = await fetch(panel.dataset.aiUrl, {
           method: 'POST', credentials: 'same-origin', redirect: 'error', signal: current.signal,
           headers: {'Content-Type': 'application/json', 'X-CSRFToken': token},
-          body: JSON.stringify({token: panel.dataset.aiToken, text, consent: true}),
+          body: JSON.stringify({token: panel.dataset.aiToken, text, consent: true, ...(panel.dataset.aiSpeech ? {confirmed: true} : {})}),
         });
         const payload = await response.json();
         if (current !== controller || editor.value !== text) return;
@@ -47,7 +49,7 @@
           const node = document.createElement(tag); node.textContent = content; target.append(node); return node;
         };
         append('h3', ui('Учебная оценка ИИ') + ` · ${review.score}/${review.maximum}`);
-        append('p', ui('Это оценка текущего текста, не официальный балл B1.'));
+        append('p', panel.dataset.aiSpeech ? ui('Это разбор подтверждённой расшифровки. Произношение не оценивается.') : ui('Это оценка текущего текста, не официальный балл B1.'));
         Object.entries(labels).forEach(([key, label]) => {
           const item = review.criteria[key];
           append('h4', ui(label) + ` · ${item.score}/5`);

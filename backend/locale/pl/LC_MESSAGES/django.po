@@ -7614,3 +7614,84 @@ msgstr "Ta część pozostanie bez punktów. Odpowiedzi w tej części nie zosta
 
 msgid "После проверки изменить ответы этой части уже нельзя."
 msgstr "Po sprawdzeniu nie można już zmienić odpowiedzi w tej części."
+
+msgid "Разбор речи с ИИ"
+msgstr "Analiza wypowiedzi z AI"
+
+msgid "Запись отправляется в Groq только по твоему выбору. Сначала проверь польскую расшифровку, затем запроси языковой разбор. Произношение не оценивается; результат не меняет балл прогона. Аудио, текст и разбор не сохраняются в аккаунте."
+msgstr "Nagranie trafia do Groq tylko na Twoje życzenie. Najpierw sprawdź polską transkrypcję, a następnie poproś o analizę językową. Wymowa nie jest oceniana; wynik nie zmienia punktów próby. Nagranie, tekst i analiza nie są zapisywane na koncie."
+
+msgid "Разрешаю отправить эту запись в Groq для расшифровки."
+msgstr "Zgadzam się na wysłanie tego nagrania do Groq w celu transkrypcji."
+
+msgid "Расшифровать запись"
+msgstr "Transkrybuj nagranie"
+
+msgid "Сначала запиши и останови устный ответ."
+msgstr "Najpierw nagraj odpowiedź ustną i zatrzymaj nagrywanie."
+
+msgid "До 2 МБ аудио и 6000 символов текста. Письмо и речь вместе: до 10 запросов ИИ за 24 часа; расшифровка и разбор — два запроса."
+msgstr "Do 2 MB nagrania i 6000 znaków tekstu. Pisanie i mówienie łącznie: do 10 zapytań AI na 24 godziny; transkrypcja i analiza to dwa zapytania."
+
+msgid "Проверь расшифровку и исправь ошибки распознавания"
+msgstr "Sprawdź transkrypcję i popraw błędy rozpoznawania"
+
+msgid "Сверь текст со своей записью. Распознавание может пропустить слова или добавить лишнее; подтверждай только проверенный текст."
+msgstr "Porównaj tekst ze swoim nagraniem. Rozpoznawanie może pomijać słowa lub dodawać zbędne; potwierdzaj tylko sprawdzony tekst."
+
+msgid "Я проверил расшифровку и разрешаю отправить этот текст и задание в Groq для разбора."
+msgstr "Sprawdziłem transkrypcję i zgadzam się na wysłanie tego tekstu i zadania do Groq w celu analizy."
+
+msgid "Разобрать подтверждённый текст"
+msgstr "Przeanalizuj potwierdzony tekst"
+
+msgid "ИИ речи пока не подключён. Запись и самопроверка доступны."
+msgstr "AI do analizy wypowiedzi nie jest jeszcze podłączone. Nagrywanie i samoocena są dostępne."
+
+msgid "Ответь вслух. Запись добровольная: микрофон включается только по кнопке и с твоего разрешения. Аудио остаётся в памяти страницы. Отправка в Groq для расшифровки доступна только по отдельному согласию; запись и самопроверка не отправляют аудио."
+msgstr "Odpowiedz na głos. Nagrywanie jest dobrowolne: mikrofon włącza się tylko po naciśnięciu przycisku i za Twoją zgodą. Nagranie pozostaje w pamięci strony. Wysłanie do Groq w celu transkrypcji wymaga osobnej zgody; nagrywanie i samoocena nie wysyłają nagrania."
+
+msgid "Добровольный разбор письма и речи с ИИ"
+msgstr "Dobrowolna analiza pisania i mówienia z AI"
+
+msgid "В пилоте речи запись передаётся в Groq только после отдельного согласия. Расшифровка требует проверки и подтверждения перед отправкой текста на языковой разбор. Произношение не оценивается. LingoFlow обрабатывает аудио в памяти, не сохраняет его, расшифровку или разбор в базе, файлах или журналах."
+msgstr "W pilotażu mówienia nagranie trafia do Groq tylko po osobnej zgodzie. Transkrypcję należy sprawdzić i potwierdzić przed wysłaniem tekstu do analizy językowej. Wymowa nie jest oceniana. LingoFlow przetwarza nagranie w pamięci i nie zapisuje nagrania, transkrypcji ani analizy w bazie, plikach lub dziennikach."
+
+msgid "Запись готова. Расшифровка начнётся только по твоему выбору."
+msgstr "Nagranie jest gotowe. Transkrypcja rozpocznie się tylko na Twoje życzenie."
+
+msgid "Сначала разреши отправку записи в Groq."
+msgstr "Najpierw wyraź zgodę na wysłanie nagrania do Groq."
+
+msgid "Для расшифровки нужна запись MP4, WebM или Ogg размером до 2 МБ."
+msgstr "Do transkrypcji potrzebne jest nagranie MP4, WebM lub Ogg o rozmiarze do 2 MB."
+
+msgid "Распознаём польскую речь…"
+msgstr "Rozpoznajemy polską mowę…"
+
+msgid "ИИ речи временно недоступен. Запись и самопроверка доступны без отправки."
+msgstr "AI do analizy wypowiedzi jest chwilowo niedostępne. Nagrywanie i samoocena są dostępne bez wysyłania danych."
+
+msgid "Расшифровка готова. Проверь её перед разбором."
+msgstr "Transkrypcja jest gotowa. Sprawdź ją przed analizą."
+
+msgid "Не удалось расшифровать запись. Она осталась на странице; попробуй позже."
+msgstr "Nie udało się transkrybować nagrania. Pozostało na stronie; spróbuj później."
+
+msgid "Проверь расшифровку и подтверди отправку текста в Groq."
+msgstr "Sprawdź transkrypcję i potwierdź wysłanie tekstu do Groq."
+
+msgid "Сначала расшифруй запись."
+msgstr "Najpierw transkrybuj nagranie."
+
+msgid "Это разбор подтверждённой расшифровки. Произношение не оценивается."
+msgstr "To analiza potwierdzonej transkrypcji. Wymowa nie jest oceniana."
+
+msgid "Подтверди отправку записи и обнови страницу задания."
+msgstr "Potwierdź wysłanie nagrania i odśwież stronę zadania."
+
+msgid "Прогон восстанавливается в текущей вкладке до 4 часов. При истечении времени проверяемой части текущие ответы отправляются автоматически, пустые считаются пропущенными. Письмо отправляется только по отдельному выбору «Проверить с ИИ»; речь отправляется в Groq только по отдельному выбору расшифровки. Прогон не выставляет автоматический балл за письмо и речь. После пяти частей в историю аккаунта сохраняются дата, вариант, баллы, пропуски и соблюдение времени; тексты и аудио не сохраняются."
+msgstr "Próba jest przywracana w bieżącej karcie przez maksymalnie 4 godziny. Po upływie czasu części sprawdzanej bieżące odpowiedzi są wysyłane automatycznie; puste uznaje się za pominięte. Tekst pisemny jest wysyłany tylko po wybraniu „Sprawdź z AI”; nagranie trafia do Groq tylko po osobnym wybraniu transkrypcji. Próba nie przyznaje automatycznych punktów za pisanie i mówienie. Po pięciu częściach na koncie zapisywane są data, wariant, punkty, pominięcia i przestrzeganie czasu; teksty i nagrania nie są zapisywane."
+
+msgid "До 6000 символов · письмо и речь вместе: 10 запросов ИИ за 24 часа на аккаунт."
+msgstr "Do 6000 znaków · pisanie i mówienie łącznie: 10 zapytań AI na konto w ciągu 24 godzin."
