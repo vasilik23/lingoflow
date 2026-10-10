@@ -32,3 +32,31 @@ class PolishLearningSupportTests(SimpleTestCase):
             self.assertEqual(learning_text(question['prompt']), question['prompt'])
         with override('en'):
             self.assertEqual(learning_text(question['prompt']), 'How do you greet someone informally?')
+
+
+from django.test import TestCase
+from polskiflow.learning.models import Flashcard, Lesson, Question
+
+
+class PolishIntroductionsSupportTests(TestCase):
+    def test_introductory_lessons_have_polish_support_and_unchanged_source(self):
+        lessons = Lesson.objects.filter(pk__in=('words', 'review', 'grammar', 'quiz'))
+        self.assertEqual(lessons.count(), 4)
+        support = []
+        for lesson in lessons:
+            support.append(lesson.theory_title)
+            support.extend(value for pair in lesson.theory_sections for value in pair)
+        questions = list(Question.objects.filter(lesson__in=lessons))
+        self.assertEqual(len(questions), 13)
+        for question in questions:
+            support.extend((question.prompt, question.explanation, *question.options))
+        support.extend(Flashcard.objects.filter(lesson_links__lesson__in=lessons).values_list('translation', flat=True))
+        with override('pl'):
+            for source in support:
+                self.assertNotRegex(learning_text(source), r'[А-Яа-яЁё]', source)
+        with override('ru'):
+            for source in support:
+                self.assertEqual(learning_text(source), source)
+        for question in questions:
+            question.refresh_from_db()
+            self.assertLess(question.correct, len(question.options))
