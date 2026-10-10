@@ -1072,3 +1072,15 @@ class LessonViewsTests(TestCase):
             {"action": "answer", "state": "tampered", "choice": 0},
         )
         self.assertEqual(response.status_code, 400)
+
+    def test_answer_feedback_identifies_choice_without_color_and_can_receive_focus(self):
+        for choice in (0, 1):
+            response = self.client.post('/lesson/quiz/step/', {
+                'action': 'answer', 'state': self.lesson_state('quiz'), 'choice': choice,
+            })
+            self.assertContains(response, 'data-lesson-feedback tabindex="-1"')
+            self.assertContains(response, 'Правильный ответ')
+            self.assertContains(response, 'Твой ответ')
+            self.assertContains(response, 'Верно! 🎉' if choice == 1 else 'Неверно')
+            self.assertContains(response, 'Cześć — неформальное')
+            self.assertContains(response, 'lesson-feedback.js')
