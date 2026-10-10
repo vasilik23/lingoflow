@@ -17260,3 +17260,84 @@ msgstr "This part will remain unscored. Its answers will not be checked."
 
 msgid "После проверки изменить ответы этой части уже нельзя."
 msgstr "You cannot change this part’s answers after they are checked."
+
+msgid "Разбор речи с ИИ"
+msgstr "AI speech review"
+
+msgid "Запись отправляется в Groq только по твоему выбору. Сначала проверь польскую расшифровку, затем запроси языковой разбор. Произношение не оценивается; результат не меняет балл прогона. Аудио, текст и разбор не сохраняются в аккаунте."
+msgstr "Your recording goes to Groq only when you choose. Check the Polish transcript first, then request language feedback. Pronunciation is not assessed; feedback does not change your practice exam score. Audio, text and feedback are not saved to your account."
+
+msgid "Разрешаю отправить эту запись в Groq для расшифровки."
+msgstr "I agree to send this recording to Groq for transcription."
+
+msgid "Расшифровать запись"
+msgstr "Transcribe recording"
+
+msgid "Сначала запиши и останови устный ответ."
+msgstr "Record your spoken answer and stop recording first."
+
+msgid "До 2 МБ аудио и 6000 символов текста. Письмо и речь вместе: до 10 запросов ИИ за 24 часа; расшифровка и разбор — два запроса."
+msgstr "Up to 2 MB of audio and 6000 text characters. Writing and speech share up to 10 AI requests per 24 hours; transcription and review use two requests."
+
+msgid "Проверь расшифровку и исправь ошибки распознавания"
+msgstr "Check the transcript and correct recognition errors"
+
+msgid "Сверь текст со своей записью. Распознавание может пропустить слова или добавить лишнее; подтверждай только проверенный текст."
+msgstr "Compare the text with your recording. Recognition may omit words or add extra ones; confirm only text you have checked."
+
+msgid "Я проверил расшифровку и разрешаю отправить этот текст и задание в Groq для разбора."
+msgstr "I have checked the transcript and agree to send this text and task to Groq for review."
+
+msgid "Разобрать подтверждённый текст"
+msgstr "Review confirmed text"
+
+msgid "ИИ речи пока не подключён. Запись и самопроверка доступны."
+msgstr "Speech AI is not connected yet. Recording and self-review are available."
+
+msgid "Ответь вслух. Запись добровольная: микрофон включается только по кнопке и с твоего разрешения. Аудио остаётся в памяти страницы. Отправка в Groq для расшифровки доступна только по отдельному согласию; запись и самопроверка не отправляют аудио."
+msgstr "Answer aloud. Recording is optional: the microphone starts only when you press the button and grant permission. Audio stays in this page’s memory. Sending it to Groq for transcription requires separate consent; recording and self-review do not send audio."
+
+msgid "Добровольный разбор письма и речи с ИИ"
+msgstr "Optional AI writing and speech feedback"
+
+msgid "В пилоте речи запись передаётся в Groq только после отдельного согласия. Расшифровка требует проверки и подтверждения перед отправкой текста на языковой разбор. Произношение не оценивается. LingoFlow обрабатывает аудио в памяти, не сохраняет его, расшифровку или разбор в базе, файлах или журналах."
+msgstr "In the speech pilot, recordings go to Groq only with separate consent. Check and confirm the transcript before sending the text for language feedback. Pronunciation is not assessed. LingoFlow processes audio in memory and does not save audio, transcripts or feedback in its database, files or logs."
+
+msgid "Запись готова. Расшифровка начнётся только по твоему выбору."
+msgstr "Recording ready. Transcription starts only when you choose."
+
+msgid "Сначала разреши отправку записи в Groq."
+msgstr "Agree to send the recording to Groq first."
+
+msgid "Для расшифровки нужна запись MP4, WebM или Ogg размером до 2 МБ."
+msgstr "Transcription requires an MP4, WebM or Ogg recording up to 2 MB."
+
+msgid "Распознаём польскую речь…"
+msgstr "Recognising Polish speech…"
+
+msgid "ИИ речи временно недоступен. Запись и самопроверка доступны без отправки."
+msgstr "Speech AI is temporarily unavailable. Recording and self-review are available without sending data."
+
+msgid "Расшифровка готова. Проверь её перед разбором."
+msgstr "Transcript ready. Check it before requesting feedback."
+
+msgid "Не удалось расшифровать запись. Она осталась на странице; попробуй позже."
+msgstr "Could not transcribe the recording. It remains on this page; try again later."
+
+msgid "Проверь расшифровку и подтверди отправку текста в Groq."
+msgstr "Check the transcript and confirm sending the text to Groq."
+
+msgid "Сначала расшифруй запись."
+msgstr "Transcribe the recording first."
+
+msgid "Это разбор подтверждённой расшифровки. Произношение не оценивается."
+msgstr "This feedback reviews the confirmed transcript. Pronunciation is not assessed."
+
+msgid "Подтверди отправку записи и обнови страницу задания."
+msgstr "Confirm sending the recording and refresh the task page."
+
+msgid "Прогон восстанавливается в текущей вкладке до 4 часов. При истечении времени проверяемой части текущие ответы отправляются автоматически, пустые считаются пропущенными. Письмо отправляется только по отдельному выбору «Проверить с ИИ»; речь отправляется в Groq только по отдельному выбору расшифровки. Прогон не выставляет автоматический балл за письмо и речь. После пяти частей в историю аккаунта сохраняются дата, вариант, баллы, пропуски и соблюдение времени; тексты и аудио не сохраняются."
+msgstr "This practice run can be restored in the current tab for up to 4 hours. When an objective part times out, current answers are submitted automatically; empty answers count as skipped. Writing is sent only when you choose “Review with AI”; speech goes to Groq only when you separately choose transcription. The run does not automatically score writing or speaking. After all five parts, the account history stores the date, variant, scores, omissions and timing; texts and audio are not saved."
+
+msgid "До 6000 символов · письмо и речь вместе: 10 запросов ИИ за 24 часа на аккаунт."
+msgstr "Up to 6000 characters · writing and speech share 10 AI requests per account per 24 hours."

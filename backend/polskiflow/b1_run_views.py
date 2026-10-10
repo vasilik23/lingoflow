@@ -10,6 +10,7 @@ from django.utils.crypto import salted_hmac
 from django.views.decorators.http import require_http_methods
 
 from polskiflow.auth_views import require_browser_user
+from polskiflow.ai_speaking import speaking_ai_available, speaking_token
 from polskiflow.ai_writing import run_writing_tasks, writing_ai_available
 from polskiflow.domain.b1_exam_instructions import B1_INSTRUCTIONS, B1_RUN_LISTENING_INSTRUCTION, B1_RUN_READING_INSTRUCTION, B1_RUN_WRITING_INSTRUCTION, B1_RUN_SPEAKING_INSTRUCTION
 from polskiflow.domain.b1_exam_simulation import B1_SIMULATION_PARTS
@@ -154,14 +155,17 @@ def b1_training_run(request):
         instruction = B1_RUN_WRITING_INSTRUCTION
     elif part and part["id"] == "speaking" and state.get("content_version", 1) >= 5:
         instruction = B1_RUN_SPEAKING_INSTRUCTION
+    speaking_tasks = training_speaking_tasks(variant, state.get("content_version", 1), interactive=state.get("speaking_version") == 2) if part and part["id"] == "speaking" else ()
     response = render(request, "b1_training_run.html", {
         "state": state, "variant": variant, "part": part,
         "questions": training_questions(variant, part["id"], state.get("content_version", 1)) if part else (),
         "reading_blocks": training_reading_blocks(variant, state.get("content_version", 1)) if part and part["id"] == "reading" else (),
         "grammar_blocks": training_grammar_blocks(variant, state.get("content_version", 1)) if part and part["id"] == "grammar" else (),
         "writing_ai_available": writing_ai_available(),
+        "speaking_ai_available": speaking_ai_available(),
+        "speech_ai_token": speaking_token(request.supabase_user.id, speaking_tasks) if speaking_tasks else "",
         "writing_tasks": run_writing_tasks(request.supabase_user.id, training_writing_tasks(variant, state.get("content_version", 1))) if part and part["id"] == "writing" else (),
-        "speaking_tasks": training_speaking_tasks(variant, state.get("content_version", 1), interactive=state.get("speaking_version") == 2) if part and part["id"] == "speaking" else (),
+        "speaking_tasks": speaking_tasks,
         "speaking_preparation_seconds": max(0, state.get("speaking_ready_at", now) - now) if part and part["id"] == "speaking" else 0,
         "instruction": instruction,
         "listening_recording": listening_recording,

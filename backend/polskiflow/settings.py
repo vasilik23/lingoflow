@@ -35,6 +35,7 @@ MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
+    "polskiflow.ai_speaking.SpeechUploadMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
@@ -164,3 +165,7 @@ LOGGING = {
 GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "")
 GROQ_WRITING_ENABLED = os.environ.get("GROQ_WRITING_ENABLED", "false").lower() == "true"
 GROQ_WRITING_MODEL = os.environ.get("GROQ_WRITING_MODEL", "openai/gpt-oss-120b")
+
+# Disabled until the owner verifies provider data controls and live quality.
+GROQ_SPEAKING_ENABLED = os.environ.get("GROQ_SPEAKING_ENABLED", "false").lower() == "true"
+GROQ_TRANSCRIPTION_MODEL = os.environ.get("GROQ_TRANSCRIPTION_MODEL", "whisper-large-v3-turbo")

@@ -1,0 +1,20 @@
+{% load i18n %}
+<details class="ai-writing-review" data-ai-speaking data-ai-writing data-ai-speech="1" data-ai-token="" data-ai-recording-token="{{ speech_ai_token }}" data-ai-editor="speech-transcript" data-ai-url="{% url 'ai-speech-review' %}" data-transcribe-url="{% url 'ai-speech-transcribe' %}">
+  <summary>{% translate "Разбор речи с ИИ" %}</summary>
+  <p class="muted">{% translate "Запись отправляется в Groq только по твоему выбору. Сначала проверь польскую расшифровку, затем запроси языковой разбор. Произношение не оценивается; результат не меняет балл прогона. Аудио, текст и разбор не сохраняются в аккаунте." %} <a href="{% url 'privacy' %}#privacy-ai">{% translate "Обработка данных" %}</a></p>
+  {% if speaking_ai_available %}
+    <label class="ai-writing-consent"><input type="checkbox" data-ai-audio-consent data-ai-consent> {% translate "Разрешаю отправить эту запись в Groq для расшифровки." %}</label>
+    <button type="button" class="compact-button" data-ai-transcribe disabled>{% translate "Расшифровать запись" %}</button>
+    <p role="status" aria-live="polite" data-transcribe-status>{% translate "Сначала запиши и останови устный ответ." %}</p>
+    <p class="muted">{% translate "До 2 МБ аудио и 6000 символов текста. Письмо и речь вместе: до 10 запросов ИИ за 24 часа; расшифровка и разбор — два запроса." %}</p>
+    <div data-speech-text hidden>
+      <label for="speech-transcript">{% translate "Проверь расшифровку и исправь ошибки распознавания" %}</label>
+      <textarea id="speech-transcript" rows="7" maxlength="6000" lang="pl" aria-describedby="speech-transcript-note"></textarea>
+      <p id="speech-transcript-note" class="muted">{% translate "Сверь текст со своей записью. Распознавание может пропустить слова или добавить лишнее; подтверждай только проверенный текст." %}</p>
+      <label class="ai-writing-consent"><input type="checkbox" data-ai-consent data-ai-confirmed> {% translate "Я проверил расшифровку и разрешаю отправить этот текст и задание в Groq для разбора." %}</label>
+      <button type="button" class="compact-button" data-ai-submit>{% translate "Разобрать подтверждённый текст" %}</button>
+      <p role="status" aria-live="polite" data-ai-status></p>
+      <div class="writing-feedback" data-ai-result hidden></div>
+    </div>
+  {% else %}<p class="muted">{% translate "ИИ речи пока не подключён. Запись и самопроверка доступны." %}</p>{% endif %}
+</details>
