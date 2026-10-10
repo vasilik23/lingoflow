@@ -236,3 +236,13 @@ Secrets окружения production-smoke. 975 тестов, system check и m
 прошли; изменений UI/базы нет. Реальный dedicated account, Secrets, живой запуск
 и внешний alert channel остаются операционной приёмкой.
 [Активация мониторинга](docs/operations-baseline.md#prepared-authenticated-schedule-disabled-until-configured).
+
+### Надёжность проверки production-ответов
+
+Усилена проверка ответов production smoke: каждый JSON-ответ ограничен 2 МиБ,
+вложенные contracts проверяются по типам, неверный UTF-8 и оборванный ответ
+дают безопасную ошибку без пользовательского payload. Private/no-store теперь
+проверяются как точные директивы, request ID ограничен безопасным форматом
+и длиной. Не-200 ответ отклоняется до чтения тела. 980 тестов, system check
+и migration drift прошли; изменений UI и базы нет. Авторизованный schedule
+остаётся выключенным до настройки выделенного аккаунта и Secrets.

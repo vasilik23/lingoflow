@@ -2,6 +2,8 @@
 
 import json
 import ssl
+import re
+from http.client import HTTPException
 from dataclasses import dataclass
 from urllib.error import HTTPError, URLError
 from urllib.parse import urljoin, urlparse
@@ -20,6 +22,7 @@ PRIVATE_CHECKS = (
     ("bootstrap", "api/v1/me/bootstrap/"),
     ("export", "api/v1/me/export/"),
 )
+MAX_RESPONSE_BYTES = 2 * 1024 * 1024
 SSL_CONTEXT = ssl.create_default_context(cafile=certifi.where())
 
 
@@ -74,22 +77,27 @@ def run_synthetic_smoke(
         request = Request(urljoin(base_url, path), headers=headers)
         try:
             with urlopen(request, timeout=timeout, context=SSL_CONTEXT) as response:
-                payload = json.load(response)
                 status = response.status
+                if status != 200:
+                    raise SmokeFailure(f"{name}: HTTP {status}")
+                body = response.read(MAX_RESPONSE_BYTES + 1)
+                if len(body) > MAX_RESPONSE_BYTES:
+                    raise SmokeFailure(f"{name}: response exceeds 2 MiB")
+                payload = json.loads(body.decode("utf-8"))
                 response_headers = response.headers
         except HTTPError as error:
-            raise SmokeFailure(f"{name}: HTTP {error.code}") from error
-        except (URLError, TimeoutError, json.JSONDecodeError) as error:
-            raise SmokeFailure(f"{name}: unavailable or invalid JSON") from error
+            raise SmokeFailure(f"{name}: HTTP {error.code}") from None
+        except (URLError, OSError, HTTPException, json.JSONDecodeError, UnicodeError, RecursionError):
+            raise SmokeFailure(f"{name}: unavailable or invalid JSON") from None
         if status != 200 or not isinstance(payload, dict):
             raise SmokeFailure(f"{name}: unexpected response")
         _validate_payload(name, payload)
-        cache_control = response_headers.get("Cache-Control", "").lower()
-        if private and ("private" not in cache_control or "no-store" not in cache_control):
+        cache_control = {part.strip().lower() for part in response_headers.get("Cache-Control", "").split(",")}
+        if private and not {"private", "no-store"}.issubset(cache_control):
             raise SmokeFailure(f"{name}: private cache boundary missing")
         request_id = response_headers.get("X-Request-ID", "")
-        if not request_id:
-            raise SmokeFailure(f"{name}: request ID missing")
+        if not re.fullmatch(r"[A-Za-z0-9_-]{1,128}", request_id):
+            raise SmokeFailure(f"{name}: request ID missing or invalid")
         results.append(SmokeResult(name, status, request_id))
     return tuple(results)
 
@@ -108,11 +116,15 @@ def _validate_payload(name, payload):
         raise SmokeFailure("health: application is not healthy")
     if name == "ready" and payload.get("status") != "ready":
         raise SmokeFailure("ready: application is not ready")
-    if name == "openapi" and "/api/v1/me/bootstrap/" not in payload.get("paths", {}):
+    if name == "openapi" and (not isinstance(payload.get("paths"), dict)
+                              or not isinstance(payload["paths"].get("/api/v1/me/bootstrap/"), dict)):
         raise SmokeFailure("openapi: bootstrap contract missing")
-    if name == "catalog" and not isinstance(payload.get("data", {}).get("courses"), list):
+    if name == "catalog" and (not isinstance(payload.get("data"), dict)
+                              or not isinstance(payload["data"].get("courses"), list)):
         raise SmokeFailure("catalog: course list missing")
     if name in {"bootstrap", "export"}:
         expected = f"learner-{'data-export' if name == 'export' else 'bootstrap'}"
-        if payload.get("meta", {}).get("contract") != expected or not isinstance(payload.get("data"), dict):
+        if (not isinstance(payload.get("meta"), dict)
+                or payload["meta"].get("contract") != expected
+                or not isinstance(payload.get("data"), dict)):
             raise SmokeFailure(f"{name}: contract mismatch")
