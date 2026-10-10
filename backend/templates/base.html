@@ -104,6 +104,7 @@
     <main id="main-content" class="page-shell {% if request.supabase_user %}with-nav{% endif %}" tabindex="-1">
       {% block content %}{% endblock %}
     </main>
+    <script src="{% static 'polskiflow/lesson-feedback.js' %}?shell={{ pwa_shell_version }}" defer></script>
     {% block scripts %}{% endblock %}
     <script>
       (function () {
