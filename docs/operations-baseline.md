@@ -70,7 +70,52 @@ The public half runs automatically every four hours from
 health, readiness, OpenAPI and catalog. A failure marks the workflow red and
 uses normal GitHub Actions notifications as the initial alert channel.
 
-The authenticated half remains an explicit release smoke until a dedicated
-non-privileged account has automatic short-lived token rotation. Never turn a
-static learner token into a long-lived GitHub secret merely to schedule it.
-An external paging channel and an authenticated schedule remain launch gaps.
+The authenticated half has an optional fresh-session schedule described below.
+It remains disabled until a dedicated account and secrets are configured and
+verified. External paging remains a launch gap.
+
+## Prepared authenticated schedule (disabled until configured)
+
+`production_smoke --fresh-session https://lingoflow-learn.vercel.app` obtains a
+new short-lived password-grant session for each run. Credentials are read from
+environment variables; access/refresh tokens are not written to files, workflow
+outputs, artifacts or GitHub Secrets. The refresh token is never reused.
+The existing API probes remain GET-only. Login and local logout are Auth POSTs;
+this mode therefore creates and revokes an Auth session, but does not alter
+learning data. There is no automatic signup, email, retry or public-only fallback.
+
+Activation steps for the operator:
+
+1. Prepare a dedicated confirmed, non-anonymous learner with no admin privileges
+   and no real learner data. Verify its UUID and ownership in Supabase. Do not use
+   a personal account. This command checks UUID, not the account's admin grants.
+2. Set access-token expiry to no more than 3600 seconds in the Auth project;
+   the command accepts a reported lifetime of 300–3600 seconds. Local signout
+   revokes this session's refresh ability; issued access tokens can remain valid
+   until their expiry. A terminated runner may miss cleanup.
+3. Create GitHub environment `production-smoke`, restrict it to `main`, and store
+   these environment Secrets through GitHub's secret UI (never PR text or logs):
+   `LINGOFLOW_SMOKE_AUTH_URL` (hosted `https://<20-character-ref>.supabase.co`),
+   `LINGOFLOW_SMOKE_PUBLISHABLE_KEY` (publishable `sb_publishable_` key),
+   `LINGOFLOW_SMOKE_EMAIL`, `LINGOFLOW_SMOKE_PASSWORD`, `LINGOFLOW_SMOKE_USER_ID`.
+   Legacy anon/service-role keys are deliberately not accepted in this mode.
+4. Set repository variable `LINGOFLOW_AUTHENTICATED_SMOKE_ENABLED=true` only after
+   the environment is ready. Run Production Smoke manually on `main`; require
+   all six probes and session cleanup to pass. If environment approvals are
+   required, scheduled runs will wait for them; configure protection accordingly.
+5. Check the next scheduled run (every four hours). Enable GitHub Actions failure
+   notifications for the responsible operator. This is the existing initial
+   channel; external paging and a verified recipient remain separate work.
+6. Rotate the dedicated account password in Supabase and replace its environment
+   secret; rerun the workflow. Never maintain a static access/refresh token in
+   GitHub. To disable the job, remove/set the repository variable to `false`.
+
+The job is skipped while its enable variable is absent. Missing credentials,
+wrong UUID, failed login, malformed response, excessive token lifetime, failed
+probe or failed logout make an enabled job red. It sends credentials only to
+validated hosted Supabase Auth, rejects redirects, uses a bounded response and
+never prints Auth bodies. No production login has been verified as part of
+preparing this workflow; activation requires the dedicated account above.
+
+Protocol reference: [official Supabase Auth OpenAPI](https://github.com/supabase/auth/blob/master/openapi.yaml)
+(password grant and `logout?scope=local`).
