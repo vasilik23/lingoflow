@@ -17236,3 +17236,27 @@ msgstr "Local drafts, recordings and unsynced results do not transfer automatica
 
 msgid "Если приложение установлено на домашнем экране, откройте новый адрес в браузере и добавьте LingoFlow на экран заново. Старый значок остаётся связан с прежним адресом."
 msgstr "If the app is installed on your home screen, open the new address in your browser and add LingoFlow again. The old icon remains linked to the previous address."
+
+msgid "отвечено"
+msgstr "answered"
+
+msgid "Вопросы без ответа"
+msgstr "Unanswered questions"
+
+msgid "Завершить часть?"
+msgstr "Finish this part?"
+
+msgid "Вернуться к заданиям"
+msgstr "Return to the tasks"
+
+msgid "Подтвердить"
+msgstr "Confirm"
+
+msgid "Тексты для чтения"
+msgstr "Reading texts"
+
+msgid "Эта часть останется без балла. Ответы этой части не будут проверены."
+msgstr "This part will remain unscored. Its answers will not be checked."
+
+msgid "После проверки изменить ответы этой части уже нельзя."
+msgstr "You cannot change this part’s answers after they are checked."

@@ -165,6 +165,9 @@ class B1ExamSimulationViewTests(TestCase):
         self.assertContains(opened, '<main ', count=1)
         self.assertContains(opened, 'role="timer" aria-live="off"')
         self.assertContains(opened, 'id="simulation-timer-status" role="status"')
+        self.assertContains(opened, 'data-exam-workspace')
+        self.assertContains(opened, 'data-exam-confirm')
+        self.assertContains(opened, 'data-exam-missing')
         self.assertContains(opened, "Объём этого оригинального набора LingoFlow меньше")
         questions = opened.context["questions"]
         payload = {"simulation_token": opened.context["simulation_token"]}

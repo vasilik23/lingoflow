@@ -1323,3 +1323,15 @@ button.secondary { background: var(--surface); border-color: var(--line); }
 .migration-notice { margin-top: 1rem; font-size: .875rem; overflow-wrap: anywhere; }
 .migration-notice summary { cursor: pointer; font-weight: 600; padding-block: .4rem; }
 .migration-notice p { line-height: 1.5; margin-block: .65rem; }
+
+/* Exam navigation stays compact and in normal flow below the timer. */
+.exam-workspace-bar { position: sticky; top: 4.5rem; z-index: 5; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .35rem .75rem; padding: .65rem .8rem; border: 1px solid var(--line); border-radius: .8rem; background: var(--surface); box-shadow: var(--shadow); font-size: .85rem; }
+.exam-workspace-bar [role="timer"] { font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--primary); }
+.exam-question-navigation { margin-block: .75rem; font-size: .85rem; }
+.exam-question-navigation summary { cursor: pointer; padding-block: .4rem; }
+.exam-question-navigation nav, .exam-text-navigation { display: flex; flex-wrap: wrap; gap: .5rem; margin-block: .6rem; }
+.exam-question-navigation a, .exam-text-navigation a { display: inline-flex; align-items: center; justify-content: center; min-width: 2.75rem; min-height: 2.75rem; padding: .4rem .65rem; border: 1px solid var(--line); border-radius: .65rem; }
+[data-exam-question], [id^="reading-"] { scroll-margin-top: 10rem; }
+.mock-question label:has(input:checked) { box-shadow: inset 3px 0 var(--primary); font-weight: 700; }
+.exam-finish-dialog { width: min(28rem, calc(100% - 2rem)); max-height: calc(100dvh - 3rem); overflow: auto; padding: 1.25rem; border: 1px solid var(--line); border-radius: 1rem; color: var(--text); background: var(--surface); }
+.exam-finish-dialog::backdrop { background: rgb(0 0 0 / .5); }

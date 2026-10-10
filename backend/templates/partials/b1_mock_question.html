@@ -1,5 +1,5 @@
 {% load i18n ui %}
-<fieldset class="mock-question">
+<fieldset class="mock-question" id="exam-question-{{ question.id }}" tabindex="-1" data-exam-question>
   <legend>{{ question.prompt|ui_text }}</legend>
   {% if question.written %}<input type="text" name="answer_{{ question.id }}" aria-label="{{ question.prompt|ui_text }}" lang="pl" maxlength="120" autocomplete="off" spellcheck="false" data-run-written {% if not result %}required{% else %}disabled{% endif %}>{% else %}
   {% for option in question.options %}<label><input type="radio" name="answer_{{ question.id }}" value="{{ forloop.counter0 }}" {% if not result %}required{% else %}disabled{% endif %}> <span lang="pl">{{ option|ui_text }}</span></label>{% endfor %}
