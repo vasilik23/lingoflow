@@ -138,3 +138,75 @@ class SyntheticSmokeTests(SimpleTestCase):
         run.assert_called_once_with(
             "https://example.com", "", timeout=10, include_private=False
         )
+
+    @patch("polskiflow.domain.synthetic_smoke.urlopen")
+    def test_malformed_nested_contracts_fail_without_payload_leak(self, urlopen):
+        valid = [
+            {"status": "ok"}, {"status": "ready"},
+            {"paths": {"/api/v1/me/bootstrap/": {}}}, {"data": {"courses": []}},
+            {"meta": {"contract": "learner-bootstrap"}, "data": {}},
+        ]
+        for index, payloads in (
+            (2, ({"paths": None}, {"paths": ["/api/v1/me/bootstrap/"]},
+                 {"paths": {"/api/v1/me/bootstrap/": "private-value"}})),
+            (3, ({"data": None}, {"data": ["private-value"]}, {"data": {"courses": {}}})),
+            (4, ({"meta": None, "data": {}}, {"meta": ["private-value"], "data": {}},
+                 {"meta": {"contract": "learner-bootstrap"}, "data": None})),
+            (5, ({"meta": None, "data": {}},)),
+        ):
+            for payload in payloads:
+                with self.subTest(index=index, payload=payload):
+                    urlopen.side_effect = [*[_response(p, cache="private, no-store") for p in valid[:index]],
+                                           _response(payload, cache="private, no-store")]
+                    with self.assertRaises(SmokeFailure) as raised:
+                        run_synthetic_smoke("https://example.com", "private-token")
+                    self.assertNotIn("private-value", str(raised.exception))
+
+    @patch("polskiflow.domain.synthetic_smoke.urlopen")
+    def test_bounded_read_and_invalid_encoding_fail_cleanly(self, urlopen):
+        from polskiflow.domain.synthetic_smoke import MAX_RESPONSE_BYTES
+        for body in (b"x" * (MAX_RESPONSE_BYTES + 1), b'\xffprivate-value', b'{"status":'):
+            reply = _response({})
+            reply.read.return_value = body
+            urlopen.side_effect = [reply]
+            with self.assertRaises(SmokeFailure) as raised:
+                run_synthetic_smoke("https://example.com", include_private=False)
+            reply.read.assert_called_once_with(MAX_RESPONSE_BYTES + 1)
+            self.assertNotIn("private-value", str(raised.exception))
+
+    @patch("polskiflow.domain.synthetic_smoke.urlopen")
+    def test_bad_request_ids_never_reach_command_output(self, urlopen):
+        for request_id in ("", "request\nprivate-value", "secret@example.com", "x" * 129, "\x1b[31mprivate-value"):
+            urlopen.side_effect = [_response({"status": "ok"}, request_id=request_id)]
+            output = io.StringIO()
+            with self.assertRaises(CommandError) as raised:
+                call_command("production_smoke", "https://example.com", public_only=True, stdout=output)
+            self.assertEqual(output.getvalue(), "")
+            self.assertNotIn("private-value", str(raised.exception))
+
+    @patch("polskiflow.domain.synthetic_smoke.urlopen")
+    def test_cache_directives_must_match_exactly(self, urlopen):
+        for cache in ("not-private, no-store", "private, no-store-later", "private=yes, no-store"):
+            urlopen.side_effect = [
+                _response({"status": "ok"}), _response({"status": "ready"}),
+                _response({"paths": {"/api/v1/me/bootstrap/": {}}}),
+                _response({"data": {"courses": []}}),
+                _response({"meta": {"contract": "learner-bootstrap"}, "data": {}}, cache=cache),
+            ]
+            with self.assertRaisesMessage(SmokeFailure, "private cache boundary missing"):
+                run_synthetic_smoke("https://example.com", "private-token")
+
+    @patch("polskiflow.domain.synthetic_smoke.urlopen")
+    def test_truncated_transport_and_non_200_response_do_not_leak_body(self, urlopen):
+        from http.client import IncompleteRead
+        reply = _response({})
+        reply.read.side_effect = IncompleteRead(b"private-value")
+        urlopen.side_effect = [reply]
+        with self.assertRaisesMessage(SmokeFailure, "unavailable or invalid JSON"):
+            run_synthetic_smoke("https://example.com", include_private=False)
+        reply = _response({"private-value": "learner-data"})
+        reply.status = 503
+        urlopen.side_effect = [reply]
+        with self.assertRaisesMessage(SmokeFailure, "health: HTTP 503"):
+            run_synthetic_smoke("https://example.com", include_private=False)
+        reply.read.assert_not_called()

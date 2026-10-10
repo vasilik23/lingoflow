@@ -34,7 +34,12 @@ database backups, or alerts.
 The `production_smoke` management command verifies the public probes, OpenAPI,
 catalog, authenticated bootstrap and complete data-export contracts. It only
 uses `GET`, checks request IDs and the private/no-store boundary, and never
-prints the access token or response data.
+prints the access token or response data. Each response is limited to 2 MiB;
+malformed nested contracts, invalid UTF-8 and interrupted bodies fail with a
+sanitized error. Non-200 bodies are not read. Private cache directives must
+match exactly; request IDs may contain only ASCII letters, digits, hyphens
+and underscores, up to 128 characters. Larger exports fail this synthetic
+probe; use a small dedicated account rather than treating it as an export tool.
 
 Use a short-lived token belonging to a dedicated non-privileged smoke account:
 
