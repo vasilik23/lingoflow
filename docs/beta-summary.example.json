@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "commit": null,
+  "window": {"start": null, "end": null},
+  "participants": null,
+  "journey": {"started": null, "completed": null, "lost_results": null, "duplicate_results": null},
+  "runtime": {"requests": null, "server_errors": null, "response_p95_ms": null},
+  "feedback": {"open_blocking": null, "open_high": null},
+  "manual": {
+    "iphone_audio": null,
+    "mac_audio": null,
+    "password_recovery": null,
+    "account_deletion": null,
+    "accessibility": null,
+    "privacy_approved": null,
+    "content_reviewed": null
+  }
+}
