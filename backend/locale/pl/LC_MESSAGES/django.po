@@ -8157,3 +8157,156 @@ msgstr "syn"
 
 msgid "Ile masz lat? Mam rok, dwa/trzy/cztery lata, пять и больше — lat: Mam dwanaście lat."
 msgstr "Ile masz lat? Mówimy: Mam rok, dwa/trzy/cztery lata, pięć lat. Także: Mam dwanaście lat."
+
+msgid "Czasem означает «иногда»."
+msgstr "Czasem oznacza od czasu do czasu."
+
+msgid "Ja ___ o siódmej. Выберите форму wstawać."
+msgstr "Ja ___ o siódmej. Wybierz formę czasownika wstawać."
+
+msgid "Jeść śniadanie — завтракать."
+msgstr "Jeść śniadanie oznacza jeść pierwszy posiłek dnia."
+
+msgid "My ___ do domu o szóstej. Форма wracać."
+msgstr "My ___ do domu o szóstej. Wstaw formę czasownika wracać."
+
+msgid "O której? — O siódmej. Сначала: najpierw, затем: potem, вечером: wieczorem."
+msgstr "O której? — O siódmej. Kolejność opisujemy słowami najpierw i potem, a porę dnia słowem wieczorem."
+
+msgid "Ona ___ pracę o dziewiątej. Выберите форму zaczynać."
+msgstr "Ona ___ pracę o dziewiątej. Wybierz formę czasownika zaczynać."
+
+msgid "Ty ___ śniadanie w domu. Выберите форму jeść."
+msgstr "Ty ___ śniadanie w domu. Wybierz formę czasownika jeść."
+
+msgid "Wstawać — вставать."
+msgstr "Wstawać oznacza podnosić się z łóżka lub z miejsca, na którym siedzimy."
+
+msgid "zawsze — всегда, często — часто, czasem — иногда, nigdy — никогда. С nigdy говорим: nigdy nie pracuję."
+msgstr "zawsze — za każdym razem, często — wiele razy, czasem — od czasu do czasu, nigdy — ani razu. Z nigdy używamy nie: nigdy nie pracuję."
+
+msgid "Время и порядок"
+msgstr "Czas i kolejność"
+
+msgid "Выберите «Я завтракаю дома»."
+msgstr "Wybierz zdanie o jedzeniu śniadania w domu."
+
+msgid "Выберите естественную фразу."
+msgstr "Wybierz naturalne zdanie."
+
+msgid "Выберите логичный порядок."
+msgstr "Wybierz logiczną kolejność."
+
+msgid "Выберите правильную фразу с nigdy."
+msgstr "Wybierz poprawne zdanie z nigdy."
+
+msgid "Глагол меняется по лицам: ja wstaję, ty wstajesz, on/ona wstaje; ja czytam, ty czytasz, ona czyta."
+msgstr "Czasownik odmienia się przez osoby: ja wstaję, ty wstajesz, on/ona wstaje; ja czytam, ty czytasz, ona czyta."
+
+msgid "Для ja употребляется форма wstaję."
+msgstr "Z zaimkiem ja używamy formy wstaję."
+
+msgid "Для my используется окончание -my: wracamy."
+msgstr "Dla my używamy końcówki -my: wracamy."
+
+msgid "Для ona используется форма zaczyna."
+msgstr "Z zaimkiem ona używamy formy zaczyna."
+
+msgid "Для ty глагол jeść имеет форму jesz."
+msgstr "Z zaimkiem ty czasownik jeść ma formę jesz."
+
+msgid "Как сказать «Я часто читаю вечером»?"
+msgstr "Jak powiedzieć, że często czytasz wieczorem?"
+
+msgid "Как сказать «Я никогда не пью кофе вечером»?"
+msgstr "Jak powiedzieć, że nigdy nie pijesz kawy wieczorem?"
+
+msgid "Как сказать «иногда»?"
+msgstr "Jak powiedzieć od czasu do czasu jednym słowem?"
+
+msgid "Личные формы"
+msgstr "Formy osobowe"
+
+msgid "На вопрос o której? отвечают временем с o."
+msgstr "Na pytanie o której? odpowiadamy, podając godzinę z przyimkiem o."
+
+msgid "Наречие często можно поставить перед глаголом."
+msgstr "Przysłówek często można postawić przed czasownikiem."
+
+msgid "Обычный утренний порядок: встать, позавтракать, пойти на работу."
+msgstr "Typowa kolejność rano to: wstać, zjeść śniadanie, pójść do pracy."
+
+msgid "Она возвращается автобусом."
+msgstr "Ona wraca autobusem."
+
+msgid "Она встаёт в семь."
+msgstr "Ona wstaje o siódmej."
+
+msgid "Она ложится в одиннадцать."
+msgstr "Ona kładzie się spać o jedenastej."
+
+msgid "После nigdy используется nie перед личной формой глагола."
+msgstr "Po nigdy używamy nie przed osobową formą czasownika."
+
+msgid "С nigdy отрицание оформляется конструкцией nigdy nie + глагол."
+msgstr "Z nigdy tworzymy przeczenie za pomocą konstrukcji nigdy nie + czasownik."
+
+msgid "Сначала человек просыпается: budzę się."
+msgstr "Najpierw człowiek się budzi: budzę się."
+
+msgid "Частотность"
+msgstr "Częstotliwość"
+
+msgid "Что означает wstawać?"
+msgstr "Co oznacza wstawać?"
+
+msgid "Что происходит раньше?"
+msgstr "Co dzieje się wcześniej?"
+
+msgid "возвращаться"
+msgstr "wracać — przychodzić lub przyjeżdżać z powrotem"
+
+msgid "вставать"
+msgstr "wstawać — podnosić się z łóżka lub z miejsca siedzącego"
+
+msgid "готовить"
+msgstr "gotować — przygotowywać jedzenie"
+
+msgid "завтракать"
+msgstr "jeść śniadanie"
+
+msgid "заканчивать"
+msgstr "kończyć — doprowadzać coś do końca"
+
+msgid "идти на работу"
+msgstr "iść do pracy"
+
+msgid "иногда"
+msgstr "czasem — od czasu do czasu"
+
+msgid "каждый день"
+msgstr "codziennie — każdego dnia"
+
+msgid "ложиться спать"
+msgstr "kłaść się spać"
+
+msgid "мыться"
+msgstr "myć się — dbać o czystość swojego ciała"
+
+msgid "начинать"
+msgstr "zaczynać — rozpoczynać"
+
+msgid "одеваться"
+msgstr "ubierać się — zakładać ubranie"
+
+msgid "отдыхать"
+msgstr "odpoczywać — robić przerwę i nabierać sił"
+
+msgid "просыпаться"
+msgstr "budzić się — przestawać spać"
+
+msgid "работать"
+msgstr "pracować"
+
+msgid "читать"
+msgstr "czytać"
