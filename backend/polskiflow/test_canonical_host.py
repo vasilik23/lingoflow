@@ -28,6 +28,7 @@ class CanonicalHostTests(SimpleTestCase):
             ("polish-learn.vercel.app", "/api/v1/me/profile/"),
             ("polish-learn.vercel.app", "/static/polskiflow/app.css"),
             ("polish-learn.vercel.app", "/service-worker.js"),
+            ("polish-learn.vercel.app", "/offline/?shell=fixture&language=en"),
         ):
             with self.subTest(host=host, path=path):
                 self.assertEqual(self.middleware(self.factory.get(path, HTTP_HOST=host)).status_code, 200)
@@ -75,3 +76,10 @@ class CanonicalHostTests(SimpleTestCase):
                 self.assertEqual(response.status_code, 308)
                 self.assertEqual(response['Location'], settings.PUBLIC_APP_ORIGIN + '/reset-password/?next=%2Freading%2F')
                 self.assertNotIn('Set-Cookie', response)
+
+    def test_legacy_worker_can_precache_its_public_offline_page(self):
+        from django.test import Client
+        response = Client().get("/offline/?shell=fixture&language=en", HTTP_HOST="polish-learn.vercel.app")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response["Content-Language"], "en")
+        self.assertNotIn("Location", response)
