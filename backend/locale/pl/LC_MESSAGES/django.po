@@ -8445,3 +8445,138 @@ msgstr "krzesło"
 
 msgid "шкаф"
 msgstr "szafa"
+
+msgid "Bułka — булочка."
+msgstr "Bułka to małe pieczywo, zwykle na jedną porcję."
+
+msgid "Ile kosztuje? — нейтральный вопрос «Сколько стоит?»."
+msgstr "Ile kosztuje? to neutralne pytanie o cenę."
+
+msgid "Owoce — фрукты."
+msgstr "Owoce to na przykład jabłka, gruszki i banany."
+
+msgid "Poproszę + винительный падеж — вежливая формула заказа."
+msgstr "Poproszę + biernik to uprzejma formuła zamawiania."
+
+msgid "Proszę или poproszę + предмет: Proszę wodę. Poproszę kawę."
+msgstr "Proszę lub poproszę + rzecz, którą zamawiamy: Proszę wodę. Poproszę kawę."
+
+msgid "Sklep — магазин."
+msgstr "Sklep to miejsce, w którym kupujemy różne rzeczy."
+
+msgid "В заказе естественно: Proszę wodę."
+msgstr "Naturalny sposób zamówienia to: Proszę wodę."
+
+msgid "Вежливый заказ"
+msgstr "Uprzejme zamawianie"
+
+msgid "Винительный падеж"
+msgstr "Biernik"
+
+msgid "Выберите «булочка»."
+msgstr "Wybierz nazwę małego pieczywa na jedną porcję."
+
+msgid "Выберите естественный заказ."
+msgstr "Wybierz naturalną formę zamówienia."
+
+msgid "Как заказать кофе без сахара?"
+msgstr "Jak zamówić kawę bez cukru?"
+
+msgid "Где покупают продукты?"
+msgstr "Gdzie kupujemy produkty spożywcze?"
+
+msgid "Женские существительные на -a обычно получают -ę: kawę."
+msgstr "Rzeczowniki rodzaju żeńskiego zakończone na -a zwykle mają w bierniku końcówkę -ę: kawę."
+
+msgid "Как вежливо спросить цену?"
+msgstr "Jak uprzejmie zapytać o cenę?"
+
+msgid "Как заказать воду?"
+msgstr "Jak zamówić wodę?"
+
+msgid "Количество"
+msgstr "Ilość"
+
+msgid "О цене спрашиваем Ile kosztuje…?"
+msgstr "O cenę pytamy: Ile kosztuje…?"
+
+msgid "Оля платит картой."
+msgstr "Ola płaci kartą."
+
+msgid "Она берёт четыре яблока."
+msgstr "Ona bierze cztery jabłka."
+
+msgid "Она покупает продукты на завтрак."
+msgstr "Ona kupuje produkty na śniadanie."
+
+msgid "После kilogram нужна форма jabłek."
+msgstr "Po kilogram używamy formy jabłek."
+
+msgid "После kupuję нужна форма kawę."
+msgstr "Po kupuję używamy formy kawę."
+
+msgid "После kupuję/proszę женское -a обычно меняется на -ę: kawa → kawę, woda → wodę. Мужской неодушевлённый часто не меняется: chleb."
+msgstr "Po kupuję/proszę końcówka -a w rzeczownikach rodzaju żeńskiego zwykle zmienia się na -ę: kawa → kawę, woda → wodę. Forma rzeczownika rodzaju męskiego nieżywotnego często pozostaje bez zmian: chleb."
+
+msgid "После litr, kilogram и gram форма меняется: litr mleka, kilogram jabłek, dwieście gramów sera."
+msgstr "Po litr, kilogram i gram forma rzeczownika się zmienia: litr mleka, kilogram jabłek, dwieście gramów sera."
+
+msgid "После proszę предмет — в винительном падеже: zimną wodę."
+msgstr "Po proszę rzecz, którą zamawiamy, występuje w bierniku: zimną wodę."
+
+msgid "После единицы количества употребляем родительный: litr mleka."
+msgstr "Po jednostce ilości używamy dopełniacza: litr mleka."
+
+msgid "У неодушевлённых существительных мужского рода форма часто не меняется: chleb."
+msgstr "Forma rzeczowników rodzaju męskiego nieżywotnego często pozostaje bez zmian: chleb."
+
+msgid "Что означает owoce?"
+msgstr "Co oznacza owoce?"
+
+msgid "булочка"
+msgstr "bułka"
+
+msgid "вода"
+msgstr "woda"
+
+msgid "еда"
+msgstr "jedzenie"
+
+msgid "килограмм"
+msgstr "kilogram"
+
+msgid "кофе"
+msgstr "kawa"
+
+msgid "магазин"
+msgstr "sklep"
+
+msgid "молоко"
+msgstr "mleko"
+
+msgid "напитки"
+msgstr "napoje"
+
+msgid "овощи"
+msgstr "warzywa"
+
+msgid "пожалуйста; прошу"
+msgstr "proszę — uprzejma prośba"
+
+msgid "покупать"
+msgstr "kupować — nabywać coś za pieniądze"
+
+msgid "сколько стоит?"
+msgstr "ile kosztuje? — pytanie o cenę"
+
+msgid "сыр"
+msgstr "ser"
+
+msgid "фрукты"
+msgstr "owoce"
+
+msgid "хлеб"
+msgstr "chleb"
+
+msgid "яблоко"
+msgstr "jabłko"
