@@ -1,0 +1,4 @@
+interface:
+  display_name: "LingoFlow · PO / Designer / QA"
+  short_description: "Аудит сценариев, UX и багов с приоритетным планом"
+  default_prompt: "Используй $lingoflow-product-audit для проверки LingoFlow и подготовки подтверждённых багов и приоритетных улучшений."
