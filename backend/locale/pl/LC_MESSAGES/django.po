@@ -7578,3 +7578,15 @@ msgstr "Pełna lekcja i zapisywanie powtórek wymagają konta."
 
 msgid "Что закрепить"
 msgstr "Co utrwalić"
+
+msgid "LingoFlow переехал: что изменилось?"
+msgstr "LingoFlow zmienił adres: co się zmieniło?"
+
+msgid "Войдите в прежний аккаунт на новом адресе. Сохранённый в аккаунте прогресс останется; повторная регистрация не нужна."
+msgstr "Zaloguj się na dotychczasowe konto pod nowym adresem. Postępy zapisane na koncie pozostają; ponowna rejestracja nie jest potrzebna."
+
+msgid "Локальные черновики, записи и несинхронизированные результаты не переносятся автоматически: они привязаны к прежнему адресу. Не очищайте данные старого сайта, если там осталось несохранённое."
+msgstr "Lokalne szkice, nagrania i niezsynchronizowane wyniki nie są przenoszone automatycznie: są powiązane z poprzednim adresem. Nie usuwaj danych starej witryny, jeśli pozostały tam niezapisane materiały."
+
+msgid "Если приложение установлено на домашнем экране, откройте новый адрес в браузере и добавьте LingoFlow на экран заново. Старый значок остаётся связан с прежним адресом."
+msgstr "Jeśli aplikacja jest na ekranie głównym, otwórz nowy adres w przeglądarce i ponownie dodaj LingoFlow do ekranu. Stara ikona pozostaje powiązana z poprzednim adresem."

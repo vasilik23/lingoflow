@@ -12,9 +12,11 @@ class CanonicalHostMiddleware:
 
     def __call__(self, request):
         host = request.get_host().split(":", 1)[0].lower()
+        # The legacy worker precaches its public offline page on its own origin.
+        # Redirecting this fetch across origins would prevent installation.
         compatible_endpoint = (
             request.path_info.startswith(("/api/", "/static/"))
-            or request.path_info in {"/health/", "/ready/", "/service-worker.js", "/manifest.webmanifest"}
+            or request.path_info in {"/health/", "/ready/", "/service-worker.js", "/manifest.webmanifest", "/offline/"}
         )
         if (
             settings.PUBLIC_APP_ORIGIN

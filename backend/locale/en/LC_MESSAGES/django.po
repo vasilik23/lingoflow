@@ -17224,3 +17224,15 @@ msgstr "An account is needed for the full lesson and saved reviews."
 
 msgid "Что закрепить"
 msgstr "What to reinforce"
+
+msgid "LingoFlow переехал: что изменилось?"
+msgstr "LingoFlow has moved: what changed?"
+
+msgid "Войдите в прежний аккаунт на новом адресе. Сохранённый в аккаунте прогресс останется; повторная регистрация не нужна."
+msgstr "Sign in to your existing account at the new address. Progress saved to your account remains; you do not need to register again."
+
+msgid "Локальные черновики, записи и несинхронизированные результаты не переносятся автоматически: они привязаны к прежнему адресу. Не очищайте данные старого сайта, если там осталось несохранённое."
+msgstr "Local drafts, recordings and unsynced results do not transfer automatically: they belong to the previous address. Keep the old site’s data if it contains unsaved work."
+
+msgid "Если приложение установлено на домашнем экране, откройте новый адрес в браузере и добавьте LingoFlow на экран заново. Старый значок остаётся связан с прежним адресом."
+msgstr "If the app is installed on your home screen, open the new address in your browser and add LingoFlow again. The old icon remains linked to the previous address."
