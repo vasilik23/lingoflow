@@ -8580,3 +8580,138 @@ msgstr "chleb"
 
 msgid "яблоко"
 msgstr "jabłko"
+
+msgid "Dworzec — вокзал."
+msgstr "Dworzec to miejsce, z którego odjeżdżają i do którego przyjeżdżają pociągi lub autobusy."
+
+msgid "Iść prosto — идти прямо; skręcić w lewo / w prawo — повернуть налево / направо."
+msgstr "Iść prosto oznacza iść bez zmiany kierunku; skręcić w lewo / w prawo oznacza zmienić kierunek w lewą / prawą stronę."
+
+msgid "Jak dojść do apteki? — «Как дойти до аптеки?»."
+msgstr "Jak dojść do apteki? to pytanie o drogę do apteki."
+
+msgid "Jak dojść do…? — естественный вопрос о пути к месту."
+msgstr "Jak dojść do…? to naturalne pytanie o drogę do danego miejsca."
+
+msgid "Naprzeciwko означает «напротив» и требует родительного падежа."
+msgstr "Naprzeciwko wskazuje miejsce po przeciwnej stronie i wymaga dopełniacza."
+
+msgid "Obok + родительный падеж обозначает расположение рядом: obok banku."
+msgstr "Obok + dopełniacz oznacza bliskie położenie: obok banku."
+
+msgid "Obok — рядом, naprzeciwko — напротив, przy — у. Спрашиваем: Jak dojść do dworca?"
+msgstr "Obok oznacza bliskie położenie, naprzeciwko — po przeciwnej stronie, przy — blisko danego miejsca. Pytamy: Jak dojść do dworca?"
+
+msgid "Proszę + инфинитив: proszę iść, proszę skręcić, proszę przejść."
+msgstr "Proszę + bezokolicznik: proszę iść, proszę skręcić, proszę przejść."
+
+msgid "Przystanek — остановка общественного транспорта."
+msgstr "Przystanek to miejsce, w którym zatrzymują się pojazdy komunikacji publicznej."
+
+msgid "Skręcić w prawo — повернуть направо."
+msgstr "Skręcić w prawo oznacza zmienić kierunek w prawą stronę."
+
+msgid "В вежливой инструкции после proszę употребляем инфинитив: proszę przejść."
+msgstr "W uprzejmej instrukcji po proszę używamy bezokolicznika: proszę przejść."
+
+msgid "Вежливая инструкция"
+msgstr "Uprzejma instrukcja"
+
+msgid "Выберите «вокзал»."
+msgstr "Wybierz nazwę miejsca, z którego odjeżdżają pociągi."
+
+msgid "Выберите естественный вопрос о дороге."
+msgstr "Wybierz naturalne pytanie o drogę."
+
+msgid "Где встречаются на площади?"
+msgstr "Jak określić miejsce spotkania na placu?"
+
+msgid "Для местонахождения на площади употребляем na placu."
+msgstr "Aby wskazać miejsce na placu, używamy formy na placu."
+
+msgid "Инструкция велит повернуть налево."
+msgstr "Instrukcja wskazuje, że trzeba skręcić w lewo."
+
+msgid "Как вежливо спросить дорогу к вокзалу?"
+msgstr "Jak uprzejmie zapytać o drogę do dworca?"
+
+msgid "Как вежливо спросить: «Как дойти до вокзала?»"
+msgstr "Jak uprzejmie zapytać, jak dojść do dworca?"
+
+msgid "Как сказать «поверните направо»?"
+msgstr "Jak poprosić rozmówcę, żeby skręcił w prawo?"
+
+msgid "Как сказать «Пожалуйста, поверните направо»?"
+msgstr "Jak uprzejmie poprosić rozmówcę, żeby skręcił w prawo?"
+
+msgid "Как спросить: «Как дойти до аптеки?»"
+msgstr "Jak zapytać, jak dojść do apteki?"
+
+msgid "Направление движения выражает наречие prosto."
+msgstr "Kierunek ruchu określa przysłówek prosto."
+
+msgid "Напротив музея кафе."
+msgstr "Naprzeciwko muzeum jest kawiarnia."
+
+msgid "Она выходит с вокзала."
+msgstr "Ona wychodzi z dworca."
+
+msgid "Ориентиры"
+msgstr "Punkty orientacyjne"
+
+msgid "После iść направление передаёт наречие prosto: идти прямо."
+msgstr "Po iść kierunek określa przysłówek prosto: iść prosto."
+
+msgid "После вежливого proszę используем инфинитив przejść."
+msgstr "Po uprzejmym proszę używamy bezokolicznika przejść."
+
+msgid "Устойчивое направление — w lewo: повернуть налево."
+msgstr "Używamy wyrażenia w lewo: skręcić w lewo."
+
+msgid "Что означает przystanek?"
+msgstr "Co oznacza przystanek?"
+
+msgid "аптека"
+msgstr "apteka"
+
+msgid "банк"
+msgstr "bank"
+
+msgid "вокзал"
+msgstr "dworzec"
+
+msgid "город"
+msgstr "miasto"
+
+msgid "налево"
+msgstr "w lewo"
+
+msgid "направо"
+msgstr "w prawo"
+
+msgid "напротив"
+msgstr "naprzeciwko — po przeciwnej stronie"
+
+msgid "остановка"
+msgstr "przystanek"
+
+msgid "переходить"
+msgstr "przechodzić — przemieszczać się przez coś lub do innego miejsca"
+
+msgid "площадь"
+msgstr "plac"
+
+msgid "поворачивать"
+msgstr "skręcać — zmieniać kierunek"
+
+msgid "прямо"
+msgstr "prosto — bez zmiany kierunku"
+
+msgid "рядом"
+msgstr "obok — blisko czegoś lub kogoś"
+
+msgid "улица"
+msgstr "ulica"
+
+msgid "центр"
+msgstr "centrum"

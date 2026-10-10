@@ -177,3 +177,26 @@ class PolishFoodSupportTests(TestCase):
         with override('ru'):
             for source in support:
                 self.assertEqual(learning_text(source), source)
+
+
+class PolishCitySupportTests(TestCase):
+    def test_city_lessons_have_polish_support_without_collapsing_choices(self):
+        lessons = Lesson.objects.filter(topic_id='city-directions')
+        self.assertEqual(lessons.count(), 5)
+        support = []
+        for lesson in lessons:
+            support.append(lesson.theory_title)
+            support.extend(value for pair in lesson.theory_sections for value in pair)
+        questions = list(Question.objects.filter(lesson__in=lessons))
+        self.assertEqual(len(questions), 16)
+        for question in questions:
+            support.extend((question.prompt, question.explanation, *question.options))
+        support.extend(Flashcard.objects.filter(lesson_links__lesson__in=lessons).values_list('translation', flat=True))
+        with override('pl'):
+            self.assertEqual([source for source in support if re.search(r'[А-Яа-яЁё]', learning_text(source))], [])
+            for question in questions:
+                options = [learning_text(option) for option in question.options]
+                self.assertEqual(len(set(options)), len(options), question.prompt)
+        with override('ru'):
+            for source in support:
+                self.assertEqual(learning_text(source), source)
