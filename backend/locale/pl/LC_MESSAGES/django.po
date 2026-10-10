@@ -7815,3 +7815,177 @@ msgstr "dobrze"
 
 msgid "я являюсь / я есть"
 msgstr "jestem — forma czasownika być dla ja"
+
+msgid "Jakimi językami mówisz? — естественный вопрос о языках общения."
+msgstr "Jakimi językami mówisz? to naturalne pytanie o języki, którymi posługuje się rozmówca."
+
+msgid "Ona jest ___. Вставьте «полька»."
+msgstr "Ona jest ___. Wstaw odpowiednią formę słowa Polka."
+
+msgid "Pochodzić — быть родом, происходить."
+msgstr "Pochodzić oznacza mieć swoje miejsce pochodzenia."
+
+msgid "Pochodzę z… означает «Я родом из…»."
+msgstr "Pochodzę z… to sposób podania swojego miejsca pochodzenia."
+
+msgid "Polak — мужчина, Polka — женщина; Polska — название страны женского рода."
+msgstr "Polak to mężczyzna, Polka to kobieta; Polska jest nazwą kraju rodzaju żeńskiego."
+
+msgid "Polka — полька; Polak — поляк."
+msgstr "Polka to kobieta z Polski, a Polak to mężczyzna z Polski."
+
+msgid "Skąd pochodzisz? Выберите естественный ответ."
+msgstr "Skąd pochodzisz? Wybierz naturalną odpowiedź."
+
+msgid "Ukraina — страна; Ukrainiec — человек; ukraiński — прилагательное."
+msgstr "Ukraina to kraj; Ukrainiec to osoba; ukraiński to przymiotnik."
+
+msgid "Znać język — знать язык."
+msgstr "Znać język oznacza rozumieć go i umieć się nim posługiwać."
+
+msgid "język polski, język ukraiński, język niemiecki. Прилагательное согласуется с существительным."
+msgstr "język polski, język ukraiński, język niemiecki. Przymiotnik dopasowujemy do rzeczownika."
+
+msgid "Выберите женскую национальность."
+msgstr "Wybierz nazwę narodowości w rodzaju żeńskim."
+
+msgid "Выберите название страны."
+msgstr "Wybierz nazwę kraju."
+
+msgid "Выберите правильную пару."
+msgstr "Wybierz poprawną parę."
+
+msgid "Где ты живёшь?"
+msgstr "Gdzie mieszkasz?"
+
+msgid "Германия"
+msgstr "Niemcy"
+
+msgid "Группа вместе учит польский."
+msgstr "Grupa wspólnie uczy się języka polskiego."
+
+msgid "Для языка общения используется конструкция mówić po + наречие: po polsku."
+msgstr "Aby wskazać język, używamy konstrukcji mówić po + przysłówek: po polsku."
+
+msgid "Как сказать «Я говорю по-польски»?"
+msgstr "Jak powiedzieć, że mówisz w języku polskim?"
+
+msgid "Как сказать «польский язык»?"
+msgstr "Jak nazwać język używany w Polsce?"
+
+msgid "Как сказать о языке"
+msgstr "Jak mówić o języku"
+
+msgid "Как спросить «На каких языках ты говоришь?»"
+msgstr "Jak zapytać rozmówcę, jakimi językami mówi?"
+
+msgid "Какого рода слово Polska?"
+msgstr "Jakiego rodzaju jest słowo Polska?"
+
+msgid "На каком языке ты говоришь?"
+msgstr "W jakim języku mówisz?"
+
+msgid "Названия стран на -a обычно женского рода: ta Polska."
+msgstr "Nazwy krajów zakończone na -a są zwykle rodzaju żeńskiego: ta Polska."
+
+msgid "Нейтральный порядок: język polski."
+msgstr "Neutralny szyk to: język polski."
+
+msgid "Оксана живёт в Кракове."
+msgstr "Oksana mieszka w Krakowie."
+
+msgid "Откуда ты родом?"
+msgstr "Skąd pochodzisz?"
+
+msgid "Польша"
+msgstr "Polska"
+
+msgid "После jest при указании национальности употребляется творительный падеж: jest Polką."
+msgstr "Po jest nazwa narodowości występuje w narzędniku: jest Polką."
+
+msgid "Прилагательное мужского рода: język polski."
+msgstr "Przymiotnik ma rodzaj męski: język polski."
+
+msgid "Прилагательные"
+msgstr "Przymiotniki"
+
+msgid "Род"
+msgstr "Rodzaj gramatyczny"
+
+msgid "Томас из Германии."
+msgstr "Thomas jest z Niemiec."
+
+msgid "Украина"
+msgstr "Ukraina"
+
+msgid "Человек из Германии — Niemiec; после jest: Niemcem."
+msgstr "Mężczyzna z Niemiec to Niemiec; po jest używamy formy Niemcem."
+
+msgid "Что значит «Znam trochę polski»?"
+msgstr "Co oznacza Znam trochę polski?"
+
+msgid "Что означает «Skąd pochodzisz?»"
+msgstr "Co oznacza pytanie Skąd pochodzisz?"
+
+msgid "Я не говорю по-польски"
+msgstr "Nie mówię po polsku"
+
+msgid "Я немного знаю польский"
+msgstr "Znam trochę język polski"
+
+msgid "Я родом из Польши"
+msgstr "Pochodzę z Polski"
+
+msgid "Язык общения выражается через po: po ukraińsku."
+msgstr "Język wskazujemy za pomocą po: po ukraińsku."
+
+msgid "быть родом"
+msgstr "pochodzić — mieć swoje miejsce pochodzenia"
+
+msgid "говорить"
+msgstr "mówić — porozumiewać się za pomocą słów"
+
+msgid "женского"
+msgstr "żeńskiego"
+
+msgid "знать"
+msgstr "znać — mieć wiedzę o czymś"
+
+msgid "мужского"
+msgstr "męskiego"
+
+msgid "немец"
+msgstr "Niemiec — mężczyzna z Niemiec"
+
+msgid "немецкий"
+msgstr "niemiecki — związany z Niemcami"
+
+msgid "полька"
+msgstr "Polka — kobieta z Polski"
+
+msgid "польский"
+msgstr "polski — związany z Polską"
+
+msgid "поляк"
+msgstr "Polak — mężczyzna z Polski"
+
+msgid "среднего"
+msgstr "nijakiego"
+
+msgid "украинец"
+msgstr "Ukrainiec — mężczyzna z Ukrainy"
+
+msgid "украинка"
+msgstr "Ukrainka — kobieta z Ukrainy"
+
+msgid "украинский"
+msgstr "ukraiński — związany z Ukrainą"
+
+msgid "язык"
+msgstr "język — sposób porozumiewania się"
+
+msgid "Как ответить «Я родом из Украины»?"
+msgstr "Jak odpowiedzieć, że pochodzisz z Ukrainy?"
+
+msgid "Что значит «Trochę znam język polski»?"
+msgstr "Co oznacza Trochę znam język polski?"
