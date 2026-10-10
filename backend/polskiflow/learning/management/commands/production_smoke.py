@@ -1,10 +1,12 @@
 """Run the read-only production synthetic smoke from an operator shell."""
 
 import os
+from contextlib import nullcontext
 
 from django.core.management.base import BaseCommand, CommandError
 
 from polskiflow.domain.synthetic_smoke import SmokeFailure, run_synthetic_smoke
+from polskiflow.domain.smoke_session import fresh_smoke_session
 
 
 class Command(BaseCommand):
@@ -17,6 +19,8 @@ class Command(BaseCommand):
             default="POLSKIFLOW_SMOKE_ACCESS_TOKEN",
             help="Environment variable containing a short-lived learner access token",
         )
+        parser.add_argument("--fresh-session", action="store_true",
+                            help="Use an ephemeral dedicated production learner session")
         parser.add_argument("--timeout", type=float, default=10)
         parser.add_argument(
             "--public-only",
@@ -26,14 +30,19 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         public_only = options["public_only"]
-        token = os.environ.get(options["token_env"], "") if not public_only else ""
-        if not public_only and not token:
+        fresh = options["fresh_session"]
+        if fresh and public_only:
+            raise CommandError("fresh-session and public-only cannot be combined")
+        token = os.environ.get(options["token_env"], "") if not public_only and not fresh else ""
+        if not public_only and not fresh and not token:
             raise CommandError(f"Missing access token in {options['token_env']}")
         try:
-            results = run_synthetic_smoke(
-                options["base_url"], token, timeout=options["timeout"],
-                include_private=not public_only,
-            )
+            session = fresh_smoke_session(options["base_url"]) if fresh else nullcontext(token)
+            with session as access_token:
+                results = run_synthetic_smoke(
+                    options["base_url"], access_token, timeout=options["timeout"],
+                    include_private=not public_only,
+                )
         except SmokeFailure as error:
             raise CommandError(str(error)) from error
         for result in results:

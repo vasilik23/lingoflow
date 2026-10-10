@@ -656,6 +656,18 @@ telemetry, не обращается к базе/провайдеру и не р
 Реальные участники, наблюдения и ручные проверки остаются открытыми.
 [Проведение beta и критерии](docs/closed-beta-readiness.md).
 
+Подготовлен выключенный авторизованный production smoke по расписанию: перед
+каждым запуском создаётся короткоживущая сессия выделенного learner-аккаунта,
+после GET-проверок выполняется local logout, включая сбой проверки. UUID и срок
+токена проверяются; refresh/access token не сохраняются. Ошибка авторизации или
+logout не превращается в успешный публичный smoke. Режим ограничен canonical
+production и hosted Supabase Auth, redirects запрещены; привилегированные ключи
+не принимаются. GitHub job включается только отдельной переменной и использует
+Secrets окружения production-smoke. 975 тестов, system check и migration drift
+прошли; изменений UI/базы нет. Реальный dedicated account, Secrets, живой запуск
+и внешний alert channel остаются операционной приёмкой.
+[Активация мониторинга](docs/operations-baseline.md#prepared-authenticated-schedule-disabled-until-configured).
+
 ## Следующие этапы
 
 ### P1 — улучшения экзаменационного цикла, по порядку
@@ -685,7 +697,8 @@ telemetry, не обращается к базе/провайдеру и не р
 
 - Заполнить юридические данные и retention policy.
 - Проверить production-каскады удаления на отдельном аккаунте.
-- Настроить ротацию токена и внешний alert channel авторизованного synthetic smoke.
+- Активировать и проверить подготовленный fresh-session smoke на выделенном аккаунте
+  по [инструкции](docs/operations-baseline.md#prepared-authenticated-schedule-disabled-until-configured); настроить внешний alert channel.
 - Провести независимую польскоязычную проверку контента, начиная с A1–A2; проверить также английские учебные переводы.
 - Провести assistive-technology/user audit и измерить field performance при достаточном согласованном трафике.
 - Провести закрытую beta, собрать согласованные наблюдения и пройти
