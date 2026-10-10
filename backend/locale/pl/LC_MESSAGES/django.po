@@ -7698,3 +7698,120 @@ msgstr "Do 6000 znaków · pisanie i mówienie łącznie: 10 zapytań AI na kont
 
 msgid "Ищем по названиям и описаниям тем, уроков и текстов."
 msgstr "Wyszukujemy w tytułach i opisach tematów, lekcji i tekstów."
+
+msgid "Jak masz na imię? — «Как тебя зовут?»"
+msgstr "Jak masz na imię? to pytanie o imię rozmówcy."
+
+msgid "Jestem Anna. — Я Анна. Jestem z Polski. — Я из Польши."
+msgstr "Jestem Anna. — Tak przedstawiamy się rozmówcy. Jestem z Polski. — Tak mówimy, skąd pochodzimy."
+
+msgid "Miło mi — краткое «Приятно познакомиться»."
+msgstr "Miło mi to krótka, uprzejma odpowiedź podczas przedstawiania się."
+
+msgid "My ___ na kursie. Вставьте форму być."
+msgstr "My ___ na kursie. Wstaw odpowiednią formę czasownika być."
+
+msgid "My jesteśmy — «мы являемся / мы находимся»."
+msgstr "Z zaimkiem my używamy formy jesteśmy: My jesteśmy na kursie."
+
+msgid "Oni ___ z Polski. Вставьте форму być."
+msgstr "Oni ___ z Polski. Wstaw odpowiednią formę czasownika być."
+
+msgid "Oni są — «они являются»."
+msgstr "Z zaimkiem oni używamy formy są: Oni są z Polski."
+
+msgid "Pani — вежливое обращение к женщине."
+msgstr "Pani to uprzejma forma zwracania się do kobiety."
+
+msgid "Pani — вежливое обращение к женщине; используется форма jest."
+msgstr "Pani to uprzejma forma zwracania się do kobiety; używamy z nią formy jest."
+
+msgid "Вежливое обращение"
+msgstr "Uprzejme formy zwracania się do rozmówcy"
+
+msgid "Выберите правильное про Марека: Marek ___ z Polski."
+msgstr "Wybierz poprawną formę: Marek ___ z Polski."
+
+msgid "Выберите форму для «ты»: Ty ___ z Polski."
+msgstr "Wybierz formę dla zaimka ty: Ty ___ z Polski."
+
+msgid "Для он/она/оно используется форма jest."
+msgstr "Z zaimkami on, ona i ono używamy formy jest."
+
+msgid "До завтра"
+msgstr "Do jutra"
+
+msgid "Как вежливо обратиться к незнакомой женщине?"
+msgstr "Jak uprzejmie zwrócić się do nieznajomej kobiety?"
+
+msgid "Как вежливо спросить женщину: «Вы из Варшавы?»"
+msgstr "Jak uprzejmie zapytać kobietę, czy jest z Warszawy?"
+
+msgid "Как спросить «Как тебя зовут?»"
+msgstr "Jak zapytać rozmówcę o imię?"
+
+msgid "Мне холодно"
+msgstr "Jest mi zimno"
+
+msgid "Очень хорошо"
+msgstr "Bardzo dobrze"
+
+msgid "Представляемся"
+msgstr "Przedstawiamy się"
+
+msgid "Приятно познакомиться"
+msgstr "Miło mi cię poznać"
+
+msgid "С pan и pani используется третье лицо: Czy pan jest z Polski? Czy pani jest nauczycielką?"
+msgstr "Z formami pan i pani używamy trzeciej osoby: Czy pan jest z Polski? Czy pani jest nauczycielką?"
+
+msgid "С местоимением ty используется jesteś."
+msgstr "Z zaimkiem ty używamy formy jesteś."
+
+msgid "Что означает «Miło mi» при знакомстве?"
+msgstr "Co oznacza Miło mi podczas przedstawiania się?"
+
+msgid "господин / Вы"
+msgstr "pan — uprzejma forma zwracania się do mężczyzny"
+
+msgid "госпожа / Вы"
+msgstr "pani — uprzejma forma zwracania się do kobiety"
+
+msgid "до свидания"
+msgstr "do widzenia — pożegnanie"
+
+msgid "добрый день"
+msgstr "dzień dobry — uprzejme powitanie"
+
+msgid "из Польши"
+msgstr "z Polski — określenie kraju pochodzenia"
+
+msgid "как тебя зовут?"
+msgstr "jak masz na imię? — pytanie o imię"
+
+msgid "как ты?"
+msgstr "jak się masz? — pytanie o samopoczucie"
+
+msgid "меня зовут"
+msgstr "mam na imię — podajemy swoje imię"
+
+msgid "откуда ты?"
+msgstr "skąd jesteś? — pytanie o pochodzenie"
+
+msgid "привет / пока"
+msgstr "cześć — nieformalne powitanie lub pożegnanie"
+
+msgid "приятно познакомиться"
+msgstr "miło mi — uprzejma odpowiedź podczas przedstawiania się"
+
+msgid "тоже"
+msgstr "też — również"
+
+msgid "ты являешься / ты есть"
+msgstr "jesteś — forma czasownika być dla ty"
+
+msgid "хорошо"
+msgstr "dobrze"
+
+msgid "я являюсь / я есть"
+msgstr "jestem — forma czasownika być dla ja"
