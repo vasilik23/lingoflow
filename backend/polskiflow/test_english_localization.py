@@ -57,16 +57,20 @@ class EnglishInterfaceTests(SimpleTestCase):
         self.assertEqual(response['Content-Language'], 'en')
         self.assertIn('&language=en', self.client.get('/service-worker.js?language=en').content.decode())
 
-    def test_learning_filter_is_english_only_and_escapes_markup(self):
+    def test_learning_filter_localizes_support_and_escapes_markup(self):
         with override('en'):
             self.assertEqual(learning_text('спасибо'), 'thank you')
             self.assertEqual(learning_text('Dziękuję'), 'Dziękuję')
             self.assertEqual(learning_text('Личная заметка, которой нет в каталоге'), 'Личная заметка, которой нет в каталоге')
             template = engines['django'].from_string('{% load ui %}{{ text|learning_text }}')
             self.assertEqual(template.render({'text': '<script>alert(1)</script>'}), '&lt;script&gt;alert(1)&lt;/script&gt;')
-        for language in ('ru', 'pl'):
-            with override(language):
-                self.assertEqual(learning_text('спасибо'), 'спасибо')
+        with override('ru'):
+            self.assertEqual(learning_text('спасибо'), 'спасибо')
+        with override('pl'):
+            self.assertEqual(learning_text('Как неформально поздороваться?'), 'Jak przywitać się nieformalnie?')
+            self.assertEqual(learning_text('Dziękuję'), 'Dziękuję')
+            self.assertEqual(learning_text('Личная заметка, которой нет в каталоге'), 'Личная заметка, которой нет в каталоге')
+            self.assertEqual(template.render({'text': '<script>alert(1)</script>'}), '&lt;script&gt;alert(1)&lt;/script&gt;')
 
 
 class EnglishLearningTests(TestCase):

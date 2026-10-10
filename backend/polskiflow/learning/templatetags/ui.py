@@ -53,8 +53,8 @@ def ui_items(values):
 
 @register.filter
 def learning_text(value):
-    """English study support; retain Polish exercises and the Russian course."""
-    return ui_text(value) if get_language() == "en" else value
+    """Localized study support; untranslated content remains canonical."""
+    return ui_text(value) if get_language() in {"pl", "en"} else value
 
 
 @lru_cache(maxsize=1)
