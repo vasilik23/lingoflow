@@ -75,8 +75,13 @@
           const selected = document.createElement("button");
           selected.type = "button";
           selected.className = "sentence-token selected";
-          selected.textContent = tokenButtons[tokenIndex].textContent;
-          selected.setAttribute("aria-label", ui("Убрать слово ") + selected.textContent);
+          const removal = document.createElement("span");
+          removal.className = "visually-hidden";
+          removal.textContent = ui("Убрать слово ");
+          const word = document.createElement("span");
+          word.lang = tokenButtons[tokenIndex].lang;
+          word.textContent = tokenButtons[tokenIndex].textContent;
+          selected.append(removal, word);
           selected.addEventListener("click", function () {
             order = order.filter(function (value) { return value !== tokenIndex; });
             render();

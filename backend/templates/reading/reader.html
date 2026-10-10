@@ -25,7 +25,7 @@
         </div>
         <noscript><p class="muted">{% translate "Для аудирования нужен JavaScript и системный синтез речи." %}</p></noscript>
       </section>
-      <div class="reading-paper">
+      <div class="reading-paper" lang="pl">
         {% for paragraph in paragraphs %}
           <p>{% for token in paragraph %}{% if token.translation %}<button type="button" class="reader-word" data-word="{{ token.word }}" data-lemma="{{ token.lemma }}" data-translation="{{ token.translation|learning_text }}" data-source-translation="{{ token.translation }}" data-part-of-speech="{{ token.part_of_speech }}">{{ token.text }}</button>{% else %}{{ token.text }}{% endif %}{% endfor %}</p>
         {% endfor %}

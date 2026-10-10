@@ -71,3 +71,18 @@ def english_reading(paragraphs):
     if not all(isinstance(paragraph, str) and translations.get(paragraph) for paragraph in paragraphs):
         return []
     return [translations[paragraph] for paragraph in paragraphs]
+
+
+@register.filter
+def learning_language(value, source_language="pl"):
+    """Language of a study fragment, preserving the Russian fallback.
+
+    The caller supplies the language of untranslated Latin-script content;
+    this is not a general-purpose language detector or a label for user text.
+    """
+    localized = learning_text(value)
+    if isinstance(localized, str) and re.search(r"[А-Яа-яЁё]", localized):
+        return "ru"
+    if localized != value:
+        return get_language() if get_language() in {"ru", "pl", "en"} else "ru"
+    return source_language if source_language in {"ru", "pl", "en"} else "ru"
