@@ -3,7 +3,7 @@
 {% block title %}{{ task.plan_title|ui_text }} — LingoFlow{% endblock %}
 {% block content %}
   <div class="lesson-shell">
-    <header class="lesson-header"><a class="back-button" href="{% url 'home' %}" aria-label="{% translate "Вернуться на главную" %}">←</a><strong>{{ task.plan_title|ui_text }}</strong>{% if lesson_bookmarks_available %}<form method="post" action="{% url 'toggle-lesson-bookmark' lesson_id %}">{% csrf_token %}<input type="hidden" name="saved" value="{% if is_bookmarked %}0{% else %}1{% endif %}"><input type="hidden" name="next" value="{{ request.path }}"><button class="lesson-save-button{% if is_bookmarked %} is-saved{% endif %}" type="submit" aria-label="{% if is_bookmarked %}{% translate "Убрать урок из сохранённого" %}{% else %}{% translate "Сохранить урок" %}{% endif %}">{% if is_bookmarked %}★{% else %}☆{% endif %}</button></form>{% else %}<span></span>{% endif %}</header>
+    <header class="lesson-header"><a class="back-button" href="{% url 'home' %}" aria-label="{% translate "Вернуться на главную" %}">←</a><h1>{{ task.plan_title|ui_text }}</h1>{% if lesson_bookmarks_available %}<form method="post" action="{% url 'toggle-lesson-bookmark' lesson_id %}">{% csrf_token %}<input type="hidden" name="saved" value="{% if is_bookmarked %}0{% else %}1{% endif %}"><input type="hidden" name="next" value="{{ request.path }}"><button class="lesson-save-button{% if is_bookmarked %} is-saved{% endif %}" type="submit" aria-label="{% if is_bookmarked %}{% translate "Убрать урок из сохранённого" %}{% else %}{% translate "Сохранить урок" %}{% endif %}">{% if is_bookmarked %}★{% else %}☆{% endif %}</button></form>{% else %}<span></span>{% endif %}</header>
     <section id="lesson-flow">
       {% if resume_notice %}<p class="lesson-resume-notice" role="status">{% translate "Продолжаем с сохранённого шага. Прогресс синхронизирован между твоими устройствами." %}</p>{% endif %}
       {% if lesson_kind == "words" or lesson_kind == "review" %}
@@ -11,8 +11,8 @@
       {% elif lesson_kind == "grammar" and not resume_practice %}
         <div class="card lesson-card theory-card">
           <p class="eyebrow">{% translate "Короткая теория" %}</p>
-          <h1>{{ grammar.title|ui_text }}</h1>
-          {% for heading, body in grammar.sections %}<div class="theory-section"><h2>{{ heading|ui_text }}</h2><p class="muted">{{ body|ui_text }}</p></div>{% endfor %}
+          <h2>{{ grammar.title|ui_text }}</h2>
+          {% for heading, body in grammar.sections %}<div class="theory-section"><h3>{{ heading|ui_text }}</h3><p class="muted">{{ body|ui_text }}</p></div>{% endfor %}
         </div>
         <form method="post" action="{% url 'lesson-step' lesson_id %}">
           {% csrf_token %}<input type="hidden" name="action" value="start"><input type="hidden" name="state" value="{{ lesson_state }}">
