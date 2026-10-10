@@ -7989,3 +7989,171 @@ msgstr "Jak odpowiedzieć, że pochodzisz z Ukrainy?"
 
 msgid "Что значит «Trochę znam język polski»?"
 msgstr "Co oznacza Trochę znam język polski?"
+
+msgid "Ania ma 12 ___. Выберите форму."
+msgstr "Ania ma 12 ___. Wybierz poprawną formę."
+
+msgid "Córka — дочь; syn — сын."
+msgstr "Córka to dziecko płci żeńskiej, a syn to dziecko płci męskiej."
+
+msgid "Ich означает «их» и не изменяется."
+msgstr "Ich wskazuje, że coś należy do nich; ta forma się nie odmienia."
+
+msgid "Ile lat ma…? — стандартный вопрос о возрасте."
+msgstr "Ile lat ma…? to standardowe pytanie o wiek."
+
+msgid "Ile masz lat? Mam rok, dwa/trzy/cztery lata, pięć и больше — lat: Mam dwanaście lat."
+msgstr "Ile masz lat? Mówimy: Mam rok, dwa/trzy/cztery lata, pięć lat. Także: Mam dwanaście lat."
+
+msgid "Jego не изменяется по роду и означает «его»."
+msgstr "Jego wskazuje, że coś należy do niego; ta forma nie zmienia się zależnie od rodzaju rzeczownika."
+
+msgid "Mam… сообщает, кто есть в семье."
+msgstr "Mam… pozwala powiedzieć, kogo mamy w rodzinie."
+
+msgid "Ola ma 4 ___. Вставьте форму."
+msgstr "Ola ma 4 ___. Wstaw poprawną formę."
+
+msgid "Piotr ma 15 ___. Вставьте форму."
+msgstr "Piotr ma 15 ___. Wstaw poprawną formę."
+
+msgid "Rodzice — родители."
+msgstr "Rodzice to mama i tata."
+
+msgid "Siostra — женского рода: moja siostra."
+msgstr "Siostra jest rzeczownikiem rodzaju żeńskiego: moja siostra."
+
+msgid "Tata — существительное мужского рода, поэтому mój tata."
+msgstr "Tata jest rzeczownikiem rodzaju męskiego, dlatego mówimy mój tata."
+
+msgid "jego brat — его брат; jej siostra — её сестра. Jego и jej не изменяются."
+msgstr "jego brat — brat tego mężczyzny; jej siostra — siostra tej kobiety. Jego i jej się nie odmieniają."
+
+msgid "mój tata · moja mama · moje dziecko · moi rodzice. Форма зависит от рода и числа предмета."
+msgstr "mój tata · moja mama · moje dziecko · moi rodzice. Forma zależy od rodzaju i liczby rzeczownika."
+
+msgid "Возраст"
+msgstr "Wiek"
+
+msgid "Возраст спрашивают конструкцией Ile lat ma…?"
+msgstr "O wiek pytamy za pomocą konstrukcji Ile lat ma…?"
+
+msgid "Выберите «моя мама»."
+msgstr "Wybierz poprawną formę dla swojej mamy."
+
+msgid "Выберите: ___ siostra ma dwadzieścia lat."
+msgstr "Wybierz: ___ siostra ma dwadzieścia lat."
+
+msgid "Выберите: ___ tata ma na imię Piotr."
+msgstr "Wybierz: ___ tata ma na imię Piotr."
+
+msgid "Его и её"
+msgstr "Jego i jej"
+
+msgid "Её мама работает учительницей."
+msgstr "Jej mama pracuje jako nauczycielka."
+
+msgid "Как сказать «его мама»?"
+msgstr "Jak powiedzieć, że to mama tego mężczyzny?"
+
+msgid "Как сказать «их дети»?"
+msgstr "Jak powiedzieć, że to dzieci tych osób?"
+
+msgid "Как спросить «Сколько лет твоему брату?»"
+msgstr "Jak zapytać rozmówcę o wiek jego brata?"
+
+msgid "Как спросить возраст сестры?"
+msgstr "Jak zapytać o wiek siostry?"
+
+msgid "Как спросить: «Сколько лет твоей сестре?»"
+msgstr "Jak zapytać rozmówcę o wiek jego siostry?"
+
+msgid "Кто такая córka?"
+msgstr "Kim jest córka?"
+
+msgid "Кто такие rodzice?"
+msgstr "Kim są rodzice?"
+
+msgid "Куба интересуется спортом."
+msgstr "Kuba interesuje się sportem."
+
+msgid "Мая навещает бабушку и дедушку."
+msgstr "Maja odwiedza babcię i dziadka."
+
+msgid "После 12 используется форма lat: dwanaście lat."
+msgstr "Po liczbie 12 używamy formy lat: dwanaście lat."
+
+msgid "После 15 употребляется lat."
+msgstr "Po liczbie 15 używamy formy lat."
+
+msgid "После 2, 3 и 4 употребляется lata: cztery lata."
+msgstr "Po liczbach 2, 3 i 4 używamy formy lata: cztery lata."
+
+msgid "С существительным женского рода употребляется moja."
+msgstr "Z rzeczownikiem rodzaju żeńskiego używamy formy moja."
+
+msgid "Согласование"
+msgstr "Zgodność rodzaju i liczby"
+
+msgid "У меня один брат"
+msgstr "Mam jednego brata"
+
+msgid "У меня одна сестра"
+msgstr "Mam jedną siostrę"
+
+msgid "Что означает «Mam jednego brata»?"
+msgstr "Co oznacza Mam jednego brata?"
+
+msgid "Я вижу брата"
+msgstr "Widzę brata"
+
+msgid "бабушка"
+msgstr "babcia — mama jednego z rodziców"
+
+msgid "бабушка и дедушка"
+msgstr "babcia i dziadek"
+
+msgid "брат"
+msgstr "brat — chłopiec lub mężczyzna mający tych samych rodziców"
+
+msgid "дедушка"
+msgstr "dziadek — tata jednego z rodziców"
+
+msgid "дети"
+msgstr "dzieci"
+
+msgid "дочь"
+msgstr "córka"
+
+msgid "жена"
+msgstr "żona"
+
+msgid "мама"
+msgstr "mama"
+
+msgid "муж"
+msgstr "mąż"
+
+msgid "папа"
+msgstr "tata"
+
+msgid "ребёнок"
+msgstr "dziecko"
+
+msgid "родители"
+msgstr "rodzice"
+
+msgid "семья"
+msgstr "rodzina"
+
+msgid "сестра"
+msgstr "siostra — dziewczyna lub kobieta mająca tych samych rodziców"
+
+msgid "сколько лет?"
+msgstr "ile lat? — pytanie o wiek"
+
+msgid "сын"
+msgstr "syn"
+
+msgid "Ile masz lat? Mam rok, dwa/trzy/cztery lata, пять и больше — lat: Mam dwanaście lat."
+msgstr "Ile masz lat? Mówimy: Mam rok, dwa/trzy/cztery lata, pięć lat. Także: Mam dwanaście lat."
