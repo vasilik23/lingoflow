@@ -724,6 +724,7 @@ window.PolskiFlowPolishMessages = {
   "Итоговая рекомендация опирается на проведённый анализ.": "Końcowa rekomendacja opiera się na przeprowadzonej analizie.",
   "Итоговое повторение A2": "Powtórka końcowa A2",
   "Итоговый проект B2": "Projekt końcowy B2",
+  "Ищем по названиям и описаниям тем, уроков и текстов.": "Wyszukujemy w tytułach i opisach tematów, lekcji i tekstów.",
   "К курсу": "Do kursu",
   "К курсу →": "Do kursu →",
   "К основному содержимому": "Przejdź do głównej treści",

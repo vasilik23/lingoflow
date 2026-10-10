@@ -4,11 +4,11 @@
 {% block toolbar_title %}<h1 id="search-title">{% translate "Что хочешь найти?" %}</h1>{% endblock %}
 {% block content %}
   <section class="search-hero" aria-labelledby="search-title">
-    <div><p class="eyebrow">{% translate "Весь LingoFlow" %}</p><p class="muted">{% translate "Темы, отдельные уроки и учебные тексты — в одном месте." %}</p></div>
+    <div><p class="eyebrow">{% translate "Весь LingoFlow" %}</p><p class="muted" id="search-scope">{% translate "Ищем по названиям и описаниям тем, уроков и текстов." %}</p></div>
     <form class="global-search-form" method="get" role="search">
       <label class="visually-hidden" for="global-search-query">{% translate "Поиск по приложению" %}</label>
       <span aria-hidden="true">⌕</span>
-      <input id="global-search-query" name="q" value="{{ search_result.query }}" minlength="2" maxlength="80" type="search" placeholder="{% translate "Например: работа, погода, путешествия" %}" autofocus>
+      <input id="global-search-query" aria-describedby="search-scope" name="q" value="{{ search_result.query }}" minlength="2" maxlength="80" type="search" placeholder="{% translate "Например: работа, погода, путешествия" %}" autofocus>
       <button type="submit">{% translate "Найти" %}</button>
     </form>
   </section>
