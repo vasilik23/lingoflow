@@ -227,10 +227,10 @@ class PolishAllA1SupportTests(TestCase):
 
 
 class PolishReadingSupportTests(TestCase):
-    def test_all_a1_a2_reading_support_is_polish_and_preserves_sources(self):
-        readings = list(ReadingText.objects.filter(level__in=('A1', 'A2'), is_active=True))
-        self.assertGreaterEqual(len(readings), 26)
-        self.assertEqual({reading.level for reading in readings}, {'A1', 'A2'})
+    def test_all_a1_a2_b1_reading_support_is_polish_and_preserves_sources(self):
+        readings = list(ReadingText.objects.filter(level__in=('A1', 'A2', 'B1'), is_active=True))
+        self.assertGreaterEqual(len(readings), 38)
+        self.assertEqual({reading.level for reading in readings}, {'A1', 'A2', 'B1'})
         support = []
         for reading in readings:
             support.extend((reading.title, reading.description))
