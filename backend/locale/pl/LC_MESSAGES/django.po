@@ -12363,3 +12363,279 @@ msgstr "fizjoterapeuta"
 
 msgid "эскиз"
 msgstr "szkic"
+
+msgid "Dorastać — постепенно становиться взрослым."
+msgstr "Dorastać oznacza stopniowo stawać się dorosłym."
+
+msgid "Jeździł описывает повторение, został — единичный завершённый выбор."
+msgstr "Jeździł opisuje powtarzające się czynności, a został — jednorazowy, zakończony wybór."
+
+msgid "Najpierw и potem выстраивают хронологию; założyła передаёт достигнутый результат."
+msgstr "Najpierw i potem porządkują wydarzenia chronologicznie; założyła wskazuje osiągnięty rezultat."
+
+msgid "Najpierw, następnie, z czasem и w końcu помогают показать развитие событий."
+msgstr "Najpierw, następnie, z czasem i w końcu pomagają pokazać rozwój wydarzeń."
+
+msgid "Okazać się сообщает, каким что-либо оказалось."
+msgstr "Okazać się informuje, jakie coś było w rzeczywistości."
+
+msgid "Początkowo вводит начальный этап истории."
+msgstr "Początkowo wprowadza początkowy etap historii."
+
+msgid "Punkt zwrotny меняет дальнейшее развитие событий."
+msgstr "Punkt zwrotny zmienia dalszy przebieg wydarzeń."
+
+msgid "Ukończyła подчёркивает завершённый результат."
+msgstr "Ukończyła podkreśla zakończony rezultat."
+
+msgid "Ukończyłem ясно обозначает завершённый этап."
+msgstr "Ukończyłem wyraźnie wskazuje zakończony etap."
+
+msgid "Wpłynąć na — оказать влияние на что-либо."
+msgstr "Wpłynąć na oznacza wywrzeć na coś wpływ."
+
+msgid "Wpłynąć требует na + винительный падеж: na moje życie."
+msgstr "Wpłynąć łączy się z na i biernikiem: na moje życie."
+
+msgid "В финале она связывает опыт с пониманием собственных целей."
+msgstr "Na końcu łączy doświadczenie ze zrozumieniem własnych celów."
+
+msgid "Йоанна выросла в Белостоке."
+msgstr "Joanna dorastała w Białymstoku."
+
+msgid "Как сказать «поворотный момент»?"
+msgstr "Jak powiedzieć „moment, który zmienia dalszy bieg wydarzeń”?"
+
+msgid "Как сказать о завершённом образовании?"
+msgstr "Jak powiedzieć o ukończeniu edukacji?"
+
+msgid "Несовершенный вид pracowała описывает длительный фон прошлого."
+msgstr "Forma niedokonana pracowała opisuje długotrwałe tło wydarzeń z przeszłości."
+
+msgid "Несовершенный вид описывает длительность, повторение и фон: pracowała, jeździł."
+msgstr "Aspekt niedokonany opisuje trwanie, powtarzanie i tło wydarzeń: pracowała, jeździł."
+
+msgid "Одно завершённое событие предшествует другому: ukończył."
+msgstr "Jedno zakończone wydarzenie poprzedza drugie: ukończył."
+
+msgid "Она изучала архитектуру в Варшаве."
+msgstr "Studiowała architekturę w Warszawie."
+
+msgid "Она решила заниматься общественными пространствами."
+msgstr "Postanowiła zajmować się przestrzeniami publicznymi."
+
+msgid "Первая работа дала ей практический опыт."
+msgstr "Pierwsza praca dała jej praktyczne doświadczenie."
+
+msgid "Работа над библиотекой изменила её профессиональные цели."
+msgstr "Praca nad biblioteką zmieniła jej cele zawodowe."
+
+msgid "Связная история"
+msgstr "Spójna opowieść"
+
+msgid "Совершенный вид выделяет завершённый этап: ukończyła, podjął, osiągnęli."
+msgstr "Aspekt dokonany podkreśla zakończony etap: ukończyła, podjął, osiągnęli."
+
+msgid "Составьте: Сначала она работала в школе, а потом открыла фирму."
+msgstr "Ułóż zdanie: najpierw pracowała w szkole, a potem założyła firmę."
+
+msgid "Составьте: Этот опыт сильно повлиял на мою жизнь."
+msgstr "Ułóż zdanie: to doświadczenie mocno wpłynęło na moje życie."
+
+msgid "Фон и процесс"
+msgstr "Tło i proces"
+
+msgid "Хронологические маркеры делают рассказ связным."
+msgstr "Określenia porządkujące wydarzenia chronologicznie nadają opowieści spójność."
+
+msgid "Что лучше связывает биографический рассказ?"
+msgstr "Co najlepiej zapewnia spójność opowieści biograficznej?"
+
+msgid "Что означает dorastać?"
+msgstr "Co oznacza dorastać?"
+
+msgid "важное событие"
+msgstr "ważne wydarzenie"
+
+msgid "вспоминать"
+msgstr "wspominać"
+
+msgid "достичь цели"
+msgstr "osiągnąć cel"
+
+msgid "жизненный опыт"
+msgstr "doświadczenie życiowe"
+
+msgid "начать карьеру"
+msgstr "rozpocząć karierę"
+
+msgid "оказаться"
+msgstr "okazać się"
+
+msgid "окончить вуз"
+msgstr "ukończyć studia"
+
+msgid "переезжать"
+msgstr "przeprowadzać się"
+
+msgid "переехать"
+msgstr "przeprowadzić się"
+
+msgid "поначалу"
+msgstr "początkowo"
+
+msgid "принять решение"
+msgstr "podjąć decyzję"
+
+msgid "приобрести опыт"
+msgstr "zdobyć doświadczenie"
+
+msgid "расти; взрослеть"
+msgstr "rosnąć, dorastać"
+
+msgid "со временем"
+msgstr "z czasem"
+
+msgid "увольняться"
+msgstr "odchodzić z pracy"
+
+msgid "Dojechać обозначает достижение пункта назначения."
+msgstr "Dojechać oznacza dotrzeć do miejsca docelowego."
+
+msgid "Odwołany lot не состоится."
+msgstr "Odwołany lot nie odbędzie się."
+
+msgid "Ominąć — выбрать путь в обход препятствия."
+msgstr "Ominąć oznacza wybrać drogę obok przeszkody."
+
+msgid "Prosić o zwrot kosztów — стандартная просьба о возмещении."
+msgstr "Prosić o zwrot kosztów to typowe sformułowanie prośby o zwrócenie wydanych pieniędzy."
+
+msgid "Przejechać przez называет место по пути, ominąć — движение в обход."
+msgstr "Przejechać przez wskazuje miejsce na trasie, a ominąć — ruch w celu jego obejścia."
+
+msgid "Przejechać przez — проехать через место."
+msgstr "Przejechać przez oznacza przebyć drogę prowadzącą przez dane miejsce."
+
+msgid "Przesiadka — смена транспорта по пути."
+msgstr "Przesiadka to zmiana środka transportu podczas podróży."
+
+msgid "Utknąć означает оказаться без возможности продолжить путь."
+msgstr "Utknąć oznacza znaleźć się w sytuacji, w której nie można kontynuować podróży."
+
+msgid "Wyjechać z показывает отправление, przyjechać/dojechać do — прибытие и достижение цели."
+msgstr "Wyjechać z wskazuje miejsce wyjazdu, a przyjechać/dojechać do — przybycie i dotarcie do celu."
+
+msgid "Wyjeżdża z называет исходную точку, przyjeżdża do — конечную."
+msgstr "Wyjeżdża z wskazuje miejsce początkowe, a przyjeżdża do — miejsce docelowe."
+
+msgid "Z powodu вводит причину проблемы, dlatego связывает её с решением."
+msgstr "Z powodu wprowadza przyczynę problemu, a dlatego łączy go z rozwiązaniem."
+
+msgid "Z powodu вводит причину, dlatego — следствие и решение."
+msgstr "Z powodu wprowadza przyczynę, a dlatego — skutek i rozwiązanie."
+
+msgid "Z powodu вводит причину, zdążyć na требует винительного падежа."
+msgstr "Z powodu wprowadza przyczynę, a zdążyć na łączy się z biernikiem."
+
+msgid "Zaproponować komu? требует дательного: nam; co? — винительного: połączenie."
+msgstr "Zaproponować komu? łączy się z celownikiem: nam; co? — z biernikiem: połączenie."
+
+msgid "Zawieźć kogoś do места — доставить кого-либо."
+msgstr "Zawieźć kogoś do danego miejsca oznacza dostarczyć tam tę osobę środkiem transportu."
+
+msgid "Zgłosić problem — сообщить сотруднику о неисправности."
+msgstr "Zgłosić problem oznacza poinformować pracownika o usterce."
+
+msgid "Zrobić wrażenie — произвести впечатление."
+msgstr "Zrobić wrażenie oznacza wzbudzić u kogoś silne odczucia."
+
+msgid "В Катовице объявили о большой задержке."
+msgstr "W Katowicach ogłoszono duże opóźnienie."
+
+msgid "Из-за задержки они могли не успеть на короткую пересадку."
+msgstr "Z powodu opóźnienia mogli nie zdążyć na krótką przesiadkę."
+
+msgid "Как попросить возврат расходов?"
+msgstr "Jak poprosić o zwrot kosztów?"
+
+msgid "Как связать проблему и решение?"
+msgstr "Jak połączyć problem z rozwiązaniem?"
+
+msgid "Марта оценила неожиданное изменение как полезный опыт."
+msgstr "Marta uznała nieoczekiwaną zmianę za cenne doświadczenie."
+
+msgid "Начало и конец"
+msgstr "Początek i koniec"
+
+msgid "Они ехали поездом в Прагу."
+msgstr "Jechali pociągiem do Pragi."
+
+msgid "Они использовали паузу для короткой прогулки."
+msgstr "Wykorzystali przerwę na krótki spacer."
+
+msgid "Поезд отправляется с платформы: z peronu."
+msgstr "Pociąg odjeżdża z peronu: z peronu."
+
+msgid "Приставка do- подчёркивает достижение конечной точки."
+msgstr "Przedrostek do- podkreśla dotarcie do punktu docelowego."
+
+msgid "Причина и решение"
+msgstr "Przyczyna i rozwiązanie"
+
+msgid "Путь"
+msgstr "Trasa"
+
+msgid "Составьте: Из-за задержки мы не успели на пересадку."
+msgstr "Ułóż zdanie: z powodu opóźnienia nie zdążyliśmy na przesiadkę."
+
+msgid "Составьте: Сотрудник предложил нам другой рейс."
+msgstr "Ułóż zdanie: pracownik zaproponował nam inne połączenie."
+
+msgid "Сотрудница предложила альтернативный маршрут через Остраву."
+msgstr "Pracownica zaproponowała alternatywną trasę przez Ostrawę."
+
+msgid "Что означает przesiadka?"
+msgstr "Co oznacza przesiadka?"
+
+msgid "багаж"
+msgstr "bagaż"
+
+msgid "возврат расходов"
+msgstr "zwrot kosztów"
+
+msgid "задержка"
+msgstr "opóźnienie"
+
+msgid "заменяющий"
+msgstr "zastępczy"
+
+msgid "застрять"
+msgstr "utknąć"
+
+msgid "незабываемое впечатление"
+msgstr "niezapomniane wrażenie"
+
+msgid "обойти; миновать"
+msgstr "ominąć"
+
+msgid "отменённый"
+msgstr "odwołany"
+
+msgid "пересадка"
+msgstr "przesiadka"
+
+msgid "платформа"
+msgstr "peron"
+
+msgid "приехать"
+msgstr "przyjechać"
+
+msgid "проехать"
+msgstr "przejechać"
+
+msgid "сообщение; рейс"
+msgstr "połączenie"
+
+msgid "уехать; выехать"
+msgstr "wyjechać"
