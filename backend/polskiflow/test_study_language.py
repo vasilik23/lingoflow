@@ -6,6 +6,24 @@ from polskiflow.learning.templatetags.ui import learning_language
 
 
 class StudyLanguageTests(SimpleTestCase):
+    def test_b1_instruction_and_review_use_the_displayed_support_language(self):
+        source = 'Как неформально поздороваться?'
+        for lang in ('ru', 'pl', 'en'):
+            with self.subTest(lang=lang), override(lang):
+                instruction = render_to_string('partials/b1_exam_instruction.html',
+                    {'instruction': {'polish': 'Proszę odpowiedzieć.', 'russian': source}})
+                self.assertIn('<p lang="pl">Proszę odpowiedzieć.</p>', instruction)
+                self.assertIn(f'<p lang="{lang}">', instruction)
+                self.assertIn(f'<details lang="{lang}">', instruction)
+                question = {'id': 'one', 'prompt': source, 'options': ['Cześć'],
+                            'explanation': 'Личная заметка, которой нет в каталоге'}
+                html = render_to_string('partials/b1_mock_question.html', {
+                    'question': question, 'result': {'details': [{'question': question,
+                    'is_correct': True, 'correct_text': 'Cześć'}]}})
+                self.assertIn(f'<legend lang="{lang}">', html)
+                self.assertIn('<span lang="pl">Cześć</span>', html)
+                self.assertIn('<span lang="ru">Личная заметка', html)
+
     def test_language_matches_translation_and_canonical_polish(self):
         for lang in ('ru', 'pl', 'en'):
             with override(lang):

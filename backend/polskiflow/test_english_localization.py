@@ -107,7 +107,7 @@ class EnglishLearningTests(TestCase):
         self.assertEqual(restored.context['run_token'], token)
         self.assertEqual(restored.context['state'], started.context['state'])
         self.assertEqual(restored.context['questions'], started.context['questions'])
-        self.assertContains(restored, 'Explanation in English')
+        self.assertContains(restored, 'Task explanation')
         self.assertContains(restored, 'lang="pl"')
 
     def test_every_active_reading_has_complete_optional_english_translation(self):
