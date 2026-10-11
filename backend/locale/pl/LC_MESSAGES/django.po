@@ -11856,3 +11856,510 @@ msgstr "jabłka"
 
 msgid "двое"
 msgstr "dwoje"
+
+msgid "Биография, профессиональный выбор и поворотный момент"
+msgstr "Biografia, wybór zawodowy i punkt zwrotny"
+
+msgid "Задержка, альтернативный маршрут и неожиданные впечатления"
+msgstr "Opóźnienie, alternatywna trasa i niespodziewane wrażenia"
+
+msgid "Итоговый проект: от чтения источников до письма и обсуждения"
+msgstr "Projekt końcowy: od lektury źródeł do pisania i dyskusji"
+
+msgid "Как жители нашли решение экологической проблемы"
+msgstr "Jak mieszkańcy rozwiązali problem ekologiczny"
+
+msgid "Как общественная инициатива привела к компромиссу"
+msgstr "Jak inicjatywa społeczna doprowadziła do kompromisu"
+
+msgid "Как проверить публикацию и передать её главную мысль"
+msgstr "Jak sprawdzić publikację i przekazać jej główną myśl"
+
+msgid "Как разговор о потребностях помогает найти компромисс"
+msgstr "Jak rozmowa o potrzebach pomaga znaleźć kompromis"
+
+msgid "Как сопоставить путеводитель и местный музей"
+msgstr "Jak porównać informacje z przewodnika i lokalnego muzeum"
+
+msgid "Как сравнить роман, экранизацию и культурное событие"
+msgstr "Jak porównać powieść, ekranizację i wydarzenie kulturalne"
+
+msgid "Как цель, практика и обратная связь помогают учиться"
+msgstr "Jak cel, praktyka i informacja zwrotna pomagają w nauce"
+
+msgid "Почему устойчивые привычки начинаются с небольшого изменения"
+msgstr "Dlaczego trwałe nawyki zaczynają się od małej zmiany"
+
+msgid "Собеседование и осознанный выбор профессионального развития"
+msgstr "Rozmowa kwalifikacyjna i świadomy wybór ścieżki rozwoju zawodowego"
+
+msgid "абонемент"
+msgstr "karnet"
+
+msgid "берег"
+msgstr "brzeg"
+
+msgid "более разумный"
+msgstr "rozsądniejszy"
+
+msgid "более сложный; амбициозный"
+msgstr "bardziej wymagający, ambitniejszy"
+
+msgid "более широкий"
+msgstr "szerszy"
+
+msgid "большинство"
+msgstr "większość"
+
+msgid "братья и сёстры"
+msgstr "rodzeństwo"
+
+msgid "быть важным"
+msgstr "mieć znaczenie"
+
+msgid "вводить"
+msgstr "wprowadzać"
+
+msgid "вести; руководить"
+msgstr "prowadzić, kierować"
+
+msgid "вечерний"
+msgstr "wieczorowy"
+
+msgid "взрослеть"
+msgstr "dorastać"
+
+msgid "влияние"
+msgstr "wpływ"
+
+msgid "волонтёрка"
+msgstr "wolontariuszka"
+
+msgid "восстановление"
+msgstr "przywrócenie, regeneracja"
+
+msgid "второстепенный"
+msgstr "drugoplanowy"
+
+msgid "выделить"
+msgstr "przeznaczyć"
+
+msgid "выполнять"
+msgstr "wykonywać"
+
+msgid "выпускной экзамен"
+msgstr "egzamin końcowy, matura"
+
+msgid "выражать"
+msgstr "wyrażać"
+
+msgid "высказывание"
+msgstr "wypowiedź"
+
+msgid "гнездо"
+msgstr "gniazdo"
+
+msgid "готовность"
+msgstr "gotowość"
+
+msgid "граничит"
+msgstr "graniczy"
+
+msgid "диалект"
+msgstr "dialekt, gwara"
+
+msgid "доказать"
+msgstr "udowodnić"
+
+msgid "должна была быть"
+msgstr "miała być"
+
+msgid "доступный"
+msgstr "dostępny"
+
+msgid "друг друга; взаимно"
+msgstr "nawzajem, wzajemnie"
+
+msgid "желание"
+msgstr "ochota, chęć"
+
+msgid "жилой район"
+msgstr "osiedle mieszkaniowe"
+
+msgid "задержанный"
+msgstr "opóźniony"
+
+msgid "заключить; отметить"
+msgstr "stwierdzić"
+
+msgid "заменить"
+msgstr "zastąpić"
+
+msgid "заметный; явный"
+msgstr "wyraźny"
+
+msgid "заседание"
+msgstr "posiedzenie"
+
+msgid "заснуть"
+msgstr "zasnąć"
+
+msgid "застройка"
+msgstr "zabudowa"
+
+msgid "значительно"
+msgstr "znacznie"
+
+msgid "исключительно"
+msgstr "wyłącznie"
+
+msgid "использовать"
+msgstr "wykorzystywać"
+
+msgid "итоговый"
+msgstr "końcowy"
+
+msgid "казаться"
+msgstr "wydawać się"
+
+msgid "камера хранения"
+msgstr "przechowalnia bagażu"
+
+msgid "канал"
+msgstr "kanał"
+
+msgid "квалификация"
+msgstr "kwalifikacje"
+
+msgid "компромисс"
+msgstr "kompromis"
+
+msgid "конфликт"
+msgstr "konflikt"
+
+msgid "костюм"
+msgstr "kostium"
+
+msgid "краткий пересказ"
+msgstr "streszczenie"
+
+msgid "критерий"
+msgstr "kryterium"
+
+msgid "курорт"
+msgstr "kurort"
+
+msgid "ливень"
+msgstr "ulewa"
+
+msgid "маршрут"
+msgstr "trasa"
+
+msgid "мастерица"
+msgstr "rzemieślniczka"
+
+msgid "мастерская"
+msgstr "warsztat"
+
+msgid "местоположение"
+msgstr "lokalizacja"
+
+msgid "наблюдать"
+msgstr "obserwować"
+
+msgid "насекомое"
+msgstr "owad"
+
+msgid "не спеша"
+msgstr "bez pośpiechu"
+
+msgid "небольшой"
+msgstr "niewielki"
+
+msgid "недопонимание"
+msgstr "brak wzajemnego zrozumienia"
+
+msgid "недоразумение"
+msgstr "nieporozumienie"
+
+msgid "недостаток"
+msgstr "wada"
+
+msgid "недоступный"
+msgstr "niedostępny"
+
+msgid "неудачный"
+msgstr "nieudany"
+
+msgid "но"
+msgstr "lecz"
+
+msgid "обосновала"
+msgstr "uzasadniła"
+
+msgid "общественные обсуждения"
+msgstr "konsultacje społeczne"
+
+msgid "объявить"
+msgstr "zapowiedzieć, ogłosić"
+
+msgid "объём; круг"
+msgstr "zakres"
+
+msgid "ограничить"
+msgstr "ograniczyć"
+
+msgid "ожидание"
+msgstr "oczekiwanie"
+
+msgid "окончание"
+msgstr "ukończenie"
+
+msgid "определила"
+msgstr "określiła"
+
+msgid "осадки"
+msgstr "opady"
+
+msgid "особенно"
+msgstr "zwłaszcza"
+
+msgid "осознанный"
+msgstr "świadomy"
+
+msgid "остаток"
+msgstr "reszta"
+
+msgid "остаться"
+msgstr "pozostać"
+
+msgid "отличаться"
+msgstr "różnić się"
+
+msgid "отчёт"
+msgstr "raport"
+
+msgid "перебивать"
+msgstr "przerywać wypowiedź"
+
+msgid "перекус"
+msgstr "przekąska"
+
+msgid "переутомляться"
+msgstr "przemęczać się"
+
+msgid "перечислить"
+msgstr "wymienić"
+
+msgid "перспектива"
+msgstr "perspektywa"
+
+msgid "площадка"
+msgstr "plac"
+
+msgid "повлиять на"
+msgstr "wpłynąć na"
+
+msgid "поворотный момент"
+msgstr "punkt zwrotny"
+
+msgid "повторять"
+msgstr "powtarzać"
+
+msgid "повышенным голосом"
+msgstr "podniesionym głosem"
+
+msgid "подвела итог"
+msgstr "podsumowała"
+
+msgid "поколение"
+msgstr "pokolenie"
+
+msgid "полный"
+msgstr "pełny"
+
+msgid "пологий"
+msgstr "łagodny, o niewielkim nachyleniu"
+
+msgid "получать; приобретать"
+msgstr "zdobywać"
+
+msgid "посадить"
+msgstr "posadzić"
+
+msgid "представлять себе"
+msgstr "wyobrażać sobie"
+
+msgid "преимущество"
+msgstr "zaleta"
+
+msgid "преподаватель; ведущий"
+msgstr "nauczyciel, osoba prowadząca zajęcia"
+
+msgid "привыкнуть"
+msgstr "przyzwyczaić się"
+
+msgid "приняла"
+msgstr "przyjęła"
+
+msgid "приобрести"
+msgstr "zdobyć"
+
+msgid "причина"
+msgstr "przyczyna"
+
+msgid "проводник; контролёр"
+msgstr "konduktor"
+
+msgid "произведение"
+msgstr "dzieło"
+
+msgid "производить"
+msgstr "wywierać, wytwarzać"
+
+msgid "произношение"
+msgstr "wymowa"
+
+msgid "пространство"
+msgstr "przestrzeń"
+
+msgid "проявить"
+msgstr "wykazać"
+
+msgid "развитие"
+msgstr "rozwój"
+
+msgid "разделить"
+msgstr "podzielić"
+
+msgid "расходы"
+msgstr "koszty"
+
+msgid "результат"
+msgstr "wynik"
+
+msgid "резюме; подведение итогов"
+msgstr "podsumowanie"
+
+msgid "ремонт"
+msgstr "remont"
+
+msgid "риск"
+msgstr "ryzyko"
+
+msgid "самочувствие"
+msgstr "samopoczucie"
+
+msgid "самый ценный"
+msgstr "najcenniejszy"
+
+msgid "сеанс"
+msgstr "seans"
+
+msgid "серьёзный"
+msgstr "poważny"
+
+msgid "сила воли"
+msgstr "siła woli"
+
+msgid "скрытая"
+msgstr "ukryta"
+
+msgid "собеседник"
+msgstr "rozmówca"
+
+msgid "соблюсти"
+msgstr "dotrzymać"
+
+msgid "совершать"
+msgstr "popełniać"
+
+msgid "совместный"
+msgstr "wspólny"
+
+msgid "совмещать"
+msgstr "łączyć"
+
+msgid "содержать"
+msgstr "zawierać"
+
+msgid "создаваться"
+msgstr "powstawać"
+
+msgid "сообщение; объявление"
+msgstr "komunikat"
+
+msgid "соседний"
+msgstr "sąsiedni"
+
+msgid "сослалась"
+msgstr "odniosła się"
+
+msgid "состояться"
+msgstr "odbyć się"
+
+msgid "сохранённые"
+msgstr "zachowane"
+
+msgid "специалистка"
+msgstr "specjalistka"
+
+msgid "средство"
+msgstr "środek"
+
+msgid "старинный"
+msgstr "dawny, zabytkowy"
+
+msgid "стекать"
+msgstr "spływać"
+
+msgid "темп"
+msgstr "tempo"
+
+msgid "терпение"
+msgstr "cierpliwość"
+
+msgid "течение"
+msgstr "przepływ"
+
+msgid "тревожный"
+msgstr "alarmujący"
+
+msgid "уверенность"
+msgstr "pewność"
+
+msgid "угрожать"
+msgstr "grozić"
+
+msgid "удерживать"
+msgstr "zatrzymywać"
+
+msgid "указать"
+msgstr "wskazać"
+
+msgid "умение"
+msgstr "umiejętność"
+
+msgid "упростила"
+msgstr "uprościła"
+
+msgid "усилие; нагрузка"
+msgstr "wysiłek, obciążenie"
+
+msgid "успеть"
+msgstr "zdążyć"
+
+msgid "установить; определить"
+msgstr "ustalić"
+
+msgid "устойчивый"
+msgstr "trwały"
+
+msgid "участник"
+msgstr "uczestnik"
+
+msgid "физиотерапевт"
+msgstr "fizjoterapeuta"
+
+msgid "эскиз"
+msgstr "szkic"
