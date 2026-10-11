@@ -30,6 +30,14 @@
           <p>{% for token in paragraph %}{% if token.translation %}<button type="button" class="reader-word" data-word="{{ token.word }}" data-lemma="{{ token.lemma }}" data-translation="{{ token.translation|learning_text }}" data-translation-lang="{{ token.translation|learning_language:'ru' }}" data-source-translation="{{ token.translation }}" data-part-of-speech="{{ token.part_of_speech }}">{{ token.text }}</button>{% else %}{{ token.text }}{% endif %}{% endfor %}</p>
         {% endfor %}
       </div>
+      {% if glossary_words %}
+        <details class="card reading-glossary">
+          <summary>{% translate "Слова из текста" %} · {{ glossary_words|length }}</summary>
+          <div lang="pl">
+            {% for token in glossary_words %}<p><button type="button" class="reader-word" data-word="{{ token.word }}" data-lemma="{{ token.lemma }}" data-translation="{{ token.translation|learning_text }}" data-translation-lang="{{ token.translation|learning_language:'ru' }}" data-source-translation="{{ token.translation }}" data-part-of-speech="{{ token.part_of_speech }}" data-glossary-entry>{{ token.text }}</button></p>{% endfor %}
+          </div>
+        </details>
+      {% endif %}
       {% with english_paragraphs=text.paragraphs|english_reading %}
         {% if english_paragraphs %}
           <details class="card reading-translation">
@@ -121,7 +129,7 @@
       selectedTranslation.lang = button.dataset.translationLang;
       document.querySelector('#word-input').value = button.dataset.word;
       document.querySelector('#translation-input').value = button.dataset.sourceTranslation;
-      document.querySelector('#context-input').value = button.closest('p').textContent.trim();
+      document.querySelector('#context-input').value = button.dataset.glossaryEntry !== undefined ? '' : button.closest('p').textContent.trim().slice(0, 500);
       const dictionaryStatus = document.querySelector('#dictionary-status');
       if (dictionaryStatus) dictionaryStatus.textContent = '';
       if (window.innerWidth < 850) document.querySelector('#word-panel').scrollIntoView({behavior: 'smooth', block: 'nearest'});

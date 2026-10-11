@@ -2,11 +2,28 @@ import subprocess
 from pathlib import Path
 from unittest.mock import patch
 
-from django.test import TestCase
+from django.test import SimpleTestCase, TestCase
 
 from polskiflow.auth import ACCESS_COOKIE, SupabaseUser
 from polskiflow.learning.models import Course, ReadingText, Topic
 from polskiflow.progress_store import DashboardProgress
+from polskiflow.reading_views import _tokenize
+
+
+class ReadingTokenizationTests(SimpleTestCase):
+    def test_phrases_win_over_words_and_preserve_original_text(self):
+        paragraph = "Czytać między wierszami, nie czytać-wcale ani odczytać."
+        tokens = _tokenize([paragraph], {
+            "czytać": "читать", "czytać między wierszami": "читать между строк",
+        })[0]
+        self.assertEqual("".join(token["text"] for token in tokens), paragraph)
+        selected = [token for token in tokens if token.get("translation")]
+        self.assertEqual([token["word"] for token in selected], ["czytać między wierszami"])
+        self.assertEqual(selected[0]["text"], "Czytać między wierszami")
+
+    def test_literal_metacharacters_and_invalid_glossary_are_safe(self):
+        self.assertEqual(_tokenize(["a+b, ab", None], {"a+b": "сумма"})[0][0]["word"], "a+b")
+        self.assertEqual(_tokenize(["Tekst."], None), [[{"text": "Tekst."}]])
 
 
 class ReadingViewsTests(TestCase):
@@ -272,6 +289,32 @@ class ReadingViewsTests(TestCase):
         response = self.client.get("/reading/test-story/")
 
         self.assertContains(response, 'data-word="kota"')
+
+    @patch("polskiflow.reading_views.save_personal_word", return_value=True)
+    def test_unmatched_phrase_is_available_and_saves_canonical_lemma(self, save_word):
+        text = ReadingText.objects.get(pk="test-story")
+        text.glossary = {"czytać między wierszami": {
+            "lemma": "czytać między wierszami", "translation": "читать между строк",
+        }}
+        text.save(update_fields=["glossary"])
+        response = self.client.get("/reading/test-story/")
+        self.assertContains(response, 'class="card reading-glossary"')
+        self.assertContains(response, 'data-word="czytać między wierszami"')
+        self.assertNotContains(response, 'class="card reading-glossary" open')
+        self.client.post("/reading/test-story/save/", {
+            "word": "czytać między wierszami", "translation": "читать между строк", "context": "",
+        })
+        self.assertEqual(save_word.call_args.args[2:5], ("czytać między wierszami", "читать между строк", ""))
+
+    def test_current_c1_c2_readings_expose_every_glossary_entry(self):
+        readings = ReadingText.objects.filter(level__in=["C1", "C2"], is_active=True)
+        self.assertEqual(readings.count(), 20)
+        for text in readings:
+            with self.subTest(text=text.pk):
+                response = self.client.get(f"/reading/{text.pk}/")
+                words = {token["word"] for paragraph in response.context["paragraphs"] for token in paragraph if token.get("translation")}
+                words.update(token["word"] for token in response.context["glossary_words"])
+                self.assertEqual(words, {surface.strip().casefold() for surface in text.glossary})
 
     def test_reader_offers_private_system_speech_controls(self):
         response = self.client.get("/reading/test-story/")
