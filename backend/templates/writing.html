@@ -2,6 +2,7 @@
 {% load i18n ui static %}
 {% block title %}{% translate "Письменная практика" %} {{ selected_writing_level|ui_text }} · LingoFlow{% endblock %}
 {% block content %}
+{% get_current_language as study_ui_language %}
   <header class="content-header writing-header">
     <div><p class="eyebrow">{% translate "Практика" %} {{ selected_writing_level|ui_text }}</p><h1>{% translate "Письменные ответы" %}</h1><p class="muted">{% translate "Напиши черновик и проверь наблюдаемые признаки текста. Подсказка не оценивает грамотность, уровень или качество ответа." %}</p></div>
     <a class="compact-button" href="{% url 'course' %}?level={{ selected_writing_level }}">{% translate "К темам" %} {{ selected_writing_level|ui_text }} →</a>
@@ -25,23 +26,23 @@
   <section class="card writing-workspace" aria-label="{% translate "Редактор письменного ответа" %}">
     <label for="writing-prompt">{% translate "Выбери задание" %}</label>
     <select id="writing-prompt" class="writing-prompt-select">
-      {% for prompt in writing_prompts %}<option value="{{ prompt.id }}">{{ prompt.title|ui_text }}</option>{% endfor %}
+      {% for prompt in writing_prompts %}<option value="{{ prompt.id }}"><span lang="{{ prompt.title|learning_language }}">{{ prompt.title|learning_markup }}</span></option>{% endfor %}
     </select>
 
     {% for prompt in writing_prompts %}
       <div class="writing-prompt" data-writing-prompt="{{ prompt.id }}" data-min-words="{{ prompt.min_words }}" data-min-paragraphs="{{ prompt.min_paragraphs }}" data-markers="{{ prompt.markers|join:'|' }}"{% if not forloop.first %} hidden{% endif %}>
         <p class="eyebrow">{% translate "Задание" %} {{ forloop.counter|ui_text }}{% if prompt.genre %} · <span lang="pl">{{ prompt.genre|ui_text }}</span>{% endif %}</p>
-        <h2>{{ prompt.title|ui_text }}</h2>
-        <p>{{ prompt.task|ui_text }}</p>
+        <h2><span lang="{{ prompt.title|learning_language }}">{{ prompt.title|learning_markup }}</span></h2>
+        <p><span lang="{{ prompt.task|learning_language }}">{{ prompt.task|learning_markup }}</span></p>
         {% if prompt.requirements %}
           <section class="writing-task-points" aria-labelledby="points-{{ prompt.id }}">
             <h3 id="points-{{ prompt.id }}">{% translate "Что обязательно раскрыть" %}</h3>
-            <ul>{% for requirement in prompt.requirements %}<li>{{ requirement|ui_text }}</li>{% endfor %}</ul>
+            <ul>{% for requirement in prompt.requirements %}<li><span lang="{{ requirement|learning_language }}">{{ requirement|learning_markup }}</span></li>{% endfor %}</ul>
           </section>
         {% endif %}
-        <p class="writing-hint"><strong>{% translate "Ориентир:" %}</strong> {{ prompt.hint|ui_text }}</p>
+        <p class="writing-hint"><strong>{% translate "Ориентир:" %}</strong> <span lang="{{ prompt.hint|learning_language }}">{{ prompt.hint|learning_markup }}</span></p>
         <label for="draft-{{ prompt.id }}">{% translate "Твой черновик" %}</label>
-        <textarea id="draft-{{ prompt.id }}" rows="12" data-writing-draft="{{ prompt.id }}" aria-describedby="draft-help-{{ prompt.id }}"></textarea>
+        <textarea id="draft-{{ prompt.id }}" rows="12" data-writing-draft="{{ prompt.id }}" lang="pl" aria-describedby="draft-help-{{ prompt.id }}"></textarea>
         <div class="writing-draft-meta" id="draft-help-{{ prompt.id }}">
           <span data-word-count aria-live="polite">{% translate "0 слов" %}</span>
           <span data-save-status role="status">{% translate "Черновик сохраняется только в этом браузере" %}</span>
@@ -49,7 +50,7 @@
         {% include "partials/ai_writing_review.html" with ai_token=prompt.ai_token ai_editor="draft-"|add:prompt.id %}
         <fieldset class="writing-checklist">
           <legend>{% translate "Самопроверка для этого жанра" %}</legend>
-          {% for criterion in prompt.checklist %}<label><input type="checkbox"> {{ criterion|ui_text }}</label>{% endfor %}
+          {% for criterion in prompt.checklist %}<label><input type="checkbox"> <span lang="{{ criterion|learning_language }}">{{ criterion|learning_markup }}</span></label>{% endfor %}
         </fieldset>
         <div class="writing-feedback-actions">
           <button type="button" data-check-draft>{% translate "Проверить по критериям" %}</button>
@@ -63,11 +64,11 @@
             <div class="writing-review-grid">
               <fieldset>
                 <legend>{% translate "Все пункты задания" %}</legend>
-                {% for requirement in prompt.requirements %}<label><input type="checkbox" data-writing-requirement> {{ requirement|ui_text }}</label>{% endfor %}
+                {% for requirement in prompt.requirements %}<label><input type="checkbox" data-writing-requirement> <span lang="{{ requirement|learning_language }}">{{ requirement|learning_markup }}</span></label>{% endfor %}
               </fieldset>
               <fieldset>
                 <legend>{% translate "Что проверить в языке" %}</legend>
-                {% for focus in prompt.grammar_recommendations %}<label><input type="checkbox" data-writing-error value="{{ focus.label }}" data-writing-href="{% url 'lesson' focus.lesson_id %}" data-writing-lesson-title="{{ focus.lesson_title|ui_text }}"> {{ focus.label|ui_text }}</label>{% endfor %}
+                {% for focus in prompt.grammar_recommendations %}<label><input type="checkbox" data-writing-error value="{{ focus.label }}" data-writing-href="{% url 'lesson' focus.lesson_id %}" data-writing-lesson-title="{{ focus.lesson_title|ui_text }}"> <span lang="{{ focus.label|learning_language }}">{{ focus.label|learning_markup }}</span></label>{% endfor %}
               </fieldset>
             </div>
             <details class="writing-sample"><summary>{% translate "Показать пример ответа после своей попытки" %}</summary><p lang="pl">{{ prompt.sample_answer|ui_text }}</p><p class="muted">{% translate "Это один возможный ответ. Сравни структуру и выполнение пунктов, а не копируй текст." %}</p></details>
