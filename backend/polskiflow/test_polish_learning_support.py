@@ -227,10 +227,10 @@ class PolishAllA1SupportTests(TestCase):
 
 
 class PolishReadingSupportTests(TestCase):
-    def test_all_a1_a2_b1_reading_support_is_polish_and_preserves_sources(self):
-        readings = list(ReadingText.objects.filter(level__in=('A1', 'A2', 'B1'), is_active=True))
-        self.assertGreaterEqual(len(readings), 38)
-        self.assertEqual({reading.level for reading in readings}, {'A1', 'A2', 'B1'})
+    def test_all_a1_a2_b1_b2_reading_support_is_polish_and_preserves_sources(self):
+        readings = list(ReadingText.objects.filter(level__in=('A1', 'A2', 'B1', 'B2'), is_active=True))
+        self.assertGreaterEqual(len(readings), 50)
+        self.assertEqual({reading.level for reading in readings}, {'A1', 'A2', 'B1', 'B2'})
         support = []
         for reading in readings:
             support.extend((reading.title, reading.description))
@@ -271,6 +271,31 @@ class PolishB1BiographyTravelSupportTests(TestCase):
 class PolishAllB1SupportTests(TestCase):
     def test_all_b1_topics_have_polish_support_and_distinct_choices(self):
         lessons = Lesson.objects.filter(topic__course__level='B1', is_active=True)
+        self.assertEqual(lessons.values('topic_id').order_by().distinct().count(), 12)
+        self.assertEqual(lessons.count(), 60)
+        support = []
+        for lesson in lessons:
+            support.append(lesson.theory_title)
+            support.extend(value for pair in lesson.theory_sections for value in pair)
+        questions = list(Question.objects.filter(lesson__in=lessons))
+        self.assertGreaterEqual(len(questions), 200)
+        for question in questions:
+            support.extend((question.prompt, question.explanation, *question.options))
+        support.extend(Flashcard.objects.filter(lesson_links__lesson__in=lessons).values_list('translation', flat=True))
+        with override('pl'):
+            self.assertEqual(sorted(set(source for source in support
+                                        if re.search(r'[А-Яа-яЁё]', learning_text(source)))), [])
+            for question in questions:
+                options = [learning_text(option) for option in question.options]
+                self.assertEqual(len(set(options)), len(options), question.prompt)
+        with override('ru'):
+            for source in support:
+                self.assertEqual(learning_text(source), source)
+
+
+class PolishAllB2SupportTests(TestCase):
+    def test_all_b2_topics_have_polish_support_and_distinct_choices(self):
+        lessons = Lesson.objects.filter(topic__course__level='B2', is_active=True)
         self.assertEqual(lessons.values('topic_id').order_by().distinct().count(), 12)
         self.assertEqual(lessons.count(), 60)
         support = []
