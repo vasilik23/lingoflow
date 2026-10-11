@@ -1,4 +1,5 @@
 {% load i18n ui %}
+{% get_current_language as study_ui_language %}
 <details class="card mock-section run-review"{% if latest_review %} open{% endif %}>
   <summary><strong>{% translate "Разбор" %} · {{ review.title|ui_text }}</strong></summary>
   {% if review.status == 'scored' and review.details %}
@@ -7,11 +8,11 @@
     <ol class="run-review-list">
     {% for detail in review.details %}
       <li class="run-review-answer{% if detail.unanswered %} is-unanswered{% elif detail.is_correct %} is-correct{% else %} is-incorrect{% endif %}">
-        <p><strong>{{ detail.question.prompt|ui_text }}</strong></p>
+        <p><strong lang="{{ detail.question.prompt|learning_language:study_ui_language }}">{{ detail.question.prompt|ui_text }}</strong></p>
         <p>{% if detail.unanswered %}<strong>{% translate "Без ответа" %}</strong>{% elif detail.is_correct %}<strong>{% translate "Верно" %}</strong>{% else %}<strong>{% translate "Неверно" %}</strong>{% endif %}</p>
         {% if not detail.unanswered %}<p>{% translate "Твой ответ:" %} <span lang="pl">{% if detail.question.written %}{{ detail.selected_text }}{% else %}{{ detail.selected_text|ui_text }}{% endif %}</span></p>{% endif %}
         <p>{% translate "Правильный ответ:" %} <strong lang="pl">{{ detail.correct_text|ui_text }}</strong></p>
-        <p>{{ detail.question.explanation|ui_text }}</p>
+        <p lang="{{ detail.question.explanation|learning_language:study_ui_language }}">{{ detail.question.explanation|ui_text }}</p>
         <a href="{% url 'lesson' detail.theory_lesson %}" target="_blank" rel="noopener">{% translate "Повторить теорию" %} ↗</a>
       </li>
     {% endfor %}
