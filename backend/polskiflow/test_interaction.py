@@ -226,4 +226,4 @@ class InteractionScenarioTests(TestCase):
         response = self.client.get("/practice/")
 
         self.assertContains(response, 'href="/interaction/"')
-        self.assertContains(response, "Общение и медиация")
+        self.assertContains(response, "Говорение")

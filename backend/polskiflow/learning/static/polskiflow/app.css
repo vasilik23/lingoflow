@@ -1349,4 +1349,4 @@ button.secondary { background: var(--surface); border-color: var(--line); }
 .practice-catalog[open] > summary { margin-bottom: 1rem; }
 .practice-recommendation { grid-template-rows: auto auto auto; padding: 1rem; margin-bottom: 1rem; }
 .practice-recommendation h2 { margin: 0; font-size: 1.05rem; }
-@media (min-width: 720px) { .practice-quick-links { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 720px) { .practice-quick-links { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
