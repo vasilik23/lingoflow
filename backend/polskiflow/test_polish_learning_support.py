@@ -37,7 +37,7 @@ class PolishLearningSupportTests(SimpleTestCase):
 
 
 from django.test import TestCase
-from polskiflow.learning.models import Flashcard, Lesson, Question
+from polskiflow.learning.models import Flashcard, Lesson, Question, ReadingText
 
 
 class PolishIntroductionsSupportTests(TestCase):
@@ -221,6 +221,24 @@ class PolishAllA1SupportTests(TestCase):
             for question in questions:
                 options = [learning_text(option) for option in question.options]
                 self.assertEqual(len(set(options)), len(options), question.prompt)
+        with override('ru'):
+            for source in support:
+                self.assertEqual(learning_text(source), source)
+
+
+class PolishReadingSupportTests(TestCase):
+    def test_all_a1_a2_reading_support_is_polish_and_preserves_sources(self):
+        readings = list(ReadingText.objects.filter(level__in=('A1', 'A2'), is_active=True))
+        self.assertGreaterEqual(len(readings), 26)
+        self.assertEqual({reading.level for reading in readings}, {'A1', 'A2'})
+        support = []
+        for reading in readings:
+            support.extend((reading.title, reading.description))
+            support.extend(entry.get('translation', '') if isinstance(entry, dict) else entry
+                           for entry in reading.glossary.values())
+        with override('pl'):
+            self.assertEqual(sorted(set(source for source in support
+                                        if re.search(r'[А-Яа-яЁё]', learning_text(source)))), [])
         with override('ru'):
             for source in support:
                 self.assertEqual(learning_text(source), source)

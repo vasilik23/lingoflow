@@ -11016,3 +11016,843 @@ msgstr "Jak poinformować lekarza o alergii na penicylinę?"
 
 msgid "Что нужно сделать, если в квартире сломалось отопление?"
 msgstr "Co należy zrobić, gdy w mieszkaniu zepsuje się ogrzewanie?"
+
+msgid "Анна знакомится с группой на первом уроке польского"
+msgstr "Anna poznaje grupę na pierwszej lekcji polskiego"
+
+msgid "Анна спрашивает дорогу к городскому музею"
+msgstr "Anna pyta o drogę do miejskiego muzeum"
+
+msgid "Возврат повреждённой куртки без бумажного чека"
+msgstr "Zwrot uszkodzonej kurtki bez papierowego paragonu"
+
+msgid "Два разных рассказа о прошедших выходных"
+msgstr "Dwie różne opowieści o minionym weekendzie"
+
+msgid "Касия начинает новую работу и продолжает учить польский"
+msgstr "Kasia zaczyna nową pracę i nadal uczy się polskiego"
+
+msgid "Консультация, рекомендации и безопасный приём лекарства"
+msgstr "Konsultacja, zalecenia i bezpieczne przyjmowanie leku"
+
+msgid "Лена договаривается о ремонте отопления"
+msgstr "Lena umawia naprawę ogrzewania"
+
+msgid "Лена решает несколько повседневных задач по-польски"
+msgstr "Lena załatwia kilka codziennych spraw po polsku"
+
+msgid "Майя рассказывает о семейной встрече"
+msgstr "Maja opowiada o rodzinnym spotkaniu"
+
+msgid "Марк проводит свободный день с друзьями"
+msgstr "Marek spędza wolny dzień z przyjaciółmi"
+
+msgid "Марта и Павел договариваются встретиться после работы"
+msgstr "Marta i Paweł umawiają się na spotkanie po pracy"
+
+msgid "Марта показывает друзьям новую квартиру"
+msgstr "Marta pokazuje znajomym nowe mieszkanie"
+
+msgid "Маршрут, планы и решения перед поездкой"
+msgstr "Trasa, plany i decyzje przed podróżą"
+
+msgid "Недопонимание, извинение и восстановление дружбы"
+msgstr "Nieporozumienie, przeprosiny i odbudowa przyjaźni"
+
+msgid "Новые обязанности и первый результат на работе"
+msgstr "Nowe obowiązki i pierwszy rezultat w pracy"
+
+msgid "Обычное утро Анны в Варшаве"
+msgstr "Zwykły poranek Anny w Warszawie"
+
+msgid "Однодневная поездка, история города и местный праздник"
+msgstr "Jednodniowa wycieczka, historia miasta i lokalne święto"
+
+msgid "Оля покупает продукты к завтраку"
+msgstr "Ola kupuje produkty na śniadanie"
+
+msgid "Оля рассказывает врачу о самочувствии"
+msgstr "Ola mówi lekarzowi o swoim samopoczuciu"
+
+msgid "Оля рассказывает о своём обычном дне"
+msgstr "Ola opowiada o swoim zwykłym dniu"
+
+msgid "Поездка, неожиданности и спокойное решение проблем"
+msgstr "Podróż, niespodzianki i spokojne rozwiązywanie problemów"
+
+msgid "Покупаем овощи на городском рынке"
+msgstr "Kupujemy warzywa na miejskim targu"
+
+msgid "Прогноз, безопасный маршрут и забота о природе"
+msgstr "Prognoza, bezpieczna trasa i troska o przyrodę"
+
+msgid "Участники курса рассказывают о странах и языках"
+msgstr "Uczestnicy kursu opowiadają o krajach i językach"
+
+msgid "Фестиваль, разные мнения и короткая рецензия"
+msgstr "Festiwal, różne opinie i krótka recenzja"
+
+msgid "Форма, документы и получение подтверждения"
+msgstr "Formularz, dokumenty i otrzymanie potwierdzenia"
+
+msgid "анализировать"
+msgstr "analizować"
+
+msgid "английский"
+msgstr "angielski"
+
+msgid "атмосфера"
+msgstr "atmosfera"
+
+msgid "аудитории"
+msgstr "sali lekcyjnej"
+
+msgid "безветренно"
+msgstr "bezwietrznie"
+
+msgid "берёт"
+msgstr "bierze"
+
+msgid "благодаря"
+msgstr "dzięki"
+
+msgid "бутерброд"
+msgstr "kanapka"
+
+msgid "быстро"
+msgstr "szybko"
+
+msgid "вирусный"
+msgstr "wirusowy"
+
+msgid "вместе"
+msgstr "razem"
+
+msgid "возвращается"
+msgstr "wraca"
+
+msgid "воскресенье"
+msgstr "niedziela"
+
+msgid "восстановить"
+msgstr "odbudować"
+
+msgid "все"
+msgstr "wszyscy"
+
+msgid "встаёт"
+msgstr "wstaje"
+
+msgid "встречает"
+msgstr "spotyka"
+
+msgid "встречаться"
+msgstr "spotykać się"
+
+msgid "всё"
+msgstr "wszystko"
+
+msgid "вторая половина дня"
+msgstr "popołudnie"
+
+msgid "вход"
+msgstr "wejście"
+
+msgid "входит"
+msgstr "wchodzi"
+
+msgid "выбирает"
+msgstr "wybiera"
+
+msgid "выбирать"
+msgstr "wybierać"
+
+msgid "выйти"
+msgstr "wyjść"
+
+msgid "выпить"
+msgstr "wypić"
+
+msgid "выполнить"
+msgstr "wykonać"
+
+msgid "выслушать"
+msgstr "wysłuchać"
+
+msgid "выходить"
+msgstr "wychodzić"
+
+msgid "готовит"
+msgstr "przygotowuje"
+
+msgid "градус"
+msgstr "stopień"
+
+msgid "грамм"
+msgstr "gram"
+
+msgid "гром"
+msgstr "grzmot"
+
+msgid "гулять"
+msgstr "spacerować"
+
+msgid "двенадцать"
+msgstr "dwanaście"
+
+msgid "двести"
+msgstr "dwieście"
+
+msgid "делает"
+msgstr "robi"
+
+msgid "дело"
+msgstr "sprawa"
+
+msgid "день"
+msgstr "dzień"
+
+msgid "детектив"
+msgstr "kryminał"
+
+msgid "довольный"
+msgstr "zadowolony"
+
+msgid "договариваться; определять"
+msgstr "ustalać"
+
+msgid "дойти"
+msgstr "dojść"
+
+msgid "дописать"
+msgstr "dopisać"
+
+msgid "дорога"
+msgstr "droga"
+
+msgid "дружить"
+msgstr "przyjaźnić się"
+
+msgid "ехать"
+msgstr "jechać"
+
+msgid "жаропонижающий"
+msgstr "przeciwgorączkowy"
+
+msgid "ждать"
+msgstr "czekać"
+
+msgid "желает"
+msgstr "życzy"
+
+msgid "живёт"
+msgstr "mieszka"
+
+msgid "забронировать"
+msgstr "zarezerwować"
+
+msgid "завтрак"
+msgstr "śniadanie"
+
+msgid "заказывать"
+msgstr "zamawiać"
+
+msgid "закончить"
+msgstr "skończyć"
+
+msgid "заметить"
+msgstr "zauważyć"
+
+msgid "занимать (время)"
+msgstr "zajmować czas"
+
+msgid "заполнить; дополнить"
+msgstr "uzupełnić"
+
+msgid "защищать"
+msgstr "chronić"
+
+msgid "злотых"
+msgstr "złotych"
+
+msgid "знакомый / одногруппник"
+msgstr "kolega, znajomy z grupy"
+
+msgid "знакомым"
+msgstr "znajomym"
+
+msgid "зрители"
+msgstr "widzowie"
+
+msgid "идти"
+msgstr "iść"
+
+msgid "идти (о дожде)"
+msgstr "padać (o deszczu)"
+
+msgid "идёт"
+msgstr "idzie"
+
+msgid "измерять"
+msgstr "mierzyć"
+
+msgid "итог; резюме"
+msgstr "podsumowanie"
+
+msgid "каждый"
+msgstr "każdy"
+
+msgid "какой"
+msgstr "jaki"
+
+msgid "картофель"
+msgstr "ziemniaki"
+
+msgid "коллега"
+msgstr "osoba, z którą pracujemy"
+
+msgid "контейнер"
+msgstr "pojemnik"
+
+msgid "конце"
+msgstr "końcu"
+
+msgid "короткий"
+msgstr "krótki"
+
+msgid "красные"
+msgstr "czerwone"
+
+msgid "кратко"
+msgstr "krótko"
+
+msgid "купить"
+msgstr "kupić"
+
+msgid "курсе"
+msgstr "kursie"
+
+msgid "лежать"
+msgstr "leżeć"
+
+msgid "ложиться"
+msgstr "kłaść się"
+
+msgid "людей"
+msgstr "ludzi"
+
+msgid "лёгкие"
+msgstr "płuca"
+
+msgid "международный"
+msgstr "międzynarodowy"
+
+msgid "место"
+msgstr "miejsce"
+
+msgid "много"
+msgstr "dużo"
+
+msgid "навестить"
+msgstr "odwiedzić"
+
+msgid "навещать"
+msgstr "odwiedzać"
+
+msgid "назначить"
+msgstr "wyznaczyć termin"
+
+msgid "назначить; договориться"
+msgstr "umówić się, ustalić termin"
+
+msgid "наступить; приблизиться"
+msgstr "nadejść"
+
+msgid "находить"
+msgstr "znajdować"
+
+msgid "начале"
+msgstr "początku"
+
+msgid "начало"
+msgstr "początek"
+
+msgid "начать"
+msgstr "zacząć"
+
+msgid "неделя"
+msgstr "tydzień"
+
+msgid "новый"
+msgstr "nowy"
+
+msgid "о путешествиях"
+msgstr "dotyczący podróży"
+
+msgid "обед"
+msgstr "obiad"
+
+msgid "обидеть; ранить"
+msgstr "zranić, sprawić przykrość"
+
+msgid "обслуживание"
+msgstr "obsługa"
+
+msgid "объяснить"
+msgstr "wyjaśnić"
+
+msgid "обычно"
+msgstr "zwykle"
+
+msgid "обязательный"
+msgstr "wymagany"
+
+msgid "огурцы"
+msgstr "ogórki"
+
+msgid "однодневный"
+msgstr "jednodniowy"
+
+msgid "опоздать"
+msgstr "spóźnić się"
+
+msgid "опубликовать"
+msgstr "opublikować"
+
+msgid "осматривать"
+msgstr "badać"
+
+msgid "осмотреть"
+msgstr "zbadać"
+
+msgid "осмотреть; посетить"
+msgstr "zwiedzić"
+
+msgid "отвечает"
+msgstr "odpowiada"
+
+msgid "отвечать"
+msgstr "odpowiadać"
+
+msgid "отдохнуть"
+msgstr "odpocząć"
+
+msgid "открывает"
+msgstr "otwiera"
+
+msgid "отменить"
+msgstr "odwołać"
+
+msgid "отъезд"
+msgstr "odjazd"
+
+msgid "оценить по достоинству"
+msgstr "docenić"
+
+msgid "первый"
+msgstr "pierwszy"
+
+msgid "перейти; пройти"
+msgstr "przejść"
+
+msgid "перекрёсток"
+msgstr "skrzyżowanie"
+
+msgid "письменный стол"
+msgstr "biurko"
+
+msgid "платит"
+msgstr "płaci"
+
+msgid "платить"
+msgstr "płacić"
+
+msgid "платный"
+msgstr "płatny"
+
+msgid "по-разному"
+msgstr "inaczej"
+
+msgid "по-русски"
+msgstr "po rosyjsku"
+
+msgid "побудить"
+msgstr "zachęcić"
+
+msgid "повернуть"
+msgstr "skręcić"
+
+msgid "повторно"
+msgstr "ponownie"
+
+msgid "повыситься"
+msgstr "wzrosnąć"
+
+msgid "подать"
+msgstr "złożyć"
+
+msgid "подруга; знакомая"
+msgstr "koleżanka, znajoma"
+
+msgid "подтвердить"
+msgstr "potwierdzić"
+
+msgid "подходить"
+msgstr "pasować"
+
+msgid "пойти"
+msgstr "pójść"
+
+msgid "показывать"
+msgstr "pokazywać"
+
+msgid "покупает"
+msgstr "kupuje"
+
+msgid "покупки"
+msgstr "zakupy"
+
+msgid "полдень"
+msgstr "południe"
+
+msgid "поликлиника"
+msgstr "przychodnia"
+
+msgid "полной"
+msgstr "pełnej"
+
+msgid "получить"
+msgstr "otrzymać"
+
+msgid "помидоры"
+msgstr "pomidory"
+
+msgid "помогать"
+msgstr "pomagać"
+
+msgid "понимать"
+msgstr "rozumieć"
+
+msgid "посетить"
+msgstr "odwiedzić miejsce"
+
+msgid "посмотреть"
+msgstr "obejrzeć"
+
+msgid "потом"
+msgstr "potem"
+
+msgid "потому что"
+msgstr "ponieważ"
+
+msgid "почувствовать"
+msgstr "poczuć"
+
+msgid "поэтому"
+msgstr "dlatego"
+
+msgid "правдоподобно"
+msgstr "wiarygodnie"
+
+msgid "превышать"
+msgstr "przekraczać"
+
+msgid "предвещать; прогнозировать"
+msgstr "zapowiadać"
+
+msgid "предлагать"
+msgstr "proponować"
+
+msgid "предложить"
+msgstr "zaproponować"
+
+msgid "предпочитать"
+msgstr "woleć"
+
+msgid "представлять"
+msgstr "przedstawiać"
+
+msgid "представляться"
+msgstr "przedstawiać się"
+
+msgid "преподаватель"
+msgstr "nauczyciel"
+
+msgid "приготовить"
+msgstr "przygotować"
+
+msgid "приезжать"
+msgstr "przyjeżdżać"
+
+msgid "признать"
+msgstr "przyznać"
+
+msgid "прилавков"
+msgstr "stoisk"
+
+msgid "приходить"
+msgstr "przychodzić"
+
+msgid "прихожая"
+msgstr "przedpokój"
+
+msgid "приятного"
+msgstr "miłego"
+
+msgid "продавец"
+msgstr "sprzedawca"
+
+msgid "продавца"
+msgstr "sprzedawcy"
+
+msgid "продавщица"
+msgstr "sprzedawczyni"
+
+msgid "продлиться"
+msgstr "potrwać"
+
+msgid "просмотреть"
+msgstr "przejrzeć"
+
+msgid "проходить"
+msgstr "odbywać się"
+
+msgid "прочитать"
+msgstr "przeczytać"
+
+msgid "прошу / проходите"
+msgstr "zapraszam"
+
+msgid "пряник"
+msgstr "piernik"
+
+msgid "радиатор"
+msgstr "kaloryfer"
+
+msgid "разговаривать"
+msgstr "rozmawiać"
+
+msgid "разница"
+msgstr "różnica"
+
+msgid "разочарованная"
+msgstr "rozczarowana"
+
+msgid "раньше"
+msgstr "wcześniej"
+
+msgid "раньше; в прошлом"
+msgstr "dawniej"
+
+msgid "распродажа"
+msgstr "wyprzedaż"
+
+msgid "рассказывает"
+msgstr "opowiada"
+
+msgid "растение"
+msgstr "roślina"
+
+msgid "ратуша"
+msgstr "ratusz"
+
+msgid "региональный"
+msgstr "regionalny"
+
+msgid "режиссёр (женщина)"
+msgstr "reżyserka"
+
+msgid "рекомендованный"
+msgstr "zalecany"
+
+msgid "родной"
+msgstr "ojczysty"
+
+msgid "рынок"
+msgstr "targ"
+
+msgid "рыночная площадь"
+msgstr "rynek"
+
+msgid "рюкзак"
+msgstr "plecak"
+
+msgid "сад"
+msgstr "ogród"
+
+msgid "самостоятельно"
+msgstr "samodzielnie"
+
+msgid "свежие"
+msgstr "świeże"
+
+msgid "свежий"
+msgstr "świeży"
+
+msgid "светит"
+msgstr "świeci"
+
+msgid "семейные"
+msgstr "rodzinne"
+
+msgid "сесть в транспорт"
+msgstr "wsiąść do pojazdu"
+
+msgid "сидит"
+msgstr "siedzi"
+
+msgid "скачать; получить"
+msgstr "pobrać"
+
+msgid "слабость"
+msgstr "osłabienie"
+
+msgid "слушает"
+msgstr "słucha"
+
+msgid "сначала"
+msgstr "najpierw"
+
+msgid "снимать"
+msgstr "wynajmować"
+
+msgid "совет"
+msgstr "rada"
+
+msgid "согласно"
+msgstr "zgodnie z"
+
+msgid "согласно; как было запланировано"
+msgstr "zgodnie z planem"
+
+msgid "солнце"
+msgstr "słońce"
+
+msgid "сообщать; подавать"
+msgstr "podawać informacje"
+
+msgid "сообщение"
+msgstr "wiadomość"
+
+msgid "соседа"
+msgstr "sąsiada"
+
+msgid "соседка"
+msgstr "sąsiadka"
+
+msgid "сохранить"
+msgstr "zachować"
+
+msgid "специалист"
+msgstr "fachowiec"
+
+msgid "спокойное"
+msgstr "spokojne"
+
+msgid "спокойный"
+msgstr "spokojny"
+
+msgid "спрашивает"
+msgstr "pyta"
+
+msgid "спрашивать"
+msgstr "pytać"
+
+msgid "срок действия"
+msgstr "okres ważności"
+
+msgid "старинный городской дом"
+msgstr "kamienica"
+
+msgid "старый город"
+msgstr "stare miasto"
+
+msgid "стоит"
+msgstr "kosztuje"
+
+msgid "стоять"
+msgstr "stać"
+
+msgid "субботу"
+msgstr "sobotę"
+
+msgid "сумка"
+msgstr "torba"
+
+msgid "сумкой"
+msgstr "torbą"
+
+msgid "сумма"
+msgstr "kwota"
+
+msgid "счесть"
+msgstr "uznać"
+
+msgid "сыром"
+msgstr "serem"
+
+msgid "тепло"
+msgstr "ciepło"
+
+msgid "точный"
+msgstr "dokładny"
+
+msgid "туристический приют"
+msgstr "schronisko turystyczne"
+
+msgid "тётя"
+msgstr "ciocia"
+
+msgid "уважать"
+msgstr "szanować"
+
+msgid "узнать"
+msgstr "dowiedzieć się"
+
+msgid "улыбается"
+msgstr "uśmiecha się"
+
+msgid "упаковывать"
+msgstr "pakować"
+
+msgid "успокоиться"
+msgstr "uspokoić się"
+
+msgid "уставший"
+msgstr "zmęczony"
+
+msgid "участвовать"
+msgstr "uczestniczyć"
+
+msgid "фотография"
+msgstr "zdjęcie"
+
+msgid "холм"
+msgstr "wzgórze"
+
+msgid "хотеть"
+msgstr "chcieć"
+
+msgid "хочет"
+msgstr "chce"
+
+msgid "цветных"
+msgstr "kolorowych"
+
+msgid "четыре"
+msgstr "cztery"
+
+msgid "экземпляр"
+msgstr "egzemplarz"
+
+msgid "экскурсовод"
+msgstr "przewodnik turystyczny"
+
+msgid "этаж"
+msgstr "piętro"
+
+msgid "яблоки"
+msgstr "jabłka"
+
+msgid "двое"
+msgstr "dwoje"
