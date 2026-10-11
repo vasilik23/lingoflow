@@ -7,6 +7,25 @@ from django.utils.safestring import mark_safe
 
 
 class StudyLanguageTests(SimpleTestCase):
+    def test_writing_support_marks_display_language_and_preserves_attributes(self):
+        prompt = {'id': 'example', 'title': 'Как неформально поздороваться?',
+                  'task': 'Выберите ответ на «Jak się masz?»', 'hint': 'Личная заметка, которой нет в каталоге',
+                  'requirements': ['Cześć'], 'checklist': ['Личная заметка, которой нет в каталоге']}
+        for language in ('ru', 'pl', 'en'):
+            with self.subTest(language=language), override(language):
+                html = render_to_string('writing.html', {'writing_prompts': [prompt], 'selected_writing_level': 'A1'})
+                self.assertIn(f'<span lang="{language}">', html)
+                self.assertIn('<span lang="pl">Jak się masz?</span>', html)
+                self.assertIn('<span lang="pl">Cześć</span>', html)
+                self.assertIn('<span lang="ru">Личная заметка', html)
+                self.assertIn('lang="pl" aria-describedby="draft-help-example"', html)
+
+    def test_speaking_image_accessible_name_is_polish_and_escaped(self):
+        html = render_to_string('partials/speaking_visual_dialogue.html', {
+            'task': {'image': 'example.png', 'image_alt': 'Osoba <test>', 'image_description': 'Osoba czyta.'}})
+        self.assertIn('<img lang="pl"', html)
+        self.assertIn('alt="Osoba &lt;test&gt;"', html)
+
     def test_b1_shared_question_and_review_mark_quotes_and_answers(self):
         question = {'id': 'one', 'prompt': 'Выберите ответ на «Jak się masz?»',
                     'explanation': 'Wyrażenie „jak tylko” oznacza natychmiast.',

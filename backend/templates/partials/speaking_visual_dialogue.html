@@ -1,5 +1,5 @@
 {% load static i18n ui %}
-{% if task.image %}<figure class="speaking-picture"><img src="{% static task.image %}" alt="{{ task.image_alt|ui_text }}" loading="lazy" width="1536" height="1024"><figcaption>{% translate "Учебная иллюстрация LingoFlow, создана с ИИ." %}</figcaption></figure><details class="speaking-picture-description"><summary>{% translate "Текстовое описание изображения" %}</summary><p lang="pl">{{ task.image_description|ui_text }}</p></details>{% endif %}
+{% if task.image %}<figure class="speaking-picture"><img lang="pl" src="{% static task.image %}" alt="{{ task.image_alt|ui_text }}" loading="lazy" width="1536" height="1024"><figcaption>{% translate "Учебная иллюстрация LingoFlow, создана с ИИ." %}</figcaption></figure><details class="speaking-picture-description"><summary>{% translate "Текстовое описание изображения" %}</summary><p lang="pl">{{ task.image_description|ui_text }}</p></details>{% endif %}
 {% if task.dialogue_turns %}
 {% if review_mode %}<ol>{% for turn in task.dialogue_turns %}<li lang="pl">{{ turn|ui_text }}</li>{% endfor %}</ol>{% else %}
 <div class="speaking-dialogue" data-speaking-dialogue data-dialogue-id="{{ dialogue_id }}" data-dialogue-owner="{{ request.supabase_user.id }}">
