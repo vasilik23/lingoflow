@@ -7,6 +7,33 @@ from django.utils.safestring import mark_safe
 
 
 class StudyLanguageTests(SimpleTestCase):
+    def test_b1_shared_question_and_review_mark_quotes_and_answers(self):
+        question = {'id': 'one', 'prompt': 'Выберите ответ на «Jak się masz?»',
+                    'explanation': 'Wyrażenie „jak tylko” oznacza natychmiast.',
+                    'options': ['Dobrze', 'Źle']}
+        detail = {'question': question, 'is_correct': False, 'selected_text': 'Źle',
+                  'correct_text': 'Dobrze', 'theory_lesson': 'grammar'}
+        for language in ('ru', 'pl', 'en'):
+            with self.subTest(language=language), override(language):
+                mock = render_to_string('partials/b1_mock_question.html', {
+                    'question': question, 'result': {'details': [detail]}})
+                review = render_to_string('partials/b1_run_review.html', {
+                    'review': {'status': 'scored', 'details': [detail]}})
+                for html in (mock, review):
+                    self.assertIn('<span lang="pl">Jak się masz?</span>', html)
+                    self.assertIn('<span lang="pl">jak tylko</span>', html)
+                    self.assertIn('lang="pl">Dobrze</', html)
+                    self.assertIn('lang="pl">Źle</', html)
+
+    def test_b1_written_answer_is_escaped_without_quote_markup(self):
+        question = {'id': 'one', 'prompt': 'Uzupełnij.', 'written': True}
+        detail = {'question': question, 'selected_text': '<img src=x> „jak tylko”', 'correct_text': 'tak'}
+        html = render_to_string('partials/b1_mock_question.html', {
+            'question': question, 'result': {'details': [detail]}})
+        self.assertIn('&lt;img src=x&gt;', html)
+        self.assertNotIn('<span lang="pl">jak tylko</span>', html)
+        self.assertNotIn('<img', html)
+
     def test_reviewed_polish_quote_is_marked_without_changing_translation(self):
         source = 'Выберите ответ на «Jak się masz?»'
         for language in ('ru', 'pl', 'en'):
