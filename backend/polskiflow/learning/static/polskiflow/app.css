@@ -649,7 +649,7 @@ p { line-height: 1.65; }
 .lesson-progress { height: .42rem; margin-bottom: 1.2rem; overflow: hidden; border-radius: 999px; background: #e5e2f3; }
 .lesson-progress span { display: block; width: var(--value); height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--primary), #9b7cff); }
 .progress-label { margin-bottom: .55rem; color: var(--muted); font-size: .78rem; font-weight: 700; text-align: center; }
-.lesson-card { min-height: 17rem; display: grid; align-content: center; text-align: center; }
+.lesson-card { min-height: 17rem; display: grid; grid-template-columns: minmax(0, 1fr); align-content: center; text-align: center; overflow-wrap: anywhere; }
 .word { margin: .7rem 0; font-size: clamp(2.5rem, 12vw, 4rem); letter-spacing: -.055em; }
 .translation { margin-bottom: .45rem; font-size: 1.25rem; font-weight: 700; }
 .example { color: var(--muted); font-style: italic; }
