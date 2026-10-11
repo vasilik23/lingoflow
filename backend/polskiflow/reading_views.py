@@ -29,7 +29,6 @@ from polskiflow.reading_bookmark_store import load_reading_bookmarks, set_readin
 from polskiflow.collection_store import load_collection_summaries
 from polskiflow.news_feed import CATEGORIES, CATEGORY_IDS, latest_official_news
 
-TOKEN_PATTERN = re.compile(r"([\wąćęłńóśźżĄĆĘŁŃÓŚŹŻ-]+)", re.UNICODE)
 REVIEW_QUALITIES = {"again", "hard", "good", "easy"}
 PRACTICE_WORD_IDS_SESSION_KEY = "dictionary_practice_word_ids"
 PRACTICE_MODE_SESSION_KEY = "dictionary_practice_mode"
@@ -152,12 +151,20 @@ def reader(request: HttpRequest, text_id: str) -> HttpResponse:
     )
     bookmarks = load_reading_bookmarks(request.supabase_access_token, request.supabase_user.id)
     collections = load_collection_summaries(request.supabase_access_token, request.supabase_user.id)
+    paragraphs = _tokenize(text.paragraphs, text.glossary)
+    matched_words = {token["word"] for paragraph in paragraphs for token in paragraph if token.get("translation")}
+    glossary_words = [
+        {"text": surface, "word": surface, **entry}
+        for surface, entry in _glossary_entries(text.glossary).items()
+        if surface not in matched_words
+    ]
     return render(
         request,
         "reading/reader.html",
         {
             "text": text,
-            "paragraphs": _tokenize(text.paragraphs, text.glossary),
+            "paragraphs": paragraphs,
+            "glossary_words": glossary_words,
             "comprehension_task": comprehension_task,
             "is_bookmarked": text_id in (bookmarks or set()),
             "bookmarks_available": bookmarks is not None,
@@ -460,15 +467,27 @@ def remove_dictionary_word(request: HttpRequest, word_id: str) -> HttpResponse:
 
 def _tokenize(paragraphs: list, glossary: dict) -> list[list[dict]]:
     entries = _glossary_entries(glossary)
+    # Longest phrases win; word/hyphen boundaries prevent matching inside
+    # another word. Keep punctuation and original spacing intact.
+    surfaces = sorted(entries, key=len, reverse=True)
+    pattern = re.compile(
+        r"(?<![\w-])(?:" + "|".join(re.escape(surface) for surface in surfaces) + r")(?![\w-])",
+        re.IGNORECASE,
+    ) if surfaces else None
     result = []
     for paragraph in paragraphs if isinstance(paragraphs, list) else []:
         if not isinstance(paragraph, str):
             continue
         tokens = []
-        for token in TOKEN_PATTERN.split(paragraph):
-            if token:
-                entry = entries.get(token.casefold())
-                tokens.append({"text": token, "word": token.casefold(), **(entry or {})})
+        cursor = 0
+        for match in pattern.finditer(paragraph) if pattern else []:
+            if match.start() > cursor:
+                tokens.append({"text": paragraph[cursor:match.start()]})
+            token = match.group()
+            tokens.append({"text": token, "word": token.casefold(), **entries[token.casefold()]})
+            cursor = match.end()
+        if cursor < len(paragraph):
+            tokens.append({"text": paragraph[cursor:]})
         result.append(tokens)
     return result
 
