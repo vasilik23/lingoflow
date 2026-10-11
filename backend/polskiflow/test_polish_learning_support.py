@@ -1,4 +1,6 @@
+import json
 import re
+from pathlib import Path
 
 from django.template.loader import render_to_string
 from django.test import SimpleTestCase
@@ -8,6 +10,12 @@ from polskiflow.learning.templatetags.ui import learning_text
 
 
 class PolishLearningSupportTests(SimpleTestCase):
+    def test_entire_learning_catalogue_has_no_russian_fallback_in_polish(self):
+        sources = json.loads((Path(__file__).parent / 'localization' / 'learning_messages.json').read_text())
+        with override('pl'):
+            self.assertEqual(sorted(set(source for source in sources
+                                        if re.search(r'[А-Яа-яЁё]', learning_text(source)))), [])
+
     def test_question_and_review_use_existing_polish_support_without_changing_answers(self):
         question = {
             'prompt': 'Как неформально поздороваться?',
@@ -227,10 +235,10 @@ class PolishAllA1SupportTests(TestCase):
 
 
 class PolishReadingSupportTests(TestCase):
-    def test_all_a1_to_c1_reading_support_is_polish_and_preserves_sources(self):
-        readings = list(ReadingText.objects.filter(level__in=('A1', 'A2', 'B1', 'B2', 'C1'), is_active=True))
-        self.assertGreaterEqual(len(readings), 60)
-        self.assertEqual({reading.level for reading in readings}, {'A1', 'A2', 'B1', 'B2', 'C1'})
+    def test_all_a1_to_c2_reading_support_is_polish_and_preserves_sources(self):
+        readings = list(ReadingText.objects.filter(level__in=('A1', 'A2', 'B1', 'B2', 'C1', 'C2'), is_active=True))
+        self.assertGreaterEqual(len(readings), 70)
+        self.assertEqual({reading.level for reading in readings}, {'A1', 'A2', 'B1', 'B2', 'C1', 'C2'})
         support = []
         for reading in readings:
             support.extend((reading.title, reading.description))
@@ -321,6 +329,31 @@ class PolishAllB2SupportTests(TestCase):
 class PolishAllC1SupportTests(TestCase):
     def test_all_c1_topics_have_polish_support_and_distinct_choices(self):
         lessons = Lesson.objects.filter(topic__course__level='C1', is_active=True)
+        self.assertEqual(lessons.values('topic_id').order_by().distinct().count(), 10)
+        self.assertEqual(lessons.count(), 50)
+        support = []
+        for lesson in lessons:
+            support.append(lesson.theory_title)
+            support.extend(value for pair in lesson.theory_sections for value in pair)
+        questions = list(Question.objects.filter(lesson__in=lessons))
+        self.assertGreaterEqual(len(questions), 150)
+        for question in questions:
+            support.extend((question.prompt, question.explanation, *question.options))
+        support.extend(Flashcard.objects.filter(lesson_links__lesson__in=lessons).values_list('translation', flat=True))
+        with override('pl'):
+            self.assertEqual(sorted(set(source for source in support
+                                        if re.search(r'[А-Яа-яЁё]', learning_text(source)))), [])
+            for question in questions:
+                options = [learning_text(option) for option in question.options]
+                self.assertEqual(len(set(options)), len(options), question.prompt)
+        with override('ru'):
+            for source in support:
+                self.assertEqual(learning_text(source), source)
+
+
+class PolishAllC2SupportTests(TestCase):
+    def test_all_c2_topics_have_polish_support_and_distinct_choices(self):
+        lessons = Lesson.objects.filter(topic__course__level='C2', is_active=True)
         self.assertEqual(lessons.values('topic_id').order_by().distinct().count(), 10)
         self.assertEqual(lessons.count(), 50)
         support = []
