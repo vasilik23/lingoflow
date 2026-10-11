@@ -268,6 +268,31 @@ class PolishB1BiographyTravelSupportTests(TestCase):
                 self.assertEqual(learning_text(source), source)
 
 
+class PolishAllB1SupportTests(TestCase):
+    def test_all_b1_topics_have_polish_support_and_distinct_choices(self):
+        lessons = Lesson.objects.filter(topic__course__level='B1', is_active=True)
+        self.assertEqual(lessons.values('topic_id').order_by().distinct().count(), 12)
+        self.assertEqual(lessons.count(), 60)
+        support = []
+        for lesson in lessons:
+            support.append(lesson.theory_title)
+            support.extend(value for pair in lesson.theory_sections for value in pair)
+        questions = list(Question.objects.filter(lesson__in=lessons))
+        self.assertGreaterEqual(len(questions), 200)
+        for question in questions:
+            support.extend((question.prompt, question.explanation, *question.options))
+        support.extend(Flashcard.objects.filter(lesson_links__lesson__in=lessons).values_list('translation', flat=True))
+        with override('pl'):
+            self.assertEqual(sorted(set(source for source in support
+                                        if re.search(r'[А-Яа-яЁё]', learning_text(source)))), [])
+            for question in questions:
+                options = [learning_text(option) for option in question.options]
+                self.assertEqual(len(set(options)), len(options), question.prompt)
+        with override('ru'):
+            for source in support:
+                self.assertEqual(learning_text(source), source)
+
+
 class PolishAllA2SupportTests(TestCase):
     def test_all_a2_topics_have_polish_lesson_support_and_distinct_choices(self):
         lessons = Lesson.objects.filter(topic__course__level='A2', is_active=True)
