@@ -2,10 +2,35 @@ from django.template.loader import render_to_string
 from django.test import SimpleTestCase
 from django.utils.translation import override
 
-from polskiflow.learning.templatetags.ui import learning_language
+from polskiflow.learning.templatetags.ui import learning_language, learning_markup, learning_text
+from django.utils.safestring import mark_safe
 
 
 class StudyLanguageTests(SimpleTestCase):
+    def test_reviewed_polish_quote_is_marked_without_changing_translation(self):
+        source = 'Выберите ответ на «Jak się masz?»'
+        for language in ('ru', 'pl', 'en'):
+            with self.subTest(language=language), override(language):
+                html = str(learning_markup(source))
+                self.assertIn('<span lang="pl">Jak się masz?</span>', html)
+                from django.utils.html import strip_tags
+                self.assertEqual(strip_tags(html), learning_text(source))
+
+    def test_markup_escapes_html_and_leaves_unknown_quotes_unmarked(self):
+        with override('ru'):
+            html = str(learning_markup(mark_safe('<img src=x onerror=alert(1)> «Jak się masz?» «Hello»')))
+            self.assertNotIn('<img', html)
+            self.assertIn('&lt;img', html)
+            self.assertIn('<span lang="pl">Jak się masz?</span>', html)
+            self.assertNotIn('<span lang="pl">Hello</span>', html)
+
+    def test_rendered_question_marks_polish_inside_support(self):
+        with override('en'):
+            html = render_to_string('lessons/_question.html', {'question': {
+                'prompt': 'Выберите ответ на «Jak się masz?»', 'options': ['Dobrze'],
+            }, 'index': 0, 'total': 1, 'lesson_id': 'quiz', 'LANGUAGE_CODE': 'en'})
+            self.assertIn('<span lang="pl">Jak się masz?</span>', html)
+
     def test_b1_instruction_and_review_use_the_displayed_support_language(self):
         source = 'Как неформально поздороваться?'
         for lang in ('ru', 'pl', 'en'):

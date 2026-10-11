@@ -12,7 +12,7 @@
     </div>
   {% endif %}
   {% if followup.kind == "repeat" %}
-    {% if followup.mistake %}<details class="followup-mistake"><summary>{% translate "Что закрепить" %}</summary><p><strong>{{ followup.mistake.prompt|learning_text }}</strong></p><p>{{ followup.mistake.explanation|learning_text }}</p></details>{% endif %}
+    {% if followup.mistake %}<details class="followup-mistake"><summary>{% translate "Что закрепить" %}</summary><p><strong>{{ followup.mistake.prompt|learning_markup }}</strong></p><p>{{ followup.mistake.explanation|learning_markup }}</p></details>{% endif %}
     <a class="complete-next" href="{% url 'lesson' followup.lesson.id %}">
       <span aria-hidden="true">↻</span>
       <span><small>{% translate "Следующий шаг: закрепить" %}</small><strong>{{ followup.lesson.title|ui_text }}</strong><small>~{{ followup.lesson.minutes }} {% translate "мин" %}</small></span>
