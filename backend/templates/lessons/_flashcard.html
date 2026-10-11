@@ -5,7 +5,7 @@
 <div class="card lesson-card">
   <p class="eyebrow">{% if lesson_kind == "review" %}{% if LANGUAGE_CODE == 'en' %}Review{% else %}Powtórka{% endif %}{% else %}{% if LANGUAGE_CODE == 'en' %}Words of the day{% else %}Słówka dnia{% endif %}{% endif %}</p>
   <h2 class="word" lang="pl">{{ card.polish|ui_text }}</h2>
-  {% if revealed %}<p class="translation" lang="{{ card.translation|learning_language:study_ui_language }}">{{ card.translation|learning_text }}</p><p class="example" lang="{{ card.example|learning_language }}">{{ card.example|learning_text }}</p>{% else %}<p class="muted">{% translate "Сначала вспомни значение, затем открой перевод." %}</p>{% endif %}
+  {% if revealed %}<p class="translation" lang="{{ card.translation|learning_language:study_ui_language }}">{{ card.translation|learning_markup }}</p><p class="example" lang="{{ card.example|learning_language }}">{{ card.example|learning_markup }}</p>{% else %}<p class="muted">{% translate "Сначала вспомни значение, затем открой перевод." %}</p>{% endif %}
 </div>
 {% if revealed %}
   <div class="actions">

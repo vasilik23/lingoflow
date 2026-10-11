@@ -2,6 +2,7 @@
 {% load i18n ui %}
 {% block title %}{{ task.plan_title|ui_text }} — LingoFlow{% endblock %}
 {% block content %}
+  {% with study_ui_language=LANGUAGE_CODE|default:'ru' %}
   <div class="lesson-shell">
     <header class="lesson-header"><a class="back-button" href="{% url 'home' %}" aria-label="{% translate "Вернуться на главную" %}">←</a><h1>{{ task.plan_title|ui_text }}</h1>{% if lesson_bookmarks_available %}<form method="post" action="{% url 'toggle-lesson-bookmark' lesson_id %}">{% csrf_token %}<input type="hidden" name="saved" value="{% if is_bookmarked %}0{% else %}1{% endif %}"><input type="hidden" name="next" value="{{ request.path }}"><button class="lesson-save-button{% if is_bookmarked %} is-saved{% endif %}" type="submit" aria-label="{% if is_bookmarked %}{% translate "Убрать урок из сохранённого" %}{% else %}{% translate "Сохранить урок" %}{% endif %}">{% if is_bookmarked %}★{% else %}☆{% endif %}</button></form>{% else %}<span></span>{% endif %}</header>
     <section id="lesson-flow">
@@ -11,8 +12,8 @@
       {% elif lesson_kind == "grammar" and not resume_practice %}
         <div class="card lesson-card theory-card">
           <p class="eyebrow">{% translate "Короткая теория" %}</p>
-          <h2>{{ grammar.title|ui_text }}</h2>
-          {% for heading, body in grammar.sections %}<div class="theory-section"><h3>{{ heading|ui_text }}</h3><p class="muted">{{ body|ui_text }}</p></div>{% endfor %}
+          <h2 lang="{{ grammar.title|learning_language:study_ui_language }}">{{ grammar.title|learning_markup }}</h2>
+          {% for heading, body in grammar.sections %}<div class="theory-section"><h3 lang="{{ heading|learning_language:study_ui_language }}">{{ heading|learning_markup }}</h3><p class="muted" lang="{{ body|learning_language:study_ui_language }}">{{ body|learning_markup }}</p></div>{% endfor %}
         </div>
         <form method="post" action="{% url 'lesson-step' lesson_id %}">
           {% csrf_token %}<input type="hidden" name="action" value="start"><input type="hidden" name="state" value="{{ lesson_state }}">
@@ -43,6 +44,7 @@
       </div>
     </details>
   </div>
+  {% endwith %}
 {% endblock %}
 {% block scripts %}
 {% load static i18n ui %}

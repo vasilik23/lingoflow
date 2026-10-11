@@ -6,6 +6,7 @@ from functools import lru_cache
 from pathlib import Path
 
 from django import template
+from django.utils.html import escape, format_html, format_html_join
 from django.utils.translation import gettext, get_language, ngettext
 
 register = template.Library()
@@ -55,6 +56,34 @@ def ui_items(values):
 def learning_text(value):
     """Localized study support; untranslated content remains canonical."""
     return ui_text(value) if get_language() in {"pl", "en"} else value
+
+
+@lru_cache(maxsize=1)
+def _polish_study_quotes():
+    return frozenset(json.loads((Path(__file__).resolve().parents[2] / "localization/polish_study_quotes.json").read_text()))
+
+
+@register.filter
+def learning_markup(value):
+    """Escaped display-only markup for explicitly reviewed Polish quotations.
+
+    Never use in attributes, form values, or user-authored content.
+    Translation remains plain text everywhere outside this filter.
+    """
+    localized = learning_text(value)
+    if not isinstance(localized, str) or not isinstance(value, str):
+        return localized
+    pieces = []
+    cursor = 0
+    for match in re.finditer(r'[«„“"]([^»”"]+)[»”"]', localized):
+        fragment = match.group(1)
+        if fragment not in _polish_study_quotes() or fragment not in value:
+            continue
+        pieces.append(escape(localized[cursor:match.start(1)]))
+        pieces.append(format_html('<span lang="pl">{}</span>', escape(fragment)))
+        cursor = match.end(1)
+    pieces.append(escape(localized[cursor:]))
+    return format_html_join("", "{}", ((piece,) for piece in pieces))
 
 
 @lru_cache(maxsize=1)
