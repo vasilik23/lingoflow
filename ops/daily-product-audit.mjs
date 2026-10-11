@@ -69,6 +69,7 @@ try {
   process.exitCode = 1;
 } finally {
   clearTimeout(timer);
+  if (child?.pid) { try { process.kill(-child.pid, 'SIGTERM'); } catch {} }
   if (workspace) fs.rmSync(workspace, { recursive: true, force: true });
   fs.rmdirSync(lock);
 }

@@ -20,6 +20,7 @@ function fixture(t) {
   const cli = path.join(root, 'fake-codex.mjs');
   fs.writeFileSync(cli, `#!${process.execPath}
 import fs from 'node:fs';
+import { spawn } from 'node:child_process';
 if (fs.existsSync('.env') || fs.existsSync('uncommitted.txt')) process.exit(9);
 let prompt = ''; for await (const chunk of process.stdin) prompt += chunk;
 if (!prompt.includes('Snapshot:') || !prompt.includes('Synthetic audit task.')) process.exit(8);
@@ -27,6 +28,11 @@ if (process.env.FAKE_DELAY) await new Promise(resolve => setTimeout(resolve, 100
 if (process.env.FAKE_NO_REPORT) process.exit(0);
 const report = process.argv[process.argv.indexOf('--output-last-message') + 1];
 fs.mkdirSync('audit-evidence'); fs.writeFileSync('audit-evidence/observation.json', '{}');
+if (process.env.FAKE_BACKGROUND) {
+  const background = spawn(process.execPath, ['-e', 'setInterval(() => {}, 1000)'], { stdio: 'ignore' });
+  fs.writeFileSync('audit-evidence/background.json', JSON.stringify({ pid: background.pid }));
+  background.unref();
+}
 fs.writeFileSync(report, '# Synthetic report');
 `);
   fs.chmodSync(cli, 0o700);
@@ -81,4 +87,18 @@ test('concurrent invocation is rejected without interrupting the first audit', a
   assert.match(second.output, /Audit already running/);
   assert.equal((await first.done).code, 0);
   assert.equal(result(env.root).status.status, 'report_created');
+});
+
+test('owned background processes stop after the report is saved', async t => {
+  const env = fixture(t);
+  assert.equal((await start(env, { FAKE_BACKGROUND: '1' }).done).code, 0);
+  const { run } = result(env.root);
+  const { pid } = JSON.parse(fs.readFileSync(path.join(run, 'evidence/background.json')));
+  let alive = true;
+  for (let i = 0; i < 100; i++) {
+    try { process.kill(pid, 0); } catch { alive = false; break; }
+    await new Promise(resolve => setTimeout(resolve, 10));
+  }
+  if (alive) process.kill(pid, 'SIGTERM');
+  assert.equal(alive, false);
 });
