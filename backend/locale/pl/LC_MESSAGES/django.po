@@ -13983,3 +13983,2205 @@ msgstr "tylko pożegnanie"
 
 msgid "цель"
 msgstr "cel"
+
+msgid "Wprawdzie… ale, mimo że и niemniej jednak признают ограничение, не отменяя основную мысль."
+msgstr "Wprawdzie… ale, mimo że i niemniej jednak uznają ograniczenie, nie podważając głównej myśli."
+
+msgid "Как вежливо ответить на возражение?"
+msgstr "Jak uprzejmie odpowiedzieć na zastrzeżenie?"
+
+msgid "Контраргумент"
+msgstr "Kontrargument"
+
+msgid "Обозначь stanowisko, добавь uzasadnienie и dowód, затем сформулируй wniosek."
+msgstr "Wskaż stanowisko, dodaj uzasadnienie i dowód, a następnie sformułuj wniosek."
+
+msgid "Сначала точно назови zastrzeżenie, затем odnieś się do niego через данные или пример."
+msgstr "Najpierw dokładnie nazwij zastrzeżenie, a potem odnieś się do niego, wykorzystując dane lub przykład."
+
+msgid "Составьте: С одной стороны предложение экономит время, с другой — ограничивает выбор."
+msgstr "Ułóż zdanie: z jednej strony propozycja oszczędza czas, z drugiej — ogranicza wybór."
+
+msgid "Составьте: Хотя я понимаю это возражение, новые данные подтверждают наш вывод."
+msgstr "Ułóż zdanie: chociaż rozumiem to zastrzeżenie, nowe dane potwierdzają nasz wniosek."
+
+msgid "Что означает stanowisko в дискуссии?"
+msgstr "Co oznacza stanowisko w dyskusji?"
+
+msgid "доказательство"
+msgstr "dowód"
+
+msgid "контраргумент"
+msgstr "kontrargument"
+
+msgid "название встречи"
+msgstr "nazwa spotkania"
+
+msgid "несмотря на то что"
+msgstr "mimo że"
+
+msgid "обоснование"
+msgstr "uzasadnienie"
+
+msgid "оговорка"
+msgstr "zastrzeżenie"
+
+msgid "ответить на; обратиться к"
+msgstr "odnieść się do"
+
+msgid "позиция"
+msgstr "stanowisko"
+
+msgid "позиция по вопросу"
+msgstr "stanowisko w danej sprawie"
+
+msgid "поставить под сомнение"
+msgstr "podważyć"
+
+msgid "правда, хотя"
+msgstr "wprawdzie"
+
+msgid "предпосылка"
+msgstr "założenie"
+
+msgid "с другой стороны"
+msgstr "z drugiej strony"
+
+msgid "с одной стороны"
+msgstr "z jednej strony"
+
+msgid "случайный пример"
+msgstr "przypadkowy przykład"
+
+msgid "тем не менее"
+msgstr "niemniej jednak"
+
+msgid "Powiedział, że… и przekazała, że… передают содержание без дословной цитаты."
+msgstr "Powiedział, że… i przekazała, że… przekazują treść bez dosłownego cytowania."
+
+msgid "Według, jak podaje, ma/miał и podobno показывают, кому принадлежит сообщение и насколько оно подтверждено."
+msgstr "Według, jak podaje, ma/miał i podobno wskazują, kto jest źródłem wiadomości i w jakim stopniu ją potwierdzono."
+
+msgid "Косвенная речь"
+msgstr "Mowa zależna"
+
+msgid "Составьте: По данным управления, мост будет открыт в понедельник."
+msgstr "Ułóż zdanie: według urzędu most zostanie otwarty w poniedziałek."
+
+msgid "Составьте: Свидетель сообщил, что поезд остановился перед станцией."
+msgstr "Ułóż zdanie: świadek poinformował, że pociąg zatrzymał się przed stacją."
+
+msgid "Степень уверенности"
+msgstr "Stopień pewności"
+
+msgid "Факт или оценка"
+msgstr "Fakt czy ocena"
+
+msgid "Факт можно проверить; слова przełomowy, skandaliczny или katastrofalny требуют пометки как оценка автора."
+msgstr "Fakt można sprawdzić; słowa przełomowy, skandaliczny lub katastrofalny wymagają zaznaczenia, że są oceną autora."
+
+msgid "Что такое sprostowanie?"
+msgstr "Co to jest sprostowanie?"
+
+msgid "анонимный комментарий"
+msgstr "anonimowy komentarz"
+
+msgid "беспристрастный"
+msgstr "bezstronny"
+
+msgid "источник"
+msgstr "źródło"
+
+msgid "как говорят"
+msgstr "podobno"
+
+msgid "как сообщает"
+msgstr "jak podaje"
+
+msgid "опровергнуть"
+msgstr "zdementować"
+
+msgid "опровержение, исправление"
+msgstr "sprostowanie"
+
+msgid "оценить"
+msgstr "ocenić"
+
+msgid "предполагаемый, мнимый"
+msgstr "rzekomy"
+
+msgid "публичное исправление ошибки"
+msgstr "publiczne poprawienie błędu"
+
+msgid "репортаж; изложение"
+msgstr "relacja"
+
+msgid "сообщение в СМИ"
+msgstr "wiadomość medialna"
+
+msgid "эмоциональный заголовок"
+msgstr "emocjonalny nagłówek"
+
+msgid "якобы; как сообщается"
+msgstr "jakoby, jak się podaje"
+
+msgid "Omówienie — отглагольное существительное, называющее процесс."
+msgstr "Omówienie to rzeczownik odczasownikowy nazywający proces."
+
+msgid "Uprzejmie przypominam — корректная деловая формула."
+msgstr "Uprzejmie przypominam to poprawna formuła biznesowa."
+
+msgid "Ustalono и пассив zostanie przesunięte сохраняют официальный безличный регистр."
+msgstr "Ustalono i strona bierna zostanie przesunięte zachowują oficjalny, bezosobowy rejestr."
+
+msgid "Ustalono — безличная форма на -no, фокусирующая решение, а не исполнителя."
+msgstr "Ustalono to bezosobowa forma na -no, skupiająca uwagę na decyzji, a nie na wykonawcy."
+
+msgid "W nawiązaniu do + родительный задаёт формальную связь с предыдущим контактом."
+msgstr "W nawiązaniu do z dopełniaczem formalnie łączy wiadomość z wcześniejszym kontaktem."
+
+msgid "Wdrożenie — существительное, называющее процесс."
+msgstr "Wdrożenie to rzeczownik nazywający proces."
+
+msgid "Zastrzeżenie сообщает о риске или несогласии."
+msgstr "Zastrzeżenie informuje o ryzyku lub braku zgody."
+
+msgid "Zwracam się z prośbą o — нейтральная формальная просьба."
+msgstr "Zwracam się z prośbą o to neutralna, formalna prośba."
+
+msgid "Безличная форма выдвигает результат на первый план."
+msgstr "Forma bezosobowa wysuwa rezultat na pierwszy plan."
+
+msgid "В деловой переписке просьбу смягчают формулы Zwracam się z prośbą o… и Czy mogliby Państwo…"
+msgstr "W korespondencji biznesowej prośbę łagodzą formuły Zwracam się z prośbą o… i Czy mogliby Państwo…"
+
+msgid "Вопрос уважает очередь и участников."
+msgstr "Pytanie szanuje kolejność wypowiedzi i uczestników."
+
+msgid "Материалы позволили подготовиться к решениям."
+msgstr "Materiały pozwoliły przygotować się do podejmowania decyzji."
+
+msgid "Номинализация"
+msgstr "Nominalizacja"
+
+msgid "Он опасался, что сотрудники не успеют обучиться."
+msgstr "Obawiał się, że pracownicy nie zdążą się przeszkolić."
+
+msgid "Она попросила прислать замечания."
+msgstr "Poprosiła o przesłanie uwag."
+
+msgid "Первая формула нейтральна и вежлива."
+msgstr "Pierwsza formuła jest neutralna i uprzejma."
+
+msgid "После o нужен винительный; мужской неодушевлённый совпадает с родительным в этой форме сообщения."
+msgstr "Po o potrzebny jest biernik; w tym wyrażeniu rzeczownik rodzaju męskiego nieżywotnego ma formę równą mianownikowi."
+
+msgid "Протокол фокусируется на решениях."
+msgstr "Protokół skupia się na decyzjach."
+
+msgid "Регистр"
+msgstr "Rejestr"
+
+msgid "Результат встречи"
+msgstr "Rezultat spotkania"
+
+msgid "Резюме фиксирует решения и следующие шаги."
+msgstr "Podsumowanie zapisuje decyzje i kolejne kroki."
+
+msgid "Составьте: Было решено перенести внедрение на следующий месяц."
+msgstr "Ułóż zdanie: ustalono, że wdrożenie zostanie przesunięte na następny miesiąc."
+
+msgid "Составьте: В продолжение нашей встречи отправляю согласованное резюме."
+msgstr "Ułóż zdanie: w nawiązaniu do naszego spotkania przesyłam uzgodnione podsumowanie."
+
+msgid "Существительные на -anie/-enie уплотняют сообщение: omówić plan → omówienie planu."
+msgstr "Rzeczowniki na -anie/-enie kondensują informację: omówić plan → omówienie planu."
+
+msgid "Так решение становится исполнимым."
+msgstr "Dzięki temu decyzję można wykonać."
+
+msgid "Фиксируй decyzję, osobę odpowiedzialną и termin, используя bezosobowe ustalono/uzgodniono."
+msgstr "Zapisuj decyzję, osobę odpowiedzialną i termin, używając bezosobowych form ustalono/uzgodniono."
+
+msgid "Формула prosić o требует винительного падежа."
+msgstr "Formuła prosić o łączy się z biernikiem."
+
+msgid "Что означает porządek obrad?"
+msgstr "Co oznacza porządek obrad?"
+
+msgid "Этапность стала компромиссом."
+msgstr "Wdrożenie etapami stało się kompromisem."
+
+msgid "Это два обязательных элемента плана."
+msgstr "To dwa obowiązkowe elementy planu."
+
+msgid "Это список вопросов для обсуждения."
+msgstr "To lista spraw do omówienia."
+
+msgid "в продолжение, ссылаясь на"
+msgstr "w nawiązaniu do"
+
+msgid "вежливо напоминать"
+msgstr "uprzejmie przypominać"
+
+msgid "взять слово"
+msgstr "zabrać głos"
+
+msgid "вложение"
+msgstr "załącznik"
+
+msgid "внедрение"
+msgstr "wdrożenie"
+
+msgid "высказать возражение"
+msgstr "zgłosić zastrzeżenie"
+
+msgid "высказать обоснованное возражение"
+msgstr "zgłosić uzasadnione zastrzeżenie"
+
+msgid "достичь соглашения"
+msgstr "dojść do porozumienia"
+
+msgid "закрыть встречу"
+msgstr "zamknąć spotkanie"
+
+msgid "на достигнутом решении"
+msgstr "na podjętej decyzji"
+
+msgid "на имени автора"
+msgstr "na nazwisku autora"
+
+msgid "на эмоциях адресата"
+msgstr "na emocjach adresata"
+
+msgid "обращаться с просьбой"
+msgstr "zwracać się z prośbą"
+
+msgid "определить приоритеты"
+msgstr "ustalić priorytety"
+
+msgid "оставаться в распоряжении"
+msgstr "pozostawać do dyspozycji"
+
+msgid "ответственное лицо"
+msgstr "osoba odpowiedzialna"
+
+msgid "повестка встречи"
+msgstr "porządek obrad"
+
+msgid "подтвердить отпуск"
+msgstr "potwierdzić urlop"
+
+msgid "резюме, итог"
+msgstr "podsumowanie"
+
+msgid "согласование"
+msgstr "uzgodnienie"
+
+msgid "срок выполнения"
+msgstr "termin wykonania"
+
+msgid "трудовой договор"
+msgstr "umowa o pracę"
+
+msgid "Bada się — безличная возвратная конструкция для общего процесса."
+msgstr "Bada się to bezosobowa konstrukcja zwrotna opisująca ogólny proces."
+
+msgid "Na podstawie требует родительного падежа."
+msgstr "Na podstawie łączy się z dopełniaczem."
+
+msgid "Na podstawie требует родительного, opracowano — безличная форма."
+msgstr "Na podstawie łączy się z dopełniaczem, a opracowano jest formą bezosobową."
+
+msgid "Próbka — часть материала или наблюдений."
+msgstr "Próbka to część materiału lub zbiór obserwacji."
+
+msgid "Urządzenie — средний род, поэтому które."
+msgstr "Urządzenie jest rodzaju nijakiego, dlatego używamy które."
+
+msgid "Wykrywać wzorce — естественное сочетание."
+msgstr "Wykrywać wzorce to naturalne połączenie wyrazów."
+
+msgid "X to urządzenie/proces, który… сначала называет класс, затем отличительный признак."
+msgstr "X to urządzenie/proces, który… najpierw wskazuje kategorię, a potem cechę wyróżniającą."
+
+msgid "Безличное się описывает регулярный процесс."
+msgstr "Bezosobowe się opisuje regularny proces."
+
+msgid "Безличность"
+msgstr "Bezosobowość"
+
+msgid "В тексте указаны шесть садов."
+msgstr "W tekście wskazano sześć ogrodów."
+
+msgid "Гипотеза требует проверки данными."
+msgstr "Hipoteza wymaga sprawdzenia na podstawie danych."
+
+msgid "Датчик измеряет влажность почвы."
+msgstr "Czujnik mierzy wilgotność gleby."
+
+msgid "Конструкции bada się, można zmierzyć и zaobserwowano описывают общий метод без ненужного исполнителя."
+msgstr "Konstrukcje bada się, można zmierzyć i zaobserwowano opisują ogólną metodę bez zbędnego wskazywania wykonawcy."
+
+msgid "Оба ограничения названы прямо."
+msgstr "Oba ograniczenia wymieniono wprost."
+
+msgid "Ограничения помогают правильно интерпретировать данные."
+msgstr "Ograniczenia pomagają poprawnie interpretować dane."
+
+msgid "Определение"
+msgstr "Definicja"
+
+msgid "Определение строится через to, а пассив jest wykorzystywany согласуется с zbiór."
+msgstr "Definicję tworzy się za pomocą to, a strona bierna jest wykorzystywany zgadza się z rzeczownikiem zbiór."
+
+msgid "Пассив"
+msgstr "Strona bierna"
+
+msgid "Пассив выдвигает решение и факт разработки."
+msgstr "Strona bierna wysuwa na pierwszy plan rozwiązanie i fakt jego opracowania."
+
+msgid "Пассив требует причастия zweryfikowane."
+msgstr "Strona bierna wymaga imiesłowu zweryfikowane."
+
+msgid "Пассив: są + причастие, согласованное с dane во множественном числе."
+msgstr "Strona bierna: są i imiesłów zgodny z dane w liczbie mnogiej."
+
+msgid "Повторяемость и выборка укрепляют вывод."
+msgstr "Powtarzalność i próba wzmacniają wniosek."
+
+msgid "Решение зависит от фактических условий."
+msgstr "Rozwiązanie zależy od rzeczywistych warunków."
+
+msgid "Составьте: Алгоритм — это набор правил, который используется для обработки данных."
+msgstr "Ułóż zdanie: algorytm to zbiór reguł, który jest wykorzystywany do przetwarzania danych."
+
+msgid "Составьте: На основании результатов было разработано новое решение."
+msgstr "Ułóż zdanie: na podstawie wyników opracowano nowe rozwiązanie."
+
+msgid "Средняя экономия составила 18%."
+msgstr "Średnia oszczędność wyniosła 18%."
+
+msgid "Указан класс и отличительная функция."
+msgstr "Wskazano kategorię i funkcję wyróżniającą."
+
+msgid "Финал текста предлагает эту структуру."
+msgstr "Zakończenie tekstu proponuje tę strukturę."
+
+msgid "Форма на -no сообщает наблюдение без указания исследователя."
+msgstr "Forma na -no przekazuje obserwację bez wskazania badacza."
+
+msgid "Формы jest wykorzystywany / został opracowany выдвигают объект и результат на первый план."
+msgstr "Formy jest wykorzystywany / został opracowany wysuwają na pierwszy plan obiekt i rezultat."
+
+msgid "Что означает próbka в исследовании?"
+msgstr "Co oznacza próbka w badaniu?"
+
+msgid "Чтобы заменить результаты"
+msgstr "Żeby zastąpić wyniki"
+
+msgid "Чтобы показать границы вывода"
+msgstr "Żeby pokazać granice wniosku"
+
+msgid "Чтобы скрыть метод"
+msgstr "Żeby ukryć metodę"
+
+msgid "алгоритм"
+msgstr "algorytm"
+
+msgid "гипотеза"
+msgstr "hipoteza"
+
+msgid "готовый вывод"
+msgstr "gotowy wniosek"
+
+msgid "датчик"
+msgstr "czujnik"
+
+msgid "на основании"
+msgstr "na podstawie"
+
+msgid "название прибора"
+msgstr "nazwa przyrządu"
+
+msgid "обнаруживать"
+msgstr "wykrywać"
+
+msgid "обрабатывать данные"
+msgstr "przetwarzać dane"
+
+msgid "образец или группа для анализа"
+msgstr "materiał lub grupa do analizy"
+
+msgid "образец, выборка"
+msgstr "próbka, próba badawcza"
+
+msgid "ограничение"
+msgstr "ograniczenie"
+
+msgid "предположение, исходная посылка"
+msgstr "założenie, przesłanka wyjściowa"
+
+msgid "применение"
+msgstr "zastosowanie"
+
+msgid "провести исследование"
+msgstr "przeprowadzić badanie"
+
+msgid "разработать"
+msgstr "opracować"
+
+msgid "явление"
+msgstr "zjawisko"
+
+msgid "Możliwe, że отмечает возможность, а не уверенность."
+msgstr "Możliwe, że wskazuje możliwość, a nie pewność."
+
+msgid "O 5% обозначает величину роста."
+msgstr "O 5% wskazuje wielkość wzrostu."
+
+msgid "Ponad dwa razy więcej, nieco mniej niż и w porównaniu z помогают сопоставлять показатели без потери масштаба."
+msgstr "Ponad dwa razy więcej, nieco mniej niż i w porównaniu z pomagają porównywać wskaźniki bez utraty skali."
+
+msgid "Popyt — спрос покупателей; podaż — предложение продавцов."
+msgstr "Popyt oznacza zapotrzebowanie kupujących, a podaż — ofertę sprzedających."
+
+msgid "Prawdopodobnie маркирует прогноз, а не установленный факт."
+msgstr "Prawdopodobnie oznacza prognozę, a nie ustalony fakt."
+
+msgid "Prawdopodobnie, możliwe, że и istnieje ryzyko, że отделяют прогноз от подтверждённого факта."
+msgstr "Prawdopodobnie, możliwe, że i istnieje ryzyko, że oddzielają prognozę od potwierdzonego faktu."
+
+msgid "Wahać się — колебаться между значениями."
+msgstr "Wahać się oznacza zmieniać się między wartościami."
+
+msgid "Wzrosła o отвечает на вопрос, на сколько изменился показатель."
+msgstr "Wzrosła o odpowiada na pytanie, o ile zmienił się wskaźnik."
+
+msgid "Z… do… показывает начальное и конечное значение."
+msgstr "Z… do… wskazuje wartość początkową i końcową."
+
+msgid "Будущее и маркер вероятности создают прогноз."
+msgstr "Czas przyszły i określenie prawdopodobieństwa tworzą prognozę."
+
+msgid "В тексте прямо упомянут включённый ремонт."
+msgstr "Tekst wprost wspomina o remoncie wliczonym w cenę."
+
+msgid "Вероятность"
+msgstr "Prawdopodobieństwo"
+
+msgid "Выгодность учитывает все расходы и качество, не только ценник."
+msgstr "Opłacalność uwzględnia wszystkie koszty i jakość, a nie tylko cenę."
+
+msgid "Доля изменилась с 9% до 14%, то есть на 5 п.п."
+msgstr "Udział zmienił się z 9% do 14%, czyli o 5 punktów procentowych."
+
+msgid "Изменение на величину выражается wzrósł o, а podaż требует формы zmieniła."
+msgstr "Zmianę o określoną wielkość wyraża wzrósł o, a podaż wymaga formy zmieniła."
+
+msgid "Конструкции wzrosło o / spadło z… do… точно различают изменение на величину и диапазон изменения."
+msgstr "Konstrukcje wzrosło o / spadło z… do… dokładnie odróżniają wielkość zmiany od jej wartości początkowej i końcowej."
+
+msgid "Максимальная указанная сумма — 3900 zł."
+msgstr "Najwyższa podana kwota to 3900 zł."
+
+msgid "Оба риска перечислены в четвёртом абзаце."
+msgstr "Oba ryzyka wymieniono w czwartym akapicie."
+
+msgid "Покупательная способность показывает, сколько благ позволяет приобрести доход."
+msgstr "Siła nabywcza pokazuje, ile dóbr można kupić za dany dochód."
+
+msgid "Прогноз вводит prawdopodobnie, сравнение — w porównaniu z + творительный."
+msgstr "Prognozę wprowadza prawdopodobnie, a porównanie — w porównaniu z i narzędnik."
+
+msgid "Разница 12 от исходных 120 составляет 10%."
+msgstr "Różnica 12 w stosunku do początkowych 120 wynosi 10%."
+
+msgid "Разница долей равна 10 процентным пунктам."
+msgstr "Różnica udziałów wynosi 10 punktów procentowych."
+
+msgid "Регулярная выручка названа причиной прогноза."
+msgstr "Regularny przychód wskazano jako przyczynę prognozy."
+
+msgid "Сопоставление условий делает решение обоснованным."
+msgstr "Porównanie warunków pozwala uzasadnić decyzję."
+
+msgid "Составьте: Вероятно, этот вариант будет выгоднее по сравнению с предыдущим."
+msgstr "Ułóż zdanie: prawdopodobnie ten wariant będzie korzystniejszy w porównaniu z poprzednim."
+
+msgid "Составьте: Спрос вырос на 8%, но предложение почти не изменилось."
+msgstr "Ułóż zdanie: popyt wzrósł o 8%, ale podaż prawie się nie zmieniła."
+
+msgid "Сравнительная степень с конкретным показателем соединяется через niż."
+msgstr "Stopień wyższy z konkretnym wskaźnikiem łączy się przez niż."
+
+msgid "Тенденция"
+msgstr "Tendencja"
+
+msgid "Финальный вывод требует анализа нескольких факторов."
+msgstr "Końcowy wniosek wymaga analizy kilku czynników."
+
+msgid "вероятно"
+msgstr "prawdopodobnie"
+
+msgid "выгодный"
+msgstr "korzystny"
+
+msgid "доля"
+msgstr "udział"
+
+msgid "доход"
+msgstr "dochód"
+
+msgid "колебаться"
+msgstr "wahać się"
+
+msgid "покупательная способность"
+msgstr "siła nabywcza"
+
+msgid "предложение"
+msgstr "podaż"
+
+msgid "прогноз"
+msgstr "prognoza"
+
+msgid "рост"
+msgstr "wzrost"
+
+msgid "снижение"
+msgstr "spadek"
+
+msgid "сопоставить данные"
+msgstr "porównać dane"
+
+msgid "спрос"
+msgstr "popyt"
+
+msgid "тенденция"
+msgstr "tendencja"
+
+msgid "Na podstawie + родительный вводит правовое основание."
+msgstr "Na podstawie z dopełniaczem wprowadza podstawę prawną."
+
+msgid "Odwołać się od decyzji, ubiegać się o świadczenie и zobowiązać kogoś do działania требуют фиксированных предлогов и падежей."
+msgstr "Odwołać się od decyzji, ubiegać się o świadczenie i zobowiązać kogoś do działania wymagają określonych przyimków i przypadków."
+
+msgid "Odwołać się od требует родительного падежа."
+msgstr "Odwołać się od łączy się z dopełniaczem."
+
+msgid "Proszę o требует отглагольного существительного, na podstawie — родительного."
+msgstr "W tym zdaniu po proszę o używamy rzeczownika odczasownikowego, a po na podstawie — dopełniacza."
+
+msgid "Prośba o + винительный называет предмет просьбы."
+msgstr "Prośba o z biernikiem wskazuje przedmiot prośby."
+
+msgid "Ubiegam się o + винительный."
+msgstr "Ubiegam się o łączy się z biernikiem."
+
+msgid "Ubiegamy się o что-либо — устойчивое управление."
+msgstr "Ubiegamy się o coś to stałe połączenie wyrazów."
+
+msgid "Upływ terminu означает окончание установленного срока."
+msgstr "Upływ terminu oznacza zakończenie ustalonego czasu."
+
+msgid "W związku z требует творительного, skarga na — винительного."
+msgstr "W związku z łączy się z narzędnikiem, a skarga na — z biernikiem."
+
+msgid "Załącznik — документ, приложенный к обращению."
+msgstr "Załącznik to dokument dołączony do pisma."
+
+msgid "Zgodnie z, na podstawie и w związku z связывают обращение с правилом, документом или обстоятельством."
+msgstr "Zgodnie z, na podstawie i w związku z łączą pismo z zasadą, dokumentem lub okolicznością."
+
+msgid "Zwracam się z prośbą o… и wnoszę o… называют просьбу или требование нейтрально и точно."
+msgstr "Zwracam się z prośbą o… i wnoszę o… nazywają prośbę lub żądanie neutralnie i dokładnie."
+
+msgid "В обосновании указали отсутствие документа о доходе."
+msgstr "W uzasadnieniu wskazano brak dokumentu o dochodzie."
+
+msgid "Дело рассматривает компетентный орган."
+msgstr "Sprawę rozpatruje właściwy organ."
+
+msgid "Нормативное сочетание — odwołać się od decyzji."
+msgstr "Poprawne połączenie to odwołać się od decyzji."
+
+msgid "Обоснование объясняет фактические и правовые причины."
+msgstr "Uzasadnienie wyjaśnia przyczyny faktyczne i prawne."
+
+msgid "Основание"
+msgstr "Podstawa"
+
+msgid "Официальная связка zgodnie z вводит основание правила."
+msgstr "Oficjalne wyrażenie zgodnie z wskazuje podstawę w danej regule."
+
+msgid "Официальное письмо должно помогать проверить факты."
+msgstr "Oficjalne pismo powinno ułatwiać sprawdzenie faktów."
+
+msgid "Первая формула нейтральна, точна и вежлива."
+msgstr "Pierwsza formuła jest neutralna, precyzyjna i uprzejma."
+
+msgid "Перед сочетанием согласных употребляется w związku ze + творительный."
+msgstr "W tym połączeniu spółgłosek używamy w związku ze i narzędnika."
+
+msgid "Платформа сохранила подтверждение отправки."
+msgstr "Platforma zachowała potwierdzenie wysłania."
+
+msgid "Просьба сформулирована прямо в третьем абзаце."
+msgstr "Prośbę sformułowano wprost w trzecim akapicie."
+
+msgid "Составьте: В связи с отсутствием ответа я подаю жалобу на бездействие органа."
+msgstr "Ułóż zdanie: w związku z brakiem odpowiedzi składam skargę na bezczynność organu."
+
+msgid "Составьте: Прошу повторно рассмотреть дело на основании приложенных документов."
+msgstr "Ułóż zdanie: proszę o ponowne rozpatrzenie sprawy na podstawie załączonych dokumentów."
+
+msgid "Срок в разъяснении составлял 14 дней."
+msgstr "Termin podany w pouczeniu wynosił 14 dni."
+
+msgid "Структурированное обращение позволяет органу проверить требование."
+msgstr "Uporządkowane pismo pozwala organowi sprawdzić żądanie."
+
+msgid "Цель письма"
+msgstr "Cel pisma"
+
+msgid "Эти три элемента перечислены в выводе."
+msgstr "Te trzy elementy wymieniono we wniosku."
+
+msgid "административное решение"
+msgstr "decyzja administracyjna"
+
+msgid "в соответствии с"
+msgstr "zgodnie z"
+
+msgid "заявление, ходатайство"
+msgstr "wniosek, podanie"
+
+msgid "обжаловать"
+msgstr "zaskarżyć"
+
+msgid "обратиться с просьбой"
+msgstr "zwrócić się z prośbą"
+
+msgid "подать апелляцию"
+msgstr "wnieść odwołanie"
+
+msgid "право, полномочие"
+msgstr "prawo, uprawnienie"
+
+msgid "правовая норма, положение"
+msgstr "przepis prawny"
+
+msgid "рассмотреть дело"
+msgstr "rozpatrzyć sprawę"
+
+msgid "ходатайствовать, претендовать на"
+msgstr "ubiegać się o"
+
+msgid "Być może вводит осторожную гипотезу о мотиве."
+msgstr "Być może wprowadza ostrożną hipotezę dotyczącą motywu."
+
+msgid "Być może оставляет место неопределённости."
+msgstr "Być może pozostawia miejsce na niepewność."
+
+msgid "Dojść do porozumienia — прийти к согласию."
+msgstr "Dojść do porozumienia oznacza osiągnąć zgodę."
+
+msgid "Mogła + infinitiv здесь оценивает упущенную возможность."
+msgstr "Mogła z bezokolicznikiem ocenia tutaj niewykorzystaną możliwość."
+
+msgid "Mogła + infinitiv показывает возможное, но не реализованное действие."
+msgstr "Mogła z bezokolicznikiem wskazuje możliwe, ale niezrealizowane działanie."
+
+msgid "Prawdopodobnie обозначает обоснованную, но не абсолютную уверенность."
+msgstr "Prawdopodobnie wskazuje uzasadnioną, ale nie absolutną pewność."
+
+msgid "Prawdopodobnie смягчает вывод, а obawiać się требует родительного падежа."
+msgstr "Prawdopodobnie łagodzi wniosek, a obawiać się łączy się z dopełniaczem."
+
+msgid "Prawdopodobnie явно маркирует степень уверенности."
+msgstr "Prawdopodobnie wyraźnie wskazuje stopień pewności."
+
+msgid "Wydaje mi się rozsądne, że… оценивает решение мягче, чем To było nierozsądne. Конструкция mógł / mogła + infinitiv показывает упущенную возможность без прямого обвинения."
+msgstr "Wydaje mi się rozsądne, że… ocenia decyzję łagodniej niż To było nierozsądne. Konstrukcja mógł / mogła z bezokolicznikiem wskazuje niewykorzystaną możliwość bez bezpośredniego oskarżenia."
+
+msgid "Wydawało się передаёт субъективную оценку, а не установленный факт."
+msgstr "Wydawało się przekazuje subiektywną ocenę, a nie ustalony fakt."
+
+msgid "Z perspektywy + родительный задаёт точку зрения; mogła + infinitiv — упущенную возможность."
+msgstr "Z perspektywy z dopełniaczem określa punkt widzenia; mogła z bezokolicznikiem — niewykorzystaną możliwość."
+
+msgid "Zależało mu na…, obawiała się, że… и potrzebowała, żeby… связывают поступок с внутренней причиной, не выдавая догадку за факт."
+msgstr "Zależało mu na…, obawiała się, że… i potrzebowała, żeby… łączą czyn z wewnętrzną przyczyną, nie przedstawiając przypuszczenia jako faktu."
+
+msgid "Żal часто возникает из-за пережитой несправедливости или недостатка внимания."
+msgstr "Żal często wynika z doznanej niesprawiedliwości lub braku uwagi."
+
+msgid "Выражение отделяет субъективное восприятие от общего факта."
+msgstr "Wyrażenie oddziela subiektywny odbiór od ogólnego faktu."
+
+msgid "Граница касается совместных решений."
+msgstr "Granica dotyczy wspólnych decyzji."
+
+msgid "Границы защищают потребности и не равны отвержению."
+msgstr "Granice chronią potrzeby i nie oznaczają odrzucenia."
+
+msgid "Естественное сочетание: przypisywać komuś intencje."
+msgstr "Naturalne połączenie: przypisywać komuś intencje."
+
+msgid "Их структура отделяет наблюдение от интерпретации."
+msgstr "Ich struktura oddziela obserwację od interpretacji."
+
+msgid "Мотив и потребность"
+msgstr "Motyw i potrzeba"
+
+msgid "Наверняка: z pewnością / niewątpliwie; вероятно: prawdopodobnie / przypuszczalnie; осторожная гипотеза: być może / możliwe, że."
+msgstr "Pewność: z pewnością / niewątpliwie; prawdopodobieństwo: prawdopodobnie / przypuszczalnie; ostrożna hipoteza: być może / możliwe, że."
+
+msgid "Он признал, что мог раньше включить Лену в решение."
+msgstr "Przyznał, że mógł wcześniej włączyć Lenę w podejmowanie decyzji."
+
+msgid "Она чувствовала себя исключённой из принятия решений."
+msgstr "Czuła się wykluczona z podejmowania decyzji."
+
+msgid "Оценка поведения"
+msgstr "Ocena zachowania"
+
+msgid "Пауза и называние эмоции снижают напряжение."
+msgstr "Przerwa i nazwanie emocji zmniejszają napięcie."
+
+msgid "Первая реплика называет возможное чувство без навязывания интерпретации."
+msgstr "Pierwsza wypowiedź nazywa możliwe uczucie, nie narzucając interpretacji."
+
+msgid "Составьте: Вероятно, она отстранилась, потому что боялась очередного конфликта."
+msgstr "Ułóż zdanie: prawdopodobnie wycofała się, ponieważ obawiała się kolejnego konfliktu."
+
+msgid "Составьте: С его точки зрения она могла проявить больше понимания."
+msgstr "Ułóż zdanie: z jego perspektywy mogła okazać więcej zrozumienia."
+
+msgid "Текст предлагает осторожную гипотезу о его страхе эскалации."
+msgstr "Tekst proponuje ostrożną hipotezę dotyczącą jego obawy przed eskalacją."
+
+msgid "Финал текста прямо формулирует эту функцию."
+msgstr "Zakończenie tekstu wprost wskazuje tę funkcję."
+
+msgid "взять ответственность"
+msgstr "wziąć odpowiedzialność"
+
+msgid "говорить мягче было запрещено"
+msgstr "łagodniejsze mówienie było zabronione"
+
+msgid "избегать конфронтации"
+msgstr "unikać konfrontacji"
+
+msgid "обижаться, испытывать досаду"
+msgstr "odczuwać żal"
+
+msgid "она точно ничего не сказала"
+msgstr "na pewno nic nie powiedziała"
+
+msgid "отстраниться, выйти из ситуации"
+msgstr "wycofać się"
+
+msgid "по доказанному правилу"
+msgstr "zgodnie z udowodnioną regułą"
+
+msgid "полностью прекращать общение"
+msgstr "całkowicie zerwać kontakt"
+
+msgid "потребность в близости"
+msgstr "potrzeba bliskości"
+
+msgid "прийти к согласию"
+msgstr "dojść do porozumienia"
+
+msgid "приписывать кому-то намерения"
+msgstr "przypisywać komuś intencje"
+
+msgid "против её воли"
+msgstr "wbrew jej woli"
+
+msgid "проявить понимание"
+msgstr "okazać zrozumienie"
+
+msgid "реагировать импульсивно"
+msgstr "reagować impulsywnie"
+
+msgid "с её точки зрения"
+msgstr "z jej perspektywy"
+
+msgid "с точки зрения"
+msgstr "z perspektywy"
+
+msgid "скрывать свои потребности"
+msgstr "ukrywać swoje potrzeby"
+
+msgid "существовала другая возможность поведения"
+msgstr "istniała inna możliwość zachowania"
+
+msgid "устанавливать границы"
+msgstr "wyznaczać granice"
+
+msgid "чувство безопасности"
+msgstr "poczucie bezpieczeństwa"
+
+msgid "чувствовать напряжение"
+msgstr "odczuwać napięcie"
+
+msgid "чувствовать себя обойдённым вниманием"
+msgstr "czuć się pominiętym"
+
+msgid "ясно обозначать допустимое в отношениях"
+msgstr "jasno określać, co jest dopuszczalne w relacji"
+
+msgid "Aby + infinitiv выражает цель художественного приёма."
+msgstr "Aby z bezokolicznikiem wyraża cel zabiegu artystycznego."
+
+msgid "Dzięki temu связывает особенность финала с её эффектом."
+msgstr "Dzięki temu łączy cechę zakończenia z jej efektem."
+
+msgid "Fabuła организует события истории."
+msgstr "Fabuła porządkuje wydarzenia opowieści."
+
+msgid "Można + infinitiv вводит допустимую интерпретацию, а не единственный ответ."
+msgstr "Można z bezokolicznikiem wprowadza dopuszczalną interpretację, a nie jedyną odpowiedź."
+
+msgid "Można interpretować jako оставляет место другим обоснованным прочтениям."
+msgstr "Można interpretować jako pozostawia miejsce na inne uzasadnione odczytania."
+
+msgid "Można odczytać jako — готовая аналитическая рамка; symbol требует родительного определения."
+msgstr "Można odczytać jako to gotowa rama analityczna; dookreślenie rzeczownika symbol przyjmuje dopełniacz."
+
+msgid "Odwoływać się do требует родительного падежа."
+msgstr "Odwoływać się do łączy się z dopełniaczem."
+
+msgid "Аргументированная рецензия связывает оценку с конкретными средствами произведения."
+msgstr "Uzasadniona recenzja łączy ocenę z konkretnymi środkami wyrazu utworu."
+
+msgid "В косвенной речи первое лицо меняется на третье."
+msgstr "W mowie zależnej pierwsza osoba zmienia się na trzecią."
+
+msgid "Звук шагов допускает разные прочтения."
+msgstr "Dźwięk kroków dopuszcza różne interpretacje."
+
+msgid "Интерпретация"
+msgstr "Interpretacja"
+
+msgid "Короткая цитата вводится через autor pisze, że… или bohater mówi: «…» и обязательно сопровождается объяснением её функции."
+msgstr "Krótki cytat wprowadza się przez autor pisze, że… lub bohater mówi: „…” i zawsze wyjaśnia się jego funkcję."
+
+msgid "Косвенная речь использует że wróci; устойчивое сочетание — poddawać coś w wątpliwość."
+msgstr "Mowa zależna wykorzystuje że wróci; stałe połączenie to poddawać coś w wątpliwość."
+
+msgid "Косвенная речь меняет перспективу: Powiedziała: «Wrócę» → Powiedziała, że wróci. В рецензии настоящее время может описывать действие произведения."
+msgstr "Mowa zależna zmienia perspektywę: Powiedziała: „Wrócę” → Powiedziała, że wróci. W recenzji czas teraźniejszy może opisywać akcję utworu."
+
+msgid "Напряжение возникает из ограниченной информации."
+msgstr "Napięcie wynika z ograniczonej informacji."
+
+msgid "Напряжение создаётся системой повествовательных и визуальных средств."
+msgstr "Napięcie powstaje dzięki systemowi środków narracyjnych i wizualnych."
+
+msgid "Неоднозначность открывает несколько интерпретаций, если они опираются на текст."
+msgstr "Niejednoznaczność otwiera kilka interpretacji, jeśli opierają się na tekście."
+
+msgid "Первая фраза объясняет возможный смысл образа."
+msgstr "Pierwsze zdanie wyjaśnia możliwe znaczenie obrazu."
+
+msgid "Пересказ"
+msgstr "Streszczenie"
+
+msgid "При передаче реплики меняется лицо: znam → zna."
+msgstr "Przy przekazywaniu wypowiedzi zmienia się osoba: znam → zna."
+
+msgid "Рецензия связывает повторяющийся образ с ожиданием."
+msgstr "Recenzja łączy powracający obraz z oczekiwaniem."
+
+msgid "Составьте: Героиня сказала, что вернётся, но рассказчик ставит её слова под сомнение."
+msgstr "Ułóż zdanie: bohaterka powiedziała, że wróci, ale narrator poddaje jej słowa w wątpliwość."
+
+msgid "Составьте: Этот образ можно истолковать как символ утраченной близости."
+msgstr "Ułóż zdanie: ten obraz można interpretować jako symbol utraconej bliskości."
+
+msgid "Финальный абзац обосновывает положительную оценку его связности."
+msgstr "Ostatni akapit uzasadnia pozytywną ocenę spójności utworu."
+
+msgid "Формулы można odczytać jako…, motyw sugeruje, że… и scena skłania do wniosku… отделяют анализ от пересказа сюжета."
+msgstr "Formuły można odczytać jako…, motyw sugeruje, że… i scena skłania do wniosku… oddzielają analizę od streszczenia fabuły."
+
+msgid "Цитата"
+msgstr "Cytat"
+
+msgid "Цитата — доказательство, её функцию нужно объяснить."
+msgstr "Cytat jest dowodem; trzeba wyjaśnić jego funkcję."
+
+msgid "Эта информация добавляет другую перспективу."
+msgstr "Ta informacja dodaje inną perspektywę."
+
+msgid "Это её внешняя практическая задача."
+msgstr "To jej zewnętrzne zadanie praktyczne."
+
+msgid "Это система визуальных средств фильма."
+msgstr "To system wizualnych środków wyrazu filmu."
+
+msgid "биографию зрителя"
+msgstr "biografię widza"
+
+msgid "визуальная составляющая"
+msgstr "warstwa wizualna"
+
+msgid "интерпретировать"
+msgstr "interpretować"
+
+msgid "можно истолковать как"
+msgstr "można odczytać jako"
+
+msgid "мотив, повторяющийся образ"
+msgstr "motyw, powracający obraz"
+
+msgid "неоднозначный"
+msgstr "niejednoznaczny"
+
+msgid "отсылать к"
+msgstr "odwoływać się do"
+
+msgid "порядок глав книги"
+msgstr "kolejność rozdziałów książki"
+
+msgid "последовательность событий произведения"
+msgstr "kolejność wydarzeń utworu"
+
+msgid "привести цитату"
+msgstr "przytoczyć cytat"
+
+msgid "рассказчик"
+msgstr "narrator"
+
+msgid "символизировать"
+msgstr "symbolizować"
+
+msgid "создавать напряжение"
+msgstr "budować napięcie"
+
+msgid "список актёров"
+msgstr "lista aktorów"
+
+msgid "только мнение критика"
+msgstr "tylko opinia krytyka"
+
+msgid "точка зрения"
+msgstr "punkt widzenia"
+
+msgid "трансформация героя"
+msgstr "przemiana bohatera"
+
+msgid "цвет, кадр, свет и композицию изображения"
+msgstr "kolor, kadr, światło i kompozycję obrazu"
+
+msgid "Jeśli dobrze rozumiem нейтрально проверяет точность перефразирования."
+msgstr "Jeśli dobrze rozumiem neutralnie sprawdza dokładność parafrazy."
+
+msgid "Oddać głos — передать очередь говорящему."
+msgstr "Oddać głos oznacza przekazać komuś kolej wypowiedzi."
+
+msgid "Podsumowując вводит вывод, natomiast показывает различие, а co do tego panuje zgoda фиксирует общую точку без стирания разногласий."
+msgstr "Podsumowując wprowadza wniosek, natomiast pokazuje różnicę, a co do tego panuje zgoda wskazuje wspólny punkt bez pomijania rozbieżności."
+
+msgid "Podsumowując вводит сжатый итог с сохранением разногласия."
+msgstr "Podsumowując wprowadza zwięzły wniosek, zachowując informację o rozbieżnościach."
+
+msgid "Porozumienie предполагает согласование позиций."
+msgstr "Porozumienie zakłada uzgodnienie stanowisk."
+
+msgid "Sporny указывает на отсутствие согласия."
+msgstr "Sporny wskazuje brak zgody."
+
+msgid "Wrócić do + dopełniacz обозначает возврат к вопросу."
+msgstr "Wrócić do z dopełniaczem oznacza powrót do sprawy."
+
+msgid "Wróćmy do направляет разговор без оценки участника."
+msgstr "Wróćmy do kieruje rozmową bez oceniania uczestnika."
+
+msgid "Zgadzać się co do + dopełniacz фиксирует область согласия; ale сохраняет контраст."
+msgstr "Zgadzać się co do z dopełniaczem wskazuje obszar zgody; ale zachowuje kontrast."
+
+msgid "Аргумент расширил понятие доступности."
+msgstr "Argument poszerzył pojęcie dostępności."
+
+msgid "Выражение относится к доступу к участию в разговоре."
+msgstr "Wyrażenie dotyczy możliwości uczestniczenia w rozmowie."
+
+msgid "Модератор обозначила исследовательскую цель встречи."
+msgstr "Moderatorka wskazała badawczy cel spotkania."
+
+msgid "Модератор отделяет позицию от собственной оценки: jeśli dobrze rozumiem…, innymi słowy… и rozmówca zwraca uwagę na…"
+msgstr "Moderator oddziela stanowisko od własnej oceny: jeśli dobrze rozumiem…, innymi słowy… i rozmówca zwraca uwagę na…"
+
+msgid "Модерация регулирует процесс, а не взгляды."
+msgstr "Moderacja reguluje proces, a nie poglądy."
+
+msgid "Нейтральный пересказ"
+msgstr "Neutralna relacja"
+
+msgid "Она вернула разговор к расписанию."
+msgstr "Przywróciła rozmowę do kwestii harmonogramu."
+
+msgid "Парная конструкция сопоставляет два аспекта."
+msgstr "Konstrukcja parzysta porównuje dwa aspekty."
+
+msgid "Парный маркер организует сбалансированное сопоставление."
+msgstr "Parzyste określenie organizuje wyważone porównanie."
+
+msgid "Перефразирование служит точности и общему пониманию."
+msgstr "Parafraza służy dokładności i wspólnemu zrozumieniu."
+
+msgid "Перефразирование сохранило обе сути."
+msgstr "Parafraza zachowała sens obu wypowiedzi."
+
+msgid "После proponować естественно употребляется infinitiv; формула смягчает проверку смысла."
+msgstr "Po proponować naturalnie używa się bezokolicznika; formuła łagodzi sprawdzanie sensu."
+
+msgid "Составьте: Если я правильно понимаю, вы предлагаете изменить порядок обсуждения."
+msgstr "Ułóż zdanie: jeśli dobrze rozumiem, proponujecie zmienić kolejność dyskusji."
+
+msgid "Составьте: Подводя итог, мы согласны с целью, но способ остаётся спорным."
+msgstr "Ułóż zdanie: podsumowując, zgadzamy się co do celu, ale sposób pozostaje sporny."
+
+msgid "Управление ходом дискуссии"
+msgstr "Kierowanie przebiegiem dyskusji"
+
+msgid "Финальный итог явно называет нерешённые вопросы."
+msgstr "Końcowe podsumowanie wyraźnie wskazuje nierozwiązane kwestie."
+
+msgid "Формула оставляет собеседнику возможность уточнить позицию."
+msgstr "Formuła daje rozmówcy możliwość doprecyzowania stanowiska."
+
+msgid "Формулы oddaję głos…, wróćmy do… и zanim przejdziemy dalej помогают обозначать этапы разговора и распределять слово."
+msgstr "Formuły oddaję głos…, wróćmy do… i zanim przejdziemy dalej pomagają wyznaczać etapy rozmowy i udzielać głosu."
+
+msgid "Хороший итог различает согласованное и спорное."
+msgstr "Dobre podsumowanie odróżnia sprawy uzgodnione od spornych."
+
+msgid "Это конкретный согласованный результат."
+msgstr "To konkretny, uzgodniony rezultat."
+
+msgid "вернёмся к"
+msgstr "wróćmy do"
+
+msgid "вопрос, по которому сохраняется разногласие"
+msgstr "kwestia, co do której pozostaje rozbieżność"
+
+msgid "выиграть спор любой ценой"
+msgstr "wygrać spór za wszelką cenę"
+
+msgid "выработать приемлемое согласованное решение"
+msgstr "wypracować akceptowalne, uzgodnione rozwiązanie"
+
+msgid "готовый итог встречи"
+msgstr "gotowe podsumowanie spotkania"
+
+msgid "достичь согласия"
+msgstr "osiągnąć porozumienie"
+
+msgid "если я правильно понимаю"
+msgstr "jeśli dobrze rozumiem"
+
+msgid "завершает встречу"
+msgstr "kończy spotkanie"
+
+msgid "иными словами"
+msgstr "innymi słowy"
+
+msgid "объявления перерыва"
+msgstr "ogłoszenia przerwy"
+
+msgid "она явно выходит за регламент или тему"
+msgstr "wyraźnie przekracza czas lub odchodzi od tematu"
+
+msgid "ответить на аргумент"
+msgstr "odpowiedzieć na argument"
+
+msgid "отложить все вопросы"
+msgstr "odłożyć wszystkie kwestie"
+
+msgid "отменяет его аргумент"
+msgstr "unieważnia jego argument"
+
+msgid "передать слово"
+msgstr "oddać głos"
+
+msgid "по этому поводу есть согласие"
+msgstr "co do tego panuje zgoda"
+
+msgid "подводя итог"
+msgstr "podsumowując"
+
+msgid "позиция отличается от его собственной"
+msgstr "stanowisko różni się od jego własnego"
+
+msgid "получить возможность высказаться"
+msgstr "uzyskać możliwość wypowiedzi"
+
+msgid "потерять голос"
+msgstr "stracić głos"
+
+msgid "прервать выступление"
+msgstr "przerwać wystąpienie"
+
+msgid "приглашает этого человека высказаться"
+msgstr "zaprasza tę osobę do wypowiedzi"
+
+msgid "придерживаться темы"
+msgstr "trzymać się tematu"
+
+msgid "прочитать итог"
+msgstr "odczytać podsumowanie"
+
+msgid "с одной стороны… с другой…"
+msgstr "z jednej strony… z drugiej…"
+
+msgid "собеседник приводит данные"
+msgstr "rozmówca przytacza dane"
+
+msgid "сопоставления двух аспектов"
+msgstr "porównania dwóch aspektów"
+
+msgid "список участников"
+msgstr "lista uczestników"
+
+msgid "спорный вопрос"
+msgstr "kwestia sporna"
+
+msgid "уточнить"
+msgstr "doprecyzować"
+
+msgid "цитирования закона"
+msgstr "cytowania prawa"
+
+msgid "чтобы изменить мнение автора"
+msgstr "żeby zmienić opinię autora"
+
+msgid "чтобы проверить смысл и сделать позицию понятной"
+msgstr "żeby sprawdzić sens i przedstawić stanowisko zrozumiale"
+
+msgid "чтобы сократить число участников"
+msgstr "żeby zmniejszyć liczbę uczestników"
+
+msgid "Czy dobrze rozumiem, że… и co dokładnie masz na myśli? помогают проверить смысл до оценки."
+msgstr "Czy dobrze rozumiem, że… i co dokładnie masz na myśli? pomagają sprawdzić sens przed oceną."
+
+msgid "Jeśli zabrzmiało to…, chciałem powiedzieć… позволяет признать эффект слов и точно переформулировать намерение."
+msgstr "Jeśli zabrzmiało to…, chciałem powiedzieć… pozwala uznać efekt słów i precyzyjnie przeformułować zamiar."
+
+msgid "Lepiej…, niż… сравнивает решения."
+msgstr "Lepiej…, niż… porównuje rozwiązania."
+
+msgid "Mieć na myśli — иметь в виду."
+msgstr "Mieć na myśli oznacza zamierzać przekazać dany sens."
+
+msgid "Zanim обозначает действие до вывода."
+msgstr "Zanim wskazuje działanie poprzedzające wniosek."
+
+msgid "Дистанция"
+msgstr "Dystans"
+
+msgid "Её задела интерпретация короткого сообщения."
+msgstr "Dotknęła ją interpretacja krótkiej wiadomości."
+
+msgid "Команда адаптировала нормы без стирания различий."
+msgstr "Zespół dostosował normy bez zacierania różnic."
+
+msgid "Команда добавляет контекст."
+msgstr "Zespół dodaje kontekst."
+
+msgid "Она говорила от своего опыта."
+msgstr "Mówiła o własnym doświadczeniu."
+
+msgid "Поведение зависит от многих факторов."
+msgstr "Zachowanie zależy od wielu czynników."
+
+msgid "Ремонт разговора"
+msgstr "Naprawa rozmowy"
+
+msgid "Составьте: Если я правильно понимаю, молчание не означало несогласия."
+msgstr "Ułóż zdanie: jeśli dobrze rozumiem, milczenie nie oznaczało braku zgody."
+
+msgid "Составьте: По моему опыту, лучше уточнить норму, чем делать предположения."
+msgstr "Ułóż zdanie: z mojego doświadczenia wynika, że lepiej doprecyzować normę, niż przyjmować założenia."
+
+msgid "Уточнение"
+msgstr "Doprecyzowanie"
+
+msgid "Уточнение предшествует оценке."
+msgstr "Doprecyzowanie poprzedza ocenę."
+
+msgid "Формула отделяет эффект от намерения."
+msgstr "Formuła oddziela efekt od zamiaru."
+
+msgid "Формула проверяет интерпретацию нейтрально."
+msgstr "Formuła neutralnie sprawdza interpretację."
+
+msgid "Формулы mam wrażenie, wydaje mi się и w moim doświadczeniu показывают, что речь идёт о наблюдении, а не универсальном правиле."
+msgstr "Formuły mam wrażenie, wydaje mi się i w moim doświadczeniu wskazują, że chodzi o obserwację, a nie uniwersalną regułę."
+
+msgid "адаптировать стиль"
+msgstr "dostosować styl"
+
+msgid "избегать предположений"
+msgstr "unikać założeń"
+
+msgid "коммуникативная норма"
+msgstr "norma komunikacyjna"
+
+msgid "косвенный"
+msgstr "pośredni"
+
+msgid "намерение"
+msgstr "intencja"
+
+msgid "обобщение"
+msgstr "uogólnienie"
+
+msgid "по моему опыту"
+msgstr "z mojego doświadczenia"
+
+msgid "прояснить недоразумение"
+msgstr "wyjaśnić nieporozumienie"
+
+msgid "прямой"
+msgstr "bezpośredni"
+
+msgid "сохранять дистанцию"
+msgstr "zachować dystans"
+
+msgid "стереотип"
+msgstr "stereotyp"
+
+msgid "считать тон"
+msgstr "odczytać ton"
+
+msgid "„bezpośredni” — прямой."
+msgstr "„bezpośredni” oznacza wyrażony wprost."
+
+msgid "„doprecyzować” — уточнить."
+msgstr "„doprecyzować” oznacza określić dokładniej."
+
+msgid "„intencja” — намерение."
+msgstr "„intencja” to zamiar."
+
+msgid "„interpretować” — интерпретировать."
+msgstr "„interpretować” oznacza wyjaśniać znaczenie."
+
+msgid "„nieporozumienie” — недоразумение."
+msgstr "„nieporozumienie” to brak wzajemnego zrozumienia."
+
+msgid "„norma komunikacyjna” — коммуникативная норма."
+msgstr "„norma komunikacyjna” to przyjęta zasada porozumiewania się."
+
+msgid "„odczytać ton” — считать тон."
+msgstr "„odczytać ton” oznacza rozpoznać sposób i nastawienie wypowiedzi."
+
+msgid "„pośredni” — косвенный."
+msgstr "„pośredni” oznacza niewyrażony wprost."
+
+msgid "„stereotyp” — стереотип."
+msgstr "„stereotyp” to utrwalony, uproszczony obraz."
+
+msgid "„uogólnienie” — обобщение."
+msgstr "„uogólnienie” to rozszerzenie obserwacji na całą grupę."
+
+msgid "Dane wskazują, sugerują или nie pozwalają stwierdzić передают разную силу вывода."
+msgstr "Dane wskazują, sugerują lub nie pozwalają stwierdzić wyrażają różną siłę wniosku."
+
+msgid "Na podstawie + dopełniacz обозначает основание."
+msgstr "Na podstawie z dopełniaczem wskazuje podstawę."
+
+msgid "Oba согласуется с nijakim źródła."
+msgstr "Oba zgadza się z rzeczownikiem źródła rodzaju nijakiego."
+
+msgid "Podczas gdy сопоставляет два подхода."
+msgstr "Podczas gdy porównuje dwa podejścia."
+
+msgid "Podczas gdy сопоставляет источники, а łącznie pokazują… вводит общий вывод."
+msgstr "Podczas gdy porównuje źródła, a łącznie pokazują… wprowadza wspólny wniosek."
+
+msgid "Sugerują — осторожный вывод."
+msgstr "Sugerują wyraża ostrożny wniosek."
+
+msgid "Według autora и z badania wynika jasno отделяют сведения источника от нашей оценки."
+msgstr "Według autora i z badania wynika wyraźnie oddzielają informacje ze źródła od naszej oceny."
+
+msgid "Wynikać z danych — следовать из данных."
+msgstr "Wynikać z danych oznacza być wnioskiem opartym na danych."
+
+msgid "Активное создание примеров помогало."
+msgstr "Aktywne tworzenie przykładów pomagało."
+
+msgid "Оба источника касались словарного запаса."
+msgstr "Oba źródła dotyczyły słownictwa."
+
+msgid "Она обозначила и пользу, и ограничения."
+msgstr "Wskazała zarówno korzyści, jak i ograniczenia."
+
+msgid "Оно длилось три недели."
+msgstr "Trwało trzy tygodnie."
+
+msgid "Прямое объединение было бы некорректным."
+msgstr "Bezpośrednie połączenie byłoby niepoprawne."
+
+msgid "Синтез"
+msgstr "Synteza"
+
+msgid "Составьте: На основании этой выборки нельзя сделать окончательный вывод."
+msgstr "Ułóż zdanie: na podstawie tej próby nie można wyciągnąć ostatecznego wniosku."
+
+msgid "Составьте: Оба источника указывают на пользу, но используют разные методы."
+msgstr "Ułóż zdanie: oba źródła wskazują korzyści, ale wykorzystują różne metody."
+
+msgid "Это корректная работа с источником."
+msgstr "To poprawna praca ze źródłem."
+
+msgid "выборка"
+msgstr "próba badawcza"
+
+msgid "данные указывают"
+msgstr "dane wskazują"
+
+msgid "избегать плагиата"
+msgstr "unikać plagiatu"
+
+msgid "надёжный источник"
+msgstr "wiarygodne źródło"
+
+msgid "охват исследования"
+msgstr "zakres badania"
+
+msgid "перефразировать"
+msgstr "sparafrazować"
+
+msgid "резюме"
+msgstr "streszczenie"
+
+msgid "сноска"
+msgstr "przypis"
+
+msgid "сравнить результаты"
+msgstr "porównać wyniki"
+
+msgid "тезис"
+msgstr "teza"
+
+msgid "цитировать"
+msgstr "cytować"
+
+msgid "„cytować” — цитировать."
+msgstr "„cytować” oznacza przytaczać czyjeś słowa."
+
+msgid "„dowód” — доказательство."
+msgstr "„dowód” to informacja potwierdzająca twierdzenie."
+
+msgid "„porównać wyniki” — сравнить результаты."
+msgstr "„porównać wyniki” oznacza zestawić rezultaty."
+
+msgid "„przypis” — сноска."
+msgstr "„przypis” to dodatkowa informacja przy tekście."
+
+msgid "„sparafrazować” — перефразировать."
+msgstr "„sparafrazować” oznacza przekazać sens innymi słowami."
+
+msgid "„streszczenie” — резюме."
+msgstr "„streszczenie” to zwięzłe przedstawienie treści."
+
+msgid "„teza” — тезис."
+msgstr "„teza” to twierdzenie wymagające uzasadnienia."
+
+msgid "„wiarygodne źródło” — надёжный источник."
+msgstr "„wiarygodne źródło” to źródło, któremu można zaufać."
+
+msgid "„wniosek” — вывод."
+msgstr "„wniosek” to rezultat rozumowania."
+
+msgid "„zakres badania” — охват исследования."
+msgstr "„zakres badania” określa, co objęto badaniem."
+
+msgid "Chociaż вводит уступку, nie można — безличную необходимость."
+msgstr "Chociaż wprowadza przyzwolenie, a nie można — bezosobową niemożność lub zakaz."
+
+msgid "Gdyby + past и условная форма выражают нереальное условие."
+msgstr "Gdyby z formą czasu przeszłego i trybem warunkowym wyraża warunek nierzeczywisty."
+
+msgid "Niemniej вводит существенную оговорку."
+msgstr "Niemniej wprowadza istotne zastrzeżenie."
+
+msgid "O ile вводит условие оценки."
+msgstr "O ile wprowadza warunek oceny."
+
+msgid "Tryb warunkowy описывает нереализованную возможность."
+msgstr "Tryb warunkowy opisuje niezrealizowaną możliwość."
+
+msgid "Вопрос связывал пользу и возможный ущерб."
+msgstr "Pytanie łączyło korzyść z możliwą szkodą."
+
+msgid "Защита"
+msgstr "Obrona"
+
+msgid "Исследовательский вопрос ограничивает тему и определяет, какие данные действительно нужны."
+msgstr "Pytanie badawcze ogranicza temat i określa, jakie dane są rzeczywiście potrzebne."
+
+msgid "Критерии были измеримыми."
+msgstr "Kryteria były mierzalne."
+
+msgid "На вопрос сначала ответь прямо, затем назови доказательство и границы вывода."
+msgstr "Najpierw odpowiedz na pytanie wprost, potem wskaż dowód i granice wniosku."
+
+msgid "Обратная связь улучшила план."
+msgstr "Informacja zwrotna poprawiła plan."
+
+msgid "Ответ был прямым и доказательным."
+msgstr "Odpowiedź była bezpośrednia i poparta dowodami."
+
+msgid "Результат нельзя автоматически обобщать."
+msgstr "Wyniku nie można automatycznie uogólniać."
+
+msgid "Составьте: Если бы мы повторили проект, мы бы раньше собрали обратную связь."
+msgstr "Ułóż zdanie: gdybyśmy powtórzyli projekt, wcześniej zebralibyśmy informację zwrotną."
+
+msgid "Составьте: Хотя результат подтвердил тезис, нельзя игнорировать ограничение выборки."
+msgstr "Ułóż zdanie: chociaż wynik potwierdził tezę, nie można ignorować ograniczenia próby."
+
+msgid "Тезис, основание, пример и признание ограничения создают убедительную структуру."
+msgstr "Teza, uzasadnienie, przykład i uznanie ograniczenia tworzą przekonującą strukturę."
+
+msgid "Финал подчёркивает честную аргументацию."
+msgstr "Zakończenie podkreśla uczciwą argumentację."
+
+msgid "Фокус"
+msgstr "Punkt skupienia"
+
+msgid "график"
+msgstr "harmonogram"
+
+msgid "защищать позицию"
+msgstr "bronić stanowiska"
+
+msgid "исследовательский вопрос"
+msgstr "pytanie badawcze"
+
+msgid "критерий успеха"
+msgstr "kryterium sukcesu"
+
+msgid "оценить результат"
+msgstr "ocenić rezultat"
+
+msgid "промежуточный этап"
+msgstr "etap pośredni"
+
+msgid "связность"
+msgstr "spójność"
+
+msgid "сделать вывод"
+msgstr "wyciągnąć wniosek"
+
+msgid "следующий шаг"
+msgstr "kolejny krok"
+
+msgid "черновая версия"
+msgstr "wersja robocza"
+
+msgid "„etap pośredni” — промежуточный этап."
+msgstr "„etap pośredni” to etap między początkiem a końcem."
+
+msgid "„harmonogram” — график."
+msgstr "„harmonogram” to plan działań w czasie."
+
+msgid "„kontrargument” — контраргумент."
+msgstr "„kontrargument” to argument przeciw danej tezie."
+
+msgid "„kryterium sukcesu” — критерий успеха."
+msgstr "„kryterium sukcesu” to warunek oceny powodzenia."
+
+msgid "„ocenić rezultat” — оценить результат."
+msgstr "„ocenić rezultat” oznacza sprawdzić jakość wyniku."
+
+msgid "„pytanie badawcze” — исследовательский вопрос."
+msgstr "„pytanie badawcze” określa, czego chcemy się dowiedzieć."
+
+msgid "„uzasadnienie” — обоснование."
+msgstr "„uzasadnienie” wyjaśnia podstawy stanowiska."
+
+msgid "„wyciągnąć wniosek” — сделать вывод."
+msgstr "„wyciągnąć wniosek” oznacza sformułować rezultat rozumowania."
+
+msgid "„zastrzeżenie” — оговорка."
+msgstr "„zastrzeżenie” to wskazanie wątpliwości lub ograniczenia."
+
+msgid "„założenie” — предпосылка."
+msgstr "„założenie” to przyjęta przesłanka."
+
+msgid "Итоговый B2-проект: данные, защита решения и честная самооценка"
+msgstr "Projekt końcowy B2: dane, obrona rozwiązania i uczciwa samoocena"
+
+msgid "Как жительница проверила срок, основание и структуру официального обращения"
+msgstr "Jak mieszkanka sprawdziła termin, podstawę i strukturę oficjalnego pisma"
+
+msgid "Как команда превратила сложное обсуждение в ясный план"
+msgstr "Jak zespół zmienił złożoną dyskusję w jasny plan"
+
+msgid "Как международная команда разобрала недоразумение без стереотипов"
+msgstr "Jak międzynarodowy zespół wyjaśnił nieporozumienie bez stereotypów"
+
+msgid "Как объяснить принцип системы и не скрыть ограничения исследования"
+msgstr "Jak wyjaśnić zasadę działania systemu i nie ukryć ograniczeń badania"
+
+msgid "Как оговорки и контраргументы улучшают городскую рекомендацию"
+msgstr "Jak zastrzeżenia i kontrargumenty poprawiają rekomendację dla miasta"
+
+msgid "Как отличить наблюдение от догадки о мотивах и восстановить диалог"
+msgstr "Jak odróżnić obserwację od przypuszczeń o motywach i przywrócić dialog"
+
+msgid "Как сравнение сообщений отделяет подтверждённые факты от предположений"
+msgstr "Jak porównanie wiadomości oddziela potwierdzone fakty od przypuszczeń"
+
+msgid "Как студентка сопоставила исследования и не преувеличила результат"
+msgstr "Jak studentka porównała badania i nie wyolbrzymiła wyniku"
+
+msgid "Как числа, скрытые расходы и степень уверенности меняют потребительский выбор"
+msgstr "Jak liczby, ukryte koszty i stopień pewności zmieniają wybór konsumenta"
+
+msgid "Оригинальная запись общественного обсуждения с модерацией и итогом"
+msgstr "Oryginalny zapis dyskusji publicznej z moderacją i podsumowaniem"
+
+msgid "Оригинальная рецензия вымышленного фильма: образ, перспектива и неоднозначный финал"
+msgstr "Oryginalna recenzja fikcyjnego filmu: obraz, perspektywa i niejednoznaczne zakończenie"
+
+msgid "абонентская плата"
+msgstr "abonament"
+
+msgid "адаптировать"
+msgstr "dostosować"
+
+msgid "анонимные"
+msgstr "anonimowe"
+
+msgid "бедного"
+msgstr "biednego"
+
+msgid "безусловный"
+msgstr "bezwarunkowy"
+
+msgid "более подробные"
+msgstr "bardziej szczegółowe"
+
+msgid "была принята"
+msgstr "została przyjęta"
+
+msgid "в собственность"
+msgstr "na własność"
+
+msgid "вела"
+msgstr "prowadziła"
+
+msgid "вернули"
+msgstr "zwrócili"
+
+msgid "взимать"
+msgstr "pobierać"
+
+msgid "влажность"
+msgstr "wilgotność"
+
+msgid "возражение"
+msgstr "zastrzeżenie"
+
+msgid "воспринимал"
+msgstr "odbierał"
+
+msgid "восприняла"
+msgstr "odebrała"
+
+msgid "вручения"
+msgstr "doręczenia"
+
+msgid "выгодность"
+msgstr "opłacalność"
+
+msgid "выручка, доход"
+msgstr "przychód, dochód"
+
+msgid "выявление"
+msgstr "wykrywanie"
+
+msgid "гласил"
+msgstr "brzmiał"
+
+msgid "добавлять письменно"
+msgstr "dopisywać"
+
+msgid "доброжелательный"
+msgstr "życzliwy"
+
+msgid "доказывал"
+msgstr "dowodził"
+
+msgid "дополнение"
+msgstr "uzupełnienie"
+
+msgid "достаточно"
+msgstr "wystarczająco"
+
+msgid "достиг"
+msgstr "osiągnął"
+
+msgid "достоверность"
+msgstr "wiarygodność"
+
+msgid "доступности"
+msgstr "dostępności"
+
+msgid "ездящие издалека"
+msgstr "dojeżdżający z daleka"
+
+msgid "жалоб"
+msgstr "skarg"
+
+msgid "завершающая"
+msgstr "końcowa"
+
+msgid "завершение"
+msgstr "zakończenie"
+
+msgid "задерживается"
+msgstr "opóźnia się"
+
+msgid "заметили"
+msgstr "zauważyli"
+
+msgid "запускает"
+msgstr "uruchamia"
+
+msgid "идентичности"
+msgstr "tożsamości"
+
+msgid "избегал"
+msgstr "unikał"
+
+msgid "измерения"
+msgstr "pomiary"
+
+msgid "изображал"
+msgstr "przedstawiał"
+
+msgid "инвалидность"
+msgstr "niepełnosprawność"
+
+msgid "интерпретации"
+msgstr "interpretacji"
+
+msgid "интерпретация"
+msgstr "interpretacja"
+
+msgid "использование"
+msgstr "wykorzystanie"
+
+msgid "клапан"
+msgstr "zawór"
+
+msgid "колебалась"
+msgstr "wahała się"
+
+msgid "комиссия"
+msgstr "prowizja"
+
+msgid "компетенция органа"
+msgstr "właściwość organu"
+
+msgid "конфронтации"
+msgstr "konfrontacji"
+
+msgid "модальность"
+msgstr "modalność"
+
+msgid "нагрузка"
+msgstr "obciążenie"
+
+msgid "намерением"
+msgstr "intencją"
+
+msgid "напряжение"
+msgstr "napięcie"
+
+msgid "незаметно"
+msgstr "niepostrzeżenie"
+
+msgid "ненадёжной"
+msgstr "niewiarygodnej"
+
+msgid "неопределённость"
+msgstr "niepewność"
+
+msgid "неоспоримые факты"
+msgstr "niepodważalne fakty"
+
+msgid "непредвиденных"
+msgstr "nieprzewidzianych"
+
+msgid "неработающем"
+msgstr "niedziałającym"
+
+msgid "обойдённая вниманием"
+msgstr "pominięta"
+
+msgid "оборванные"
+msgstr "urwane"
+
+msgid "обосновании"
+msgstr "uzasadnieniu"
+
+msgid "обратиться"
+msgstr "zwrócić się"
+
+msgid "обсуждали"
+msgstr "omawiali"
+
+msgid "объяснение"
+msgstr "wyjaśnienie"
+
+msgid "объём"
+msgstr "zakres"
+
+msgid "оговорила"
+msgstr "zastrzegła"
+
+msgid "ограничения"
+msgstr "ograniczenia"
+
+msgid "одновременно"
+msgstr "jednocześnie"
+
+msgid "одноразовую"
+msgstr "jednorazową"
+
+msgid "ожиданий"
+msgstr "oczekiwań"
+
+msgid "ожидания"
+msgstr "oczekiwania"
+
+msgid "опасался"
+msgstr "obawiał się"
+
+msgid "определили"
+msgstr "ustalili"
+
+msgid "освещения"
+msgstr "oświetlenia"
+
+msgid "оспорил"
+msgstr "zakwestionował"
+
+msgid "оставалась"
+msgstr "pozostawała"
+
+msgid "ответственную"
+msgstr "odpowiedzialną"
+
+msgid "отдельных"
+msgstr "poszczególnych"
+
+msgid "отказную"
+msgstr "odmowną"
+
+msgid "отклонить"
+msgstr "odrzucić"
+
+msgid "отныне"
+msgstr "odtąd"
+
+msgid "отправляю"
+msgstr "przesyłam"
+
+msgid "отстранился"
+msgstr "wycofał się"
+
+msgid "отсутствующей"
+msgstr "brakującej"
+
+msgid "охват"
+msgstr "zakres"
+
+msgid "охватили бы"
+msgstr "objęliby"
+
+msgid "охватывало"
+msgstr "obejmowało"
+
+msgid "охраны"
+msgstr "ochrony"
+
+msgid "паралич"
+msgstr "paraliż"
+
+msgid "передаваемые"
+msgstr "przekazywane"
+
+msgid "перефразировала"
+msgstr "sparafrazowała"
+
+msgid "пилотный проект"
+msgstr "pilotaż"
+
+msgid "платёж, взнос"
+msgstr "opłata, składka"
+
+msgid "подписочный"
+msgstr "abonamentowy"
+
+msgid "полив"
+msgstr "podlewanie"
+
+msgid "получили слово"
+msgstr "otrzymali głos"
+
+msgid "порядок"
+msgstr "porządek"
+
+msgid "посещаемости"
+msgstr "frekwencji"
+
+msgid "последовательность событий"
+msgstr "kolejność wydarzeń"
+
+msgid "пособие, выплата"
+msgstr "świadczenie"
+
+msgid "почва"
+msgstr "gleba"
+
+msgid "право"
+msgstr "prawo"
+
+msgid "предварительная"
+msgstr "wstępna"
+
+msgid "предвестие"
+msgstr "zapowiedź"
+
+msgid "предполагаемый"
+msgstr "rzekomy"
+
+msgid "предполагала"
+msgstr "zakładała"
+
+msgid "предположения"
+msgstr "założenia"
+
+msgid "предсказуемые"
+msgstr "przewidywalne"
+
+msgid "представляет собой"
+msgstr "stanowi"
+
+msgid "пренебрегал"
+msgstr "lekceważył"
+
+msgid "пренебрежительной"
+msgstr "lekceważącej"
+
+msgid "приближается"
+msgstr "zbliża się"
+
+msgid "привести в порядок"
+msgstr "uporządkować"
+
+msgid "приводя"
+msgstr "przytaczając"
+
+msgid "привычки"
+msgstr "nawyki"
+
+msgid "пригород"
+msgstr "przedmieście"
+
+msgid "приложения"
+msgstr "załączniki"
+
+msgid "примирения"
+msgstr "pojednania"
+
+msgid "принимаемая"
+msgstr "przyjmowana"
+
+msgid "принятых"
+msgstr "przyjętych"
+
+msgid "приписывала"
+msgstr "przypisywała"
+
+msgid "приписывать"
+msgstr "przypisywać"
+
+msgid "прогноз, предположение"
+msgstr "prognoza, przypuszczenie"
+
+msgid "продлении"
+msgstr "przedłużeniu"
+
+msgid "производство, процедура"
+msgstr "postępowanie"
+
+msgid "происхождения"
+msgstr "pochodzenia"
+
+msgid "проконсультировали бы"
+msgstr "skonsultowaliby"
+
+msgid "пропуск, превышение"
+msgstr "uchybienie, przekroczenie"
+
+msgid "пропущено"
+msgstr "pominięto"
+
+msgid "пространства"
+msgstr "przestrzeni"
+
+msgid "процентных пунктов"
+msgstr "punktów procentowych"
+
+msgid "равнодушие"
+msgstr "obojętność"
+
+msgid "разочаровать"
+msgstr "rozczarować"
+
+msgid "разработала"
+msgstr "opracowała"
+
+msgid "разъяснение порядка обжалования"
+msgstr "pouczenie o odwołaniu"
+
+msgid "раскрывает"
+msgstr "ujawnia"
+
+msgid "расписания"
+msgstr "harmonogramu"
+
+msgid "распознавали"
+msgstr "rozpoznawali"
+
+msgid "рассматривать"
+msgstr "rozpatrywać"
+
+msgid "расставании"
+msgstr "rozstaniu"
+
+msgid "расторжение договора"
+msgstr "wypowiedzenie umowy"
+
+msgid "расхождением"
+msgstr "rozbieżnością"
+
+msgid "резких"
+msgstr "gwałtownych"
+
+msgid "рецензируемые"
+msgstr "recenzowane"
+
+msgid "решали однозначно"
+msgstr "rozstrzygali"
+
+msgid "решать однозначно"
+msgstr "rozstrzygać"
+
+msgid "решение по существу"
+msgstr "rozstrzygnięcie merytoryczne"
+
+msgid "риски"
+msgstr "ryzyka"
+
+msgid "самооценке"
+msgstr "samoocenie"
+
+msgid "сбой"
+msgstr "awaria"
+
+msgid "сигнализирует"
+msgstr "sygnalizuje"
+
+msgid "слабости"
+msgstr "słabości"
+
+msgid "следовать"
+msgstr "wynikać"
+
+msgid "случайную"
+msgstr "przypadkową"
+
+msgid "снизила"
+msgstr "obniżyła"
+
+msgid "сноски"
+msgstr "przypisy"
+
+msgid "событий"
+msgstr "wydarzeń"
+
+msgid "совокупный"
+msgstr "łączny"
+
+msgid "согласовали"
+msgstr "uzgodnili"
+
+msgid "сокрытии"
+msgstr "ukrywaniu"
+
+msgid "сообщения"
+msgstr "wiadomości"
+
+msgid "сохранится"
+msgstr "utrzyma się"
+
+msgid "спорным"
+msgstr "spornym"
+
+msgid "ссылался"
+msgstr "powoływał się"
+
+msgid "сценариев"
+msgstr "scenariuszy"
+
+msgid "тогда как"
+msgstr "podczas gdy"
+
+msgid "точное"
+msgstr "precyzyjne"
+
+msgid "трансформация"
+msgstr "przemiana"
+
+msgid "требующие"
+msgstr "wymagające"
+
+msgid "уверенности"
+msgstr "pewności"
+
+msgid "удобный"
+msgstr "wygodny"
+
+msgid "указал"
+msgstr "wskazał"
+
+msgid "уполномоченный, представитель"
+msgstr "pełnomocnik"
+
+msgid "усиливают"
+msgstr "wzmacniają"
+
+msgid "успеют"
+msgstr "zdążą"
+
+msgid "установить"
+msgstr "ustalić"
+
+msgid "уступка"
+msgstr "przyzwolenie"
+
+msgid "уточнение"
+msgstr "doprecyzowanie"
+
+msgid "уточнял"
+msgstr "doprecyzowywał"
+
+msgid "фактические"
+msgstr "faktyczne"
+
+msgid "фамилия"
+msgstr "nazwisko"
+
+msgid "филиал"
+msgstr "filia"
+
+msgid "финансирования"
+msgstr "finansowania"
+
+msgid "формулировка"
+msgstr "sformułowanie"
+
+msgid "формулировки"
+msgstr "sformułowania"
+
+msgid "чувствовал"
+msgstr "czuł"
+
+msgid "экономия"
+msgstr "oszczędność"
+
+msgid "этапы"
+msgstr "etapy"
+
+msgid "эффективная"
+msgstr "skuteczna"
+
+msgid "эффективность"
+msgstr "skuteczność"
+
+msgid "Zwrot „porównać wyniki” oznacza „сравнить результаты”, czyli wskazać podobieństwa i różnice rezultatów."
+msgstr "Zwrot „porównać wyniki” oznacza wskazać podobieństwa i różnice rezultatów."
+
+msgid "Zwrot „wyciągnąć wniosek” znaczy „сделать вывод”, czyli sformułować rezultat na podstawie danych."
+msgstr "Zwrot „wyciągnąć wniosek” znaczy sformułować rezultat na podstawie danych."
+
+msgid "„Cytować” odpowiada rosyjskiemu „цитировать” i oznacza dosłownie przytaczać cudze słowa ze źródłem."
+msgstr "„Cytować” oznacza dosłownie przytaczać cudze słowa ze wskazaniem źródła."
+
+msgid "„Dowód” to po rosyjsku „доказательство”, czyli fakt lub argument potwierdzający dane twierdzenie."
+msgstr "„Dowód” to fakt lub argument potwierdzający dane twierdzenie."
+
+msgid "„Etap pośredni” to „промежуточный этап”, znajdujący się między rozpoczęciem a zakończeniem projektu."
+msgstr "„Etap pośredni” znajduje się między rozpoczęciem a zakończeniem projektu."
+
+msgid "„Harmonogram” oznacza „график”, czyli uporządkowany w czasie plan działań i terminów projektu."
+msgstr "„Harmonogram” to uporządkowany w czasie plan działań i terminów projektu."
+
+msgid "„Kontrargument” to „контраргумент”, a więc argument skierowany przeciwko wcześniej przedstawionej tezie."
+msgstr "„Kontrargument” to argument skierowany przeciwko wcześniej przedstawionej tezie."
+
+msgid "„Kryterium sukcesu” to „критерий успеха”, pozwalający zmierzyć, czy projekt osiągnął cel."
+msgstr "„Kryterium sukcesu” pozwala zmierzyć, czy projekt osiągnął cel."
+
+msgid "„Ocenić rezultat” oznacza „оценить результат”, czyli porównać uzyskany wynik z przyjętymi kryteriami."
+msgstr "„Ocenić rezultat” oznacza porównać uzyskany wynik z przyjętymi kryteriami."
+
+msgid "„Porządek obrad” oznacza rosyjską „повестку встречи”, czyli listę kwestii zaplanowanych do omówienia."
+msgstr "„Porządek obrad” to lista kwestii zaplanowanych do omówienia."
+
+msgid "„Przypis” oznacza rosyjską „сноску”, która wskazuje źródło informacji lub dodaje objaśnienie."
+msgstr "„Przypis” wskazuje źródło informacji lub dodaje objaśnienie."
+
+msgid "„Pytanie badawcze” oznacza „исследовательский вопрос” i precyzyjnie określa problem analizowany w projekcie."
+msgstr "„Pytanie badawcze” precyzyjnie określa problem analizowany w projekcie."
+
+msgid "„Sparafrazować” znaczy „перефразировать”, a więc przekazać tę samą myśl własnymi słowami."
+msgstr "„Sparafrazować” znaczy przekazać tę samą myśl własnymi słowami."
+
+msgid "„Streszczenie” to rosyjskie „резюме”, czyli zwięzłe przedstawienie najważniejszych treści dłuższego tekstu."
+msgstr "„Streszczenie” to zwięzłe przedstawienie najważniejszych treści dłuższego tekstu."
+
+msgid "„Teza” odpowiada rosyjskiemu słowu „тезис” i nazywa główne twierdzenie wymagające uzasadnienia."
+msgstr "„Teza” to główne twierdzenie wymagające uzasadnienia."
+
+msgid "„Uzasadnienie” oznacza „обоснование”, czyli przedstawienie powodów i dowodów wspierających daną decyzję."
+msgstr "„Uzasadnienie” to przedstawienie powodów i dowodów wspierających daną decyzję."
+
+msgid "„Wiarygodne źródło” to po rosyjsku „надёжный источник”, czyli materiał zasługujący na zaufanie."
+msgstr "„Wiarygodne źródło” to materiał zasługujący na zaufanie."
+
+msgid "„Wniosek” oznacza rosyjski „вывод”, formułowany na podstawie wcześniej przedstawionych danych i argumentów."
+msgstr "„Wniosek” formułuje się na podstawie wcześniej przedstawionych danych i argumentów."
+
+msgid "„Zakres badania” to „охват исследования”, określający temat, granice i obszar przeprowadzonej analizy."
+msgstr "„Zakres badania” określa temat, granice i obszar przeprowadzonej analizy."
+
+msgid "„Zastrzeżenie” odpowiada rosyjskiej „оговорке” i wskazuje ograniczenie albo warunek przedstawionej opinii."
+msgstr "„Zastrzeżenie” wskazuje ograniczenie albo warunek przedstawionej opinii."
+
+msgid "„Założenie” odpowiada rosyjskiej „предпосылке”, czyli twierdzeniu przyjętemu jako punkt wyjścia analizy."
+msgstr "„Założenie” to twierdzenie przyjęte jako punkt wyjścia analizy."
