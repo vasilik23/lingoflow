@@ -5,6 +5,6 @@
   <p lang="pl">{{ instruction.polish|ui_text }}</p>
   <details lang="{{ instruction.russian|learning_language:study_ui_language }}">
     <summary lang="{{ study_ui_language }}">{% translate "Пояснение задания" %}</summary>
-    <p lang="{{ instruction.russian|learning_language:study_ui_language }}">{{ instruction.russian|learning_text }}</p>
+    <p lang="{{ instruction.russian|learning_language:study_ui_language }}">{{ instruction.russian|learning_markup }}</p>
   </details>
 </div>
