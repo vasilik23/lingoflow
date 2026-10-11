@@ -16842,3 +16842,1386 @@ msgstr "triangulacja źródeł"
 
 msgid "условный вывод"
 msgstr "wniosek warunkowy"
+
+msgid "Jedynie sugeruje точно маркирует вывод, а не подтверждённый факт."
+msgstr "Jedynie sugeruje precyzyjnie wskazuje wniosek, a nie potwierdzony fakt."
+
+msgid "Zdaje się zakładać сохраняет эпистемическую осторожность."
+msgstr "Zdaje się zakładać zachowuje ostrożność epistemiczną."
+
+msgid "Автор прямо указывает на запрос уточнения."
+msgstr "Autor wprost wskazuje prośbę o doprecyzowanie."
+
+msgid "Конструкция wynikać z + dopełniacz вводит контекстуальный вывод."
+msgstr "Konstrukcja wynikać z z dopełniaczem wprowadza wniosek z kontekstu."
+
+msgid "Контекст повысил правдоподобие, но не сделал вывод доказанным."
+msgstr "Kontekst zwiększył wiarygodność, ale nie uczynił wniosku udowodnionym."
+
+msgid "Оба прочтения прямо названы в первом абзаце."
+msgstr "Oba odczytania wskazano wprost w pierwszym akapicie."
+
+msgid "Открытый вопрос описывает недосказанность, не выдавая интерпретацию за факт."
+msgstr "Otwarte pytanie opisuje niedopowiedzenie, nie przedstawiając interpretacji jako faktu."
+
+msgid "Первая формулировка отдельно называет буквальный и выводимый уровни смысла."
+msgstr "Pierwsze sformułowanie osobno wskazuje dosłowny i wywnioskowany poziom sensu."
+
+msgid "Переформулировка прямо указывает референта и устраняет конкурирующее прочтение."
+msgstr "Parafraza wprost wskazuje referenta i usuwa konkurencyjne odczytanie."
+
+msgid "Пресуппозицией была общая осведомлённость о проекте."
+msgstr "Presupozycją była wspólna wiedza o projekcie."
+
+msgid "Пресуппозиция считается уже принятой предпосылкой, а импликатура выводится из контекста и принципов сотрудничества. Проверяй, что именно сказано, что предполагается и что лишь вероятно подразумевается."
+msgstr "Presupozycję traktuje się jako przyjęte założenie, a implikaturę wyprowadza się z kontekstu i zasad współpracy. Sprawdzaj, co dokładnie powiedziano, co założono, a co jest tylko prawdopodobnie sugerowane."
+
+msgid "При медиации отмечай степень уверенности: autor stwierdza, sugeruje, zdaje się zakładać. Не превращай намёк в утверждение и сохраняй продуктивную неоднозначность, если она существенна."
+msgstr "W mediacji wskazuj stopień pewności: autor stwierdza, sugeruje, zdaje się zakładać. Nie zmieniaj sugestii w twierdzenie i zachowuj produktywną wieloznaczność, jeśli jest istotna."
+
+msgid "Смысл за пределами слов"
+msgstr "Sens poza słowami"
+
+msgid "Составьте: Автор лишь намекает, что решение было принято раньше."
+msgstr "Ułóż zdanie: autor jedynie sugeruje, że decyzję podjęto wcześniej."
+
+msgid "Составьте: Из контекста следует, что адресат знал об изменении."
+msgstr "Ułóż zdanie: z kontekstu wynika, że adresat wiedział o zmianie."
+
+msgid "Текст подчёркивает сохранённую неоднозначность оценки."
+msgstr "Tekst podkreśla zachowaną wieloznaczność oceny."
+
+msgid "Точная переформулировка"
+msgstr "Precyzyjna parafraza"
+
+msgid "Финальный абзац формулирует именно этот принцип."
+msgstr "Ostatni akapit formułuje właśnie tę zasadę."
+
+msgid "буквальность"
+msgstr "dosłowność"
+
+msgid "добавочный смысл"
+msgstr "sens naddany"
+
+msgid "импликатура, подразумеваемый смысл"
+msgstr "implikatura, sens sugerowany"
+
+msgid "намекнуть вскользь"
+msgstr "zasugerować mimochodem"
+
+msgid "не без значения"
+msgstr "nie bez znaczenia"
+
+msgid "оставить пространство для интерпретации"
+msgstr "zostawić przestrzeń interpretacji"
+
+msgid "пресуппозиция"
+msgstr "presupozycja"
+
+msgid "следовать из контекста"
+msgstr "wynikać z kontekstu"
+
+msgid "считывание намерения"
+msgstr "odczytanie intencji"
+
+msgid "уклониться от ответа"
+msgstr "uchylić się od odpowiedzi"
+
+msgid "устранить двусмысленность"
+msgstr "usunąć dwuznaczność"
+
+msgid "уточнить границы"
+msgstr "doprecyzować granice"
+
+msgid "читать между строк"
+msgstr "czytać między wierszami"
+
+msgid "Nawet jeśli вводит уступку без отказа от основного вывода."
+msgstr "Nawet jeśli wprowadza przyzwolenie bez rezygnacji z głównego wniosku."
+
+msgid "Вместо бинарного выбора предложено сравнение вариантов."
+msgstr "Zamiast wyboru binarnego zaproponowano porównanie wariantów."
+
+msgid "Возражение признано и связано с переходным фондом."
+msgstr "Zastrzeżenie uznano i powiązano z funduszem przejściowym."
+
+msgid "Вывод связан с данными и одновременно обозначает следующий критерий проверки."
+msgstr "Wniosek powiązano z danymi i jednocześnie wskazano następne kryterium weryfikacji."
+
+msgid "Композиция как аргумент"
+msgstr "Kompozycja jako argument"
+
+msgid "Конструкция nie..., lecz... создаёт точную антитезу."
+msgstr "Konstrukcja nie..., lecz... tworzy precyzyjną antytezę."
+
+msgid "Она сводила аудиторию к сторонникам действия и мнимым защитникам хаоса."
+msgstr "Sprowadzała odbiorców do zwolenników działania i rzekomych obrońców chaosu."
+
+msgid "Первая версия признаёт возражение и предлагает критерий сравнения."
+msgstr "Pierwsza wersja uznaje zastrzeżenie i proponuje kryterium porównania."
+
+msgid "Первая реплика искусственно сводит множество возможностей к двум крайностям."
+msgstr "Pierwsza wypowiedź sztucznie sprowadza wiele możliwości do dwóch skrajności."
+
+msgid "Повтор одной структуры создаёт параллелизм и сохраняет содержательные опоры."
+msgstr "Powtórzenie jednej struktury tworzy paralelizm i zachowuje podstawy treści."
+
+msgid "Повтор организовал три проверяемых шага."
+msgstr "Powtórzenie uporządkowało trzy sprawdzalne kroki."
+
+msgid "Порядок доводов, повтор и синтаксический параллелизм направляют внимание. Сильная композиция делает логику видимой; она не должна подменять доказательство эмоциональным эффектом."
+msgstr "Kolejność argumentów, powtórzenie i paralelizm składniowy kierują uwagą. Silna kompozycja uwidacznia logikę; nie powinna zastępować dowodu efektem emocjonalnym."
+
+msgid "Предвосхищай сильнейший контраргумент, называй ограничения и проверяй ложные дилеммы. Этическая стратегия усиливает тезис прозрачностью, а не сокрытием неудобных данных."
+msgstr "Wyprzedzaj najsilniejszy kontrargument, wskazuj ograniczenia i sprawdzaj fałszywe dylematy. Etyczna strategia wzmacnia tezę przez przejrzystość, a nie ukrywanie niewygodnych danych."
+
+msgid "Риторика без манипуляции"
+msgstr "Retoryka bez manipulacji"
+
+msgid "Риторические средства сохранены, но подчинены прозрачному доводу."
+msgstr "Środki retoryczne zachowano, ale podporządkowano przejrzystemu argumentowi."
+
+msgid "Составьте: Даже если возражение верно, оно не опровергает главного вывода."
+msgstr "Ułóż zdanie: nawet jeśli zastrzeżenie jest trafne, nie podważa głównego wniosku."
+
+msgid "Составьте: Мы меняем не цель, а способ её достижения."
+msgstr "Ułóż zdanie: zmieniamy nie cel, lecz sposób jego osiągnięcia."
+
+msgid "Финал стал проверяемым предложением."
+msgstr "Zakończenie stało się sprawdzalną propozycją."
+
+msgid "антитеза"
+msgstr "antyteza"
+
+msgid "градация"
+msgstr "gradacja"
+
+msgid "изменить перспективу"
+msgstr "zmienić perspektywę"
+
+msgid "ложная дилемма"
+msgstr "fałszywy dylemat"
+
+msgid "наращивать напряжение"
+msgstr "stopniować napięcie"
+
+msgid "предвосхитить контраргумент"
+msgstr "wyprzedzić kontrargument"
+
+msgid "пуанте, заключительный акцент"
+msgstr "puenta, końcowy akcent"
+
+msgid "риторическая фигура"
+msgstr "figura retoryczna"
+
+msgid "риторический вопрос"
+msgstr "pytanie retoryczne"
+
+msgid "синтаксический параллелизм"
+msgstr "paralelizm składniowy"
+
+msgid "сместить акцент"
+msgstr "przesunąć akcent"
+
+msgid "смысловой центр"
+msgstr "punkt ciężkości"
+
+msgid "сузить тезис"
+msgstr "zawęzić tezę"
+
+msgid "честность аргументации"
+msgstr "rzetelność argumentacji"
+
+msgid "эристический приём"
+msgstr "chwyt erystyczny"
+
+msgid "Jednak точно маркирует границу частичного согласия."
+msgstr "Jednak precyzyjnie wskazuje granicę częściowej zgody."
+
+msgid "Nawet jeśli вводит уступку, а nie wynika отделяет вывод от предпосылки."
+msgstr "Nawet jeśli wprowadza przyzwolenie, a nie wynika oddziela wniosek od przesłanki."
+
+msgid "Вывод признаёт силу аргумента, не расширяя её сверх данных."
+msgstr "Wniosek uznaje siłę argumentu, nie rozszerzając jej poza dane."
+
+msgid "Доказательные обязанности стали точными."
+msgstr "Obowiązki dowodowe stały się precyzyjne."
+
+msgid "Критикуй сильнейшую разумную версию аргумента. Уступка не отменяет возражение: она показывает его границы и сохраняет интеллектуальную добросовестность."
+msgstr "Krytykuj najsilniejszą rozsądną wersję argumentu. Przyzwolenie nie usuwa zastrzeżenia: pokazuje jego granice i zachowuje rzetelność intelektualną."
+
+msgid "Несогласие без подмены"
+msgstr "Niezgoda bez zniekształcenia"
+
+msgid "Он заменил ограниченный тезис утверждением о ненужности профессии."
+msgstr "Zastąpił ograniczoną tezę twierdzeniem o zbędności zawodu."
+
+msgid "Он назвал реальный тезис и добавил сильный пример доступности."
+msgstr "Wskazał rzeczywistą tezę i dodał mocny przykład dostępności."
+
+msgid "Она ограничила вывод продолжением пилота."
+msgstr "Ograniczyła wniosek do kontynuowania pilotażu."
+
+msgid "Ответ точно реконструирует приоритет и локализует разногласие."
+msgstr "Odpowiedź precyzyjnie rekonstruuje priorytet i lokalizuje rozbieżność."
+
+msgid "Первая версия карикатурно усиливает исходный тезис."
+msgstr "Pierwsza wersja karykaturalnie wzmacnia tezę wyjściową."
+
+msgid "Сильная реконструкция"
+msgstr "Silna rekonstrukcja"
+
+msgid "Сначала изложи позицию собеседника так, чтобы он мог её признать. Отдели тезис, предпосылки и вывод, затем укажи точную область согласия и спора."
+msgstr "Najpierw przedstaw stanowisko rozmówcy tak, żeby mógł je uznać. Oddziel tezę, przesłanki i wniosek, a potem wskaż dokładny obszar zgody i sporu."
+
+msgid "Составьте: Даже если диагноз верен, предложенное лечение из него не следует."
+msgstr "Ułóż zdanie: nawet jeśli diagnoza jest trafna, proponowane leczenie z niej nie wynika."
+
+msgid "Составьте: Я принимаю исходные данные, но оспариваю способ их интерпретации."
+msgstr "Ułóż zdanie: przyjmuję dane wyjściowe, ale kwestionuję sposób ich interpretacji."
+
+msgid "Спор касался обоснованности широкого вывода."
+msgstr "Spór dotyczył zasadności szerokiego wniosku."
+
+msgid "Формулировка связывает доказательную обязанность с конкретным утверждением."
+msgstr "Sformułowanie wiąże obowiązek dowodowy z konkretnym twierdzeniem."
+
+msgid "Частичное согласие помогло сузить область разногласия."
+msgstr "Częściowa zgoda pomogła zawęzić obszar rozbieżności."
+
+msgid "бремя доказательства"
+msgstr "ciężar dowodu"
+
+msgid "избежать сверхинтерпретации"
+msgstr "uniknąć nadinterpretacji"
+
+msgid "оспорить предпосылку"
+msgstr "zakwestionować przesłankę"
+
+msgid "остаться при своей позиции"
+msgstr "pozostać przy swoim stanowisku"
+
+msgid "отличить факт от оценки"
+msgstr "odróżnić fakt od oceny"
+
+msgid "предмет разногласия"
+msgstr "punkt sporny"
+
+msgid "принцип благожелательности"
+msgstr "zasada życzliwości"
+
+msgid "соблюсти добросовестность"
+msgstr "zachować rzetelność"
+
+msgid "соломенное чучело"
+msgstr "chochoł argumentacyjny"
+
+msgid "сформулировать оговорку"
+msgstr "sformułować zastrzeżenie"
+
+msgid "тезис оппонента"
+msgstr "teza oponenta"
+
+msgid "усиленная версия аргумента"
+msgstr "wzmocniona wersja argumentu"
+
+msgid "частично признать правоту"
+msgstr "przyznać rację częściowo"
+
+msgid "Dopiero po выстраивает правильную иерархию этапов."
+msgstr "Dopiero po porządkuje właściwą hierarchię etapów."
+
+msgid "Zespół przeprowadził заменяет тяжёлую именную конструкцию."
+msgstr "Zespół przeprowadził zastępuje ciężką konstrukcję nominalną."
+
+msgid "Глаголы ocenił и zmienił возвращают действующее лицо и действие."
+msgstr "Czasowniki ocenił i zmienił przywracają wykonawcę i działanie."
+
+msgid "Изменение убирает помеху, но сохраняет индивидуальный образ."
+msgstr "Zmiana usuwa przeszkodę, ale zachowuje indywidualny obraz."
+
+msgid "Комментарии делали логику правок прозрачной."
+msgstr "Komentarze czyniły logikę poprawek przejrzystą."
+
+msgid "Минимально достаточное вмешательство"
+msgstr "Minimalna wystarczająca ingerencja"
+
+msgid "Немотивированный разговорный фрагмент ломает регистр отчёта."
+msgstr "Nieuzasadniony fragment potoczny narusza rejestr raportu."
+
+msgid "Парная конструкция im..., tym... выражает пропорциональную зависимость."
+msgstr "Konstrukcja parzysta im..., tym... wyraża zależność proporcjonalną."
+
+msgid "Правка искажала эпистемическую силу авторского вывода."
+msgstr "Poprawka zniekształcała siłę epistemiczną wniosku autora."
+
+msgid "Проблема была глобальной, а не локально грамматической."
+msgstr "Problem był globalny, a nie lokalnie gramatyczny."
+
+msgid "Редакторская диагностика"
+msgstr "Diagnoza redakcyjna"
+
+msgid "Сначала она диагностировала структуру."
+msgstr "Najpierw zdiagnozowała strukturę."
+
+msgid "Сначала определи цель, адресата и основной вывод. Исправляй глобальную структуру до локального стиля: иначе идеально отшлифованное предложение может остаться в ненужном абзаце."
+msgstr "Najpierw określ cel, adresata i główny wniosek. Poprawiaj strukturę globalną przed stylem lokalnym: inaczej idealnie dopracowane zdanie może pozostać w niepotrzebnym akapicie."
+
+msgid "Составьте: Только после проверки структуры редактор сократил отдельные предложения."
+msgstr "Ułóż zdanie: dopiero po sprawdzeniu struktury redaktor skrócił poszczególne zdania."
+
+msgid "Составьте: Чем сложнее тезис, тем яснее должна быть структура текста."
+msgstr "Ułóż zdanie: im bardziej złożona teza, tym jaśniejsza powinna być struktura tekstu."
+
+msgid "Устраняй двусмысленность, перегрузку и смену регистра, но сохраняй голос автора. Каждое существенное изменение должно иметь объяснимую функцию."
+msgstr "Usuwaj dwuznaczność, przeciążenie i zmiany rejestru, ale zachowuj głos autora. Każda istotna zmiana powinna mieć funkcję, którą można wyjaśnić."
+
+msgid "Финал определяет редактуру как управление пониманием структуры."
+msgstr "Zakończenie określa redakcję jako kierowanie rozumieniem struktury."
+
+msgid "Читатель сначала получает опорный вывод, затем его границы."
+msgstr "Czytelnik najpierw otrzymuje kluczowy wniosek, a potem jego granice."
+
+msgid "выделить вывод"
+msgstr "wyodrębnić wniosek"
+
+msgid "глобальная связность"
+msgstr "spójność globalna"
+
+msgid "номинализация"
+msgstr "nominalizacja"
+
+msgid "облегчить синтаксис"
+msgstr "rozluźnić składnię"
+
+msgid "обосновать вмешательство"
+msgstr "uzasadnić ingerencję"
+
+msgid "переставить абзац"
+msgstr "przestawić akapit"
+
+msgid "рема, новая информация"
+msgstr "remat, nowa informacja"
+
+msgid "содержательная редактура"
+msgstr "redakcja merytoryczna"
+
+msgid "сохранить авторский голос"
+msgstr "zachować głos autora"
+
+msgid "стилистическая редактура"
+msgstr "redakcja stylistyczna"
+
+msgid "тема предложения"
+msgstr "temat zdania"
+
+msgid "унифицировать регистр"
+msgstr "ujednolicić rejestr"
+
+msgid "устранить избыточность"
+msgstr "usunąć redundancję"
+
+msgid "Choć вводит уступку, а zachowano точно фиксирует сохранённый элемент."
+msgstr "Choć wprowadza przyzwolenie, a zachowano dokładnie wskazuje zachowany element."
+
+msgid "Sugeruje сохраняет исходную эпистемическую осторожность."
+msgstr "Sugeruje zachowuje wyjściową ostrożność epistemiczną."
+
+msgid "В аудиоформате данные сопровождались репликой исследовательницы."
+msgstr "W formacie audio danym towarzyszyła wypowiedź badaczki."
+
+msgid "Именно эти инварианты названы в финале."
+msgstr "Właśnie te inwarianty wskazano w zakończeniu."
+
+msgid "Инвариант содержания"
+msgstr "Inwariant treści"
+
+msgid "Композиция сохранила вес ограничения."
+msgstr "Kompozycja zachowała wagę ograniczenia."
+
+msgid "Конструкция to, co... связывает функцию элемента в двух жанрах."
+msgstr "Konstrukcja to, co... łączy funkcję elementu w dwóch gatunkach."
+
+msgid "Минимальный инвариант включает тезис, основание и границы вывода."
+msgstr "Minimalny inwariant obejmuje tezę, podstawę i granice wniosku."
+
+msgid "Новый адресат"
+msgstr "Nowy adresat"
+
+msgid "Новый интерпретирующий заголовок должен быть отделён от исходного материала."
+msgstr "Nowy interpretujący nagłówek powinien być oddzielony od materiału źródłowego."
+
+msgid "Он неоправданно расширял область вывода."
+msgstr "Bezzasadnie rozszerzał zakres wniosku."
+
+msgid "Перед трансформацией выпиши факты, степень уверенности, оговорки и основную функцию текста. Жанр может изменить порядок и регистр, но не должен незаметно усиливать вывод."
+msgstr "Przed przekształceniem wypisz fakty, stopień pewności, zastrzeżenia i główną funkcję tekstu. Gatunek może zmieniać kolejność i rejestr, ale nie powinien niepostrzeżenie wzmacniać wniosku."
+
+msgid "Раскрытие неизвестной аббревиатуры помогает адресату и не меняет позицию автора."
+msgstr "Rozwinięcie nieznanego skrótu pomaga adresatowi i nie zmienia stanowiska autora."
+
+msgid "Редакционная рамка была обозначена прозрачно."
+msgstr "Ramę redakcyjną wskazano przejrzyście."
+
+msgid "Составьте: То, что в отчёте было предпосылкой, в подкасте нужно назвать прямо."
+msgstr "Ułóż zdanie: to, co w raporcie było przesłanką, w podcaście trzeba nazwać wprost."
+
+msgid "Составьте: Хотя формат стал короче, оговорка о недостатке данных сохранилась."
+msgstr "Ułóż zdanie: choć format stał się krótszy, zachowano zastrzeżenie dotyczące braku danych."
+
+msgid "Экологическое влияние не входило в исследование."
+msgstr "Wpływu na środowisko nie objęto badaniem."
+
+msgid "Экспликация добавляет необходимый контекст, а компрессия убирает второстепенное. Проверяй, понимает ли новый адресат связи и отличает ли исходные слова автора от редакторской рамки."
+msgstr "Eksplikacja dodaje niezbędny kontekst, a kompresja usuwa to, co drugorzędne. Sprawdzaj, czy nowy adresat rozumie powiązania i odróżnia słowa autora od ramy redakcyjnej."
+
+msgid "доминанта текста"
+msgstr "dominanta tekstu"
+
+msgid "иерархия фактов"
+msgstr "hierarchia faktów"
+
+msgid "избежать упрощения смысла"
+msgstr "uniknąć uproszczenia sensu"
+
+msgid "изменить точку зрения"
+msgstr "zmienić punkt widzenia"
+
+msgid "перевести форму в функцию"
+msgstr "przełożyć formę na funkcję"
+
+msgid "переформулировать сообщение"
+msgstr "przeformułować komunikat"
+
+msgid "сжатие содержания"
+msgstr "kompresja treści"
+
+msgid "сжать аргумент"
+msgstr "skondensować argument"
+
+msgid "смена регистра"
+msgstr "zmiana rejestru"
+
+msgid "целевая аудитория"
+msgstr "grupa docelowa"
+
+msgid "экспликация"
+msgstr "eksplikacja"
+
+msgid "эксплицировать контекст"
+msgstr "wyjaśnić kontekst wprost"
+
+msgid "Nie można wykluczyć сохраняет открытость альтернативной интерпретации."
+msgstr "Nie można wykluczyć zachowuje otwartość na alternatywną interpretację."
+
+msgid "O tyle, o ile ограничивает силу вывода объяснительной способностью."
+msgstr "O tyle, o ile ogranicza siłę wniosku do jego zdolności wyjaśniania."
+
+msgid "Версия связывала несколько независимых деталей."
+msgstr "Wersja łączyła kilka niezależnych szczegółów."
+
+msgid "Интерпретация как гипотеза"
+msgstr "Interpretacja jako hipoteza"
+
+msgid "Исторический и современный читатель"
+msgstr "Czytelnik historyczny i współczesny"
+
+msgid "Конкурирующие гипотезы имели разную объяснительную область."
+msgstr "Konkurencyjne hipotezy miały różne zakresy wyjaśniania."
+
+msgid "Оба прочтения названы в первом абзаце."
+msgstr "Oba odczytania wskazano w pierwszym akapicie."
+
+msgid "Повторяемая формальная связь делает гипотезу проверяемой."
+msgstr "Powtarzające się powiązanie formalne pozwala sprawdzić hipotezę."
+
+msgid "Различай вероятное намерение автора, эффект для первой аудитории и сегодняшнее восприятие. Анахроничное прочтение может быть продуктивным, если оно честно обозначено."
+msgstr "Odróżniaj prawdopodobny zamiar autora, efekt dla pierwszych odbiorców i dzisiejszy odbiór. Anachroniczne odczytanie może być produktywne, jeśli jasno je oznaczono."
+
+msgid "Связывай наблюдаемую форму с контекстом через аргумент, а не свободную ассоциацию. Сильное прочтение объясняет несколько деталей и допускает проверку конкурирующей версией."
+msgstr "Łącz obserwowaną formę z kontekstem za pomocą argumentu, a nie swobodnego skojarzenia. Silne odczytanie wyjaśnia kilka szczegółów i dopuszcza sprawdzenie przez konkurencyjną wersję."
+
+msgid "Современная рамка явно названа, а не приписана эпохе."
+msgstr "Współczesną ramę nazwano wprost, zamiast przypisywać ją epoce."
+
+msgid "Составьте: Нельзя исключить, что современный зритель видит в сцене другой конфликт."
+msgstr "Ułóż zdanie: nie można wykluczyć, że współczesny widz dostrzega w scenie inny konflikt."
+
+msgid "Составьте: Это прочтение убедительно постольку, поскольку объясняет повторяющийся образ окна."
+msgstr "Ułóż zdanie: to odczytanie jest przekonujące o tyle, o ile wyjaśnia powracający obraz okna."
+
+msgid "Сравнение опирается на объяснительную силу и экономность предпосылок."
+msgstr "Porównanie opiera się na sile wyjaśniania i oszczędności założeń."
+
+msgid "Текст отделяет авторскую декларацию от эффекта экспозиции."
+msgstr "Tekst oddziela deklarację autora od efektu ekspozycji."
+
+msgid "Финал подчёркивает одновременно обоснованность и открытость пересмотру."
+msgstr "Zakończenie podkreśla zarówno zasadność, jak i otwartość na rewizję."
+
+msgid "Формулировка отдельно описывает вероятный замысел и современную реакцию."
+msgstr "Sformułowanie osobno opisuje prawdopodobny zamiar i współczesną reakcję."
+
+msgid "Этот элемент поддерживал институциональное прочтение."
+msgstr "Ten element wspierał odczytanie instytucjonalne."
+
+msgid "активировать ассоциацию"
+msgstr "uruchomić skojarzenie"
+
+msgid "вести диалог с традицией"
+msgstr "prowadzić dialog z tradycją"
+
+msgid "интертекстуальность"
+msgstr "intertekstualność"
+
+msgid "конвенция эпохи"
+msgstr "konwencja epoki"
+
+msgid "конкурирующее прочтение"
+msgstr "konkurencyjne odczytanie"
+
+msgid "культурный контекст"
+msgstr "kontekst kulturowy"
+
+msgid "литературная аллюзия"
+msgstr "aluzja literacka"
+
+msgid "нарративная стратегия"
+msgstr "strategia narracyjna"
+
+msgid "обосновать прочтение"
+msgstr "uzasadnić odczytanie"
+
+msgid "отделить намерение от эффекта"
+msgstr "oddzielić intencję od efektu"
+
+msgid "перспектива читателя"
+msgstr "perspektywa czytelnika"
+
+msgid "поместить в контекст"
+msgstr "osadzić w kontekście"
+
+msgid "поставить интерпретацию под сомнение"
+msgstr "zakwestionować interpretację"
+
+msgid "символика"
+msgstr "symbolika"
+
+msgid "учесть анахронизм"
+msgstr "uwzględnić anachronizm"
+
+msgid "Innymi słowy вводит проверяемую переформулировку, zaś сопоставляет интересы."
+msgstr "Innymi słowy wprowadza sprawdzalną parafrazę, a zaś porównuje interesy."
+
+msgid "Каждый вариант получил прозрачную карту последствий."
+msgstr "Każdy wariant otrzymał przejrzystą mapę konsekwencji."
+
+msgid "Медиатор структурирует выбор, сохраняя мандат сторон."
+msgstr "Mediator porządkuje wybór, zachowując mandat stron."
+
+msgid "Медиация не упрощает смысл до лозунга. Она раскрывает термин, сохраняет ограничения и подбирает примеры, понятные конкретной стороне, явно отделяя перевод позиции от собственной оценки."
+msgstr "Mediacja nie upraszcza sensu do hasła. Wyjaśnia termin, zachowuje ograniczenia i dobiera przykłady zrozumiałe dla konkretnej strony, wyraźnie oddzielając przekazanie stanowiska od własnej oceny."
+
+msgid "Общая цель не отменяет точно названного разногласия."
+msgstr "Wspólny cel nie usuwa dokładnie nazwanej rozbieżności."
+
+msgid "Общий термин скрывал разные критерии."
+msgstr "Wspólny termin ukrywał różne kryteria."
+
+msgid "Ограничение касалось переносимости результатов."
+msgstr "Ograniczenie dotyczyło możliwości przeniesienia wyników."
+
+msgid "От позиции к интересу"
+msgstr "Od stanowiska do interesu"
+
+msgid "Первая версия сохраняет область применимости экспертного вывода."
+msgstr "Pierwsza wersja zachowuje zakres stosowalności wniosku eksperckiego."
+
+msgid "Подтверждение сторон снижает риск смысловой подмены."
+msgstr "Potwierdzenie przez strony zmniejsza ryzyko zmiany sensu."
+
+msgid "Решение не принято, но условия осмысленного выбора созданы."
+msgstr "Decyzji nie podjęto, ale stworzono warunki świadomego wyboru."
+
+msgid "Составьте: Если обе стороны одинаково понимают риск, можно обсуждать допустимый предел."
+msgstr "Ułóż zdanie: jeżeli obie strony tak samo rozumieją ryzyko, można omówić dopuszczalną granicę."
+
+msgid "Составьте: Иными словами, учёные требуют проверки, а жители — понятного срока."
+msgstr "Ułóż zdanie: innymi słowy, naukowcy wymagają sprawdzenia, zaś mieszkańcy — zrozumiałego terminu."
+
+msgid "Так была сформулирована общая цель."
+msgstr "Tak sformułowano wspólny cel."
+
+msgid "Термин перевели в практическое последствие."
+msgstr "Termin przełożono na praktyczną konsekwencję."
+
+msgid "Точность для разных аудиторий"
+msgstr "Precyzja dla różnych odbiorców"
+
+msgid "Условие jeżeli отделяет согласование понятия от следующего решения."
+msgstr "Warunek jeżeli oddziela uzgodnienie pojęcia od następnej decyzji."
+
+msgid "Фиксируй области согласия и разногласия, проверяй перефразирование у сторон и ищи варианты по интересам. Медиатор организует понимание, но не присваивает себе право решения."
+msgstr "Zapisuj obszary zgody i rozbieżności, sprawdzaj parafrazy ze stronami i szukaj wariantów według interesów. Mediator organizuje zrozumienie, ale nie przejmuje prawa do decyzji."
+
+msgid "асимметрия знаний"
+msgstr "asymetria wiedzy"
+
+msgid "выявить потребность"
+msgstr "rozpoznać potrzebę"
+
+msgid "интерес стороны"
+msgstr "interes strony"
+
+msgid "медиатор"
+msgstr "mediator"
+
+msgid "не решать за стороны"
+msgstr "nie decydować za strony"
+
+msgid "общий знаменатель"
+msgstr "wspólny mianownik"
+
+msgid "перевести на язык практики"
+msgstr "przełożyć na język praktyki"
+
+msgid "пространство для согласия"
+msgstr "przestrzeń porozumienia"
+
+msgid "расхождение позиций"
+msgstr "rozbieżność stanowisk"
+
+msgid "снять напряжение"
+msgstr "rozładować napięcie"
+
+msgid "согласовать определение"
+msgstr "uzgodnić definicję"
+
+msgid "сохранить точность"
+msgstr "zachować precyzję"
+
+msgid "специальный термин"
+msgstr "termin specjalistyczny"
+
+msgid "сформулировать промежуточный вариант"
+msgstr "sformułować wariant pośredni"
+
+msgid "Im..., tym... калибрует силу вывода по качеству контроля."
+msgstr "Im..., tym... dostosowuje siłę wniosku do jakości kontroli."
+
+msgid "Jednak вводит методологическое ограничение для внешне согласованных результатов."
+msgstr "Jednak wprowadza ograniczenie metodologiczne dla pozornie zgodnych wyników."
+
+msgid "Вес доказательства зависит от метода, а не только от количества источников."
+msgstr "Waga dowodu zależy od metody, a nie tylko od liczby źródeł."
+
+msgid "Итог был ограничен субъективной концентрацией."
+msgstr "Wniosek ograniczono do subiektywnego poczucia koncentracji."
+
+msgid "Калиброванный вывод"
+msgstr "Skalibrowany wniosek"
+
+msgid "Качественные данные расширили возможное объяснение."
+msgstr "Dane jakościowe poszerzyły możliwe wyjaśnienie."
+
+msgid "Не среднее арифметическое"
+msgstr "Nie średnia arytmetyczna"
+
+msgid "Первая версия признаёт наблюдение и ограничивает причинную интерпретацию."
+msgstr "Pierwsza wersja uznaje obserwację i ogranicza interpretację przyczynową."
+
+msgid "Разделяй наблюдение, интерпретацию и рекомендацию. Называй степень уверенности, альтернативные объяснения и область применимости, не превращая отсутствие доказательства в доказательство отсутствия."
+msgstr "Oddzielaj obserwację, interpretację i rekomendację. Wskazuj stopień pewności, alternatywne wyjaśnienia i zakres stosowalności, nie zmieniając braku dowodu w dowód braku."
+
+msgid "Рекомендация соразмерна качеству доказательства."
+msgstr "Rekomendacja jest proporcjonalna do jakości dowodu."
+
+msgid "Самоотбор оставлял смешивающие переменные."
+msgstr "Samoselekcja pozostawiała zmienne zakłócające."
+
+msgid "Синтез учитывает дизайн, выборку и качество каждого источника. Совпадение результатов усиливает вывод лишь тогда, когда одинаковая ошибка или зависимость источников не объясняет это совпадение."
+msgstr "Synteza uwzględnia projekt badania, próbę i jakość każdego źródła. Zgodność wyników wzmacnia wniosek tylko wtedy, gdy nie wyjaśnia jej wspólny błąd lub zależność źródeł."
+
+msgid "Составьте: Результаты совпадают, однако исследования опираются на сходные малые выборки."
+msgstr "Ułóż zdanie: wyniki są zbieżne, jednak badania opierają się na podobnych małych próbach."
+
+msgid "Составьте: Чем слабее контроль переменных, тем осторожнее должен быть причинный вывод."
+msgstr "Ułóż zdanie: im słabsza kontrola zmiennych, tym ostrożniejszy powinien być wniosek przyczynowy."
+
+msgid "Средняя уверенность сочетает поддержку и реальные ограничения."
+msgstr "Umiarkowana pewność łączy poparcie z rzeczywistymi ograniczeniami."
+
+msgid "Финал точно называет недостающие сравнения."
+msgstr "Zakończenie precyzyjnie wskazuje brakujące porównania."
+
+msgid "Фраза точно называет отсутствующий тип данных и популяцию."
+msgstr "Zdanie dokładnie wskazuje brakujący typ danych i populację."
+
+msgid "Эксперимент дал небольшой эффект в тесте внимания."
+msgstr "Eksperyment wykazał niewielki efekt w teście uwagi."
+
+msgid "взвешивать доказательства"
+msgstr "ważyć dowody"
+
+msgid "исследовательская выборка"
+msgstr "próba badawcza"
+
+msgid "качество доказательства"
+msgstr "jakość dowodu"
+
+msgid "контролировать переменную"
+msgstr "kontrolować zmienną"
+
+msgid "методологическое ограничение"
+msgstr "ograniczenie metodologiczne"
+
+msgid "не путать корреляцию с причинностью"
+msgstr "nie mylić korelacji z przyczynowością"
+
+msgid "объяснить расхождение"
+msgstr "wyjaśnić rozbieżność"
+
+msgid "оговорить область вывода"
+msgstr "zastrzec zakres wniosku"
+
+msgid "смешивающая переменная"
+msgstr "zmienna zakłócająca"
+
+msgid "сравнить методологии"
+msgstr "porównać metodologie"
+
+msgid "степень уверенности"
+msgstr "stopień pewności"
+
+msgid "сходимость результатов"
+msgstr "zbieżność wyników"
+
+msgid "триангуляция данных"
+msgstr "triangulacja danych"
+
+msgid "указать исследовательский пробел"
+msgstr "wskazać lukę badawczą"
+
+msgid "Nie rezygnując сохраняет приём, а łagodzi обозначает изменение интенсивности."
+msgstr "Nie rezygnując zachowuje zabieg, a łagodzi wskazuje zmianę intensywności."
+
+msgid "Авторский голос возникает из повторяемых решений о дистанции, ритме, образности и степени прямоты. Его нельзя свести к декоративным словам или постоянной необычности."
+msgstr "Głos autorski wynika z powtarzających się decyzji dotyczących dystansu, rytmu, obrazowości i bezpośredniości. Nie można sprowadzić go do ozdobnych słów ani ciągłej niezwykłości."
+
+msgid "Вариативность без манерности"
+msgstr "Zróżnicowanie bez manieryczności"
+
+msgid "Голос как система решений"
+msgstr "Głos jako system decyzji"
+
+msgid "Два глагола описывают формальный приём и его смысловую функцию."
+msgstr "Dwa czasowniki opisują zabieg formalny i jego funkcję znaczeniową."
+
+msgid "Ирония работала без авторского объяснения."
+msgstr "Ironia działała bez wyjaśnienia autora."
+
+msgid "Кавычки и контекст создают иронию без прямого комментария."
+msgstr "Cudzysłów i kontekst tworzą ironię bez bezpośredniego komentarza."
+
+msgid "Контраст длины предложений связан с динамикой сцены."
+msgstr "Kontrast długości zdań wiąże się z dynamiką sceny."
+
+msgid "Короткая фраза моделировала событие."
+msgstr "Krótka fraza modelowała wydarzenie."
+
+msgid "Манерность возникает, когда заметный приём становится автоматическим."
+msgstr "Manieryczność powstaje, gdy wyrazisty zabieg staje się automatyczny."
+
+msgid "Меняй длину и рисунок фразы по функции: ускоряй действие, замедляй наблюдение, оставляй паузу перед выводом. Редактируй эффект, не стирая характер текста."
+msgstr "Zmieniaj długość i układ frazy według funkcji: przyspieszaj akcję, spowalniaj obserwację, zostawiaj pauzę przed wnioskiem. Redaguj efekt, nie usuwając charakteru tekstu."
+
+msgid "Модальность и спокойный ритм оставляют послевкусие вместо декларации."
+msgstr "Modalność i spokojny rytm zostawiają wrażenie zamiast deklaracji."
+
+msgid "Монотонная композиция не поддерживала желаемый эффект."
+msgstr "Monotonna kompozycja nie wspierała zamierzonego efektu."
+
+msgid "Открытый вопрос сохранил наблюдательный тон."
+msgstr "Otwarte pytanie zachowało obserwacyjny ton."
+
+msgid "Резкая декларация не совпадала с голосом текста."
+msgstr "Ostra deklaracja nie pasowała do głosu tekstu."
+
+msgid "Составьте: Короткая фраза прерывает плавный ритм и обнажает сомнение."
+msgstr "Ułóż zdanie: krótka fraza przerywa płynny rytm i odsłania wątpliwość."
+
+msgid "Составьте: Не отказываясь от иронии, автор смягчает её последней оговоркой."
+msgstr "Ułóż zdanie: nie rezygnując z ironii, autor łagodzi ją ostatnim zastrzeżeniem."
+
+msgid "Финал определяет голос как систему решений."
+msgstr "Zakończenie określa głos jako system decyzji."
+
+msgid "авторский голос"
+msgstr "głos autorski"
+
+msgid "избегать манерности"
+msgstr "unikać manieryczności"
+
+msgid "каденция предложения"
+msgstr "kadencja zdania"
+
+msgid "модулировать темп"
+msgstr "modulować tempo"
+
+msgid "нарративная дистанция"
+msgstr "dystans narracyjny"
+
+msgid "нарушить регулярность"
+msgstr "przełamać regularność"
+
+msgid "обострить контраст"
+msgstr "wyostrzyć kontrast"
+
+msgid "писать в собственном регистре"
+msgstr "pisać we własnym rejestrze"
+
+msgid "приглушить финальный акцент"
+msgstr "wyciszyć końcowy akcent"
+
+msgid "ритм прозы"
+msgstr "rytm prozy"
+
+msgid "синтаксическое уплотнение"
+msgstr "zagęszczenie składni"
+
+msgid "сохранить идиоматичность"
+msgstr "zachować idiomatyczność"
+
+msgid "тон высказывания"
+msgstr "ton wypowiedzi"
+
+msgid "тонкая ирония"
+msgstr "dyskretna ironia"
+
+msgid "узнаваемая фраза"
+msgstr "rozpoznawalna fraza"
+
+msgid "Lecz сохраняет контраст, tak aby вводит функцию правки."
+msgstr "Lecz zachowuje kontrast, a tak aby wprowadza funkcję poprawki."
+
+msgid "Ponieważ связывает редакторское решение с доказательным основанием."
+msgstr "Ponieważ łączy decyzję redakcyjną z podstawą dowodową."
+
+msgid "Бриф фиксировал информирование с сохранением границ данных."
+msgstr "Brief wskazywał informowanie z zachowaniem granic danych."
+
+msgid "Единый замысел, разные жанры"
+msgstr "Jeden zamysł, różne gatunki"
+
+msgid "Защита связывает форму с аудиторией и смысловыми рисками."
+msgstr "Obrona łączy formę z odbiorcami i ryzykami zmiany sensu."
+
+msgid "Источники не позволяли более сильную рекомендацию."
+msgstr "Źródła nie pozwalały na silniejszą rekomendację."
+
+msgid "Композиция подчинялась задаче адресата."
+msgstr "Kompozycję podporządkowano zadaniu adresata."
+
+msgid "Критерий описывает наблюдаемое понимание аудитории."
+msgstr "Kryterium opisuje obserwowalne zrozumienie przez odbiorców."
+
+msgid "Не оценивай работу общими словами. Покажи конкретную правку, объясни её эффект, назови оставшееся ограничение и следующий шаг. Итоговый уровень остаётся учебной целью, а не официальной сертификацией."
+msgstr "Nie oceniaj pracy ogólnikowo. Pokaż konkretną poprawkę, wyjaśnij jej efekt, wskaż pozostałe ograniczenie i kolejny krok. Poziom końcowy pozostaje celem nauki, a nie oficjalną certyfikacją."
+
+msgid "Он переработал связь, не разрушая иерархию."
+msgstr "Przepracował powiązanie, nie naruszając hierarchii."
+
+msgid "Полная записка делает путь к выводу проверяемым."
+msgstr "Pełna nota pozwala sprawdzić drogę do wniosku."
+
+msgid "Проект объединяет аналитический текст, адаптацию для другой аудитории и устную защиту. Зафиксируй инварианты содержания, источники, риски и критерии до начала редактирования."
+msgstr "Projekt łączy tekst analityczny, adaptację dla innych odbiorców i obronę ustną. Określ inwarianty treści, źródła, ryzyka i kryteria przed rozpoczęciem redakcji."
+
+msgid "Самооценка была доказательной и направленной на ревизию."
+msgstr "Samoocena opierała się na dowodach i prowadziła do rewizji."
+
+msgid "Самооценка опирается на следы работы и допускает улучшение."
+msgstr "Samoocena opiera się na śladach pracy i dopuszcza poprawę."
+
+msgid "Самооценка по доказательствам"
+msgstr "Samoocena na podstawie dowodów"
+
+msgid "Составьте: В итоговой версии я сузил вывод, поскольку один источник не подтверждал причинность."
+msgstr "Ułóż zdanie: w wersji końcowej zawęziłem wniosek, ponieważ jedno źródło nie potwierdzało przyczynowości."
+
+msgid "Составьте: Я сохранила метафору, но изменила абзац так, чтобы яснее показать ограничение."
+msgstr "Ułóż zdanie: zachowałam metaforę, lecz zmieniłam akapit tak, aby jaśniej pokazać ograniczenie."
+
+msgid "Термин адаптирован через понятное последствие."
+msgstr "Termin dostosowano przez zrozumiałą konsekwencję."
+
+msgid "задокументировать источник"
+msgstr "udokumentować źródło"
+
+msgid "защитить редакторское решение"
+msgstr "obronić decyzję redakcyjną"
+
+msgid "калибровать вывод"
+msgstr "kalibrować wniosek"
+
+msgid "коммуникационный бриф"
+msgstr "brief komunikacyjny"
+
+msgid "лист самооценки"
+msgstr "arkusz samooceny"
+
+msgid "методологическая записка"
+msgstr "nota metodologiczna"
+
+msgid "многожанровый проект"
+msgstr "projekt wielogatunkowy"
+
+msgid "обосновать выбор жанра"
+msgstr "uzasadnić wybór gatunku"
+
+msgid "определить объём"
+msgstr "określić zakres"
+
+msgid "переработать черновик"
+msgstr "przepracować wersję roboczą"
+
+msgid "сделать выводы из процесса"
+msgstr "wyciągnąć wnioski z procesu"
+
+msgid "цепочка аргументации"
+msgstr "łańcuch argumentacji"
+
+msgid "визуальный код"
+msgstr "kod wizualny"
+
+msgid "воспроизводимость"
+msgstr "odtwarzalność"
+
+msgid "горизонт ожиданий"
+msgstr "horyzont oczekiwań"
+
+msgid "границы согласия"
+msgstr "granice zgody"
+
+msgid "декларативный слой"
+msgstr "warstwa deklaratywna"
+
+msgid "иерархия доводов"
+msgstr "hierarchia argumentów"
+
+msgid "история изменений"
+msgstr "historia zmian"
+
+msgid "качественные данные"
+msgstr "dane jakościowe"
+
+msgid "коллективная память"
+msgstr "pamięć zbiorowa"
+
+msgid "коллективный адресат"
+msgstr "adresat zbiorowy"
+
+msgid "коммуникативное намерение"
+msgstr "intencja komunikacyjna"
+
+msgid "личное эссе"
+msgstr "esej osobisty"
+
+msgid "переговорный мандат"
+msgstr "mandat negocjacyjny"
+
+msgid "перспектива первого лица"
+msgstr "perspektywa pierwszoosobowa"
+
+msgid "портфолио"
+msgstr "portfolio"
+
+msgid "прагматика"
+msgstr "pragmatyka"
+
+msgid "пресс-релиз"
+msgstr "komunikat prasowy"
+
+msgid "протокол разногласий"
+msgstr "protokół rozbieżności"
+
+msgid "рабочая версия"
+msgstr "wersja robocza"
+
+msgid "редакторский след"
+msgstr "ślad redakcyjny"
+
+msgid "резюме для руководства"
+msgstr "streszczenie dla kierownictwa"
+
+msgid "ритм высказывания"
+msgstr "rytm wypowiedzi"
+
+msgid "риторическая пауза"
+msgstr "pauza retoryczna"
+
+msgid "систематический обзор"
+msgstr "przegląd systematyczny"
+
+msgid "тональная связность"
+msgstr "spójność tonalna"
+
+msgid "устойчивость аргумента"
+msgstr "odporność argumentu"
+
+msgid "финальная версия"
+msgstr "wersja końcowa"
+
+msgid "честная реконструкция"
+msgstr "rzetelna rekonstrukcja"
+
+msgid "язык пользы"
+msgstr "język korzyści"
+
+msgid "„adresat docelowy” oznacza: целевая аудитория."
+msgstr "„adresat docelowy” oznacza: grupa docelowa."
+
+msgid "„aluzja literacka” oznacza: литературная аллюзия."
+msgstr "„aluzja literacka” oznacza: aluzja literacka."
+
+msgid "„antyteza” oznacza tutaj: антитеза."
+msgstr "„antyteza” oznacza tutaj: antyteza."
+
+msgid "„argument stalowy” oznacza: усиленная версия аргумента."
+msgstr "„argument stalowy” oznacza: wzmocniona wersja argumentu."
+
+msgid "„arkusz samooceny” oznacza: лист самооценки."
+msgstr "„arkusz samooceny” oznacza: arkusz samooceny."
+
+msgid "„asymetria wiedzy” oznacza: асимметрия знаний."
+msgstr "„asymetria wiedzy” oznacza: asymetria wiedzy."
+
+msgid "„brief komunikacyjny” oznacza: коммуникационный бриф."
+msgstr "„brief komunikacyjny” oznacza: brief komunikacyjny."
+
+msgid "„chochoł argumentacyjny” oznacza: соломенное чучело."
+msgstr "„chochoł argumentacyjny” oznacza: chochoł argumentacyjny."
+
+msgid "„ciężar dowodu” oznacza: бремя доказательства."
+msgstr "„ciężar dowodu” oznacza: ciężar dowodu."
+
+msgid "„dominanta tekstu” oznacza: доминанта текста."
+msgstr "„dominanta tekstu” oznacza: dominanta tekstu."
+
+msgid "„dosłowność” oznacza tutaj: буквальность."
+msgstr "„dosłowność” oznacza tutaj: dosłowność."
+
+msgid "„dystans narracyjny” oznacza: нарративная дистанция."
+msgstr "„dystans narracyjny” oznacza: dystans narracyjny."
+
+msgid "„eksplicytacja” oznacza: экспликация."
+msgstr "„eksplicytacja” oznacza: eksplikacja."
+
+msgid "„figura retoryczna” oznacza tutaj: риторическая фигура."
+msgstr "„figura retoryczna” oznacza tutaj: figura retoryczna."
+
+msgid "„fraza rozpoznawalna” oznacza: узнаваемая фраза."
+msgstr "„fraza rozpoznawalna” oznacza: rozpoznawalna fraza."
+
+msgid "„gradacja” oznacza tutaj: градация."
+msgstr "„gradacja” oznacza tutaj: gradacja."
+
+msgid "„głos autorski” oznacza: авторский голос."
+msgstr "„głos autorski” oznacza: głos autorski."
+
+msgid "„hierarchia faktów” oznacza: иерархия фактов."
+msgstr "„hierarchia faktów” oznacza: hierarchia faktów."
+
+msgid "„hierarchia informacji” oznacza: иерархия информации."
+msgstr "„hierarchia informacji” oznacza: hierarchia informacji."
+
+msgid "„implikatura” oznacza tutaj: импликатура, подразумеваемый смысл."
+msgstr "„implikatura” oznacza tutaj: implikatura, sens sugerowany."
+
+msgid "„informacja zwrotna” oznacza: обратная связь."
+msgstr "„informacja zwrotna” oznacza: informacja zwrotna."
+
+msgid "„interes strony” oznacza: интерес стороны."
+msgstr "„interes strony” oznacza: interes strony."
+
+msgid "„intertekstualność” oznacza: интертекстуальность."
+msgstr "„intertekstualność” oznacza: intertekstualność."
+
+msgid "„ironia dyskretna” oznacza: тонкая ирония."
+msgstr "„ironia dyskretna” oznacza: dyskretna ironia."
+
+msgid "„jakość dowodu” oznacza: качество доказательства."
+msgstr "„jakość dowodu” oznacza: jakość dowodu."
+
+msgid "„kadencja zdania” oznacza: каденция предложения."
+msgstr "„kadencja zdania” oznacza: kadencja zdania."
+
+msgid "„kompresja treści” oznacza: сжатие содержания."
+msgstr "„kompresja treści” oznacza: kompresja treści."
+
+msgid "„konkluzja” oznacza: заключение."
+msgstr "„konkluzja” oznacza: zakończenie."
+
+msgid "„konkurencyjne odczytanie” oznacza: конкурирующее прочтение."
+msgstr "„konkurencyjne odczytanie” oznacza: konkurencyjne odczytanie."
+
+msgid "„kontekst kulturowy” oznacza: культурный контекст."
+msgstr "„kontekst kulturowy” oznacza: kontekst kulturowy."
+
+msgid "„konwencja epoki” oznacza: конвенция эпохи."
+msgstr "„konwencja epoki” oznacza: konwencja epoki."
+
+msgid "„konwencja gatunkowa” oznacza: жанровая конвенция."
+msgstr "„konwencja gatunkowa” oznacza: konwencja gatunkowa."
+
+msgid "„kryterium sukcesu” oznacza: критерий успеха."
+msgstr "„kryterium sukcesu” oznacza: kryterium sukcesu."
+
+msgid "„mediatorka” oznacza: медиатор."
+msgstr "„mediatorka” oznacza: mediator."
+
+msgid "„modulować tempo” oznacza: модулировать темп."
+msgstr "„modulować tempo” oznacza: modulować tempo."
+
+msgid "„niedopowiedzenie” oznacza tutaj: недосказанность."
+msgstr "„niedopowiedzenie” oznacza tutaj: niedopowiedzenie."
+
+msgid "„nominalizacja” oznacza: номинализация."
+msgstr "„nominalizacja” oznacza: nominalizacja."
+
+msgid "„nota metodologiczna” oznacza: методологическая записка."
+msgstr "„nota metodologiczna” oznacza: nota metodologiczna."
+
+msgid "„odczytanie intencji” oznacza tutaj: считывание намерения."
+msgstr "„odczytanie intencji” oznacza tutaj: odczytanie intencji."
+
+msgid "„ograniczenie metodologiczne” oznacza: методологическое ограничение."
+msgstr "„ograniczenie metodologiczne” oznacza: ograniczenie metodologiczne."
+
+msgid "„osadzić w kontekście” oznacza: поместить в контекст."
+msgstr "„osadzić w kontekście” oznacza: osadzić w kontekście."
+
+msgid "„paralelizm składniowy” oznacza tutaj: синтаксический параллелизм."
+msgstr "„paralelizm składniowy” oznacza tutaj: paralelizm składniowy."
+
+msgid "„perspektywa odbiorcy” oznacza: перспектива читателя."
+msgstr "„perspektywa odbiorcy” oznacza: perspektywa czytelnika."
+
+msgid "„pole porozumienia” oznacza: пространство для согласия."
+msgstr "„pole porozumienia” oznacza: przestrzeń porozumienia."
+
+msgid "„porównać metodologie” oznacza: сравнить методологии."
+msgstr "„porównać metodologie” oznacza: porównać metodologie."
+
+msgid "„presupozycja” oznacza tutaj: пресуппозиция."
+msgstr "„presupozycja” oznacza tutaj: presupozycja."
+
+msgid "„projekt wielogatunkowy” oznacza: многожанровый проект."
+msgstr "„projekt wielogatunkowy” oznacza: projekt wielogatunkowy."
+
+msgid "„przeformułować przekaz” oznacza: переформулировать сообщение."
+msgstr "„przeformułować przekaz” oznacza: przeformułować komunikat."
+
+msgid "„przesunąć akcent” oznacza tutaj: сместить акцент."
+msgstr "„przesunąć akcent” oznacza tutaj: przesunąć akcent."
+
+msgid "„przesłanka” oznacza: предпосылка."
+msgstr "„przesłanka” oznacza: założenie."
+
+msgid "„przełamać regularność” oznacza: нарушить регулярность."
+msgstr "„przełamać regularność” oznacza: przełamać regularność."
+
+msgid "„przełożyć na język praktyki” oznacza: перевести на язык практики."
+msgstr "„przełożyć na język praktyki” oznacza: przełożyć na język praktyki."
+
+msgid "„przyznać rację częściowo” oznacza: частично признать правоту."
+msgstr "„przyznać rację częściowo” oznacza: przyznać rację częściowo."
+
+msgid "„próba badawcza” oznacza: исследовательская выборка."
+msgstr "„próba badawcza” oznacza: próba badawcza."
+
+msgid "„puenta” oznacza tutaj: пуанте, заключительный акцент."
+msgstr "„puenta” oznacza tutaj: puenta, końcowy akcent."
+
+msgid "„punkt ciężkości” oznacza tutaj: смысловой центр."
+msgstr "„punkt ciężkości” oznacza tutaj: punkt ciężkości."
+
+msgid "„punkt sporny” oznacza: предмет разногласия."
+msgstr "„punkt sporny” oznacza: punkt sporny."
+
+msgid "„pytanie retoryczne” oznacza tutaj: риторический вопрос."
+msgstr "„pytanie retoryczne” oznacza tutaj: pytanie retoryczne."
+
+msgid "„rama interpretacyjna” oznacza: интерпретационная рамка."
+msgstr "„rama interpretacyjna” oznacza: rama interpretacyjna."
+
+msgid "„redakcja merytoryczna” oznacza: содержательная редактура."
+msgstr "„redakcja merytoryczna” oznacza: redakcja merytoryczna."
+
+msgid "„redakcja stylistyczna” oznacza: стилистическая редактура."
+msgstr "„redakcja stylistyczna” oznacza: redakcja stylistyczna."
+
+msgid "„remat” oznacza: рема, новая информация."
+msgstr "„remat” oznacza: remat, nowa informacja."
+
+msgid "„rozbieżność stanowisk” oznacza: расхождение позиций."
+msgstr "„rozbieżność stanowisk” oznacza: rozbieżność stanowisk."
+
+msgid "„rozluźnić składnię” oznacza: облегчить синтаксис."
+msgstr "„rozluźnić składnię” oznacza: rozluźnić składnię."
+
+msgid "„rytm prozy” oznacza: ритм прозы."
+msgstr "„rytm prozy” oznacza: rytm prozy."
+
+msgid "„sens naddany” oznacza tutaj: добавочный смысл."
+msgstr "„sens naddany” oznacza tutaj: sens naddany."
+
+msgid "„spójność globalna” oznacza: глобальная связность."
+msgstr "„spójność globalna” oznacza: spójność globalna."
+
+msgid "„stopień pewności” oznacza: степень уверенности."
+msgstr "„stopień pewności” oznacza: stopień pewności."
+
+msgid "„stopniować napięcie” oznacza tutaj: наращивать напряжение."
+msgstr "„stopniować napięcie” oznacza tutaj: stopniować napięcie."
+
+msgid "„strategia narracyjna” oznacza: нарративная стратегия."
+msgstr "„strategia narracyjna” oznacza: strategia narracyjna."
+
+msgid "„symbolika” oznacza: символика."
+msgstr "„symbolika” oznacza: symbolika."
+
+msgid "„synteza źródeł” oznacza: синтез источников."
+msgstr "„synteza źródeł” oznacza: synteza źródeł."
+
+msgid "„temat zdania” oznacza: тема предложения."
+msgstr "„temat zdania” oznacza: temat zdania."
+
+msgid "„termin specjalistyczny” oznacza: специальный термин."
+msgstr "„termin specjalistyczny” oznacza: termin specjalistyczny."
+
+msgid "„teza oponenta” oznacza: тезис оппонента."
+msgstr "„teza oponenta” oznacza: teza oponenta."
+
+msgid "„tok wywodu” oznacza: ход рассуждения."
+msgstr "„tok wywodu” oznacza: tok rozumowania."
+
+msgid "„ton wypowiedzi” oznacza: тон высказывания."
+msgstr "„ton wypowiedzi” oznacza: ton wypowiedzi."
+
+msgid "„triangulacja danych” oznacza: триангуляция данных."
+msgstr "„triangulacja danych” oznacza: triangulacja danych."
+
+msgid "„uchylić się od odpowiedzi” oznacza tutaj: уклониться от ответа."
+msgstr "„uchylić się od odpowiedzi” oznacza tutaj: uchylić się od odpowiedzi."
+
+msgid "„uruchomić skojarzenie” oznacza: активировать ассоциацию."
+msgstr "„uruchomić skojarzenie” oznacza: uruchomić skojarzenie."
+
+msgid "„usunąć redundancję” oznacza: устранить избыточность."
+msgstr "„usunąć redundancję” oznacza: usunąć redundancję."
+
+msgid "„uzasadnić wybór gatunku” oznacza: обосновать выбор жанра."
+msgstr "„uzasadnić wybór gatunku” oznacza: uzasadnić wybór gatunku."
+
+msgid "„uzgodnić definicję” oznacza: согласовать определение."
+msgstr "„uzgodnić definicję” oznacza: uzgodnić definicję."
+
+msgid "„warunek brzegowy” oznacza: граничное условие."
+msgstr "„warunek brzegowy” oznacza: warunek brzegowy."
+
+msgid "„ważyć dowody” oznacza: взвешивать доказательства."
+msgstr "„ważyć dowody” oznacza: ważyć dowody."
+
+msgid "„wersja dla odbiorcy” oznacza: версия для аудитории."
+msgstr "„wersja dla odbiorcy” oznacza: wersja dla odbiorców."
+
+msgid "„wieloznaczność” oznacza tutaj: многозначность."
+msgstr "„wieloznaczność” oznacza tutaj: wieloznaczność."
+
+msgid "„wspólny mianownik” oznacza: общий знаменатель."
+msgstr "„wspólny mianownik” oznacza: wspólny mianownik."
+
+msgid "„wynikać z kontekstu” oznacza tutaj: следовать из контекста."
+msgstr "„wynikać z kontekstu” oznacza tutaj: wynikać z kontekstu."
+
+msgid "„wyprzedzić kontrargument” oznacza tutaj: предвосхитить контраргумент."
+msgstr "„wyprzedzić kontrargument” oznacza tutaj: wyprzedzić kontrargument."
+
+msgid "„zachować zastrzeżenie” oznacza: сохранить оговорку."
+msgstr "„zachować zastrzeżenie” oznacza: zachować zastrzeżenie."
+
+msgid "„zagęszczenie składni” oznacza: синтаксическое уплотнение."
+msgstr "„zagęszczenie składni” oznacza: zagęszczenie składni."
+
+msgid "„zakwestionować przesłankę” oznacza: оспорить предпосылку."
+msgstr "„zakwestionować przesłankę” oznacza: zakwestionować przesłankę."
+
+msgid "„zasada życzliwości” oznacza: принцип благожелательности."
+msgstr "„zasada życzliwości” oznacza: zasada życzliwości."
+
+msgid "„zasugerować mimochodem” oznacza tutaj: намекнуть вскользь."
+msgstr "„zasugerować mimochodem” oznacza tutaj: zasugerować mimochodem."
+
+msgid "„zbieżność wyników” oznacza: сходимость результатов."
+msgstr "„zbieżność wyników” oznacza: zbieżność wyników."
+
+msgid "„zdefiniować zakres” oznacza: определить объём."
+msgstr "„zdefiniować zakres” oznacza: określić zakres."
+
+msgid "„zmiana rejestru” oznacza: смена регистра."
+msgstr "„zmiana rejestru” oznacza: zmiana rejestru."
+
+msgid "„zmienna zakłócająca” oznacza: смешивающая переменная."
+msgstr "„zmienna zakłócająca” oznacza: zmienna zakłócająca."
+
+msgid "„łańcuch argumentacji” oznacza: цепочка аргументации."
+msgstr "„łańcuch argumentacji” oznacza: łańcuch argumentacji."
+
+msgid "выражение"
+msgstr "wyrażenie"
+
+msgid "глагол"
+msgstr "czasownik"
+
+msgid "глагольная конструкция"
+msgstr "konstrukcja czasownikowa"
+
+msgid "да"
+msgstr "tak"
+
+msgid "деепричастие"
+msgstr "imiesłów przysłówkowy"
+
+msgid "местоимение"
+msgstr "zaimek"
+
+msgid "наречие"
+msgstr "przysłówek"
+
+msgid "нет"
+msgstr "nie"
+
+msgid "прилагательное"
+msgstr "przymiotnik"
+
+msgid "причастие"
+msgstr "imiesłów przymiotnikowy"
+
+msgid "словосочетание"
+msgstr "połączenie wyrazów"
+
+msgid "союз"
+msgstr "spójnik"
+
+msgid "спасибо"
+msgstr "dziękuję"
+
+msgid "существительное"
+msgstr "rzeczownik"
+
+msgid "устойчивое выражение"
+msgstr "stałe wyrażenie"
+
+msgid "числительное"
+msgstr "liczebnik"
