@@ -67,7 +67,7 @@
   </div>
   <div class="topic-list" aria-label="{% translate "Темы курса" %}">
     {% for topic in course_topics %}
-      <details class="topic-card" id="topic-{{ topic.id }}" open data-course-topic{% if topic.id == primary_topic_id %} data-course-topic-primary="true"{% endif %}>
+      <details class="topic-card" id="topic-{{ topic.id }}"{% if topic.id == primary_topic_id %} open{% endif %} data-course-topic{% if topic.id == primary_topic_id %} data-course-topic-primary="true"{% endif %}>
         <summary class="topic-summary">
           <span class="topic-header">
             <span class="topic-emoji">{{ topic.emoji|ui_text }}</span>
@@ -107,20 +107,13 @@
 {% block scripts %}
   <script>
     (function () {
-      const topics = Array.from(document.querySelectorAll("[data-course-topic]"));
-      const mobile = window.matchMedia("(max-width: 699px)");
-      let compact = null;
-
-      function syncTopics() {
-        if (compact === mobile.matches) return;
-        compact = mobile.matches;
-        topics.forEach(function (topic) {
-          topic.open = !compact || topic.dataset.courseTopicPrimary === "true";
-        });
+      function openLinkedTopic() {
+        const id = window.location.hash.slice(1);
+        const topic = document.getElementById(id);
+        if (topic?.matches('[data-course-topic]')) topic.open = true;
       }
-
-      syncTopics();
-      mobile.addEventListener?.("change", syncTopics);
+      openLinkedTopic();
+      window.addEventListener('hashchange', openLinkedTopic);
     }());
   </script>
 {% endblock %}
