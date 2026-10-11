@@ -8715,3 +8715,654 @@ msgstr "ulica"
 
 msgid "центр"
 msgstr "centrum"
+
+msgid "Анна из Украины."
+msgstr "Anna jest z Ukrainy."
+
+msgid "Нового коллегу зовут Марек."
+msgstr "Nowy kolega ma na imię Marek."
+
+msgid "Он выбирает красные яблоки."
+msgstr "On wybiera czerwone jabłka."
+
+msgid "Он идёт на рынок в субботу."
+msgstr "On idzie na targ w sobotę."
+
+msgid "Она ест хлеб с сыром."
+msgstr "Ona je chleb z serem."
+
+msgid "По дороге она встречает соседа."
+msgstr "Po drodze spotyka sąsiada."
+
+msgid "После завтрака она идёт на работу."
+msgstr "Po śniadaniu idzie do pracy."
+
+msgid "Продавец называет четыре злотых."
+msgstr "Sprzedawca podaje cenę czterech złotych."
+
+msgid "Это первый день на курсе."
+msgstr "To pierwszy dzień na kursie."
+
+msgid "Jutro — завтра."
+msgstr "Jutro to dzień po dzisiejszym dniu."
+
+msgid "O której się spotykamy? — естественный вопрос «Во сколько встречаемся?»."
+msgstr "O której się spotykamy? to naturalne pytanie o godzinę spotkania."
+
+msgid "Pasować в договорённостях означает «подходить, быть удобным»."
+msgstr "Pasować przy ustalaniu spotkania oznacza być odpowiednim lub wygodnym."
+
+msgid "Pasuje mi — «мне подходит»."
+msgstr "Pasuje mi oznacza, że proponowany termin jest dla mnie odpowiedni."
+
+msgid "Spotkanie — встреча."
+msgstr "Spotkanie to wspólne spędzenie czasu lub rozmowa w ustalonym miejscu."
+
+msgid "W poniedziałek, w środę, w piątek, но we wtorek. Для выходных: w weekend."
+msgstr "W poniedziałek, w środę, w piątek, ale we wtorek. Dla dni wolnych: w weekend."
+
+msgid "В четверг у него курс."
+msgstr "W czwartek ma kurs."
+
+msgid "Выберите естественный ответ на предложение встретиться."
+msgstr "Wybierz naturalną odpowiedź na propozycję spotkania."
+
+msgid "Говорим we wtorek."
+msgstr "Mówimy we wtorek."
+
+msgid "Дни недели"
+msgstr "Dni tygodnia"
+
+msgid "Договорённость"
+msgstr "Ustalanie spotkania"
+
+msgid "Если сегодня четверг, завтра — пятница: jutro."
+msgstr "Jeśli dziś jest czwartek, jutro będzie piątek."
+
+msgid "Как сказать «в среду»?"
+msgstr "Jak powiedzieć, że coś odbywa się w środę?"
+
+msgid "Как спросить время встречи?"
+msgstr "Jak zapytać o godzinę spotkania?"
+
+msgid "Место — кафе возле парка."
+msgstr "Miejscem spotkania jest kawiarnia przy parku."
+
+msgid "О времени спрашиваем o której?"
+msgstr "O godzinę pytamy: o której?"
+
+msgid "Они договорились на шесть."
+msgstr "Umówili się na szóstą."
+
+msgid "Перед wtorek для удобства произношения употребляем we: we wtorek."
+msgstr "Przed wtorek dla łatwiejszej wymowy używamy we: we wtorek."
+
+msgid "Перед точным временем используем o."
+msgstr "Przed dokładną godziną używamy o."
+
+msgid "Перед часом используем o: o szóstej, o ósmej, o dziesiątej."
+msgstr "Przed godziną używamy o: o szóstej, o ósmej, o dziesiątej."
+
+msgid "С днями недели употребляем w: w poniedziałek."
+msgstr "Z dniami tygodnia używamy w: w poniedziałek."
+
+msgid "Сегодня пятница?"
+msgstr "Czy dziś jest piątek?"
+
+msgid "Спрашиваем: O której się spotykamy? Czy pasuje ci piątek? Отвечаем: Tak, pasuje mi."
+msgstr "Pytamy: O której się spotykamy? Czy pasuje ci piątek? Odpowiadamy: Tak, pasuje mi."
+
+msgid "Тебе подходит пятница?"
+msgstr "Czy pasuje ci piątek?"
+
+msgid "Точное время"
+msgstr "Dokładna godzina"
+
+msgid "Точное время вводим предлогом o: o szóstej."
+msgstr "Dokładną godzinę wprowadzamy przyimkiem o: o szóstej."
+
+msgid "Ты работаешь в пятницу?"
+msgstr "Czy pracujesz w piątek?"
+
+msgid "Устойчивое сочетание — w środę."
+msgstr "Używamy wyrażenia w środę."
+
+msgid "Что означает jutro?"
+msgstr "Co oznacza jutro?"
+
+msgid "Что означает spotkanie?"
+msgstr "Co oznacza spotkanie?"
+
+msgid "в котором часу?"
+msgstr "o której? — pytanie o godzinę"
+
+msgid "вечером"
+msgstr "wieczorem"
+
+msgid "встреча"
+msgstr "spotkanie"
+
+msgid "вторник"
+msgstr "wtorek"
+
+msgid "выходные"
+msgstr "weekend — dni wolne na końcu tygodnia"
+
+msgid "завтра"
+msgstr "jutro"
+
+msgid "минута"
+msgstr "minuta"
+
+msgid "опоздание"
+msgstr "spóźnienie"
+
+msgid "подходить; быть удобным"
+msgstr "pasować — być odpowiednim lub wygodnym"
+
+msgid "понедельник"
+msgstr "poniedziałek"
+
+msgid "пятница"
+msgstr "piątek"
+
+msgid "расписание"
+msgstr "rozkład — plan godzin zajęć lub odjazdów"
+
+msgid "сегодня"
+msgstr "dzisiaj"
+
+msgid "среда"
+msgstr "środa"
+
+msgid "утром"
+msgstr "rano"
+
+msgid "час; время"
+msgstr "godzina; czas"
+
+msgid "четверг"
+msgstr "czwartek"
+
+msgid "Biuro — офис."
+msgstr "Biuro to miejsce pracy, w którym wykonuje się zadania administracyjne lub zawodowe."
+
+msgid "Musieć + инфинитив: muszę skończyć, musisz napisać, on/ona musi przeczytać."
+msgstr "Musieć + bezokolicznik: muszę skończyć, musisz napisać, on/ona musi przeczytać."
+
+msgid "My możemy / musimy, wy możecie / musicie. После модального глагола форма действия не меняется."
+msgstr "My możemy / musimy, wy możecie / musicie. Po czasowniku modalnym forma określająca czynność pozostaje w bezokoliczniku."
+
+msgid "Móc + инфинитив: mogę pracować, możesz pomóc, on/ona może przyjść."
+msgstr "Móc + bezokolicznik: mogę pracować, możesz pomóc, on/ona może przyjść."
+
+msgid "Zadanie — задание или задача."
+msgstr "Zadanie to czynność, którą należy wykonać."
+
+msgid "Возможность"
+msgstr "Możliwość"
+
+msgid "Выберите базовую форму «учиться»."
+msgstr "Wybierz podstawową formę czasownika oznaczającego zdobywanie wiedzy."
+
+msgid "Выберите естественное предложение."
+msgstr "Wybierz naturalne zdanie."
+
+msgid "Для ja форма глагола móc — mogę."
+msgstr "Dla ja forma czasownika móc to mogę."
+
+msgid "Для my форма musieć — musimy."
+msgstr "Dla my forma czasownika musieć to musimy."
+
+msgid "Для my: zaczynamy."
+msgstr "Dla my używamy zaczynamy."
+
+msgid "Для ona форма musieć — musi; после неё употребляем инфинитив."
+msgstr "Dla ona forma czasownika musieć to musi; po niej używamy bezokolicznika."
+
+msgid "Её первая задача — сообщение."
+msgstr "Jej pierwszym zadaniem jest napisanie wiadomości."
+
+msgid "К одному собеседнику обращаемся: Czy możesz…?"
+msgstr "Do jednego rozmówcy zwracamy się: Czy możesz…?"
+
+msgid "Множественное число"
+msgstr "Liczba mnoga"
+
+msgid "Модальный глагол соединяется с инфинитивом: mogę pracować, muszę skończyć."
+msgstr "Czasownik modalny łączy się z bezokolicznikiem: mogę pracować, muszę skończyć."
+
+msgid "Обязанность"
+msgstr "Obowiązek"
+
+msgid "Она учится дважды в неделю."
+msgstr "Ona uczy się dwa razy w tygodniu."
+
+msgid "После muszę нужен инфинитив: skończyć."
+msgstr "Po muszę potrzebny jest bezokolicznik: skończyć."
+
+msgid "Словарная форма — uczyć się."
+msgstr "Forma słownikowa to uczyć się."
+
+msgid "У Каси новая работа в небольшой фирме."
+msgstr "Kasia ma nową pracę w małej firmie."
+
+msgid "Что означает biuro?"
+msgstr "Co oznacza biuro?"
+
+msgid "Что означает zadanie?"
+msgstr "Co oznacza zadanie?"
+
+msgid "Что ставим после mogę / muszę?"
+msgstr "Jaką formę stawiamy po mogę / muszę?"
+
+msgid "быть должным"
+msgstr "musieć — mieć obowiązek"
+
+msgid "задание"
+msgstr "zadanie"
+
+msgid "занятие"
+msgstr "zajęcia — lekcja lub spotkanie poświęcone nauce"
+
+msgid "инфинитив"
+msgstr "bezokolicznik"
+
+msgid "компания"
+msgstr "firma"
+
+msgid "мочь"
+msgstr "móc — mieć możliwość"
+
+msgid "офис"
+msgstr "biuro"
+
+msgid "работа"
+msgstr "praca"
+
+msgid "сотрудник"
+msgstr "pracownik"
+
+msgid "студент"
+msgstr "student"
+
+msgid "существительное только"
+msgstr "tylko rzeczownik"
+
+msgid "учитель"
+msgstr "nauczyciel"
+
+msgid "учиться"
+msgstr "uczyć się — zdobywać wiedzę lub umiejętności"
+
+msgid "учиться в вузе"
+msgstr "studiować — uczyć się na uczelni"
+
+msgid "школа"
+msgstr "szkoła"
+
+msgid "Co lubisz robić? — естественный вопрос «Что ты любишь делать?»."
+msgstr "Co lubisz robić? to naturalne pytanie o ulubione zajęcia."
+
+msgid "Co lubisz robić…? спрашивает о предпочтениях."
+msgstr "Co lubisz robić…? to pytanie o preferencje."
+
+msgid "Interesować się + творительный падеж: interesuję się kinem, muzyką, sportem."
+msgstr "Interesować się + narzędnik: interesuję się kinem, muzyką, sportem."
+
+msgid "Interesować się требует творительного падежа: sportem."
+msgstr "Interesować się wymaga narzędnika: sportem."
+
+msgid "Jeździć na rowerze — регулярно ездить на велосипеде."
+msgstr "Jeździć na rowerze oznacza regularnie poruszać się rowerem."
+
+msgid "Lubić + инфинитив: lubię czytać, lubisz oglądać, lubimy grać."
+msgstr "Lubić + bezokolicznik: lubię czytać, lubisz oglądać, lubimy grać."
+
+msgid "Spacer — прогулка."
+msgstr "Spacer to spokojne chodzenie dla odpoczynku."
+
+msgid "Выберите естественный вопрос."
+msgstr "Wybierz naturalne pytanie."
+
+msgid "Для my форма lubić — lubimy."
+msgstr "Dla my forma czasownika lubić to lubimy."
+
+msgid "Из-за дождя они меняют план."
+msgstr "Z powodu deszczu zmieniają plan."
+
+msgid "Интерес"
+msgstr "Zainteresowanie"
+
+msgid "Как сказать «я играю в футбол»?"
+msgstr "Jak powiedzieć, że grasz w piłkę nożną?"
+
+msgid "Как спросить о любимом занятии?"
+msgstr "Jak zapytać o ulubione zajęcie?"
+
+msgid "Любимое действие"
+msgstr "Ulubiona czynność"
+
+msgid "Любимый предмет"
+msgstr "Ulubiona rzecz"
+
+msgid "Они выбирают короткую комедию."
+msgstr "Wybierają krótką komedię."
+
+msgid "После interesuję się употребляем творительный падеж: kinem."
+msgstr "Po interesuję się używamy narzędnika: kinem."
+
+msgid "После lubi нужна форма książkę."
+msgstr "Po lubi potrzebna jest forma książkę."
+
+msgid "После lubimy действие остаётся в инфинитиве: oglądać."
+msgstr "Po lubimy czynność pozostaje w bezokoliczniku: oglądać."
+
+msgid "После lubić предмет обычно стоит в винительном падеже: muzykę."
+msgstr "Po lubić rzecz zwykle występuje w bierniku: muzykę."
+
+msgid "После lubić предмет стоит в винительном падеже: lubię muzykę, książkę, sport."
+msgstr "Po lubić rzecz występuje w bierniku: lubię muzykę, książkę, sport."
+
+msgid "После lubię можно поставить инфинитив: lubię czytać."
+msgstr "Po lubię można postawić bezokolicznik: lubię czytać."
+
+msgid "После lubię употребляем инфинитив słuchać."
+msgstr "Po lubię używamy bezokolicznika słuchać."
+
+msgid "С играми и спортом употребляем grać w: gram w piłkę."
+msgstr "Z grami i sportem używamy grać w: gram w piłkę."
+
+msgid "Утром он читает."
+msgstr "Rano czyta."
+
+msgid "Что означает jeździć na rowerze?"
+msgstr "Co oznacza jeździć na rowerze?"
+
+msgid "Что означает spacer?"
+msgstr "Co oznacza spacer?"
+
+msgid "велосипед"
+msgstr "rower"
+
+msgid "гулять пешком"
+msgstr "spacerować — chodzić dla odpoczynku"
+
+msgid "друг"
+msgstr "przyjaciel"
+
+msgid "ездить"
+msgstr "jeździć — regularnie przemieszczać się pojazdem"
+
+msgid "ездить на велосипеде"
+msgstr "jeździć na rowerze"
+
+msgid "играть"
+msgstr "grać"
+
+msgid "интересоваться"
+msgstr "interesować się — poświęcać czemuś uwagę"
+
+msgid "книга"
+msgstr "książka"
+
+msgid "любить; нравиться"
+msgstr "lubić — chętnie coś robić lub mieć do czegoś pozytywny stosunek"
+
+msgid "музыка"
+msgstr "muzyka"
+
+msgid "прогулка"
+msgstr "spacer"
+
+msgid "свободное время"
+msgstr "czas wolny"
+
+msgid "слушать"
+msgstr "słuchać"
+
+msgid "смотреть"
+msgstr "oglądać"
+
+msgid "смотреть гонки"
+msgstr "oglądać wyścigi"
+
+msgid "спорт"
+msgstr "sport"
+
+msgid "фильм"
+msgstr "film"
+
+msgid "Boli + место в единственном числе: boli mnie głowa, gardło, brzuch."
+msgstr "Boli + część ciała w liczbie pojedynczej: boli mnie głowa, gardło, brzuch."
+
+msgid "Bolą + множественное число: bolą mnie nogi, oczy, plecy."
+msgstr "Bolą + liczba mnoga: bolą mnie nogi, oczy, plecy."
+
+msgid "Brzuch — единственное число, поэтому boli mnie brzuch."
+msgstr "Brzuch ma liczbę pojedynczą, dlatego mówimy boli mnie brzuch."
+
+msgid "Czuć się описывает самочувствие: źle się czuję."
+msgstr "Czuć się opisuje samopoczucie: źle się czuję."
+
+msgid "Gardło — горло."
+msgstr "Gardło to część ciała między ustami a przełykiem."
+
+msgid "Jak się pan czuje? — вежливый вопрос «Как вы себя чувствуете?»."
+msgstr "Jak się pan czuje? to uprzejme pytanie o samopoczucie."
+
+msgid "Kaszlę — «я кашляю»."
+msgstr "Kaszlę to forma czasownika kaszleć dla ja."
+
+msgid "Plecy имеют форму множественного числа: bolą mnie plecy."
+msgstr "Plecy mają formę liczby mnogiej: bolą mnie plecy."
+
+msgid "Где покупают лекарство?"
+msgstr "Gdzie kupujemy lekarstwo?"
+
+msgid "Как сказать «я плохо себя чувствую»?"
+msgstr "Jak powiedzieć, że źle się czujesz?"
+
+msgid "Как спросить пациента о самочувствии?"
+msgstr "Jak zapytać pacjenta o samopoczucie?"
+
+msgid "Несколько или форма множественного числа"
+msgstr "Kilka części ciała lub forma liczby mnogiej"
+
+msgid "Одна часть тела"
+msgstr "Jedna część ciała"
+
+msgid "Она заболела."
+msgstr "Ona zachorowała."
+
+msgid "После mam нужен винительный падеж: mam temperaturę."
+msgstr "Po mam potrzebny jest biernik: mam temperaturę."
+
+msgid "После mam употребляем винительный падеж: gorączkę."
+msgstr "Po mam używamy biernika: gorączkę."
+
+msgid "После musisz ставим инфинитив: odpoczywać."
+msgstr "Po musisz stawiamy bezokolicznik: odpoczywać."
+
+msgid "После врача она идёт в аптеку."
+msgstr "Po wizycie u lekarza idzie do apteki."
+
+msgid "С mam называем симптом: mam katar, kaszel; mam gorączkę, temperaturę."
+msgstr "Z mam nazywamy objaw: mam katar, kaszel; mam gorączkę, temperaturę."
+
+msgid "С одним больным местом используем boli и именительный падеж: boli mnie głowa."
+msgstr "Z jedną bolącą częścią ciała używamy boli i mianownika: boli mnie głowa."
+
+msgid "С формой множественного числа употребляем bolą: bolą mnie plecy."
+msgstr "Z formą liczby mnogiej używamy bolą: bolą mnie plecy."
+
+msgid "Симптом как состояние"
+msgstr "Objaw jako stan"
+
+msgid "У неё 38 градусов."
+msgstr "Ma temperaturę 38 stopni."
+
+msgid "У пациента кашель. Что он скажет?"
+msgstr "Pacjent kaszle. Co powie?"
+
+msgid "У существительного мужского рода katar форма после ma не меняется."
+msgstr "Rzeczownik rodzaju męskiego katar nie zmienia formy po ma."
+
+msgid "Что означает gardło?"
+msgstr "Co oznacza gardło?"
+
+msgid "болеть"
+msgstr "boleć — powodować ból"
+
+msgid "больной"
+msgstr "chory"
+
+msgid "врач"
+msgstr "lekarz"
+
+msgid "голова"
+msgstr "głowa"
+
+msgid "горло"
+msgstr "gardło"
+
+msgid "жар; высокая температура"
+msgstr "gorączka — wysoka temperatura ciała"
+
+msgid "живот"
+msgstr "brzuch"
+
+msgid "здоровье"
+msgstr "zdrowie"
+
+msgid "кашлять"
+msgstr "kaszleć"
+
+msgid "лекарство"
+msgstr "lekarstwo"
+
+msgid "насморк"
+msgstr "katar"
+
+msgid "температура"
+msgstr "temperatura"
+
+msgid "чувствовать себя"
+msgstr "czuć się — mieć określone samopoczucie"
+
+msgid "Boli сочетается с единственным числом, bolą — с множественным."
+msgstr "Boli łączy się z liczbą pojedynczą, a bolą — z liczbą mnogą."
+
+msgid "Jak dojść do…? — естественный вопрос о маршруте."
+msgstr "Jak dojść do…? to naturalne pytanie o trasę."
+
+msgid "Mam na imię… — базовая форма представления."
+msgstr "Mam na imię… to podstawowa forma przedstawiania się."
+
+msgid "Plecy имеют форму множественного числа."
+msgstr "Plecy mają formę liczby mnogiej."
+
+msgid "Siostra — женский род, поэтому moja."
+msgstr "Siostra ma rodzaj żeński, dlatego używamy moja."
+
+msgid "W poniedziałek o ósmej; mogę/muszę + инфинитив; boli + одно, bolą + множественное число."
+msgstr "W poniedziałek o ósmej; mogę/muszę + bezokolicznik; boli + liczba pojedyncza, bolą + liczba mnoga."
+
+msgid "Визит назначен на четверг в девять."
+msgstr "Wizyta jest umówiona na czwartek na dziewiątą."
+
+msgid "Во множественном числе о людях: moi rodzice."
+msgstr "W liczbie mnogiej o osobach: moi rodzice."
+
+msgid "Время, возможность и здоровье"
+msgstr "Czas, możliwość i zdrowie"
+
+msgid "Для Anna/ona нужна форма wstaje."
+msgstr "Dla Anna/ona potrzebna jest forma wstaje."
+
+msgid "Для ja употребляем wstaję."
+msgstr "Dla ja używamy wstaję."
+
+msgid "Для ja форма być — jestem."
+msgstr "Dla ja forma czasownika być to jestem."
+
+msgid "Для on форма глагола mówić — mówi."
+msgstr "Dla on forma czasownika mówić to mówi."
+
+msgid "Как естественно представиться?"
+msgstr "Jak naturalnie się przedstawić?"
+
+msgid "Как спросить дорогу?"
+msgstr "Jak zapytać o drogę?"
+
+msgid "О себе"
+msgstr "O sobie"
+
+msgid "Они обсуждают семью, работу и выходные."
+msgstr "Rozmawiają o rodzinie, pracy i weekendzie."
+
+msgid "После lubię действие выражается инфинитивом."
+msgstr "Po lubię czynność wyrażamy bezokolicznikiem."
+
+msgid "После muszę ставим инфинитив."
+msgstr "Po muszę stawiamy bezokolicznik."
+
+msgid "После poproszę предмет стоит в винительном падеже: kawę."
+msgstr "Po poproszę rzecz występuje w bierniku: kawę."
+
+msgid "После количества употребляется родительный падеж: kilogram jabłek."
+msgstr "Po określeniu ilości używamy dopełniacza: kilogram jabłek."
+
+msgid "Предмет находится na stole."
+msgstr "Przedmiot znajduje się na stole."
+
+msgid "Предметы и места"
+msgstr "Przedmioty i miejsca"
+
+msgid "Проверяй род и падеж: moja siostra, poproszę kawę, w domu, na stole."
+msgstr "Sprawdzaj rodzaj i przypadek: moja siostra, poproszę kawę, w domu, na stole."
+
+msgid "С днём употребляем w, со временем — o."
+msgstr "Z dniem używamy w, a z godziną — o."
+
+msgid "Согласуй лицо глагола: jestem, mieszkam, pracuję, lubię; для on/ona: jest, mieszka, pracuje, lubi."
+msgstr "Dopasuj osobę czasownika: jestem, mieszkam, pracuję, lubię; dla on/ona: jest, mieszka, pracuje, lubi."
+
+msgid "Фраза означает «Я умею справиться на польском»."
+msgstr "To zdanie oznacza, że potrafię poradzić sobie po polsku."
+
+msgid "Что показывает готовность действовать самостоятельно?"
+msgstr "Co pokazuje gotowość do samodzielnego działania?"
+
+msgid "Это её покупки."
+msgstr "To jej zakupy."
+
+msgid "договариваться о встрече"
+msgstr "umawiać się na spotkanie"
+
+msgid "дорога; путь"
+msgstr "droga; trasa"
+
+msgid "нуждаться"
+msgstr "potrzebować"
+
+msgid "попросить"
+msgstr "poprosić"
+
+msgid "представиться"
+msgstr "przedstawić się"
+
+msgid "справиться"
+msgstr "poradzić sobie"
+
+msgid "уладить; сделать"
+msgstr "załatwić — zrobić lub rozwiązać coś"
+
+msgid "Как естественно сказать «Меня зовут Лена»?"
+msgstr "Jak naturalnie przedstawić się jako Lena?"
+
+msgid "Как спросить «Как дойти до вокзала?»"
+msgstr "Jak zapytać, jak dojść do dworca?"
+
+msgid "Как спросить «Что ты любишь делать в выходные?»"
+msgstr "Jak zapytać rozmówcę o ulubione zajęcia w weekend?"

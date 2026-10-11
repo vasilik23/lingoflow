@@ -200,3 +200,27 @@ class PolishCitySupportTests(TestCase):
         with override('ru'):
             for source in support:
                 self.assertEqual(learning_text(source), source)
+
+
+class PolishAllA1SupportTests(TestCase):
+    def test_all_a1_topics_have_polish_lesson_support_and_distinct_choices(self):
+        lessons = Lesson.objects.filter(topic__course__level='A1', is_active=True)
+        self.assertGreaterEqual(lessons.values('topic_id').distinct().count(), 12)
+        support = []
+        for lesson in lessons:
+            support.append(lesson.theory_title)
+            support.extend(value for pair in lesson.theory_sections for value in pair)
+        questions = list(Question.objects.filter(lesson__in=lessons))
+        self.assertGreater(len(questions), 150)
+        for question in questions:
+            support.extend((question.prompt, question.explanation, *question.options))
+        support.extend(Flashcard.objects.filter(lesson_links__lesson__in=lessons).values_list('translation', flat=True))
+        with override('pl'):
+            missing = sorted(set(source for source in support if re.search(r'[А-Яа-яЁё]', learning_text(source))))
+            self.assertEqual(missing, [])
+            for question in questions:
+                options = [learning_text(option) for option in question.options]
+                self.assertEqual(len(set(options)), len(options), question.prompt)
+        with override('ru'):
+            for source in support:
+                self.assertEqual(learning_text(source), source)
