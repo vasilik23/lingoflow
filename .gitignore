@@ -21,3 +21,6 @@ backend/db.sqlite3
 
 # Supabase CLI local state
 supabase/.temp/
+
+# private scheduled audit runs
+.local-audits/

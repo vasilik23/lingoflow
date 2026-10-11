@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0"><dict>
+<key>Label</key><string>com.lingoflow.daily-product-audit</string>
+<key>ProgramArguments</key><array><string>__NODE_EXECUTABLE__</string><string>__PROJECT_ROOT__/ops/daily-product-audit.mjs</string></array>
+<key>WorkingDirectory</key><string>__PROJECT_ROOT__</string>
+<key>EnvironmentVariables</key><dict>
+<key>PATH</key><string>__NODE_BIN_DIRECTORY__:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+<key>LINGOFLOW_AUDIT_CODEX</key><string>__CODEX_EXECUTABLE__</string>
+<key>LANG</key><string>en_US.UTF-8</string>
+</dict>
+<key>StartCalendarInterval</key><dict><key>Hour</key><integer>9</integer><key>Minute</key><integer>0</integer></dict>
+<key>RunAtLoad</key><false/>
+<key>StandardOutPath</key><string>__PROJECT_ROOT__/.local-audits/launch.log</string>
+<key>StandardErrorPath</key><string>__PROJECT_ROOT__/.local-audits/launch-error.log</string>
+</dict></plist>

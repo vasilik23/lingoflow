@@ -9366,3 +9366,1653 @@ msgstr "Jak zapytać, jak dojść do dworca?"
 
 msgid "Как спросить «Что ты любишь делать в выходные?»"
 msgstr "Jak zapytać rozmówcę o ulubione zajęcia w weekend?"
+
+msgid "Co robiłeś/robiłaś w weekend? — вопрос о завершённом прошлом."
+msgstr "Co robiłeś/robiłaś w weekend? to pytanie o miniony weekend."
+
+msgid "Ewa — женский род: czytała."
+msgstr "Ewa to kobieta, dlatego używamy czytała."
+
+msgid "Ja (женщина) długo ___."
+msgstr "Ja (kobieta) długo ___."
+
+msgid "Ja (мужчина) ___ weekend w domu."
+msgstr "Ja (mężczyzna) ___ weekend w domu."
+
+msgid "My (мужчина и женщина) ___ w Krakowie."
+msgstr "My (mężczyzna i kobieta) ___ w Krakowie."
+
+msgid "My (смешанная группа) ___ późno."
+msgstr "My (grupa mieszana) ___ późno."
+
+msgid "Paweł — мужской род: oglądał."
+msgstr "Paweł to mężczyzna, dlatego używamy oglądał."
+
+msgid "Przedwczoraj — позавчера."
+msgstr "Przedwczoraj to dzień przed wczorajszym dniem."
+
+msgid "В первом абзаце прямо сказано: Kasia pojechała pociągiem do Wrocławia."
+msgstr "Pierwszy akapit mówi wprost: Kasia pojechała pociągiem do Wrocławia."
+
+msgid "В субботу подруги посетили музей и увидели рыночную площадь."
+msgstr "W sobotę koleżanki odwiedziły muzeum i zobaczyły rynek."
+
+msgid "Говорящая женщина выбирает форму odpoczywałam."
+msgstr "Kobieta wybiera formę odpoczywałam."
+
+msgid "Говорящий выбирает форму по своему роду: robiłem/byłem или robiłam/byłam."
+msgstr "Osoba mówiąca wybiera formę zgodną ze swoim rodzajem: robiłem/byłem albo robiłam/byłam."
+
+msgid "Группа женщин: zostały."
+msgstr "Grupa kobiet: zostały."
+
+msgid "Группа мужчин: poszli."
+msgstr "Grupa mężczyzn: poszli."
+
+msgid "Для Ania нужна женская форма poszła."
+msgstr "Dla Ani potrzebna jest forma żeńska poszła."
+
+msgid "Для группы с мужчиной: byliśmy, robili; для группы только из женщин/предметов: byłyśmy, robiły."
+msgstr "Dla grupy z mężczyzną: byliśmy, robili; dla grupy tylko kobiet lub przedmiotów: byłyśmy, robiły."
+
+msgid "Для группы только из женщин нужна форма niemęskoosobowa: zwiedziły."
+msgstr "Dla grupy samych kobiet potrzebna jest forma niemęskoosobowa: zwiedziły."
+
+msgid "Для смешанной группы употребляется форма męskoosobowa: byliśmy."
+msgstr "Dla grupy mieszanej używamy formy męskoosobowej: byliśmy."
+
+msgid "Для смешанной группы: wróciliśmy."
+msgstr "Dla grupy mieszanej: wróciliśmy."
+
+msgid "Как спросить о прошлых выходных?"
+msgstr "Jak zapytać o miniony weekend?"
+
+msgid "Мужская форма первого лица: spędziłem."
+msgstr "Męska forma pierwszej osoby: spędziłem."
+
+msgid "Мы и они"
+msgstr "My i oni"
+
+msgid "После отдыха Павел в понедельник чувствовал прилив энергии."
+msgstr "Po odpoczynku Paweł w poniedziałek miał dużo energii."
+
+msgid "Союз więc связывает причину и результат: было солнечно, поэтому они много гуляли."
+msgstr "Więc łączy przyczynę i skutek: było słonecznie, więc dużo spacerowali."
+
+msgid "Текст перечисляет два действия Павла дома: приготовил обед и посмотрел два фильма."
+msgstr "Tekst wymienia dwie czynności Pawła w domu: ugotował obiad i obejrzał dwa filmy."
+
+msgid "Что означает przedwczoraj?"
+msgstr "Co oznacza przedwczoraj?"
+
+msgid "Я"
+msgstr "Ja"
+
+msgid "в последнее время"
+msgstr "ostatnio"
+
+msgid "вернуться"
+msgstr "wrócić"
+
+msgid "встретиться"
+msgstr "spotkać się"
+
+msgid "вчера"
+msgstr "wczoraj"
+
+msgid "концерт"
+msgstr "koncert"
+
+msgid "музей"
+msgstr "muzeum"
+
+msgid "навестить; посетить"
+msgstr "odwiedzić"
+
+msgid "недавно"
+msgstr "niedawno"
+
+msgid "отдых"
+msgstr "odpoczynek"
+
+msgid "поехать"
+msgstr "pojechać"
+
+msgid "позавчера"
+msgstr "przedwczoraj"
+
+msgid "провести (время)"
+msgstr "spędzić czas"
+
+msgid "произойти"
+msgstr "wydarzyć się"
+
+msgid "увидеть"
+msgstr "zobaczyć"
+
+msgid "экскурсия; поездка"
+msgstr "wycieczka"
+
+msgid "Jak dojedziemy na dworzec? — Как мы доберёмся до вокзала?"
+msgstr "Jak dojedziemy na dworzec? to pytanie o sposób dotarcia na dworzec."
+
+msgid "Odjeżdża — отправляется по расписанию."
+msgstr "Odjeżdża oznacza, że pojazd rusza zgodnie z rozkładem."
+
+msgid "Planować — планировать."
+msgstr "Planować oznacza ustalać przyszłe działania."
+
+msgid "Zarezerwuje — совершенная форма будущего времени."
+msgstr "Zarezerwuje to dokonana forma czasu przyszłego."
+
+msgid "Будущее длительное действие: będziemy wracać."
+msgstr "Przyszła czynność trwająca przez pewien czas: będziemy wracać."
+
+msgid "Для ja: będę podróżować."
+msgstr "Dla ja: będę podróżować."
+
+msgid "Для my используется форма będziemy: będziemy wracać."
+msgstr "Dla my używamy będziemy: będziemy wracać."
+
+msgid "Для my: wyruszymy — мы отправимся."
+msgstr "Dla my: wyruszymy."
+
+msgid "Для длительного будущего действия: личная форма być + инфинитив: będę pakować."
+msgstr "Dla niedokonanej czynności przyszłej: osobowa forma być + bezokolicznik: będę pakować."
+
+msgid "Завтра я буду паковать чемодан."
+msgstr "Jutro będę pakować walizkę."
+
+msgid "Им достаточно одного чемодана, потому что поездка продлится два дня."
+msgstr "Wystarczy im jedna walizka, ponieważ wyjazd potrwa dwa dni."
+
+msgid "Используй zamierzam, mam zamiar или chcę + инфинитив: zamierzam odwiedzić Gdańsk."
+msgstr "Używaj zamierzam, mam zamiar lub chcę + bezokolicznik: zamierzam odwiedzić Gdańsk."
+
+msgid "Как спросить, каким путём добраться до вокзала?"
+msgstr "Jak zapytać o sposób dotarcia na dworzec?"
+
+msgid "Мы намерены посетить Гданьск."
+msgstr "Zamierzamy odwiedzić Gdańsk."
+
+msgid "Намерение"
+msgstr "Zamiar"
+
+msgid "Намерение выражается конструкцией zamierzam + инфинитив."
+msgstr "Zamiar wyrażamy konstrukcją zamierzam + bezokolicznik."
+
+msgid "Они купят билеты онлайн, чтобы не стоять в очереди."
+msgstr "Kupią bilety online, żeby nie stać w kolejce."
+
+msgid "Они планируют выехать из Кракова в пятницу вечером."
+msgstr "Planują wyjechać z Krakowa w piątek wieczorem."
+
+msgid "Пересадка запланирована в Варшаве."
+msgstr "Przesiadka jest zaplanowana w Warszawie."
+
+msgid "После zamierzam употребляется…"
+msgstr "Po zamierzam używamy…"
+
+msgid "После zamierzać нужен инфинитив: zamierzamy odwiedzić."
+msgstr "Po zamierzać potrzebny jest bezokolicznik: zamierzamy odwiedzić."
+
+msgid "При хорошей погоде они пообедают на пляже."
+msgstr "Przy dobrej pogodzie zjedzą obiad na plaży."
+
+msgid "Процесс в будущем"
+msgstr "Proces w przyszłości"
+
+msgid "Результат в будущем"
+msgstr "Rezultat w przyszłości"
+
+msgid "С несовершенным глаголом: личная форма być + инфинитив — będę podróżować, będziemy wracać."
+msgstr "Z czasownikiem niedokonanym: osobowa forma być + bezokolicznik — będę podróżować, będziemy wracać."
+
+msgid "Совершенная форма przesiądziemy обозначает однократное будущее действие."
+msgstr "Dokonana forma przesiądziemy oznacza pojedynczą przyszłą czynność."
+
+msgid "Совершенный глагол kupić образует простое будущее: Ola kupi."
+msgstr "Dokonany czasownik kupić tworzy czas przyszły prosty: Ola kupi."
+
+msgid "Совершенный глагол имеет простую форму: kupię bilet, zarezerwujemy nocleg, pojedziemy."
+msgstr "Czasownik dokonany ma prostą formę przyszłą: kupię bilet, zarezerwujemy nocleg, pojedziemy."
+
+msgid "Что означает planować?"
+msgstr "Co oznacza planować?"
+
+msgid "билет"
+msgstr "bilet"
+
+msgid "бронировать"
+msgstr "rezerwować"
+
+msgid "доехать"
+msgstr "dojechać"
+
+msgid "намереваться"
+msgstr "zamierzać"
+
+msgid "ночлег"
+msgstr "nocleg"
+
+msgid "опаздывать"
+msgstr "spóźniać się"
+
+msgid "отправиться в путь"
+msgstr "wyruszyć"
+
+msgid "пересесть"
+msgstr "przesiąść się"
+
+msgid "планировать"
+msgstr "planować"
+
+msgid "поезд"
+msgstr "pociąg"
+
+msgid "поездка; отъезд"
+msgstr "wyjazd"
+
+msgid "путешествие"
+msgstr "podróż"
+
+msgid "самолёт"
+msgstr "samolot"
+
+msgid "собирать вещи"
+msgstr "pakować się"
+
+msgid "существительное в творительном падеже"
+msgstr "rzeczownik w narzędniku"
+
+msgid "только прошедшее время"
+msgstr "tylko czas przeszły"
+
+msgid "чемодан"
+msgstr "walizka"
+
+msgid "Kaucja — залог, который обычно возвращают после окончания аренды."
+msgstr "Kaucja to kwota zabezpieczająca, zwykle zwracana po zakończeniu najmu."
+
+msgid "Potrzebować требует родительного падежа: potrzebujemy hydraulika."
+msgstr "Potrzebować wymaga dopełniacza: potrzebujemy hydraulika."
+
+msgid "Szukać и potrzebować требуют родительного: szukam mieszkania, potrzebuję hydraulika."
+msgstr "Szukać i potrzebować wymagają dopełniacza: szukam mieszkania, potrzebuję hydraulika."
+
+msgid "Szukać управляет родительным падежом: nowego mieszkania."
+msgstr "Szukać łączy się z dopełniaczem: nowego mieszkania."
+
+msgid "Ustalić termin naprawy — назначить время ремонта."
+msgstr "Ustalić termin naprawy oznacza uzgodnić, kiedy odbędzie się naprawa."
+
+msgid "Zgłosić usterkę administracji — сообщить управляющей компании о неисправности."
+msgstr "Zgłosić usterkę administracji oznacza poinformować administrację o problemie."
+
+msgid "Администрация назначила визит на вторник с 16 до 18."
+msgstr "Administracja umówiła wizytę na wtorek od 16 do 18."
+
+msgid "Глагол szukać требует родительного падежа: szukamy mieszkania."
+msgstr "Czasownik szukać wymaga dopełniacza: szukamy mieszkania."
+
+msgid "Глагольное управление"
+msgstr "Rekcja czasownika"
+
+msgid "Ему нужны были описание проблемы и фотография счётчика."
+msgstr "Potrzebował opisu problemu i zdjęcia licznika."
+
+msgid "Если специалист не придёт вовремя, она снова свяжется с администрацией."
+msgstr "Jeśli specjalista nie przyjdzie na czas, ponownie skontaktuje się z administracją."
+
+msgid "Когда z означает «с»: problem z ogrzewaniem, rozmowa z właścicielem."
+msgstr "Gdy z oznacza wspólność: problem z ogrzewaniem, rozmowa z właścicielem."
+
+msgid "Куда сообщить о неисправности?"
+msgstr "Gdzie zgłosić usterkę?"
+
+msgid "Лицо после z ставится в творительном падеже: z hydraulikiem."
+msgstr "Osoba po z występuje w narzędniku: z hydraulikiem."
+
+msgid "Отрицательная конструкция nie ma требует родительного: prądu."
+msgstr "Przeczenie nie ma wymaga dopełniacza: prądu."
+
+msgid "После nie ma употребляется родительный падеж: ciepłej wody."
+msgstr "Po nie ma używamy dopełniacza: ciepłej wody."
+
+msgid "После nie ma: nie ma prądu, ciepłej wody, ogrzewania."
+msgstr "Po nie ma: nie ma prądu, ciepłej wody, ogrzewania."
+
+msgid "После z в значении «с чем?» нужен творительный падеж: z ogrzewaniem."
+msgstr "Po z w pytaniu z czym? potrzebny jest narzędnik: z ogrzewaniem."
+
+msgid "После z в значении совместности употребляется творительный: z właścicielem."
+msgstr "Po z oznaczającym wspólność używamy narzędnika: z właścicielem."
+
+msgid "После z в конструкции problem z нужен творительный: kranem."
+msgstr "Po z w konstrukcji problem z potrzebny jest narzędnik: kranem."
+
+msgid "При аренде стороны подписывают umowę — договор."
+msgstr "Przy najmie strony podpisują umowę."
+
+msgid "Разговариваю с владельцем."
+msgstr "Rozmawiam z właścicielem."
+
+msgid "Родительный после отрицания"
+msgstr "Dopełniacz po przeczeniu"
+
+msgid "Сначала она позвонила владельцу квартиры."
+msgstr "Najpierw zadzwoniła do właściciela mieszkania."
+
+msgid "Творительный после z"
+msgstr "Narzędnik po z"
+
+msgid "Утром Лена заметила, что отопление не работает."
+msgstr "Rano Lena zauważyła, że ogrzewanie nie działa."
+
+msgid "Что обычно подписывают при аренде?"
+msgstr "Co zwykle podpisujemy przy najmie?"
+
+msgid "Что означает kaucja?"
+msgstr "Co oznacza kaucja?"
+
+msgid "арендная плата"
+msgstr "czynsz"
+
+msgid "владелец"
+msgstr "właściciel"
+
+msgid "горячая вода"
+msgstr "ciepła woda"
+
+msgid "договор"
+msgstr "umowa"
+
+msgid "залог"
+msgstr "kaucja"
+
+msgid "неисправность"
+msgstr "usterka"
+
+msgid "отопление"
+msgstr "ogrzewanie"
+
+msgid "ремонт; починка"
+msgstr "naprawa"
+
+msgid "сантехник"
+msgstr "hydraulik"
+
+msgid "снимать; сдавать"
+msgstr "wynajmować"
+
+msgid "сообщать; заявлять"
+msgstr "zgłaszać"
+
+msgid "срок; назначенное время"
+msgstr "termin"
+
+msgid "счётчик"
+msgstr "licznik"
+
+msgid "управляющая компания"
+msgstr "administracja budynku"
+
+msgid "электричество"
+msgstr "prąd"
+
+msgid "Codziennie и przez godzinę указывают на процесс; do piątku и najpierw… potem часто требуют результата."
+msgstr "Codziennie i przez godzinę wskazują proces; do piątku oraz najpierw… potem często wskazują oczekiwany rezultat."
+
+msgid "Mam doświadczenie w sprzedaży — естественная конструкция об опыте."
+msgstr "Mam doświadczenie w sprzedaży to naturalna konstrukcja opisująca doświadczenie."
+
+msgid "Obowiązek — обязанность или служебная задача."
+msgstr "Obowiązek to powinność lub zadanie służbowe."
+
+msgid "Teraz указывает на текущий процесс: rozwiązuję."
+msgstr "Teraz wskazuje bieżący proces: rozwiązuję."
+
+msgid "Termin — назначенная дата или крайний срок."
+msgstr "Termin to ustalona data lub ostateczny czas wykonania zadania."
+
+msgid "Важен завершённый результат к сроку: przygotować."
+msgstr "Ważny jest zakończony rezultat przed terminem: przygotować."
+
+msgid "Длительность процесса в прошлом передаёт несовершенный pisać: pisałam."
+msgstr "Trwanie procesu w przeszłości wyraża niedokonane pisać: pisałam."
+
+msgid "Завершённый единичный результат: rozwiązała."
+msgstr "Pojedynczy zakończony rezultat: rozwiązała."
+
+msgid "Каждое утро она проверяет почту и планирует задачи."
+msgstr "Każdego ranka sprawdza pocztę i planuje zadania."
+
+msgid "Как сказать «у меня опыт в продажах»?"
+msgstr "Jak powiedzieć, że masz doświadczenie w sprzedaży?"
+
+msgid "Коллега показал ей, как быстрее заполнить таблицу."
+msgstr "Kolega pokazał jej, jak szybciej wypełnić tabelę."
+
+msgid "Контекст помогает"
+msgstr "Kontekst pomaga"
+
+msgid "Майя начала работу в небольшой IT-компании."
+msgstr "Maja rozpoczęła pracę w małej firmie IT."
+
+msgid "Несовершенный вид"
+msgstr "Aspekt niedokonany"
+
+msgid "Однократное завершённое действие в прошлом: wyjaśnił."
+msgstr "Pojedyncza zakończona czynność w przeszłości: wyjaśnił."
+
+msgid "Однократный законченный результат: zrobić, napisać, przygotować, rozwiązać."
+msgstr "Pojedynczy zakończony rezultat: zrobić, napisać, przygotować, rozwiązać."
+
+msgid "Она закончила отчёт раньше срока и получила похвалу."
+msgstr "Skończyła raport przed terminem i otrzymała pochwałę."
+
+msgid "Она решила проблему за десять минут."
+msgstr "Rozwiązała problem w dziesięć minut."
+
+msgid "Повторяющийся процесс выражает несовершенный вид: przygotowuję."
+msgstr "Powtarzający się proces wyraża aspekt niedokonany: przygotowuję."
+
+msgid "Последовательность завершённых будущих действий требует совершенного sprawdzę."
+msgstr "Kolejność zakończonych czynności przyszłych wymaga dokonanego sprawdzę."
+
+msgid "Процесс, повторение и длительность: robić, pisać, przygotowywać, rozwiązywać."
+msgstr "Proces, powtarzanie i trwanie: robić, pisać, przygotowywać, rozwiązywać."
+
+msgid "Регулярное действие: несовершенный analizuję."
+msgstr "Regularna czynność: niedokonane analizuję."
+
+msgid "Результат к концу дня: совершенный zrobię."
+msgstr "Rezultat do końca dnia: dokonane zrobię."
+
+msgid "Руководитель поручил подготовить отчёт для клиента."
+msgstr "Kierownik polecił przygotować raport dla klienta."
+
+msgid "Следующий завершённый этап в будущем: wyślemy."
+msgstr "Kolejny zakończony etap w przyszłości: wyślemy."
+
+msgid "Совершенный вид"
+msgstr "Aspekt dokonany"
+
+msgid "Что обозначает termin проекта?"
+msgstr "Co oznacza termin projektu?"
+
+msgid "Что означает obowiązek?"
+msgstr "Co oznacza obowiązek?"
+
+msgid "задача"
+msgstr "zadanie"
+
+msgid "зарплата"
+msgstr "wynagrodzenie"
+
+msgid "команда"
+msgstr "zespół"
+
+msgid "команду"
+msgstr "zespół — forma biernika"
+
+msgid "крайний срок"
+msgstr "ostateczny termin"
+
+msgid "написать"
+msgstr "napisać"
+
+msgid "обязанность"
+msgstr "obowiązek"
+
+msgid "опыт"
+msgstr "doświadczenie"
+
+msgid "отпуск"
+msgstr "urlop"
+
+msgid "писать"
+msgstr "pisać"
+
+msgid "повышение"
+msgstr "awans"
+
+msgid "подготавливать (процесс)"
+msgstr "przygotowywać — proces"
+
+msgid "подготовить (результат)"
+msgstr "przygotować — rezultat"
+
+msgid "рабочее место"
+msgstr "miejsce pracy"
+
+msgid "решать (процесс)"
+msgstr "rozwiązywać — proces"
+
+msgid "решить"
+msgstr "rozwiązać"
+
+msgid "руководитель"
+msgstr "kierownik"
+
+msgid "смена"
+msgstr "zmiana w pracy"
+
+msgid "срок"
+msgstr "termin"
+
+msgid "Oddać — вернуть товар."
+msgstr "Oddać oznacza zwrócić towar."
+
+msgid "Proszę o wymianę na inny rozmiar — вежливая просьба об обмене."
+msgstr "Proszę o wymianę na inny rozmiar to uprzejma prośba o wymianę."
+
+msgid "Reklamacja — официальное обращение из-за дефекта товара."
+msgstr "Reklamacja to oficjalne zgłoszenie wady towaru."
+
+msgid "Бумажный чек она потеряла."
+msgstr "Zgubiła papierowy paragon."
+
+msgid "Для женского рода: droższa od poprzedniej."
+msgstr "Dla rodzaju żeńskiego: droższa od poprzedniej."
+
+msgid "Используй niż + именительный или od + родительный: tańszy niż ten; tańszy od tego."
+msgstr "Używaj niż + mianownik lub od + dopełniacz: tańszy niż ten; tańszy od tego."
+
+msgid "Как попросить обмен на другой размер?"
+msgstr "Jak poprosić o wymianę na inny rozmiar?"
+
+msgid "Количество требует родительного множественного: kilogram pomidorów."
+msgstr "Określenie ilości wymaga dopełniacza liczby mnogiej: kilogram pomidorów."
+
+msgid "Она обменяла куртку на исправную более дешёвую модель."
+msgstr "Wymieniła kurtkę na nieuszkodzony, tańszy model."
+
+msgid "Она показала банковское подтверждение оплаты."
+msgstr "Pokazała bankowe potwierdzenie płatności."
+
+msgid "После dwóch употребляется родительный множественного: dwóch paragonów."
+msgstr "Po dwóch używamy dopełniacza liczby mnogiej: dwóch paragonów."
+
+msgid "После pół kilo, dwóch, trzech нужен родительный: jabłek, paragonów, koszulek."
+msgstr "Po pół kilo, dwóch, trzech potrzebny jest dopełniacz: jabłek, paragonów, koszulek."
+
+msgid "После trzech: родительный множественного — koszulek."
+msgstr "Po trzech: dopełniacz liczby mnogiej — koszulek."
+
+msgid "После единицы количества нужен родительный множественного: pół kilo jabłek."
+msgstr "Po jednostce ilości potrzebny jest dopełniacz liczby mnogiej: pół kilo jabłek."
+
+msgid "Превосходная степень dobry — najlepszy."
+msgstr "Stopień najwyższy od dobry: najlepszy."
+
+msgid "Превосходная степень tani — najtańsza."
+msgstr "Stopień najwyższy od tani: najtańsza."
+
+msgid "Продавец предложил обмен или возврат денег."
+msgstr "Sprzedawca zaproponował wymianę lub zwrot pieniędzy."
+
+msgid "С чем сравниваем"
+msgstr "Z czym porównujemy"
+
+msgid "Сравнение"
+msgstr "Porównanie"
+
+msgid "Сравнительная степень dobry — lepszy."
+msgstr "Stopień wyższy od dobry: lepszy."
+
+msgid "Сравнительная степень tani — tańszy; с niż: tańszy niż tamten."
+msgstr "Stopień wyższy od tani: tańszy; z niż: tańszy niż tamten."
+
+msgid "У куртки оказался повреждён замок."
+msgstr "Kurtka miała uszkodzony zamek."
+
+msgid "Частые формы: tani → tańszy, drogi → droższy, dobry → lepszy, zły → gorszy."
+msgstr "Częste formy: tani → tańszy, drogi → droższy, dobry → lepszy, zły → gorszy."
+
+msgid "Чек или подтверждение платежа доказывают покупку."
+msgstr "Paragon lub potwierdzenie płatności stanowią dowód zakupu."
+
+msgid "Что означает reklamacja?"
+msgstr "Co oznacza reklamacja?"
+
+msgid "Что подтверждает покупку?"
+msgstr "Co potwierdza zakup?"
+
+msgid "Это лучший размер."
+msgstr "To najlepszy rozmiar."
+
+msgid "вернуть"
+msgstr "zwrócić"
+
+msgid "возврат"
+msgstr "zwrot"
+
+msgid "дефект"
+msgstr "wada"
+
+msgid "дешевле"
+msgstr "taniej"
+
+msgid "дороже"
+msgstr "drożej"
+
+msgid "лучше"
+msgstr "lepiej"
+
+msgid "обмен"
+msgstr "wymiana"
+
+msgid "повреждённый"
+msgstr "uszkodzony"
+
+msgid "подтверждение"
+msgstr "potwierdzenie"
+
+msgid "претензия на товар"
+msgstr "reklamacja towaru"
+
+msgid "претензия; рекламация"
+msgstr "reklamacja"
+
+msgid "примерить"
+msgstr "przymierzyć"
+
+msgid "примерочная"
+msgstr "przymierzalnia"
+
+msgid "размер"
+msgstr "rozmiar"
+
+msgid "скидка"
+msgstr "rabat"
+
+msgid "стоить"
+msgstr "kosztować"
+
+msgid "хуже"
+msgstr "gorzej"
+
+msgid "чек"
+msgstr "paragon"
+
+msgid "Dawkowanie — количество и частота приёма лекарства."
+msgstr "Dawkowanie określa ilość i częstotliwość przyjmowania leku."
+
+msgid "Dziecko — средний род: powinno."
+msgstr "Dziecko to rodzaj nijaki: powinno."
+
+msgid "Mam uczulenie na… — стандартная фраза об аллергии."
+msgstr "Mam uczulenie na… to standardowe zdanie informujące o alergii."
+
+msgid "Nie wolno + инфинитив: nie wolno przekraczać dawki."
+msgstr "Nie wolno + bezokolicznik: nie wolno przekraczać dawki."
+
+msgid "Pogorszyć się — ухудшиться; jeśli вводит реальное условие."
+msgstr "Pogorszyć się oznacza zmianę na gorsze; jeśli wprowadza realny warunek."
+
+msgid "Powinien/powinna/powinno согласуется с человеком; официальное należy остаётся безличным."
+msgstr "Powinien/powinna/powinno zgadza się z rodzajem osoby; oficjalne należy pozostaje bezosobowe."
+
+msgid "Trzeba + инфинитив: trzeba odpoczywać."
+msgstr "Trzeba + bezokolicznik: trzeba odpoczywać."
+
+msgid "Warto + инфинитив даёт мягкую рекомендацию."
+msgstr "Warto + bezokolicznik wyraża łagodną rekomendację."
+
+msgid "Безличная инструкция: należy przyjmować."
+msgstr "Bezosobowa instrukcja: należy przyjmować."
+
+msgid "Безличное trzeba + инфинитив выражает общую необходимость."
+msgstr "Bezosobowe trzeba + bezokolicznik wyraża ogólną konieczność."
+
+msgid "В инструкции нейтральная рекомендация: należy + инфинитив."
+msgstr "W instrukcji neutralne zalecenie: należy + bezokolicznik."
+
+msgid "Врач счёл инфекцию вирусной, поэтому антибиотик не требовался."
+msgstr "Lekarz uznał infekcję za wirusową, dlatego antybiotyk nie był potrzebny."
+
+msgid "Для женщины: powinna + инфинитив."
+msgstr "Dla kobiety: powinna + bezokolicznik."
+
+msgid "Если состояние ухудшится…"
+msgstr "Jeśli stan się pogorszy…"
+
+msgid "Запрет"
+msgstr "Zakaz"
+
+msgid "Запрет выражает безличное nie wolno + инфинитив."
+msgstr "Zakaz wyraża bezosobowe nie wolno + bezokolicznik."
+
+msgid "Здесь нельзя курить."
+msgstr "Tutaj nie wolno palić."
+
+msgid "Как сообщить об аллергии?"
+msgstr "Jak poinformować o alergii?"
+
+msgid "Кашель и слабость продолжались три дня."
+msgstr "Kaszel i osłabienie trwały trzy dni."
+
+msgid "Общая необходимость"
+msgstr "Ogólna konieczność"
+
+msgid "Повторная консультация нужна при ухудшении или сохраняющейся температуре."
+msgstr "Ponowna konsultacja jest potrzebna przy pogorszeniu stanu lub utrzymującej się gorączce."
+
+msgid "После nie wolno нужен инфинитив: odstawiać."
+msgstr "Po nie wolno potrzebny jest bezokolicznik: odstawiać."
+
+msgid "Рекомендации: отдых, жидкость и средство от температуры."
+msgstr "Zalecenia: odpoczynek, płyny i lek przeciwgorączkowy."
+
+msgid "Рекомендация"
+msgstr "Zalecenie"
+
+msgid "Сонливость может быть побочным эффектом лекарства."
+msgstr "Senność może być skutkiem ubocznym leku."
+
+msgid "Фармацевт уточнила аллергию и другие лекарства."
+msgstr "Farmaceutka zapytała o alergie i inne leki."
+
+msgid "Форма powinien согласуется с pan в мужском роде."
+msgstr "Forma powinien zgadza się z pan w rodzaju męskim."
+
+msgid "Что может вызвать сонливость?"
+msgstr "Co może powodować senność?"
+
+msgid "Что означает dawkowanie?"
+msgstr "Co oznacza dawkowanie?"
+
+msgid "аллергия"
+msgstr "alergia"
+
+msgid "боль в горле"
+msgstr "ból gardła"
+
+msgid "больничный лист"
+msgstr "zwolnienie lekarskie"
+
+msgid "высокая температура"
+msgstr "gorączka"
+
+msgid "диагноз"
+msgstr "diagnoza"
+
+msgid "дозировка"
+msgstr "dawkowanie"
+
+msgid "кашель"
+msgstr "kaszel"
+
+msgid "обследование"
+msgstr "badanie"
+
+msgid "побочный эффект"
+msgstr "skutek uboczny"
+
+msgid "принимать лекарство"
+msgstr "przyjmować lek"
+
+msgid "приёмная"
+msgstr "poczekalnia"
+
+msgid "рецепт"
+msgstr "recepta"
+
+msgid "симптом"
+msgstr "objaw"
+
+msgid "сироп"
+msgstr "syrop"
+
+msgid "таблетка"
+msgstr "tabletka"
+
+msgid "улучшиться"
+msgstr "poprawić się"
+
+msgid "ухудшиться"
+msgstr "pogorszyć się"
+
+msgid "Bo вводит причину и соединяет её с главным предложением."
+msgstr "Bo wprowadza przyczynę i łączy ją ze zdaniem głównym."
+
+msgid "Bo вводит причину отсутствия."
+msgstr "Bo wprowadza przyczynę nieobecności."
+
+msgid "Bo и dlatego że отвечают на вопрос «почему?»: Nie przyszedł, bo był chory."
+msgstr "Bo i dlatego że odpowiadają na pytanie dlaczego?: Nie przyszedł, bo był chory."
+
+msgid "Dlaczego задаёт вопрос о причине."
+msgstr "Dlaczego wprowadza pytanie o przyczynę."
+
+msgid "Dlatego начинает следствие: времени не было, поэтому он написал короткое сообщение."
+msgstr "Dlatego wprowadza skutek: nie miał czasu, dlatego napisał krótką wiadomość."
+
+msgid "Dlatego показывает результат: Był chory, dlatego został w domu."
+msgstr "Dlatego wskazuje rezultat: Był chory, dlatego został w domu."
+
+msgid "Dlatego соединяет причину с её следствием."
+msgstr "Dlatego łączy przyczynę z jej skutkiem."
+
+msgid "Pogodzić się — помириться; в прошедшем времени: pogodziliśmy się."
+msgstr "Pogodzić się oznacza zakończyć kłótnię; w czasie przeszłym: pogodziliśmy się."
+
+msgid "Zaufanie — доверие между людьми."
+msgstr "Zaufanie to przekonanie, że można polegać na drugiej osobie."
+
+msgid "Że вводит содержание чувства или мнения: cieszę się, że…"
+msgstr "Że wprowadza treść uczucia lub opinii: cieszę się, że…"
+
+msgid "Że вводит факт, который вызывает гордость."
+msgstr "Że wprowadza fakt, który jest powodem dumy."
+
+msgid "Że отвечает на вопрос «что?»: Cieszę się, że jesteś tutaj."
+msgstr "Że odpowiada na pytanie co?: Cieszę się, że jesteś tutaj."
+
+msgid "Аня объяснила ситуацию и извинилась."
+msgstr "Ania wyjaśniła sytuację i przeprosiła."
+
+msgid "Как сказать «Мы помирились»?"
+msgstr "Jak powiedzieć, że się pogodziliśmy?"
+
+msgid "Конкретное искреннее извинение помогает восстановить разговор."
+msgstr "Konkretne, szczere przeprosiny pomagają wrócić do rozmowy."
+
+msgid "Марта ждала встречи, но Аня её отменила без объяснения."
+msgstr "Marta czekała na spotkanie, ale Ania odwołała je bez wyjaśnienia."
+
+msgid "Марте понадобилось время, чтобы успокоиться."
+msgstr "Marta potrzebowała czasu, żeby się uspokoić."
+
+msgid "Они поняли ценность разговора об эмоциях и внимательного слушания."
+msgstr "Zrozumiały wartość rozmowy o emocjach i uważnego słuchania."
+
+msgid "Помириться помогла открытая беседа."
+msgstr "Otwarta rozmowa pomogła im się pogodzić."
+
+msgid "После cieszę się содержание эмоции вводится через że."
+msgstr "Po cieszę się treść emocji wprowadzamy za pomocą że."
+
+msgid "После действия причину удобно вводить союзом bo."
+msgstr "Przyczynę działania można wprowadzić spójnikiem bo."
+
+msgid "Почему она обеспокоена?"
+msgstr "Dlaczego ona jest zmartwiona?"
+
+msgid "Причина"
+msgstr "Przyczyna"
+
+msgid "Следствие"
+msgstr "Skutek"
+
+msgid "Содержание мысли или чувства"
+msgstr "Treść myśli lub uczucia"
+
+msgid "Составьте: Я рад, что мы помирились."
+msgstr "Ułóż zdanie: Cieszę się, że się pogodziliśmy."
+
+msgid "Форма женского рода: rozczarowana."
+msgstr "Forma żeńska: rozczarowana."
+
+msgid "Что лучше сказать после обидных слов?"
+msgstr "Co najlepiej powiedzieć po przykrych słowach?"
+
+msgid "Что означает zaufanie?"
+msgstr "Co oznacza zaufanie?"
+
+msgid "Я звоню, потому что скучаю."
+msgstr "Dzwonię, bo tęsknię."
+
+msgid "гордый"
+msgstr "dumny"
+
+msgid "доверие"
+msgstr "zaufanie"
+
+msgid "дружба"
+msgstr "przyjaźń"
+
+msgid "извиниться"
+msgstr "przeprosić"
+
+msgid "искренний"
+msgstr "szczery"
+
+msgid "обеспокоенный"
+msgstr "zmartwiony"
+
+msgid "отношения"
+msgstr "relacje"
+
+msgid "поддержка"
+msgstr "wsparcie"
+
+msgid "помириться"
+msgstr "pogodzić się"
+
+msgid "простить"
+msgstr "wybaczyć"
+
+msgid "радоваться"
+msgstr "cieszyć się"
+
+msgid "разочарованный"
+msgstr "rozczarowany"
+
+msgid "ревнивый; завистливый"
+msgstr "zazdrosny"
+
+msgid "скучать по"
+msgstr "tęsknić za"
+
+msgid "ссора"
+msgstr "kłótnia"
+
+msgid "ссориться"
+msgstr "kłócić się"
+
+msgid "Ale противопоставляет две оценки фильма."
+msgstr "Ale przeciwstawia dwie oceny filmu."
+
+msgid "Fabuła — последовательность событий произведения."
+msgstr "Fabuła to ciąg wydarzeń w utworze."
+
+msgid "Film или serial заменяем на go: Obejrzałem go."
+msgstr "Film lub serial zastępujemy zaimkiem go: Obejrzałem go."
+
+msgid "Go относится к фильму, а bo вводит причину рекомендации."
+msgstr "Go odnosi się do filmu, a bo wprowadza powód rekomendacji."
+
+msgid "Książkę, aktorkę или recenzję заменяем на ją: Czytam ją."
+msgstr "Książkę, aktorkę lub recenzję zastępujemy zaimkiem ją: Czytam ją."
+
+msgid "Polecać + винительный: polecam tę książkę."
+msgstr "Polecać + biernik: polecam tę książkę."
+
+msgid "Powieść — женский род, поэтому в винительном падеже используется ją."
+msgstr "Powieść ma rodzaj żeński, dlatego w bierniku używamy ją."
+
+msgid "Recenzja — женский род, поэтому: napisał ją."
+msgstr "Recenzja ma rodzaj żeński, dlatego: napisał ją."
+
+msgid "Reżyser руководит созданием фильма."
+msgstr "Reżyser kieruje realizacją filmu."
+
+msgid "Serial — мужской род: oglądam go."
+msgstr "Serial ma rodzaj męski: oglądam go."
+
+msgid "Wzruszający описывает сильную эмоциональную реакцию на произведение."
+msgstr "Wzruszający opisuje silną reakcję emocjonalną na utwór."
+
+msgid "Во множественном числе неодушевлённые объекты заменяет je."
+msgstr "W liczbie mnogiej przedmioty nieożywione zastępujemy zaimkiem je."
+
+msgid "Женский объект"
+msgstr "Dopełnienie rodzaju żeńskiego"
+
+msgid "Женский объект tę aktorkę заменяется винительным ją."
+msgstr "Dopełnienie żeńskie tę aktorkę zastępujemy biernikiem ją."
+
+msgid "Как сказать «Я рекомендую эту книгу»?"
+msgstr "Jak polecić tę książkę?"
+
+msgid "Кто отвечает за постановку фильма?"
+msgstr "Kto odpowiada za reżyserię filmu?"
+
+msgid "Лену тронула история пожилой соседки."
+msgstr "Lenę wzruszyła historia starszej sąsiadki."
+
+msgid "Лично-мужская группа aktorów заменяется местоимением ich."
+msgstr "Grupę męskoosobową aktorów zastępujemy zaimkiem ich."
+
+msgid "Мужской неодушевлённый объект film заменяется местоимением go."
+msgstr "Nieożywione dopełnienie męskie film zastępujemy zaimkiem go."
+
+msgid "Мужской объект"
+msgstr "Dopełnienie rodzaju męskiego"
+
+msgid "На следующий день Лена опубликовала короткую рецензию."
+msgstr "Następnego dnia Lena opublikowała krótką recenzję."
+
+msgid "Неодушевлённые объекты заменяет je, лично-мужскую группу — ich."
+msgstr "Przedmioty nieożywione zastępujemy zaimkiem je, a grupę męskoosobową — ich."
+
+msgid "Они выбрали фестиваль короткометражных фильмов."
+msgstr "Wybrali festiwal filmów krótkometrażowych."
+
+msgid "Павлу показался слишком медленным темп."
+msgstr "Pawłowi tempo wydało się zbyt wolne."
+
+msgid "После показа они задали режиссёру вопросы."
+msgstr "Po pokazie zadali reżyserowi pytania."
+
+msgid "Составьте: Я рекомендую его, потому что сюжет интересный."
+msgstr "Ułóż zdanie: Polecam go, bo fabuła jest ciekawa."
+
+msgid "Что можно назвать wzruszający?"
+msgstr "Co można określić jako wzruszające?"
+
+msgid "Что означает fabuła?"
+msgstr "Co oznacza fabuła?"
+
+msgid "актёр"
+msgstr "aktor"
+
+msgid "время начала"
+msgstr "godzina rozpoczęcia"
+
+msgid "выставка"
+msgstr "wystawa"
+
+msgid "герой произведения"
+msgstr "bohater utworu"
+
+msgid "оценивать"
+msgstr "oceniać"
+
+msgid "режиссёр"
+msgstr "reżyser"
+
+msgid "рекомендовать"
+msgstr "polecać"
+
+msgid "рецензия"
+msgstr "recenzja"
+
+msgid "роман"
+msgstr "powieść"
+
+msgid "сериал"
+msgstr "serial"
+
+msgid "серия"
+msgstr "odcinek"
+
+msgid "скучный"
+msgstr "nudny"
+
+msgid "спектакль"
+msgstr "spektakl"
+
+msgid "сюжет"
+msgstr "fabuła"
+
+msgid "трогательный"
+msgstr "wzruszający"
+
+msgid "трогательный финал"
+msgstr "wzruszające zakończenie"
+
+msgid "цена билета"
+msgstr "cena biletu"
+
+msgid "Brakować требует родительного: brakuje podpisu."
+msgstr "Brakować wymaga dopełniacza: brakuje podpisu."
+
+msgid "Chciałbym/chciałabym — стандартная вежливая форма просьбы."
+msgstr "Chciałbym/chciałabym to standardowa uprzejma forma prośby."
+
+msgid "Chciałbym/chciałabym… и Czy może pan/pani… смягчают официальный вопрос."
+msgstr "Chciałbym/chciałabym… i Czy może pan/pani… łagodzą oficjalne pytanie."
+
+msgid "Czy może pani…? — нейтральная официальная просьба."
+msgstr "Czy może pani…? to neutralna oficjalna prośba."
+
+msgid "Czy może pan…? сохраняет нейтральный официальный тон."
+msgstr "Czy może pan…? zachowuje neutralny oficjalny ton."
+
+msgid "Do + родительный задаёт крайний срок: do piętnastego maja."
+msgstr "Do + dopełniacz wskazuje ostateczny termin: do piętnastego maja."
+
+msgid "Od + дата обозначает начало доступного периода."
+msgstr "Od + data oznacza początek dostępnego okresu."
+
+msgid "Proszę + инфинитив: Proszę podpisać formularz."
+msgstr "Proszę + bezokolicznik: Proszę podpisać formularz."
+
+msgid "Rubryka — отдельное поле формы."
+msgstr "Rubryka to osobne pole formularza."
+
+msgid "Załącznik — дополнительный документ, приложенный к заявлению."
+msgstr "Załącznik to dodatkowy dokument dołączony do wniosku."
+
+msgid "В датах день — порядковое числительное, месяц обычно в родительном падеже."
+msgstr "W datach dzień jest liczebnikiem porządkowym, a miesiąc zwykle występuje w dopełniaczu."
+
+msgid "В заявлении важно проверить корректность данных."
+msgstr "We wniosku należy sprawdzić poprawność danych."
+
+msgid "В подтверждении указан номер дела для проверки статуса."
+msgstr "Potwierdzenie zawiera numer sprawy pozwalający sprawdzić jej status."
+
+msgid "В форме не хватает подписи."
+msgstr "W formularzu brakuje podpisu."
+
+msgid "Вежливая просьба"
+msgstr "Uprzejma prośba"
+
+msgid "Для подтверждения личности Наталия показала паспорт."
+msgstr "Aby potwierdzić tożsamość, Natalia pokazała paszport."
+
+msgid "Изготовление карты займёт около двух недель."
+msgstr "Przygotowanie karty zajmie około dwóch tygodni."
+
+msgid "Инструкция"
+msgstr "Instrukcja"
+
+msgid "Как вежливо попросить повторить?"
+msgstr "Jak uprzejmie poprosić o powtórzenie?"
+
+msgid "Как вежливо сказать «Я хотел бы подать заявление»?"
+msgstr "Jak uprzejmie poprosić o możliwość złożenia wniosku?"
+
+msgid "Назначенный срок оформляется: termin na + дата."
+msgstr "Umówiony termin wyrażamy konstrukcją termin na + data."
+
+msgid "Наталия пришла подать заявление на карту жителя."
+msgstr "Natalia przyszła złożyć wniosek o kartę mieszkańca."
+
+msgid "После do в обозначении срока используется родительный: do piętnastego maja."
+msgstr "Po do w określeniu terminu używamy dopełniacza: do piętnastego maja."
+
+msgid "После подачи выдают или отправляют подтверждение."
+msgstr "Po złożeniu wniosku otrzymujemy potwierdzenie."
+
+msgid "Составьте: Пожалуйста, подпишите форму здесь."
+msgstr "Ułóż zdanie: Proszę podpisać formularz tutaj."
+
+msgid "Сотрудница заметила отсутствие даты рождения."
+msgstr "Pracownica zauważyła brak daty urodzenia."
+
+msgid "Срок и дата"
+msgstr "Termin i data"
+
+msgid "Формальная инструкция строится как proszę + инфинитив."
+msgstr "Formalną instrukcję tworzymy za pomocą proszę + bezokolicznik."
+
+msgid "Что нужно проверить перед подачей?"
+msgstr "Co należy sprawdzić przed złożeniem wniosku?"
+
+msgid "Что означает załącznik?"
+msgstr "Co oznacza załącznik?"
+
+msgid "Что подтверждает подачу заявления?"
+msgstr "Co potwierdza złożenie wniosku?"
+
+msgid "бланк; форма"
+msgstr "formularz"
+
+msgid "государственное учреждение"
+msgstr "urząd"
+
+msgid "действительный"
+msgstr "ważny"
+
+msgid "документ, удостоверяющий личность"
+msgstr "dokument tożsamości"
+
+msgid "заявление"
+msgstr "wniosek"
+
+msgid "не хватать"
+msgstr "brakować"
+
+msgid "номер дела"
+msgstr "numer sprawy"
+
+msgid "очередь"
+msgstr "kolejka"
+
+msgid "персональные данные"
+msgstr "dane osobowe"
+
+msgid "подать заявление"
+msgstr "złożyć wniosek"
+
+msgid "подпись"
+msgstr "podpis"
+
+msgid "поле формы"
+msgstr "rubryka"
+
+msgid "получить готовый документ"
+msgstr "odebrać gotowy dokument"
+
+msgid "приложение к документу"
+msgstr "załącznik"
+
+msgid "Może + инфинитив сообщает о возможности или вероятности."
+msgstr "Może + bezokolicznik informuje o możliwości lub prawdopodobieństwie."
+
+msgid "Można говорит о доступной возможности, а może — о вероятности."
+msgstr "Można mówi o dostępnej możliwości, a może — o prawdopodobieństwie."
+
+msgid "Należy + инфинитив выражает безличную необходимость; podczas требует родительного падежа."
+msgstr "Należy + bezokolicznik wyraża bezosobową konieczność; podczas wymaga dopełniacza."
+
+msgid "Nie wolno + инфинитив выражает запрет."
+msgstr "Nie wolno + bezokolicznik wyraża zakaz."
+
+msgid "Nie wolno выражает запрет."
+msgstr "Nie wolno wyraża zakaz."
+
+msgid "Prognoza pogody сообщает об ожидаемой погоде."
+msgstr "Prognoza pogody informuje o przewidywanej pogodzie."
+
+msgid "Segregować odpady — разделять мусор по видам."
+msgstr "Segregować odpady oznacza rozdzielać śmieci według rodzaju."
+
+msgid "Szlak — обозначенный туристический маршрут."
+msgstr "Szlak to oznaczona trasa turystyczna."
+
+msgid "Trzeba + инфинитив выражает общую необходимость."
+msgstr "Trzeba + bezokolicznik wyraża ogólną konieczność."
+
+msgid "Trzeba/należy + инфинитив: Trzeba zabrać wodę."
+msgstr "Trzeba/należy + bezokolicznik: Trzeba zabrać wodę."
+
+msgid "Warto + инфинитив означает полезную рекомендацию."
+msgstr "Warto + bezokolicznik wyraża przydatną rekomendację."
+
+msgid "Warto + инфинитив — мягкая рекомендация."
+msgstr "Warto + bezokolicznik to łagodne zalecenie."
+
+msgid "Warto советует, а nie wolno запрещает действие."
+msgstr "Warto doradza, a nie wolno zakazuje działania."
+
+msgid "Zanieczyszczenie — загрязнение среды."
+msgstr "Zanieczyszczenie oznacza obecność szkodliwych substancji w środowisku."
+
+msgid "Бутылку отсортировали в подходящий контейнер."
+msgstr "Butelkę wrzucono do odpowiedniego pojemnika."
+
+msgid "Как дать мягкий совет проверить прогноз?"
+msgstr "Jak łagodnie doradzić sprawdzenie prognozy?"
+
+msgid "Как сказать «сортировать отходы»?"
+msgstr "Jak powiedzieć, że rozdzielamy śmieci według rodzaju?"
+
+msgid "Необходимость"
+msgstr "Konieczność"
+
+msgid "Они отправились в национальный парк."
+msgstr "Wybrali się do parku narodowego."
+
+msgid "Они увидели тёмные облака и услышали гром."
+msgstr "Zobaczyli ciemne chmury i usłyszeli grzmot."
+
+msgid "После дождя и грозы иногда появляется радуга."
+msgstr "Po deszczu i burzy czasem pojawia się tęcza."
+
+msgid "После дождя над лесом появилась радуга."
+msgstr "Po deszczu nad lasem pojawiła się tęcza."
+
+msgid "Сильный ветер может ломать ветки."
+msgstr "Silny wiatr może łamać gałęzie."
+
+msgid "Совет и запрет"
+msgstr "Rada i zakaz"
+
+msgid "Составьте: Во время засухи необходимо экономить воду."
+msgstr "Ułóż zdanie: Podczas suszy należy oszczędzać wodę."
+
+msgid "Утром ожидалось солнце, а после обеда — гроза."
+msgstr "Rano prognozowano słońce, a po południu — burzę."
+
+msgid "Что может вредить воздуху?"
+msgstr "Co może szkodzić powietrzu?"
+
+msgid "Что означает prognoza pogody?"
+msgstr "Co oznacza prognoza pogody?"
+
+msgid "ветер"
+msgstr "wiatr"
+
+msgid "горный маршрут"
+msgstr "szlak górski"
+
+msgid "гроза"
+msgstr "burza"
+
+msgid "жара"
+msgstr "upał"
+
+msgid "загрязнение"
+msgstr "zanieczyszczenie"
+
+msgid "защищать природу"
+msgstr "chronić przyrodę"
+
+msgid "мороз"
+msgstr "mróz"
+
+msgid "облако"
+msgstr "chmura"
+
+msgid "окружающая среда"
+msgstr "środowisko"
+
+msgid "пейзаж"
+msgstr "krajobraz"
+
+msgid "прогноз погоды"
+msgstr "prognoza pogody"
+
+msgid "радуга"
+msgstr "tęcza"
+
+msgid "сортировать отходы"
+msgstr "segregować odpady"
+
+msgid "температура воды"
+msgstr "temperatura wody"
+
+msgid "туристический маршрут"
+msgstr "szlak turystyczny"
+
+msgid "экономить воду"
+msgstr "oszczędzać wodę"
+
+msgid "Kiedy связывает действие или момент с последующим событием."
+msgstr "Kiedy łączy czynność lub moment z kolejnym wydarzeniem."
+
+msgid "Kiedy связывает события во времени, а na końcu вводит последний этап."
+msgstr "Kiedy łączy wydarzenia w czasie, a na końcu wprowadza ostatni etap."
+
+msgid "Lokalni mieszkańcy — жители конкретного места."
+msgstr "Lokalni mieszkańcy to osoby mieszkające w danym miejscu."
+
+msgid "Na końcu вводит последнее событие и завершает последовательность."
+msgstr "Na końcu wprowadza ostatnie wydarzenie i zamyka sekwencję."
+
+msgid "Na końcu естественно вводит заключительное событие."
+msgstr "Na końcu naturalnie wprowadza wydarzenie kończące opowieść."
+
+msgid "Najpierw вводит первое действие: Najpierw spotkaliśmy się na rynku."
+msgstr "Najpierw wprowadza pierwszą czynność: Najpierw spotkaliśmy się na rynku."
+
+msgid "Najpierw вводит первое событие рассказа."
+msgstr "Najpierw wprowadza pierwsze wydarzenie opowieści."
+
+msgid "Najpierw …, a następnie … ясно передаёт порядок двух действий."
+msgstr "Najpierw …, a następnie … jasno wskazuje kolejność dwóch czynności."
+
+msgid "Potem показывает следующее действие в хронологической последовательности."
+msgstr "Potem wskazuje kolejną czynność w porządku chronologicznym."
+
+msgid "Potem, następnie и później показывают следующие этапы рассказа."
+msgstr "Potem, następnie i później wskazują kolejne etapy opowieści."
+
+msgid "Później продолжает хронологический рассказ."
+msgstr "Później kontynuuje chronologiczną opowieść."
+
+msgid "Zabytek — исторически или культурно ценный объект."
+msgstr "Zabytek to obiekt o wartości historycznej lub kulturowej."
+
+msgid "Zwiedzać можно город, музей, замок и другие места."
+msgstr "Zwiedzać można miasto, muzeum, zamek i inne miejsca."
+
+msgid "В музее они узнали о старом способе приготовления пряников."
+msgstr "W muzeum poznali dawny sposób przygotowywania pierników."
+
+msgid "Выберите естественное описание Польши."
+msgstr "Wybierz naturalny opis Polski."
+
+msgid "Гданьск расположен на балтийском побережье Польши."
+msgstr "Gdańsk leży na polskim wybrzeżu Bałtyku."
+
+msgid "Группа Майи отправилась на однодневную поездку в Торунь."
+msgstr "Grupa Mai wybrała się na jednodniową wycieczkę do Torunia."
+
+msgid "Как естественно завершить рассказ?"
+msgstr "Jak naturalnie zakończyć opowieść?"
+
+msgid "Как завершить рассказ о празднике?"
+msgstr "Jak zakończyć opowieść o święcie?"
+
+msgid "Как сказать «местные жители»?"
+msgstr "Jak określić osoby mieszkające w danym miejscu?"
+
+msgid "Майе запомнились история Торуни и атмосфера местного события."
+msgstr "Maja zapamiętała historię Torunia i atmosferę lokalnego wydarzenia."
+
+msgid "На площади проходил местный фестиваль."
+msgstr "Na rynku odbywał się lokalny festiwal."
+
+msgid "Начало"
+msgstr "Początek"
+
+msgid "О событии говорят: festiwal odbywa się — фестиваль проходит."
+msgstr "O wydarzeniu mówimy: festiwal odbywa się."
+
+msgid "Первым событием была встреча с экскурсоводом на площади."
+msgstr "Pierwszym wydarzeniem było spotkanie z przewodnikiem na rynku."
+
+msgid "Польское побережье находится на севере, а горные районы — на юге."
+msgstr "Polskie wybrzeże leży na północy, a obszary górskie — na południu."
+
+msgid "Продолжение"
+msgstr "Kontynuacja"
+
+msgid "Связь и завершение"
+msgstr "Powiązanie i zakończenie"
+
+msgid "Составьте: Сначала мы осмотрели замок, а затем пошли на рынок."
+msgstr "Ułóż zdanie: Najpierw zwiedziliśmy zamek, a następnie poszliśmy na rynek."
+
+msgid "Что лучше начинает связный рассказ о поездке?"
+msgstr "Co najlepiej rozpoczyna spójną opowieść o wycieczce?"
+
+msgid "Что можно zwiedzać?"
+msgstr "Co można zwiedzać?"
+
+msgid "Что означает zabytek?"
+msgstr "Co oznacza zabytek?"
+
+msgid "главная площадь"
+msgstr "rynek"
+
+msgid "горы"
+msgstr "góry"
+
+msgid "житель"
+msgstr "mieszkaniec"
+
+msgid "исторический памятник"
+msgstr "zabytek historyczny"
+
+msgid "местный"
+msgstr "lokalny"
+
+msgid "осматривать достопримечательности"
+msgstr "zwiedzać"
+
+msgid "памятник истории; достопримечательность"
+msgstr "zabytek"
+
+msgid "побережье"
+msgstr "wybrzeże"
+
+msgid "праздновать"
+msgstr "świętować"
+
+msgid "проходить; состояться"
+msgstr "odbywać się"
+
+msgid "регион"
+msgstr "region"
+
+msgid "столица"
+msgstr "stolica"
+
+msgid "традиция"
+msgstr "tradycja"
+
+msgid "Bo вводит причину эмоционального состояния."
+msgstr "Bo wprowadza przyczynę stanu emocjonalnego."
+
+msgid "Czy może mi pani powiedzieć…? — нейтральная официальная просьба."
+msgstr "Czy może mi pani powiedzieć…? to neutralna oficjalna prośba."
+
+msgid "Film — мужской род, объект заменяется местоимением go."
+msgstr "Film ma rodzaj męski, dlatego dopełnienie zastępujemy zaimkiem go."
+
+msgid "Jutro указывает на будущее: kupimy."
+msgstr "Jutro wskazuje przyszłość: kupimy."
+
+msgid "Książka — существительное женского рода, поэтому объект заменяется местоимением ją."
+msgstr "Książka to rzeczownik rodzaju żeńskiego, dlatego dopełnienie zastępujemy zaimkiem ją."
+
+msgid "Najtańszy — превосходная степень от tani."
+msgstr "Najtańszy to stopień najwyższy od tani."
+
+msgid "Napisałem подчёркивает завершённый результат действия."
+msgstr "Napisałem podkreśla zakończony rezultat czynności."
+
+msgid "Następnie связывает последовательные события рассказа."
+msgstr "Następnie łączy kolejne wydarzenia opowieści."
+
+msgid "Powinieneś + инфинитив выражает рекомендацию."
+msgstr "Powinieneś + bezokolicznik wyraża zalecenie."
+
+msgid "Zajmować się требует творительного падежа: naprawą."
+msgstr "Zajmować się wymaga narzędnika: naprawą."
+
+msgid "Że вводит содержание сообщения, а bo — его причину."
+msgstr "Że wprowadza treść wiadomości, a bo — jej przyczynę."
+
+msgid "Że передаёт содержание, bo — причину, następnie — последовательность. В просьбе используй czy może… или chciałbym/chciałabym…."
+msgstr "Że wyraża treść, bo — przyczynę, następnie — kolejność. W prośbie używaj czy może… lub chciałbym/chciałabym…."
+
+msgid "В аптеке она купила сироп и сохранила чек."
+msgstr "W aptece kupiła syrop i zachowała paragon."
+
+msgid "В комнате было холодно, потому что не работало отопление."
+msgstr "W pokoju było zimno, ponieważ nie działało ogrzewanie."
+
+msgid "В конце Лена подводит итог: спокойствие и ясная просьба помогают."
+msgstr "Na końcu Lena podsumowuje: spokój i jasna prośba pomagają."
+
+msgid "Вежливая просьба строится как chciałbym + инфинитив złożyć."
+msgstr "Uprzejmą prośbę tworzymy za pomocą chciałbym + bezokolicznik złożyć."
+
+msgid "Время и результат"
+msgstr "Czas i rezultat"
+
+msgid "Выбирай прошедшее или будущее по ситуации, а вид глагола — по процессу или завершённому результату."
+msgstr "Wybieraj czas przeszły lub przyszły zależnie od sytuacji, a aspekt czasownika — zależnie od procesu lub zakończonego rezultatu."
+
+msgid "Для законченного события используем прошедшее время."
+msgstr "Dla zakończonego wydarzenia używamy czasu przeszłego."
+
+msgid "Завершённое событие в прошлом требует формы pojechała."
+msgstr "Zakończone wydarzenie w przeszłości wymaga formy pojechała."
+
+msgid "Из-за дождя они выбрали музей вместо долгой прогулки."
+msgstr "Z powodu deszczu wybrali muzeum zamiast długiego spaceru."
+
+msgid "Лена планировала выходные и встречу с двоюродной сестрой."
+msgstr "Lena planowała weekend i spotkanie z kuzynką."
+
+msgid "Направление к городу передаётся конструкцией do + родительный падеж."
+msgstr "Kierunek do miasta wyrażamy konstrukcją do + dopełniacz."
+
+msgid "После nie ma используется родительный падеж: ciepłej wody."
+msgstr "Po nie ma używamy dopełniacza: ciepłej wody."
+
+msgid "После przed нужен творительный, после warto — инфинитив."
+msgstr "Po przed potrzebny jest narzędnik, a po warto — bezokolicznik."
+
+msgid "После спокойного объяснения Лена получила другую комнату."
+msgstr "Po spokojnym wyjaśnieniu Lena otrzymała inny pokój."
+
+msgid "Предлоги и глаголы управляют падежом; niż вводит сравнение, а местоимение заменяет уже названный объект."
+msgstr "Przyimki i czasowniki wymagają odpowiednich przypadków; niż wprowadza porównanie, a zaimek zastępuje wcześniej wymienione dopełnienie."
+
+msgid "При сравнении двух предметов используется сравнительная степень + niż."
+msgstr "Przy porównaniu dwóch przedmiotów używamy stopnia wyższego + niż."
+
+msgid "Реальное условие относится к будущему: jeśli będzie…, zostaniemy…."
+msgstr "Realny warunek dotyczy przyszłości: jeśli będzie…, zostaniemy…."
+
+msgid "Связный ответ"
+msgstr "Spójna odpowiedź"
+
+msgid "Составьте: Перед поездкой стоит проверить прогноз."
+msgstr "Ułóż zdanie: Przed podróżą warto sprawdzić prognozę."
+
+msgid "Составьте: Я хотел бы подать заявление завтра."
+msgstr "Ułóż zdanie: Chciałbym złożyć wniosek jutro."
+
+msgid "Финальный маркер na koniec и правильное прошедшее время создают ясное завершение."
+msgstr "Końcowe na koniec i poprawny czas przeszły tworzą jasne zakończenie."
+
+msgid "Форма зависит от связи"
+msgstr "Forma zależy od związku między wyrazami"
+
+msgid "Что лучше всего завершает связный рассказ?"
+msgstr "Co najlepiej kończy spójną opowieść?"
+
+msgid "договориться; понять друг друга"
+msgstr "porozumieć się"
+
+msgid "изменить мнение"
+msgstr "zmienić zdanie"
+
+msgid "обосновать мнение"
+msgstr "uzasadnić opinię"
+
+msgid "объяснить ситуацию"
+msgstr "wyjaśnić sytuację"
+
+msgid "отреагировать"
+msgstr "zareagować"
+
+msgid "подвести итог"
+msgstr "podsumować"
+
+msgid "попросить о помощи"
+msgstr "poprosić o pomoc"
+
+msgid "порекомендовать место"
+msgstr "polecić miejsce"
+
+msgid "посоветовать"
+msgstr "doradzić"
+
+msgid "рассказать о событии"
+msgstr "opowiedzieć o wydarzeniu"
+
+msgid "сообщить о проблеме"
+msgstr "zgłosić problem"
+
+msgid "сохранить подтверждение"
+msgstr "zachować potwierdzenie"
+
+msgid "спланировать поездку"
+msgstr "zaplanować podróż"
+
+msgid "сравнить варианты"
+msgstr "porównać możliwości"
+
+msgid "уладить дело"
+msgstr "załatwić sprawę"
+
+msgid "учесть погоду"
+msgstr "uwzględnić pogodę"
+
+msgid "Как прочитать дату 12.03.2026?"
+msgstr "Jak odczytać datę 12.03.2026?"
+
+msgid "Как сказать «Если состояние ухудшится…»?"
+msgstr "Jak powiedzieć, że stan może się pogorszyć?"
+
+msgid "Как сказать «Пожалуйста, подпишите форму здесь»?"
+msgstr "Jak uprzejmie poprosić o podpisanie formularza w tym miejscu?"
+
+msgid "Как сообщить врачу об аллергии на пенициллин?"
+msgstr "Jak poinformować lekarza o alergii na penicylinę?"
+
+msgid "Что нужно сделать, если в квартире сломалось отопление?"
+msgstr "Co należy zrobić, gdy w mieszkaniu zepsuje się ogrzewanie?"
