@@ -30,3 +30,24 @@ class StudyLanguageTests(SimpleTestCase):
             self.assertIn('<h2 class="word" lang="pl">Dziękuję</h2>', card)
             self.assertIn('<p class="translation" lang="en">thank you</p>', card)
             self.assertIn('<p class="example" lang="pl">Dziękuję za pomoc.</p>', card)
+
+    def test_public_example_and_answer_review_preserve_polish_and_fallback_languages(self):
+        question = {'prompt': 'Как неформально поздороваться?', 'options': ['Cześć'],
+                    'correct': 0, 'explanation': 'Личная заметка, которой нет в каталоге'}
+        for lang in ('ru', 'pl', 'en'):
+            with self.subTest(lang=lang), override(lang):
+                context = {'lesson': {'question': question}, 'selected_text': 'Cześć',
+                           'correct_text': 'Cześć'}
+                for preview in (True, False):
+                    html = render_to_string('partials/public_lesson_question.html',
+                                            {**context, 'preview': preview})
+                    self.assertIn('<span lang="pl">Cześć</span>', html)
+                    review = render_to_string('partials/public_lesson_explanation.html',
+                                              {**context, 'preview': preview})
+                    self.assertIn('<span lang="pl">Cześć</span>', review)
+                    self.assertIn('<p lang="ru">Личная заметка', review)
+                theory = render_to_string('partials/public_lesson_theory.html',
+                    {'lesson': {'theory_title': 'Как неформально поздороваться?',
+                                'theory': ['Cześć', 'Личная заметка, которой нет в каталоге']}})
+                self.assertIn('<h3 lang="pl">Cześć</h3>', theory)
+                self.assertIn('<p lang="ru">Личная заметка', theory)
