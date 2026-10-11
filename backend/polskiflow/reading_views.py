@@ -28,6 +28,7 @@ from polskiflow.progress_store import load_dashboard_progress, save_lesson_compl
 from polskiflow.reading_bookmark_store import load_reading_bookmarks, set_reading_bookmark
 from polskiflow.collection_store import load_collection_summaries
 from polskiflow.news_feed import CATEGORIES, CATEGORY_IDS, latest_official_news
+from polskiflow.domain.reading_glossary_forms import with_reading_forms
 
 REVIEW_QUALITIES = {"again", "hard", "good", "easy"}
 PRACTICE_WORD_IDS_SESSION_KEY = "dictionary_practice_word_ids"
@@ -151,8 +152,8 @@ def reader(request: HttpRequest, text_id: str) -> HttpResponse:
     )
     bookmarks = load_reading_bookmarks(request.supabase_access_token, request.supabase_user.id)
     collections = load_collection_summaries(request.supabase_access_token, request.supabase_user.id)
-    paragraphs = _tokenize(text.paragraphs, text.glossary)
-    matched_words = {token["word"] for paragraph in paragraphs for token in paragraph if token.get("translation")}
+    paragraphs = _tokenize(text.paragraphs, text.glossary, text.id)
+    matched_words = {token.get("glossary_word", token["word"]) for paragraph in paragraphs for token in paragraph if token.get("translation")}
     glossary_words = [
         {"text": surface, "word": surface, **entry}
         for surface, entry in _glossary_entries(text.glossary).items()
@@ -424,7 +425,7 @@ def add_dictionary_word(request: HttpRequest, text_id: str) -> HttpResponse:
     surface_word = request.POST.get("word", "").strip().casefold()
     translation = request.POST.get("translation", "").strip()
     context = request.POST.get("context", "").strip()
-    entry = _glossary_entries(text.glossary).get(surface_word)
+    entry = with_reading_forms(_glossary_entries(text.glossary), text.id).get(surface_word)
     if (
         not entry
         or translation != entry["translation"]
@@ -465,8 +466,8 @@ def remove_dictionary_word(request: HttpRequest, word_id: str) -> HttpResponse:
     return redirect("dictionary")
 
 
-def _tokenize(paragraphs: list, glossary: dict) -> list[list[dict]]:
-    entries = _glossary_entries(glossary)
+def _tokenize(paragraphs: list, glossary: dict, text_id: str = "") -> list[list[dict]]:
+    entries = with_reading_forms(_glossary_entries(glossary), text_id)
     # Longest phrases win; word/hyphen boundaries prevent matching inside
     # another word. Keep punctuation and original spacing intact.
     surfaces = sorted(entries, key=len, reverse=True)
