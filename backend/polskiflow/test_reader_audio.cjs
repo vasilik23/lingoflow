@@ -7,7 +7,7 @@ const source = template.split('{% block scripts %}')[1].match(/<script>([\s\S]*?
 const element = () => ({disabled: false, textContent: '', value: '1', events: {}, addEventListener(event, fn) {this.events[event] = fn;}});
 const controls = Object.fromEntries(['play', 'pause', 'stop', 'rate', 'status'].map(name => [name, element()]));
 const panel = {hidden: true, querySelector(selector) {return controls[selector.match(/data-audio-(\w+)/)[1]];}};
-const word = {...element(), dataset: {word: 'dom', lemma: 'dom', translation: 'дом', sourceTranslation: 'дом'}, classList: {add() {}}, closest: () => ({textContent: 'Mój dom.'})};
+const word = {...element(), dataset: {word: 'dom', lemma: 'dom', translation: 'дом', translationLang: 'ru', sourceTranslation: 'дом'}, classList: {add() {}}, closest: () => ({textContent: 'Mój dom.'})};
 const fields = Object.fromEntries(['.word-panel-placeholder', '.word-panel-result', '#selected-word', '#selected-translation', '#word-input', '#translation-input', '#context-input'].map(key => [key, element()]));
 const windowEvents = {}, spoken = [];
 const speechSynthesis = {paused: false, cancel() {}, resume() {this.paused = false;}, pause() {this.paused = true;}, speak(utterance) {spoken.push(utterance);}};
@@ -33,4 +33,12 @@ assert.equal(controls.pause.disabled, true, 'back-forward cache restores a stopp
 assert.equal(controls.status.textContent, 'Готово к воспроизведению');
 word.events.click();
 assert.equal(fields['#word-input'].value, 'dom', 'word selection tolerates an unrecognized word query status');
+for (const [lang, translation] of [['pl', 'dom'], ['en', 'house'], ['ru', 'дом']]) {
+  word.dataset.translationLang = lang;
+  word.dataset.translation = translation;
+  word.events.click();
+  assert.equal(fields['#selected-translation'].lang, lang, 'the panel updates the language for every selection');
+  assert.equal(fields['#selected-translation'].textContent, translation);
+  assert.equal(fields['#translation-input'].value, 'дом', 'localized display must not change the canonical saved value');
+}
 console.log('Reader speech cancellation, stale callbacks, pagehide and word selection: PASS');

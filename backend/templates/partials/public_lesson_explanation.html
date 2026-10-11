@@ -1,6 +1,6 @@
 {% load i18n ui %}
 <div class="public-answer-review">
-  {% if not preview %}<p>{% translate "Твой ответ:" %} {{ selected_text|ui_text }}</p>{% endif %}
-  <p><strong>{% translate "Правильный ответ:" %}</strong> {% if preview %}{% for option in lesson.question.options %}{% if forloop.counter0 == lesson.question.correct %}{{ option|ui_text }}{% endif %}{% endfor %}{% else %}{{ correct_text|ui_text }}{% endif %}</p>
-  <p>{{ lesson.question.explanation|ui_text }}</p>
+  {% if not preview %}<p>{% translate "Твой ответ:" %} <span lang="{{ selected_text|learning_language }}">{{ selected_text|ui_text }}</span></p>{% endif %}
+  <p><strong>{% translate "Правильный ответ:" %}</strong> {% if preview %}{% for option in lesson.question.options %}{% if forloop.counter0 == lesson.question.correct %}<span lang="{{ option|learning_language }}">{{ option|ui_text }}</span>{% endif %}{% endfor %}{% else %}<span lang="{{ correct_text|learning_language }}">{{ correct_text|ui_text }}</span>{% endif %}</p>
+  <p lang="{{ lesson.question.explanation|learning_language }}">{{ lesson.question.explanation|ui_text }}</p>
 </div>

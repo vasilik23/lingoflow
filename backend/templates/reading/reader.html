@@ -27,7 +27,7 @@
       </section>
       <div class="reading-paper" lang="pl">
         {% for paragraph in paragraphs %}
-          <p>{% for token in paragraph %}{% if token.translation %}<button type="button" class="reader-word" data-word="{{ token.word }}" data-lemma="{{ token.lemma }}" data-translation="{{ token.translation|learning_text }}" data-source-translation="{{ token.translation }}" data-part-of-speech="{{ token.part_of_speech }}">{{ token.text }}</button>{% else %}{{ token.text }}{% endif %}{% endfor %}</p>
+          <p>{% for token in paragraph %}{% if token.translation %}<button type="button" class="reader-word" data-word="{{ token.word }}" data-lemma="{{ token.lemma }}" data-translation="{{ token.translation|learning_text }}" data-translation-lang="{{ token.translation|learning_language:'ru' }}" data-source-translation="{{ token.translation }}" data-part-of-speech="{{ token.part_of_speech }}">{{ token.text }}</button>{% else %}{{ token.text }}{% endif %}{% endfor %}</p>
         {% endfor %}
       </div>
       {% with english_paragraphs=text.paragraphs|english_reading %}
@@ -62,7 +62,7 @@
     <aside class="word-panel" id="word-panel">
       <div class="word-panel-placeholder"><span>👆</span><strong>{% translate "Нажми на слово" %}</strong><p>{% translate "Здесь появится перевод, и слово можно будет сохранить." %}</p></div>
       <div class="word-panel-result" hidden>
-        <p class="eyebrow">{% translate "Перевод" %}</p><h2 id="selected-word"></h2><p class="selected-translation" id="selected-translation"></p>
+        <p class="eyebrow">{% translate "Перевод" %}</p><h2 id="selected-word" lang="pl"></h2><p class="selected-translation" id="selected-translation"></p>
         <form method="post" action="{% url 'add-dictionary-word' text.id %}">
           {% csrf_token %}<input type="hidden" name="word" id="word-input"><input type="hidden" name="translation" id="translation-input"><input type="hidden" name="context" id="context-input">
           <button type="submit">{% translate "＋ Добавить в словарь" %}</button>
@@ -116,7 +116,9 @@
         ? button.dataset.lemma
         : `${button.dataset.word} → ${button.dataset.lemma}`;
       document.querySelector('#selected-word').textContent = label;
-      document.querySelector('#selected-translation').textContent = button.dataset.translation;
+      const selectedTranslation = document.querySelector('#selected-translation');
+      selectedTranslation.textContent = button.dataset.translation;
+      selectedTranslation.lang = button.dataset.translationLang;
       document.querySelector('#word-input').value = button.dataset.word;
       document.querySelector('#translation-input').value = button.dataset.sourceTranslation;
       document.querySelector('#context-input').value = button.closest('p').textContent.trim();

@@ -87,6 +87,18 @@ class ReadingViewsTests(TestCase):
         self.news_mock = self.news_patch.start()
         self.addCleanup(self.news_patch.stop)
 
+    def test_glossary_carries_translated_language_and_russian_fallback(self):
+        for lang, translated, translated_language in (
+            ('ru', 'молоко', 'ru'), ('pl', 'mleko', 'pl'), ('en', 'milk', 'en'),
+        ):
+            with self.subTest(lang=lang):
+                self.client.cookies['django_language'] = lang
+                page = self.client.get('/reading/test-story/')
+                self.assertContains(page, f'data-translation="{translated}" data-translation-lang="{translated_language}"')
+                self.assertContains(page, 'data-translation="кот" data-translation-lang="ru"')
+                self.assertContains(page, 'data-source-translation="молоко"')
+                self.assertContains(page, '<h2 id="selected-word" lang="pl">')
+
     @patch("polskiflow.reading_views.load_reading_bookmarks", return_value={"test-story"})
     def test_library_can_filter_saved_texts(self, _bookmarks):
         response = self.client.get("/reading/?level=A1&saved=1")
