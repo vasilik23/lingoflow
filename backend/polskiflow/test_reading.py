@@ -8,9 +8,17 @@ from polskiflow.auth import ACCESS_COOKIE, SupabaseUser
 from polskiflow.learning.models import Course, ReadingText, Topic
 from polskiflow.progress_store import DashboardProgress
 from polskiflow.reading_views import _tokenize
+from polskiflow.domain.reading_glossary_forms import READING_GLOSSARY_FORMS, with_reading_forms
 
 
 class ReadingTokenizationTests(SimpleTestCase):
+    def test_forms_are_scoped_and_never_replace_authoritative_entries(self):
+        entries = {"przesłanka": {"translation": "предпосылка", "lemma": "przesłanka"}}
+        self.assertNotIn("przesłankę", with_reading_forms(entries, "c11-tekst"))
+        self.assertEqual(with_reading_forms({}, "c23-tekst"), {})
+        overridden = {**entries, "przesłankę": {"translation": "override"}}
+        self.assertEqual(with_reading_forms(overridden, "c23-tekst"), overridden)
+
     def test_phrases_win_over_words_and_preserve_original_text(self):
         paragraph = "Czytać między wierszami, nie czytać-wcale ani odczytać."
         tokens = _tokenize([paragraph], {
@@ -312,9 +320,38 @@ class ReadingViewsTests(TestCase):
         for text in readings:
             with self.subTest(text=text.pk):
                 response = self.client.get(f"/reading/{text.pk}/")
-                words = {token["word"] for paragraph in response.context["paragraphs"] for token in paragraph if token.get("translation")}
+                words = {token.get("glossary_word", token["word"]) for paragraph in response.context["paragraphs"] for token in paragraph if token.get("translation")}
                 words.update(token["word"] for token in response.context["glossary_words"])
                 self.assertEqual(words, {surface.strip().casefold() for surface in text.glossary})
+
+    def test_every_reviewed_form_occurs_in_current_reading_and_keeps_meaning(self):
+        for text_id, forms in READING_GLOSSARY_FORMS.items():
+            text = ReadingText.objects.get(pk=text_id)
+            tokens = [token for paragraph in _tokenize(text.paragraphs, text.glossary, text_id) for token in paragraph if token.get("translation")]
+            for surface, canonical in forms.items():
+                with self.subTest(text=text_id, surface=surface):
+                    self.assertIn(canonical, text.glossary)
+                    token = next(token for token in tokens if token["word"] == surface)
+                    entry = text.glossary[canonical]
+                    expected = entry.get("translation") if isinstance(entry, dict) else entry
+                    self.assertEqual(token["translation"], expected)
+                    self.assertEqual(token["glossary_word"], canonical)
+
+    @patch("polskiflow.reading_views.save_personal_word", return_value=True)
+    def test_reviewed_form_saves_lemma_and_rejects_unreviewed_form(self, save_word):
+        text = ReadingText.objects.get(pk="c16-tekst")
+        entry = text.glossary["warunek brzegowy"]
+        translation = entry.get("translation") if isinstance(entry, dict) else entry
+        response = self.client.post("/reading/c16-tekst/save/", {
+            "word": "warunków brzegowych", "translation": translation, "context": text.paragraphs[0],
+        })
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(save_word.call_args.args[2], "warunek brzegowy")
+        response = self.client.post("/reading/c16-tekst/save/", {
+            "word": "warunkami brzegowymi", "translation": translation,
+        })
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(save_word.call_count, 1)
 
     def test_reader_offers_private_system_speech_controls(self):
         response = self.client.get("/reading/test-story/")
