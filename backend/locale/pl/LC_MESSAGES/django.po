@@ -16185,3 +16185,660 @@ msgstr "„Zastrzeżenie” wskazuje ograniczenie albo warunek przedstawionej op
 
 msgid "„Założenie” odpowiada rosyjskiej „предпосылке”, czyli twierdzeniu przyjętemu jako punkt wyjścia analizy."
 msgstr "„Założenie” to twierdzenie przyjęte jako punkt wyjścia analizy."
+
+msgid "Brzmieć protekcjonalnie — звучать покровительственно, словно говорящий считает себя компетентнее или выше адресата."
+msgstr "Brzmieć protekcjonalnie oznacza mówić z wyższością, jakby mówiący uważał się za bardziej kompetentnego lub ważniejszego od adresata."
+
+msgid "Dobór słów означает осознанный выбор лексики: одна и та же мысль может звучать нейтрально, официально или разговорно."
+msgstr "Dobór słów oznacza świadome wybieranie słownictwa: ta sama myśl może brzmieć neutralnie, oficjalnie lub potocznie."
+
+msgid "Dobór słów — выбор слов; выражение подчёркивает, что автор сознательно подбирает лексику под цель и адресата."
+msgstr "Dobór słów podkreśla, że autor świadomie wybiera słownictwo zgodnie z celem i adresatem."
+
+msgid "Dostosować wypowiedź — адаптировать высказывание, то есть изменить лексику, тон или структуру под конкретного адресата."
+msgstr "Dostosować wypowiedź oznacza zmienić słownictwo, ton lub strukturę z myślą o konkretnym adresacie."
+
+msgid "Neutralny значит нейтральный: без заметной разговорной окраски и без подчёркнутой официальности."
+msgstr "Neutralny oznacza pozbawiony wyraźnego zabarwienia potocznego i podkreślonej oficjalności."
+
+msgid "Neutralny — лишённый подчёркнутой фамильярности и официальности; такой тон подходит широкой аудитории и передаёт смысл без лишней оценки."
+msgstr "Neutralny ton nie jest nadmiernie poufały ani oficjalny; pasuje do szerokiego grona odbiorców i przekazuje sens bez zbędnej oceny."
+
+msgid "Oficjalny значит официальный; такой стиль соблюдает институциональные нормы и обычно сохраняет дистанцию."
+msgstr "Oficjalny styl przestrzega norm instytucjonalnych i zwykle zachowuje dystans."
+
+msgid "Oficjalny называют регистр с установленными формулами, точными формулировками и большей дистанцией между автором и адресатом."
+msgstr "Oficjalny rejestr wykorzystuje ustalone formuły, precyzyjne sformułowania i większy dystans między autorem a adresatem."
+
+msgid "Potoczny значит разговорный: естественный для неофициальной устной речи и близких отношений."
+msgstr "Potoczny oznacza naturalny dla nieoficjalnej mowy i bliskich relacji."
+
+msgid "Potoczny описывает непринуждённую разговорную речь; такие формы уместны среди знакомых, но не всегда подходят официальному письму."
+msgstr "Potoczny opisuje swobodną mowę; takie formy są odpowiednie wśród znajomych, ale nie zawsze pasują do oficjalnego pisma."
+
+msgid "Rejestr — это регистр речи: набор языковых средств, соответствующий конкретной ситуации общения."
+msgstr "Rejestr to zestaw środków językowych odpowiadający konkretnej sytuacji komunikacyjnej."
+
+msgid "Skrócić dystans — сократить дистанцию, сделав общение менее формальным и более непосредственным."
+msgstr "Skrócić dystans oznacza uczynić komunikację mniej formalną i bardziej bezpośrednią."
+
+msgid "Wybierz wyrażenie pasujące do celu: выбор слов."
+msgstr "Wybierz wyrażenie pasujące do celu: świadome wybieranie słownictwa."
+
+msgid "Wybierz wyrażenie pasujące do celu: нейтральный."
+msgstr "Wybierz wyrażenie pasujące do celu: bez wyraźnej potoczności ani oficjalności."
+
+msgid "Wybierz wyrażenie pasujące do celu: официальный."
+msgstr "Wybierz wyrażenie pasujące do celu: zgodny z normami instytucjonalnymi."
+
+msgid "Wybierz wyrażenie pasujące do celu: разговорный."
+msgstr "Wybierz wyrażenie pasujące do celu: charakterystyczny dla swobodnej rozmowy."
+
+msgid "Wybierz wyrażenie pasujące do celu: регистр."
+msgstr "Wybierz wyrażenie pasujące do celu: odmiana języka dostosowana do sytuacji."
+
+msgid "Wybierz wyrażenie pasujące do celu: формула вежливости."
+msgstr "Wybierz wyrażenie pasujące do celu: ustalona uprzejma formuła."
+
+msgid "Zachować dystans — сохранять дистанцию: поддерживать уважительный, не слишком личный характер общения."
+msgstr "Zachować dystans oznacza utrzymać pełen szacunku, niezbyt osobisty charakter komunikacji."
+
+msgid "Zwrot grzecznościowy — устойчивая формула вежливости, например Szanowna Pani или Z poważaniem, а не просто нейтральное слово."
+msgstr "Zwrot grzecznościowy to ustalona uprzejma formuła, na przykład Szanowna Pani lub Z poważaniem, a nie tylko neutralne słowo."
+
+msgid "Zwrot grzecznościowy — формула вежливости, которая обозначает уважение и регулирует дистанцию между собеседниками."
+msgstr "Zwrot grzecznościowy wyraża szacunek i reguluje dystans między rozmówcami."
+
+msgid "В первом абзаце названы три разных адресата — друг, команда и учреждение, поэтому для каждого понадобился свой тон."
+msgstr "W pierwszym akapicie wskazano trzech adresatów: przyjaciela, zespół i instytucję; każdy wymagał innego tonu."
+
+msgid "В четвёртом абзаце редактор замечает риск чрезмерной вежливости: она способна прозвучать покровительственно."
+msgstr "W czwartym akapicie redaktor dostrzega ryzyko nadmiernej uprzejmości: może ona brzmieć protekcjonalnie."
+
+msgid "Второй абзац описывает разговорную версию: она короткая и прямая, но в обращении к учреждению была бы неуместна."
+msgstr "Drugi akapit opisuje wersję potoczną: krótką i bezpośrednią, ale nieodpowiednią w piśmie do instytucji."
+
+msgid "Выбирай формулировку с учётом смысла, адресата и контекста."
+msgstr "Wybieraj sformułowanie z uwzględnieniem sensu, adresata i kontekstu."
+
+msgid "Первый абзац вводит исходную ситуацию целиком: редактор готовит три версии одного сообщения для трёх адресатов."
+msgstr "Pierwszy akapit przedstawia całą sytuację wyjściową: redaktor przygotowuje trzy wersje jednej wiadomości dla trzech adresatów."
+
+msgid "Последний абзац формулирует общий вывод: хороший регистр определяется точным соответствием адресату, а не сложностью слов."
+msgstr "Ostatni akapit formułuje ogólny wniosek: dobry rejestr zależy od trafnego dopasowania do adresata, a nie od trudności słów."
+
+msgid "Регистр — это разновидность речи, которую выбирают с учётом ситуации, цели и отношений между собеседниками."
+msgstr "Rejestr to odmiana wypowiedzi wybierana z uwzględnieniem sytuacji, celu i relacji między rozmówcami."
+
+msgid "Третий абзац посвящён официальной версии: в ней есть формула вежливости и точная цель, однако тон не становится холодным."
+msgstr "Trzeci akapit dotyczy wersji oficjalnej: zawiera zwrot grzecznościowy i precyzyjny cel, ale ton nie staje się chłodny."
+
+msgid "Фокус темы"
+msgstr "Główny punkt tematu"
+
+msgid "адаптировать высказывание"
+msgstr "dostosować wypowiedź"
+
+msgid "выбор слов"
+msgstr "dobór słów"
+
+msgid "выверить тон"
+msgstr "wyważyć ton"
+
+msgid "звучать покровительственно"
+msgstr "brzmieć protekcjonalnie"
+
+msgid "нейтральный"
+msgstr "neutralny"
+
+msgid "неуместный"
+msgstr "niestosowny"
+
+msgid "переформулировать"
+msgstr "przeformułować"
+
+msgid "разговорный"
+msgstr "potoczny"
+
+msgid "регистр"
+msgstr "rejestr"
+
+msgid "ситуативный контекст"
+msgstr "kontekst sytuacyjny"
+
+msgid "сократить дистанцию"
+msgstr "skrócić dystans"
+
+msgid "формула вежливости"
+msgstr "zwrot grzecznościowy"
+
+msgid "Wybierz wyrażenie pasujące do celu: контраргумент."
+msgstr "Wybierz wyrażenie pasujące do celu: argument przeciw danej tezie."
+
+msgid "Wybierz wyrażenie pasujące do celu: оговорка."
+msgstr "Wybierz wyrażenie pasujące do celu: wskazanie wątpliwości lub ograniczenia."
+
+msgid "Wybierz wyrażenie pasujące do celu: опровергнуть возражение."
+msgstr "Wybierz wyrażenie pasujące do celu: wykazać nietrafność zarzutu."
+
+msgid "Wybierz wyrażenie pasujące do celu: предпосылка."
+msgstr "Wybierz wyrażenie pasujące do celu: przyjęta przesłanka."
+
+msgid "Wybierz wyrażenie pasujące do celu: признать правоту."
+msgstr "Wybierz wyrażenie pasujące do celu: zgodzić się, że ktoś ma rację."
+
+msgid "Wybierz wyrażenie pasujące do celu: ход рассуждения."
+msgstr "Wybierz wyrażenie pasujące do celu: przebieg rozumowania."
+
+msgid "взвешивать аргументы"
+msgstr "ważyć argumenty"
+
+msgid "злоупотребление"
+msgstr "nadużycie"
+
+msgid "косвенно следовать"
+msgstr "wynikać pośrednio"
+
+msgid "не предрешает"
+msgstr "nie przesądza"
+
+msgid "нюансировать позицию"
+msgstr "niuansować stanowisko"
+
+msgid "обоснованный вывод"
+msgstr "uzasadniony wniosek"
+
+msgid "опровергнуть возражение"
+msgstr "odeprzeć zarzut"
+
+msgid "постольку, поскольку"
+msgstr "o tyle, o ile"
+
+msgid "признать правоту"
+msgstr "przyznać rację"
+
+msgid "с большой вероятностью"
+msgstr "z dużym prawdopodobieństwem"
+
+msgid "ход рассуждения"
+msgstr "tok rozumowania"
+
+msgid "Wybierz wyrażenie pasujące do celu: интерпретационная рамка."
+msgstr "Wybierz wyrażenie pasujące do celu: sposób wyznaczający interpretację."
+
+msgid "Wybierz wyrażenie pasujące do celu: ироничный."
+msgstr "Wybierz wyrażenie pasujące do celu: wyrażający ironię."
+
+msgid "Wybierz wyrażenie pasujące do celu: оттенок, звучание."
+msgstr "Wybierz wyrażenie pasujące do celu: odcień znaczenia lub ton."
+
+msgid "Wybierz wyrażenie pasujące do celu: подбор примеров."
+msgstr "Wybierz wyrażenie pasujące do celu: wybór przykładów."
+
+msgid "Wybierz wyrażenie pasujące do celu: скрытая предпосылка."
+msgstr "Wybierz wyrażenie pasujące do celu: niewypowiedziane założenie."
+
+msgid "Wybierz wyrażenie pasujące do celu: умолчание."
+msgstr "Wybierz wyrażenie pasujące do celu: celowe pominięcie informacji."
+
+msgid "внешне нейтральный"
+msgstr "pozornie neutralny"
+
+msgid "имплицитный вывод"
+msgstr "wniosek niewyrażony wprost"
+
+msgid "интерпретационная рамка"
+msgstr "rama interpretacyjna"
+
+msgid "ироничный"
+msgstr "ironiczny"
+
+msgid "намекать"
+msgstr "sugerować"
+
+msgid "оттенок, звучание"
+msgstr "wydźwięk"
+
+msgid "оценочный"
+msgstr "wartościujący"
+
+msgid "подбор примеров"
+msgstr "dobór przykładów"
+
+msgid "скрытая предпосылка"
+msgstr "ukryte założenie"
+
+msgid "ставить под сомнение"
+msgstr "kwestionować"
+
+msgid "стратегия автора"
+msgstr "strategia autora"
+
+msgid "считать намерение"
+msgstr "odczytać intencję"
+
+msgid "умолчание"
+msgstr "przemilczenie"
+
+msgid "Wybierz wyrażenie pasujące do celu: избежать упрощения."
+msgstr "Wybierz wyrażenie pasujące do celu: nie redukować nadmiernie złożoności."
+
+msgid "Wybierz wyrażenie pasujące do celu: неспециалист."
+msgstr "Wybierz wyrażenie pasujące do celu: osoba bez wiedzy specjalistycznej."
+
+msgid "Wybierz wyrażenie pasujące do celu: объяснить понятие."
+msgstr "Wybierz wyrażenie pasujące do celu: objaśnić znaczenie pojęcia."
+
+msgid "Wybierz wyrażenie pasujące do celu: переложить простым языком."
+msgstr "Wybierz wyrażenie pasujące do celu: przedstawić w prostych słowach."
+
+msgid "Wybierz wyrażenie pasujące do celu: сохранить оговорку."
+msgstr "Wybierz wyrażenie pasujące do celu: nie pominąć ograniczenia."
+
+msgid "Wybierz wyrażenie pasujące do celu: суть."
+msgstr "Wybierz wyrażenie pasujące do celu: najważniejsza treść."
+
+msgid "дозировать сложность"
+msgstr "stopniować złożoność"
+
+msgid "избежать упрощения"
+msgstr "uniknąć uproszczenia"
+
+msgid "неспециалист"
+msgstr "niespecjalista"
+
+msgid "объяснить зависимость"
+msgstr "wyjaśnić zależność"
+
+msgid "объяснить понятие"
+msgstr "wyjaśnić pojęcie"
+
+msgid "опустить деталь"
+msgstr "pominąć szczegół"
+
+msgid "переложить простым языком"
+msgstr "przełożyć na prosty język"
+
+msgid "посредничать"
+msgstr "pośredniczyć"
+
+msgid "привести аналогию"
+msgstr "przywołać analogię"
+
+msgid "проверить понимание"
+msgstr "sprawdzić zrozumienie"
+
+msgid "сохранить оговорку"
+msgstr "zachować zastrzeżenie"
+
+msgid "структурировать информацию"
+msgstr "uporządkować informacje"
+
+msgid "суть"
+msgstr "sedno"
+
+msgid "точно передать смысл"
+msgstr "wiernie przekazać sens"
+
+msgid "Wybierz wyrażenie pasujące do celu: проблемный абзац."
+msgstr "Wybierz wyrażenie pasujące do celu: akapit poświęcony jednemu problemowi."
+
+msgid "Wybierz wyrażenie pasujące do celu: связность рассуждения."
+msgstr "Wybierz wyrażenie pasujące do celu: logiczne powiązanie rozumowania."
+
+msgid "Wybierz wyrażenie pasujące do celu: синтез источников."
+msgstr "Wybierz wyrażenie pasujące do celu: połączenie informacji ze źródeł."
+
+msgid "Wybierz wyrażenie pasujące do celu: сослаться на исследование."
+msgstr "Wybierz wyrażenie pasujące do celu: powołać się na badanie."
+
+msgid "Wybierz wyrażenie pasujące do celu: средство связи."
+msgstr "Wybierz wyrażenie pasujące do celu: element łączący części tekstu."
+
+msgid "Wybierz wyrażenie pasujące do celu: тематическое предложение."
+msgstr "Wybierz wyrażenie pasujące do celu: zdanie wskazujące temat akapitu."
+
+msgid "второстепенный аргумент"
+msgstr "argument drugorzędny"
+
+msgid "заключение"
+msgstr "zakończenie"
+
+msgid "иерархия информации"
+msgstr "hierarchia informacji"
+
+msgid "избегать повторов"
+msgstr "unikać powtórzeń"
+
+msgid "изложение"
+msgstr "wywód"
+
+msgid "оговорить"
+msgstr "zastrzec"
+
+msgid "проблемный абзац"
+msgstr "akapit problemowy"
+
+msgid "редактировать"
+msgstr "redagować"
+
+msgid "связность рассуждения"
+msgstr "spójność rozumowania"
+
+msgid "синтез источников"
+msgstr "synteza źródeł"
+
+msgid "сослаться на исследование"
+msgstr "powołać się na badanie"
+
+msgid "средство связи"
+msgstr "środek spójności"
+
+msgid "ссылка"
+msgstr "odsyłacz"
+
+msgid "тематическое предложение"
+msgstr "zdanie tematyczne"
+
+msgid "уточнить тезис"
+msgstr "doprecyzować tezę"
+
+msgid "Wybierz wyrażenie pasujące do celu: граничное условие."
+msgstr "Wybierz wyrażenie pasujące do celu: warunek określający granice rozwiązania."
+
+msgid "Wybierz wyrażenie pasujące do celu: операционный риск."
+msgstr "Wybierz wyrażenie pasujące do celu: ryzyko związane z działalnością operacyjną."
+
+msgid "Wybierz wyrażenie pasujące do celu: представить рекомендацию."
+msgstr "Wybierz wyrażenie pasujące do celu: zaprezentować zalecenie."
+
+msgid "Wybierz wyrażenie pasujące do celu: реализуемость."
+msgstr "Wybierz wyrażenie pasujące do celu: możliwość wykonania."
+
+msgid "Wybierz wyrażenie pasujące do celu: согласовать критерии."
+msgstr "Wybierz wyrażenie pasujące do celu: uzgodnić zasady oceny."
+
+msgid "Wybierz wyrażenie pasujące do celu: сфера ответственности."
+msgstr "Wybierz wyrażenie pasujące do celu: obszar odpowiedzialności."
+
+msgid "граничное условие"
+msgstr "warunek brzegowy"
+
+msgid "измеримый результат"
+msgstr "mierzalny rezultat"
+
+msgid "итоговая ответственность"
+msgstr "odpowiedzialność końcowa"
+
+msgid "оговорить конфиденциальность"
+msgstr "zastrzec poufność"
+
+msgid "операционный риск"
+msgstr "ryzyko operacyjne"
+
+msgid "оценить трудозатраты"
+msgstr "oszacować nakład pracy"
+
+msgid "представить рекомендацию"
+msgstr "przedstawić rekomendację"
+
+msgid "привести к эскалации"
+msgstr "doprowadzić do eskalacji"
+
+msgid "расхождение"
+msgstr "rozbieżność"
+
+msgid "реализуемость"
+msgstr "wykonalność"
+
+msgid "резервный вариант"
+msgstr "wariant rezerwowy"
+
+msgid "согласовать критерии"
+msgstr "uzgodnić kryteria"
+
+msgid "согласовать на переговорах"
+msgstr "wynegocjować"
+
+msgid "сфера ответственности"
+msgstr "zakres odpowiedzialności"
+
+msgid "точка принятия решения"
+msgstr "punkt decyzyjny"
+
+msgid "Wybierz wyrażenie pasujące do celu: метафора."
+msgstr "Wybierz wyrażenie pasujące do celu: przenośne użycie wyrazu."
+
+msgid "Wybierz wyrażenie pasujące do celu: ненадёжный рассказчик."
+msgstr "Wybierz wyrażenie pasujące do celu: opowiadający, któremu nie można w pełni ufać."
+
+msgid "Wybierz wyrażenie pasujące do celu: перспектива."
+msgstr "Wybierz wyrażenie pasujące do celu: punkt widzenia."
+
+msgid "Wybierz wyrażenie pasujące do celu: ритм предложения."
+msgstr "Wybierz wyrażenie pasujące do celu: rytmiczna organizacja zdania."
+
+msgid "Wybierz wyrażenie pasujące do celu: сравнение."
+msgstr "Wybierz wyrażenie pasujące do celu: zestawienie cech dwóch rzeczy."
+
+msgid "Wybierz wyrażenie pasujące do celu: эллипсис."
+msgstr "Wybierz wyrażenie pasujące do celu: pominięcie części zdania możliwej do odtworzenia."
+
+msgid "голос героя"
+msgstr "głos bohatera"
+
+msgid "драматическая ирония"
+msgstr "ironia dramatyczna"
+
+msgid "контраст"
+msgstr "kontrast"
+
+msgid "кульминация"
+msgstr "kulminacja"
+
+msgid "метафора"
+msgstr "metafora"
+
+msgid "многозначность"
+msgstr "wieloznaczność"
+
+msgid "недосказанность"
+msgstr "niedopowiedzenie"
+
+msgid "ненадёжный рассказчик"
+msgstr "niewiarygodny narrator"
+
+msgid "образность"
+msgstr "obrazowość"
+
+msgid "ритм предложения"
+msgstr "rytm zdania"
+
+msgid "стилизация"
+msgstr "stylizacja"
+
+msgid "эллипсис"
+msgstr "elipsa"
+
+msgid "Wybierz wyrażenie pasujące do celu: заинтересованная сторона."
+msgstr "Wybierz wyrażenie pasujące do celu: strona mająca interes w danej sprawie."
+
+msgid "Wybierz wyrażenie pasujące do celu: легитимизировать решение."
+msgstr "Wybierz wyrażenie pasujące do celu: nadać decyzji legitymację."
+
+msgid "Wybierz wyrażenie pasujące do celu: область согласия."
+msgstr "Wybierz wyrażenie pasujące do celu: zakres wspólnego stanowiska."
+
+msgid "Wybierz wyrażenie pasujące do celu: ось спора."
+msgstr "Wybierz wyrażenie pasujące do celu: główny wymiar sporu."
+
+msgid "Wybierz wyrażenie pasujące do celu: отдать должное аргументу."
+msgstr "Wybierz wyrażenie pasujące do celu: uznać wartość argumentu."
+
+msgid "Wybierz wyrażenie pasujące do celu: сбалансировать интересы."
+msgstr "Wybierz wyrażenie pasujące do celu: wyważyć interesy."
+
+msgid "выработать компромисс"
+msgstr "wypracować kompromis"
+
+msgid "заинтересованная сторона"
+msgstr "interesariusz"
+
+msgid "легитимизировать решение"
+msgstr "legitymizować decyzję"
+
+msgid "необходимое условие"
+msgstr "warunek konieczny"
+
+msgid "область согласия"
+msgstr "obszar zgody"
+
+msgid "обозначить напряжение"
+msgstr "wskazać napięcie"
+
+msgid "обострять конфликт"
+msgstr "zaostrzać konflikt"
+
+msgid "ось спора"
+msgstr "oś sporu"
+
+msgid "отдать должное аргументу"
+msgstr "docenić argument"
+
+msgid "отложить решение"
+msgstr "odroczyć decyzję"
+
+msgid "позиция меньшинства"
+msgstr "stanowisko mniejszości"
+
+msgid "процедура консультаций"
+msgstr "procedura konsultacji"
+
+msgid "рабочее резюме"
+msgstr "robocze podsumowanie"
+
+msgid "рамки дискуссии"
+msgstr "ramy dyskusji"
+
+msgid "сбалансировать интересы"
+msgstr "równoważyć interesy"
+
+msgid "Wybierz wyrażenie pasujące do celu: жанровая конвенция."
+msgstr "Wybierz wyrażenie pasujące do celu: zasady typowe dla gatunku."
+
+msgid "Wybierz wyrażenie pasujące do celu: информационное сообщение."
+msgstr "Wybierz wyrażenie pasujące do celu: wiadomość przekazująca informacje."
+
+msgid "Wybierz wyrażenie pasujące do celu: лид."
+msgstr "Wybierz wyrażenie pasujące do celu: wprowadzenie do tekstu prasowego."
+
+msgid "Wybierz wyrażenie pasujące do celu: оценочный заголовок."
+msgstr "Wybierz wyrażenie pasujące do celu: nagłówek wyrażający ocenę."
+
+msgid "Wybierz wyrażenie pasujące do celu: рамка сообщения."
+msgstr "Wybierz wyrażenie pasujące do celu: sposób ujmowania informacji."
+
+msgid "Wybierz wyrażenie pasujące do celu: фельетон."
+msgstr "Wybierz wyrażenie pasujące do celu: krótki, swobodny tekst publicystyczny."
+
+msgid "жанровая конвенция"
+msgstr "konwencja gatunkowa"
+
+msgid "заострить тезис"
+msgstr "wyostrzyć tezę"
+
+msgid "информационное сообщение"
+msgstr "wiadomość informacyjna"
+
+msgid "лид"
+msgstr "lead"
+
+msgid "отбор информации"
+msgstr "selekcja informacji"
+
+msgid "отделить комментарий"
+msgstr "oddzielić komentarz"
+
+msgid "оценочный заголовок"
+msgstr "nagłówek wartościujący"
+
+msgid "преобразовать жанр"
+msgstr "zmienić gatunek"
+
+msgid "рамка сообщения"
+msgstr "rama przekazu"
+
+msgid "редакционная ответственность"
+msgstr "odpowiedzialność redakcyjna"
+
+msgid "смысловое сокращение"
+msgstr "skrót myślowy"
+
+msgid "согласование высказывания"
+msgstr "autoryzacja wypowiedzi"
+
+msgid "сохранить смысл"
+msgstr "zachować sens"
+
+msgid "фельетон"
+msgstr "felieton"
+
+msgid "Wybierz wyrażenie pasujące do celu: ведущий вопрос."
+msgstr "Wybierz wyrażenie pasujące do celu: pytanie wyznaczające kierunek projektu."
+
+msgid "Wybierz wyrażenie pasujące do celu: версия для аудитории."
+msgstr "Wybierz wyrażenie pasujące do celu: wersja dostosowana do odbiorców."
+
+msgid "Wybierz wyrażenie pasujące do celu: критерий оценки."
+msgstr "Wybierz wyrażenie pasujące do celu: zasada oceny."
+
+msgid "Wybierz wyrażenie pasujące do celu: охват проекта."
+msgstr "Wybierz wyrażenie pasujące do celu: obszar objęty projektem."
+
+msgid "Wybierz wyrażenie pasujące do celu: синтез выводов."
+msgstr "Wybierz wyrażenie pasujące do celu: połączenie wniosków w całość."
+
+msgid "Wybierz wyrażenie pasujące do celu: триангуляция источников."
+msgstr "Wybierz wyrażenie pasujące do celu: zestawienie kilku źródeł w celu weryfikacji."
+
+msgid "ведущий вопрос"
+msgstr "pytanie przewodnie"
+
+msgid "версия для аудитории"
+msgstr "wersja dla odbiorców"
+
+msgid "вспомогательный материал"
+msgstr "materiał pomocniczy"
+
+msgid "генеральная репетиция"
+msgstr "próba generalna"
+
+msgid "дальнейшее направление"
+msgstr "dalszy kierunek"
+
+msgid "защита проекта"
+msgstr "obrona projektu"
+
+msgid "критерий оценки"
+msgstr "kryterium oceny"
+
+msgid "ответить на возражение"
+msgstr "odpowiedzieć na zastrzeżenie"
+
+msgid "охват проекта"
+msgstr "zakres projektu"
+
+msgid "признать ограничение"
+msgstr "uznać ograniczenie"
+
+msgid "самооценка"
+msgstr "samoocena"
+
+msgid "синтез выводов"
+msgstr "synteza wniosków"
+
+msgid "триангуляция источников"
+msgstr "triangulacja źródeł"
+
+msgid "условный вывод"
+msgstr "wniosek warunkowy"
