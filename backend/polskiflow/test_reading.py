@@ -274,7 +274,7 @@ class ReadingViewsTests(TestCase):
         self.assertContains(response, "Wiadomość dnia")
         self.assertContains(response, "Przykład")
         self.assertContains(response, 'target="_blank" rel="noopener noreferrer"')
-        self.assertContains(response, 'href="/reading/" class="nav-link active"')
+        self.assertContains(response, 'href="/learn/" class="nav-link active"')
         self.assertNotContains(response, '<span>Новости</span>')
         self.assertContains(response, 'href="/reading/">Учебные тексты</a>')
 

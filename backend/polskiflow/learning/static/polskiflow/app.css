@@ -70,7 +70,7 @@ p { line-height: 1.65; }
 
 .app-nav { position: fixed; z-index: 20; inset: auto 0 0; display: grid; grid-template-columns: 1fr auto; align-items: center; min-height: 4.7rem; padding: .55rem max(1rem, env(safe-area-inset-right)) max(.55rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left)); background: rgba(255,255,255,.94); border-top: 1px solid var(--line); backdrop-filter: blur(18px); }
 .brand { display: none; }
-.nav-links { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); min-width: 0; width: 100%; }
+.nav-links { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); min-width: 0; width: 100%; }
 .nav-link { display: grid; min-width: 0; justify-items: center; gap: .2rem; padding: .45rem .25rem; border-radius: .9rem; color: var(--muted); font-size: .72rem; font-weight: 700; text-decoration: none; }
 .nav-link.active { color: var(--primary); background: var(--primary-soft); }
 .nav-icon { font-size: 1.35rem; line-height: 1; }
@@ -1354,3 +1354,7 @@ button.secondary { background: var(--surface); border-color: var(--line); }
 .practice-recommendation { grid-template-rows: auto auto auto; padding: 1rem; margin-bottom: 1rem; }
 .practice-recommendation h2 { margin: 0; font-size: 1.05rem; }
 @media (min-width: 720px) { .practice-quick-links { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+.learning-section-nav { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.learning-section-nav a { padding: .5rem .8rem; border: 1px solid var(--line); border-radius: .7rem; color: var(--text); text-decoration: none; }
+.learning-section-nav a[aria-current] { background: var(--primary-soft); color: var(--primary-dark); border-color: var(--primary); font-weight: 700; }

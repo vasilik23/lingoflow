@@ -3623,6 +3623,7 @@ window.PolskiFlowEnglishMessages = {
   "Учебный прогон пяти частей: таймер, перерывы, разбор и итог в истории.": "Five-part training run: timer, breaks, review and a result in history.",
   "Ученик": "Student",
   "Учись и возвращайся": "Learn and return",
+  "Учиться": "Learn",
   "Учреждения": "Institutions",
   "Учёба и материалы": "Learning and materials",
   "Учёба и результат": "Learning and performance",

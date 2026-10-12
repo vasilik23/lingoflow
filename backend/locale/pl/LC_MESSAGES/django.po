@@ -18225,3 +18225,6 @@ msgstr "stałe wyrażenie"
 
 msgid "числительное"
 msgstr "liczebnik"
+
+msgid "Учиться"
+msgstr "Nauka"

@@ -10,6 +10,17 @@ from django.utils.html import escape, format_html, format_html_join
 from django.utils.translation import gettext, get_language, ngettext
 
 register = template.Library()
+
+
+@register.filter
+def navigation_section(route):
+    if route == "home":
+        return "today"
+    if route in {"learn-hub", "course", "lesson", "reading-library", "reader", "news-library", "dictionary", "global-search"}:
+        return "learn"
+    if isinstance(route, str) and (route.startswith("b1-") or route.startswith("dictionary-practice") or route in {"practice-hub", "listening-practice", "writing-practice", "interaction-practice", "diagnostic"}):
+        return "practice"
+    return ""
 _PATTERNS = []
 for _message in json.loads((Path(__file__).resolve().parents[2] / "localization/server_patterns.json").read_text()):
     _parts = re.split(r"(%\(v\d+\)s)", _message)

@@ -8,6 +8,7 @@ from polskiflow.account_views import account_delete, account_security
 from polskiflow.auth import require_supabase_user
 from polskiflow.auth_views import b1_exam_prep, course, daily_tasks, forgot_password, help_center, home, listening_practice, login_view, logout_view, onboarding, practice_hub, privacy, profile, profile_data_export, register_view, resend_confirmation, reset_password, sources, writing_practice
 from polskiflow.diagnostic_views import diagnostic
+from polskiflow.auth_views import learn_hub
 from polskiflow.placement_views import placement_check
 from polskiflow.public_views import public_intro, public_demo
 from polskiflow.feedback_views import feedback
@@ -49,6 +50,7 @@ def current_user(request):
 
 
 urlpatterns = [
+    path("learn/", learn_hub, name="learn-hub"),
     path("language/", set_language, name="set-language"),
     path("admin/", admin.site.urls),
     path("manifest.webmanifest", web_app_manifest, name="web-app-manifest"),

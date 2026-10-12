@@ -49,26 +49,13 @@
         <a class="brand" href="{% url 'home' %}" aria-label="{% translate "LingoFlow — на главную" %}">
           <span class="brand-mark">L</span><span class="brand-name">LingoFlow</span>
         </a>
+        {% with section=request.resolver_match.url_name|navigation_section %}
         <div class="nav-links">
-          <a href="{% url 'home' %}" class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">
-            <span class="nav-icon" aria-hidden="true">⌂</span><span>{% translate "Сегодня" %}</span>
-          </a>
-          <a href="{% url 'course' %}" class="nav-link {% if request.resolver_match.url_name == 'course' or request.resolver_match.url_name == 'lesson' %}active{% endif %}">
-            <span class="nav-icon" aria-hidden="true">◫</span><span>{% translate "Курс" %}</span>
-          </a>
-          <a href="{% url 'practice-hub' %}" class="nav-link {% if request.resolver_match.url_name == 'practice-hub' or request.resolver_match.url_name == 'listening-practice' or request.resolver_match.url_name == 'writing-practice' or request.resolver_match.url_name == 'interaction-practice' or request.resolver_match.url_name == 'diagnostic' %}active{% endif %}">
-            <span class="nav-icon" aria-hidden="true">◎</span><span>{% translate "Практика" %}</span>
-          </a>
-          <a href="{% url 'reading-library' %}" class="nav-link {% if request.resolver_match.url_name == 'reading-library' or request.resolver_match.url_name == 'reader' or request.resolver_match.url_name == 'news-library' %}active{% endif %}">
-            <span class="nav-icon" aria-hidden="true">▤</span><span>{% translate "Читать" %}</span>
-          </a>
-          <a href="{% url 'dictionary' %}" class="nav-link {% if request.resolver_match.url_name == 'dictionary' %}active{% endif %}">
-            <span class="nav-icon" aria-hidden="true">◇</span><span>{% translate "Словарь" %}</span>
-          </a>
-          <a href="{% url 'global-search' %}" class="nav-link nav-link-search {% if request.resolver_match.url_name == 'global-search' %}active{% endif %}">
-            <span class="nav-icon" aria-hidden="true">⌕</span><span>{% translate "Поиск" %}</span>
-          </a>
+          <a href="{% url 'home' %}" class="nav-link {% if section == 'today' %}active{% endif %}"{% if section == 'today' %} aria-current="true"{% endif %}><span class="nav-icon" aria-hidden="true">⌂</span><span>{% translate "Сегодня" %}</span></a>
+          <a href="{% url 'learn-hub' %}" class="nav-link {% if section == 'learn' %}active{% endif %}"{% if section == 'learn' %} aria-current="true"{% endif %}><span class="nav-icon" aria-hidden="true">◫</span><span>{% translate "Учиться" %}</span></a>
+          <a href="{% url 'practice-hub' %}" class="nav-link {% if section == 'practice' %}active{% endif %}"{% if section == 'practice' %} aria-current="true"{% endif %}><span class="nav-icon" aria-hidden="true">◎</span><span>{% translate "Практика" %}</span></a>
         </div>
+        {% endwith %}
       </nav>
       <header class="app-toolbar">
         <a class="toolbar-brand" href="{% url 'home' %}" aria-label="{% translate "LingoFlow — на главную" %}"><span class="brand-mark" aria-hidden="true">L</span>{% block toolbar_title %}<span>LingoFlow</span>{% endblock %}</a>

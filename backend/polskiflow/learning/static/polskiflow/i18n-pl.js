@@ -3772,6 +3772,7 @@ window.PolskiFlowPolishMessages = {
   "Учебный прогон пяти частей: таймер, перерывы, разбор и итог в истории.": "Próba treningowa z pięciu części: zegar, przerwy, omówienie i wynik w historii.",
   "Ученик": "Uczeń",
   "Учись и возвращайся": "Ucz się i wracaj",
+  "Учиться": "Nauka",
   "Учреждения": "Urzędy",
   "Учёба и материалы": "Nauka i materiały",
   "Учёба и результат": "Nauka i wynik",

@@ -1,0 +1,6 @@
+{% load i18n %}
+<nav class="learning-section-nav" aria-label="{% translate 'Учиться' %}">
+  <a href="{% url 'course' %}"{% if active == 'course' %} aria-current="page"{% endif %}>{% translate "Курс" %}</a>
+  <a href="{% url 'reading-library' %}"{% if active == 'reading' %} aria-current="page"{% endif %}>{% translate "Чтение" %}</a>
+  <a href="{% url 'dictionary' %}"{% if active == 'dictionary' %} aria-current="page"{% endif %}>{% translate "Словарь" %}</a>
+</nav>

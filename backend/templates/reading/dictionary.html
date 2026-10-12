@@ -3,6 +3,7 @@
 {% block title %}{% translate "Мой словарь · LingoFlow" %}{% endblock %}
 {% block toolbar_title %}<h1>{% translate "Личный словарь" %}</h1>{% endblock %}
 {% block content %}
+  {% include "partials/learn_navigation.html" with active="dictionary" %}
   <header class="content-header">
     <div><p class="eyebrow">Moje słowa</p><p class="muted">{% translate "Слова, которые встретились тебе во время чтения." %}</p></div>
     <div class="header-actions">
