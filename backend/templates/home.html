@@ -11,14 +11,6 @@
     </div>
   </section>
 
-  {% if resume_lesson %}
-    <aside class="card resume-card" aria-labelledby="resume-title">
-      <span class="resume-card-icon" aria-hidden="true">{{ resume_lesson.emoji|ui_text }}</span>
-      <div><p class="eyebrow">{% translate "Незавершённый урок" %}</p><h2 id="resume-title">{{ resume_lesson.title|ui_text }}</h2><p class="muted">{{ resume_lesson.level|ui_text }} {% translate "· продолжим с шага" %} {{ resume_lesson.step|ui_text }}</p></div>
-      <a class="compact-button" href="{% url 'lesson' resume_lesson.id %}">{% translate "Продолжить →" %}</a>
-    </aside>
-  {% endif %}
-
   <div class="dashboard-grid home-plan-grid">
     <section class="card daily-card" id="daily-plan">
       <div class="progress-ring" style="--value: {{ progress_percent }}" role="progressbar" aria-label="{% translate "Выполнение плана по оценочной длительности" %}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ progress_percent }}"><strong>{{ progress_percent|ui_text }}%</strong></div>
@@ -29,16 +21,20 @@
       </div>
       {% if not dashboard.available %}<p class="data-notice">{% translate "Прогресс временно недоступен. Уроки по-прежнему можно проходить." %}</p>{% endif %}
       <div class="daily-actions">
-      {% if daily_start_task %}
+      {% if resume_lesson %}
+        <a class="compact-button daily-action" href="{% url 'lesson' resume_lesson.id %}" aria-describedby="daily-start-title">{% translate "Продолжить →" %}</a>
+      {% elif daily_start_task %}
         <a class="compact-button daily-action" href="{% if daily_start_task.kind == 'dictionary-review' %}{% url 'dictionary-practice' %}{% else %}{% url 'lesson' daily_start_task.id %}{% endif %}" aria-describedby="daily-start-title">{% if daily_start_task.completed %}{% translate "Повторить задание" %}{% elif completed_count %}{% translate "Продолжить занятия" %}{% else %}{% translate "Начать занятия" %}{% endif %} →</a>
       {% else %}
         <a class="compact-button daily-action" href="{% url 'course' %}">{% translate "К курсу →" %}</a>
       {% endif %}
-      <a class="daily-plan-link" href="#daily-tasks">{% translate "Посмотреть план" %}</a>
       </div>
-      {% if daily_start_task %}<p class="muted daily-start-title" id="daily-start-title">{{ daily_start_task.title|ui_text }}</p>{% endif %}
+      {% if resume_lesson %}<p class="muted daily-start-title" id="daily-start-title">{% translate "Незавершённый урок" %} · {{ resume_lesson.title|ui_text }} · {% translate "· продолжим с шага" %} {{ resume_lesson.step|ui_text }}</p>
+      {% elif daily_start_task %}<p class="muted daily-start-title" id="daily-start-title">{{ daily_start_task.title|ui_text }}</p>{% endif %}
     </section>
-    <section class="daily-tasks-panel" id="daily-tasks" aria-labelledby="daily-tasks-title">
+    <details class="card daily-tasks-panel" id="daily-tasks">
+      <summary>{% translate "Посмотреть план" %} · {{ completed_count|ui_text }}/{{ tasks|length|ui_text }}</summary>
+    <section aria-labelledby="daily-tasks-title">
       <div class="section-heading daily-tasks-heading">
         <div>
           <p class="eyebrow">{% translate "План на день" %}</p>
@@ -59,19 +55,19 @@
         {% endfor %}
       </div>
     </section>
+    </details>
   </div>
-  {% if b1_exam_prep %}
-    <aside class="card exam-home-card" aria-labelledby="exam-home-title">
-      <div class="exam-home-countdown" aria-hidden="true">
-        {% if b1_exam_prep.countdown.available %}<strong>{{ b1_exam_prep.countdown.days_remaining|ui_text }}</strong><span>{% translate "до старта" %}</span>{% else %}<strong>B1</strong><span>{% translate "экзамен" %}</span>{% endif %}
-      </div>
-      <div>
-        <p class="eyebrow">{% translate "Подготовка к государственному B1" %}</p>
-        <h2 id="exam-home-title">{{ b1_exam_prep.countdown.label|ui_text }}</h2>
-        <p class="muted">{% translate "Сегодня —" %} {{ b1_exam_prep.daily_minutes|ui_text }} {% translate "минут по трём экзаменационным навыкам." %}{% if b1_exam_prep.focus %} {% translate "Фокус:" %} {{ b1_exam_prep.focus.title|ui_text }} {% translate "— последние тренировки" %} {{ b1_exam_prep.focus.percent|ui_text }}%.{% endif %}</p>
-      </div>
-      <a class="compact-button" href="{% url 'b1-exam-prep' %}">{% translate "Выбрать формат" %}</a>
-    </aside>
-  {% endif %}
+  {% if b1_exam_prep %}<p class="muted today-exam-link"><a href="{% url 'b1-exam-prep' %}">{% translate "Подготовка к B1" %}</a> · {{ b1_exam_prep.countdown.label|ui_text }}</p>{% endif %}
 
+{% endblock %}
+
+{% block scripts %}
+<script>
+(() => {
+  const plan = document.getElementById('daily-tasks');
+  const openLinkedPlan = () => { if (window.location.hash === '#daily-tasks') plan.open = true; };
+  openLinkedPlan();
+  window.addEventListener('hashchange', openLinkedPlan);
+})();
+</script>
 {% endblock %}

@@ -10,9 +10,9 @@ class TodayStartTaskTests(TestCase):
         auth = patch('polskiflow.auth.authenticate_access_token',return_value=SupabaseUser('learner','learner@example.test'))
         auth.start(); self.addCleanup(auth.stop)
 
-    def page(self, tasks, available=True):
-        dashboard = DashboardProgress('Learner','A1',0,frozenset(),available)
-        with patch('polskiflow.auth_views._daily_plan',return_value=(dashboard,tasks,sum(task['completed'] for task in tasks),0,15)), patch('polskiflow.auth_views.tasks',return_value=[]):
+    def page(self, tasks, available=True, level='A1', catalog=None, draft=None):
+        dashboard = DashboardProgress('Learner',level,0,frozenset(),available)
+        with patch('polskiflow.auth_views._daily_plan',return_value=(dashboard,tasks,sum(task['completed'] for task in tasks),0,15)), patch('polskiflow.auth_views.tasks',return_value=catalog or []), patch('polskiflow.auth_views.load_latest_lesson_draft',return_value=draft):
             return self.client.get('/')
 
     def task(self, id, completed=False, kind='words'):
@@ -23,7 +23,7 @@ class TodayStartTaskTests(TestCase):
         self.assertEqual(page.context['daily_start_task']['id'],'next')
         self.assertContains(page,'class="compact-button daily-action" href="/lesson/next/"')
         self.assertContains(page,'Продолжить занятия')
-        self.assertContains(page,'class="daily-plan-link" href="#daily-tasks"')
+        self.assertContains(page,'<summary>Посмотреть план · 1/3</summary>')
         self.assertNotContains(page,'class="compact-button daily-action" href="#daily-tasks"')
 
     def test_dictionary_recommendation_uses_its_actual_practice_route(self):
@@ -44,3 +44,20 @@ class TodayStartTaskTests(TestCase):
         page = self.page([self.task('first')],available=False)
         self.assertContains(page,'Прогресс временно недоступен')
         self.assertContains(page,'class="compact-button daily-action" href="/lesson/first/"')
+
+    def test_resume_replaces_daily_start_without_removing_plan(self):
+        page = self.page([self.task('next')], catalog=[self.task('draft')],
+                         draft={'lesson_id': 'draft', 'step_index': 2})
+        self.assertContains(page, 'class="compact-button daily-action"', count=1)
+        self.assertContains(page, 'class="compact-button daily-action" href="/lesson/draft/"')
+        self.assertContains(page, 'Незавершённый урок')
+        self.assertContains(page, 'href="/lesson/next/"')
+        self.assertNotContains(page, 'class="card resume-card"')
+
+    def test_b1_shows_exam_destination_without_second_daily_plan(self):
+        page = self.page([self.task('next')], level='B1', available=False)
+        self.assertContains(page, 'class="compact-button daily-action"', count=1)
+        self.assertContains(page, 'href="/exam/b1/"')
+        self.assertNotContains(page, 'exam-home-card')
+        self.assertNotContains(page, 'минут по трём экзаменационным навыкам')
+        self.assertContains(page, '<details class="card daily-tasks-panel" id="daily-tasks">')
