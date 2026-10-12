@@ -1282,6 +1282,10 @@ button.secondary { background: var(--surface); border-color: var(--line); }
 .speaking-dialogue li.is-current { border-left: 3px solid var(--primary); font-weight: 700; }
 .daily-start-title { grid-column: 1 / -1; margin: 0; font-size: .8rem; text-align: center; }
 .daily-plan-link { grid-column: 1 / -1; justify-self: center; font-size: .85rem; }
+.home-plan-grid { grid-template-columns: minmax(0, 1fr); }
+.daily-tasks-panel > summary { cursor: pointer; font-weight: 700; }
+.daily-tasks-panel[open] > summary { margin-bottom: 1rem; }
+.today-exam-link { margin-top: 1rem; }
 .daily-actions { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; }
 .daily-actions .daily-action { flex: 1; margin: 0; }
 

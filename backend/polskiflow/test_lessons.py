@@ -105,7 +105,7 @@ class LessonViewsTests(TestCase):
         response = self.client.get("/")
         self.assertContains(response, "Незавершённый урок")
         self.assertContains(response, "продолжим с шага 3")
-        self.assertContains(response, 'href="/lesson/quiz/">Продолжить')
+        self.assertContains(response, 'class="compact-button daily-action" href="/lesson/quiz/"')
 
     @patch("polskiflow.auth_views.load_dashboard_progress")
     @patch("polskiflow.auth_views.load_latest_lesson_draft", return_value={"lesson_id": "quiz", "step_index": 2})

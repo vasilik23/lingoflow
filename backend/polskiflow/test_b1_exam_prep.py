@@ -315,9 +315,9 @@ class B1ExamPrepViewTests(TestCase):
         ):
             a2_response = self.client.get("/")
 
-        self.assertContains(b1_response, "Подготовка к государственному B1")
+        self.assertContains(b1_response, "Подготовка к B1")
         self.assertContains(b1_response, 'href="/exam/b1/"')
-        self.assertNotContains(a2_response, "Подготовка к государственному B1")
+        self.assertNotContains(a2_response, 'class="muted today-exam-link"')
 
     @patch("polskiflow.auth_views.tasks", return_value=[
         {"id": "b1-reading-check", "kind": "quiz", "level": "B1", "minutes": 5},
@@ -338,5 +338,7 @@ class B1ExamPrepViewTests(TestCase):
 
         response = self.client.get("/")
 
-        self.assertContains(response, "Фокус: Чтение — последние тренировки 60%")
+        self.assertEqual(response.context['b1_exam_prep']['focus']['percent'], 60)
+        self.assertContains(response, 'href="/exam/b1/"')
+        self.assertNotContains(response, "Фокус:")
         self.assertNotContains(response, "готовность 60%")
