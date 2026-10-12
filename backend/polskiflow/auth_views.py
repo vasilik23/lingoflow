@@ -576,6 +576,12 @@ def practice_hub(request: HttpRequest) -> HttpResponse:
 
 
 @require_browser_user
+def learn_hub(request: HttpRequest) -> HttpResponse:
+    """One entry for learning materials, with no additional account/store reads."""
+    return _no_store(render(request, "learn.html"))
+
+
+@require_browser_user
 def b1_exam_prep(request: HttpRequest) -> HttpResponse:
     """Show an honest study surface aligned with the official adult B1 format."""
     fallback_name = (request.supabase_user.email or "ученик").split("@", 1)[0]

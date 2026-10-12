@@ -3,6 +3,7 @@
 {% block title %}{% translate "Чтение · LingoFlow" %}{% endblock %}
 {% block toolbar_title %}<h1>{% translate "Читай по-польски" %}</h1>{% endblock %}
 {% block content %}
+  {% include "partials/learn_navigation.html" with active="reading" %}
   <header class="content-header">
     <div><p class="eyebrow">Czytelnia</p><p class="muted">{% translate "Короткие адаптированные истории с переводом слов по нажатию." %}</p></div>
     <a class="compact-button news-entry" href="{% url 'news-library' %}">{% translate "Свежие новости →" %}</a>

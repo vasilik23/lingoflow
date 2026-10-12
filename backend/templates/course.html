@@ -3,6 +3,7 @@
 {% block title %}{% translate "Курс · LingoFlow" %}{% endblock %}
 {% block toolbar_title %}<h1>{% translate "Курс польского" %}</h1>{% endblock %}
 {% block content %}
+  {% include "partials/learn_navigation.html" with active="course" %}
   <header class="content-header">
     <div><p class="eyebrow">{% translate "Траектория A1 → C2" %}</p><p class="muted">{% translate "Проходи темы по порядку: слова, грамматика, повторение, чтение и проверка знаний." %}</p></div>
     <a class="compact-button" href="{% url 'practice-hub' %}">{% translate "Все тренажёры →" %}</a>

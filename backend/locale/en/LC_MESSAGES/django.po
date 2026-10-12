@@ -17344,3 +17344,6 @@ msgstr "Up to 6000 characters · writing and speech share 10 AI requests per acc
 
 msgid "Ищем по названиям и описаниям тем, уроков и текстов."
 msgstr "Search covers the titles and descriptions of topics, lessons and texts."
+
+msgid "Учиться"
+msgstr "Learn"
