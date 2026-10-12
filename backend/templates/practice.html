@@ -15,10 +15,10 @@
     </a>
   {% endif %}
   <nav class="practice-quick-links" aria-label="{% translate 'Тренажёры' %}">
-    <a href="{% url 'dictionary-practice' %}"><span aria-hidden="true">◇</span>{% translate "Повторение слов" %}</a>
-    <a href="{% url 'listening-practice' %}"><span aria-hidden="true">◉</span>{% translate "Аудирование" %}</a>
-    <a href="{% url 'writing-practice' %}"><span aria-hidden="true">✎</span>{% translate "Письменная практика" %}</a>
-    <a href="{% url 'interaction-practice' %}"><span aria-hidden="true">↔</span>{% translate "Говорение" %}</a>
+    <a href="{% url 'dictionary-practice' %}"><span aria-hidden="true">{% include 'components/icon.html' with name='words' %}</span>{% translate "Повторение слов" %}</a>
+    <a href="{% url 'listening-practice' %}"><span aria-hidden="true">{% include 'components/icon.html' with name='audio' %}</span>{% translate "Аудирование" %}</a>
+    <a href="{% url 'writing-practice' %}"><span aria-hidden="true">{% include 'components/icon.html' with name='write' %}</span>{% translate "Письменная практика" %}</a>
+    <a href="{% url 'interaction-practice' %}"><span aria-hidden="true">{% include 'components/icon.html' with name='speak' %}</span>{% translate "Говорение" %}</a>
   </nav>
   <details class="practice-catalog">
     <summary>{% translate "Подготовка к B1" %} · {% translate "Карта навыков" %}</summary>

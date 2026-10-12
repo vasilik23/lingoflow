@@ -4,8 +4,8 @@
 {% block toolbar_title %}<h1>{% translate "Учиться" %}</h1>{% endblock %}
 {% block content %}
 <section class="learning-space-grid" aria-label="{% translate 'Учиться' %}">
-  <a class="card learning-space-card" href="{% url 'course' %}"><span aria-hidden="true">◫</span><div><h2>{% translate "Курс" %}</h2><p>{% translate "Темы и уроки" %}</p></div><strong>{% translate "Открыть →" %}</strong></a>
-  <a class="card learning-space-card" href="{% url 'reading-library' %}"><span aria-hidden="true">▤</span><div><h2>{% translate "Чтение" %}</h2><p>{% translate "Короткие адаптированные истории с переводом слов по нажатию." %}</p></div><strong>{% translate "Открыть →" %}</strong></a>
-  <a class="card learning-space-card" href="{% url 'dictionary' %}"><span aria-hidden="true">◇</span><div><h2>{% translate "Словарь" %}</h2><p>{% translate "Повторение слов" %}</p></div><strong>{% translate "Открыть →" %}</strong></a>
+  <a class="card learning-space-card" href="{% url 'course' %}"><span aria-hidden="true">{% include 'components/icon.html' with name='book' %}</span><div><h2>{% translate "Курс" %}</h2><p>{% translate "Темы и уроки" %}</p></div><strong>{% translate "Открыть →" %}</strong></a>
+  <a class="card learning-space-card" href="{% url 'reading-library' %}"><span aria-hidden="true">{% include 'components/icon.html' with name='reading' %}</span><div><h2>{% translate "Чтение" %}</h2><p>{% translate "Короткие адаптированные истории с переводом слов по нажатию." %}</p></div><strong>{% translate "Открыть →" %}</strong></a>
+  <a class="card learning-space-card" href="{% url 'dictionary' %}"><span aria-hidden="true">{% include 'components/icon.html' with name='words' %}</span><div><h2>{% translate "Словарь" %}</h2><p>{% translate "Повторение слов" %}</p></div><strong>{% translate "Открыть →" %}</strong></a>
 </section>
 {% endblock %}

@@ -51,9 +51,9 @@
         </a>
         {% with section=request.resolver_match.url_name|navigation_section %}
         <div class="nav-links">
-          <a href="{% url 'home' %}" class="nav-link {% if section == 'today' %}active{% endif %}"{% if section == 'today' %} aria-current="true"{% endif %}><span class="nav-icon" aria-hidden="true">⌂</span><span>{% translate "Сегодня" %}</span></a>
-          <a href="{% url 'learn-hub' %}" class="nav-link {% if section == 'learn' %}active{% endif %}"{% if section == 'learn' %} aria-current="true"{% endif %}><span class="nav-icon" aria-hidden="true">◫</span><span>{% translate "Учиться" %}</span></a>
-          <a href="{% url 'practice-hub' %}" class="nav-link {% if section == 'practice' %}active{% endif %}"{% if section == 'practice' %} aria-current="true"{% endif %}><span class="nav-icon" aria-hidden="true">◎</span><span>{% translate "Практика" %}</span></a>
+          <a href="{% url 'home' %}" class="nav-link {% if section == 'today' %}active{% endif %}"{% if section == 'today' %} aria-current="true"{% endif %}><span class="nav-icon" aria-hidden="true">{% include 'components/icon.html' with name='home' %}</span><span>{% translate "Сегодня" %}</span></a>
+          <a href="{% url 'learn-hub' %}" class="nav-link {% if section == 'learn' %}active{% endif %}"{% if section == 'learn' %} aria-current="true"{% endif %}><span class="nav-icon" aria-hidden="true">{% include 'components/icon.html' with name='book' %}</span><span>{% translate "Учиться" %}</span></a>
+          <a href="{% url 'practice-hub' %}" class="nav-link {% if section == 'practice' %}active{% endif %}"{% if section == 'practice' %} aria-current="true"{% endif %}><span class="nav-icon" aria-hidden="true">{% include 'components/icon.html' with name='target' %}</span><span>{% translate "Практика" %}</span></a>
         </div>
         {% endwith %}
       </nav>
