@@ -880,7 +880,14 @@ def listening_practice(request: HttpRequest) -> HttpResponse:
         if dialogue_submitted
         else None
     )
-    dialogue = {**LISTENING_DIALOGUE, "questions": dialogue_questions}
+    from django.templatetags.static import static
+    from polskiflow.domain.practice_listening_media import practice_media
+
+    def media_urls(name, content):
+        paths = practice_media(name, content["lines"])
+        return {part: static(path) for part, path in paths.items()} if paths else {}
+
+    dialogue = {**LISTENING_DIALOGUE, "questions": dialogue_questions, "media": media_urls("dialogue", LISTENING_DIALOGUE)}
     b1_answers = {
         question["id"]: request.POST.get(question["id"], "")
         for question in LISTENING_B1["questions"]
@@ -895,7 +902,7 @@ def listening_practice(request: HttpRequest) -> HttpResponse:
         for question in LISTENING_B1["questions"]
     )
     b1_submitted = submitted and any(b1_answers.values())
-    b1_listening = {**LISTENING_B1, "questions": b1_questions}
+    b1_listening = {**LISTENING_B1, "questions": b1_questions, "media": media_urls("b1", LISTENING_B1)}
     b2_answers = {
         question["id"]: request.POST.get(question["id"], "")
         for question in LISTENING_B2["questions"]
@@ -910,7 +917,7 @@ def listening_practice(request: HttpRequest) -> HttpResponse:
         for question in LISTENING_B2["questions"]
     )
     b2_submitted = submitted and any(b2_answers.values())
-    b2_listening = {**LISTENING_B2, "questions": b2_questions}
+    b2_listening = {**LISTENING_B2, "questions": b2_questions, "media": media_urls("b2", LISTENING_B2)}
     return render(
         request,
         "listening.html",

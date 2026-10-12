@@ -18289,3 +18289,12 @@ msgstr "Odpowiedzi do wyboru wymagają co najmniej 4 różnych słów z tego tek
 
 msgid "Передай смысл"
 msgstr "Przekaż sens"
+
+msgid "Не удалось воспроизвести аудио. Попробуй ещё раз."
+msgstr "Nie udało się odtworzyć dźwięku. Spróbuj ponownie."
+
+msgid "Аудио загружается…"
+msgstr "Wczytywanie dźwięku…"
+
+msgid "Синтетическая польская озвучка eSpeak-NG. Это учебный аудиофайл, не запись диктора."
+msgstr "Syntetyczna polska mowa eSpeak-NG. To edukacyjny plik audio, a nie nagranie lektora."

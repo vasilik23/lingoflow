@@ -1,0 +1,54 @@
+{
+  "engine": "eSpeak-NG Emscripten 0.3.5",
+  "voice": "pl",
+  "rate": 155,
+  "created_at": "2026-10-12",
+  "clips": {
+    "dialogue-full": {
+      "path": "polskiflow/audio/practice/dialogue-full.m4a",
+      "transcript_sha256": "a599b9f87a2f97025521c4a9e2333dd5edf96860286d050878aad09ef06ed2e2",
+      "sha256": "26f61c36590cc2683fe923e634ee085caf77deb35fb88182908826a112315022",
+      "duration_seconds": 19.245351473922902
+    },
+    "dialogue-fragment-0": {
+      "path": "polskiflow/audio/practice/dialogue-fragment-0.m4a",
+      "transcript_sha256": "3230b2a016320b2d53067a550d9ce57acd9f976a6bdf41188a9dde0a76a5a980",
+      "sha256": "0066353cf77184611b6a997a5941f42d9217baf6cbe39f40e4c6d8d4dbe24778",
+      "duration_seconds": 3.8308843537414967
+    },
+    "dialogue-fragment-1": {
+      "path": "polskiflow/audio/practice/dialogue-fragment-1.m4a",
+      "transcript_sha256": "12ed9da5022663ce4c397d80c9e6a9d62ba7f4dabf73722f326374926530fb15",
+      "sha256": "fd0c3dadf0b6ed48a889fa68911d30aadc10175efa8cfbea206db525d4532ec1",
+      "duration_seconds": 6.121269841269841
+    },
+    "dialogue-fragment-2": {
+      "path": "polskiflow/audio/practice/dialogue-fragment-2.m4a",
+      "transcript_sha256": "e26d0321a95a8bc62931cb6e860c9d6fe97d071c25279c2bfefe0068a676688c",
+      "sha256": "5ed649abd6db79c2c6504687b63a88e43178d819d57b865050e25292e97e65dd",
+      "duration_seconds": 4.117913832199546
+    },
+    "dialogue-fragment-3": {
+      "path": "polskiflow/audio/practice/dialogue-fragment-3.m4a",
+      "transcript_sha256": "f80df0d18d2449db696a0c3cdecce45be05bba821786eae27bb75048d99fa522",
+      "sha256": "a1a705c9d64356e0da2cbe822d2a70f1b9f5c22056da387058289bc2d82259f4",
+      "duration_seconds": 4.111337868480725
+    },
+    "b1-full": {
+      "path": "polskiflow/audio/practice/b1-full.m4a",
+      "transcript_sha256": "f7b21b0587b58b7037735b8265f698f344fd35393f827974feba5741119cd9e2",
+      "sha256": "d7307402632e12154d2a3f41815ee9f986db74f2f7596fd5e99c9245bb65ac15",
+      "duration_seconds": 34.33478458049887
+    },
+    "b2-full": {
+      "path": "polskiflow/audio/practice/b2-full.m4a",
+      "transcript_sha256": "3f0513a0ed67ada5c14a55e9b844f5e637b2b19df790fb0fd961a29e8c92c919",
+      "sha256": "662481623bb06db9c48cbd4b18fe69090c5b803933255bcbbf842f91ace73c76",
+      "duration_seconds": 39.478956916099776
+    }
+  },
+  "origin": "original",
+  "created_for": "LingoFlow",
+  "verified_at": "2026-10-12",
+  "verification": "automated transcript checksums and non-silent media decode; no independent pronunciation review"
+}

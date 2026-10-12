@@ -17408,3 +17408,12 @@ msgstr "Multiple-choice answers need at least 4 different words from this text. 
 
 msgid "Передай смысл"
 msgstr "Convey the meaning"
+
+msgid "Не удалось воспроизвести аудио. Попробуй ещё раз."
+msgstr "Could not play the audio. Try again."
+
+msgid "Аудио загружается…"
+msgstr "Loading audio…"
+
+msgid "Синтетическая польская озвучка eSpeak-NG. Это учебный аудиофайл, не запись диктора."
+msgstr "Synthetic Polish speech by eSpeak-NG. This is a practice audio file, not a narrator recording."
