@@ -1368,3 +1368,23 @@ button.secondary { background: var(--surface); border-color: var(--line); }
 .learning-section-nav { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 1rem; }
 .learning-section-nav a { padding: .5rem .8rem; border: 1px solid var(--line); border-radius: .7rem; color: var(--text); text-decoration: none; }
 .learning-section-nav a[aria-current] { background: var(--primary-soft); color: var(--primary-dark); border-color: var(--primary); font-weight: 700; }
+
+/* Explicit radio dimensions avoid Safari's flex intrinsic sizing. */
+.placement-option input[type="radio"], .diagnostic-check input[type="radio"], .listening-options input[type="radio"] {
+  width: 1.1rem; height: 1.1rem; min-height: 0; padding: 0;
+  flex: 0 0 1.1rem; margin: .15rem 0 0; accent-color: var(--primary);
+}
+.diagnostic-check span, .listening-options label > span { min-width: 0; flex: 1; }
+.listening-dialogue > fieldset, .listening-card { min-width: 0; }
+.listening-dialogue > fieldset { margin: 1.25rem 0 0; padding: .85rem; border: 1px solid var(--line); border-radius: .85rem; }
+.listening-dialogue legend { max-width: 100%; padding-inline: .35rem; font-weight: 800; }
+nav.reading-audio-actions { margin-bottom: 1rem; }
+.listening-dialogue-player .reading-audio-actions, .listening-fragments { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: .85rem; }
+.listening-fragments .compact-button { background: var(--surface-soft); color: var(--text); border: 1px solid var(--line); }
+.listening-list fieldset.listening-card { margin: 1.25rem 0 0; padding: .85rem; border: 1px solid var(--line); border-radius: .85rem; }
+.practice-intro-row > a, .daily-goal-summary > a, .today-exam-link > a, .content-tool-panel .muted > a {
+  display: inline-flex; align-items: center; min-height: 2.75rem; padding: .35rem .65rem;
+  border: 1px solid var(--line); border-radius: .65rem; color: var(--text);
+  background: var(--surface-soft); font-weight: 700; text-decoration: none;
+}
+.content-tool-panel textarea { width: 100%; min-width: 0; padding: .75rem; border: 1px solid var(--line); border-radius: .75rem; background: var(--surface); color: var(--text); font: inherit; }
