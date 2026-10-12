@@ -688,7 +688,7 @@ class ReadingViewsTests(TestCase):
             "/dictionary/practice/?source=test-story&mode=lemma"
         )
 
-        self.assertContains(response, "Выбери польскую лемму")
+        self.assertContains(response, "Выбери слово по-польски")
         self.assertContains(response, ">дом<")
         self.assertContains(response, ">dom<")
         self.assertContains(response, "Слово 1 из 1")
@@ -719,7 +719,7 @@ class ReadingViewsTests(TestCase):
         response = self.client.get("/dictionary/practice/?source=test-story")
 
         self.assertContains(response, "На сегодня всё")
-        self.assertNotContains(response, "Выбери польскую лемму")
+        self.assertNotContains(response, "Выбери слово по-польски")
 
     def test_reader_practice_rejects_unknown_source(self):
         response = self.client.get("/dictionary/practice/?source=unknown-story")

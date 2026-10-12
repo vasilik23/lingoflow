@@ -1,2 +1,2 @@
 {% load i18n ui %}
-{% if saved %}<p class="save-success">✓ «{{ word|ui_text }}{% translate "» теперь в словаре" %}</p><a class="compact-button saved-word-practice" href="{{ practice_url }}">{% translate "Тренировать слова текста →" %}</a>{% else %}<p class="save-error">{% translate "Не удалось сохранить. Попробуйте ещё раз." %}</p>{% endif %}
+{% if saved %}<p class="save-success">✓ «{{ word|ui_text }}{% translate "» теперь в словаре" %}</p><a class="compact-button saved-word-practice" href="{{ practice_url }}">{% translate "Повторить слова текста →" %}</a>{% else %}<p class="save-error">{% translate "Не удалось сохранить. Попробуйте ещё раз." %}</p>{% endif %}

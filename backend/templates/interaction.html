@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% load i18n ui static %}
-{% block title %}{% translate "Взаимодействие и медиация · LingoFlow" %}{% endblock %}
+{% block title %}{% translate "Говорение" %} · LingoFlow{% endblock %}
 {% block content %}
   <header class="content-header interaction-header">
-    <div><p class="eyebrow">{% translate "Практика B1–B2" %}</p><h1>{% translate "Взаимодействие и медиация" %}</h1><p class="muted">{% translate "Выбирай реплику, которая помогает договориться, сохраняет смысл и учитывает адресата." %}</p></div>
+    <div><p class="eyebrow">{% translate "Практика B1–B2" %}</p><h1>{% translate "Говорение" %}</h1><p class="muted">{% translate "Выбирай реплику, которая помогает договориться, сохраняет смысл и учитывает адресата." %}</p></div>
     <a class="compact-button" href="{% url 'course' %}?level=B1">{% translate "К курсу →" %}</a>
   </header>
 
@@ -59,7 +59,7 @@
   <div class="interaction-list">
     {% for scenario in scenarios %}
       <article class="card interaction-card" id="scenario-{{ scenario.id }}">
-        <header><span>{{ scenario.level|ui_text }}</span><span>{{ scenario.mode|ui_text }}</span></header>
+        <header><span>{{ scenario.level|ui_text }}</span><span>{% if scenario.mode == "Медиация" %}{% translate "Передай смысл" %}{% else %}{{ scenario.mode|ui_text }}{% endif %}</span></header>
         <h2>{{ scenario.title|ui_text }}</h2>
         <p>{{ scenario.situation|ui_text }}</p>
         <form method="post" action="{% url 'interaction-practice' %}#scenario-{{ scenario.id }}">

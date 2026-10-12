@@ -10,7 +10,7 @@
 {% if not answered %}
   <form class="options" method="post" action="{% url 'dictionary-practice-step' %}">
     {% csrf_token %}<input type="hidden" name="action" value="answer"><input type="hidden" name="index" value="{{ index }}"><input type="hidden" name="score" value="{{ score }}">
-    {% if question.typed %}<label class="typed-answer"><span>{% translate "Польская лемма" %}</span><input type="text" name="answer" autocomplete="off" autocapitalize="none" spellcheck="false" required autofocus></label><button class="button" type="submit">{% translate "Проверить" %}</button>{% else %}{% for option in question.options %}<button type="submit" name="choice" value="{{ forloop.counter0 }}">{{ option|learning_text }}</button>{% endfor %}{% endif %}
+    {% if question.typed %}<label class="typed-answer"><span>{% translate "Слово по-польски" %}</span><input type="text" name="answer" autocomplete="off" autocapitalize="none" spellcheck="false" required autofocus></label><button class="button" type="submit">{% translate "Проверить" %}</button>{% else %}{% for option in question.options %}<button type="submit" name="choice" value="{{ forloop.counter0 }}">{{ option|learning_text }}</button>{% endfor %}{% endif %}
   </form>
 {% else %}
   {% if not question.typed %}<div class="options practice-answered">

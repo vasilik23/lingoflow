@@ -18243,3 +18243,49 @@ msgstr "Sprawdź, czy uwzględniasz wszystkie punkty zadania."
 
 msgid "Перечитай ответ и проверь смысл и грамматику."
 msgstr "Przeczytaj odpowiedź ponownie i sprawdź sens oraz gramatykę."
+
+msgid "Слово добавлено в словарь. Повтори его, чтобы лучше запомнить."
+msgstr "Słowo zostało dodane do słownika. Powtórz je, aby lepiej je zapamiętać."
+
+msgid "Повторяй сохранённые слова. Приложение подскажет, когда вернуться к ним."
+msgstr "Powtarzaj zapisane słowa. Aplikacja podpowie, kiedy do nich wrócić."
+
+msgid "Повторить слова текста →"
+msgstr "Powtórz słowa z tekstu →"
+
+msgid "Слово по-польски"
+msgstr "Słowo po polsku"
+
+msgid "Введите слово по-польски"
+msgstr "Wpisz słowo po polsku"
+
+msgid "Впиши слово вместо пропуска"
+msgstr "Wpisz słowo w lukę"
+
+msgid "Впиши слово по-польски"
+msgstr "Wpisz słowo po polsku"
+
+msgid "Выбери слово по-польски"
+msgstr "Wybierz słowo po polsku"
+
+msgid "Проверить объём и структуру"
+msgstr "Sprawdź długość i strukturę"
+
+msgid "Объём и структура"
+msgstr "Długość i struktura"
+
+msgid "Слова и выражения: "
+msgstr "Słowa i wyrażenia: "
+
+msgid "Проверены только объём, абзацы и указанные выражения. Грамматику, смысл и стиль нужно проверить отдельно."
+msgstr "Sprawdzono tylko długość, akapity i wskazane wyrażenia. Gramatykę, sens i styl trzeba sprawdzić osobno."
+
+msgid " к повторению"
+msgstr " do powtórki"
+
+
+msgid "Для вариантов ответа нужно минимум 4 разных слова из этого текста. Сейчас сохранено:"
+msgstr "Odpowiedzi do wyboru wymagają co najmniej 4 różnych słów z tego tekstu. Zapisano:"
+
+msgid "Передай смысл"
+msgstr "Przekaż sens"

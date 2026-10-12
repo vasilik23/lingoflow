@@ -6,7 +6,7 @@
     <header class="lesson-header"><a class="back-button" href="{% url 'dictionary' %}" aria-label="{% translate "Назад" %}">←</a><strong>{% translate "Тренировка слов" %}</strong><span></span></header>
     <nav class="level-tabs practice-mode-tabs" aria-label="{% translate "Режим тренировки" %}">
       <a href="{{ mode_urls.translation }}"{% if mode == "translation" %} aria-current="page"{% endif %}>{% translate "Перевод" %}</a>
-      <a href="{{ mode_urls.lemma }}"{% if mode == "lemma" %} aria-current="page"{% endif %}>{% translate "Лемма" %}</a>
+      <a href="{{ mode_urls.lemma }}"{% if mode == "lemma" %} aria-current="page"{% endif %}>{% translate "Слово по-польски" %}</a>
       <a href="{{ mode_urls.context }}"{% if mode == "context" %} aria-current="page"{% endif %}>{% translate "В контексте" %}</a>
     </nav>
     <div id="practice-flow">
