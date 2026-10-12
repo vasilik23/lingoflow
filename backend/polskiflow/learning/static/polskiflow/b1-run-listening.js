@@ -93,7 +93,10 @@
     current.onend = () => { if (current === utterance) settled(state.used < limit ? ui('Сообщение завершено. Перед повтором — пауза 30 секунд для ответов.') : ui('Два прослушивания использованы. Ответь на вопросы.')); };
     current.onerror = () => { if (current === utterance) settled(started ? ui('Воспроизведение прервано; начатое прослушивание учтено.') : ui('Голос не запустился; прослушивание не потрачено. Попробуй ещё раз или пропусти часть.')); };
     watchdog = setTimeout(() => { if (!started && current === utterance) cancel(ui('Голос не запустился; прослушивание не потрачено. Можно попробовать ещё раз.')); }, 10000);
-    try { speechSynthesis.speak(current); }
+    try {
+      window.PolskiFlowAudioSession?.prepareSpeech(current);
+      speechSynthesis.speak(current);
+    }
     catch (_) { cancel(ui('Системный голос недоступен; прослушивание не потрачено.')); }
   });
   stop.addEventListener('click', () => cancel(ui('Воспроизведение остановлено. Начатое прослушивание учтено; перед повтором — пауза 30 секунд.')));

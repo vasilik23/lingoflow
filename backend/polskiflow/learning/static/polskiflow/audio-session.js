@@ -1,11 +1,17 @@
 (() => {
   let captures = 0;
+  let currentSpeech = null;
   const setType = type => {
     // Older browsers do not expose AudioSession; recording must still work.
     try { if (navigator.audioSession) navigator.audioSession.type = type; } catch (_) {}
   };
   const playback = () => { if (!captures) setType('playback'); };
   window.PolskiFlowAudioSession = {
+    prepareSpeech(utterance) {
+      // Keep the active utterance alive while Safari owns its callbacks.
+      currentSpeech = utterance || null;
+      playback();
+    },
     beginCapture() {
       captures++;
       setType('play-and-record');
@@ -26,6 +32,7 @@
     },
   };
   // Includes saved answers and native controls, without autoplaying a clip.
+  window.addEventListener?.('pagehide', () => { currentSpeech = null; });
   document.addEventListener('play', event => {
     if (event.target.tagName === 'AUDIO') playback();
   }, true);

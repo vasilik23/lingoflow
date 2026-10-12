@@ -109,6 +109,7 @@
         current.onend = () => { if (utterance === current) reset(ui('Текст прослушан')); };
         current.onerror = () => { if (utterance === current) reset(ui('Не удалось запустить системный польский голос')); };
         play.textContent = ui('↻ Сначала'); pause.disabled = false; stop.disabled = false; status.textContent = ui('Воспроизведение');
+        window.PolskiFlowAudioSession?.prepareSpeech(current);
         speechSynthesis.speak(current);
       });
       pause.addEventListener('click', () => { if (speechSynthesis.paused) { speechSynthesis.resume(); pause.textContent = ui('Ⅱ Пауза'); status.textContent = ui('Воспроизведение'); } else { speechSynthesis.pause(); pause.textContent = ui('▶ Продолжить'); status.textContent = ui('Пауза'); } });

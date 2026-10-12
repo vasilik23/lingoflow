@@ -13,7 +13,11 @@ for (const mode of ['supported', 'missing', 'throws']) {
   }}};
   vm.runInNewContext(source, context);
   const session = context.window.PolskiFlowAudioSession;
+  session.prepareSpeech();
+  if (mode === 'supported') assert.equal(navigator.audioSession.type, 'playback', 'speech uses the playback session');
   const release = session.beginCapture();
+  session.prepareSpeech();
+  if (mode === 'supported') assert.equal(navigator.audioSession.type, 'play-and-record', 'speech must not interrupt capture');
   const secondRelease = session.beginCapture();
   release(); release();
   play({target: {tagName: 'AUDIO'}});

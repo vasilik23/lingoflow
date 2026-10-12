@@ -157,6 +157,7 @@
         utterance.rate = Number(rate.value);
         utterance.onend = () => { status.textContent = ui('Прослушано: ') + label; };
         utterance.onerror = () => { status.textContent = ui('Не удалось запустить системный польский голос'); };
+        window.PolskiFlowAudioSession?.prepareSpeech(utterance);
         speechSynthesis.speak(utterance);
         repeat.disabled = false;
         status.textContent = ui('Воспроизведение: ') + label;
@@ -182,7 +183,8 @@
           utterance.rate = Number(b1Player.querySelector('[data-b1-rate]').value);
           utterance.onend = () => { b1Status.textContent = ui('Запись B1 прослушана'); };
           utterance.onerror = () => { b1Status.textContent = ui('Не удалось запустить системный польский голос'); };
-          speechSynthesis.speak(utterance);
+          window.PolskiFlowAudioSession?.prepareSpeech(utterance);
+        speechSynthesis.speak(utterance);
           b1Repeat.disabled = false;
           b1Status.textContent = ui('Воспроизведение записи B1');
         };
@@ -203,7 +205,8 @@
           utterance.rate = Number(b2Player.querySelector('[data-b2-rate]').value);
           utterance.onend = () => { b2Status.textContent = ui('Запись B2 прослушана'); };
           utterance.onerror = () => { b2Status.textContent = ui('Не удалось запустить системный польский голос'); };
-          speechSynthesis.speak(utterance);
+          window.PolskiFlowAudioSession?.prepareSpeech(utterance);
+        speechSynthesis.speak(utterance);
           b2Repeat.disabled = false;
           b2Status.textContent = ui('Воспроизведение записи B2');
         };
