@@ -17,16 +17,16 @@
   {% endif %}
   <form method="post" class="listening-list">
     {% csrf_token %}
-    <section class="card listening-dialogue" id="a1-a2-listening" tabindex="-1" aria-labelledby="dialogue-title">
-      <p class="eyebrow">{% translate "Мини-диалог ·" %} {{ dialogue.level|ui_text }}</p>
-      <h2 id="dialogue-title">{{ dialogue.title|ui_text }}</h2>
+    <input type="hidden" name="active_section" data-listening-active value="{{ listening_active_section }}">
+    <details class="card listening-dialogue" name="listening-level" data-listening-level id="a1-a2-listening" tabindex="-1" aria-labelledby="dialogue-title"{% if listening_active_section == "a1-a2-listening" %} open{% endif %}>
+      <summary class="listening-level-summary"><h2 id="dialogue-title"><span class="level-badge">{{ dialogue.level|ui_text }}</span> {{ dialogue.title|ui_text }} <span aria-hidden="true">⌄</span></h2></summary>
       {{ dialogue.media|json_script:"dialogue-listening-media" }}
       {{ dialogue.lines|json_script:"listening-dialogue-lines" }}
       <div class="listening-dialogue-player" data-dialogue-player data-media-id="dialogue-listening-media" hidden>
         <p class="muted" data-dialogue-status aria-live="polite">{% translate "Готово к воспроизведению" %}</p>
         <div class="reading-audio-actions">
           <button type="button" data-dialogue-play>{% translate "▶ Весь диалог" %}</button>
-          <button type="button" data-dialogue-repeat disabled>{% translate "↻ Повторить фрагмент" %}</button>
+          <button type="button" class="secondary" data-dialogue-repeat disabled>{% translate "↻ Повторить фрагмент" %}</button>
           <button type="button" class="secondary" data-listening-stop disabled>{% translate "Остановить" %}</button>
           <label><span>{% translate "Скорость" %}</span><select data-dialogue-rate><option value="0.75">0,75×</option><option value="1" selected>1×</option><option value="1.15">1,15×</option></select></label>
         </div>
@@ -49,18 +49,17 @@
           {% if dialogue_submitted %}<p class="listening-feedback {% if question.is_correct %}is-correct{% else %}is-wrong{% endif %}">{% if question.is_correct %}{% translate "Верно." %}{% else %}{% translate "Правильный ответ:" %} <strong>{{ question.answer|ui_text }}</strong>.{% endif %} {{ question.explanation|ui_text }}</p>{% endif %}
         </fieldset>
       {% endfor %}
-      <p class="muted listening-audio-note">{% translate "Синтетическая польская озвучка eSpeak-NG. Это учебный аудиофайл, не запись диктора." %}</p>
-    </section>
-    <section class="card listening-dialogue" id="b1-listening" tabindex="-1" aria-labelledby="b1-listening-title">
-      <p class="eyebrow">{% translate "Связная речь ·" %} {{ b1_listening.level|ui_text }}</p>
-      <h2 id="b1-listening-title">{{ b1_listening.title|ui_text }}</h2>
+      <p class="muted listening-audio-note">{% translate "Нейросетевая польская озвучка Piper. Это учебный аудиофайл, не запись диктора." %}</p>
+    </details>
+    <details class="card listening-dialogue" name="listening-level" data-listening-level id="b1-listening" tabindex="-1" aria-labelledby="b1-listening-title"{% if listening_active_section == "b1-listening" %} open{% endif %}>
+      <summary class="listening-level-summary"><h2 id="b1-listening-title"><span class="level-badge">{{ b1_listening.level|ui_text }}</span> {{ b1_listening.title|ui_text }} <span aria-hidden="true">⌄</span></h2></summary>
       {{ b1_listening.media|json_script:"b1-listening-media" }}
       {{ b1_listening.lines|json_script:"b1-listening-lines" }}
       <div class="listening-dialogue-player" data-b1-player data-media-id="b1-listening-media" hidden>
         <p class="muted" data-b1-status aria-live="polite">{% translate "Готово к воспроизведению" %}</p>
         <div class="reading-audio-actions">
           <button type="button" data-b1-play>{% translate "▶ Прослушать" %}</button>
-          <button type="button" data-b1-repeat disabled>{% translate "↻ Повторить" %}</button>
+          <button type="button" class="secondary" data-b1-repeat disabled>{% translate "↻ Повторить" %}</button>
           <button type="button" class="secondary" data-listening-stop disabled>{% translate "Остановить" %}</button>
           <label><span>{% translate "Скорость" %}</span><select data-b1-rate><option value="0.75">0,75×</option><option value="1" selected>1×</option><option value="1.15">1,15×</option></select></label>
         </div>
@@ -75,23 +74,22 @@
         <fieldset class="listening-card">
           <legend>{{ question.prompt|ui_text }}</legend>
           <div class="listening-options">
-            {% for option in question.options %}<label><input type="radio" name="{{ question.id }}" value="{{ option|ui_text }}" {% if question.selected == option %}checked{% endif %}> {{ option|ui_text }}</label>{% endfor %}
+            {% for option in question.options %}<label><input type="radio" name="{{ question.id }}" value="{{ option|ui_text }}" {% if question.selected == option %}checked{% endif %} required> {{ option|ui_text }}</label>{% endfor %}
           </div>
           {% if b1_submitted %}<p class="listening-feedback {% if question.is_correct %}is-correct{% else %}is-wrong{% endif %}">{% if question.is_correct %}{% translate "Верно." %}{% else %}{% translate "Правильный ответ:" %} <strong>{{ question.answer|ui_text }}</strong>.{% endif %} {{ question.explanation|ui_text }}</p>{% endif %}
         </fieldset>
       {% endfor %}
-      <p class="muted listening-audio-note">{% translate "Синтетическая польская озвучка eSpeak-NG. Это учебный аудиофайл, не запись диктора." %}</p>
-    </section>
-    <section class="card listening-dialogue" id="b2-listening" tabindex="-1" aria-labelledby="b2-listening-title">
-      <p class="eyebrow">{% translate "Связная речь ·" %} {{ b2_listening.level|ui_text }}</p>
-      <h2 id="b2-listening-title">{{ b2_listening.title|ui_text }}</h2>
+      <p class="muted listening-audio-note">{% translate "Нейросетевая польская озвучка Piper. Это учебный аудиофайл, не запись диктора." %}</p>
+    </details>
+    <details class="card listening-dialogue" name="listening-level" data-listening-level id="b2-listening" tabindex="-1" aria-labelledby="b2-listening-title"{% if listening_active_section == "b2-listening" %} open{% endif %}>
+      <summary class="listening-level-summary"><h2 id="b2-listening-title"><span class="level-badge">{{ b2_listening.level|ui_text }}</span> {{ b2_listening.title|ui_text }} <span aria-hidden="true">⌄</span></h2></summary>
       {{ b2_listening.media|json_script:"b2-listening-media" }}
       {{ b2_listening.lines|json_script:"b2-listening-lines" }}
       <div class="listening-dialogue-player" data-b2-player data-media-id="b2-listening-media" hidden>
         <p class="muted" data-b2-status aria-live="polite">{% translate "Готово к воспроизведению" %}</p>
         <div class="reading-audio-actions">
           <button type="button" data-b2-play>{% translate "▶ Прослушать" %}</button>
-          <button type="button" data-b2-repeat disabled>{% translate "↻ Повторить" %}</button>
+          <button type="button" class="secondary" data-b2-repeat disabled>{% translate "↻ Повторить" %}</button>
           <button type="button" class="secondary" data-listening-stop disabled>{% translate "Остановить" %}</button>
           <label><span>{% translate "Скорость" %}</span><select data-b2-rate><option value="0.75">0,75×</option><option value="1" selected>1×</option><option value="1.15">1,15×</option></select></label>
         </div>
@@ -106,14 +104,14 @@
         <fieldset class="listening-card">
           <legend>{{ question.prompt|ui_text }}</legend>
           <div class="listening-options">
-            {% for option in question.options %}<label><input type="radio" name="{{ question.id }}" value="{{ option|ui_text }}" {% if question.selected == option %}checked{% endif %}> {{ option|ui_text }}</label>{% endfor %}
+            {% for option in question.options %}<label><input type="radio" name="{{ question.id }}" value="{{ option|ui_text }}" {% if question.selected == option %}checked{% endif %} required> {{ option|ui_text }}</label>{% endfor %}
           </div>
           {% if b2_submitted %}<p class="listening-feedback {% if question.is_correct %}is-correct{% else %}is-wrong{% endif %}">{% if question.is_correct %}{% translate "Верно." %}{% else %}{% translate "Правильный ответ:" %} <strong>{{ question.answer|ui_text }}</strong>.{% endif %} {{ question.explanation|ui_text }}</p>{% endif %}
         </fieldset>
       {% endfor %}
-      <p class="muted listening-audio-note">{% translate "Синтетическая польская озвучка eSpeak-NG. Это учебный аудиофайл, не запись диктора." %}</p>
-    </section>
-    <h2 id="listening-words" tabindex="-1">{% translate "Отдельные слова · A1" %}</h2>
+      <p class="muted listening-audio-note">{% translate "Нейросетевая польская озвучка Piper. Это учебный аудиофайл, не запись диктора." %}</p>
+    </details>
+    <details class="card listening-word-level" name="listening-level" data-listening-level id="listening-words"{% if listening_active_section == "listening-words" %} open{% endif %}><summary class="listening-level-summary"><h2>{% translate "Отдельные слова · A1" %} <span aria-hidden="true">⌄</span></h2></summary>
     {% for item in listening_items %}
       <fieldset class="card listening-card">
         <legend>{% translate "Запись" %} {{ forloop.counter|ui_text }}</legend>
@@ -134,7 +132,8 @@
         {% endif %}
       </fieldset>
     {% endfor %}
-    <button class="primary-button" type="submit">{% translate "Проверить ответы" %}</button>
+    </details>
+    <button class="primary-button" data-listening-check type="submit">{% translate "Проверить ответы" %}</button>
   </form>
   <aside class="card audio-attribution" aria-labelledby="audio-sources-title">
     <h2 id="audio-sources-title">{% translate "Источники записей" %}</h2>

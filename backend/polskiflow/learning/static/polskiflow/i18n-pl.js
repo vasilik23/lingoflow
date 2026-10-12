@@ -2036,6 +2036,7 @@ window.PolskiFlowPolishMessages = {
   "Неизвестный режим времени.": "Nieznany tryb czasu.",
   "Неизвестный сценарий.": "Nieznany scenariusz.",
   "Неизвестный формат задания.": "Nieznany format zadania.",
+  "Нейросетевая польская озвучка Piper. Это учебный аудиофайл, не запись диктора.": "Polska mowa neuronowa Piper. To edukacyjny plik audio, a nie nagranie lektora.",
   "Нейтральная версия сохраняет главное опасение — недостаток времени — но не приписывает Анне критику человека или отказ от работы.": "Neutralna wersja zachowuje główną obawę — brak czasu — ale nie przypisuje Annie krytyki człowieka ani odmowy pracy.",
   "Нейтрально передать позицию": "Neutralnie przekaż stanowisko",
   "Нейтральный пересказ": "Neutralna relacja",

@@ -150,7 +150,7 @@ class LessonViewsTests(TestCase):
         self.assertContains(page, "текстовую альтернативу")
         self.assertContains(page, "data-dialogue-rate")
         self.assertContains(page, "data-dialogue-repeat")
-        self.assertContains(page, "Синтетическая польская озвучка eSpeak-NG")
+        self.assertContains(page, "Нейросетевая польская озвучка Piper")
         self.assertContains(page, "dialogue-full.m4a")
 
         result = self.client.post(
@@ -192,6 +192,22 @@ class LessonViewsTests(TestCase):
         self.assertContains(result, "2 / 3")
         self.assertContains(result, "Новый детский игровой комплекс")
         self.assertContains(result, "Слово «najpierw» вводит первый пункт встречи")
+
+    def test_listening_b1_submission_does_not_grade_unattempted_word_exercise(self):
+        page = self.client.post("/listening/", {
+            "active_section": "b1-listening",
+            "b1_listening_reason": "Из-за прогноза сильного дождя",
+            "b1_listening_plan": "Новый детский игровой комплекс",
+            "b1_listening_action": "Подтвердить участие",
+        })
+        self.assertContains(page, "3 / 3")
+        self.assertFalse(page.context["submitted"])
+        self.assertEqual(page.context["listening_active_section"], "b1-listening")
+        self.assertNotContains(page, "Все слова распознаны")
+
+    def test_listening_unknown_section_is_not_used_as_a_dom_target(self):
+        page = self.client.post("/listening/", {"active_section": "<script>"})
+        self.assertEqual(page.context["listening_active_section"], "a1-a2-listening")
 
     def test_listening_pilot_includes_original_b2_speech_with_permanent_transcript(self):
         page = self.client.get("/listening/")
@@ -787,7 +803,7 @@ class LessonViewsTests(TestCase):
 
         response = self.client.get("/?minutes=30")
 
-        self.assertContains(response, "Cześć, Василий!")
+        self.assertContains(response, "<h1>Сегодня</h1>", html=True)
         self.assertContains(response, "Уровень A2")
         self.assertNotContains(response, "4 дн. подряд")
         self.assertContains(response, "2 из 4")

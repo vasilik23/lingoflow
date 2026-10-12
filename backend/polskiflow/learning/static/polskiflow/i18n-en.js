@@ -1989,6 +1989,7 @@ window.PolskiFlowEnglishMessages = {
   "Неизвестный режим времени.": "Unknown timeline.",
   "Неизвестный сценарий.": "Unknown script.",
   "Неизвестный формат задания.": "Unknown task format.",
+  "Нейросетевая польская озвучка Piper. Это учебный аудиофайл, не запись диктора.": "Neural Polish speech by Piper. This is a practice audio file, not a narrator recording.",
   "Нейтральная версия сохраняет главное опасение — недостаток времени — но не приписывает Анне критику человека или отказ от работы.": "The neutral version retains the main concern - lack of time - but does not attribute to Anna criticism of the person or refusal to work.",
   "Нейтрально передать позицию": "Neutrally transfer position",
   "Нейтральный пересказ": "Neutral retelling",
