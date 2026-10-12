@@ -22,7 +22,7 @@
       <p class="assembled-sentence">{% for word in builder_answer_words %}<span lang="{{ word|learning_language }}">{{ word|ui_text }}</span>{% if not forloop.last %} {% endif %}{% endfor %}</p>
       {% if not builder_correct %}<p class="correct-sentence">{% translate "Правильно:" %} <strong lang="{{ builder_correct_sentence|learning_language }}">{{ builder_correct_sentence|ui_text }}</strong></p>{% endif %}
     </div>
-    <p class="card feedback"><span lang="{{ question.explanation|learning_language:study_ui_language }}">{{ question.explanation|learning_markup }}</span></p>
+    <p class="card feedback lesson-feedback"><span lang="{{ question.explanation|explanation_language }}">{{ question.explanation|explanation_markup }}</span></p>
     <form method="post" action="{% url 'lesson-step' lesson_id %}">
       {% csrf_token %}<input type="hidden" name="action" value="next"><input type="hidden" name="state" value="{{ lesson_state }}"><input type="hidden" name="answer_order" value="{{ builder_answer_json }}"><button>{% if index|add:1 == total %}{% translate "Завершить урок" %}{% else %}{% translate "Следующий вопрос →" %}{% endif %}</button>
     </form>
@@ -33,10 +33,10 @@
     {% for option in question.options %}<button type="submit" name="choice" value="{{ forloop.counter0 }}"><span>{{ forloop.counter|ui_text }}.</span>&nbsp; <span lang="{{ option|learning_language }}">{{ option|learning_markup }}</span></button>{% endfor %}
   </form>
 {% else %}
-  <div class="options">
-    {% for option in question.options %}<button disabled class="{% if forloop.counter0 == question.correct %}correct{% elif forloop.counter0 == selected %}wrong{% endif %}"><span lang="{{ option|learning_language }}">{{ option|learning_markup }}</span>{% if forloop.counter0 == question.correct %} — {{ correct_label|cut:":" }}{% endif %}{% if forloop.counter0 == selected %} — {{ selected_label|cut:":" }}{% endif %}</button>{% endfor %}
+  <div class="options lesson-answer-review">
+    {% for option in question.options %}<button type="button" disabled class="{% if forloop.counter0 == question.correct %}correct{% elif forloop.counter0 == selected %}wrong{% endif %}"><span class="lesson-answer-text" lang="{{ option|learning_language }}">{{ option|learning_markup }}</span>{% if forloop.counter0 == question.correct or forloop.counter0 == selected %}<span class="lesson-answer-status">{% if forloop.counter0 == question.correct %}<span>{{ correct_label|cut:":" }}</span>{% endif %}{% if forloop.counter0 == selected %}<span>{{ selected_label|cut:":" }}</span>{% endif %}</span>{% endif %}</button>{% endfor %}
   </div>
-  <p class="card feedback" data-lesson-feedback tabindex="-1"><strong>{% if selected == question.correct %}{% translate "Верно! 🎉" %}{% else %}{% translate "Неверно" %}{% endif %}</strong><br><span lang="{{ question.explanation|learning_language:study_ui_language }}">{{ question.explanation|learning_markup }}</span></p>
+  <div class="card feedback lesson-feedback" data-lesson-feedback tabindex="-1"><strong>{% if selected == question.correct %}{% translate "Верно! 🎉" %}{% else %}{% translate "Неверно" %}{% endif %}</strong><p lang="{{ question.explanation|explanation_language }}">{{ question.explanation|explanation_markup }}</p></div>
   <form method="post" action="{% url 'lesson-step' lesson_id %}">
     {% csrf_token %}<input type="hidden" name="action" value="next"><input type="hidden" name="state" value="{{ lesson_state }}"><button>{% if index|add:1 == total %}{% translate "Завершить урок" %}{% else %}{% translate "Следующий вопрос →" %}{% endif %}</button>
   </form>
