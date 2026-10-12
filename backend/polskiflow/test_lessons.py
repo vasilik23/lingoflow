@@ -635,7 +635,7 @@ class LessonViewsTests(TestCase):
         self.assertContains(response, 'data-writing-href="/lesson/bio-grammar/"')
         self.assertContains(response, 'data-writing-href="/lesson/b1work-grammar/"')
         self.assertContains(response, "Открыть урок:")
-        self.assertContains(response, 'href="/course/?level=B1&kind=grammar"')
+        self.assertNotContains(response, 'href="/course/?level=B1&kind=grammar"')
         self.assertContains(response, "Это один возможный ответ")
 
     def test_writing_practice_supports_b2_and_separates_local_storage(self):

@@ -8,25 +8,19 @@
     <a class="compact-button" href="{% url 'course' %}?level={{ selected_writing_level }}">{% translate "К темам" %} {{ selected_writing_level|ui_text }} →</a>
   </header>
 
+  <details class="card filter-panel writing-options"><summary>{% translate "Уровень письменной практики" %} · {{ selected_writing_level }}</summary>
   <p><a class="compact-button" href="{% url 'b1-exam-writing' %}">{% translate "Экзаменационное письмо B1" %} →</a></p>
   <nav class="course-levels writing-levels" aria-label="{% translate "Уровень письменной практики" %}">
     {% for level in writing_levels %}<a href="?level={{ level.id }}"{% if level.id == selected_writing_level %} aria-current="page"{% endif %}><strong>{{ level.id|ui_text }}</strong><small>{{ level.prompt_count|ui_text }} {% translate "заданий" %}</small></a>{% endfor %}
   </nav>
+  </details>
 
-  <section class="card writing-focus-summary" aria-labelledby="writing-focus-title" data-writing-focus-summary>
-    <div>
-      <p class="eyebrow">{% translate "Персональное закрепление" %}</p>
-      <h2 id="writing-focus-title">{% translate "Что повторить после самопроверки" %}</h2>
-      <p class="muted" data-writing-focus-empty>{% translate "Отметь замеченные языковые ошибки после черновика — здесь появится короткий план без отправки текста на сервер." %}</p>
-      <ol data-writing-focus-list hidden></ol>
-    </div>
-    <a class="compact-button" href="{% url 'course' %}?level={{ selected_writing_level }}&kind=grammar">{% translate "Открыть грамматику" %} {{ selected_writing_level|ui_text }}</a>
-  </section>
+
 
   <section class="card writing-workspace" aria-label="{% translate "Редактор письменного ответа" %}">
     <label for="writing-prompt">{% translate "Выбери задание" %}</label>
     <select id="writing-prompt" class="writing-prompt-select">
-      {% for prompt in writing_prompts %}<option value="{{ prompt.id }}"><span lang="{{ prompt.title|learning_language }}">{{ prompt.title|learning_markup }}</span></option>{% endfor %}
+      {% for prompt in writing_prompts %}<option value="{{ prompt.id }}" lang="{{ prompt.title|learning_language }}">{{ prompt.title|learning_text }}</option>{% endfor %}
     </select>
 
     {% for prompt in writing_prompts %}
@@ -40,26 +34,26 @@
             <ul>{% for requirement in prompt.requirements %}<li><span lang="{{ requirement|learning_language }}">{{ requirement|learning_markup }}</span></li>{% endfor %}</ul>
           </section>
         {% endif %}
-        <p class="writing-hint"><strong>{% translate "Ориентир:" %}</strong> <span lang="{{ prompt.hint|learning_language }}">{{ prompt.hint|learning_markup }}</span></p>
+        <details class="writing-hint"><summary>{% translate "Ориентир:" %}</summary><p> <span lang="{{ prompt.hint|learning_language }}">{{ prompt.hint|learning_markup }}</span></p></details>
         <label for="draft-{{ prompt.id }}">{% translate "Твой черновик" %}</label>
         <textarea id="draft-{{ prompt.id }}" rows="12" data-writing-draft="{{ prompt.id }}" lang="pl" aria-describedby="draft-help-{{ prompt.id }}"></textarea>
         <div class="writing-draft-meta" id="draft-help-{{ prompt.id }}">
           <span data-word-count aria-live="polite">{% translate "0 слов" %}</span>
           <span data-save-status role="status">{% translate "Черновик сохраняется только в этом браузере" %}</span>
         </div>
-        {% include "partials/ai_writing_review.html" with ai_token=prompt.ai_token ai_editor="draft-"|add:prompt.id %}
+
+        <div class="writing-feedback-actions">
+          <button type="button" data-check-draft>{% translate "Проверить по критериям" %}</button>
+        </div>
+        <div class="writing-feedback" data-writing-feedback role="status" tabindex="-1" aria-live="polite" hidden></div>
+        <section data-writing-self-check hidden>
+        <details class="writing-self-check"><summary id="revision-{{ prompt.id }}">{% translate "Разбор после черновика" %}</summary>
         <fieldset class="writing-checklist">
           <legend>{% translate "Самопроверка для этого жанра" %}</legend>
           {% for criterion in prompt.checklist %}<label><input type="checkbox"> <span lang="{{ criterion|learning_language }}">{{ criterion|learning_markup }}</span></label>{% endfor %}
         </fieldset>
-        <div class="writing-feedback-actions">
-          <button type="button" data-check-draft>{% translate "Проверить по критериям" %}</button>
-          <button class="secondary writing-reset" type="button" data-reset-draft>{% translate "Удалить этот черновик" %}</button>
-        </div>
-        <div class="writing-feedback" data-writing-feedback role="status" aria-live="polite" hidden></div>
         {% if prompt.requirements %}
           <section class="writing-revision" data-writing-revision hidden aria-labelledby="revision-{{ prompt.id }}">
-            <h3 id="revision-{{ prompt.id }}">{% translate "Разбор после черновика" %}</h3>
             <p class="muted">{% translate "Сначала отметь выполненные пункты, затем выбери зоны, где сам заметил ошибки. Эти отметки остаются только в этом браузере." %}</p>
             <div class="writing-review-grid">
               <fieldset>
@@ -74,8 +68,20 @@
             <details class="writing-sample"><summary>{% translate "Показать пример ответа после своей попытки" %}</summary><p lang="pl">{{ prompt.sample_answer|ui_text }}</p><p class="muted">{% translate "Это один возможный ответ. Сравни структуру и выполнение пунктов, а не копируй текст." %}</p></details>
           </section>
         {% endif %}
+        </details>
+        </section>
+        {% include "partials/ai_writing_review.html" with ai_token=prompt.ai_token ai_editor="draft-"|add:prompt.id %}
+        <details class="writing-tools"><summary>{% translate "Дополнительные действия" %}</summary><button class="secondary writing-reset" type="button" data-reset-draft>{% translate "Удалить этот черновик" %}</button></details>
       </div>
     {% endfor %}
+  </section>
+  <section class="card writing-focus-summary" aria-labelledby="writing-focus-title" data-writing-focus-summary hidden>
+    <div>
+      <p class="eyebrow">{% translate "Персональное закрепление" %}</p>
+      <h2 id="writing-focus-title">{% translate "Что повторить после самопроверки" %}</h2>
+      <p class="muted" data-writing-focus-empty>{% translate "Отметь замеченные языковые ошибки после черновика — здесь появится короткий план без отправки текста на сервер." %}</p>
+      <ol data-writing-focus-list hidden></ol>
+    </div>
   </section>
 {% endblock %}
 {% block scripts %}
@@ -105,7 +111,7 @@
         });
         const priorities = Array.from(counts.entries()).sort(function (left, right) {
           return right[1].count - left[1].count || left[0].localeCompare(right[0], document.documentElement.lang);
-        }).slice(0, 3);
+        }).slice(0, 1);
         const list = focusSummary.querySelector("[data-writing-focus-list]");
         const empty = focusSummary.querySelector("[data-writing-focus-empty]");
         list.replaceChildren();
@@ -119,6 +125,7 @@
           item.append(title, action);
           list.append(item);
         });
+        focusSummary.hidden = priorities.length === 0;
         empty.hidden = priorities.length > 0;
         list.hidden = priorities.length === 0;
       }
@@ -151,7 +158,13 @@
         result.innerHTML = ui("<strong>Проверка видимых признаков</strong><ul>") + checks.map(function (check) {
           return "<li class=\"" + (check.passed ? "passed" : "missing") + "\">" + (check.passed ? "✓ " : ui("Нужно проверить: ")) + check.text + "</li>";
         }).join("") + ui("</ul><p>Это техническая подсказка, а не оценка преподавателя: перечитай текст и отдельно проверь грамматику, смысл и стиль.</p>");
+        const next = document.createElement('p');
+        next.dataset.writingNextStep = '';
+        next.textContent = !checks[0].passed ? ui('Допиши текст до нужного объёма.') : !checks[1].passed ? ui('Раздели текст на абзацы.') : !checks[2].passed ? ui('Проверь, раскрыты ли все пункты задания.') : ui('Перечитай ответ и проверь смысл и грамматику.');
+        result.append(next);
         result.hidden = false;
+        panel.querySelector('[data-writing-self-check]').hidden = false;
+        result.focus();
         const revision = panel.querySelector("[data-writing-revision]");
         if (revision) revision.hidden = false;
       }
@@ -169,6 +182,10 @@
         updateCount(panel, textarea.value);
         textarea.addEventListener("input", function () {
           updateCount(panel, textarea.value);
+          panel.querySelector("[data-writing-feedback]").hidden = true;
+          panel.querySelector("[data-writing-self-check]").hidden = true;
+          const revision = panel.querySelector("[data-writing-revision]");
+          if (revision) revision.hidden = true;
           try { localStorage.setItem(key, textarea.value); status.textContent = ui("Черновик сохранён в этом браузере"); }
           catch (error) { status.textContent = ui("Не удалось сохранить черновик локально"); }
         });
@@ -194,6 +211,7 @@
           try { localStorage.removeItem(reviewKey); } catch (error) { /* Отметки уже сняты в интерфейсе. */ }
           updateCount(panel, "");
           panel.querySelector("[data-writing-feedback]").hidden = true;
+          panel.querySelector("[data-writing-self-check]").hidden = true;
           const revision = panel.querySelector("[data-writing-revision]");
           if (revision) revision.hidden = true;
           status.textContent = ui("Черновик удалён");
@@ -202,7 +220,16 @@
         });
       });
       updateFocusSummary();
-      select.addEventListener("change", function () { showPrompt(select.value); });
+      const selectedKey = storagePrefix + 'selected-prompt';
+      try {
+        const saved = localStorage.getItem(selectedKey);
+        if (panels.some(panel => panel.dataset.writingPrompt === saved)) select.value = saved;
+      } catch (error) { /* Draft storage status already explains unavailable storage. */ }
+      showPrompt(select.value);
+      select.addEventListener("change", function () {
+        showPrompt(select.value);
+        try { localStorage.setItem(selectedKey, select.value); } catch (error) { /* Drafts keep their own storage status. */ }
+      });
     }());
   </script>
 {% endblock %}

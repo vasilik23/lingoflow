@@ -7,6 +7,13 @@ from django.utils.safestring import mark_safe
 
 
 class StudyLanguageTests(SimpleTestCase):
+    def test_writing_selector_uses_plain_escaped_text(self):
+        with override('ru'):
+            html = render_to_string('writing.html', {'writing_prompts': [{
+                'id': 'example', 'title': 'Текст «Jak się masz?» <b>пример</b>',
+            }], 'selected_writing_level': 'A1'})
+            self.assertIn('<option value="example" lang="ru">Текст «Jak się masz?» &lt;b&gt;пример&lt;/b&gt;</option>', html)
+
     def test_writing_support_marks_display_language_and_preserves_attributes(self):
         prompt = {'id': 'example', 'title': 'Как неформально поздороваться?',
                   'task': 'Выберите ответ на «Jak się masz?»', 'hint': 'Личная заметка, которой нет в каталоге',

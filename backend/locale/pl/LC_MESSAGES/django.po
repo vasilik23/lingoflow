@@ -18228,3 +18228,18 @@ msgstr "liczebnik"
 
 msgid "Учиться"
 msgstr "Nauka"
+
+msgid "Дополнительные действия"
+msgstr "Dodatkowe działania"
+
+msgid "Допиши текст до нужного объёма."
+msgstr "Uzupełnij tekst do wymaganej długości."
+
+msgid "Раздели текст на абзацы."
+msgstr "Podziel tekst na akapity."
+
+msgid "Проверь, раскрыты ли все пункты задания."
+msgstr "Sprawdź, czy uwzględniasz wszystkie punkty zadania."
+
+msgid "Перечитай ответ и проверь смысл и грамматику."
+msgstr "Przeczytaj odpowiedź ponownie i sprawdź sens oraz gramatykę."

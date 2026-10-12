@@ -17347,3 +17347,18 @@ msgstr "Search covers the titles and descriptions of topics, lessons and texts."
 
 msgid "Учиться"
 msgstr "Learn"
+
+msgid "Дополнительные действия"
+msgstr "More actions"
+
+msgid "Допиши текст до нужного объёма."
+msgstr "Expand your draft to the required length."
+
+msgid "Раздели текст на абзацы."
+msgstr "Split your draft into paragraphs."
+
+msgid "Проверь, раскрыты ли все пункты задания."
+msgstr "Check that you address every task requirement."
+
+msgid "Перечитай ответ и проверь смысл и грамматику."
+msgstr "Reread your answer and check its meaning and grammar."
