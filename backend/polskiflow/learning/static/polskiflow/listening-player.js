@@ -4,6 +4,7 @@
   let active = null;
   const players = [];
   const cancel = message => {
+    window.PolskiFlowAudioSession?.stopSpeech?.();
     if (active) {
       clearTimeout(active.timer);
       active.utterance.onstart = active.utterance.onend = active.utterance.onerror = null;

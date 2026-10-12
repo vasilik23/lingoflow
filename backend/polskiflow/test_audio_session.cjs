@@ -9,7 +9,7 @@ for (const mode of ['supported', 'missing', 'throws']) {
   if (mode === 'throws') navigator.audioSession = {set type(_) {throw new Error('unsupported');}};
   let play;
   const context = {navigator, window: {}, document: {addEventListener(name, callback, capture) {
-    assert.equal(name, 'play'); assert.equal(capture, true); play = callback;
+    if (name === 'play') { assert.equal(capture, true); play = callback; } else assert.equal(name, 'visibilitychange');
   }}};
   vm.runInNewContext(source, context);
   const session = context.window.PolskiFlowAudioSession;
