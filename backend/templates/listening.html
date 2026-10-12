@@ -26,6 +26,7 @@
         <div class="reading-audio-actions">
           <button type="button" data-dialogue-play>{% translate "▶ Весь диалог" %}</button>
           <button type="button" data-dialogue-repeat disabled>{% translate "↻ Повторить фрагмент" %}</button>
+          <button type="button" class="secondary" data-listening-stop disabled>{% translate "Остановить" %}</button>
           <label><span>{% translate "Скорость" %}</span><select data-dialogue-rate><option value="0.75">0,75×</option><option value="1" selected>1×</option><option value="1.15">1,15×</option></select></label>
         </div>
         <div class="listening-fragments" aria-label="{% translate "Фрагменты диалога" %}">
@@ -58,6 +59,7 @@
         <div class="reading-audio-actions">
           <button type="button" data-b1-play>{% translate "▶ Прослушать" %}</button>
           <button type="button" data-b1-repeat disabled>{% translate "↻ Повторить" %}</button>
+          <button type="button" class="secondary" data-listening-stop disabled>{% translate "Остановить" %}</button>
           <label><span>{% translate "Скорость" %}</span><select data-b1-rate><option value="0.75">0,75×</option><option value="1" selected>1×</option><option value="1.15">1,15×</option></select></label>
         </div>
       </div>
@@ -87,6 +89,7 @@
         <div class="reading-audio-actions">
           <button type="button" data-b2-play>{% translate "▶ Прослушать" %}</button>
           <button type="button" data-b2-repeat disabled>{% translate "↻ Повторить" %}</button>
+          <button type="button" class="secondary" data-listening-stop disabled>{% translate "Остановить" %}</button>
           <label><span>{% translate "Скорость" %}</span><select data-b2-rate><option value="0.75">0,75×</option><option value="1" selected>1×</option><option value="1.15">1,15×</option></select></label>
         </div>
       </div>
@@ -136,83 +139,5 @@
   </aside>
 {% endblock %}
 {% block scripts %}
-  <script>
-    (() => {
-  const ui = (typeof window !== "undefined" && window.PolskiFlowI18n?.t) || ((text, ...values) => Array.isArray(text) ? text.map((part, i) => part + (values[i] ?? "")).join("") : text);
-
-      const player = document.querySelector('[data-dialogue-player]');
-      if (!player || !('speechSynthesis' in window) || !('SpeechSynthesisUtterance' in window)) return;
-      player.hidden = false;
-      const lines = JSON.parse(document.querySelector('#listening-dialogue-lines').textContent);
-      const play = player.querySelector('[data-dialogue-play]');
-      const repeat = player.querySelector('[data-dialogue-repeat]');
-      const rate = player.querySelector('[data-dialogue-rate]');
-      const status = player.querySelector('[data-dialogue-status]');
-      let lastText = lines.join(' ');
-      const speak = (text, label) => {
-        speechSynthesis.cancel();
-        lastText = text;
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'pl-PL';
-        utterance.rate = Number(rate.value);
-        utterance.onend = () => { status.textContent = ui('Прослушано: ') + label; };
-        utterance.onerror = () => { status.textContent = ui('Не удалось запустить системный польский голос'); };
-        window.PolskiFlowAudioSession?.prepareSpeech(utterance);
-        speechSynthesis.speak(utterance);
-        repeat.disabled = false;
-        status.textContent = ui('Воспроизведение: ') + label;
-      };
-      play.addEventListener('click', () => speak(lines.join(' '), ui('весь диалог')));
-      repeat.addEventListener('click', () => speak(lastText, ui('последний фрагмент')));
-      player.querySelectorAll('[data-dialogue-fragment]').forEach((button) => button.addEventListener('click', () => {
-        const index = Number(button.dataset.dialogueFragment);
-        speak(lines[index], ui`фрагмент ${index + 1}`);
-      }));
-      window.addEventListener('pagehide', () => speechSynthesis.cancel());
-
-      const b1Player = document.querySelector('[data-b1-player]');
-      if (b1Player) {
-        b1Player.hidden = false;
-        const b1Lines = JSON.parse(document.querySelector('#b1-listening-lines').textContent);
-        const b1Status = b1Player.querySelector('[data-b1-status]');
-        const b1Repeat = b1Player.querySelector('[data-b1-repeat]');
-        const speakB1 = () => {
-          speechSynthesis.cancel();
-          const utterance = new SpeechSynthesisUtterance(b1Lines.join(' '));
-          utterance.lang = 'pl-PL';
-          utterance.rate = Number(b1Player.querySelector('[data-b1-rate]').value);
-          utterance.onend = () => { b1Status.textContent = ui('Запись B1 прослушана'); };
-          utterance.onerror = () => { b1Status.textContent = ui('Не удалось запустить системный польский голос'); };
-          window.PolskiFlowAudioSession?.prepareSpeech(utterance);
-        speechSynthesis.speak(utterance);
-          b1Repeat.disabled = false;
-          b1Status.textContent = ui('Воспроизведение записи B1');
-        };
-        b1Player.querySelector('[data-b1-play]').addEventListener('click', speakB1);
-        b1Repeat.addEventListener('click', speakB1);
-      }
-
-      const b2Player = document.querySelector('[data-b2-player]');
-      if (b2Player) {
-        b2Player.hidden = false;
-        const b2Lines = JSON.parse(document.querySelector('#b2-listening-lines').textContent);
-        const b2Status = b2Player.querySelector('[data-b2-status]');
-        const b2Repeat = b2Player.querySelector('[data-b2-repeat]');
-        const speakB2 = () => {
-          speechSynthesis.cancel();
-          const utterance = new SpeechSynthesisUtterance(b2Lines.join(' '));
-          utterance.lang = 'pl-PL';
-          utterance.rate = Number(b2Player.querySelector('[data-b2-rate]').value);
-          utterance.onend = () => { b2Status.textContent = ui('Запись B2 прослушана'); };
-          utterance.onerror = () => { b2Status.textContent = ui('Не удалось запустить системный польский голос'); };
-          window.PolskiFlowAudioSession?.prepareSpeech(utterance);
-        speechSynthesis.speak(utterance);
-          b2Repeat.disabled = false;
-          b2Status.textContent = ui('Воспроизведение записи B2');
-        };
-        b2Player.querySelector('[data-b2-play]').addEventListener('click', speakB2);
-        b2Repeat.addEventListener('click', speakB2);
-      }
-    })();
-  </script>
+  <script src="{% static 'polskiflow/listening-player.js' %}?shell={{ pwa_shell_version }}" defer></script>
 {% endblock %}
