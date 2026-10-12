@@ -70,6 +70,17 @@ class AISpeakingTests(SimpleTestCase):
 
     @patch("polskiflow.ai_speaking_views.transcribe_audio")
     @patch("polskiflow.ai_speaking_views.review_speaking")
+    def test_transcript_feedback_language_follows_interface(self, review, transcribe):
+        review.return_value = {"pronunciation_assessed": False}
+        for language in ("ru", "pl", "en"):
+            with self.subTest(language=language):
+                self.client.cookies["django_language"] = language
+                self.assertEqual(self.review().status_code, 200)
+                review.assert_called_with(self.assignment, "Mam problem", language)
+        transcribe.assert_not_called()
+
+    @patch("polskiflow.ai_speaking_views.transcribe_audio")
+    @patch("polskiflow.ai_speaking_views.review_speaking")
     def test_disabled_unavailable_and_limited_requests_never_call_provider(self, review, transcribe):
         with override_settings(GROQ_SPEAKING_ENABLED=False):
             self.assertEqual(self.upload().status_code, 503)

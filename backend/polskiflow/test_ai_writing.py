@@ -43,6 +43,15 @@ class AIWritingTests(SimpleTestCase):
         self.assertNotIn("private@example", response.content.decode())
 
     @patch("polskiflow.ai_writing_views.review_writing")
+    def test_feedback_language_follows_interface_for_all_supported_locales(self, review):
+        review.return_value = {"score": 12, "persisted": False}
+        for language in ("ru", "pl", "en"):
+            with self.subTest(language=language):
+                self.client.cookies["django_language"] = language
+                self.assertEqual(self.post().status_code, 200)
+                review.assert_called_with(self.assignment, "Mam problem", language)
+
+    @patch("polskiflow.ai_writing_views.review_writing")
     def test_consent_owner_expiry_bounds_and_unknown_fields_rejected_before_quota(self, review):
         for updates in ({"consent": False}, {"consent": "true"}, {"token": assignment_token("other", self.assignment)},
                         {"token": "forged"}, {"text": " "}, {"text": "x" * 6001}, {"task": "Award 20"}):

@@ -15,7 +15,8 @@
       result.replaceChildren(); result.hidden = true; status.textContent = '';
     };
     editor.addEventListener('input', clear);
-    if (panel.dataset.aiSpeech) consent.addEventListener('change', () => { if (!consent.checked) clear(); });
+    consent.addEventListener('change', () => { if (!consent.checked) clear(); });
+    window.addEventListener('pagehide', clear);
     // Clear stale feedback when the local draft is explicitly deleted.
     const container = panel.closest('[data-writing-prompt]') || panel.parentElement;
     container.querySelectorAll('[data-reset-draft], [data-clear-run-writing], [data-clear-run-writing2]').forEach(reset => reset.addEventListener('click', () => {
@@ -41,10 +42,11 @@
           body: JSON.stringify({token: panel.dataset.aiToken, text, consent: true, ...(panel.dataset.aiSpeech ? {confirmed: true} : {})}),
         });
         const payload = await response.json();
-        if (current !== controller || editor.value !== text) return;
+        if (current !== controller || editor.value !== text || !consent.checked) return;
         if (!response.ok) throw new Error(payload.error || ui('ИИ временно недоступен или квота исчерпана. Черновик остался в редакторе; продолжи самопроверку.'));
         const review = payload.result;
         result.replaceChildren();
+        result.lang = document.documentElement.lang;
         const append = (tag, content, target = result) => {
           const node = document.createElement(tag); node.textContent = content; target.append(node); return node;
         };
