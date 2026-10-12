@@ -20,8 +20,9 @@
     <section class="card listening-dialogue" id="a1-a2-listening" tabindex="-1" aria-labelledby="dialogue-title">
       <p class="eyebrow">{% translate "Мини-диалог ·" %} {{ dialogue.level|ui_text }}</p>
       <h2 id="dialogue-title">{{ dialogue.title|ui_text }}</h2>
+      {{ dialogue.media|json_script:"dialogue-listening-media" }}
       {{ dialogue.lines|json_script:"listening-dialogue-lines" }}
-      <div class="listening-dialogue-player" data-dialogue-player hidden>
+      <div class="listening-dialogue-player" data-dialogue-player data-media-id="dialogue-listening-media" hidden>
         <p class="muted" data-dialogue-status aria-live="polite">{% translate "Готово к воспроизведению" %}</p>
         <div class="reading-audio-actions">
           <button type="button" data-dialogue-play>{% translate "▶ Весь диалог" %}</button>
@@ -48,13 +49,14 @@
           {% if dialogue_submitted %}<p class="listening-feedback {% if question.is_correct %}is-correct{% else %}is-wrong{% endif %}">{% if question.is_correct %}{% translate "Верно." %}{% else %}{% translate "Правильный ответ:" %} <strong>{{ question.answer|ui_text }}</strong>.{% endif %} {{ question.explanation|ui_text }}</p>{% endif %}
         </fieldset>
       {% endfor %}
-      <p class="muted listening-audio-note">{% translate "Звук создаёт системный польский голос браузера из оригинального текста LingoFlow; доступность и тембр голоса зависят от устройства." %}</p>
+      <p class="muted listening-audio-note">{% translate "Синтетическая польская озвучка eSpeak-NG. Это учебный аудиофайл, не запись диктора." %}</p>
     </section>
     <section class="card listening-dialogue" id="b1-listening" tabindex="-1" aria-labelledby="b1-listening-title">
       <p class="eyebrow">{% translate "Связная речь ·" %} {{ b1_listening.level|ui_text }}</p>
       <h2 id="b1-listening-title">{{ b1_listening.title|ui_text }}</h2>
+      {{ b1_listening.media|json_script:"b1-listening-media" }}
       {{ b1_listening.lines|json_script:"b1-listening-lines" }}
-      <div class="listening-dialogue-player" data-b1-player hidden>
+      <div class="listening-dialogue-player" data-b1-player data-media-id="b1-listening-media" hidden>
         <p class="muted" data-b1-status aria-live="polite">{% translate "Готово к воспроизведению" %}</p>
         <div class="reading-audio-actions">
           <button type="button" data-b1-play>{% translate "▶ Прослушать" %}</button>
@@ -78,13 +80,14 @@
           {% if b1_submitted %}<p class="listening-feedback {% if question.is_correct %}is-correct{% else %}is-wrong{% endif %}">{% if question.is_correct %}{% translate "Верно." %}{% else %}{% translate "Правильный ответ:" %} <strong>{{ question.answer|ui_text }}</strong>.{% endif %} {{ question.explanation|ui_text }}</p>{% endif %}
         </fieldset>
       {% endfor %}
-      <p class="muted listening-audio-note">{% translate "Звук создаёт системный голос" %} <span lang="pl">pl-PL</span> {% translate "из оригинального текста LingoFlow. Голос, тембр и доступность зависят от браузера и устройства; это не студийная запись." %}</p>
+      <p class="muted listening-audio-note">{% translate "Синтетическая польская озвучка eSpeak-NG. Это учебный аудиофайл, не запись диктора." %}</p>
     </section>
     <section class="card listening-dialogue" id="b2-listening" tabindex="-1" aria-labelledby="b2-listening-title">
       <p class="eyebrow">{% translate "Связная речь ·" %} {{ b2_listening.level|ui_text }}</p>
       <h2 id="b2-listening-title">{{ b2_listening.title|ui_text }}</h2>
+      {{ b2_listening.media|json_script:"b2-listening-media" }}
       {{ b2_listening.lines|json_script:"b2-listening-lines" }}
-      <div class="listening-dialogue-player" data-b2-player hidden>
+      <div class="listening-dialogue-player" data-b2-player data-media-id="b2-listening-media" hidden>
         <p class="muted" data-b2-status aria-live="polite">{% translate "Готово к воспроизведению" %}</p>
         <div class="reading-audio-actions">
           <button type="button" data-b2-play>{% translate "▶ Прослушать" %}</button>
@@ -108,7 +111,7 @@
           {% if b2_submitted %}<p class="listening-feedback {% if question.is_correct %}is-correct{% else %}is-wrong{% endif %}">{% if question.is_correct %}{% translate "Верно." %}{% else %}{% translate "Правильный ответ:" %} <strong>{{ question.answer|ui_text }}</strong>.{% endif %} {{ question.explanation|ui_text }}</p>{% endif %}
         </fieldset>
       {% endfor %}
-      <p class="muted listening-audio-note">{% translate "Звук создаёт системный голос" %} <span lang="pl">pl-PL</span> {% translate "из оригинального текста LingoFlow. Это тренировка понимания связной речи, но не студийная запись: голос и тембр зависят от браузера и устройства." %}</p>
+      <p class="muted listening-audio-note">{% translate "Синтетическая польская озвучка eSpeak-NG. Это учебный аудиофайл, не запись диктора." %}</p>
     </section>
     <h2 id="listening-words" tabindex="-1">{% translate "Отдельные слова · A1" %}</h2>
     {% for item in listening_items %}

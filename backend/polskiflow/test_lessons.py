@@ -150,7 +150,8 @@ class LessonViewsTests(TestCase):
         self.assertContains(page, "текстовую альтернативу")
         self.assertContains(page, "data-dialogue-rate")
         self.assertContains(page, "data-dialogue-repeat")
-        self.assertContains(page, "системный польский голос браузера")
+        self.assertContains(page, "Синтетическая польская озвучка eSpeak-NG")
+        self.assertContains(page, "dialogue-full.m4a")
 
         result = self.client.post(
             "/listening/",
@@ -174,7 +175,8 @@ class LessonViewsTests(TestCase):
         self.assertContains(page, "Ponieważ prognoza zapowiada silny deszcz")
         self.assertContains(page, "data-b1-play")
         self.assertContains(page, "systemowy głos", count=0)
-        self.assertContains(page, "это не студийная запись")
+        self.assertContains(page, "не запись диктора")
+        self.assertContains(page, "b1-full.m4a")
 
         result = self.client.post(
             "/listening/",
@@ -198,7 +200,8 @@ class LessonViewsTests(TestCase):
         self.assertContains(page, 'aria-label="Постоянный транскрипт B2"')
         self.assertContains(page, "Choć część zespołu proponowała całkowitą pracę zdalną")
         self.assertContains(page, "data-b2-play")
-        self.assertContains(page, "не студийная запись")
+        self.assertContains(page, "не запись диктора")
+        self.assertContains(page, "b2-full.m4a")
 
         result = self.client.post(
             "/listening/",
