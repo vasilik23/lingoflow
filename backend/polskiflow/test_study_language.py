@@ -2,11 +2,34 @@ from django.template.loader import render_to_string
 from django.test import SimpleTestCase
 from django.utils.translation import override
 
-from polskiflow.learning.templatetags.ui import learning_language, learning_markup, learning_text
+from polskiflow.learning.templatetags.ui import learning_language, learning_markup, learning_text, explanation_text, explanation_language
 from django.utils.safestring import mark_safe
 
 
 class StudyLanguageTests(SimpleTestCase):
+    def test_russian_explanation_overlay_keeps_canonical_questions_intact(self):
+        source = 'Mimo że łączy fakt ograniczający z wnioskiem, który pozostaje aktualny.'
+        with override('ru'):
+            self.assertEqual(learning_text(source), source)
+            self.assertIn('Союз', explanation_text(source))
+            self.assertEqual(explanation_language(source), 'ru')
+            html = render_to_string('lessons/_question.html', {'question': {
+                'prompt': 'Wybierz.', 'options': ['zasługują na'], 'correct': 0,
+                'explanation': source}, 'selected': 0, 'index': 0, 'total': 1, 'lesson_id': 'quiz'})
+            self.assertIn('<span lang="pl">Mimo że</span>', html)
+            self.assertIn('<p lang="ru">Союз', html)
+            self.assertIn('class="lesson-answer-status"', html)
+            self.assertIn('class="lesson-answer-text" lang="pl">zasługują na', html)
+        for language in ('pl', 'en'):
+            with override(language):
+                self.assertEqual(explanation_text(source), learning_text(source))
+
+    def test_unknown_explanation_is_not_fabricated_and_marks_source_language(self):
+        with override('ru'):
+            self.assertEqual(explanation_text('Nieznane wyjaśnienie.'), 'Nieznane wyjaśnienie.')
+            self.assertEqual(explanation_language('Nieznane wyjaśnienie.'), 'pl')
+            self.assertEqual(explanation_language('Пояснение'), 'ru')
+
     def test_daily_review_description_translates_without_technical_terms(self):
         for language, expected in [('ru', '2 слова к повторению'), ('pl', '2 słowa do powtórki'), ('en', '2 words to review')]:
             with self.subTest(language=language), override(language):
@@ -123,8 +146,8 @@ class StudyLanguageTests(SimpleTestCase):
             html = render_to_string('lessons/_question.html', {'question': question, 'index': 0,
                 'total': 1, 'lesson_id': 'quiz', 'selected': 0, 'LANGUAGE_CODE': 'en'})
             self.assertIn('<h2 lang="en">How do you greet someone informally?</h2>', html)
-            self.assertIn('<span lang="pl">Cześć</span>', html)
-            self.assertIn('<span lang="ru">Личная заметка', html)
+            self.assertIn('<span class="lesson-answer-text" lang="pl">Cześć</span>', html)
+            self.assertIn('<p lang="ru">Личная заметка', html)
             card = render_to_string('lessons/_flashcard.html', {'card': {'polish': 'Dziękuję',
                 'translation': 'спасибо', 'example': 'Dziękuję za pomoc.'},
                 'index': 0, 'total': 1, 'lesson_id': 'words', 'revealed': True, 'LANGUAGE_CODE': 'en'})

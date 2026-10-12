@@ -61,7 +61,7 @@ p { line-height: 1.65; }
 .skip-link:focus { transform: translateY(0); }
 :where(a, button, input, select, textarea, summary):focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
 
-.page-shell { width: min(100% - 2rem, 70rem); margin: 0 auto; padding: 1.5rem 0 6.5rem; }
+.page-shell { width: min(100% - 2rem, 70rem); margin: 0 auto; padding: 1.5rem 0 calc(6.5rem + env(safe-area-inset-bottom)); }
 .page-shell.with-nav { padding-top: 5rem; }
 .page-shell:not(.with-nav) { min-height: 100vh; display: grid; place-items: center; padding-block: 2rem; }
 .muted { color: var(--muted); }
@@ -689,6 +689,16 @@ button.secondary { background: var(--surface); border-color: var(--line); }
 .options button.correct { border-color: var(--green); background: var(--green-soft); color: #176b47; }
 .options button.wrong { border-color: var(--red); background: var(--red-soft); color: #a52f46; }
 .feedback { margin-top: .8rem; padding: 1rem; border-left: 4px solid var(--primary); }
+.lesson-answer-review button { display: grid; justify-items: start; gap: .4rem; }
+.lesson-answer-text { min-width: 0; max-width: 100%; overflow-wrap: break-word; }
+.lesson-answer-status { display: flex; flex-wrap: wrap; gap: .3rem .8rem; font-size: .78rem; line-height: 1.4; font-weight: 600; }
+.lesson-feedback { box-shadow: none; }
+.lesson-feedback p { margin: .45rem 0 0; line-height: 1.6; }
+[data-lesson-feedback]:focus { outline: 2px solid var(--primary); outline-offset: -2px; box-shadow: none; }
+.lesson-feedback:focus { border-color: var(--primary); }
+[data-lesson-feedback] { scroll-margin-block: 1rem calc(11rem + env(safe-area-inset-bottom)); }
+.sentence-builder-controls { scroll-margin-block: 1rem calc(6.5rem + env(safe-area-inset-bottom)); }
+@media (min-width: 1000px) { [data-lesson-feedback] { scroll-margin-bottom: 1rem; } }
 .feedback-layout { display: grid; gap: 1.25rem; align-items: start; }
 .feedback-form { margin: 0; }
 .feedback-history-list { display: grid; gap: .75rem; margin: 0; padding: 0; list-style: none; }

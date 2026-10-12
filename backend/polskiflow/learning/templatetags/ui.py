@@ -70,6 +70,30 @@ def learning_text(value):
 
 
 @lru_cache(maxsize=1)
+def _russian_explanations():
+    return json.loads((Path(__file__).resolve().parents[2] / "localization/russian_explanations.json").read_text())
+
+
+@register.filter
+def explanation_text(value):
+    if get_language() == "ru" and isinstance(value, str):
+        return _russian_explanations().get(value, value)
+    return learning_text(value)
+
+
+@register.filter
+def explanation_markup(value):
+    return learning_markup(explanation_text(value) if get_language() == "ru" else value)
+
+
+@register.filter
+def explanation_language(value):
+    if get_language() == "ru" and isinstance(value, str) and value in _russian_explanations():
+        return "ru"
+    return learning_language(value, "pl")
+
+
+@lru_cache(maxsize=1)
 def _polish_study_quotes():
     return frozenset(json.loads((Path(__file__).resolve().parents[2] / "localization/polish_study_quotes.json").read_text()))
 
