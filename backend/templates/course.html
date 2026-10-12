@@ -71,7 +71,7 @@
       <details class="topic-card" id="topic-{{ topic.id }}"{% if topic.id == primary_topic_id %} open{% endif %} data-course-topic{% if topic.id == primary_topic_id %} data-course-topic-primary="true"{% endif %}>
         <summary class="topic-summary">
           <span class="topic-header">
-            <span class="topic-emoji">{{ topic.emoji|ui_text }}</span>
+            <span class="topic-emoji" aria-hidden="true">{{ forloop.counter|stringformat:"02d" }}</span>
             <span><small>{{ selected_level|ui_text }} {% translate "· Тема" %} {{ forloop.counter|ui_text }}</small><strong>{{ topic.title|ui_text }}</strong><span>{{ topic.description|ui_text }}</span></span>
           </span>
           <span class="topic-progress-row">
@@ -87,7 +87,7 @@
           <div class="task-list">
             {% for task in topic.lessons %}
               <div class="task-card-row"><a class="task-card" href="{% url 'lesson' task.id %}">
-                <span class="task-icon">{{ task.emoji|ui_text }}</span>
+                <span class="task-icon" aria-hidden="true">{% include 'components/icon.html' with name='book' %}</span>
                 <span class="task-copy"><strong>{{ task.title|ui_text }}{% if task.completed %} <span class="task-complete">✓</span>{% endif %}</strong><small>{{ task.description|ui_text }} · ~{{ task.minutes|ui_text }} {% translate "мин" %}</small></span>
                 <span class="task-arrow" aria-hidden="true">→</span>
               </a>{% if lesson_bookmarks_available %}<form method="post" action="{% url 'toggle-lesson-bookmark' task.id %}">{% csrf_token %}<input type="hidden" name="saved" value="{% if task.saved %}0{% else %}1{% endif %}"><input type="hidden" name="next" value="{{ request.get_full_path }}#topic-{{ topic.id }}"><button class="bookmark-icon-button{% if task.saved %} is-saved{% endif %}" type="submit" aria-label="{% if task.saved %}{% translate "Убрать урок «" %}{{ task.title|ui_text }}{% translate "» из сохранённого" %}{% else %}{% translate "Сохранить урок «" %}{{ task.title|ui_text }}»{% endif %}">{% if task.saved %}★{% else %}☆{% endif %}</button></form>{% endif %}</div>

@@ -50,7 +50,7 @@
     <div class="reading-grid" aria-live="polite">
     {% for text in texts %}
       <a class="reading-card" href="{% url 'reader' text.id %}">
-        <span class="reading-cover">{{ text.emoji|default:"📖"|ui_text }}</span>
+        <span class="reading-cover" aria-hidden="true">{% include 'components/icon.html' with name='reading' %}</span>
         <span class="reading-card-copy"><span class="level-badge">{{ text.level|ui_text }}</span><strong>{{ text.title|ui_text }}{% if text.saved %} ★{% endif %}</strong><small>{{ text.description|ui_text }}</small><span>◷ {{ text.minutes|ui_text }} {% translate "мин · Читать →" %}</span></span>
       </a>
     {% empty %}
