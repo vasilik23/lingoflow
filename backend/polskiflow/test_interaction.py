@@ -34,7 +34,7 @@ class InteractionScenarioTests(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(SCENARIOS), 5)
-        self.assertContains(response, "Взаимодействие и медиация")
+        self.assertContains(response, "Говорение")
         self.assertContains(response, "Договориться о плане")
         self.assertContains(response, "Выбрать подходящий регистр")
         self.assertContains(response, "не экзамен, сертификат")

@@ -17362,3 +17362,49 @@ msgstr "Check that you address every task requirement."
 
 msgid "Перечитай ответ и проверь смысл и грамматику."
 msgstr "Reread your answer and check its meaning and grammar."
+
+msgid "Слово добавлено в словарь. Повтори его, чтобы лучше запомнить."
+msgstr "Word added to your dictionary. Review it to remember it better."
+
+msgid "Повторяй сохранённые слова. Приложение подскажет, когда вернуться к ним."
+msgstr "Review your saved words. The app will show you when to revisit them."
+
+msgid "Повторить слова текста →"
+msgstr "Review words from this text →"
+
+msgid "Слово по-польски"
+msgstr "Word in Polish"
+
+msgid "Введите слово по-польски"
+msgstr "Enter the word in Polish"
+
+msgid "Впиши слово вместо пропуска"
+msgstr "Fill the gap with the word"
+
+msgid "Впиши слово по-польски"
+msgstr "Type the word in Polish"
+
+msgid "Выбери слово по-польски"
+msgstr "Choose the word in Polish"
+
+msgid "Проверить объём и структуру"
+msgstr "Check length and structure"
+
+msgid "Объём и структура"
+msgstr "Length and structure"
+
+msgid "Слова и выражения: "
+msgstr "Words and phrases: "
+
+msgid "Проверены только объём, абзацы и указанные выражения. Грамматику, смысл и стиль нужно проверить отдельно."
+msgstr "Only length, paragraphs and the listed expressions were checked. Grammar, meaning and style need a separate review."
+
+msgid " к повторению"
+msgstr " to review"
+
+
+msgid "Для вариантов ответа нужно минимум 4 разных слова из этого текста. Сейчас сохранено:"
+msgstr "Multiple-choice answers need at least 4 different words from this text. Saved so far:"
+
+msgid "Передай смысл"
+msgstr "Convey the meaning"

@@ -294,7 +294,7 @@ def dictionary_practice_step(request: HttpRequest) -> HttpResponse:
         if mode == "context":
             submitted_answer = request.POST.get("answer", "")
             if not submitted_answer.strip():
-                return HttpResponseBadRequest(gettext("Введите польскую лемму"))
+                return HttpResponseBadRequest(gettext("Введите слово по-польски"))
             answer_correct = _normalize_typed_answer(
                 submitted_answer
             ) == _normalize_typed_answer(question["correct_answer"])
@@ -580,11 +580,11 @@ def _practice_questions(
                     else word["word"]
                 ),
                 "instruction": (
-                    "Впиши польскую лемму в контекст"
+                    "Впиши слово вместо пропуска"
                     if mode == "context" and context_gap
-                    else "Впиши польскую лемму"
+                    else "Впиши слово по-польски"
                     if mode == "context"
-                    else "Выбери польскую лемму"
+                    else "Выбери слово по-польски"
                     if mode == "lemma"
                     else "Выбери перевод"
                 ),

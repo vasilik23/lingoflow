@@ -7,6 +7,11 @@ from django.utils.safestring import mark_safe
 
 
 class StudyLanguageTests(SimpleTestCase):
+    def test_daily_review_description_translates_without_technical_terms(self):
+        for language, expected in [('ru', '2 слова к повторению'), ('pl', '2 słowa do powtórki'), ('en', '2 words to review')]:
+            with self.subTest(language=language), override(language):
+                self.assertEqual(learning_text('2 слова к повторению'), expected)
+
     def test_writing_selector_uses_plain_escaped_text(self):
         with override('ru'):
             html = render_to_string('writing.html', {'writing_prompts': [{

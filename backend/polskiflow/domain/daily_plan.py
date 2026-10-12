@@ -73,7 +73,7 @@ def build_daily_plan(
                 "kind": "dictionary-review",
                 "title": "Повторение словаря",
                 "description": (
-                    f"{due_count} {_russian_word_label(due_count)} по расписанию SM-2"
+                    f"{due_count} {_russian_word_label(due_count)} к повторению"
                 ),
                 "minutes": min(10, max(3, due_count)),
                 "emoji": "🧠",

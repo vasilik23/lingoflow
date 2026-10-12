@@ -86,7 +86,7 @@ class DailyPlanTests(SimpleTestCase):
 
         self.assertEqual(len(plan), 4)
         self.assertEqual(plan[-1]["id"], "dictionary-practice")
-        self.assertEqual(plan[-1]["description"], "2 слова по расписанию SM-2")
+        self.assertEqual(plan[-1]["description"], "2 слова к повторению")
         self.assertTrue(plan[-1]["completed"])
 
     def test_review_is_not_offered_until_four_words_exist(self):

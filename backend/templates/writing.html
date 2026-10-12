@@ -43,7 +43,7 @@
         </div>
 
         <div class="writing-feedback-actions">
-          <button type="button" data-check-draft>{% translate "Проверить по критериям" %}</button>
+          <button type="button" data-check-draft>{% translate "Проверить объём и структуру" %}</button>
         </div>
         <div class="writing-feedback" data-writing-feedback role="status" tabindex="-1" aria-live="polite" hidden></div>
         <section data-writing-self-check hidden>
@@ -152,12 +152,12 @@
         const checks = [
           { passed: words(value) >= minimumWords, text: ui("Минимум ") + minimumWords + ui(" слов") },
           { passed: paragraphs(value) >= minimumParagraphs, text: ui("Минимум ") + minimumParagraphs + ui(" абзаца") },
-          { passed: foundMarkers.length === markers.length, text: ui("Маркеры задания: ") + markers.join(", ") }
+          { passed: foundMarkers.length === markers.length, text: ui("Слова и выражения: ") + markers.join(", ") }
         ];
         const result = panel.querySelector("[data-writing-feedback]");
-        result.innerHTML = ui("<strong>Проверка видимых признаков</strong><ul>") + checks.map(function (check) {
+        result.innerHTML = ui("<strong>Объём и структура</strong><ul>") + checks.map(function (check) {
           return "<li class=\"" + (check.passed ? "passed" : "missing") + "\">" + (check.passed ? "✓ " : ui("Нужно проверить: ")) + check.text + "</li>";
-        }).join("") + ui("</ul><p>Это техническая подсказка, а не оценка преподавателя: перечитай текст и отдельно проверь грамматику, смысл и стиль.</p>");
+        }).join("") + ui("</ul><p>Проверены только объём, абзацы и указанные выражения. Грамматику, смысл и стиль нужно проверить отдельно.</p>");
         const next = document.createElement('p');
         next.dataset.writingNextStep = '';
         next.textContent = !checks[0].passed ? ui('Допиши текст до нужного объёма.') : !checks[1].passed ? ui('Раздели текст на абзацы.') : !checks[2].passed ? ui('Проверь, раскрыты ли все пункты задания.') : ui('Перечитай ответ и проверь смысл и грамматику.');
