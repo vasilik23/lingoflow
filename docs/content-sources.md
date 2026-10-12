@@ -459,3 +459,25 @@ created_for: LingoFlow; verified_at: 2026-10-12, внутренняя техни
   массивами `dialogue/b1/b2` из текущего контента и путь к локально установленному
   `@echogarden/espeak-ng-emscripten@0.3.5/espeak-ng.js`. Инструмент требует macOS
   afconvert, работает отдельно от Django production и его зависимостей.
+
+### Нейросетевая замена голоса аудирования — 12.10.2026
+
+Предыдущий eSpeak-пакет технически работал, но пользователь оценил его тембр
+как плохой. Семь тех же оригинальных польских текстов пересинтезированы локально
+Piper 1.8.0, голосом `pl_PL-bass-high`.
+Источник/автор: [blackbartblues/piper-pl-bass-high](https://huggingface.co/blackbartblues/piper-pl-bass-high),
+revision `d38fb15ed4eec60c124e3da1fd67359af771c3dc`, получено 12.10.2026.
+Издатель указывает Apache-2.0; [upstream model card](https://huggingface.co/rhasspy/piper-voices/raw/main/pl/pl_PL/bass/high/MODEL_CARD)
+также указывает Apache-2.0 и fine-tuning от lessac-high. Это декларация издателя,
+не независимая проверка происхождения его training recordings.
+
+Сам голос не клонировался из пользовательских записей. Вес модели и TTS
+runtime не распространяются в приложении; публикуются только аудиофайлы
+оригинального текста. CPU-синтез, length_scale 1.05, AAC 64 kbit/s.
+Model/audio/transcript SHA-256 и точные параметры в manifest. Произношение,
+естественность и педагогическое качество требуют независимого прослушивания;
+техническое декодирование не заменяет эту проверку. Реестр диктора не заполнен.
+
+Повторная сборка: `ops/generate-neural-listening-audio.py` с исходными массивами
+`dialogue/b1/b2`, соответствующей моделью и локальным Piper runtime. Production
+не вызывает TTS-провайдера, не требует API-ключа и не получает новую зависимость.

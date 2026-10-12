@@ -18298,3 +18298,6 @@ msgstr "Wczytywanie dźwięku…"
 
 msgid "Синтетическая польская озвучка eSpeak-NG. Это учебный аудиофайл, не запись диктора."
 msgstr "Syntetyczna polska mowa eSpeak-NG. To edukacyjny plik audio, a nie nagranie lektora."
+
+msgid "Нейросетевая польская озвучка Piper. Это учебный аудиофайл, не запись диктора."
+msgstr "Polska mowa neuronowa Piper. To edukacyjny plik audio, a nie nagranie lektora."

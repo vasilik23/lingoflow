@@ -16,6 +16,38 @@
     attempt.status.textContent = message;
     attempt.stop.disabled = true;
   };
+  const levels = Array.from(document.querySelectorAll?.('[data-listening-level]') || []);
+  if (levels.length) {
+    const selected = document.querySelector('[data-listening-active]');
+    const check = document.querySelector('[data-listening-check]');
+    const sync = () => {
+      const opened = levels.find(section => section.open);
+      levels.forEach(section => {
+        section.querySelectorAll('input[type="radio"]').forEach(input => { input.disabled = !section.open; });
+        if (!section.open) {
+          if (active && section.contains(active.audio)) cancel(ui('Воспроизведение остановлено'));
+          section.querySelectorAll('audio').forEach(audio => audio.pause());
+        }
+      });
+      check.disabled = !opened;
+      if (opened) selected.value = opened.id;
+      document.querySelectorAll('nav.reading-audio-actions a').forEach(link => {
+        if (opened && link.getAttribute('href') === '#' + opened.id) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      });
+    };
+    levels.forEach(section => section.addEventListener('toggle', () => {
+      if (section.open) levels.forEach(other => { if (other !== section) other.open = false; });
+      sync();
+    }));
+    const openLinked = () => {
+      const target = levels.find(section => '#' + section.id === window.location.hash);
+      if (target) { levels.forEach(section => { section.open = section === target; }); }
+      sync();
+    };
+    openLinked();
+    window.addEventListener('hashchange', openLinked);
+  }
   for (const name of ['dialogue', 'b1', 'b2']) {
     const player = document.querySelector('[data-' + name + '-player]');
     if (!player) continue;

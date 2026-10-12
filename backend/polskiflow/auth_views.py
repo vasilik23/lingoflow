@@ -881,11 +881,14 @@ def listening_practice(request: HttpRequest) -> HttpResponse:
         else None
     )
     from django.templatetags.static import static
-    from polskiflow.domain.practice_listening_media import practice_media
+    from polskiflow.domain.practice_listening_media import manifest, practice_media
 
     def media_urls(name, content):
         paths = practice_media(name, content["lines"])
-        return {part: static(path) for part, path in paths.items()} if paths else {}
+        return {
+            part: static(path) + "?v=" + manifest()[f"{name}-{part}"]["sha256"][:12]
+            for part, path in paths.items()
+        } if paths else {}
 
     dialogue = {**LISTENING_DIALOGUE, "questions": dialogue_questions, "media": media_urls("dialogue", LISTENING_DIALOGUE)}
     b1_answers = {
@@ -918,13 +921,19 @@ def listening_practice(request: HttpRequest) -> HttpResponse:
     )
     b2_submitted = submitted and any(b2_answers.values())
     b2_listening = {**LISTENING_B2, "questions": b2_questions, "media": media_urls("b2", LISTENING_B2)}
+    word_submitted = submitted and any(answers.values())
+    active_section = request.POST.get("active_section", "")
+    if active_section not in {"a1-a2-listening", "b1-listening", "b2-listening", "listening-words"}:
+        active_section = ("b2-listening" if b2_submitted else "b1-listening" if b1_submitted
+                          else "listening-words" if word_submitted else "a1-a2-listening")
     return render(
         request,
         "listening.html",
         {
             "listening_items": display_items,
             "score": score,
-            "submitted": submitted,
+            "submitted": word_submitted,
+            "listening_active_section": active_section,
             "dialogue": dialogue,
             "dialogue_submitted": dialogue_submitted,
             "dialogue_score": dialogue_score,
