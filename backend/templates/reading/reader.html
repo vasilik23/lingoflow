@@ -96,13 +96,14 @@
       const status = panel.querySelector('[data-audio-status]');
       let utterance = null;
       const cancel = () => {
+        window.PolskiFlowAudioSession?.stopSpeech?.();
         if (utterance) { utterance.onend = null; utterance.onerror = null; }
         utterance = null;
         speechSynthesis.cancel();
       };
       const reset = (message = ui('Готово к воспроизведению')) => { play.textContent = ui('▶ Слушать'); pause.textContent = ui('Ⅱ Пауза'); pause.disabled = true; stop.disabled = true; status.textContent = message; utterance = null; };
       play.addEventListener('click', () => {
-        if (speechSynthesis.paused) { speechSynthesis.resume(); pause.textContent = ui('Ⅱ Пауза'); status.textContent = ui('Воспроизведение'); return; }
+        if (speechSynthesis.paused) { window.PolskiFlowAudioSession?.prepareSpeech(utterance); speechSynthesis.resume(); pause.textContent = ui('Ⅱ Пауза'); status.textContent = ui('Воспроизведение'); return; }
         cancel();
         const current = new SpeechSynthesisUtterance(text);
         utterance = current; current.lang = 'pl-PL'; current.rate = Number(rate.value);
@@ -112,7 +113,7 @@
         window.PolskiFlowAudioSession?.prepareSpeech(current);
         speechSynthesis.speak(current);
       });
-      pause.addEventListener('click', () => { if (speechSynthesis.paused) { speechSynthesis.resume(); pause.textContent = ui('Ⅱ Пауза'); status.textContent = ui('Воспроизведение'); } else { speechSynthesis.pause(); pause.textContent = ui('▶ Продолжить'); status.textContent = ui('Пауза'); } });
+      pause.addEventListener('click', () => { if (speechSynthesis.paused) { window.PolskiFlowAudioSession?.prepareSpeech(utterance); speechSynthesis.resume(); pause.textContent = ui('Ⅱ Пауза'); status.textContent = ui('Воспроизведение'); } else { window.PolskiFlowAudioSession?.stopSpeech?.(); speechSynthesis.pause(); pause.textContent = ui('▶ Продолжить'); status.textContent = ui('Пауза'); } });
       stop.addEventListener('click', () => { cancel(); reset(ui('Воспроизведение остановлено')); });
       window.addEventListener('pagehide', () => { cancel(); reset(); });
     })();

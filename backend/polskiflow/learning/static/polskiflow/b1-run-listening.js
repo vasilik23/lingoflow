@@ -50,6 +50,7 @@
     attempt++;
     settled(message);
     if (audio) { audio.pause(); audio.currentTime = 0; }
+    window.PolskiFlowAudioSession?.stopSpeech?.();
     if ('speechSynthesis' in window) speechSynthesis.cancel();
   };
   if (audio) {
