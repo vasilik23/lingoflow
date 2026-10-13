@@ -1,11 +1,12 @@
 {% extends "base.html" %}
 {% load i18n ui static %}
 {% block title %}{% translate "Письменная практика" %} {{ selected_writing_level|ui_text }} · LingoFlow{% endblock %}
+{% block toolbar_title %}<h1 class="study-title">{% translate "Письменные ответы" %}</h1>{% endblock %}
 {% block content %}
 {% get_current_language as study_ui_language %}
   <header class="content-header writing-header">
-    <div><p class="eyebrow">{% translate "Практика" %} {{ selected_writing_level|ui_text }}</p><h1>{% translate "Письменные ответы" %}</h1><p class="muted">{% translate "Напиши черновик и проверь наблюдаемые признаки текста. Подсказка не оценивает грамотность, уровень или качество ответа." %}</p></div>
-    <a class="compact-button" href="{% url 'course' %}?level={{ selected_writing_level }}">{% translate "К темам" %} {{ selected_writing_level|ui_text }} →</a>
+    <div><p class="eyebrow">{% translate "Практика" %} {{ selected_writing_level|ui_text }}</p></div>
+    <a class="compact-button secondary-link" href="{% url 'course' %}?level={{ selected_writing_level }}">{% translate "К темам" %} {{ selected_writing_level|ui_text }} →</a>
   </header>
 
   <details class="card filter-panel writing-options"><summary>{% translate "Уровень письменной практики" %} · {{ selected_writing_level }}</summary>
@@ -18,15 +19,17 @@
 
 
   <section class="card writing-workspace" aria-label="{% translate "Редактор письменного ответа" %}">
-    <label for="writing-prompt">{% translate "Выбери задание" %}</label>
+    <div class="writing-selection"><label for="writing-prompt">{% translate "Выбери задание" %}</label>
     <select id="writing-prompt" class="writing-prompt-select">
       {% for prompt in writing_prompts %}<option value="{{ prompt.id }}" lang="{{ prompt.title|learning_language }}">{{ prompt.title|learning_text }}</option>{% endfor %}
-    </select>
+    </select></div>
 
     {% for prompt in writing_prompts %}
       <div class="writing-prompt" data-writing-prompt="{{ prompt.id }}" data-min-words="{{ prompt.min_words }}" data-min-paragraphs="{{ prompt.min_paragraphs }}" data-markers="{{ prompt.markers|join:'|' }}"{% if not forloop.first %} hidden{% endif %}>
+        <section class="writing-task-brief" aria-labelledby="writing-task-{{ prompt.id }}">
         <p class="eyebrow">{% translate "Задание" %} {{ forloop.counter|ui_text }}{% if prompt.genre %} · <span lang="pl">{{ prompt.genre|ui_text }}</span>{% endif %}</p>
-        <h2><span lang="{{ prompt.title|learning_language }}">{{ prompt.title|learning_markup }}</span></h2>
+        <h2 id="writing-task-{{ prompt.id }}"><span lang="{{ prompt.title|learning_language }}">{{ prompt.title|learning_markup }}</span></h2>
+        <a class="writing-editor-jump" href="#draft-{{ prompt.id }}">{% translate "Твой черновик" %} <span aria-hidden="true">↓</span></a>
         <p><span lang="{{ prompt.task|learning_language }}">{{ prompt.task|learning_markup }}</span></p>
         {% if prompt.requirements %}
           <section class="writing-task-points" aria-labelledby="points-{{ prompt.id }}">
@@ -35,8 +38,10 @@
           </section>
         {% endif %}
         <details class="writing-hint"><summary>{% translate "Ориентир:" %}</summary><p> <span lang="{{ prompt.hint|learning_language }}">{{ prompt.hint|learning_markup }}</span></p></details>
+        </section>
+        <div class="writing-editor">
         <label for="draft-{{ prompt.id }}">{% translate "Твой черновик" %}</label>
-        <textarea id="draft-{{ prompt.id }}" rows="12" data-writing-draft="{{ prompt.id }}" lang="pl" aria-describedby="draft-help-{{ prompt.id }}"></textarea>
+        <textarea id="draft-{{ prompt.id }}" rows="9" data-writing-draft="{{ prompt.id }}" lang="pl" aria-describedby="draft-help-{{ prompt.id }}"></textarea>
         <div class="writing-draft-meta" id="draft-help-{{ prompt.id }}">
           <span data-word-count aria-live="polite">{% translate "0 слов" %}</span>
           <span data-save-status role="status">{% translate "Черновик сохраняется только в этом браузере" %}</span>
@@ -45,6 +50,7 @@
         <div class="writing-feedback-actions">
           <button type="button" data-check-draft>{% translate "Проверить объём и структуру" %}</button>
         </div>
+        <div class="writing-check-help"><p class="muted">{% translate "Напиши черновик и проверь наблюдаемые признаки текста. Подсказка не оценивает грамотность, уровень или качество ответа." %}</p></div>
         <div class="writing-feedback" data-writing-feedback role="status" tabindex="-1" aria-live="polite" hidden></div>
         <section data-writing-self-check hidden>
         <details class="writing-self-check"><summary id="revision-{{ prompt.id }}">{% translate "Разбор после черновика" %}</summary>
@@ -72,6 +78,7 @@
         </section>
         {% include "partials/ai_writing_review.html" with ai_token=prompt.ai_token ai_editor="draft-"|add:prompt.id %}
         <details class="writing-tools"><summary>{% translate "Дополнительные действия" %}</summary><button class="secondary writing-reset" type="button" data-reset-draft>{% translate "Удалить этот черновик" %}</button></details>
+        </div>
       </div>
     {% endfor %}
   </section>
