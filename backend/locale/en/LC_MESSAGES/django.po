@@ -17423,3 +17423,6 @@ msgstr "Neural Polish speech by Piper. This is a practice audio file, not a narr
 
 msgid "Закрыть перевод"
 msgstr "Close translation"
+
+msgid "Как работает прогон"
+msgstr "How the practice run works"

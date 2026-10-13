@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% load i18n ui %}
 {% block title %}{% translate "Подготовка к экзамену B1 · LingoFlow" %}{% endblock %}
-{% block toolbar_title %}<h1>{% translate "Подготовка к B1" %}</h1>{% endblock %}
+{% block toolbar_title %}<h1 class="study-title">{% translate "Подготовка к B1" %}</h1>{% endblock %}
+{% block body_class %}exam-page{% endblock %}
 {% block content %}
   <header class="content-header b1-entry-header">
     <div><p class="muted">{% translate "Выбери занятие по времени и цели: короткий план, один навык или пятичастный прогон." %}</p></div>

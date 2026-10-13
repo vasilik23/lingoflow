@@ -1525,6 +1525,7 @@ window.PolskiFlowEnglishMessages = {
   "Как просто и точно объяснить сообщение?": "How to explain the message easily and accurately?",
   "Как проходит обучение": "How learning works",
   "Как прочитать дату 12.03.2026?": "How to read the date 12.03.2026?",
+  "Как работает прогон": "How the practice run works",
   "Как работает тренажёр": "How the simulator works",
   "Как разговор о потребностях помогает найти компромисс": "How Talking About Needs Helps Find a Compromise",
   "Как связать знания A2 в самостоятельную речь": "How to link knowledge A2 speechlessly",

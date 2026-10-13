@@ -113,7 +113,7 @@ def b1_training_run(request):
                 elif part["mode"] == "objective":
                     try:
                         answers = {question.id: request.POST[f"answer_{question.id}"] if getattr(question, "written", False) else int(request.POST[f"answer_{question.id}"]) for question in questions if f"answer_{question.id}" in request.POST}
-                        score = score_training_part(variant, part["id"], answers, state.get("content_version", 1), allow_missing=timed_out)
+                        score = score_training_part(variant, part["id"], answers, state.get("content_version", 1), allow_missing=True)
                     except (KeyError, TypeError, ValueError):
                         error, status = "Ответь на все вопросы этой части.", 400
                     else:

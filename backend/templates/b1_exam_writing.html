@@ -1,6 +1,7 @@
 {% extends "base.html" %}{% load i18n ui static %}
 {% block title %}{% translate "Экзаменационное письмо B1" %} · LingoFlow{% endblock %}
-{% block toolbar_title %}<h1>{% translate "Экзаменационное письмо B1" %}</h1>{% endblock %}
+{% block toolbar_title %}<h1 class="study-title">{% translate "Экзаменационное письмо B1" %}</h1>{% endblock %}
+{% block body_class %}exam-page{% endblock %}
 {% block content %}
 {% get_current_language as study_ui_language %}
 <p class="muted">{% translate "Выбери один комплект и напиши оба текста за общие 75 минут. Задания оригинальные, LingoFlow; формат и объёмы сверены с официальным образцом для взрослых B1." %}</p>

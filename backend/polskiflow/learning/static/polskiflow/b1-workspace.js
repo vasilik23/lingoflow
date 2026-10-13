@@ -49,7 +49,7 @@
     const description = dialog.querySelector('[data-exam-confirm-description]');
     description.textContent = action === 'skip'
       ? ui('Эта часть останется без балла. Ответы этой части не будут проверены.')
-      : ui('После проверки изменить ответы этой части уже нельзя.');
+      : ui('После проверки изменить ответы этой части уже нельзя.') + ' ' + ui('Без ответа') + ': ' + questions.filter(question => !answered(question)).length + '.';
     dialog.showModal();
   }, true);
   dialog.querySelector('[data-exam-cancel]').addEventListener('click', () => dialog.close());

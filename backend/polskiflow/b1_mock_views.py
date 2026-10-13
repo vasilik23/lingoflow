@@ -73,7 +73,7 @@ def b1_weekly_mock(request: HttpRequest) -> HttpResponse:
             else:
                 timed_out = time.time() >= _token_started_at(token) + 15 * 60
                 answers = {item.id: int(request.POST[f"answer_{item.id}"]) for item in variant.questions if f"answer_{item.id}" in request.POST}
-                result = score_mock_answers(answers, variant, allow_missing=timed_out)
+                result = score_mock_answers(answers, variant, allow_missing=True)
                 result.update(timed_out=timed_out, unanswered=result.get("unanswered", 0), incorrect=result.get("incorrect", result["total"] - result["correct"]))
                 saved = save_b1_mock_attempt(
                     request.supabase_access_token,
@@ -143,7 +143,7 @@ def b1_exam_simulation(request: HttpRequest) -> HttpResponse:
             else:
                 timed_out = time.time() >= _token_started_at(token) + simulation_timing(variant, part, timing_mode)["duration_seconds"]
                 answers = {item.id: int(request.POST[f"answer_{item.id}"]) for item in questions if f"answer_{item.id}" in request.POST}
-                result = score_simulation_part(variant, part["id"], answers, allow_missing=timed_out)
+                result = score_simulation_part(variant, part["id"], answers, allow_missing=True)
                 result.update(timed_out=timed_out, unanswered=result.get("unanswered", 0), incorrect=result.get("incorrect", result["total"] - result["correct"]))
                 saved = save_b1_section_attempt(
                     request.supabase_access_token,

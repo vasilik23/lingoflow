@@ -18304,3 +18304,6 @@ msgstr "Polska mowa neuronowa Piper. To edukacyjny plik audio, a nie nagranie le
 
 msgid "Закрыть перевод"
 msgstr "Zamknij tłumaczenie"
+
+msgid "Как работает прогон"
+msgstr "Jak działa próba"

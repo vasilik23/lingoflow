@@ -81,6 +81,21 @@ class B1ExamSimulationDomainTests(SimpleTestCase):
 
 
 class B1ExamSimulationViewTests(TestCase):
+    @patch("polskiflow.b1_mock_views.save_b1_section_attempt", return_value=True)
+    def test_early_finish_grades_partial_answers_without_timeout(self, save_attempt):
+        opened = self.client.get("/exam/b1/simulation/?part=grammar")
+        questions = opened.context["questions"]
+        response = self.client.post("/exam/b1/simulation/?part=grammar", {
+            "simulation_token": opened.context["simulation_token"],
+            f"answer_{questions[0].id}": questions[0].correct,
+        })
+        self.assertEqual(response.status_code, 200)
+        result = response.context["result"]
+        self.assertEqual((result["correct"], result["incorrect"], result["unanswered"]),
+                         (1, 0, len(questions) - 1))
+        self.assertFalse(result["timed_out"])
+        self.assertTrue(save_attempt.called)
+
     def test_shared_listening_is_scoped_to_the_active_listening_part(self):
         response = self.client.get("/exam/b1/simulation/", {"part": "listening"})
         self.assertContains(response, 'data-b1-listening')
@@ -104,8 +119,11 @@ class B1ExamSimulationViewTests(TestCase):
                   f"answer_{questions[1].id}": (questions[1].correct + 1) % len(questions[1].options)}
         with patch("polskiflow.b1_mock_views.time", SimpleNamespace(time=lambda: deadline - 1)):
             early = self.client.post("/exam/b1/simulation/", fields)
-            self.assertEqual(early.status_code, 400)
-            save_attempt.assert_not_called()
+            self.assertEqual(early.status_code, 200)
+            self.assertFalse(early.context["result"]["timed_out"])
+            self.assertEqual(early.context["result"]["unanswered"], len(questions) - 2)
+            save_attempt.assert_called_once()
+            save_attempt.reset_mock()
         with patch("polskiflow.b1_mock_views.time", SimpleNamespace(time=lambda: deadline)):
             response = self.client.post("/exam/b1/simulation/", fields)
             self.assertEqual(response.status_code, 200)

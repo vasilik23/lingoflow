@@ -1,12 +1,13 @@
 {% extends "base.html" %}
 {% load i18n ui static %}
 {% block title %}{% translate "Недельный пробный модуль B1 · LingoFlow" %}{% endblock %}
+{% block body_class %}exam-page{% endblock %}
+{% block toolbar_title %}<h1 class="study-title">{% translate "Пробный мини‑модуль" %}</h1>{% endblock %}
 {% block content %}
 <div class="mock-shell" data-mock-root{% if not result and not error %} data-b1-listening data-namespace="mock:{{ mock_storage_namespace }}" data-listening-form="mock-form" data-listening-transcript="mock-listening-transcript"{% endif %} data-storage-namespace="{{ mock_storage_namespace }}" data-started-at="{{ attempt_started_at_ms }}" data-variant-id="{{ variant.id }}" data-duration-seconds="{{ duration_seconds }}"{% if result %} data-completed="true"{% endif %}{% if error %} data-error="true"{% endif %}>
   <header class="mock-header">
-    <div><p class="eyebrow">{% translate "B1 · недельная тренировка ·" %} {{ variant.label|ui_text }}</p><h1>{% translate "Пробный мини‑модуль" %}</h1><p>{% translate "15 минут: 3 проверяемых блока + 2 блока самопроверки. Аудирование и чтение — по 2 вопроса, грамматика — 3. Письмо и речь не получают автоматического балла. Вариант меняется раз в неделю. Это тренировка LingoFlow, не официальный тест и не прогноз результата." %}</p></div>
-    {% if not result %}<div class="mock-timer" role="timer" aria-live="off"><strong id="mock-timer">15:00</strong><span>{% translate "осталось" %}</span></div><p class="visually-hidden" id="mock-timer-status" role="status" aria-live="polite" aria-atomic="true"></p>{% endif %}
-  </header>
+    <div><p class="eyebrow">{% translate "B1 · недельная тренировка ·" %} {{ variant.label|ui_text }}</p><p>{% translate "15 минут: 3 проверяемых блока + 2 блока самопроверки. Аудирование и чтение — по 2 вопроса, грамматика — 3. Письмо и речь не получают автоматического балла. Вариант меняется раз в неделю. Это тренировка LingoFlow, не официальный тест и не прогноз результата." %}</p></div>
+     </header>
 
   {% if error %}<div class="form-message error" role="alert">{{ error|ui_text }} <a href="{% url 'b1-weekly-mock' %}?restart=1">{% translate "Начать заново" %}</a></div>{% endif %}
 
@@ -20,7 +21,7 @@
     {% if saved %}<p class="form-message success" role="status">{% translate "Агрегированный результат сохранён. Ответы, письмо и запись речи не сохранялись." %}</p>{% else %}<p class="form-message warning" role="status">{% translate "Результат показан, но история сейчас недоступна. Ответы не потеряны для текущего разбора." %}</p>{% endif %}
   {% endif %}
 
-  <form method="post" class="mock-form" id="mock-form">
+  <form method="post" class="mock-form" id="mock-form">{% if not result and not error %}<div class="exam-workspace-bar" data-exam-workspace><strong>B1 · {% translate "Пробный мини‑модуль" %}</strong><span><span data-exam-answered>0</span>/<span data-exam-total>0</span> {% translate "отвечено" %}</span><strong id="mock-timer" role="timer" aria-live="off">15:00</strong></div><p class="visually-hidden" id="mock-timer-status" role="status" aria-live="polite" aria-atomic="true"></p><details class="exam-question-navigation"><summary>{% translate "Без ответа" %}: <span data-exam-missing-count>—</span></summary><nav data-exam-missing aria-label="{% translate 'Вопросы без ответа' %}"></nav></details>{% include 'partials/b1_finish_dialog.html' %}{% endif %}
     {% csrf_token %}<input type="hidden" name="attempt_token" value="{{ attempt_token }}">
 
     <section class="card mock-section" aria-labelledby="mock-listening-title">
@@ -48,7 +49,7 @@
       <article class="card mock-section"><div class="mock-section-heading"><span>5</span><div><p class="eyebrow">Mówienie</p><h2>{% translate "Говорение" %}</h2></div></div>{% if not result %}{% include "partials/b1_exam_instruction.html" with instruction=instructions.speaking %}{% endif %}<p lang="pl"><strong>{{ variant.speaking_prompt|ui_text }}</strong></p></article>
     </section>
 
-    {% if not result and not error %}<button class="primary-button mock-submit" type="submit">{% translate "Завершить и проверить" %}</button>{% endif %}
+    {% if not result and not error %}<button class="primary-button mock-submit" type="submit" formnovalidate>{% translate "Завершить и проверить" %}</button>{% endif %}
   </form>
   {% if result %}<a class="compact-button" href="{% url 'b1-weekly-mock' %}?restart=1">{% translate "Новая попытка" %}</a>{% else %}<a class="compact-button" href="{% url 'b1-weekly-mock' %}?restart=1">{% translate "Начать заново" %}</a>{% endif %}
 
@@ -60,6 +61,7 @@
   </section>
 </div>
 {{ listening_transcript|json_script:"mock-listening-transcript" }}
+<script src="{% static 'polskiflow/b1-workspace.js' %}?shell={{ pwa_shell_version }}" defer></script>
 <script>
 (() => {
   const ui = (typeof window !== "undefined" && window.PolskiFlowI18n?.t) || ((text, ...values) => Array.isArray(text) ? text.map((part, i) => part + (values[i] ?? "")).join("") : text);

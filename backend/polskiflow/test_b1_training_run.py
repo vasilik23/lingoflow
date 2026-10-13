@@ -15,6 +15,21 @@ from polskiflow.domain.b1_training_speaking import PREPARATION_SECONDS, training
 
 
 class B1TrainingRunTests(TestCase):
+    def test_confirmed_early_finish_scores_current_answers_and_preserves_skips(self):
+        opened = self.advance(self.client.get("/exam/b1/run/"), "start")
+        questions = opened.context["questions"]
+        result = self.advance(opened, "finish", **{
+            f"answer_{questions[0].id}": questions[0].correct,
+            f"answer_{questions[1].id}": (questions[1].correct + 1) % len(questions[1].options),
+        })
+        self.assertEqual(result.status_code, 200)
+        score = result.context["report"][-1]
+        self.assertEqual((score["correct"], score["incorrect"], score["unanswered"]),
+                         (1, 1, len(questions) - 2))
+        self.assertFalse(score["timed_out"])
+        self.assertEqual(result.context["state"]["phase"], "break")
+        self.assertEqual(self.advance(opened, "finish", **{f"answer_{questions[0].id}": 999}).status_code, 400)
+
     def test_workspace_submission_and_timeout_controls(self):
         result = subprocess.run(["node", str(Path(__file__).with_name("test_b1_workspace.cjs"))], capture_output=True, text=True, timeout=15)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
@@ -461,9 +476,9 @@ class B1TrainingRunTests(TestCase):
             self.assertEqual(restored.context['run_token'], response.context['run_token'])
             self.assertEqual(restored.context['grammar_blocks'], blocks)
             fields = {f'answer_{q.id}': q.correct for q in restored.context['questions']}
-            rejected = self.advance(restored, 'finish', **dict(list(fields.items())[:-1]))
-            self.assertEqual(rejected.status_code, 400)
-            self.assertEqual(rejected.context['state']['results'], [])
+            partial = self.advance(restored, 'finish', **dict(list(fields.items())[:-1]))
+            self.assertEqual(partial.status_code, 200)
+            self.assertEqual(partial.context['state']['results'][-1]['unanswered'], 1)
             result = self.advance(restored, 'finish', **fields)
             self.assertEqual(result.context['state']['results'][-1]['total'], 40)
             self.assertEqual(result.context['state']['results'][-1]['percent'], 100)
@@ -477,7 +492,10 @@ class B1TrainingRunTests(TestCase):
         self.assertContains(response, 'data-run-written', count=10)
         self.assertNotContains(response, 'value="pomógłbyś"')
         fields = {f'answer_{q.id}': q.correct for q in questions}
-        for invalid in ('', '   ', 'x' * 121):
+        for empty in ('', '   '):
+            partial = self.advance(response, 'finish', **dict(fields, answer_tw31=empty))
+            self.assertEqual(partial.context['state']['results'][-1]['unanswered'], 1)
+        for invalid in ('x' * 121,):
             self.assertEqual(self.advance(response, 'finish', **dict(fields, answer_tw31=invalid)).status_code, 400)
         self.assertEqual(self.advance(response, 'finish', **dict(fields, answer_unknown='test')).status_code, 400)
         result = self.advance(response, 'finish', **dict(fields, answer_tw31='  CZASU  ', answer_tw40='pomoglbyś'))
@@ -511,7 +529,7 @@ class B1TrainingRunTests(TestCase):
             self.assertEqual(restored.context['timer_seconds'], minutes * 60 - 13)
             self.assertEqual(restored.context['run_token'], response.context['run_token'])
             fields = {f'answer_{q.id}': q.correct for q in restored.context['questions']}
-            self.assertEqual(self.advance(restored, 'finish', **dict(list(fields.items())[:-1])).status_code, 400)
+            self.assertEqual(self.advance(restored, 'finish', **dict(list(fields.items())[:-1])).context['state']['results'][-1]['unanswered'], 1)
             if version == 8:
                 self.assertContains(restored, 'id="reading-matching"')
                 self.assertContains(restored, 'name="answer_tr30"', count=6)
@@ -578,7 +596,7 @@ class B1TrainingRunTests(TestCase):
             if version == 9:
                 self.assertEqual(self.advance(resumed, 'finish', **dict(fields, answer_tc05=6)).status_code, 400)
                 self.assertEqual(self.advance(resumed, 'finish', **dict(fields, answer_tr16=0)).status_code, 400)
-            self.assertEqual(self.advance(resumed, 'finish', **dict(list(fields.items())[:-1])).status_code, 400)
+            self.assertEqual(self.advance(resumed, 'finish', **dict(list(fields.items())[:-1])).context['state']['results'][-1]['unanswered'], 1)
             completed = self.advance(resumed, 'finish', **fields)
             self.assertEqual(completed.context['state']['results'][-1],
                              {'id': 'reading', 'status': 'scored', 'correct': 30, 'total': 30, 'percent': 100, 'timed_out': False, 'incorrect': 0, 'unanswered': 0})
@@ -600,7 +618,7 @@ class B1TrainingRunTests(TestCase):
             self.assertContains(opened, 'data-run-audio preload="none"', count=4)
             self.assertNotContains(opened, 'Системный польский голос устройства')
             fields = {f'answer_{q.id}': q.correct for q in opened.context['questions']}
-            self.assertEqual(self.advance(opened, 'finish', **dict(list(fields.items())[:-1])).status_code, 400)
+            self.assertEqual(self.advance(opened, 'finish', **dict(list(fields.items())[:-1])).context['state']['results'][-1]['unanswered'], 1)
             completed = self.advance(opened, 'finish', **fields)
             self.assertEqual(completed.context['state']['results'][-1]['total'], 20)
         self.now += 9
