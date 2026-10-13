@@ -18301,3 +18301,6 @@ msgstr "Syntetyczna polska mowa eSpeak-NG. To edukacyjny plik audio, a nie nagra
 
 msgid "Нейросетевая польская озвучка Piper. Это учебный аудиофайл, не запись диктора."
 msgstr "Polska mowa neuronowa Piper. To edukacyjny plik audio, a nie nagranie lektora."
+
+msgid "Закрыть перевод"
+msgstr "Zamknij tłumaczenie"
