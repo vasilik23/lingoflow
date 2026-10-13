@@ -1,6 +1,6 @@
 {% load i18n ui %}
 <div class="card complete-card">
-  <div class="complete-icon">🎉</div>
+  <div class="complete-icon" aria-hidden="true">{% include 'components/icon.html' with name='check' %}</div>
   <p class="eyebrow">{% if LANGUAGE_CODE == 'en' %}Great work!{% else %}Świetna robota!{% endif %}</p>
   <h1>{% translate "Урок завершён" %}</h1>
   <div class="score">{{ score|ui_text }} / {{ total|ui_text }}</div>
@@ -22,7 +22,7 @@
     <p class="followup-recheck" data-followup-pending{% if saved %} hidden{% endif %}>{% translate "Повторная проверка появится в плане после сохранения результата. Сейчас она не назначена." %}</p>
   {% elif followup.lesson %}
     <a class="complete-next" href="{% url 'lesson' followup.lesson.id %}">
-      <span aria-hidden="true">{{ followup.lesson.emoji|ui_text }}</span>
+      <span aria-hidden="true">{% include 'components/icon.html' with name='book' %}</span>
       <span><small>{% translate "Следующий урок темы" %}</small><strong>{{ followup.lesson.title|ui_text }}</strong><small>{{ followup.lesson.description|ui_text }} · ~{{ followup.lesson.minutes|ui_text }} {% translate "мин" %}</small></span>
       <span aria-hidden="true">→</span>
     </a>
