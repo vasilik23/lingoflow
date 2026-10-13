@@ -18307,3 +18307,15 @@ msgstr "Zamknij tłumaczenie"
 
 msgid "Как работает прогон"
 msgstr "Jak działa próba"
+
+msgid "Чтение и аудирование"
+msgstr "Czytanie i słuchanie"
+
+msgid "Самостоятельный ответ"
+msgstr "Samodzielna odpowiedź"
+
+msgid "Ответ не отправляется и не начисляет прогресс. Для сохранения скопируй текст."
+msgstr "Odpowiedź nie jest wysyłana i nie zwiększa postępu. Skopiuj tekst, jeśli chcesz go zachować."
+
+msgid "Что проверить"
+msgstr "Co sprawdzić"

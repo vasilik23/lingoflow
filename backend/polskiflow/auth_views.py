@@ -9,7 +9,7 @@ from django.http import HttpRequest, HttpResponse, HttpResponseNotAllowed, JsonR
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils import timezone
-from django.utils.translation import gettext
+from django.utils.translation import gettext, get_language
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.views.decorators.http import require_http_methods, require_POST
 
@@ -28,6 +28,7 @@ from polskiflow.b1_mock_store import load_b1_mock_attempts
 from polskiflow.canonical_host import email_callback_url
 from polskiflow.practice_preferences import excluded_practice_topics, set_practice_topics
 from polskiflow.domain.practice_recommendations import practice_recommendation
+from polskiflow.domain.topic_journeys import journey
 from polskiflow.domain.daily_goal import DAILY_GOAL_MINUTES, minutes_from_legacy_lessons, legacy_lessons_from_minutes
 from polskiflow.content import course_topics, tasks
 from polskiflow.dictionary_store import load_personal_words
@@ -1023,6 +1024,8 @@ def course(request: HttpRequest) -> HttpResponse:
         return f"{count} {suffix}"
     level_topics = [topic for topic in all_topics if topic["level"] == selected_level]
     for topic in level_topics:
+        pilot = journey(topic['id'], get_language())
+        topic['journey'] = pilot if pilot and set(pilot['lessons']) <= {item['id'] for item in topic['lessons']} else None
         completed_count = 0
         next_lesson = None
         for lesson in topic["lessons"]:

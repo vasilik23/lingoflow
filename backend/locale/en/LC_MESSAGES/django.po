@@ -17426,3 +17426,15 @@ msgstr "Close translation"
 
 msgid "Как работает прогон"
 msgstr "How the practice run works"
+
+msgid "Чтение и аудирование"
+msgstr "Reading and listening"
+
+msgid "Самостоятельный ответ"
+msgstr "Your own response"
+
+msgid "Ответ не отправляется и не начисляет прогресс. Для сохранения скопируй текст."
+msgstr "Your response is not sent and does not count towards progress. Copy the text if you want to keep it."
+
+msgid "Что проверить"
+msgstr "What to check"

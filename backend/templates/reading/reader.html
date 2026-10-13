@@ -5,7 +5,7 @@
 {% block content %}
   <div class="reader-layout">
     <article class="reader-article">
-      <header class="lesson-header reader-header"><a class="back-button" href="{% url 'reading-library' %}" aria-label="{% translate "Назад" %}">←</a><span class="lesson-session-meta">~{{ text.minutes|ui_text }} {% translate "мин" %}</span><span class="level-badge">{{ text.level|ui_text }}</span></header>
+      <header class="lesson-header reader-header"><a class="back-button" href="{% if journey_href %}{{ journey_href }}{% else %}{% url 'reading-library' %}{% endif %}" aria-label="{% translate "Назад" %}">←</a><span class="lesson-session-meta">~{{ text.minutes|ui_text }} {% translate "мин" %}</span><span class="level-badge">{{ text.level|ui_text }}</span></header>
       <p class="reader-meta">{{ text.description|ui_text }}</p>
       {% if request.GET.word == "saved" %}<p class="form-success" id="dictionary-status" role="status">{% translate "Слово добавлено в словарь. Повтори его, чтобы лучше запомнить." %}</p>{% elif request.GET.word == "error" %}<p class="form-error" id="dictionary-status" role="alert">{% translate "Не удалось добавить слово. Попробуй ещё раз." %}</p>{% endif %}
       {% if reading_audio_url %}
