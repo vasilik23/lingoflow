@@ -30,6 +30,7 @@ from polskiflow.collection_store import load_collection_summaries
 from polskiflow.news_feed import CATEGORIES, CATEGORY_IDS, latest_official_news
 from polskiflow.domain.reading_glossary_forms import with_reading_forms
 from polskiflow.domain.library_audio import audio_url
+from polskiflow.domain.topic_journeys import PILOTS
 
 REVIEW_QUALITIES = {"again", "hard", "good", "easy"}
 PRACTICE_WORD_IDS_SESSION_KEY = "dictionary_practice_word_ids"
@@ -144,6 +145,7 @@ def reader(request: HttpRequest, text_id: str) -> HttpResponse:
     text = reading_text(text_id)
     if text is None:
         raise Http404
+    pilot_id = next((key for key, value in PILOTS.items() if value['reading_id'] == text.id and key == text.topic_id), None)
     metadata = text.source_metadata if isinstance(text.source_metadata, dict) else {}
     comprehension_lesson_id = metadata.get("comprehension_lesson_id", "")
     comprehension_task = (
@@ -165,6 +167,7 @@ def reader(request: HttpRequest, text_id: str) -> HttpResponse:
         "reading/reader.html",
         {
             "text": text,
+            "journey_href": f'/course/topic/{pilot_id}/' if pilot_id else None,
             "reading_audio_url": audio_url(f'reading-{text.id}', ' '.join(text.paragraphs)),
             "paragraphs": paragraphs,
             "glossary_words": glossary_words,

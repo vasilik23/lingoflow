@@ -16,7 +16,7 @@ register = template.Library()
 def navigation_section(route):
     if route == "home":
         return "today"
-    if route in {"learn-hub", "course", "lesson", "reading-library", "reader", "news-library", "dictionary", "global-search"}:
+    if route in {"learn-hub", "course", "topic-journey", "lesson", "reading-library", "reader", "news-library", "dictionary", "global-search"}:
         return "learn"
     if isinstance(route, str) and (route.startswith("b1-") or route.startswith("dictionary-practice") or route in {"practice-hub", "listening-practice", "writing-practice", "interaction-practice", "diagnostic"}):
         return "practice"

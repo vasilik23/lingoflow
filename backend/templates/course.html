@@ -72,7 +72,7 @@
         <summary class="topic-summary">
           <span class="topic-header">
             <span class="topic-emoji" aria-hidden="true">{{ forloop.counter|stringformat:"02d" }}</span>
-            <span><small>{{ selected_level|ui_text }} {% translate "· Тема" %} {{ forloop.counter|ui_text }}</small><strong>{{ topic.title|ui_text }}</strong><span>{{ topic.description|ui_text }}</span></span>
+            <span><small>{{ selected_level|ui_text }} {% translate "· Тема" %} {{ forloop.counter|ui_text }}</small><strong>{{ topic.title|ui_text }}</strong><span>{% if topic.journey %}{{ topic.journey.goal }}{% else %}{{ topic.description|ui_text }}{% endif %}</span></span>
           </span>
           <span class="topic-progress-row">
             <span>{{ topic.completed_count|ui_text }} / {{ topic.lesson_count|ui_text }} {% translate "уроков" %}</span>
@@ -84,6 +84,7 @@
           <span class="topic-summary-action">{% translate "Показать уроки" %} <span aria-hidden="true">⌄</span></span>
         </summary>
         <div class="topic-lessons">
+          {% if topic.journey %}<details><summary>{% translate "Показать уроки" %}</summary>{% endif %}
           <div class="task-list">
             {% for task in topic.lessons %}
               <div class="task-card-row"><a class="task-card" href="{% url 'lesson' task.id %}">
@@ -93,7 +94,10 @@
               </a>{% if lesson_bookmarks_available %}<form method="post" action="{% url 'toggle-lesson-bookmark' task.id %}">{% csrf_token %}<input type="hidden" name="saved" value="{% if task.saved %}0{% else %}1{% endif %}"><input type="hidden" name="next" value="{{ request.get_full_path }}#topic-{{ topic.id }}"><button class="bookmark-icon-button{% if task.saved %} is-saved{% endif %}" type="submit" aria-label="{% if task.saved %}{% translate "Убрать урок «" %}{{ task.title|ui_text }}{% translate "» из сохранённого" %}{% else %}{% translate "Сохранить урок «" %}{{ task.title|ui_text }}»{% endif %}">{% if task.saved %}★{% else %}☆{% endif %}</button></form>{% endif %}</div>
             {% endfor %}
           </div>
-          {% if topic.next_lesson %}
+          {% if topic.journey %}</details>{% endif %}
+          {% if topic.journey %}
+            <a class="topic-action" href="{% url 'topic-journey' topic.id %}">{% translate "Продолжить" %} <span aria-hidden="true">→</span></a>
+          {% elif topic.next_lesson %}
             <a class="topic-action" href="{% url 'lesson' topic.next_lesson.id %}">{% translate "Продолжить" %} <span aria-hidden="true">→</span></a>
           {% else %}
             <p class="topic-complete-status"><span aria-hidden="true">✓</span> {% translate "Все уроки пройдены" %}</p>

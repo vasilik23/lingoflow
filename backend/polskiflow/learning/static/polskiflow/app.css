@@ -600,6 +600,14 @@ p { line-height: 1.65; }
 .reading-audio .eyebrow { display: none; }
 .reading-audio p { margin-bottom: 0; font-size: .78rem; }
 .reading-audio audio { width: 100%; max-width: 100%; }
+.topic-journey { display: grid; gap: 1rem; }
+.topic-journey .card { margin: 0; }
+.journey-steps { list-style: none; padding: 0; margin: 0; display: grid; gap: .65rem; }
+.topic-journey #own-answer { scroll-margin-top: 5rem; }
+.topic-journey fieldset label { display: flex; gap: .5rem; align-items: start; margin: .6rem 0; }
+.topic-journey textarea { display: block; box-sizing: border-box; width: 100%; min-height: 10rem; padding: .9rem; border: 1px solid var(--line); border-radius: .8rem; font: inherit; line-height: 1.6; background: var(--surface); color: var(--text); resize: vertical; }
+.topic-journey textarea:focus-visible { outline: 3px solid var(--primary); outline-offset: 2px; }
+.topic-journey .lesson-header .level-badge { justify-self: center; }
 .reading-audio h2 { margin: .15rem 0; font-size: 1.05rem; }
 .reading-audio-actions { display: flex; flex-wrap: wrap; gap: .5rem; align-items: end; }
 .reading-audio-actions button { width: auto; min-height: 44px; margin: 0; padding: .65rem .85rem; font-size: .82rem; }

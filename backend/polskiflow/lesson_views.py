@@ -18,6 +18,7 @@ from polskiflow.lesson_draft_store import delete_lesson_draft, load_lesson_draft
 from polskiflow.lesson_bookmark_store import load_lesson_bookmarks
 from polskiflow.lesson_note_store import load_lesson_note, save_lesson_note
 from polskiflow.domain.lesson_followup import lesson_followup
+from polskiflow.domain.topic_journeys import journey, next_target, PILOT_LESSON_IDS
 from polskiflow.domain.lesson_state import InvalidLessonState, load_lesson_state, sign_lesson_state
 from polskiflow.mistake_store import load_mistakes, set_mistake
 from polskiflow.collection_store import load_collection_summaries
@@ -195,6 +196,8 @@ def _render_step(request, template, context, lesson_id, lesson_kind):
 
 def _lesson_page_context(request, lesson_task, lesson_id, lesson_kind, context):
     """Build the full page shell for initial and non-HTMX lesson requests."""
+    navigation = context.get('lesson_navigation') or (lesson_navigation(lesson_id) if lesson_id in PILOT_LESSON_IDS else None)
+    pilot = journey((navigation or {}).get('topic_id'))
     bookmarks = load_lesson_bookmarks(
         request.supabase_access_token, request.supabase_user.id
     )
@@ -208,6 +211,7 @@ def _lesson_page_context(request, lesson_task, lesson_id, lesson_kind, context):
         "task": lesson_task,
         "lesson_id": lesson_id,
         "lesson_kind": lesson_kind,
+        "journey_href": f"/course/topic/{pilot['topic_id']}/" if pilot and lesson_id in pilot['lessons'] else None,
         "is_bookmarked": lesson_id in (bookmarks or set()),
         "lesson_bookmarks_available": bookmarks is not None,
         "lesson_note": note,
@@ -363,6 +367,8 @@ def _complete(request: HttpRequest, lesson_id: str, score: int, total: int) -> H
     navigation = lesson_navigation(lesson_id)
     lesson_task = task(lesson_id)
     followup = lesson_followup(lesson_task, navigation, score, total, datetime.now(timezone.utc).date())
+    if followup['kind'] == 'next':
+        followup['target'] = next_target((navigation or {}).get('topic_id'), lesson_id)
     if followup["kind"] == "repeat" and lesson_task["kind"] in {"grammar", "quiz"}:
         questions = (grammar(lesson_id) or {}).get("questions", []) if lesson_task["kind"] == "grammar" else quiz(lesson_id)
         mistakes = load_mistakes(request.supabase_access_token, request.supabase_user.id) or []

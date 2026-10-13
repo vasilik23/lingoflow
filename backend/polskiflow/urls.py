@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 from django.urls import path
+from polskiflow.topic_journey_views import topic_journey
 from django.contrib import admin
 from django.views.i18n import set_language
 
@@ -59,6 +60,7 @@ urlpatterns = [
     path("", home, name="home"),
     path("tasks/", daily_tasks, name="daily-tasks"),
     path("course/", course, name="course"),
+    path("course/topic/<slug:topic_id>/", topic_journey, name="topic-journey"),
     path("practice/", practice_hub, name="practice-hub"),
     path("exam/b1/run/", b1_training_run, name="b1-training-run"),
     path("exam/b1/", b1_exam_prep, name="b1-exam-prep"),

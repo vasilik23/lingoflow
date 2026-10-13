@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load i18n ui %}
+{% block title %}{{ topic.title|ui_text }} · LingoFlow{% endblock %}
+{% block toolbar_title %}<h1 class="study-title">{{ topic.title|ui_text }}</h1>{% endblock %}
+{% block content %}
+<div class="lesson-shell topic-journey">
+  <header class="lesson-header"><a class="back-button" href="{% url 'course' %}?level={{ journey.level }}#topic-{{ topic.id }}" aria-label="{% translate 'Назад' %}">←</a><span class="level-badge">{{ journey.level }}</span></header>
+  <section class="card"><h2>{{ journey.goal }}</h2><p class="muted">{{ journey.scenario }}</p>
+    {% if not progress_available %}<p role="status" class="muted">{% translate 'Прогресс временно недоступен. Уроки по-прежнему можно проходить.' %}</p>{% endif %}
+    {% if next_action %}<a class="button" data-journey-next href="{{ next_action.href }}">{% if next_action.needs_review %}{% translate 'Следующий шаг: закрепить' %}{% else %}{% translate 'Продолжить' %}{% endif %} · {{ next_action.title|ui_text }}</a>{% else %}<a class="button" data-journey-next href="#own-answer">{% translate 'Самостоятельный ответ' %}</a>{% endif %}
+  </section>
+  <ol class="journey-steps">
+    {% for step in steps %}<li><a class="task-card" href="{{ step.href }}"><span class="task-icon" aria-hidden="true">{{ forloop.counter }}</span><span class="task-copy"><strong>{{ step.title|ui_text }}{% if step.completed %} ✓{% endif %}</strong><small>{% if step.needs_review %}{% translate 'Следующий шаг: закрепить' %}{% else %}{{ step.description|ui_text }}{% endif %}</small></span><span class="task-arrow" aria-hidden="true">→</span></a></li>{% endfor %}
+  </ol>
+  <section class="card" id="own-answer" aria-labelledby="own-answer-title">
+    <h2 id="own-answer-title">{% translate 'Самостоятельный ответ' %}</h2><p>{{ journey.prompt }}</p>
+    <label for="journey-answer">{% translate 'Твой черновик' %}</label><textarea id="journey-answer" lang="pl" rows="5" maxlength="2000" aria-describedby="journey-privacy"></textarea>
+    <p class="muted" id="journey-privacy">{% translate 'Ответ не отправляется и не начисляет прогресс. Для сохранения скопируй текст.' %}</p>
+    <details><summary>{% translate 'Самопроверка' %}</summary><fieldset><legend>{% translate 'Что проверить' %}</legend>{% for check in journey.checks %}<label><input type="checkbox"> {{ check }}</label>{% endfor %}</fieldset><details><summary>{% translate 'Показать пример ответа после своей попытки' %}</summary><p lang="pl">{{ journey.sample }}</p><p class="muted">{% translate 'Это один возможный ответ. Сравни структуру и выполнение пунктов, а не копируй текст.' %}</p></details></details>
+  </section>
+</div>
+{% endblock %}
