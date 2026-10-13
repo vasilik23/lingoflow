@@ -29,6 +29,7 @@ from polskiflow.reading_bookmark_store import load_reading_bookmarks, set_readin
 from polskiflow.collection_store import load_collection_summaries
 from polskiflow.news_feed import CATEGORIES, CATEGORY_IDS, latest_official_news
 from polskiflow.domain.reading_glossary_forms import with_reading_forms
+from polskiflow.domain.library_audio import audio_url
 
 REVIEW_QUALITIES = {"again", "hard", "good", "easy"}
 PRACTICE_WORD_IDS_SESSION_KEY = "dictionary_practice_word_ids"
@@ -164,6 +165,7 @@ def reader(request: HttpRequest, text_id: str) -> HttpResponse:
         "reading/reader.html",
         {
             "text": text,
+            "reading_audio_url": audio_url(f'reading-{text.id}', ' '.join(text.paragraphs)),
             "paragraphs": paragraphs,
             "glossary_words": glossary_words,
             "comprehension_task": comprehension_task,

@@ -1,4 +1,5 @@
 """Signed, browser-resumable five-part B1 training run without server history."""
+from polskiflow.domain.library_audio import audio_url
 
 import time
 from uuid import uuid4
@@ -147,6 +148,10 @@ def b1_training_run(request):
     report = tuple({**part_info, **result, "incorrect": result.get("incorrect", result.get("total", 0) - result.get("correct", 0)), "unanswered": result.get("unanswered", 0)} for part_info, result in zip(B1_SIMULATION_PARTS, state["results"]))
     instruction = B1_INSTRUCTIONS.get(part["id"]) if part else None
     listening_recording = recording_for_run(state, variant) if part and part["id"] == "listening" else None
+    synthetic_audio_url = audio_url(f'b1-{variant.id}', variant.listening_transcript) if (
+        part and part['id'] == 'listening' and not state.get('listening_recording_id')
+        and state.get('content_version', 1) < 10
+    ) else None
     if part and part["id"] == "listening":
         instruction = B1_RUN_LISTENING_INSTRUCTION
     elif part and part["id"] == "reading" and state.get("content_version", 1) >= 3:
@@ -169,6 +174,7 @@ def b1_training_run(request):
         "speaking_preparation_seconds": max(0, state.get("speaking_ready_at", now) - now) if part and part["id"] == "speaking" else 0,
         "instruction": instruction,
         "listening_recording": listening_recording,
+        "synthetic_audio_url": synthetic_audio_url,
         "listening_blocks": block_recordings_for_run(state, variant) if part and part["id"] == "listening" and state.get("content_version", 1) >= 10 else (),
         "missing_recording": bool(part and part["id"] == "listening" and state.get("listening_recording_id") and not listening_recording),
         "run_token": token, "error": error, "report": report,

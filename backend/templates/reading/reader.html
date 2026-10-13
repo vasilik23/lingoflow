@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n ui %}
+{% load static i18n ui %}
 {% block title %}{{ text.title|ui_text }} · LingoFlow{% endblock %}
 {% block toolbar_title %}<h1 class="study-title">{{ text.title|ui_text }}</h1>{% endblock %}
 {% block content %}
@@ -8,16 +8,18 @@
       <header class="lesson-header reader-header"><a class="back-button" href="{% url 'reading-library' %}" aria-label="{% translate "Назад" %}">←</a><span class="lesson-session-meta">~{{ text.minutes|ui_text }} {% translate "мин" %}</span><span class="level-badge">{{ text.level|ui_text }}</span></header>
       <p class="reader-meta">{{ text.description|ui_text }}</p>
       {% if request.GET.word == "saved" %}<p class="form-success" id="dictionary-status" role="status">{% translate "Слово добавлено в словарь. Повтори его, чтобы лучше запомнить." %}</p>{% elif request.GET.word == "error" %}<p class="form-error" id="dictionary-status" role="alert">{% translate "Не удалось добавить слово. Попробуй ещё раз." %}</p>{% endif %}
-      {{ text.paragraphs|json_script:"reading-audio-text" }}
-      <section class="card reading-audio" data-reading-audio hidden aria-labelledby="reading-audio-title">
-        <div class="reading-audio-heading"><div><p class="eyebrow">{% translate "Аудирование" %}</p><h2 id="reading-audio-title">{% translate "Послушай текст по-польски" %}</h2><p class="muted" data-audio-status aria-live="polite">{% translate "Готово к воспроизведению" %}</p></div><label class="reading-audio-rate"><span>{% translate "Скорость" %}</span><select data-audio-rate><option value="0.8">0,8×</option><option value="1" selected>1×</option><option value="1.15">1,15×</option></select></label></div>
-        <div class="reading-audio-actions">
+      {% if reading_audio_url %}
+      <section class="card reading-audio" data-reading-audio aria-labelledby="reading-audio-title">
+        <div class="reading-audio-heading"><div><p class="eyebrow">{% translate "Аудирование" %}</p><h2 id="reading-audio-title">{% translate "Послушай текст по-польски" %}</h2><p class="muted" data-audio-status aria-live="polite">{% translate "Готово к воспроизведению" %}</p></div><label class="reading-audio-rate" hidden><span>{% translate "Скорость" %}</span><select data-audio-rate><option value="0.8">0,8×</option><option value="1" selected>1×</option><option value="1.15">1,15×</option></select></label></div>
+        <div class="reading-audio-actions" hidden>
           <button type="button" data-audio-play>{% translate "▶ Слушать" %}</button>
           <button type="button" class="secondary" data-audio-pause disabled>{% translate "Ⅱ Пауза" %}</button>
           <button type="button" class="secondary" data-audio-stop disabled>{% translate "■ Стоп" %}</button>
         </div>
-        <noscript><p class="muted">{% translate "Для аудирования нужен JavaScript и системный синтез речи." %}</p></noscript>
+        <audio aria-labelledby="reading-audio-title" data-reading-player controls preload="none" playsinline src="{{ reading_audio_url }}"></audio>
+        <p class="muted">{% translate "Нейросетевая польская озвучка Piper. Это учебный аудиофайл, не запись диктора." %} · Apache-2.0</p>
       </section>
+      {% endif %}
       <div class="reading-paper" lang="pl">
         <p class="reading-word-hint" lang="{{ LANGUAGE_CODE }}">{% translate "Нажми на слово" %}</p>
         {% for paragraph in paragraphs %}
@@ -84,42 +86,8 @@
   <dialog class="word-dialog" id="word-dialog" aria-labelledby="selected-word"></dialog>
 {% endblock %}
 {% block scripts %}
+  <script src="{% static 'polskiflow/reading-audio.js' %}" defer></script>
   <script>
-    (() => {
-  const ui = (typeof window !== "undefined" && window.PolskiFlowI18n?.t) || ((text, ...values) => Array.isArray(text) ? text.map((part, i) => part + (values[i] ?? "")).join("") : text);
-
-      const panel = document.querySelector('[data-reading-audio]');
-      if (!panel || !('speechSynthesis' in window) || !('SpeechSynthesisUtterance' in window)) return;
-      panel.hidden = false;
-      const text = JSON.parse(document.querySelector('#reading-audio-text').textContent).join(' ');
-      const play = panel.querySelector('[data-audio-play]');
-      const pause = panel.querySelector('[data-audio-pause]');
-      const stop = panel.querySelector('[data-audio-stop]');
-      const rate = panel.querySelector('[data-audio-rate]');
-      const status = panel.querySelector('[data-audio-status]');
-      let utterance = null;
-      const cancel = () => {
-        window.PolskiFlowAudioSession?.stopSpeech?.();
-        if (utterance) { utterance.onend = null; utterance.onerror = null; }
-        utterance = null;
-        speechSynthesis.cancel();
-      };
-      const reset = (message = ui('Готово к воспроизведению')) => { play.textContent = ui('▶ Слушать'); pause.textContent = ui('Ⅱ Пауза'); pause.disabled = true; stop.disabled = true; status.textContent = message; utterance = null; };
-      play.addEventListener('click', () => {
-        if (speechSynthesis.paused) { window.PolskiFlowAudioSession?.prepareSpeech(utterance); speechSynthesis.resume(); pause.textContent = ui('Ⅱ Пауза'); status.textContent = ui('Воспроизведение'); return; }
-        cancel();
-        const current = new SpeechSynthesisUtterance(text);
-        utterance = current; current.lang = 'pl-PL'; current.rate = Number(rate.value);
-        current.onend = () => { if (utterance === current) reset(ui('Текст прослушан')); };
-        current.onerror = () => { if (utterance === current) reset(ui('Не удалось запустить системный польский голос')); };
-        play.textContent = ui('↻ Сначала'); pause.disabled = false; stop.disabled = false; status.textContent = ui('Воспроизведение');
-        window.PolskiFlowAudioSession?.prepareSpeech(current);
-        speechSynthesis.speak(current);
-      });
-      pause.addEventListener('click', () => { if (speechSynthesis.paused) { window.PolskiFlowAudioSession?.prepareSpeech(utterance); speechSynthesis.resume(); pause.textContent = ui('Ⅱ Пауза'); status.textContent = ui('Воспроизведение'); } else { window.PolskiFlowAudioSession?.stopSpeech?.(); speechSynthesis.pause(); pause.textContent = ui('▶ Продолжить'); status.textContent = ui('Пауза'); } });
-      stop.addEventListener('click', () => { cancel(); reset(ui('Воспроизведение остановлено')); });
-      window.addEventListener('pagehide', () => { cancel(); reset(); });
-    })();
     const wordDialog = document.querySelector('#word-dialog');
     const wordPanel = document.querySelector('#word-panel');
     const wordHome = wordPanel?.parentElement;
