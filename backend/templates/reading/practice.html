@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% load i18n ui %}
 {% block title %}{% translate "Тренировка слов · LingoFlow" %}{% endblock %}
+{% block toolbar_title %}<h1 class="study-title">{% translate "Тренировка слов" %}</h1>{% endblock %}
 {% block content %}
   <div class="lesson-shell">
-    <header class="lesson-header"><a class="back-button" href="{% url 'dictionary' %}" aria-label="{% translate "Назад" %}">←</a><strong>{% translate "Тренировка слов" %}</strong><span></span></header>
+    <header class="lesson-header"><a class="back-button" href="{% url 'dictionary' %}" aria-label="{% translate "Назад" %}">←</a><span></span><span></span></header>
     <nav class="level-tabs practice-mode-tabs" aria-label="{% translate "Режим тренировки" %}">
       <a href="{{ mode_urls.translation }}"{% if mode == "translation" %} aria-current="page"{% endif %}>{% translate "Перевод" %}</a>
       <a href="{{ mode_urls.lemma }}"{% if mode == "lemma" %} aria-current="page"{% endif %}>{% translate "Слово по-польски" %}</a>
@@ -13,7 +14,7 @@
       {% if question %}
         {% include "reading/_practice_question.html" %}
       {% else %}
-        <div class="card empty-state practice-empty"><span>🧠</span><h1>{% if source_text_id and source_word_count == 0 %}{% translate "Слова этого текста ещё не сохранены" %}{% elif word_count >= 4 or mode == "context" and word_count %}{% translate "На сегодня всё" %}{% else %}{% translate "Нужно минимум 4 слова" %}{% endif %}</h1><p class="muted">{% if source_text_id and source_word_count == 0 %}{% translate "Вернись к тексту, нажми на полезные слова и добавь их в личный словарь." %}{% elif source_text_id and mode != "context" %}{% translate "Для вариантов ответа нужно минимум 4 разных слова из этого текста. Сейчас сохранено:" %} {{ word_count|ui_text }}.{% elif word_count >= 4 or mode == "context" and word_count %}{% translate "Следующая тренировка появится, когда слова снова будут готовы к повторению." %}{% else %}{% translate "Сейчас в словаре:" %} {{ word_count|ui_text }}{% translate ". Добавляй слова из текстов, и тренировка откроется автоматически." %}{% endif %}</p><a class="button" href="{% url 'reading-library' %}">{% translate "Найти новые слова" %}</a>{% if not available %}<p class="save-error">{% translate "Словарь временно недоступен." %}</p>{% endif %}</div>
+        <div class="card empty-state practice-empty"><span>🧠</span><h2>{% if source_text_id and source_word_count == 0 %}{% translate "Слова этого текста ещё не сохранены" %}{% elif word_count >= 4 or mode == "context" and word_count %}{% translate "На сегодня всё" %}{% else %}{% translate "Нужно минимум 4 слова" %}{% endif %}</h2><p class="muted">{% if source_text_id and source_word_count == 0 %}{% translate "Вернись к тексту, нажми на полезные слова и добавь их в личный словарь." %}{% elif source_text_id and mode != "context" %}{% translate "Для вариантов ответа нужно минимум 4 разных слова из этого текста. Сейчас сохранено:" %} {{ word_count|ui_text }}.{% elif word_count >= 4 or mode == "context" and word_count %}{% translate "Следующая тренировка появится, когда слова снова будут готовы к повторению." %}{% else %}{% translate "Сейчас в словаре:" %} {{ word_count|ui_text }}{% translate ". Добавляй слова из текстов, и тренировка откроется автоматически." %}{% endif %}</p><a class="button" href="{% url 'reading-library' %}">{% translate "Найти новые слова" %}</a>{% if not available %}<p class="save-error">{% translate "Словарь временно недоступен." %}</p>{% endif %}</div>
       {% endif %}
     </div>
   </div>

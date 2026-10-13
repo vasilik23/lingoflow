@@ -4,7 +4,7 @@
 <div class="lesson-progress"><span style="--value: {% widthratio index|add:1 total 100 %}%"></span></div>
 <section class="card question-card practice-card">
   <p class="eyebrow">{{ question.instruction|ui_text }}</p>
-  <h1>{{ question.prompt|learning_text }}</h1>
+  <h2>{{ question.prompt|learning_text }}</h2>
   {% if question.context %}<p class="practice-context">“{{ question.context|truncatechars:180 }}”</p>{% endif %}
 </section>
 {% if not answered %}

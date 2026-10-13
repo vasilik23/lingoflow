@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% load i18n ui %}
 {% block title %}{% translate "Тренировка слов · LingoFlow" %}{% endblock %}
+{% block toolbar_title %}<h1 class="study-title">{% translate "Тренировка слов" %}</h1>{% endblock %}
 {% block content %}
   <div class="lesson-shell">
-    <header class="lesson-header"><a class="back-button" href="{% url 'dictionary' %}" aria-label="{% translate "Назад" %}">←</a><strong>{% translate "Тренировка слов" %}</strong><span></span></header>
+    <header class="lesson-header"><a class="back-button" href="{% url 'dictionary' %}" aria-label="{% translate "Назад" %}">←</a><span></span><span></span></header>
     <nav class="level-tabs practice-mode-tabs" aria-label="{% translate "Режим тренировки" %}">
       <a href="{{ mode_urls.translation }}"{% if mode == "translation" %} aria-current="page"{% endif %}>{% translate "Перевод" %}</a>
       <a href="{{ mode_urls.lemma }}"{% if mode == "lemma" %} aria-current="page"{% endif %}>{% translate "Слово по-польски" %}</a>
