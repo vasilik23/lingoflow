@@ -17420,3 +17420,6 @@ msgstr "Synthetic Polish speech by eSpeak-NG. This is a practice audio file, not
 
 msgid "Нейросетевая польская озвучка Piper. Это учебный аудиофайл, не запись диктора."
 msgstr "Neural Polish speech by Piper. This is a practice audio file, not a narrator recording."
+
+msgid "Закрыть перевод"
+msgstr "Close translation"

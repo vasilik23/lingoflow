@@ -1,31 +1,25 @@
 {% extends "base.html" %}
 {% load i18n ui %}
 {% block title %}{{ text.title|ui_text }} · LingoFlow{% endblock %}
+{% block toolbar_title %}<h1 class="study-title">{{ text.title|ui_text }}</h1>{% endblock %}
 {% block content %}
   <div class="reader-layout">
     <article class="reader-article">
-      <header class="lesson-header reader-header"><a class="back-button" href="{% url 'reading-library' %}" aria-label="{% translate "Назад" %}">←</a><strong>{{ text.title|ui_text }}</strong><span class="level-badge">{{ text.level|ui_text }}</span></header>
-      <div class="reader-meta"><span>{{ text.emoji|ui_text }} {{ text.description|ui_text }}</span><span>◷ {{ text.minutes|ui_text }} {% translate "мин" %}</span></div>
+      <header class="lesson-header reader-header"><a class="back-button" href="{% url 'reading-library' %}" aria-label="{% translate "Назад" %}">←</a><span class="lesson-session-meta">~{{ text.minutes|ui_text }} {% translate "мин" %}</span><span class="level-badge">{{ text.level|ui_text }}</span></header>
+      <p class="reader-meta">{{ text.description|ui_text }}</p>
       {% if request.GET.word == "saved" %}<p class="form-success" id="dictionary-status" role="status">{% translate "Слово добавлено в словарь. Повтори его, чтобы лучше запомнить." %}</p>{% elif request.GET.word == "error" %}<p class="form-error" id="dictionary-status" role="alert">{% translate "Не удалось добавить слово. Попробуй ещё раз." %}</p>{% endif %}
-      <details class="card content-tools reader-tools" {% if request.GET.collection %}open{% endif %}>
-        <summary><span><strong>{% translate "Сохранить и организовать" %}</strong><small>{% translate "Сохранённое и личные подборки" %}</small></span><span class="content-tools-toggle" aria-hidden="true">⌄</span></summary>
-        <div class="content-tools-grid">
-          {% if bookmarks_available %}<section class="content-tool-panel"><p class="eyebrow">{% translate "Быстрый доступ" %}</p><h2>{% translate "Сохранённое" %}</h2><form method="post" action="{% url 'toggle-reading-bookmark' text.id %}">{% csrf_token %}<input type="hidden" name="saved" value="{% if is_bookmarked %}0{% else %}1{% endif %}"><button class="compact-button secondary-link" type="submit">{% if is_bookmarked %}{% translate "★ Убрать из сохранённых" %}{% else %}{% translate "☆ Сохранить текст" %}{% endif %}</button></form></section>{% endif %}
-          <section class="inline-collection content-tool-panel" id="reading-collection" aria-labelledby="reading-collection-title"><div><p class="eyebrow">{% translate "Личный маршрут" %}</p><h2 id="reading-collection-title">{% translate "Добавить в подборку" %}</h2></div>{% if request.GET.collection == "added" %}<p class="form-success" role="status">{% translate "Текст добавлен в подборку." %}</p>{% elif request.GET.collection == "error" %}<p class="form-error" role="alert">{% translate "Не удалось добавить текст." %}</p>{% endif %}{% if collection_choices %}<form method="post" action="{% url 'add-material-to-collection' 'reading' text.id %}">{% csrf_token %}<label for="reading-collection-select">{% translate "Подборка" %}</label><div class="filter-search-row"><select id="reading-collection-select" name="collection_id" required><option value="">{% translate "Выбери список" %}</option>{% for collection in collection_choices %}<option value="{{ collection.id }}">{{ collection.name }}</option>{% endfor %}</select><button type="submit">{% translate "Добавить" %}</button></div></form>{% elif collections_available %}<p class="muted">{% translate "Сначала" %} <a href="{% url 'collections' %}">{% translate "создай подборку" %}</a>.</p>{% else %}<p class="muted">{% translate "Подборки временно недоступны." %}</p>{% endif %}</section>
-        </div>
-      </details>
       {{ text.paragraphs|json_script:"reading-audio-text" }}
       <section class="card reading-audio" data-reading-audio hidden aria-labelledby="reading-audio-title">
-        <div><p class="eyebrow">{% translate "Аудирование" %}</p><h2 id="reading-audio-title">{% translate "Послушай текст по-польски" %}</h2><p class="muted" data-audio-status aria-live="polite">{% translate "Готово к воспроизведению" %}</p></div>
+        <div class="reading-audio-heading"><div><p class="eyebrow">{% translate "Аудирование" %}</p><h2 id="reading-audio-title">{% translate "Послушай текст по-польски" %}</h2><p class="muted" data-audio-status aria-live="polite">{% translate "Готово к воспроизведению" %}</p></div><label class="reading-audio-rate"><span>{% translate "Скорость" %}</span><select data-audio-rate><option value="0.8">0,8×</option><option value="1" selected>1×</option><option value="1.15">1,15×</option></select></label></div>
         <div class="reading-audio-actions">
           <button type="button" data-audio-play>{% translate "▶ Слушать" %}</button>
-          <button type="button" data-audio-pause disabled>{% translate "Ⅱ Пауза" %}</button>
-          <button type="button" data-audio-stop disabled>{% translate "■ Стоп" %}</button>
-          <label><span>{% translate "Скорость" %}</span><select data-audio-rate><option value="0.8">0,8×</option><option value="1" selected>1×</option><option value="1.15">1,15×</option></select></label>
+          <button type="button" class="secondary" data-audio-pause disabled>{% translate "Ⅱ Пауза" %}</button>
+          <button type="button" class="secondary" data-audio-stop disabled>{% translate "■ Стоп" %}</button>
         </div>
         <noscript><p class="muted">{% translate "Для аудирования нужен JavaScript и системный синтез речи." %}</p></noscript>
       </section>
       <div class="reading-paper" lang="pl">
+        <p class="reading-word-hint" lang="{{ LANGUAGE_CODE }}">{% translate "Нажми на слово" %}</p>
         {% for paragraph in paragraphs %}
           <p>{% for token in paragraph %}{% if token.translation %}<button type="button" class="reader-word" data-word="{{ token.word }}" data-lemma="{{ token.lemma }}" data-translation="{{ token.translation|learning_text }}" data-translation-lang="{{ token.translation|learning_language:'ru' }}" data-source-translation="{{ token.translation }}" data-part-of-speech="{{ token.part_of_speech }}">{{ token.text }}</button>{% else %}{{ token.text }}{% endif %}{% endfor %}</p>
         {% endfor %}
@@ -48,7 +42,7 @@
       {% endwith %}
       {% if comprehension_task %}
         <section class="card reading-check-card" aria-labelledby="reading-check-title">
-          <span class="reading-check-icon" aria-hidden="true">✓</span>
+          <span class="reading-check-icon" aria-hidden="true">{% include 'components/icon.html' with name='check' %}</span>
           <div>
             <p class="eyebrow">{% translate "После чтения" %}</p>
             <h2 id="reading-check-title">{% translate "Проверь понимание текста" %}</h2>
@@ -58,17 +52,25 @@
         </section>
       {% endif %}
       <section class="card reading-check-card" aria-labelledby="reading-words-title">
-        <span class="reading-check-icon" aria-hidden="true">◇</span>
+        <span class="reading-check-icon" aria-hidden="true">{% include 'components/icon.html' with name='words' %}</span>
         <div>
           <p class="eyebrow">{% translate "Слова из текста" %}</p>
           <h2 id="reading-words-title">{% translate "Закрепи сохранённую лексику" %}</h2>
           <p class="muted">{% translate "Повторяй сохранённые слова. Приложение подскажет, когда вернуться к ним." %}</p>
         </div>
-        <a class="compact-button" href="{% url 'dictionary-practice' %}?source={{ text.id|urlencode }}&amp;mode=lemma">{% translate "Повторить слова текста →" %}</a>
+        <a class="compact-button{% if comprehension_task %} secondary-link{% endif %}" href="{% url 'dictionary-practice' %}?source={{ text.id|urlencode }}&amp;mode=lemma">{% translate "Повторить слова текста →" %}</a>
       </section>
+      <details class="card content-tools reader-tools" {% if request.GET.collection %}open{% endif %}>
+        <summary><span><strong>{% translate "Сохранить и организовать" %}</strong><small>{% translate "Сохранённое и личные подборки" %}</small></span><span class="content-tools-toggle" aria-hidden="true">⌄</span></summary>
+        <div class="content-tools-grid">
+          {% if bookmarks_available %}<section class="content-tool-panel"><p class="eyebrow">{% translate "Быстрый доступ" %}</p><h2>{% translate "Сохранённое" %}</h2><form method="post" action="{% url 'toggle-reading-bookmark' text.id %}">{% csrf_token %}<input type="hidden" name="saved" value="{% if is_bookmarked %}0{% else %}1{% endif %}"><button class="compact-button secondary-link" type="submit">{% if is_bookmarked %}{% translate "★ Убрать из сохранённых" %}{% else %}{% translate "☆ Сохранить текст" %}{% endif %}</button></form></section>{% endif %}
+          <section class="inline-collection content-tool-panel" id="reading-collection" aria-labelledby="reading-collection-title"><div><p class="eyebrow">{% translate "Личный маршрут" %}</p><h2 id="reading-collection-title">{% translate "Добавить в подборку" %}</h2></div>{% if request.GET.collection == "added" %}<p class="form-success" role="status">{% translate "Текст добавлен в подборку." %}</p>{% elif request.GET.collection == "error" %}<p class="form-error" role="alert">{% translate "Не удалось добавить текст." %}</p>{% endif %}{% if collection_choices %}<form method="post" action="{% url 'add-material-to-collection' 'reading' text.id %}">{% csrf_token %}<label for="reading-collection-select">{% translate "Подборка" %}</label><div class="filter-search-row"><select id="reading-collection-select" name="collection_id" required><option value="">{% translate "Выбери список" %}</option>{% for collection in collection_choices %}<option value="{{ collection.id }}">{{ collection.name }}</option>{% endfor %}</select><button type="submit">{% translate "Добавить" %}</button></div></form>{% elif collections_available %}<p class="muted">{% translate "Сначала" %} <a href="{% url 'collections' %}">{% translate "создай подборку" %}</a>.</p>{% else %}<p class="muted">{% translate "Подборки временно недоступны." %}</p>{% endif %}</section>
+        </div>
+      </details>
     </article>
     <aside class="word-panel" id="word-panel">
-      <div class="word-panel-placeholder"><span>👆</span><strong>{% translate "Нажми на слово" %}</strong><p>{% translate "Здесь появится перевод, и слово можно будет сохранить." %}</p></div>
+      <button type="button" class="word-panel-close secondary" data-word-close aria-label="{% translate 'Закрыть перевод' %}">×</button>
+      <div class="word-panel-placeholder"><span aria-hidden="true">{% include 'components/icon.html' with name='words' %}</span><strong>{% translate "Нажми на слово" %}</strong><p>{% translate "Здесь появится перевод, и слово можно будет сохранить." %}</p></div>
       <div class="word-panel-result" hidden>
         <p class="eyebrow">{% translate "Перевод" %}</p><h2 id="selected-word" lang="pl"></h2><p class="selected-translation" id="selected-translation"></p>
         <form method="post" action="{% url 'add-dictionary-word' text.id %}">
@@ -79,6 +81,7 @@
       </div>
     </aside>
   </div>
+  <dialog class="word-dialog" id="word-dialog" aria-labelledby="selected-word"></dialog>
 {% endblock %}
 {% block scripts %}
   <script>
@@ -117,9 +120,27 @@
       stop.addEventListener('click', () => { cancel(); reset(ui('Воспроизведение остановлено')); });
       window.addEventListener('pagehide', () => { cancel(); reset(); });
     })();
+    const wordDialog = document.querySelector('#word-dialog');
+    const wordPanel = document.querySelector('#word-panel');
+    const wordHome = wordPanel?.parentElement;
+    let selectedWordButton = null;
+    document.querySelector('[data-word-close]')?.addEventListener('click', () => wordDialog.close());
+    wordDialog?.addEventListener('close', () => {
+      wordHome.append(wordPanel);
+      selectedWordButton?.focus({preventScroll: true});
+    });
+    wordDialog?.addEventListener('click', (event) => {
+      if (event.target !== wordDialog) return;
+      const box = wordDialog.getBoundingClientRect();
+      if (event.clientX < box.left || event.clientX > box.right || event.clientY < box.top || event.clientY > box.bottom) wordDialog.close();
+    });
+    window.addEventListener('resize', () => {
+      if (window.innerWidth >= 1000 && wordDialog?.open) wordDialog.close();
+    });
     document.querySelectorAll('.reader-word').forEach((button) => button.addEventListener('click', () => {
       document.querySelectorAll('.reader-word.selected').forEach((word) => word.classList.remove('selected'));
       button.classList.add('selected');
+      selectedWordButton = button;
       document.querySelector('.word-panel-placeholder').hidden = true;
       document.querySelector('.word-panel-result').hidden = false;
       const label = button.dataset.lemma === button.dataset.word
@@ -134,7 +155,14 @@
       document.querySelector('#context-input').value = button.dataset.glossaryEntry !== undefined ? '' : button.closest('p').textContent.trim().slice(0, 500);
       const dictionaryStatus = document.querySelector('#dictionary-status');
       if (dictionaryStatus) dictionaryStatus.textContent = '';
-      if (window.innerWidth < 850) document.querySelector('#word-panel').scrollIntoView({behavior: 'smooth', block: 'nearest'});
+      if (window.innerWidth < 1000) {
+        if (typeof wordDialog?.showModal === 'function') {
+          wordDialog.append(wordPanel);
+          if (!wordDialog.open) wordDialog.showModal();
+        } else {
+          wordPanel.scrollIntoView({behavior: 'smooth', block: 'nearest'});
+        }
+      }
     }));
   </script>
 {% endblock %}

@@ -1294,6 +1294,7 @@ window.PolskiFlowEnglishMessages = {
   "Закрытая beta": "Closed. beta",
   "Закрытая beta · LingoFlow": "Closed. beta · LingoFlow",
   "Закрыто": "Closed",
+  "Закрыть перевод": "Close translation",
   "Заметка к уроку": "Lesson note",
   "Заметка не может быть длиннее 2000 символов": "The note cannot be longer than 2,000 characters",
   "Заметка сохранена и доступна на других устройствах.": "The note is saved and available on other devices.",
