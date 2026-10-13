@@ -45,6 +45,15 @@
       if (target) { levels.forEach(section => { section.open = section === target; }); }
       sync();
     };
+    selected.form.classList.add('listening-enhanced');
+    document.querySelectorAll('nav.reading-audio-actions a').forEach(link => {
+      link.addEventListener('click', () => {
+        const target = levels.find(section => link.getAttribute('href') === '#' + section.id);
+        if (!target) return;
+        levels.forEach(section => { section.open = section === target; });
+        sync();
+      });
+    });
     openLinked();
     window.addEventListener('hashchange', openLinked);
   }
