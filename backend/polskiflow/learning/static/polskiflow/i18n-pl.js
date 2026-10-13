@@ -1547,6 +1547,7 @@ window.PolskiFlowPolishMessages = {
   "Как просто и точно объяснить сообщение?": "Jak prosto i dokładnie wyjaśnić wiadomość?",
   "Как проходит обучение": "Jak wygląda nauka",
   "Как прочитать дату 12.03.2026?": "Jak odczytać datę 12.03.2026?",
+  "Как работает прогон": "Jak działa próba",
   "Как работает тренажёр": "Jak działa ćwiczenie",
   "Как разговор о потребностях помогает найти компромисс": "Jak rozmowa o potrzebach pomaga znaleźć kompromis",
   "Как связать знания A2 в самостоятельную речь": "Jak połączyć wiedzę A2 w samodzielną wypowiedź",

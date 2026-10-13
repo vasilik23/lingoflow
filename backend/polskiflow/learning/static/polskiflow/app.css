@@ -1473,3 +1473,24 @@ nav.listening-level-nav a { margin: 0; padding: .65rem .75rem; min-height: 44px;
 @media (min-width: 1000px) { nav.listening-level-nav { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 
 .listening-enhanced:has([data-listening-level][open]) > [data-listening-level]:not([open]) { display: none; }
+
+/* One visual system for B1 entry, parts, mock, run and writing. */
+.exam-page .mock-shell { width: min(100%, 64rem); max-width: none; margin-inline: auto; }
+.exam-page .mock-header { padding: .5rem 0; margin-bottom: .75rem; }
+.exam-page .mock-header p { margin: 0; font-size: .85rem; color: var(--muted); }
+.exam-page .mock-header .eyebrow { margin-bottom: .4rem; color: var(--primary); }
+.exam-page .mock-section { padding: clamp(1rem, 3vw, 2rem); border-radius: 1.25rem; }
+.exam-page .mock-question { padding-top: 1.25rem; }
+.exam-page .mock-question label { background: var(--surface); font-weight: 550; border-radius: .85rem; }
+.exam-page .mock-question label:has(input:checked) { background: var(--primary-soft); border-color: var(--primary); }
+.exam-page .mock-source-text { font-size: 1rem; line-height: 1.85; }
+.exam-page .exam-workspace-bar { top: max(.75rem, env(safe-area-inset-top)); gap: .5rem 1rem; border-top: 3px solid var(--primary); border-radius: 1rem; }
+.exam-page .exam-writing-bar { top: max(.75rem, env(safe-area-inset-top)); padding: .8rem; border: 1px solid var(--line); border-top: 3px solid var(--primary); border-radius: 1rem; }
+.exam-page .exam-writing-bar button { width: auto; min-height: 44px; margin: 0; font-size: .85rem; }
+.exam-page .exam-writing [data-exam-task] { padding: clamp(1rem, 3vw, 1.5rem); border: 1px solid var(--line); border-radius: 1rem; }
+.exam-page .exam-writing textarea { padding: 1rem; border: 1px solid var(--line); border-radius: .85rem; background: var(--surface); color: var(--text); font: inherit; line-height: 1.8; }
+.exam-run-details { padding: .75rem 1rem; border-radius: .85rem; background: var(--surface-soft); }
+.exam-run-details summary { cursor: pointer; min-height: 44px; align-content: center; font-weight: 650; }
+.exam-run-details p { margin: .75rem 0 0; font-size: .85rem; }
+.exam-page .run-review-answer { padding: 1rem; border-radius: .75rem; background: var(--surface-soft); }
+.exam-page .b1-entry-action h2 { font-size: 1.1rem; }

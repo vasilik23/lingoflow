@@ -60,6 +60,21 @@ class B1WeeklyMockDomainTests(SimpleTestCase):
 
 
 class B1WeeklyMockViewTests(TestCase):
+    @patch("polskiflow.b1_mock_views.save_b1_mock_attempt", return_value=True)
+    def test_early_finish_grades_partial_answers_without_timeout(self, save_attempt):
+        opened = self.client.get("/exam/b1/mock/")
+        questions = opened.context["variant"].questions
+        response = self.client.post("/exam/b1/mock/", {
+            "attempt_token": opened.context["attempt_token"],
+            f"answer_{questions[0].id}": questions[0].correct,
+        })
+        self.assertEqual(response.status_code, 200)
+        result = response.context["result"]
+        self.assertEqual((result["correct"], result["incorrect"], result["unanswered"]),
+                         (1, 0, len(questions) - 1))
+        self.assertFalse(result["timed_out"])
+        self.assertTrue(save_attempt.called)
+
     def test_listening_uses_shared_controls_and_attempt_identity(self):
         response = self.client.get("/exam/b1/mock/")
         self.assertContains(response, 'data-b1-listening')
@@ -82,8 +97,11 @@ class B1WeeklyMockViewTests(TestCase):
                   f"answer_{questions[1].id}": (questions[1].correct + 1) % len(questions[1].options)}
         with patch("polskiflow.b1_mock_views.time", SimpleNamespace(time=lambda: deadline - 1)):
             early = self.client.post("/exam/b1/mock/", fields)
-            self.assertEqual(early.status_code, 400)
-            save_attempt.assert_not_called()
+            self.assertEqual(early.status_code, 200)
+            self.assertFalse(early.context["result"]["timed_out"])
+            self.assertEqual(early.context["result"]["unanswered"], len(questions) - 2)
+            save_attempt.assert_called_once()
+            save_attempt.reset_mock()
         with patch("polskiflow.b1_mock_views.time", SimpleNamespace(time=lambda: deadline)):
             response = self.client.post("/exam/b1/mock/", fields)
             self.assertEqual(response.status_code, 200)
@@ -193,7 +211,7 @@ class B1WeeklyMockViewTests(TestCase):
         self.assertEqual(submitted.context["variant"].id, "b1-weekly-v2")
         self.assertContains(submitted, "7 из 7")
 
-    def test_post_rejects_incomplete_unknown_and_cross_user_payloads(self):
+    def test_empty_finish_counts_skips_and_rejects_unknown_and_cross_user_payloads(self):
         token = self.client.get("/exam/b1/mock/").context["attempt_token"]
         incomplete = self.client.post("/exam/b1/mock/", {"attempt_token": token})
         unknown = self.client.post("/exam/b1/mock/", {"attempt_token": token, "unexpected": "1"})
@@ -210,7 +228,8 @@ class B1WeeklyMockViewTests(TestCase):
             **{f"answer_{item.id}": item.correct for item in QUESTIONS},
         })
 
-        self.assertEqual(incomplete.status_code, 400)
+        self.assertEqual(incomplete.status_code, 200)
+        self.assertEqual(incomplete.context["result"]["unanswered"], 7)
         self.assertEqual(unknown.status_code, 400)
         self.assertEqual(cross_user.status_code, 400)
         self.assertEqual(bad_attempt.status_code, 400)

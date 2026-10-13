@@ -18,8 +18,9 @@ inputs[0].checked=true;listeners.change();assert.equal(nodes.answered.textConten
 inputs[1].value='czas';listeners.input();assert.equal(nodes.answered.textContent,'2');
 const finish={value:'finish'};let prevented=false,stopped=false;
 listeners.submit({submitter:finish,preventDefault(){prevented=true;},stopImmediatePropagation(){stopped=true;}});assert(prevented&&stopped);assert(dialog.open);
+assert.match(nodes['confirm-description'].textContent,/Без ответа: 0/);
 nodes.cancel.click();assert(!dialog.open);assert.equal(form.submitted,undefined);
-listeners.submit({submitter:finish,preventDefault(){},stopImmediatePropagation(){}});nodes.accept.click();assert.equal(form.submitted,finish);assert(!dialog.open);
+inputs[1].value='';listeners.submit({submitter:finish,preventDefault(){},stopImmediatePropagation(){}});assert.match(nodes['confirm-description'].textContent,/Без ответа: 1/);nodes.accept.click();assert.equal(form.submitted,finish);assert(!dialog.open);
 listeners.submit({submitter:{value:'skip'},preventDefault(){},stopImmediatePropagation(){}});assert.match(nodes['confirm-description'].textContent,/без балла/);
 root.dataset.expired='1';root['b1-run-expired']();assert(!dialog.open);
 listeners.submit({submitter:finish,preventDefault(){throw Error('timeout must not be intercepted');}});

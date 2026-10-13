@@ -1,0 +1,6 @@
+{% load i18n %}
+<dialog class="exam-finish-dialog" data-exam-confirm aria-labelledby="exam-confirm-title" aria-describedby="exam-confirm-description">
+  <h2 id="exam-confirm-title">{% translate "Завершить часть?" %}</h2>
+  <p id="exam-confirm-description" data-exam-confirm-description></p>
+  <div class="speaking-controls"><button type="button" class="compact-button" data-exam-cancel autofocus>{% translate "Вернуться к заданиям" %}</button><button type="button" class="primary-button" data-exam-accept>{% translate "Подтвердить" %}</button></div>
+</dialog>
