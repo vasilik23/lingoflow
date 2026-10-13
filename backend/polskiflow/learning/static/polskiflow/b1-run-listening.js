@@ -73,6 +73,7 @@
       watchdog = setTimeout(() => { if (!started && currentAttempt === attempt) cancel(ui('Запись не запустилась; прослушивание не потрачено. Можно попробовать ещё раз.')); }, 10000);
       try {
         audio.currentTime = 0;
+        window.PolskiFlowAudioSession?.prepare?.(audio);
         const promise = audio.play();
         promise?.catch(() => { if (currentAttempt === attempt) cancel(ui('Запись недоступна; прослушивание не потрачено. Попробуй ещё раз или пропусти часть.')); });
       } catch (_) { cancel(ui('Запись недоступна; прослушивание не потрачено.')); }

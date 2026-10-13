@@ -1,3 +1,4 @@
+from polskiflow.domain.library_audio import audio_url
 import time
 from uuid import UUID, uuid4
 
@@ -89,6 +90,7 @@ def b1_weekly_mock(request: HttpRequest) -> HttpResponse:
         request.supabase_access_token, request.supabase_user.id
     )
     return render(request, "b1_weekly_mock.html", {
+        "synthetic_audio_url": audio_url(f'b1-{variant.id}', variant.listening_transcript) if variant else None,
         "variant": variant,
         "instructions": B1_INSTRUCTIONS,
         "questions": variant.questions,
@@ -174,6 +176,7 @@ def b1_exam_simulation(request: HttpRequest) -> HttpResponse:
         request.supabase_access_token, request.supabase_user.id
     )
     return render(request, "b1_exam_simulation.html", {
+        "synthetic_audio_url": audio_url(f'b1-{variant.id}', variant.listening_transcript) if variant else None,
         "parts": parts,
         "part": part,
         "instruction": B1_INSTRUCTIONS.get(part["id"]) if part else None,

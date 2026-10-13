@@ -15,6 +15,17 @@ from polskiflow.domain.b1_training_speaking import PREPARATION_SECONDS, training
 
 
 class B1TrainingRunTests(TestCase):
+    def test_synthetic_file_matches_each_variant_without_enabling_verified_blocks(self):
+        for variant in VARIANTS:
+            state = dict(self.client.get('/exam/b1/run/').context['state'],
+                         variant_id=variant.id, phase='part', step=0, deadline=self.now + 60)
+            response = self.client.post('/exam/b1/run/', {
+                'run_token': signing.dumps(state, salt=RUN_SALT), 'action': 'resume'})
+            self.assertContains(response, 'data-run-audio')
+            self.assertContains(response, 'Нейросетевая польская озвучка Piper')
+            self.assertTrue(response.context['synthetic_audio_url'])
+            self.assertFalse(response.context['listening_blocks'])
+
     def test_confirmed_early_finish_scores_current_answers_and_preserves_skips(self):
         opened = self.advance(self.client.get("/exam/b1/run/"), "start")
         questions = opened.context["questions"]
@@ -188,6 +199,7 @@ class B1TrainingRunTests(TestCase):
             self.assertNotContains(opened, "Системный польский голос устройства")
         resumed = self.advance(opened, "resume")
         self.assertContains(resumed, "data-missing-recording=\"1\"")
+        self.assertIsNone(resumed.context['synthetic_audio_url'])
         self.assertNotContains(resumed, "Системный польский голос устройства")
 
     def test_extended_speaking_tasks_and_legacy_three_minute_budget(self):

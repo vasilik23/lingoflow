@@ -599,6 +599,7 @@ p { line-height: 1.65; }
 .reading-audio { display: grid; gap: .65rem; margin-bottom: 1rem; padding: 1rem 1.25rem; background: var(--surface-soft); box-shadow: none; }
 .reading-audio .eyebrow { display: none; }
 .reading-audio p { margin-bottom: 0; font-size: .78rem; }
+.reading-audio audio { width: 100%; max-width: 100%; }
 .reading-audio h2 { margin: .15rem 0; font-size: 1.05rem; }
 .reading-audio-actions { display: flex; flex-wrap: wrap; gap: .5rem; align-items: end; }
 .reading-audio-actions button { width: auto; min-height: 44px; margin: 0; padding: .65rem .85rem; font-size: .82rem; }

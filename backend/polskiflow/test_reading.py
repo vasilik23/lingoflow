@@ -353,14 +353,16 @@ class ReadingViewsTests(TestCase):
         self.assertEqual(response.status_code, 400)
         self.assertEqual(save_word.call_count, 1)
 
-    def test_reader_offers_private_system_speech_controls(self):
+    def test_reader_does_not_offer_stale_audio_for_unpublished_text(self):
         response = self.client.get("/reading/test-story/")
+        self.assertNotContains(response, 'data-reading-player')
+        self.assertNotContains(response, 'SpeechSynthesisUtterance')
 
-        self.assertContains(response, "Послушай текст по-польски")
-        self.assertContains(response, 'data-audio-play')
-        self.assertContains(response, "SpeechSynthesisUtterance")
-        self.assertContains(response, "pl-PL")
-        self.assertNotContains(response, "audio src=")
+    def test_published_reader_uses_native_file_with_no_script_controls(self):
+        response = self.client.get('/reading/pierwszy-dzien-na-kursie/')
+        self.assertContains(response, 'data-reading-player controls preload="none" playsinline')
+        self.assertContains(response, 'reading-audio.js')
+        self.assertContains(response, 'Нейросетевая польская озвучка Piper')
 
     def test_reader_links_saved_words_to_sm2_practice(self):
         response = self.client.get("/reading/test-story/")
