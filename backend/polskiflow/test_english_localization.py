@@ -17,6 +17,16 @@ from polskiflow.learning.templatetags.ui import learning_text, ui_text
 
 
 class EnglishInterfaceTests(SimpleTestCase):
+    def test_pilot_glosses_keep_the_intended_word_meanings(self):
+        with override('en'):
+            for source, expected in (
+                ('говорить', 'speak'), ('представляться', 'introduce oneself'),
+                ('приобрести', 'acquire'), ('окончание', 'completion; ending'),
+                ('выпускной экзамен', 'school-leaving exam'),
+                ('снимать', 'rent'), ('согласно', 'according to'),
+            ):
+                self.assertEqual(learning_text(source), expected)
+
     def test_english_auth_cookie_and_no_global_menu_selector(self):
         page = self.client.get('/login/', HTTP_ACCEPT_LANGUAGE='en-US,en;q=0.9')
         self.assertContains(page, '<html lang="en">')

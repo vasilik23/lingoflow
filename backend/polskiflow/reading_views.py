@@ -31,6 +31,7 @@ from polskiflow.news_feed import CATEGORIES, CATEGORY_IDS, latest_official_news
 from polskiflow.domain.reading_glossary_forms import with_reading_forms
 from polskiflow.domain.library_audio import audio_url
 from polskiflow.domain.topic_journeys import PILOTS
+from polskiflow.learning.templatetags.ui import learning_text
 
 REVIEW_QUALITIES = {"again", "hard", "good", "easy"}
 PRACTICE_WORD_IDS_SESSION_KEY = "dictionary_practice_word_ids"
@@ -195,7 +196,12 @@ def dictionary(request: HttpRequest) -> HttpResponse:
     words = load_personal_words(
         request.supabase_access_token, request.supabase_user.id
     )
-    all_words = words or []
+    # Search the same presentation label that is rendered, while retaining the
+    # canonical stored translation for export, grading and language changes.
+    all_words = [
+        {**word, "display_translation": learning_text(word.get("translation", ""))}
+        for word in (words or [])
+    ]
     query = request.GET.get("q", "").strip()[:DICTIONARY_QUERY_MAX_LENGTH]
     review_filter = request.GET.get("review", "")
     if review_filter not in DICTIONARY_REVIEW_FILTERS:
@@ -639,7 +645,7 @@ def _filter_dictionary_words(
         if normalized_query:
             searchable = " ".join(
                 str(word.get(field) or "")
-                for field in ("word", "translation", "context")
+                for field in ("word", "translation", "display_translation", "context")
             )
             if normalized_query not in _normalize_typed_answer(searchable):
                 continue
