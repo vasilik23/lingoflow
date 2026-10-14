@@ -1,6 +1,7 @@
 import subprocess
 from pathlib import Path
 from unittest.mock import patch
+from copy import deepcopy
 
 from django.test import SimpleTestCase, TestCase
 
@@ -473,6 +474,26 @@ class ReadingViewsTests(TestCase):
 
         self.assertContains(response, "mleko")
         self.assertContains(response, "молоко")
+
+    @patch("polskiflow.reading_views.load_personal_words")
+    def test_dictionary_search_matches_visible_language_without_changing_saved_values(self, load_words):
+        from django.utils.translation import override
+        source = [{"id": "11111111-1111-1111-1111-111111111111", "word": "dorastać",
+                   "translation": "взрослеть", "context": "Dorastała w małym mieście."}]
+        original = deepcopy(source)
+        load_words.return_value = source
+        for language, query in (("en", "GROW UP"), ("pl", "dorastać"), ("ru", "взрослеть"),
+                                ("en", "взрослеть"), ("en", "DORASTAŁA")):
+            self.client.cookies['django_language'] = language
+            with override(language):
+                response = self.client.get('/dictionary/', {'q': query})
+            self.assertEqual(response.context['result_count'], 1)
+            self.assertEqual(response.context['words'][0]['translation'], 'взрослеть')
+            if language == 'en':
+                self.assertEqual(response.context['words'][0]['display_translation'], 'grow up')
+                self.assertContains(response, '<span>grow up</span>', html=True)
+        self.assertEqual(source, original)
+        self.assertNotIn('display_translation', source[0])
 
     @patch("polskiflow.reading_views.load_personal_words")
     def test_dictionary_searches_lemma_translation_and_context(self, load_words):

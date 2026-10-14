@@ -1,5 +1,21 @@
 # Реестр источников учебного контента
 
+### Глоссы пилотов и поиск словаря — 14.10.2026
+
+Семь коротких английских меток исправлены по значениям собственных пилотных
+чтений: speak, introduce oneself, acquire, completion; ending,
+school-leaving exam, rent, according to. Origin: original; created_for:
+LingoFlow; verified_at: 2026-10-14 (внутренняя проверка).
+Значения сопоставлены с первичными словарями:
+[rent](https://dictionary.cambridge.org/dictionary/english/rent),
+[acquire](https://dictionary.cambridge.org/dictionary/english/acquire),
+[according to](https://dictionary.cambridge.org/dictionary/english/according-to).
+Словарные статьи, примеры, изображения и аудио не импортировались;
+свободный доступ к справочнику не рассматривается как лицензия на копирование.
+Исправлены собственные переводные метки в gettext-каталоге, польский текст,
+ответы заданий и исходные переводы сохранённых слов не менялись.
+Независимая польская/английская приёмка остаётся открытой.
+
 ### Соответствия форм глоссария C1–C2 — 11.10.2026
 
 Связи в `backend/polskiflow/domain/reading_glossary_forms.py` созданы для

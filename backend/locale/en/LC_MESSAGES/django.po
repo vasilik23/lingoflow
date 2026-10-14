@@ -11335,7 +11335,7 @@ msgid "выполнять"
 msgstr "carry out"
 
 msgid "выпускной экзамен"
-msgstr "finals"
+msgstr "school-leaving exam"
 
 msgid "выработать компромисс"
 msgstr "compromise"
@@ -11425,7 +11425,7 @@ msgid "гнездо"
 msgstr "nest"
 
 msgid "говорить"
-msgstr "speak out"
+msgstr "speak"
 
 msgid "говорить мягче было запрещено"
 msgstr "Speaking softer was forbidden"
@@ -13204,7 +13204,7 @@ msgid "окно"
 msgstr "window"
 
 msgid "окончание"
-msgstr "ending"
+msgstr "completion; ending"
 
 msgid "окончания падежей"
 msgstr "case endings"
@@ -14164,7 +14164,7 @@ msgid "представлять себе"
 msgstr "imagine"
 
 msgid "представляться"
-msgstr "present"
+msgstr "introduce oneself"
 
 msgid "преимущество"
 msgstr "advantage"
@@ -14320,7 +14320,7 @@ msgid "принять решение"
 msgstr "decide"
 
 msgid "приобрести"
-msgstr "purchase"
+msgstr "acquire"
 
 msgid "приобрести опыт"
 msgstr "acquire"
@@ -15121,7 +15121,7 @@ msgid "снизила"
 msgstr "lower"
 
 msgid "снимать"
-msgstr "shoot off"
+msgstr "rent"
 
 msgid "снимать; сдавать"
 msgstr "drop off"
@@ -15178,7 +15178,7 @@ msgid "совокупный"
 msgstr "cumulative"
 
 msgid "согласно"
-msgstr "according"
+msgstr "according to"
 
 msgid "согласно; как было запланировано"
 msgstr "agreed; as planned; as planned;"
