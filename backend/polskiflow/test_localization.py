@@ -2,6 +2,7 @@ import gettext as std_gettext
 import ast
 import json
 import re
+from html import unescape
 import subprocess
 from io import StringIO
 from pathlib import Path
@@ -18,6 +19,25 @@ from polskiflow.learning.templatetags.ui import ui_text
 
 
 class LocalizationCatalogTests(SimpleTestCase):
+    def test_static_template_labels_render_their_translation_in_both_languages(self):
+        # A catalog lookup alone misses Django's percent escaping in translate.
+        templates = Path(settings.BASE_DIR) / 'templates'
+        patterns = (
+            r'\{% translate ("(?:[^"\\]|\\.)*") %\}',
+            r'\{\{ ("(?:[^"\\]|\\.)*")\|ui_text \}\}',
+        )
+        for language in ('pl', 'en'):
+            with override(language):
+                for path in templates.rglob('*.html'):
+                    for pattern in patterns:
+                        for match in re.finditer(pattern, path.read_text()):
+                            source = json.loads(match[1])
+                            expected = gettext(source)
+                            rendered = engines['django'].from_string(
+                                '{% load i18n ui %}' + match[0]).render({})
+                            self.assertEqual(unescape(rendered), unescape(expected),
+                                             f'{language}: {path.name}: {source}')
+
     def test_every_template_compiles_and_has_translated_static_interface(self):
         backend = Path(settings.BASE_DIR)
         with override("pl"):

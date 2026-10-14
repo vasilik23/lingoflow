@@ -70,7 +70,7 @@ msgid "% в тренировках"
 msgstr "% in training"
 
 msgid "% отдельно в каждом"
-msgstr "per cent separately"
+msgstr "% in each module"
 
 msgid "% правильных ответов."
 msgstr "% correct answers."
@@ -3703,7 +3703,7 @@ msgid "Здесь появится перевод, и слово можно бу
 msgstr "There will be a translation and the word can be saved."
 
 msgid "Здесь появятся уроки с результатом от 80%."
-msgstr "Here will be lessons with a result of 80%."
+msgstr "Lessons with a score of at least 80% will appear here."
 
 msgid "Здесь проверяется выбор ответа в конкретной ситуации. Это практика с прозрачными объяснениями, а не экзамен, сертификат или полная оценка языкового уровня."
 msgstr "It's a practice with transparent explanations, not an exam, a certificate, or a full assessment of language level."
@@ -5608,7 +5608,7 @@ msgid "Нет подключения — LingoFlow"
 msgstr "No connection. LingoFlow"
 
 msgid "Нет результатов ниже 70%. Продолжай план — это не оценка уровня, а подсказка по недавним ответам."
-msgstr "No results below 70 percent. Continue with the plan -- it's not a level score, it's a clue to recent responses."
+msgstr "No scores below 70%. Continue your plan — this reflects recent answers, not your language level."
 
 msgid "Нет соединения. Результат остаётся в этом браузере."
 msgstr "There's no connection. The result stays in this browser."

@@ -20,11 +20,11 @@
         <div class="weekly-review-columns">
           <article class="card weekly-review-card">
             <p class="eyebrow">{% translate "Получается уверенно" %}</p><h3>{% translate "Сильные результаты" %}</h3>
-            {% if weekly_review.strongest %}<ul>{% for item in weekly_review.strongest %}<li><span aria-hidden="true">{{ item.emoji|ui_text }}</span><div><strong>{{ item.title|ui_text }}</strong><small>{{ item.level|ui_text }} · {{ item.known|ui_text }} {% translate "из" %} {{ item.total|ui_text }}</small></div><b>{{ item.accuracy|ui_text }}%</b></li>{% endfor %}</ul>{% else %}<p class="muted">{% translate "Здесь появятся уроки с результатом от 80%." %}</p>{% endif %}
+            {% if weekly_review.strongest %}<ul>{% for item in weekly_review.strongest %}<li><span aria-hidden="true">{{ item.emoji|ui_text }}</span><div><strong>{{ item.title|ui_text }}</strong><small>{{ item.level|ui_text }} · {{ item.known|ui_text }} {% translate "из" %} {{ item.total|ui_text }}</small></div><b>{{ item.accuracy|ui_text }}%</b></li>{% endfor %}</ul>{% else %}<p class="muted">{{ "Здесь появятся уроки с результатом от 80%."|ui_text }}</p>{% endif %}
           </article>
           <article class="card weekly-review-card weekly-review-focus">
             <p class="eyebrow">{% translate "Можно закрепить" %}</p><h3>{% translate "Фокус на следующую неделю" %}</h3>
-            {% if weekly_review.reinforcement %}<ul>{% for item in weekly_review.reinforcement %}<li><span aria-hidden="true">{{ item.emoji|ui_text }}</span><div><strong>{{ item.title|ui_text }}</strong><small>{{ item.level|ui_text }} · {{ item.known|ui_text }} {% translate "из" %} {{ item.total|ui_text }}</small></div><a href="{% url 'lesson' item.id %}" aria-label="{% translate "Повторить" %} {{ item.title|ui_text }}">{% translate "Повторить" %}</a></li>{% endfor %}</ul>{% else %}<p class="muted">{% translate "Нет результатов ниже 70%. Продолжай план — это не оценка уровня, а подсказка по недавним ответам." %}</p>{% endif %}
+            {% if weekly_review.reinforcement %}<ul>{% for item in weekly_review.reinforcement %}<li><span aria-hidden="true">{{ item.emoji|ui_text }}</span><div><strong>{{ item.title|ui_text }}</strong><small>{{ item.level|ui_text }} · {{ item.known|ui_text }} {% translate "из" %} {{ item.total|ui_text }}</small></div><a href="{% url 'lesson' item.id %}" aria-label="{% translate "Повторить" %} {{ item.title|ui_text }}">{% translate "Повторить" %}</a></li>{% endfor %}</ul>{% else %}<p class="muted">{{ "Нет результатов ниже 70%. Продолжай план — это не оценка уровня, а подсказка по недавним ответам."|ui_text }}</p>{% endif %}
           </article>
         </div>
       {% else %}
