@@ -15,6 +15,74 @@ from polskiflow.domain.b1_training_speaking import PREPARATION_SECONDS, training
 
 
 class B1TrainingRunTests(TestCase):
+    @patch('polskiflow.b1_run_views.save_b1_run_attempt', return_value=False)
+    def test_all_variants_complete_partial_run_resume_and_retry_aggregate_history(self, saved):
+        from polskiflow.b1_run_store import aggregate_results
+        for variant in VARIANTS:
+            intro = self.client.get('/exam/b1/run/')
+            state = dict(intro.context['state'], variant_id=variant.id)
+            response = self.client.post('/exam/b1/run/', {
+                'run_token': signing.dumps(state, salt=RUN_SALT), 'action': 'start'})
+            for index in range(5):
+                if index < 3:
+                    questions = response.context['questions']
+                    self.now = response.context['state']['deadline']
+                    response = self.advance(response, 'timeout', **{
+                        f'answer_{questions[0].id}': questions[0].correct})
+                    result = response.context['report'][-1]
+                    self.assertEqual(result['correct'], 1)
+                    self.assertEqual(result['unanswered'], len(questions) - 1)
+                    self.assertTrue(result['timed_out'])
+                elif index == 3:
+                    response = self.advance(response, 'finish', reviewed='on')
+                else:
+                    self.now += PREPARATION_SECONDS
+                    response = self.advance(response, 'skip')
+                response = self.advance(response, 'resume')
+                self.assertEqual(len(response.context['reviews']), index + 1)
+                if index < 4:
+                    self.now += BREAK_SECONDS
+                    response = self.advance(response, 'start')
+            self.assertEqual(response.context['state']['phase'], 'report')
+            self.assertFalse(response.context['history_saved'])
+            self.assertContains(response, 'Итог пока не сохранён.')
+            self.assertEqual(response.context['next_step']['action'], 'Повторить теорию')
+            self.assertLess(response.content.index(b'id="run-report-title"'), response.content.index(b'class="card mock-section run-review"'))
+            self.assertEqual(len(aggregate_results(saved.call_args.args[2]['results'])), 5)
+            self.assertLess(len(response.context['run_token']), 16384)
+            with patch('polskiflow.b1_run_views.save_b1_run_attempt', return_value=True) as retry:
+                retried = self.advance(response, 'resume')
+                restored = self.advance(retried, 'resume')
+                self.assertEqual(retry.call_count, 1)
+                self.assertTrue(restored.context['history_saved'])
+                self.assertEqual(restored.context['next_step'], response.context['next_step'])
+
+    def test_next_step_uses_skipped_part_or_daily_plan_without_inventing_grade(self):
+        from polskiflow.domain.b1_run_review import run_next_step
+        self.assertEqual(run_next_step([{'id': 'speaking', 'status': 'skipped'}])['href'],
+                         '/interaction/#speaking-practice')
+        successful = [{'id': 'grammar', 'status': 'scored', 'percent': 100},
+                      {'id': 'writing', 'status': 'self_review'},
+                      {'id': 'speaking', 'status': 'self_review'}]
+        self.assertIn('?mode=today', run_next_step(successful)['href'])
+        self.assertEqual(run_next_step([{'id': 'reading', 'status': 'scored', 'percent': 20},
+                                       {'id': 'listening', 'status': 'scored', 'percent': 40}])['href'],
+                         '/reading/?level=B1')
+        legacy = [{'id': 'grammar', 'status': 'scored', 'percent': 10, 'details': ()}]
+        self.assertEqual(run_next_step(legacy)['href'], '/course/?level=B1&kind=grammar')
+        from polskiflow.domain.b1_exam_simulation import B1_SIMULATION_PARTS
+        state = dict(self.client.get('/exam/b1/run/').context['state'], phase='report', step=5,
+                     finished_at=self.now, results=[{'id': part['id'], 'status': 'skipped'}
+                                                  for part in B1_SIMULATION_PARTS])
+        for language in ('pl', 'en'):
+            self.client.cookies['django_language'] = language
+            with patch('polskiflow.b1_run_views.save_b1_run_attempt', return_value=False):
+                result = self.client.post('/exam/b1/run/', {
+                    'run_token': signing.dumps(state, salt=RUN_SALT), 'action': 'resume'})
+            self.assertNotContains(result, 'Общего балла нет.')
+            self.assertContains(result, 'data-run-next-step')
+            self.assertContains(result, '<a class="button" href=')
+
     def test_synthetic_file_matches_each_variant_without_enabling_verified_blocks(self):
         for variant in VARIANTS:
             state = dict(self.client.get('/exam/b1/run/').context['state'],

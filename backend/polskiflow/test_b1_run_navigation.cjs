@@ -7,7 +7,7 @@ const storage = new Map();
 function page({normalize = false, fresh = false, failStorage = false, tokenValue = 'signed-part-token', withWriting = false} = {}) {
   const token = {value: tokenValue}, status = {hidden: true};
   const answer = {name: 'answer_tg07', value: '1', checked: false, matches: () => false};
-  const events = {}; let replacement = null;
+  const events = {}; let replacement = null, historyReplaced = false;
   const editor = () => ({value: '', events: {}, addEventListener(name, callback) {this.events[name] = callback;}, focus() {}, dispatchEvent(event) {this.events[event.type]?.();}});
   const writing = editor(), writing2 = editor();
   const written = {...editor(), name: 'answer_tw31', matches: () => true};
@@ -17,9 +17,9 @@ function page({normalize = false, fresh = false, failStorage = false, tokenValue
     document: {querySelector: () => root, getElementById: id => id === 'b1-run-form' ? form : withWriting && id === 'run-writing' ? writing : withWriting && id === 'run-writing-2' ? writing2 : null, createElement: () => ({})},
     sessionStorage: {getItem: key => storage.get(key), setItem: (key, value) => {if (failStorage) throw Error('quota'); storage.set(key, value);}, removeItem: key => storage.delete(key)},
     URL, Date, Event,
-    window: {location: {href: 'https://example.test/exam/b1/run/', replace: url => {replacement = String(url);}}, addEventListener(name, callback) {events[name] = callback;}, history: {replaceState() {}}},
+    window: {location: {href: 'https://example.test/exam/b1/run/', replace: url => {replacement = String(url);}}, addEventListener(name, callback) {events[name] = callback;}, history: {replaceState() {historyReplaced = true;}}},
   });
-  return {token, answer, form, events, status, replacement, writing, writing2, written};
+  return {token, answer, form, events, status, replacement, historyReplaced, writing, writing2, written};
 }
 let f = page({normalize: true});
 assert.equal(f.replacement, 'https://example.test/exam/b1/run/');
@@ -28,8 +28,10 @@ f = page({fresh: true, tokenValue: 'new-intro-token'});
 assert.equal(f.form.submitted, true); assert.equal(f.form.actionInput.value, 'resume'); assert.equal(f.token.value, 'signed-part-token');
 f = page(); f.answer.checked = true; f.events.change();
 f = page(); assert.equal(f.answer.checked, true, 'resume keeps answers for exact signed state');
+assert.equal(f.historyReplaced, true, 'restored POST becomes a GET history entry for Back');
 f = page({normalize: true, failStorage: true});
 assert.equal(f.replacement, null, 'never navigate away if new state could not be saved'); assert.equal(f.status.hidden, false);
+assert.equal(f.historyReplaced, false, 'do not replace POST history if the draft could not be saved');
 console.log('B1 mutation navigation, resume and unavailable storage: PASS');
 
 storage.clear();

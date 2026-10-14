@@ -17438,3 +17438,12 @@ msgstr "Your response is not sent and does not count towards progress. Copy the 
 
 msgid "Что проверить"
 msgstr "What to check"
+
+msgid "Продолжи короткую практику. Самопроверка письма и речи не подтверждает экзаменационный уровень."
+msgstr "Continue with a short practice session. Self-review of writing and speaking does not confirm exam readiness."
+
+msgid "Вернись к пропущенной части."
+msgstr "Return to the part you skipped."
+
+msgid "Начни с части с самым низким учебным результатом."
+msgstr "Start with the part with your lowest practice score."
