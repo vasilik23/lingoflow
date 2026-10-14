@@ -60,11 +60,11 @@
   </details>
   <details class="card b1-entry-details">
     <summary>{% translate "Структура экзамена и официальные материалы" %}</summary>
-    <p>{% translate "минимум" %} {{ exam_prep.pass_percent|ui_text }}{% translate "% в каждом модуле" %} · {{ exam_prep.written_minutes|ui_text }} {% translate "минут письменной части" %}</p>
+    <p>{% translate "минимум" %} {{ exam_prep.pass_percent|ui_text }}{{ "% в каждом модуле"|ui_text }} · {{ exam_prep.written_minutes|ui_text }} {% translate "минут письменной части" %}</p>
   <section aria-labelledby="exam-modules-title">
     <div class="section-heading exam-section-heading">
       <div><p class="eyebrow">{% translate "Структура B1" %}</p><h2 id="exam-modules-title">{% translate "Пять модулей" %}</h2></div>
-      <span>{% translate "порог —" %} {{ exam_prep.pass_percent|ui_text }}{% translate "% отдельно в каждом" %}</span>
+      <span>{% translate "порог —" %} {{ exam_prep.pass_percent|ui_text }}{{ "% отдельно в каждом"|ui_text }}</span>
     </div>
     <div class="exam-module-grid">
       {% for module in exam_prep.modules %}
@@ -104,7 +104,7 @@
             {% if result.status == "measured" %}<strong>{{ result.percent|ui_text }}%</strong>{% else %}<strong aria-hidden="true">—</strong>{% endif %}
           </div>
           {% if result.status == "measured" %}
-            <div class="exam-result-track" role="progressbar" aria-label="{{ result.title|ui_text }}: {{ result.percent|ui_text }}{% translate "% в тренировках" %}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ result.percent }}"><span style="width: {{ result.percent }}%"></span></div>
+            <div class="exam-result-track" role="progressbar" aria-label="{{ result.title|ui_text }}: {{ result.percent|ui_text }}{{ "% в тренировках"|ui_text }}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ result.percent }}"><span style="width: {{ result.percent }}%"></span></div>
             <p class="muted">{{ result.detail|ui_text }}</p>
             {% if result.trend.status == "improved" or result.trend.status == "declined" or result.trend.status == "stable" %}<p class="exam-result-trend is-{{ result.trend.status }}">{{ result.trend.label|ui_text }} <span>({{ result.trend.previous_percent|ui_text }}% → {{ result.trend.current_percent|ui_text }}%)</span></p>{% elif result.trend.status == "first" %}<p class="exam-result-trend">{{ result.trend.label|ui_text }}</p>{% endif %}
           {% elif result.status == "empty" %}
