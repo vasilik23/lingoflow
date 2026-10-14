@@ -18319,3 +18319,12 @@ msgstr "Odpowiedź nie jest wysyłana i nie zwiększa postępu. Skopiuj tekst, j
 
 msgid "Что проверить"
 msgstr "Co sprawdzić"
+
+msgid "Продолжи короткую практику. Самопроверка письма и речи не подтверждает экзаменационный уровень."
+msgstr "Kontynuuj krótką praktykę. Samoocena pisania i mówienia nie potwierdza gotowości do egzaminu."
+
+msgid "Вернись к пропущенной части."
+msgstr "Wróć do pominiętej części."
+
+msgid "Начни с части с самым низким учебным результатом."
+msgstr "Zacznij od części z najniższym wynikiem ćwiczeniowym."

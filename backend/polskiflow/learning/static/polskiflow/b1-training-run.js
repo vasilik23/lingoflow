@@ -74,6 +74,10 @@
     }
   });
   save();
+  // A restored page arrived by POST. Replace its history entry so Back from
+  // theory/practice reloads the GET URL instead of replaying a no-store POST.
+  // Do this only after the signed state is safely retained in this tab.
+  if (!root.dataset.fresh && storageStatus.hidden) window.history.replaceState({}, '', url);
   // Refresh must replay resume, never the previous start/finish operation.
   // Only navigate once the new signed state has been safely saved in this tab.
   if (root.dataset.normalizeNavigation && storageStatus.hidden) {

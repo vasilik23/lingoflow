@@ -1,4 +1,4 @@
-"""Signed, browser-resumable five-part B1 training run without server history."""
+"""Signed, browser-resumable five-part B1 training run with aggregate history."""
 from polskiflow.domain.library_audio import audio_url
 
 import time
@@ -18,7 +18,7 @@ from polskiflow.domain.b1_exam_simulation import B1_SIMULATION_PARTS
 from polskiflow.domain.b1_training_content import CONTENT_VERSION, TRAINING_MINUTES, training_minutes, score_training_part, training_questions, training_reading_blocks, training_grammar_blocks
 from polskiflow.domain.b1_training_writing import training_writing_tasks
 from polskiflow.domain.b1_training_speaking import PREPARATION_SECONDS, training_speaking_tasks
-from polskiflow.domain.b1_run_review import run_review
+from polskiflow.domain.b1_run_review import run_review, run_next_step
 from polskiflow.b1_run_store import save_b1_run_attempt
 from polskiflow.domain.b1_weekly_mock import get_mock_variant, weekly_mock_variant
 from polskiflow.practice_preferences import excluded_practice_topics
@@ -161,6 +161,7 @@ def b1_training_run(request):
     elif part and part["id"] == "speaking" and state.get("content_version", 1) >= 5:
         instruction = B1_RUN_SPEAKING_INSTRUCTION
     speaking_tasks = training_speaking_tasks(variant, state.get("content_version", 1), interactive=state.get("speaking_version") == 2) if part and part["id"] == "speaking" else ()
+    reviews = tuple(run_review(state, variant, item) for item in B1_SIMULATION_PARTS[:state["step"]])
     response = render(request, "b1_training_run.html", {
         "state": state, "variant": variant, "part": part,
         "questions": training_questions(variant, part["id"], state.get("content_version", 1)) if part else (),
@@ -179,7 +180,8 @@ def b1_training_run(request):
         "missing_recording": bool(part and part["id"] == "listening" and state.get("listening_recording_id") and not listening_recording),
         "run_token": token, "error": error, "report": report,
         "history_saved": history_saved,
-        "reviews": tuple(run_review(state, variant, item) for item in B1_SIMULATION_PARTS[:state["step"]]),
+        "reviews": reviews,
+        "next_step": run_next_step(reviews) if state['phase'] == 'report' else None,
         "timer_seconds": max(0, state.get("deadline", state.get("break_until", now)) - now),
         "run_namespace": salted_hmac(RUN_SALT, request.supabase_user.id).hexdigest()[:32],
         "fresh": request.method == "GET", "discard_draft": bool(error and not request.POST.get("run_token") == token),

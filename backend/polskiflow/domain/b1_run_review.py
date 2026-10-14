@@ -3,6 +3,28 @@
 from polskiflow.domain.b1_training_content import score_training_part, training_reading_blocks
 from polskiflow.domain.b1_training_writing import training_writing_tasks
 from polskiflow.domain.b1_training_speaking import training_speaking_tasks
+from polskiflow.domain.b1_exam_prep import B1_EXAM_MODULES
+
+
+def run_next_step(reviews):
+    """One training suggestion, never a grade for writing or speaking."""
+    reviews = tuple(item for item in reviews if item is not None)
+    weak = [item for item in reviews if item['status'] == 'scored' and item['percent'] < 50]
+    target = min(weak, key=lambda item: item['percent']) if weak else next(
+        (item for item in reviews if item['status'] == 'skipped'), None)
+    if target is None:
+        return {'href': '/exam/b1/?mode=today#exam-today-title',
+                'action': 'Сегодня · 15 минут',
+                'reason': 'Продолжи короткую практику. Самопроверка письма и речи не подтверждает экзаменационный уровень.'}
+    module = next(item for item in B1_EXAM_MODULES if item['id'] == target['id'])
+    suggestion = {'href': module['href'], 'action': module['action'],
+                  'reason': 'Вернись к пропущенной части.' if target['status'] == 'skipped'
+                  else 'Начни с части с самым низким учебным результатом.'}
+    if target['id'] == 'grammar':
+        detail = next((item for item in target['details'] if not item['is_correct']), None)
+        if detail:
+            suggestion.update(href=f"/lesson/{detail['theory_lesson']}/", action='Повторить теорию')
+    return suggestion
 
 
 def theory_lesson(question):
