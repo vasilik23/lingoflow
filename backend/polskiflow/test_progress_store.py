@@ -17,6 +17,28 @@ from polskiflow.domain.lesson_results import validate_lesson_result
 
 
 class ProgressStoreTests(SimpleTestCase):
+    @override_settings(SUPABASE_URL='https://project.supabase.co', SUPABASE_ANON_KEY='public-key')
+    @patch('polskiflow.progress_store._utc_today', return_value=date(2026, 10, 14))
+    @patch('polskiflow.progress_store._get_rows')
+    def test_today_results_reach_topic_review_and_weekly_metrics_without_same_day_recheck(self, rows, today):
+        from polskiflow.domain.lesson_followup import latest_completions, needs_recheck
+        from polskiflow.domain.weekly_review import build_weekly_review
+        from polskiflow.domain.daily_plan import build_daily_plan
+        lessons = [{'id': 'bio-quiz', 'level': 'B1', 'kind': 'quiz', 'title': 'Quiz', 'minutes': 5}]
+        for known in (0, 10):
+            result = {'lesson_id': 'bio-quiz', 'plan_date': '2026-10-14', 'cards_total': 10, 'cards_known': known}
+            rows.side_effect = [[{'level': 'B1'}], [result, {**result, 'plan_date': '2026-10-15'}]]
+            dashboard = load_dashboard_progress('access', 'qa-owner', 'QA')
+            self.assertEqual(dashboard.recent_completion_results, (result,))
+            latest = latest_completions(dashboard.recent_completion_results, today.return_value)['bio-quiz']
+            self.assertEqual(needs_recheck(latest['cards_known'], latest['cards_total']), known == 0)
+            self.assertEqual(build_weekly_review(dashboard, lessons, today.return_value)['accuracy'], known * 10)
+            plan = build_daily_plan(lessons, level='B1', completed_all_time=dashboard.all_completed_lesson_ids,
+                                   completed_today=dashboard.completed_lesson_ids, personal_words=[],
+                                   today=today.return_value, recent_completion_results=dashboard.recent_completion_results)
+            self.assertTrue(plan[0]['completed'])
+            self.assertFalse(any(item.get('plan_type') == 'reinforcement' for item in plan))
+
     @override_settings(SUPABASE_URL="https://project.supabase.co", SUPABASE_ANON_KEY="public-key")
     @patch("polskiflow.progress_store.urlopen")
     def test_minute_goal_is_saved_with_derived_legacy_count(self, urlopen):
