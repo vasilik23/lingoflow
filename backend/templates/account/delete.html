@@ -1,11 +1,17 @@
 {% extends "base.html" %}
 {% load i18n ui %}
 {% block title %}{% translate "Удаление аккаунта · LingoFlow" %}{% endblock %}
+{% block toolbar_title %}<h1>{% translate "Удаление аккаунта" %}</h1>{% endblock %}
 {% block content %}
   <header class="content-header">
-    <div><p class="eyebrow">{% translate "Аккаунт" %}</p><h1>{% translate "Удаление аккаунта" %}</h1><p class="muted">{% translate "Это необратимое действие." %}</p></div>
+    <div><p class="eyebrow">{% translate "Аккаунт" %}</p><p class="muted">{% translate "Это необратимое действие." %}</p></div>
     <a class="compact-button secondary-link" href="{% url 'account-security' %}">{% translate "Отмена" %}</a>
   </header>
+  <section class="card profile-form" aria-labelledby="delete-export-title">
+    <h2 id="delete-export-title">{% translate "Экспорт" %}</h2>
+    <p>{% translate "Перед удалением можно скачать копию своих данных." %}</p>
+    <a class="compact-button" href="{% url 'profile-data-export' %}" download>{% translate "Скачать мои данные" %}</a>
+  </section>
   <form class="card account-security-form danger-zone" method="post" autocomplete="off">
     {% csrf_token %}
     {% if error %}<p class="form-error" role="alert">{{ error|ui_text }}</p>{% endif %}

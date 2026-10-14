@@ -2465,6 +2465,7 @@ window.PolskiFlowPolishMessages = {
   "Перед сочетанием согласных употребляется w związku ze + творительный.": "W tym połączeniu spółgłosek używamy w związku ze i narzędnika.",
   "Перед точным временем используем o.": "Przed dokładną godziną używamy o.",
   "Перед трансформацией выпиши факты, степень уверенности, оговорки и основную функцию текста. Жанр может изменить порядок и регистр, но не должен незаметно усиливать вывод.": "Przed przekształceniem wypisz fakty, stopień pewności, zastrzeżenia i główną funkcję tekstu. Gatunek może zmieniać kolejność i rejestr, ale nie powinien niepostrzeżenie wzmacniać wniosku.",
+  "Перед удалением можно скачать копию своих данных.": "Przed usunięciem konta możesz pobrać kopię swoich danych.",
   "Перед удалением при необходимости": "Przed usunięciem, w razie potrzeby",
   "Перед часом используем o: o szóstej, o ósmej, o dziesiątej.": "Przed godziną używamy o: o szóstej, o ósmej, o dziesiątej.",
   "Передай по-польски эту информацию знакомому нейтрально и понятно, не копируя исходную формулировку.": "Przekaż tę informację znajomemu po polsku neutralnie i zrozumiale, nie kopiując pierwotnego sformułowania.",

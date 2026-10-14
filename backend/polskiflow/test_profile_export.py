@@ -32,7 +32,7 @@ class ProfileExportTests(TestCase):
         response = self.client.get("/profile/export/")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response["Cache-Control"], "private, no-store")
-        self.assertIn("attachment", response["Content-Disposition"])
+        self.assertEqual(response["Content-Disposition"], 'attachment; filename="lingoflow-data.json"')
         self.assertEqual(response.json()["schema_version"], "2.2")
         self.assertEqual(response.json()["account"]["email"], "anna@example.com")
         self.assertEqual(response.json()["lesson_drafts"][0]["lesson_id"], "quiz")

@@ -18328,3 +18328,6 @@ msgstr "Wróć do pominiętej części."
 
 msgid "Начни с части с самым низким учебным результатом."
 msgstr "Zacznij od części z najniższym wynikiem ćwiczeniowym."
+
+msgid "Перед удалением можно скачать копию своих данных."
+msgstr "Przed usunięciem konta możesz pobrać kopię swoich danych."

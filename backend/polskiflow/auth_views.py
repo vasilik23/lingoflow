@@ -819,7 +819,7 @@ def profile_data_export(request: HttpRequest) -> HttpResponse:
             "account": {"email": request.supabase_user.email},
             **export.datasets,
         }, json_dumps_params={"ensure_ascii": False, "indent": 2})
-        response["Content-Disposition"] = 'attachment; filename="polskiflow-data.json"'
+        response["Content-Disposition"] = 'attachment; filename="lingoflow-data.json"'
     response["Cache-Control"] = "private, no-store"
     response["X-Content-Type-Options"] = "nosniff"
     return response

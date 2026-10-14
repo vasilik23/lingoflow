@@ -66,6 +66,8 @@ class AccountSecurityTests(SimpleTestCase):
         response = self.client.get("/account/delete/")
         self.assertContains(response, "Удаление аккаунта")
         self.assertContains(response, "Введите УДАЛИТЬ")
+        self.assertContains(response, 'href="/profile/export/" download')
+        self.assertContains(response, '<h1>Удаление аккаунта</h1>', count=1, html=True)
         self.assertEqual(response["Cache-Control"], "private, no-store")
         self.client.cookies.clear()
         self.assertEqual(self.client.get("/account/delete/").status_code, 302)

@@ -2360,6 +2360,7 @@ window.PolskiFlowEnglishMessages = {
   "Перед сеансом можно было увидеть материалы о создании сценографии.": "Before the session, you could see materials on the creation of the set design.",
   "Перед точным временем используем o.": "Before the exact time we use it. o.",
   "Перед трансформацией выпиши факты, степень уверенности, оговорки и основную функцию текста. Жанр может изменить порядок и регистр, но не должен незаметно усиливать вывод.": "Before a transformation, write out facts, confidence, reservations, and the basic function of the text. A genre can change order and register, but it must not invisibly reinforce the output.",
+  "Перед удалением можно скачать копию своих данных.": "You can download a copy of your data before deleting your account.",
   "Перед удалением при необходимости": "Before removal, if necessary",
   "Перед часом используем o: o szóstej, o ósmej, o dziesiątej.": "Before the hour we use o: o szóstej, o ósmej, o dziesiątej.",
   "Передай по-польски эту информацию знакомому нейтрально и понятно, не копируя исходную формулировку.": "Transmit this information to a friend in Polish neutrally and clearly, without copying the original wording.",
