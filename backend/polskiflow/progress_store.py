@@ -128,7 +128,7 @@ def load_dashboard_progress(
             completed_all_time.add(lesson_id)
             if plan_date == today:
                 completed_today.add(lesson_id)
-            if today - timedelta(days=29) <= plan_date < today:
+            if today - timedelta(days=29) <= plan_date <= today:
                 cards_total = completion.get("cards_total")
                 cards_known = completion.get("cards_known")
                 if (
