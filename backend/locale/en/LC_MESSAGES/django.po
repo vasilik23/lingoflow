@@ -17447,3 +17447,6 @@ msgstr "Return to the part you skipped."
 
 msgid "Начни с части с самым низким учебным результатом."
 msgstr "Start with the part with your lowest practice score."
+
+msgid "Перед удалением можно скачать копию своих данных."
+msgstr "You can download a copy of your data before deleting your account."
