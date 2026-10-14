@@ -1,9 +1,11 @@
 import time
+import json
 import subprocess
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
+from urllib.error import URLError
 
-from django.test import Client, TestCase
+from django.test import Client, TestCase, override_settings
 from django.core import signing
 
 from polskiflow.auth import ACCESS_COOKIE, SupabaseUser
@@ -138,6 +140,54 @@ class B1TrainingRunTests(TestCase):
         self.assertEqual(saved.call_count,2)
         self.assertEqual(resumed.context["state"]["finished_at"],finished.context["state"]["finished_at"])
         self.assertEqual(saved.call_args.args[2]["run_id"],state["run_id"])
+
+    @override_settings(SUPABASE_URL='https://example.supabase.co', SUPABASE_ANON_KEY='anon')
+    def test_report_recovers_when_write_commits_but_acknowledgement_is_lost(self):
+        # Exercise the real view and repository; inject faults only at HTTP.
+        state = dict(self.client.get('/exam/b1/run/').context['state'],
+                     phase='report', step=5, started_at=self.now - 60,
+                     finished_at=self.now, results=[
+                         {'id': part, 'status': 'skipped', 'timed_out': False}
+                         for part in ('listening', 'reading', 'grammar', 'writing', 'speaking')])
+        committed = {}
+        payloads = []
+
+        def transport(request, **kwargs):
+            payload = json.loads(request.data)
+            payloads.append(payload)
+            self.assertIn('on_conflict=user_id%2Crun_id', request.full_url)
+            self.assertIn('resolution=ignore-duplicates', request.get_header('Prefer'))
+            if len(payloads) == 1:
+                raise URLError('Connection failed before dispatch')
+            committed.setdefault((payload['user_id'], payload['run_id']), payload)
+            if len(payloads) == 2:
+                raise TimeoutError('Write committed, acknowledgement lost')
+            response = MagicMock(status=201)
+            response.__enter__.return_value = response
+            return response
+
+        with patch('polskiflow.b1_run_store.urlopen', side_effect=transport) as opened:
+            failed = self.client.post('/exam/b1/run/', {
+                'run_token': signing.dumps(state, salt=RUN_SALT), 'action': 'resume'})
+            self.assertFalse(committed)
+            unconfirmed = self.advance(failed, 'resume')
+            self.assertEqual(len(committed), 1)
+            for response in (failed, unconfirmed):
+                self.assertFalse(response.context['history_saved'])
+                self.assertContains(response, 'Повторить сохранение')
+                self.assertNotContains(response, 'Итог сохранён в истории аккаунта.')
+                self.assertEqual(len(response.context['reviews']), 5)
+                self.assertEqual(response.context['state']['results'], state['results'])
+            saved = self.advance(unconfirmed, 'resume')
+            restored = self.advance(saved, 'resume')
+            self.assertTrue(restored.context['history_saved'])
+            self.assertContains(restored, 'Итог сохранён в истории аккаунта.')
+            self.assertNotContains(restored, 'Повторить сохранение')
+            self.assertEqual(opened.call_count, 3)
+        self.assertEqual(len(committed), 1)
+        self.assertEqual(payloads, [payloads[0]] * 3)
+        self.assertEqual(restored.context['state']['run_id'], state['run_id'])
+        self.assertEqual(restored.context['state']['finished_at'], state['finished_at'])
 
     def test_review_preserves_correct_wrong_and_missing_responses_on_resume(self):
         opened = self.advance(self.client.get('/exam/b1/run/'), 'start')
