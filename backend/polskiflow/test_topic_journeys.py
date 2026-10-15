@@ -7,9 +7,9 @@ from django.utils.translation import override
 
 from polskiflow.auth import ACCESS_COOKIE, SupabaseUser
 from polskiflow.content import grammar, quiz, reading_text, tasks
-from polskiflow.domain.topic_journeys import PILOTS, journey, next_target
+from polskiflow.domain.topic_journeys import PILOTS, PILOT_LESSON_IDS, journey, next_target
 from polskiflow.domain.daily_plan import build_daily_plan
-from polskiflow.lesson_views import _complete
+from polskiflow.lesson_views import _complete, OFFLINE_RESULT_QUEUE_LESSON_IDS
 from polskiflow.progress_store import DashboardProgress, CompletionSaveResult
 
 
@@ -113,3 +113,29 @@ class TopicJourneyTests(TestCase):
                 response = self.client.get('/course/topic/introductions/')
                 self.assertContains(response, journey('introductions', language)['goal'])
                 self.assertContains(response, 'lang="pl" rows="5"')
+
+    @patch('polskiflow.lesson_views.delete_lesson_draft')
+    @patch('polskiflow.lesson_views.save_lesson_completion_result')
+    def test_all_fifteen_pilot_lessons_recover_only_transient_result_failures(self, save, _delete):
+        from polskiflow.content import task
+        self.assertEqual(OFFLINE_RESULT_QUEUE_LESSON_IDS, PILOT_LESSON_IDS)
+        self.assertEqual(len(OFFLINE_RESULT_QUEUE_LESSON_IDS), 15)
+        request = RequestFactory().post('/lesson/fixture/step/')
+        request.supabase_user = self.user
+        request.supabase_access_token = 'fixture'
+        for lesson_id in sorted(PILOT_LESSON_IDS):
+            with self.subTest(lesson=lesson_id):
+                self.assertIsNotNone(task(lesson_id))
+                save.return_value = CompletionSaveResult(False, True)
+                response = _complete(request, lesson_id, 0, 5)
+                self.assertContains(response, 'data-lesson-result-sync')
+                self.assertContains(response, f'&quot;lesson_id&quot;:&quot;{lesson_id}&quot;')
+                self.assertContains(response, 'data-followup-saved hidden')
+                self.assertNotContains(response, self.user.id)
+                self.assertNotContains(response, 'fixture@example')
+                for saved in (False, True):
+                    save.return_value = CompletionSaveResult(saved, False)
+                    self.assertNotContains(_complete(request, lesson_id, 0, 5), 'data-lesson-result-sync')
+        outside = next(item['id'] for item in tasks() if item['id'] not in PILOT_LESSON_IDS)
+        save.return_value = CompletionSaveResult(False, True)
+        self.assertNotContains(_complete(request, outside, 0, 5), 'data-lesson-result-sync')

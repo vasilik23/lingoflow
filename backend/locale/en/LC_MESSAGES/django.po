@@ -17465,3 +17465,6 @@ msgstr "Your profile was saved, but practice topics were not synced. Please try 
 
 msgid "Нежелательная тема практики сохраняется в профиле аккаунта, синхронизируется между устройствами, входит в экспорт и удаляется вместе с аккаунтом. Изменить её можно в профиле. Прежняя подписанная cookie хранится до 90 дней как запасной выбор браузера; до первого сохранения в аккаунт действует этот локальный выбор."
 msgstr "The excluded practice topic is saved in your account profile, synced across devices, included in your export and deleted with your account. You can change it in your profile. The previous signed cookie is kept for up to 90 days as a browser fallback; until you first save to your account, this local choice applies."
+
+msgid "Результат сохранён. Открой план, чтобы увидеть актуальные повторения."
+msgstr "Your result was saved. Open your plan to see the current reviews."

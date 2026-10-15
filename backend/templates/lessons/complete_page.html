@@ -8,6 +8,6 @@
 {% endblock %}
 {% block scripts %}
 {% load static i18n ui %}
-<script src="{% static 'polskiflow/result-queue.js' %}?v=1" defer></script>
-<script src="{% static 'polskiflow/lesson-result-sync.js' %}?v=1" defer></script>
+<script src="{% static 'polskiflow/result-queue.js' %}?shell={{ pwa_shell_version }}" defer></script>
+<script src="{% static 'polskiflow/lesson-result-sync.js' %}?shell={{ pwa_shell_version }}" defer></script>
 {% endblock %}
