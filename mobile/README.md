@@ -49,6 +49,10 @@ owner-scoped результаты за 7, 30, 90 дней или всё врем
 Все дополнительные навыки и статистика собраны в разделе «Практика», поэтому
 «Сегодня» снова сфокусирован на цели, продолжении урока и плане дня.
 
-Installable closed-beta profiles and the physical-device acceptance gate are
-documented in [`docs/mobile-beta.md`](../docs/mobile-beta.md). Running an EAS
-build requires a separately authenticated Expo account and signing setup.
+Порядок подписанной сборки и её приёмки — в
+[инструкции мобильной beta](../docs/mobile-beta.md).
+`npm run verify` проверяет код, а `npm run build:check -- --platform ios --check-session`
+отдельно проверяет условия попытки сборки и показывает недостающую настройку
+без значений ключей. EAS CLI закреплён на 24.14.0 (`npm run eas -- …`).
+Успешный preflight не подтверждает подпись или установку: нужны настоящие
+Expo-проект/сессия, а для физического iPhone — Apple Developer и provisioning.
