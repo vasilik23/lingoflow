@@ -1,10 +1,12 @@
 import { readFileSync } from 'node:fs';
+import { EAS_CLI_VERSION } from './build-readiness.mjs';
 
 const eas = JSON.parse(readFileSync(new URL('../eas.json', import.meta.url), 'utf8'));
 const app = JSON.parse(readFileSync(new URL('../app.json', import.meta.url), 'utf8')).expo;
 const envExample = readFileSync(new URL('../.env.example', import.meta.url), 'utf8');
 
 const fail = (message) => { throw new Error(message); };
+if (eas.cli?.version !== EAS_CLI_VERSION) fail('EAS CLI must use the reviewed exact version.');
 if (eas.cli?.appVersionSource !== 'remote' || eas.cli?.requireCommit !== true) fail('EAS must use remote versions and committed sources.');
 if (eas.build?.preview?.distribution !== 'internal') fail('Preview must remain internal distribution.');
 if (eas.build?.production?.distribution !== 'store' || eas.build?.production?.autoIncrement !== true) fail('Production must be store-only with auto-increment.');
