@@ -17450,3 +17450,18 @@ msgstr "Start with the part with your lowest practice score."
 
 msgid "Перед удалением можно скачать копию своих данных."
 msgstr "You can download a copy of your data before deleting your account."
+
+msgid "Фильтрует новые варианты B1 и рекомендации B2. После сохранения действует на всех устройствах. Начатые задания не меняются."
+msgstr "Filters new B1 variants and B2 recommendations. Once saved, it applies on all devices. Tasks already started stay unchanged."
+
+msgid "Темы практики временно не загружены из аккаунта. Показан прежний выбор этого браузера."
+msgstr "Practice topics could not be loaded from your account. The previous choice from this browser is shown."
+
+msgid "Не удалось сохранить темы практики. Попробуй ещё раз."
+msgstr "Could not save practice topics. Please try again."
+
+msgid "Профиль сохранён, но темы практики не синхронизированы. Попробуй ещё раз."
+msgstr "Your profile was saved, but practice topics were not synced. Please try again."
+
+msgid "Нежелательная тема практики сохраняется в профиле аккаунта, синхронизируется между устройствами, входит в экспорт и удаляется вместе с аккаунтом. Изменить её можно в профиле. Прежняя подписанная cookie хранится до 90 дней как запасной выбор браузера; до первого сохранения в аккаунт действует этот локальный выбор."
+msgstr "The excluded practice topic is saved in your account profile, synced across devices, included in your export and deleted with your account. You can change it in your profile. The previous signed cookie is kept for up to 90 days as a browser fallback; until you first save to your account, this local choice applies."

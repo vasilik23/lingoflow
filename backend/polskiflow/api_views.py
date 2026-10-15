@@ -39,6 +39,8 @@ from polskiflow.progress_store import load_completion_history, load_dashboard_pr
 from polskiflow.privacy_export_store import load_privacy_export
 from polskiflow.reading_bookmark_store import load_reading_bookmarks, set_reading_bookmark
 from polskiflow.reminder_preference_store import load_reminder_preferences, save_reminder_preferences
+from polskiflow.practice_preference_store import load_practice_preferences, save_practice_preferences
+from polskiflow.domain.practice_recommendations import native_practice_recommendation
 
 
 API_VERSION = "v1"
@@ -544,6 +546,42 @@ def learner_reminder_preferences_v1(request):
             "delivery_active": False,
         },
     )
+
+
+@csrf_exempt
+@require_http_methods(["GET", "HEAD", "PATCH"])
+@require_supabase_user
+def learner_practice_preferences_v1(request):
+    if not _valid_bearer(request):
+        return _error_response('bearer_required', 'A valid Bearer token is required', 401)
+    enabled = None
+    if request.method == 'PATCH':
+        if limited := _mutation_rate_limit(request, 'profile'):
+            return limited
+        if request.content_type != 'application/json':
+            return _error_response('unsupported_media_type', 'Content-Type must be application/json', 415)
+        if len(request.body) > 128:
+            return _error_response('payload_too_large', 'Request body is too large', 413)
+        try:
+            payload = json.loads(request.body)
+        except (json.JSONDecodeError, UnicodeDecodeError):
+            return _error_response('invalid_json', 'Request body must be valid JSON', 400)
+        if not isinstance(payload, dict) or set(payload) != {'exclude_remote_work'} or type(payload['exclude_remote_work']) is not bool:
+            return _error_response('validation_error', 'Use boolean exclude_remote_work only', 400)
+        enabled = payload['exclude_remote_work']
+    preferences = load_practice_preferences(request.supabase_access_token, request.supabase_user.id)
+    if preferences is None:
+        return _unavailable_response('learner-practice-preferences')
+    if enabled is not None:
+        if not save_practice_preferences(request.supabase_access_token, request.supabase_user.id, enabled):
+            return _unavailable_response('learner-practice-preferences')
+        preferences = {**preferences, 'exclude_remote_work': enabled, 'configured': True}
+    excluded = ('remote-work',) if preferences['exclude_remote_work'] else ()
+    return _private_response('learner-practice-preferences', {
+        'preferences': {'exclude_remote_work': preferences['exclude_remote_work']},
+        'configured': preferences['configured'],
+        'recommendation': native_practice_recommendation(preferences['level'], timezone.localdate(), excluded),
+    })
 
 
 @csrf_exempt

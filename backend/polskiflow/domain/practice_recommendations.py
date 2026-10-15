@@ -17,3 +17,16 @@ def practice_recommendation(level, today, excluded_topics=()):
         candidates = tuple(item for item in B2_PRACTICE if not set(item["topics"]) & set(excluded_topics))
         return dict(candidates[(today.toordinal() - 1) % len(candidates)]) if candidates else None
     return None
+
+
+def native_practice_recommendation(level, today, excluded_topics=()):
+    """Recommend supported native skills, never an unavailable native exam."""
+    if level != 'B2':
+        return None
+    item = practice_recommendation(level, today, excluded_topics)
+    if item is None:
+        return None
+    screen = {'/listening/#b2-listening': 'listening', '/writing/?level=B2': 'writing',
+              '/interaction/#scenario-meeting-position': 'interaction'}[item['href']]
+    titles = {'listening': 'Аудирование', 'writing': 'Письмо', 'interaction': 'Общение и медиация'}
+    return {'screen': screen, 'title': titles[screen]}

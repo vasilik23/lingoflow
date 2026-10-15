@@ -9,6 +9,7 @@ class ApiErrorBoundaryTests(TestCase):
         "/api/v1/reading/",
         "/api/v1/listening/",
         "/api/v1/me/profile/",
+        "/api/v1/me/practice-preferences/",
         "/api/v1/me/feedback/",
         "/api/v1/me/today/",
         "/api/v1/me/history/",

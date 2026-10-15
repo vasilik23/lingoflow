@@ -185,6 +185,7 @@ class Profile(models.Model):
     display_name = models.TextField(blank=True, null=True)
     level = models.CharField(max_length=2, choices=Level.choices, default=Level.A1)
     daily_goal_lessons = models.PositiveSmallIntegerField(default=4)
+    practice_exclude_remote_work = models.BooleanField(null=True, blank=True)
     streak_days = models.PositiveIntegerField(default=0)
     last_active_date = models.DateField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)

@@ -45,10 +45,11 @@
         </label>
       </div>
       <label class="practice-topic-setting">
-        <input type="hidden" name="practice_topics_present" value="1">
-        <span><input type="checkbox" name="exclude_remote_work"{% if exclude_remote_work %} checked{% endif %}> {% translate "Не предлагать удалённую и гибридную работу" %}</span>
-        <small>{% translate "Фильтрует новые варианты B1 и рекомендации B2. Сохраняется только в этом браузере." %}</small>
+        {% if practice_sync_available %}<input type="hidden" name="practice_topics_present" value="1">{% endif %}
+        <span><input type="checkbox" name="exclude_remote_work"{% if exclude_remote_work %} checked{% endif %}{% if not practice_sync_available %} disabled{% endif %}> {% translate "Не предлагать удалённую и гибридную работу" %}</span>
+        <small>{% translate "Фильтрует новые варианты B1 и рекомендации B2. После сохранения действует на всех устройствах. Начатые задания не меняются." %}</small>
       </label>
+      {% if not practice_sync_available %}<p class="form-message warning" role="status">{% translate "Темы практики временно не загружены из аккаунта. Показан прежний выбор этого браузера." %}</p>{% endif %}
       <button type="submit">{% translate "Сохранить профиль" %}</button>
     </form>
   </section>

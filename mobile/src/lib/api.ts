@@ -122,6 +122,18 @@ export function saveLessonResult(lessonId: string, cardsTotal: number, cardsKnow
   }, 'POST');
 }
 
+export type PracticePreferences = {
+  preferences: { exclude_remote_work: boolean };
+  configured: boolean;
+  recommendation: { screen: 'listening' | 'writing' | 'interaction'; title: string } | null;
+};
+export function loadPracticePreferences(accessToken: string) {
+  return apiRequest<PracticePreferences>('/api/v1/me/practice-preferences/', accessToken);
+}
+export function updatePracticePreferences(excludeRemoteWork: boolean, accessToken: string) {
+  return apiRequest<PracticePreferences>('/api/v1/me/practice-preferences/', accessToken, { exclude_remote_work: excludeRemoteWork }, 'PATCH');
+}
+
 async function apiRequest<T>(path: string, accessToken: string, body?: object, method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' = 'GET'): Promise<T> {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 12_000);

@@ -21,6 +21,24 @@ def build_openapi_v1():
         },
         "servers": [{"url": "/", "description": "Same-origin deployment"}],
         "paths": {
+            "/api/v1/me/practice-preferences/": {
+                "get": {
+                    "operationId": "getLearnerPracticePreferences",
+                    "summary": "Get account topic exclusion and a supported native B2 skill recommendation; no browser cookie import",
+                    "security": [{"supabaseBearer": []}],
+                    "responses": {"200": _json_response("Preferences, configured flag and nullable recommendation with screen/title"), **private_errors},
+                },
+                "patch": {
+                    "operationId": "patchLearnerPracticePreferences",
+                    "summary": "Set account-wide topic exclusion; last acknowledged write wins",
+                    "security": [{"supabaseBearer": []}],
+                    "requestBody": {"required": True, "content": {"application/json": {"schema": {
+                        "type": "object", "required": ["exclude_remote_work"], "additionalProperties": False,
+                        "properties": {"exclude_remote_work": {"type": "boolean"}},
+                    }}}},
+                    "responses": {"200": _json_response("Acknowledged account preferences and recommendation"), **{str(code): error_response for code in (400, 401, 405, 413, 415, 429, 503)}},
+                },
+            },
             "/api/v1/me/account/": {
                 "delete": {
                     "operationId": "deleteLearnerAccount",

@@ -5,6 +5,7 @@ import type { Session } from '@supabase/supabase-js';
 import { loadLearnerProfile, loadReminderPreferences, updateLearnerProfile, updateReminderPreferences, type LearnerProfile } from '../lib/api';
 import { supabase } from '../lib/supabase';
 import type { Colors } from '../theme';
+import { PracticePreferencesCard } from './PracticePreferencesCard';
 
 const levels = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
 
@@ -72,6 +73,7 @@ export function ProfileScreen({ session, colors, onClose }: { session: Session; 
       </View>
       {!!message && <Text accessibilityRole="alert" style={{ color: colors.primary, fontWeight: '800' }}>{message}</Text>}
       <Pressable accessibilityRole="button" disabled={saving} onPress={save} style={({ pressed }) => [styles.button, { backgroundColor: colors.primary, opacity: saving || pressed ? .55 : 1 }]}>{saving ? <ActivityIndicator color="#fff" /> : <Text style={styles.buttonText}>Сохранить</Text>}</Pressable>
+      <PracticePreferencesCard key={session.user.id} accessToken={session.access_token} colors={colors} />
       <Pressable accessibilityRole="button" onPress={() => supabase.auth.signOut()} style={[styles.signOut, { borderColor: colors.danger }]}><Text style={{ color: colors.danger, fontWeight: '900' }}>Выйти из аккаунта</Text></Pressable>
     </>}
   </ScrollView></KeyboardAvoidingView>;

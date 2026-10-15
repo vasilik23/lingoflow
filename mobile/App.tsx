@@ -54,7 +54,7 @@ export default function App() {
         : screen === 'feedback'
           ? <FeedbackScreen session={session} colors={colors} onClose={() => setScreen('today')} />
           : screen === 'practice'
-            ? <PracticeScreen colors={colors} onClose={() => setScreen('today')} onOpen={setScreen} />
+            ? <PracticeScreen key={session.user.id} session={session} colors={colors} onClose={() => setScreen('today')} onOpen={setScreen} />
           : screen === 'review'
             ? <ReviewScreen session={session} colors={colors} onClose={() => setScreen('today')} />
             : screen === 'reading'
