@@ -3026,6 +3026,7 @@ window.PolskiFlowEnglishMessages = {
   "Результат сохранён в этом браузере и ожидает отправки.": "The result is stored in this browser and awaits sending.",
   "Результат сохранён — дневная цель стала ближе.": "The result is saved - the day goal is closer.",
   "Результат сохранён.": "Result saved.",
+  "Результат сохранён. Открой план, чтобы увидеть актуальные повторения.": "Your result was saved. Open your plan to see the current reviews.",
   "Результат требует проверки. Попробуй ещё раз позже.": "The result requires testing. Try again later.",
   "Результат этой тренировки": "The result of this training",
   "Результаты": "Results",

@@ -18346,3 +18346,6 @@ msgstr "Profil został zapisany, ale tematy ćwiczeń nie zostały zsynchronizow
 
 msgid "Нежелательная тема практики сохраняется в профиле аккаунта, синхронизируется между устройствами, входит в экспорт и удаляется вместе с аккаунтом. Изменить её можно в профиле. Прежняя подписанная cookie хранится до 90 дней как запасной выбор браузера; до первого сохранения в аккаунт действует этот локальный выбор."
 msgstr "Wykluczony temat ćwiczeń jest zapisywany w profilu konta, synchronizowany między urządzeniami, uwzględniany w eksporcie i usuwany wraz z kontem. Można go zmienić w profilu. Wcześniejszy podpisany plik cookie jest przechowywany do 90 dni jako zapasowy wybór przeglądarki; do pierwszego zapisu na koncie obowiązuje ten lokalny wybór."
+
+msgid "Результат сохранён. Открой план, чтобы увидеть актуальные повторения."
+msgstr "Wynik został zapisany. Otwórz plan, aby zobaczyć aktualne powtórki."

@@ -27,7 +27,11 @@ from polskiflow.collection_store import load_collection_summaries
 # Expansion is release-gated by a successful offline -> online recovery smoke
 # in a production-like Preview environment. Keep this explicit so a new lesson
 # cannot silently join the persisted browser queue through a broad kind check.
-OFFLINE_RESULT_QUEUE_LESSON_IDS = frozenset({"words", "grammar", "review", "quiz"})
+OFFLINE_RESULT_QUEUE_LESSON_IDS = frozenset({
+    "words", "grammar", "review", "a1read-kurs-check", "quiz",
+    "housing-words", "housing-grammar", "housing-review", "housing-reading-check", "housing-quiz",
+    "bio-words", "bio-grammar", "bio-review", "bio-reading-check", "bio-quiz",
+})
 
 
 @require_browser_user

@@ -31,24 +31,46 @@
       return;
     }
 
-    const queue = queueApi.createQueue({
+    let currentSaved = false;
+    let needsAttention = false;
+    let flushing = false;
+    let queue;
+    try { queue = queueApi.createQueue({
       onStatus: function (event) {
+        // Queue-wide status and another lesson's acknowledgement cannot prove
+        // that the result displayed on this card reached the account.
+        if (currentSaved || event.state === "synced") return;
+        if (event.eventId && event.eventId !== payload.event_id && event.state !== "auth-required") return;
+        if (needsAttention && !event.eventId) return;
+        if (event.state === "needs-attention") needsAttention = true;
         status.textContent = messageFor(event.state);
         if (event.state === "sent" && event.eventId === payload.event_id) {
+          currentSaved = true;
           const card = panel.closest(".complete-card");
-          card?.querySelector("[data-followup-saved]")?.removeAttribute("hidden");
-          card?.querySelector("[data-followup-pending]")?.setAttribute("hidden", "");
+          // A newer successful attempt may already have cancelled this weak
+          // result's repeat. An event receipt is not a current-plan receipt.
+          const followup = card?.querySelector("[data-followup-pending]");
+          if (followup) {
+            followup.textContent = ui("Результат сохранён. Открой план, чтобы увидеть актуальные повторения.");
+            followup.removeAttribute("hidden");
+          }
         }
-        retry.hidden = event.state === "sent" || event.state === "synced";
+        retry.hidden = currentSaved || needsAttention;
       },
-    });
+    }); } catch (error) {
+      status.textContent = ui("Локальное сохранение недоступно. Вернись к уроку позже.");
+      return;
+    }
 
     async function flush() {
+      if (flushing) return;
+      flushing = true;
       retry.disabled = true;
-      status.textContent = ui("Отправляем сохранённый результат…");
+      if (!currentSaved && !needsAttention) status.textContent = ui("Отправляем сохранённый результат…");
       try { await queue.flushSession(namespace, csrfToken); }
-      catch (error) { status.textContent = ui("Нет соединения. Результат остаётся в этом браузере."); }
+      catch (error) { if (!currentSaved && !needsAttention) status.textContent = ui("Нет соединения. Результат остаётся в этом браузере."); }
       retry.disabled = false;
+      flushing = false;
     }
 
     retry.addEventListener("click", flush);
