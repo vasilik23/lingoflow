@@ -18331,3 +18331,18 @@ msgstr "Zacznij od części z najniższym wynikiem ćwiczeniowym."
 
 msgid "Перед удалением можно скачать копию своих данных."
 msgstr "Przed usunięciem konta możesz pobrać kopię swoich danych."
+
+msgid "Фильтрует новые варианты B1 и рекомендации B2. После сохранения действует на всех устройствах. Начатые задания не меняются."
+msgstr "Filtruje nowe warianty B1 i rekomendacje B2. Po zapisaniu działa na wszystkich urządzeniach. Rozpoczęte zadania pozostają bez zmian."
+
+msgid "Темы практики временно не загружены из аккаунта. Показан прежний выбор этого браузера."
+msgstr "Nie udało się wczytać tematów ćwiczeń z konta. Wyświetlono wcześniejszy wybór z tej przeglądarki."
+
+msgid "Не удалось сохранить темы практики. Попробуй ещё раз."
+msgstr "Nie udało się zapisać tematów ćwiczeń. Spróbuj ponownie."
+
+msgid "Профиль сохранён, но темы практики не синхронизированы. Попробуй ещё раз."
+msgstr "Profil został zapisany, ale tematy ćwiczeń nie zostały zsynchronizowane. Spróbuj ponownie."
+
+msgid "Нежелательная тема практики сохраняется в профиле аккаунта, синхронизируется между устройствами, входит в экспорт и удаляется вместе с аккаунтом. Изменить её можно в профиле. Прежняя подписанная cookie хранится до 90 дней как запасной выбор браузера; до первого сохранения в аккаунт действует этот локальный выбор."
+msgstr "Wykluczony temat ćwiczeń jest zapisywany w profilu konta, synchronizowany między urządzeniami, uwzględniany w eksporcie i usuwany wraz z kontem. Można go zmienić w profilu. Wcześniejszy podpisany plik cookie jest przechowywany do 90 dni jako zapasowy wybór przeglądarki; do pierwszego zapisu na koncie obowiązuje ten lokalny wybór."

@@ -26,7 +26,8 @@ from polskiflow.auth import (
 )
 from polskiflow.b1_mock_store import load_b1_mock_attempts
 from polskiflow.canonical_host import email_callback_url
-from polskiflow.practice_preferences import excluded_practice_topics, set_practice_topics
+from polskiflow.practice_preferences import excluded_practice_topics, persist_practice_topics, set_practice_topics
+from polskiflow.practice_preference_store import save_practice_preferences
 from polskiflow.domain.practice_recommendations import practice_recommendation
 from polskiflow.domain.topic_journeys import journey
 from polskiflow.domain.daily_goal import DAILY_GOAL_MINUTES, minutes_from_legacy_lessons, legacy_lessons_from_minutes
@@ -563,7 +564,8 @@ def practice_hub(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
         response = redirect("practice-hub")
         response["Cache-Control"] = "private, no-store"
-        set_practice_topics(response, request, exclude_remote_work=request.POST.get("exclude_remote_work") == "on")
+        if not persist_practice_topics(response, request, exclude_remote_work=request.POST.get("exclude_remote_work") == "on"):
+            return _no_store(redirect('/profile/?practice_sync_error=1'))
         return response
     excluded_topics = excluded_practice_topics(request)
     dashboard = load_dashboard_progress(
@@ -689,6 +691,10 @@ def profile(request: HttpRequest, section: str = "profile") -> HttpResponse:
     }
     profile_message = ""
     profile_error = ""
+    excluded_topics = excluded_practice_topics(request)
+    practice_sync_available = request._practice_preferences is not None
+    if request.GET.get('practice_sync_error') == '1':
+        profile_error = 'Не удалось сохранить темы практики. Попробуй ещё раз.'
     reminder_preferences = load_reminder_preferences(
         request.supabase_access_token,
         request.supabase_user.id,
@@ -759,6 +765,15 @@ def profile(request: HttpRequest, section: str = "profile") -> HttpResponse:
                 daily_goal_minutes=int(profile_form["daily_goal_minutes"]) if "daily_goal_minutes" in request.POST else minutes_from_legacy_lessons(int(profile_form["daily_goal_lessons"])),
             )
             profile_message = "Профиль сохранён"
+            if request.POST.get('practice_topics_present') == '1':
+                if practice_sync_available and save_practice_preferences(
+                    request.supabase_access_token, request.supabase_user.id,
+                    request.POST.get('exclude_remote_work') == 'on',
+                ):
+                    practice_sync_available = True
+                else:
+                    profile_message = ''
+                    profile_error = 'Профиль сохранён, но темы практики не синхронизированы. Попробуй ещё раз.'
         else:
             profile_error = "Не удалось сохранить профиль. Попробуйте ещё раз."
     response = render(
@@ -770,7 +785,8 @@ def profile(request: HttpRequest, section: str = "profile") -> HttpResponse:
             "profile_levels": PROFILE_LEVELS,
             "daily_goal_minutes_options": DAILY_GOAL_MINUTES,
             "profile_form": profile_form,
-            "exclude_remote_work": request.POST.get("exclude_remote_work") == "on" if request.method == "POST" and request.POST.get("practice_topics_present") == "1" and request.POST.get("form_action") != "reminders" else "remote-work" in excluded_practice_topics(request),
+            "exclude_remote_work": request.POST.get("exclude_remote_work") == "on" if request.method == "POST" and request.POST.get("practice_topics_present") == "1" and request.POST.get("form_action") != "reminders" else "remote-work" in excluded_topics,
+            "practice_sync_available": practice_sync_available,
             "profile_message": profile_message,
             "profile_error": profile_error,
             "reminder_preferences": reminder_preferences,

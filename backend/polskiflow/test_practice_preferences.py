@@ -61,6 +61,15 @@ class PracticePreferenceViewTests(TestCase):
         auth = patch("polskiflow.auth.authenticate_access_token", return_value=SupabaseUser("user-123", "learner@example.com"))
         auth.start()
         self.addCleanup(auth.stop)
+        for target in ('polskiflow.auth_views.save_practice_preferences',
+                       'polskiflow.practice_preferences.save_practice_preferences'):
+            saving = patch(target, return_value=True)
+            saving.start()
+            self.addCleanup(saving.stop)
+        loading = patch('polskiflow.practice_preferences.load_practice_preferences',
+                        return_value={'configured': False, 'exclude_remote_work': False, 'level': 'B1'})
+        loading.start()
+        self.addCleanup(loading.stop)
 
     def test_save_filters_new_b1_attempts_and_reset_restores_default(self):
         with patch("polskiflow.b1_mock_views.timezone.localdate", return_value=date(2026, 1, 5)):
@@ -104,3 +113,41 @@ class PracticePreferenceViewTests(TestCase):
             reset = self.client.post("/profile/", {**fields, "exclude_remote_work": ""})
             self.assertEqual(reset.cookies[PREFERENCE_COOKIE]["max-age"], 0)
             self.assertFalse(self.client.get("/profile/").context["exclude_remote_work"])
+
+    def test_failed_sync_is_not_announced_as_success_and_does_not_change_cookie(self):
+        fields = {'display_name': 'Anna', 'level': 'B1', 'daily_goal_lessons': '2',
+                  'practice_topics_present': '1', 'exclude_remote_work': 'on'}
+        with patch('polskiflow.auth_views.save_profile_settings', return_value=True), patch(
+                'polskiflow.auth_views.save_practice_preferences', return_value=False):
+            response = self.client.post('/profile/', fields)
+        self.assertContains(response, 'Профиль сохранён, но темы практики не синхронизированы.')
+        self.assertNotIn(PREFERENCE_COOKIE, response.cookies)
+        with patch('polskiflow.practice_preferences.load_practice_preferences', return_value=None):
+            unavailable = self.client.get('/profile/')
+        self.assertNotContains(unavailable, 'name="practice_topics_present"')
+        self.assertContains(unavailable, 'Темы практики временно не загружены')
+
+    def test_account_reset_overrides_an_old_cookie_and_get_does_not_migrate(self):
+        request = RequestFactory().get('/profile/')
+        request.supabase_user = SupabaseUser('user-123', 'learner@example.com')
+        response = HttpResponse()
+        set_practice_topics(response, request, exclude_remote_work=True)
+        self.client.cookies[PREFERENCE_COOKIE] = response.cookies[PREFERENCE_COOKIE].value
+        with patch('polskiflow.practice_preferences.load_practice_preferences', return_value={
+                'configured': True, 'exclude_remote_work': False, 'level': 'B1'}), patch(
+                'polskiflow.practice_preferences.save_practice_preferences') as saved:
+            profile = self.client.get('/profile/')
+        self.assertFalse(profile.context['exclude_remote_work'])
+        saved.assert_not_called()
+
+    def test_server_choice_filters_new_variants_without_replacing_a_started_attempt(self):
+        with patch('polskiflow.b1_mock_views.timezone.localdate', return_value=date(2026, 1, 5)):
+            opened = self.client.get('/exam/b1/mock/')
+            self.assertEqual(opened.context['variant'].id, 'b1-weekly-v2')
+            with patch('polskiflow.practice_preferences.load_practice_preferences', return_value={
+                    'configured': True, 'exclude_remote_work': True, 'level': 'B1'}):
+                fresh = self.client.get('/exam/b1/mock/')
+                self.assertNotEqual(fresh.context['variant'].id, 'b1-weekly-v2')
+                resumed = self.client.post('/exam/b1/mock/', {
+                    'attempt_token': opened.context['attempt_token'], 'resume': '1'})
+                self.assertEqual(resumed.context['variant'].id, 'b1-weekly-v2')
