@@ -119,8 +119,18 @@ The job is skipped while its enable variable is absent. Missing credentials,
 wrong UUID, failed login, malformed response, excessive token lifetime, failed
 probe or failed logout make an enabled job red. It sends credentials only to
 validated hosted Supabase Auth, rejects redirects, uses a bounded response and
-never prints Auth bodies. No production login has been verified as part of
-preparing this workflow; activation requires the dedicated account above.
+never prints Auth bodies. A manual fresh-session production run on the temporary
+QA account passed on 14 October 2026; this does not activate the schedule or
+replace the permanent dedicated account required above.
 
 Protocol reference: [official Supabase Auth OpenAPI](https://github.com/supabase/auth/blob/master/openapi.yaml)
 (password grant and `logout?scope=local`).
+
+## Backup and restore drill
+
+[Operator runbook](backup-restore-drill.md) covers three CLI dumps, private
+archives, checksums and guarded import into an empty local Supabase. The Node
+tool and its boundary tests are prepared; no database dump or real restore has
+been performed. Docker, psql and operator database access are still required.
+The actual restore, RLS/data acceptance and separate encrypted copy remain
+launch work. User JSON export is not a project database backup.
