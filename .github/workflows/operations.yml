@@ -1,0 +1,25 @@
+name: Operations tooling
+
+on:
+  pull_request:
+    paths:
+      - "ops/**"
+      - ".github/workflows/operations.yml"
+  push:
+    branches: [main]
+    paths:
+      - "ops/**"
+      - ".github/workflows/operations.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+      - run: node --test ops/*.test.mjs
