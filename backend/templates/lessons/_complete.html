@@ -14,24 +14,24 @@
   {% if followup.kind == "repeat" %}
     {% if followup.mistake %}<details class="followup-mistake"><summary>{% translate "Что закрепить" %}</summary><p><strong lang="{{ followup.mistake.prompt|learning_language }}">{{ followup.mistake.prompt|learning_markup }}</strong></p><p lang="{{ followup.mistake.explanation|explanation_language }}">{{ followup.mistake.explanation|explanation_markup }}</p></details>{% endif %}
     <a class="complete-next" href="{% url 'lesson' followup.lesson.id %}">
-      <span aria-hidden="true">↻</span>
-      <span><small>{% translate "Следующий шаг: закрепить" %}</small><strong>{{ followup.lesson.title|ui_text }}</strong><small>~{{ followup.lesson.minutes }} {% translate "мин" %}</small></span>
+      <span class="complete-next-icon" aria-hidden="true">↻</span>
+      <span class="complete-next-copy"><small>{% translate "Следующий шаг: закрепить" %}</small><strong>{{ followup.lesson.title|ui_text }}</strong><small>~{{ followup.lesson.minutes }} {% translate "мин" %}</small></span>
       <span aria-hidden="true">→</span>
     </a>
     <p class="followup-recheck" data-followup-saved{% if not saved %} hidden{% endif %}>{% translate "Повторная проверка в плане:" %} <time datetime="{{ followup.due_date|date:'Y-m-d' }}">{{ followup.due_date|date:'d.m.Y' }}</time>. {% translate "Успешная новая попытка отменит это повторение." %}</p>
     <p class="followup-recheck" data-followup-pending{% if saved %} hidden{% endif %}>{% translate "Повторная проверка появится в плане после сохранения результата. Сейчас она не назначена." %}</p>
   {% elif followup.target %}
-    <a class="complete-next" href="{{ followup.target.href }}"><span aria-hidden="true">→</span><span><small>{% translate "Следующий шаг" %}</small><strong>{% if followup.target.kind == 'reading' %}{% translate "Чтение и аудирование" %}{% elif followup.target.kind == 'answer' %}{% translate "Самостоятельный ответ" %}{% else %}{% translate "Проверка темы" %}{% endif %}</strong></span></a>
+    <a class="complete-next" href="{{ followup.target.href }}"><span class="complete-next-icon" aria-hidden="true">→</span><span class="complete-next-copy"><small>{% translate "Следующий шаг" %}</small><strong>{% if followup.target.kind == 'reading' %}{% translate "Чтение и аудирование" %}{% elif followup.target.kind == 'answer' %}{% translate "Самостоятельный ответ" %}{% else %}{% translate "Проверка темы" %}{% endif %}</strong></span></a>
   {% elif followup.lesson %}
     <a class="complete-next" href="{% url 'lesson' followup.lesson.id %}">
-      <span aria-hidden="true">{% include 'components/icon.html' with name='book' %}</span>
-      <span><small>{% translate "Следующий урок темы" %}</small><strong>{{ followup.lesson.title|ui_text }}</strong><small>{{ followup.lesson.description|ui_text }} · ~{{ followup.lesson.minutes|ui_text }} {% translate "мин" %}</small></span>
+      <span class="complete-next-icon" aria-hidden="true">{% include 'components/icon.html' with name='book' %}</span>
+      <span class="complete-next-copy"><small>{% translate "Следующий урок темы" %}</small><strong>{{ followup.lesson.title|ui_text }}</strong><small>{{ followup.lesson.description|ui_text }} · ~{{ followup.lesson.minutes|ui_text }} {% translate "мин" %}</small></span>
       <span aria-hidden="true">→</span>
     </a>
   {% else %}
     <a class="complete-next" href="{% url 'course' %}?level={{ lesson_navigation.level }}#topic-{{ lesson_navigation.topic_id }}">
-      <span aria-hidden="true">✓</span>
-      <span><small>{% translate "Тема завершена" %}</small><strong>{{ lesson_navigation.topic_title|ui_text }}</strong><small>{% translate "Вернуться к темам уровня" %} {{ lesson_navigation.level|ui_text }}</small></span>
+      <span class="complete-next-icon" aria-hidden="true">✓</span>
+      <span class="complete-next-copy"><small>{% translate "Тема завершена" %}</small><strong>{{ lesson_navigation.topic_title|ui_text }}</strong><small>{% translate "Вернуться к темам уровня" %} {{ lesson_navigation.level|ui_text }}</small></span>
       <span aria-hidden="true">→</span>
     </a>
   {% endif %}

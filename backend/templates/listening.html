@@ -45,7 +45,7 @@
         <fieldset class="listening-card">
           <legend><span class="listening-question-number" aria-hidden="true">{{ forloop.counter|ui_text }}</span> {{ question.prompt|ui_text }}</legend>
           <div class="listening-options">
-            {% for option in question.options %}<label><input type="radio" name="{{ question.id }}" value="{{ option|ui_text }}" {% if question.selected == option %}checked{% endif %} required> {{ option|ui_text }}</label>{% endfor %}
+            {% for option in question.options %}<label><input type="radio" name="{{ question.id }}" value="{{ option }}" {% if question.selected == option %}checked{% endif %} required> {{ option|ui_text }}</label>{% endfor %}
           </div>
           {% if dialogue_submitted %}<p class="listening-feedback {% if question.is_correct %}is-correct{% else %}is-wrong{% endif %}">{% if question.is_correct %}{% translate "Верно." %}{% else %}{% translate "Правильный ответ:" %} <strong>{{ question.answer|ui_text }}</strong>.{% endif %} {{ question.explanation|ui_text }}</p>{% endif %}
         </fieldset>
@@ -74,7 +74,7 @@
         <fieldset class="listening-card">
           <legend><span class="listening-question-number" aria-hidden="true">{{ forloop.counter|ui_text }}</span> {{ question.prompt|ui_text }}</legend>
           <div class="listening-options">
-            {% for option in question.options %}<label><input type="radio" name="{{ question.id }}" value="{{ option|ui_text }}" {% if question.selected == option %}checked{% endif %} required> {{ option|ui_text }}</label>{% endfor %}
+            {% for option in question.options %}<label><input type="radio" name="{{ question.id }}" value="{{ option }}" {% if question.selected == option %}checked{% endif %} required> {{ option|ui_text }}</label>{% endfor %}
           </div>
           {% if b1_submitted %}<p class="listening-feedback {% if question.is_correct %}is-correct{% else %}is-wrong{% endif %}">{% if question.is_correct %}{% translate "Верно." %}{% else %}{% translate "Правильный ответ:" %} <strong>{{ question.answer|ui_text }}</strong>.{% endif %} {{ question.explanation|ui_text }}</p>{% endif %}
         </fieldset>
@@ -103,7 +103,7 @@
         <fieldset class="listening-card">
           <legend><span class="listening-question-number" aria-hidden="true">{{ forloop.counter|ui_text }}</span> {{ question.prompt|ui_text }}</legend>
           <div class="listening-options">
-            {% for option in question.options %}<label><input type="radio" name="{{ question.id }}" value="{{ option|ui_text }}" {% if question.selected == option %}checked{% endif %} required> {{ option|ui_text }}</label>{% endfor %}
+            {% for option in question.options %}<label><input type="radio" name="{{ question.id }}" value="{{ option }}" {% if question.selected == option %}checked{% endif %} required> {{ option|ui_text }}</label>{% endfor %}
           </div>
           {% if b2_submitted %}<p class="listening-feedback {% if question.is_correct %}is-correct{% else %}is-wrong{% endif %}">{% if question.is_correct %}{% translate "Верно." %}{% else %}{% translate "Правильный ответ:" %} <strong>{{ question.answer|ui_text }}</strong>.{% endif %} {{ question.explanation|ui_text }}</p>{% endif %}
         </fieldset>
@@ -121,7 +121,7 @@
         </details>
         <div class="listening-options">
           {% for option in item.options %}
-            <label><input type="radio" name="{{ item.id }}" value="{{ option|ui_text }}" {% if item.selected == option %}checked{% endif %} required> <span lang="pl">{{ option|ui_text }}</span></label>
+            <label><input type="radio" name="{{ item.id }}" value="{{ option }}" {% if item.selected == option %}checked{% endif %} required> <span lang="pl">{{ option|ui_text }}</span></label>
           {% endfor %}
         </div>
         {% if submitted %}
