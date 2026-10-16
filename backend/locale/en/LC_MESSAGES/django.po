@@ -17523,3 +17523,15 @@ msgstr "The browser stores the device preference and last reminder date separate
 
 msgid "Понятно"
 msgstr "Got it"
+
+msgid "Перечитать текст"
+msgstr "Read the text again"
+
+msgid "Посмотреть правило темы"
+msgstr "View this topic’s rule"
+
+msgid "Отмечено «Знаю» · самооценка"
+msgstr "Marked “I know” · self-assessment"
+
+msgid "Правильных ответов"
+msgstr "Correct answers"
