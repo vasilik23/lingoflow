@@ -17468,3 +17468,58 @@ msgstr "The excluded practice topic is saved in your account profile, synced acr
 
 msgid "Результат сохранён. Открой план, чтобы увидеть актуальные повторения."
 msgstr "Your result was saved. Open your plan to see the current reviews."
+
+#: browser-reminders
+msgid "После выбранного времени напоминание появится на открытой странице «Сегодня» один раз в день. В закрытом приложении уведомлений нет."
+msgstr "After your chosen time, a reminder appears once a day on the open Today page. There are no notifications when the app is closed."
+
+#: browser-reminders
+msgid "Включить на этом устройстве"
+msgstr "Enable on this device"
+
+#: browser-reminders
+msgid "Выключить на этом устройстве"
+msgstr "Disable on this device"
+
+#: browser-reminders
+msgid "Это устройство включено. Сохрани ежедневное напоминание и время выше."
+msgstr "Enabled on this device. Save the daily reminder and time above."
+
+#: browser-reminders
+msgid "На этом устройстве выключено."
+msgstr "Disabled on this device."
+
+#: browser-reminders
+msgid "В этом браузере напоминания недоступны. Проверь доступ к хранилищу сайта."
+msgstr "Reminders are unavailable in this browser. Check access to site storage."
+
+#: browser-reminders
+msgid "Сначала сохрани время и ежедневное напоминание, затем включи его на нужном устройстве."
+msgstr "First save the time and daily reminder, then enable it on your chosen device."
+
+#: browser-reminders
+msgid "Для включения нужен JavaScript и доступ к хранилищу сайта."
+msgstr "Enabling requires JavaScript and access to site storage."
+
+#: browser-reminders
+msgid "Напоминание о занятии"
+msgstr "Study reminder"
+
+#: browser-reminders
+msgid "Время для польского. Выбери задание из сегодняшнего плана."
+msgstr "Time for Polish. Choose an activity from today’s plan."
+
+#: browser-reminders
+msgid "Напоминания выключены по умолчанию. После отдельного включения на устройстве они появляются только на открытой странице «Сегодня»; фоновых уведомлений нет."
+msgstr "Reminders are off by default. After you enable them separately on a device, they appear only on the open Today page; there are no background notifications."
+
+#: browser-reminders
+msgid "Отправленная обратная связь и выбранные настройки напоминаний — для поддержки и добровольных напоминаний."
+msgstr "Submitted feedback and reminder preferences — for support and opt-in reminders."
+
+#: browser-reminders
+msgid "Браузер хранит выбор устройства и дату последнего напоминания отдельно для аккаунта, без email и учебных ответов. Выход не удаляет этот выбор. Удалить его можно очисткой данных сайта; выключить — в системных настройках."
+msgstr "The browser stores the device preference and last reminder date separately for each account, without email or exercise answers. Signing out does not remove this preference. Clear site data to remove it, or disable it in the app’s system settings."
+
+msgid "Понятно"
+msgstr "Got it"

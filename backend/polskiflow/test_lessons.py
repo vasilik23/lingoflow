@@ -569,8 +569,8 @@ class LessonViewsTests(TestCase):
         self.assertNotContains(response, 'class="settings-list"')
         self.assertNotContains(response, 'name="daily_reminder_enabled"')
         response = self.client.get("/settings/")
-        self.assertContains(response, "Будущие напоминания")
-        self.assertContains(response, "ещё ничего не отправляем")
+        self.assertContains(response, "Напоминания")
+        self.assertContains(response, "В закрытом приложении уведомлений нет.")
         self.assertContains(response, 'name="daily_reminder_enabled"')
         self.assertNotContains(response, 'name="daily_reminder_enabled" type="checkbox" checked')
 
