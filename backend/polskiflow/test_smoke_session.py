@@ -21,7 +21,8 @@ ENV = {
 PAYLOAD = {
     "access_token": "private-token", "refresh_token": "private-refresh",
     "token_type": "bearer", "expires_in": 3600,
-    "user": {"id": ENV["LINGOFLOW_SMOKE_USER_ID"], "is_anonymous": False},
+    "user": {"id": ENV["LINGOFLOW_SMOKE_USER_ID"], "is_anonymous": False,
+             "role": "authenticated", "email_confirmed_at": "2026-10-16T08:00:00Z"},
 }
 
 
@@ -70,6 +71,19 @@ class SmokeSessionTests(SimpleTestCase):
             with patch.dict(os.environ, {name: value}), self.assertRaises(SmokeFailure), fresh_smoke_session(PRODUCTION_ORIGIN):
                 pass
         request.assert_not_called()
+
+    @patch("polskiflow.domain.smoke_session.urlopen")
+    def test_wrong_role_or_unconfirmed_account_rejected_and_session_revoked(self, request):
+        for changes in ({"role": "service_role"}, {"role": "anon"}, {"role": None},
+                        {"email_confirmed_at": None}, {"email_confirmed_at": " "},
+                        {"email_confirmed_at": True}):
+            request.reset_mock()
+            request.side_effect = [response({**PAYLOAD, "user": {**PAYLOAD["user"], **changes}}),
+                                   response(None, 204)]
+            with self.assertRaises(SmokeFailure), fresh_smoke_session(PRODUCTION_ORIGIN):
+                self.fail("Misconfigured account must not reach probes")
+            self.assertEqual(request.call_count, 2)
+            self.assertTrue(request.call_args.args[0].full_url.endswith("/logout?scope=local"))
 
     @patch("polskiflow.domain.smoke_session.urlopen")
     def test_auth_errors_sanitized_not_retried(self, request):

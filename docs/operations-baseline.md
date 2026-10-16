@@ -93,7 +93,10 @@ Activation steps for the operator:
 
 1. Prepare a dedicated confirmed, non-anonymous learner with no admin privileges
    and no real learner data. Verify its UUID and ownership in Supabase. Do not use
-   a personal account. This command checks UUID, not the account's admin grants.
+   a personal account or the temporary QA mailbox. Use an operator-controlled
+   permanent email so password recovery remains possible. This command checks
+   UUID, non-anonymous status, `authenticated` role and a nonempty Auth email
+   confirmation field; custom app grants still require operator verification.
 2. Set access-token expiry to no more than 3600 seconds in the Auth project;
    the command accepts a reported lifetime of 300–3600 seconds. Local signout
    revokes this session's refresh ability; issued access tokens can remain valid
@@ -122,6 +125,29 @@ validated hosted Supabase Auth, rejects redirects, uses a bounded response and
 never prints Auth bodies. A manual fresh-session production run on the temporary
 QA account passed on 14 October 2026; this does not activate the schedule or
 replace the permanent dedicated account required above.
+
+### Configuration status — 16 October 2026
+
+The GitHub environment `production-smoke` now exists with custom deployment
+branch policies allowing exactly branch `main` (no tag policy). The authenticated
+job also checks `github.ref == 'refs/heads/main'`; both checkout steps disable
+persisted Git credentials. The environment restriction is the secret boundary;
+the workflow condition is an additional guard.
+
+No monitoring account or environment secrets have been created, and the enable
+variable remains unset. Supabase rejected the attempted reserved `example.invalid`
+signup with HTTP 422; no user was created and the candidate credentials were
+removed. Permanent email selection is still required. Auth settings were only
+read: signup auto-confirm was already enabled, no email was sent and no Auth
+configuration was relaxed. Do not replace this requirement with temporary QA.
+
+The stricter session validator passed all six production probes on the existing
+QA account on 16 October, including local logout. This was a one-off verification,
+not activation of the schedule. Release baseline: 1067 Django tests, system check,
+migration drift and diff check passed.
+
+References: [GitHub environments](https://docs.github.com/en/rest/deployments/environments),
+[deployment branch policies](https://docs.github.com/en/rest/deployments/branch-policies).
 
 Protocol reference: [official Supabase Auth OpenAPI](https://github.com/supabase/auth/blob/master/openapi.yaml)
 (password grant and `logout?scope=local`).
