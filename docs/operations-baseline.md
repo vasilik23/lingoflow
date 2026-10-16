@@ -75,11 +75,12 @@ The public half runs automatically every four hours from
 health, readiness, OpenAPI and catalog. A failure marks the workflow red and
 uses normal GitHub Actions notifications as the initial alert channel.
 
-The authenticated half has an optional fresh-session schedule described below.
-It remains disabled until a dedicated account and secrets are configured and
-verified. External paging remains a launch gap.
+The authenticated half uses the fresh-session schedule described below.
+It was enabled on 16 October 2026 with a separate permanent monitoring account;
+the first manual GitHub run passed both jobs. The first actual scheduled run
+still needs observation. External paging remains a launch gap.
 
-## Prepared authenticated schedule (disabled until configured)
+## Authenticated schedule (enabled)
 
 `production_smoke --fresh-session https://lingoflow-learn.vercel.app` obtains a
 new short-lived password-grant session for each run. Credentials are read from
@@ -134,17 +135,34 @@ job also checks `github.ref == 'refs/heads/main'`; both checkout steps disable
 persisted Git credentials. The environment restriction is the secret boundary;
 the workflow condition is an additional guard.
 
-No monitoring account or environment secrets have been created, and the enable
-variable remains unset. Supabase rejected the attempted reserved `example.invalid`
-signup with HTTP 422; no user was created and the candidate credentials were
-removed. Permanent email selection is still required. Auth settings were only
-read: signup auto-confirm was already enabled, no email was sent and no Auth
-configuration was relaxed. Do not replace this requirement with temporary QA.
+The operator supplied a permanent email. Its existing account was left intact;
+a separate Gmail plus-alias account was created through normal registration and
+onboarding. It has the ordinary `authenticated` role, confirmed Auth email,
+no custom privileges and a minimal A1 profile. Five environment secrets are set,
+and `LINGOFLOW_AUTHENTICATED_SMOKE_ENABLED=true`. The random password remains
+only in the ignored owner-only local credentials file and GitHub environment.
+No email or password is published in this runbook.
+
+Correction to the earlier setup note: registration redirects to `/welcome/`,
+not `/onboarding/`. The setup harness misread successful signup as failure;
+the later HTTP 422 meant “already registered”, not rejection of the reserved
+address. The unused reserved-address account was identified by exact UUID and
+creation timestamp, checked for empty learning data and deleted; its sessions
+were also removed. The permanent account was finished using `/welcome/`.
+Auth auto-confirm was already enabled and was not changed.
 
 The stricter session validator passed all six production probes on the existing
 QA account on 16 October, including local logout. This was a one-off verification,
 not activation of the schedule. Release baseline: 1067 Django tests, system check,
 migration drift and diff check passed.
+
+The permanent account then passed the same six probes locally and in
+[GitHub run 38881443022](https://github.com/vasilik23/lingoflow/actions/runs/38881443022):
+`public-contracts` passed four checks and `authenticated-contracts` passed six,
+including normal local logout. Residual registration setup sessions were
+separately revoked. No learning completions or personal words were created.
+This proves manual execution with the configured secrets, not delivery of a
+future cron event or external alert. [Activation receipt](monitoring-activation-2026-10-16.md).
 
 References: [GitHub environments](https://docs.github.com/en/rest/deployments/environments),
 [deployment branch policies](https://docs.github.com/en/rest/deployments/branch-policies).
