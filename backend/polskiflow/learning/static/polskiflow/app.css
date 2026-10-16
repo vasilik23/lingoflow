@@ -899,9 +899,10 @@ button.secondary { background: var(--surface); border-color: var(--line); }
 .complete-icon { display: grid; place-items: center; width: 5rem; aspect-ratio: 1; margin-bottom: 1rem; border-radius: 1.5rem; background: var(--primary-soft); color: var(--primary); font-size: 2.4rem; }
 .complete-next { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: .8rem; width: min(100%, 28rem); margin: .6rem 0 1rem; padding: .9rem; border: 1px solid var(--line); border-radius: 1rem; background: var(--surface-soft); color: var(--text); text-align: left; text-decoration: none; }
 .complete-next:hover { border-color: var(--primary); box-shadow: var(--shadow); }
-.complete-next > span:first-child { display: grid; place-items: center; width: 2.65rem; height: 2.65rem; border-radius: .8rem; background: var(--surface); font-size: 1.25rem; }
-.complete-next > span:nth-child(2) { display: grid; gap: .15rem; min-width: 0; }
-.complete-next small { overflow: hidden; color: var(--muted); font-size: .72rem; text-overflow: ellipsis; white-space: nowrap; }
+.complete-next-icon { display: grid; place-items: center; width: 2.65rem; height: 2.65rem; border-radius: .8rem; background: var(--surface); font-size: 1.25rem; }
+.complete-next-copy { display: grid; gap: .15rem; min-width: 0; }
+.complete-next-copy strong { overflow-wrap: anywhere; }
+.complete-next small { color: var(--muted); font-size: .72rem; overflow-wrap: anywhere; }
 .complete-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: .65rem; width: 100%; }
 .complete-actions .button { width: auto; }
 .complete-icon .ui-icon { width: 2.5rem; height: 2.5rem; }
