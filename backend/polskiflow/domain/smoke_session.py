@@ -62,7 +62,10 @@ def fresh_smoke_session(base_url):
         user = payload.get("user")
         ttl = payload.get("expires_in")
         if (payload.get("token_type") != "bearer" or type(ttl) is not int or not 300 <= ttl <= 3600
-                or not isinstance(user, dict) or user.get("id") != owner or user.get("is_anonymous") is not False):
+                or not isinstance(user, dict) or user.get("id") != owner
+                or user.get("is_anonymous") is not False or user.get("role") != "authenticated"
+                or not isinstance(user.get("email_confirmed_at"), str)
+                or not user["email_confirmed_at"].strip()):
             raise SmokeFailure("smoke session identity or lifetime mismatch")
         yield token
     finally:

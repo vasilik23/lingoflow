@@ -1379,6 +1379,17 @@ Metro export iOS/Android подготовил оба JS-пакета.
 backup/restore: Docker, psql и CLI-доступ к БД здесь ещё не настроены.
 [Протокол drill и критерии приёмки](docs/backup-restore-drill.md).
 
+### Защита авторизованного мониторинга — 16.10.2026
+
+Создано GitHub environment `production-smoke`, доступное только ветке `main`.
+Workflow дополнительно ограничивает авторизованный job этой веткой и не сохраняет
+Git credentials после checkout. Fresh-session проверяет роль `authenticated`
+и подтверждение email; неподходящая полученная сессия завершается до API-проб.
+Постоянный аккаунт, secrets и включение расписания ещё требуют постоянного email.
+Временный QA не используется для расписания; настройки Supabase Auth не менялись.
+1067 тестов и шесть production-проб с новой валидацией прошли.
+[Состояние настройки и активация](docs/operations-baseline.md).
+
 ## Единый план работ
 
 Это единственная актуальная очередь задач. Выполнять крупными срезами:
@@ -1430,8 +1441,10 @@ backup/restore: Docker, psql и CLI-доступ к БД здесь ещё не 
 ### 3. Закрытая beta и готовность production
 
 - Заполнить юридические данные контролёра и retention policy по типам данных.
-- Активировать подготовленный fresh-session smoke на непривилегированном
-  аккаунте, настроить внешний alert channel и провести backup/restore drill
+- Выбрать постоянный email отдельного monitoring-аккаунта, создать обычного
+  learner без учебных данных, добавить secrets в environment `production-smoke`
+  и активировать fresh-session расписание после успешного ручного запуска.
+  Настроить внешний alert channel и провести backup/restore drill
   доступными средствами Supabase Free по [протоколу](docs/backup-restore-drill.md):
   снять настоящую копию, восстановить в disposable цель, сверить данные/RLS,
   проверить расшифровку и отдельное хранение резервной копии.
