@@ -1,0 +1,17 @@
+{% load i18n ui %}
+{% if lesson_reference %}
+<details class="card lesson-reference" data-lesson-reference>
+  <summary>{% if lesson_reference.kind == 'reading' %}{% translate "Перечитать текст" %}{% else %}{% translate "Посмотреть правило темы" %}{% endif %}</summary>
+  <div class="reading-copy">
+    <h2 lang="{{ lesson_reference.title|learning_language:study_ui_language }}">{{ lesson_reference.title|learning_markup }}</h2>
+    {% if lesson_reference.kind == 'reading' %}
+      {% for paragraph in lesson_reference.paragraphs %}<p lang="pl">{{ paragraph }}</p>{% endfor %}
+      {% with english_paragraphs=lesson_reference.paragraphs|english_reading %}
+        {% if english_paragraphs %}<details><summary>English translation</summary>{% for paragraph in english_paragraphs %}<p lang="en">{{ paragraph }}</p>{% endfor %}</details>{% endif %}
+      {% endwith %}
+    {% else %}
+      {% for heading, body in lesson_reference.sections %}<section class="theory-section"><h3 lang="{{ heading|learning_language:study_ui_language }}">{{ heading|learning_markup }}</h3><p lang="{{ body|learning_language:study_ui_language }}">{{ body|learning_markup }}</p></section>{% endfor %}
+    {% endif %}
+  </div>
+</details>
+{% endif %}

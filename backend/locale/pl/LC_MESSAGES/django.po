@@ -18404,3 +18404,15 @@ msgstr "Przeglądarka przechowuje wybór urządzenia i datę ostatniego przypomn
 
 msgid "Понятно"
 msgstr "Rozumiem"
+
+msgid "Перечитать текст"
+msgstr "Przeczytaj tekst ponownie"
+
+msgid "Посмотреть правило темы"
+msgstr "Zobacz regułę z tego tematu"
+
+msgid "Отмечено «Знаю» · самооценка"
+msgstr "Oznaczone jako „Znam” · samoocena"
+
+msgid "Правильных ответов"
+msgstr "Poprawne odpowiedzi"

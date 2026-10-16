@@ -13,6 +13,7 @@ from django.views.decorators.http import require_POST
 
 from polskiflow.auth_views import require_browser_user
 from polskiflow.content import flashcards, grammar, lesson_navigation, quiz, task
+from polskiflow.lesson_reference import lesson_reference
 from polskiflow.progress_store import save_lesson_completion_result
 from polskiflow.lesson_draft_store import delete_lesson_draft, load_lesson_draft, save_lesson_draft
 from polskiflow.lesson_bookmark_store import load_lesson_bookmarks
@@ -274,6 +275,7 @@ def _question_context(
         "score": score,
         "selected": selected,
         "total": len(questions),
+        "lesson_reference": lesson_reference(lesson_id, lesson_kind, grammar_content),
     }
     if _is_sentence_builder(questions[index], lesson_kind):
         tokens = _builder_tokens(questions[index], lesson_id, index)
@@ -385,6 +387,7 @@ def _complete(request: HttpRequest, lesson_id: str, score: int, total: int) -> H
         "score": score,
         "total": total,
         "saved": save_result.saved,
+        "lesson_kind": lesson_task["kind"],
         "lesson_navigation": navigation,
     }
     # Start with one narrowly scoped flow. The browser receives an opaque,

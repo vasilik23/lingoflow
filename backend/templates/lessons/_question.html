@@ -5,6 +5,7 @@
 <div class="progress-label">{% translate "Вопрос" %} {{ index|add:1|ui_text }} {% translate "из" %} {{ total|ui_text }}</div>
 <div class="lesson-progress"><span style="--value: {% widthratio index|add:1 total 100 %}%; width: var(--value)"></span></div>
 <div class="card question-card"><p class="eyebrow">{% if sentence_builder %}{% translate "Составь предложение" %}{% else %}{% translate "Выбери ответ" %}{% endif %}</p><h2 lang="{{ question.prompt|learning_language:study_ui_language }}">{{ question.prompt|learning_markup }}</h2></div>
+{% include "lessons/_reference.html" %}
 {% if sentence_builder %}
   {% if builder_answer == None %}
     <form class="sentence-builder" data-sentence-builder method="post" action="{% url 'lesson-step' lesson_id %}">

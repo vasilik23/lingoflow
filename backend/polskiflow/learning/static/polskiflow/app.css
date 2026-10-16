@@ -1507,3 +1507,7 @@ nav.listening-level-nav a { margin: 0; padding: .65rem .75rem; min-height: 44px;
 
 .browser-reminder[hidden] { display: none; }
 .browser-reminder { margin-block-end: 1rem; }
+
+.lesson-reference { margin-block: 1rem; }
+.lesson-reference > summary { cursor: pointer; font-weight: 600; }
+.lesson-reference .reading-copy { margin-block-start: 1rem; }
