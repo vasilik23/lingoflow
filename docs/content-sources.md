@@ -1,5 +1,25 @@
 # Реестр источников учебного контента
 
+### Английские метки биографии — 16.10.2026
+
+При подготовке редакторского пакета исправлены собственные четыре метки:
+`переехать` → `move (to a new home)`, `начать карьеру` → `start a career`,
+`достичь цели` → `achieve a goal`, `важное событие` → `important event`.
+Прежние `move on`, `career`, `reach`, `momentous` не передавали весь смысл
+исходной карточки в данном контексте. Origin: original; created_for: LingoFlow;
+verified_at: 2026-10-16, внутренняя проверка, не независимое approval.
+
+Лексические основания:
+[Cambridge: przeprowadzać się](https://dictionary.cambridge.org/dictionary/polish-english/przeprowadzac-sie),
+[Cambridge: start](https://dictionary.cambridge.org/dictionary/english/start),
+[Merriam-Webster: career](https://www.merriam-webster.com/dictionary/career),
+[achieve](https://www.merriam-webster.com/dictionary/achieve),
+[event](https://www.merriam-webster.com/dictionary/event).
+Формулировки меток выбраны для собственных примеров LingoFlow; словарные статьи,
+определения, примеры и медиа не импортировались. Доступ к справочникам не
+трактуется как лицензия на копирование. Польские оригиналы, задания и данные
+учеников не менялись; обновлены PO/MO и производный browser catalogue.
+
 ### Глоссы пилотов и поиск словаря — 14.10.2026
 
 Семь коротких английских меток исправлены по значениям собственных пилотных

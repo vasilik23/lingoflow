@@ -11023,7 +11023,7 @@ msgid "в то время как"
 msgstr "while"
 
 msgid "важное событие"
-msgstr "momentous"
+msgstr "important event"
 
 msgid "ванная"
 msgstr "bathroom"
@@ -11737,7 +11737,7 @@ msgid "достичь соглашения"
 msgstr "negotiate"
 
 msgid "достичь цели"
-msgstr "reach"
+msgstr "achieve a goal"
 
 msgid "достоверность"
 msgstr "certainty"
@@ -12820,7 +12820,7 @@ msgid "начать болезнь"
 msgstr "disease"
 
 msgid "начать карьеру"
-msgstr "career"
+msgstr "start a career"
 
 msgid "начинать"
 msgstr "begin"
@@ -13579,7 +13579,7 @@ msgid "переезжать"
 msgstr "move over"
 
 msgid "переехать"
-msgstr "move on"
+msgstr "move (to a new home)"
 
 msgid "перейти; пройти"
 msgstr "cross over"
