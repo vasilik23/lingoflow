@@ -1385,9 +1385,13 @@ backup/restore: Docker, psql и CLI-доступ к БД здесь ещё не 
 Workflow дополнительно ограничивает авторизованный job этой веткой и не сохраняет
 Git credentials после checkout. Fresh-session проверяет роль `authenticated`
 и подтверждение email; неподходящая полученная сессия завершается до API-проб.
-Постоянный аккаунт, secrets и включение расписания ещё требуют постоянного email.
-Временный QA не используется для расписания; настройки Supabase Auth не менялись.
-1067 тестов и шесть production-проб с новой валидацией прошли.
+После получения постоянного email создан отдельный monitoring-аккаунт через
+Gmail plus-alias; существующий аккаунт не менялся. Пять secrets сохранены
+в environment, fresh-session расписание включено раз в четыре часа.
+Обе части первого ручного GitHub workflow прошли, включая шесть авторизованных
+проб и logout. Временный QA не используется для расписания; настройки Auth
+не менялись. 1067 тестов, check и migration drift прошли.
+[Приёмка активации и исправление setup-протокола](docs/monitoring-activation-2026-10-16.md).
 [Состояние настройки и активация](docs/operations-baseline.md).
 
 ## Единый план работ
@@ -1441,10 +1445,9 @@ Git credentials после checkout. Fresh-session проверяет роль `
 ### 3. Закрытая beta и готовность production
 
 - Заполнить юридические данные контролёра и retention policy по типам данных.
-- Выбрать постоянный email отдельного monitoring-аккаунта, создать обычного
-  learner без учебных данных, добавить secrets в environment `production-smoke`
-  и активировать fresh-session расписание после успешного ручного запуска.
-  Настроить внешний alert channel и провести backup/restore drill
+- Подтвердить первый scheduled запуск включённого fresh-session мониторинга
+  и получение failure notifications оператором. Настроить внешний alert channel
+  и провести backup/restore drill
   доступными средствами Supabase Free по [протоколу](docs/backup-restore-drill.md):
   снять настоящую копию, восстановить в disposable цель, сверить данные/RLS,
   проверить расшифровку и отдельное хранение резервной копии.
