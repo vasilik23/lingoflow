@@ -1,0 +1,10 @@
+{% load i18n %}
+<div class="card" data-browser-reminder data-namespace="{{ browser_reminder_namespace }}"
+     data-enable="{% translate 'Включить на этом устройстве' %}" data-disable="{% translate 'Выключить на этом устройстве' %}"
+     data-on="{% translate 'Это устройство включено. Сохрани ежедневное напоминание и время выше.' %}"
+     data-off="{% translate 'На этом устройстве выключено.' %}"
+     data-unavailable="{% translate 'В этом браузере напоминания недоступны. Проверь доступ к хранилищу сайта.' %}">
+  <p>{% translate "Сначала сохрани время и ежедневное напоминание, затем включи его на нужном устройстве." %}</p>
+  <p class="muted" data-reminder-status role="status">{% translate "Для включения нужен JavaScript и доступ к хранилищу сайта." %}</p>
+  <button type="button" class="compact-button secondary" data-reminder-toggle disabled>{% translate "Включить на этом устройстве" %}</button>
+</div>

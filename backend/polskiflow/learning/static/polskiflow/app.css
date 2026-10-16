@@ -1504,3 +1504,6 @@ nav.listening-level-nav a { margin: 0; padding: .65rem .75rem; min-height: 44px;
 .exam-run-details p { margin: .75rem 0 0; font-size: .85rem; }
 .exam-page .run-review-answer { padding: 1rem; border-radius: .75rem; background: var(--surface-soft); }
 .exam-page .b1-entry-action h2 { font-size: 1.1rem; }
+
+.browser-reminder[hidden] { display: none; }
+.browser-reminder { margin-block-end: 1rem; }

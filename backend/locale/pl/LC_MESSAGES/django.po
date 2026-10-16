@@ -18349,3 +18349,58 @@ msgstr "Wykluczony temat ćwiczeń jest zapisywany w profilu konta, synchronizow
 
 msgid "Результат сохранён. Открой план, чтобы увидеть актуальные повторения."
 msgstr "Wynik został zapisany. Otwórz plan, aby zobaczyć aktualne powtórki."
+
+#: browser-reminders
+msgid "После выбранного времени напоминание появится на открытой странице «Сегодня» один раз в день. В закрытом приложении уведомлений нет."
+msgstr "Po wybranej godzinie przypomnienie pojawi się raz dziennie na otwartej stronie „Dzisiaj”. Zamknięta aplikacja nie wysyła powiadomień."
+
+#: browser-reminders
+msgid "Включить на этом устройстве"
+msgstr "Włącz na tym urządzeniu"
+
+#: browser-reminders
+msgid "Выключить на этом устройстве"
+msgstr "Wyłącz na tym urządzeniu"
+
+#: browser-reminders
+msgid "Это устройство включено. Сохрани ежедневное напоминание и время выше."
+msgstr "Włączono na tym urządzeniu. Zapisz powyżej codzienne przypomnienie i godzinę."
+
+#: browser-reminders
+msgid "На этом устройстве выключено."
+msgstr "Wyłączono na tym urządzeniu."
+
+#: browser-reminders
+msgid "В этом браузере напоминания недоступны. Проверь доступ к хранилищу сайта."
+msgstr "Przypomnienia są niedostępne w tej przeglądarce. Sprawdź dostęp do pamięci witryny."
+
+#: browser-reminders
+msgid "Сначала сохрани время и ежедневное напоминание, затем включи его на нужном устройстве."
+msgstr "Najpierw zapisz godzinę i codzienne przypomnienie, a następnie włącz je na wybranym urządzeniu."
+
+#: browser-reminders
+msgid "Для включения нужен JavaScript и доступ к хранилищу сайта."
+msgstr "Do włączenia potrzebny jest JavaScript i dostęp do pamięci witryny."
+
+#: browser-reminders
+msgid "Напоминание о занятии"
+msgstr "Przypomnienie o nauce"
+
+#: browser-reminders
+msgid "Время для польского. Выбери задание из сегодняшнего плана."
+msgstr "Czas na polski. Wybierz zadanie z dzisiejszego planu."
+
+#: browser-reminders
+msgid "Напоминания выключены по умолчанию. После отдельного включения на устройстве они появляются только на открытой странице «Сегодня»; фоновых уведомлений нет."
+msgstr "Przypomnienia są domyślnie wyłączone. Po osobnym włączeniu na urządzeniu pojawiają się tylko na otwartej stronie „Dzisiaj”; brak powiadomień w tle."
+
+#: browser-reminders
+msgid "Отправленная обратная связь и выбранные настройки напоминаний — для поддержки и добровольных напоминаний."
+msgstr "Przesłane opinie i wybrane ustawienia przypomnień — do obsługi zgłoszeń i dobrowolnych przypomnień."
+
+#: browser-reminders
+msgid "Браузер хранит выбор устройства и дату последнего напоминания отдельно для аккаунта, без email и учебных ответов. Выход не удаляет этот выбор. Удалить его можно очисткой данных сайта; выключить — в системных настройках."
+msgstr "Przeglądarka przechowuje wybór urządzenia i datę ostatniego przypomnienia osobno dla konta, bez adresu e-mail i odpowiedzi. Wylogowanie nie usuwa tego wyboru. Można go usunąć, czyszcząc dane witryny, lub wyłączyć w ustawieniach systemowych aplikacji."
+
+msgid "Понятно"
+msgstr "Rozumiem"

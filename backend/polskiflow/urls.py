@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 from django.urls import path
+from polskiflow.browser_reminders import browser_reminder
 from polskiflow.topic_journey_views import topic_journey
 from django.contrib import admin
 from django.views.i18n import set_language
@@ -145,6 +146,7 @@ urlpatterns = [
     path("api/v1/me/account/", learner_account_v1, name="api-v1-learner-account"),
     path("api/v1/me/export/", learner_data_export_v1, name="api-v1-learner-data-export"),
     path("api/v1/me/reminder-preferences/", learner_reminder_preferences_v1, name="api-v1-learner-reminder-preferences"),
+    path("session/reminder/", browser_reminder, name="browser-reminder"),
     path("api/v1/me/feedback/", learner_feedback_v1, name="api-v1-learner-feedback"),
     path("api/v1/me/today/", learner_today_v1, name="api-v1-learner-today"),
     path("api/v1/me/bootstrap/", learner_bootstrap_v1, name="api-v1-learner-bootstrap"),

@@ -1,8 +1,14 @@
 {% extends "base.html" %}
-{% load i18n ui %}
+{% load static i18n ui %}
 {% block content %}
   {% if request.GET.welcome %}<p class="save-success welcome-success" role="status">{% translate "План готов. Начни с первого задания — его результат сразу появится здесь." %}</p>{% endif %}
 
+  <div data-browser-reminder data-namespace="{{ browser_reminder_namespace }}" data-endpoint="{% url 'browser-reminder' %}">
+    <section class="card browser-reminder" data-reminder-panel hidden aria-label="{% translate 'Напоминание о занятии' %}">
+      <p role="status">{% translate "Время для польского. Выбери задание из сегодняшнего плана." %}</p>
+      <button type="button" class="compact-button secondary" data-reminder-dismiss>{% translate "Понятно" %}</button>
+    </section>
+  </div>
   <section class="hero">
     <h1>{% translate "Сегодня" %}</h1>
     <div class="hero-meta">
@@ -61,6 +67,7 @@
 {% endblock %}
 
 {% block scripts %}
+<script defer src="{% static 'polskiflow/browser-reminders.js' %}?shell={{ pwa_shell_version }}"></script>
 <script>
 (() => {
   const plan = document.getElementById('daily-tasks');
