@@ -1,6 +1,8 @@
 from unittest.mock import patch
 
-from django.test import SimpleTestCase
+from django.conf import settings
+from django.core.cache import cache
+from django.test import SimpleTestCase, override_settings
 
 from polskiflow.auth import ACCESS_COOKIE, SupabaseUser
 
@@ -17,7 +19,7 @@ class PrivacyPageTests(SimpleTestCase):
         self.assertContains(response, "юридическое имя контролёра")
         self.assertContains(response, "https://commission.europa.eu/")
         self.assertContains(response, "https://uodo.gov.pl/")
-        self.assertEqual(response["Cache-Control"], "public, max-age=300")
+        self.assertEqual(response["Cache-Control"], "private, no-store")
 
     def test_public_page_does_not_expose_authenticated_export_action(self):
         response = self.client.get("/privacy/")
@@ -30,3 +32,33 @@ class PrivacyPageTests(SimpleTestCase):
         response = self.client.get("/privacy/")
         self.assertContains(response, 'href="/account/security/#account-delete-title"')
         self.assertEqual(response["Cache-Control"], "private, no-store")
+
+    @override_settings(
+        MIDDLEWARE=["django.middleware.cache.UpdateCacheMiddleware", *settings.MIDDLEWARE,
+                    "django.middleware.cache.FetchFromCacheMiddleware"],
+        CACHES={"default": {"BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+                            "LOCATION": "privacy-language-regression"}},
+        CACHE_MIDDLEWARE_SECONDS=300,
+    )
+    def test_warmed_shared_cache_does_not_override_language_cookie(self):
+        cache.clear()
+        self.addCleanup(cache.clear)
+        titles = {'ru': 'Приватность и данные', 'pl': 'Prywatność i dane', 'en': 'Privacy and data'}
+        for lang in ('ru', 'pl', 'en', 'en', 'pl', 'ru'):
+            self.client.cookies['django_language'] = lang
+            response = self.client.get('/privacy/', HTTP_ACCEPT_LANGUAGE='ru')
+            self.assertEqual(response['Content-Language'], lang)
+            self.assertContains(response, f'<html lang="{lang}">')
+            self.assertContains(response, titles[lang])
+            self.assertEqual(response['Cache-Control'], 'private, no-store')
+            self.assertIn('Cookie', response['Vary'])
+
+    @patch("polskiflow.auth.authenticate_access_token", return_value=SupabaseUser("user-1", "learner@example.com"))
+    def test_authenticated_language_and_export_controls_keep_private_boundary(self, _authenticate):
+        self.client.cookies[ACCESS_COOKIE] = 'access'
+        self.client.cookies['django_language'] = 'en'
+        response = self.client.get('/privacy/', HTTP_ACCEPT_LANGUAGE='ru')
+        self.assertEqual(response['Content-Language'], 'en')
+        self.assertContains(response, 'href="/account/security/#account-delete-title"')
+        self.assertEqual(response['Cache-Control'], 'private, no-store')
+        self.assertIn('Cookie', response['Vary'])
