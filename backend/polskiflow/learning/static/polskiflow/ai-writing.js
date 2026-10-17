@@ -15,6 +15,11 @@
       result.replaceChildren(); result.hidden = true; status.textContent = '';
     };
     editor.addEventListener('input', clear);
+    // A different attempt/draft is a new submission, even when text is identical.
+    editor.addEventListener('lingoflow:writing-reset', () => {
+      consent.checked = false;
+      clear();
+    });
     consent.addEventListener('change', () => { if (!consent.checked) clear(); });
     window.addEventListener('pagehide', clear);
     // Clear stale feedback when the local draft is explicitly deleted.
