@@ -23,6 +23,7 @@ def current_shell_version() -> str:
     backend = Path(__file__).resolve().parent.parent
     assets = (
         "polskiflow/learning/static/polskiflow/browser-reminders.js",
+        "polskiflow/learning/static/polskiflow/visible-focus.js",
         "templates/base.html", "templates/offline.html", "polskiflow/pwa_views.py",
         "polskiflow/learning/static/polskiflow/app.css",
         "polskiflow/learning/static/polskiflow/favicon.svg",
