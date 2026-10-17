@@ -7,6 +7,7 @@
   const key = 'lingoflow-exam-writing-v1:' + root.dataset.owner;
   const editors = [...root.querySelectorAll('[data-exam-draft]')];
   const status = root.querySelector('[data-exam-status]');
+  const idleStatus = status.textContent;
   const clock = root.querySelector('[data-exam-clock]');
   const start = root.querySelector('[data-exam-start]');
   const finish = root.querySelector('[data-exam-finish]');
@@ -14,6 +15,13 @@
   let data = {};
   let restartPending = false;
   let storageAvailable = true;
+  function replaceDrafts(texts) {
+    editors.forEach((editor, index) => {
+      editor.value = texts?.[index] || '';
+      editor.dispatchEvent(new Event('lingoflow:writing-reset'));
+    });
+    root.querySelectorAll('[data-exam-result] input[type="checkbox"]').forEach(input => { input.checked = false; });
+  }
   function read() {
     try {
       const parsed = JSON.parse(localStorage.getItem(key) || '{}');
@@ -62,6 +70,7 @@
       else { link.removeAttribute('aria-disabled'); link.removeAttribute('tabindex'); }
     });
     if (running) status.textContent = ui('Попытка идёт. Напиши оба текста одного комплекта.');
+    if (!attempt) status.textContent = idleStatus;
     if (finished && !restartPending) {
       const empty = editors.filter(editor => !editor.value.trim()).length;
       status.textContent = (attempt.timedOut ? ui('Время истекло. Текущие тексты сохранены для самопроверки.') : ui('Попытка завершена. Тексты доступны для самопроверки.')) + ' ' + ui('Без ответа: ') + empty;
@@ -80,21 +89,21 @@
   function tick() {
     if (restartPending) { clock.textContent = '75:00'; return; }
     const attempt = data[set];
-    if (!attempt) return;
+    if (!attempt) { clock.textContent = '75:00'; return; }
     const seconds = attempt.status === 'finished' ? (attempt.remaining || 0) : Math.max(0, Math.ceil((attempt.deadline - Date.now()) / 1000));
     clock.textContent = Math.floor(seconds / 60).toString().padStart(2, '0') + ':' + (seconds % 60).toString().padStart(2, '0');
     if (attempt.status === 'running' && seconds === 0) end(true);
   }
   data = read();
   if (activeRedirect()) return;
-  if (data[set]) editors.forEach((editor, index) => { editor.value = data[set].texts[index]; });
+  if (data[set]) replaceDrafts(data[set].texts);
   save(); render(); tick();
   start.addEventListener('click', () => {
     if (storageAvailable) data = read();
     if (activeRedirect()) return;
     restartPending = false;
     data[set] = {status: 'running', deadline: Date.now() + 75 * 60000, texts: ['', ''], timedOut: false};
-    editors.forEach(editor => { editor.value = ''; });
+    replaceDrafts(['', '']);
     status.textContent = ui('Попытка идёт. Напиши оба текста одного комплекта.');
     save(); render(); tick(); editors[0].focus();
   });
@@ -113,11 +122,13 @@
     status.textContent = ui('Нажатие «Начать 75 минут» заменит тексты этого комплекта новой попыткой.');
   });
   window.addEventListener('storage', event => {
-    if (event.key !== key) return;
-    restartPending = false;
+    if (event.key !== key && event.key !== null) return;
+    const previous = JSON.stringify(data[set]);
     data = read();
     if (activeRedirect()) return;
-    if (data[set]) editors.forEach((editor, index) => { editor.value = data[set].texts[index]; });
+    if (previous === JSON.stringify(data[set]) && event.key !== null) return;
+    restartPending = false;
+    replaceDrafts(data[set]?.texts);
     render(); tick();
   });
   document.addEventListener('visibilitychange', tick);

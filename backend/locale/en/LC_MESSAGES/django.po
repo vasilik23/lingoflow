@@ -2233,7 +2233,7 @@ msgid "В дни занятий цель %(v0)s обычно достигает�
 msgstr "Days of class target %(v0)s It is better to keep the load and find a comfortable rhythm without racing after series."
 
 msgid "В единственном числе форма показывает род: on pracował/był, ona pracowała/była."
-msgstr "In the singular form, the genus is on pracował/był, ona pracowała/była."
+msgstr "In the singular, the verb form shows grammatical gender: on pracował/był, ona pracowała/była."
 
 msgid "В заказе естественно: Proszę wodę."
 msgstr "It's natural to order: Proszę wodę."
@@ -2263,7 +2263,7 @@ msgid "В магазине"
 msgstr "In the store"
 
 msgid "В мужском роде прошедшее время имеет окончание -ł: pracował."
-msgstr "In the male genus, the past tense has the ending -ł: pracował."
+msgstr "The masculine past-tense form ends in -ł: pracował."
 
 msgid "В музее они узнали о старом способе приготовления пряников."
 msgstr "In the museum, they learned about the old way of making gingerbread."
@@ -2959,7 +2959,7 @@ msgid "Говорящая женщина выбирает форму odpoczywał
 msgstr "A talking woman chooses a form odpoczywałam."
 
 msgid "Говорящий выбирает форму по своему роду: robiłem/byłem или robiłam/byłam."
-msgstr "The speaker chooses the form according to his genus: robiłem/byłem or robiłam/byłam."
+msgstr "The speaker chooses the form according to their gender: robiłem/byłem or robiłam/byłam."
 
 msgid "Голос как система решений"
 msgstr "Voice as a decision system"
@@ -10132,7 +10132,7 @@ msgid "Фон и процесс"
 msgstr "Background and process"
 
 msgid "Форма który меняется по роду, числу и роли: osoba, która pomaga; kolega, któremu ufam."
-msgstr "The form of który varies in genus, number and role: osoba, która pomaga; kolega, któremu ufam."
+msgstr "The form of który changes according to gender, number and grammatical role: osoba, która pomaga; kolega, któremu ufam."
 
 msgid "Форма powinien согласуется с pan в мужском роде."
 msgstr "Form powinien consistent pan male."
@@ -10699,7 +10699,7 @@ msgid "Я проверил вежливые конструкции, оконча
 msgstr "I checked the polite designs, endings and shapes of the future tense."
 
 msgid "Я проверил вид, род и согласование глаголов прошедшего времени."
-msgstr "I checked the appearance, genus and matching of past tense verbs."
+msgstr "I checked the aspect, gender and agreement of past-tense verbs."
 
 msgid "Я проверил выполнение всех пунктов, структуру, стиль и языковую правильность"
 msgstr "I checked all the points, structure, style and language correctness."

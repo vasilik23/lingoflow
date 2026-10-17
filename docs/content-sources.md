@@ -542,3 +542,17 @@ verified_at: 2026-10-13, внутренняя проверка. Инструкц
 Независимая польская редактура не выполнена. WSJP PAN использован для проверки
 значения `przepracować`; определения и корпусные цитаты не импортировались.
 [Карта, проверки и ограничения](topic-scenario-pilots-2026-10-13.md).
+
+### Английская грамматическая терминология — 17.10.2026
+
+Пять собственных EN-формулировок интерфейса/пояснений: grammatical gender,
+masculine past tense, выбор формы говорящим, gender/number/grammatical role
+для który и aspect/gender/agreement в самопроверке. Origin: original;
+created_for: LingoFlow; verified_at: 2026-10-17, внутренняя терминологическая
+сверка. Источники — издатель Merriam-Webster:
+[gender](https://www.merriam-webster.com/dictionary/gender),
+[masculine](https://www.merriam-webster.com/dictionary/masculine),
+[aspect](https://www.merriam-webster.com/dictionary/aspect),
+[agreement](https://www.merriam-webster.com/dictionary/agreement).
+Определения, статьи и примеры не импортировались. Русские ключи и польские
+примеры сохранены; независимая редакторская приёмка всё ещё не проведена.

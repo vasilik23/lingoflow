@@ -45,6 +45,15 @@ const flush = () => new Promise(resolve => setImmediate(resolve));
     assert.equal(requests[3].options.signal.aborted, true);
     requests[3].deliver({result}); await flush(); assert.equal(n.result.hidden, true);
     assert.equal(n.editor.value, 'Changed', 'cancel does not delete the draft');
+    n.consent.checked = true; n.button.dispatchEvent(new Event('click'));
+    requests[4].deliver({result}); await flush(); assert.equal(n.result.hidden, false);
+    n.editor.dispatchEvent(new Event('lingoflow:writing-reset'));
+    assert.equal(n.consent.checked, false); assert.equal(n.result.children.length, 0); assert.equal(n.result.hidden, true);
+    n.consent.checked = true; n.button.dispatchEvent(new Event('click'));
+    n.editor.dispatchEvent(new Event('lingoflow:writing-reset'));
+    assert.equal(requests[5].options.signal.aborted, true);
+    n.consent.checked = true; // A fresh permission must not revive a previous request with identical text.
+    requests[5].deliver({result}); await flush(); assert.equal(n.result.hidden, true);
   }
   console.log('AI writing/transcript: consent revocation, stale response, pagehide, language and escaped correction PASS');
 })().catch(error => {console.error(error); process.exitCode = 1;});
