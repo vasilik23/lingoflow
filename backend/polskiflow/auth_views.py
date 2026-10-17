@@ -9,6 +9,7 @@ from django.http import HttpRequest, HttpResponse, HttpResponseNotAllowed, JsonR
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.utils import timezone
+from django.utils.cache import patch_vary_headers
 from django.utils.translation import gettext, get_language
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.views.decorators.http import require_http_methods, require_POST
@@ -813,10 +814,9 @@ def sources(request: HttpRequest) -> HttpResponse:
 
 def privacy(request: HttpRequest) -> HttpResponse:
     """Show a public, factual inventory of current data handling."""
-    response = render(request, "privacy.html")
-    response["Cache-Control"] = (
-        "private, no-store" if request.supabase_user else "public, max-age=300"
-    )
+    # Language and account controls both depend on cookies, including for guests.
+    response = _no_store(render(request, "privacy.html"))
+    patch_vary_headers(response, ["Cookie"])
     return response
 
 
