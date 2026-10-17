@@ -21,6 +21,8 @@ PUBLIC_CHECKS = (
 PRIVATE_CHECKS = (
     ("bootstrap", "api/v1/me/bootstrap/"),
     ("export", "api/v1/me/export/"),
+    ("practice-preferences", "api/v1/me/practice-preferences/"),
+    ("reminder-preferences", "api/v1/me/reminder-preferences/"),
 )
 MAX_RESPONSE_BYTES = 2 * 1024 * 1024
 SSL_CONTEXT = ssl.create_default_context(cafile=certifi.where())
@@ -122,9 +124,27 @@ def _validate_payload(name, payload):
     if name == "catalog" and (not isinstance(payload.get("data"), dict)
                               or not isinstance(payload["data"].get("courses"), list)):
         raise SmokeFailure("catalog: course list missing")
-    if name in {"bootstrap", "export"}:
-        expected = f"learner-{'data-export' if name == 'export' else 'bootstrap'}"
+    if name in {"bootstrap", "export", "practice-preferences", "reminder-preferences"}:
+        expected = f"learner-{'data-export' if name == 'export' else name}"
         if (not isinstance(payload.get("meta"), dict)
                 or payload["meta"].get("contract") != expected
                 or not isinstance(payload.get("data"), dict)):
             raise SmokeFailure(f"{name}: contract mismatch")
+
+    if name in {"practice-preferences", "reminder-preferences"}:
+        data = payload['data']
+        preferences = data.get('preferences')
+        if not isinstance(preferences, dict):
+            raise SmokeFailure(f"{name}: preferences missing")
+        if name == 'practice-preferences':
+            if (type(preferences.get('exclude_remote_work')) is not bool
+                    or type(data.get('configured')) is not bool):
+                raise SmokeFailure(f"{name}: invalid preference types")
+        else:
+            clock = preferences.get('reminder_time')
+            if (type(preferences.get('daily_reminder_enabled')) is not bool
+                    or not isinstance(clock, str)
+                    or not re.fullmatch(r'(?:[01]\d|2[0-3]):[0-5]\d', clock)
+                    or preferences.get('timezone') != 'Europe/Warsaw'
+                    or type(data.get('delivery_active')) is not bool):
+                raise SmokeFailure(f"{name}: invalid reminder settings")

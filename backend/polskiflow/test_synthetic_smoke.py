@@ -68,11 +68,13 @@ class SyntheticSmokeTests(SimpleTestCase):
             _response({"data": {"courses": []}}),
             _response({"meta": {"contract": "learner-bootstrap"}, "data": {}}, cache="private, no-store"),
             _response({"meta": {"contract": "learner-data-export"}, "data": {}}, cache="private, no-store"),
+            _response({"meta": {"contract": "learner-practice-preferences"}, "data": {"preferences": {"exclude_remote_work": False}, "configured": False}}, cache="private, no-store"),
+            _response({"meta": {"contract": "learner-reminder-preferences"}, "data": {"preferences": {"daily_reminder_enabled": False, "reminder_time": "19:00", "timezone": "Europe/Warsaw"}, "delivery_active": False}}, cache="private, no-store"),
         ]
 
         results = run_synthetic_smoke("https://learn.example/", "secret-token")
 
-        self.assertEqual([result.name for result in results], ["health", "ready", "openapi", "catalog", "bootstrap", "export"])
+        self.assertEqual([result.name for result in results], ["health", "ready", "openapi", "catalog", "bootstrap", "export", "practice-preferences", "reminder-preferences"])
         for index, call in enumerate(urlopen.call_args_list):
             request = call.args[0]
             self.assertEqual(request.get_method(), "GET")
@@ -210,3 +212,58 @@ class SyntheticSmokeTests(SimpleTestCase):
         with self.assertRaisesMessage(SmokeFailure, "health: HTTP 503"):
             run_synthetic_smoke("https://example.com", include_private=False)
         reply.read.assert_not_called()
+
+    @patch("polskiflow.domain.synthetic_smoke.urlopen")
+    def test_new_preferences_reject_bad_types_without_leaking_payload(self, urlopen):
+        import copy
+        prefix = [
+            {'status': 'ok'}, {'status': 'ready'},
+            {'paths': {'/api/v1/me/bootstrap/': {}}}, {'data': {'courses': []}},
+            {'meta': {'contract': 'learner-bootstrap'}, 'data': {}},
+            {'meta': {'contract': 'learner-data-export'}, 'data': {}},
+        ]
+        practice = {'meta': {'contract': 'learner-practice-preferences'},
+                    'data': {'preferences': {'exclude_remote_work': False}, 'configured': False}}
+        reminder = {'meta': {'contract': 'learner-reminder-preferences'},
+                    'data': {'preferences': {'daily_reminder_enabled': False, 'reminder_time': '19:00', 'timezone': 'Europe/Warsaw'}, 'delivery_active': False}}
+        cases = []
+        for value in (None, [], 'private-value'):
+            cases.append(('practice-preferences', {**practice, 'data': {'preferences': value}}, []))
+        for field, value in (('exclude_remote_work', 'private-value'), ('exclude_remote_work', 0), ('exclude_remote_work', None)):
+            bad = copy.deepcopy(practice)
+            bad['data']['preferences'][field] = value
+            cases.append(('practice-preferences', bad, []))
+        cases.append(('practice-preferences', {**practice, 'data': {**practice['data'], 'configured': 1}}, []))
+        for field, value in (('daily_reminder_enabled', 'private-value'), ('daily_reminder_enabled', 0),
+                             ('reminder_time', '24:00'), ('reminder_time', '8:00'), ('reminder_time', None),
+                             ('timezone', 'private-value')):
+            bad = copy.deepcopy(reminder)
+            bad['data']['preferences'][field] = value
+            cases.append(('reminder-preferences', bad, [practice]))
+        cases.append(('reminder-preferences', {**reminder, 'data': {**reminder['data'], 'delivery_active': 'private-value'}}, [practice]))
+        cases.append(('reminder-preferences', {**reminder, 'meta': {'contract': 'private-value'}}, [practice]))
+        for name, bad, extra in cases:
+            with self.subTest(name=name, bad=bad):
+                urlopen.side_effect = [_response(p, cache='private, no-store') for p in [*prefix, *extra, bad]]
+                with self.assertRaises(SmokeFailure) as error:
+                    run_synthetic_smoke('https://example.com', 'private-token')
+                self.assertTrue(str(error.exception).startswith(name + ':'))
+                self.assertNotIn('private-value', str(error.exception))
+
+    @patch("polskiflow.domain.synthetic_smoke.urlopen")
+    def test_preference_cache_and_upstream_failure_are_not_success(self, urlopen):
+        prefix = [
+            {'status': 'ok'}, {'status': 'ready'},
+            {'paths': {'/api/v1/me/bootstrap/': {}}}, {'data': {'courses': []}},
+            {'meta': {'contract': 'learner-bootstrap'}, 'data': {}},
+            {'meta': {'contract': 'learner-data-export'}, 'data': {}},
+        ]
+        practice = {'meta': {'contract': 'learner-practice-preferences'},
+                    'data': {'preferences': {'exclude_remote_work': False}, 'configured': False}}
+        urlopen.side_effect = [*[_response(p, cache='private, no-store') for p in prefix], _response(practice)]
+        with self.assertRaisesMessage(SmokeFailure, 'practice-preferences: private cache boundary missing'):
+            run_synthetic_smoke('https://example.com', 'private-token')
+        urlopen.side_effect = [*[_response(p, cache='private, no-store') for p in [*prefix, practice]],
+                               HTTPError('https://example.com', 503, 'private-value', {}, None)]
+        with self.assertRaisesMessage(SmokeFailure, 'reminder-preferences: HTTP 503'):
+            run_synthetic_smoke('https://example.com', 'private-token')

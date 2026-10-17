@@ -110,7 +110,7 @@ Activation steps for the operator:
    Legacy anon/service-role keys are deliberately not accepted in this mode.
 4. Set repository variable `LINGOFLOW_AUTHENTICATED_SMOKE_ENABLED=true` only after
    the environment is ready. Run Production Smoke manually on `main`; require
-   all six probes and session cleanup to pass. If environment approvals are
+   all eight probes and session cleanup to pass. If environment approvals are
    required, scheduled runs will wait for them; configure protection accordingly.
 5. Check the next scheduled run (every four hours). Enable GitHub Actions failure
    notifications for the responsible operator. This is the existing initial
@@ -178,3 +178,12 @@ tool and its boundary tests are prepared; no database dump or real restore has
 been performed. Docker, psql and operator database access are still required.
 The actual restore, RLS/data acceptance and separate encrypted copy remain
 launch work. User JSON export is not a project database backup.
+
+### Scheduled execution confirmed — 17 October 2026
+
+The first post-activation scheduled run on 16 October passed both jobs and all six
+then-existing probes; five scheduled runs through 17 October are confirmed successful.
+[Evidence and coverage extension](monitoring-scheduled-2026-10-17.md). Current full smoke
+also checks practice/reminder preferences (eight probes total), including strict types
+and private/no-store headers. This does not prove alert recipient delivery, background
+reminders, two-user RLS isolation or database restore.
