@@ -18,7 +18,7 @@
       <p class="muted">{% translate "Выбери аудирование, чтение, грамматику, письмо или речь." %}</p>
     </a>
     <a class="card b1-entry-action" href="{% url 'b1-training-run' %}">
-      <h2>{% translate "Пройти пробный экзамен" %} <span aria-hidden="true">→</span></h2>
+      <h2>{% translate "Учебный прогон пяти частей" %} <span aria-hidden="true">→</span></h2>
       <p class="muted">{% translate "Учебный прогон пяти частей: таймер, перерывы, разбор и итог в истории." %}</p>
     </a>
   </nav>
@@ -48,7 +48,7 @@
     <div class="b1-skill-grid">
       {% for module in exam_prep.modules %}<a class="card b1-skill-link" href="{{ module.href }}"><h3>{{ module.title|ui_text }}</h3><span>{{ module.action|ui_text }} →</span></a>{% endfor %}
     </div>
-    <p><a class="compact-button" href="{% url 'b1-exam-writing' %}">{% translate "Экзаменационное письмо B1" %} →</a></p>
+    <p><a class="compact-button" href="{% url 'b1-exam-writing' %}">{% translate "Экзаменационное письмо B1" %} →</a> <span class="muted">{% translate "Один комплект, два текста, 75 минут. Отдельная попытка письма." %}</span></p>
     <details class="card b1-entry-details"><summary>{% translate "Практика с таймером" %}</summary><p>{% translate "Выбери одну часть: короткий учебный таймер или полный лимит части." %}</p><a class="compact-button" href="{% url 'b1-exam-simulation' %}">{% translate "Выбрать часть" %} →</a></details>
   </section>
   {% endif %}

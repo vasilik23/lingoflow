@@ -830,7 +830,7 @@ def profile_data_export(request: HttpRequest) -> HttpResponse:
         response = JsonResponse({"error": gettext("Данные временно недоступны. Попробуйте экспорт позже.")}, status=503)
     else:
         response = JsonResponse({
-            "schema_version": "2.2",
+            "schema_version": "2.3",
             "exported_at": timezone.now().isoformat(),
             "account": {"email": request.supabase_user.email},
             **export.datasets,

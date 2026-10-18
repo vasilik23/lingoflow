@@ -573,6 +573,9 @@ p { line-height: 1.65; }
 .speaking-timer span { color: var(--muted); font-weight: 750; }
 .speaking-timer strong { font-size: 1.55rem; font-variant-numeric: tabular-nums; }
 .speaking-controls { display: flex; flex-wrap: wrap; gap: .55rem; }
+.run-review-filters { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1rem 0; }
+.run-review-filters .compact-button { width: auto; }
+.run-review-filters [aria-pressed="true"] { outline: 2px solid var(--primary); outline-offset: 2px; }
 .speaking-controls .compact-button { border: 0; }
 .speaking-status { margin: .75rem 0; min-height: 1.4em; }
 .speaking-card audio { width: 100%; margin: .35rem 0 1rem; }

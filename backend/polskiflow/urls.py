@@ -16,7 +16,7 @@ from polskiflow.public_views import public_intro, public_demo
 from polskiflow.feedback_views import feedback
 from polskiflow.ai_speaking_views import ai_speech_transcribe, ai_speech_review
 from polskiflow.ai_writing_views import ai_writing_review
-from polskiflow.b1_writing_views import exam_writing
+from polskiflow.b1_writing_views import exam_writing, writing_history_save
 from polskiflow.history_views import learning_history
 from polskiflow.lesson_views import lesson, lesson_note, lesson_step
 from polskiflow.interaction_views import interaction_practice
@@ -96,6 +96,7 @@ urlpatterns = [
     path("speaking/ai-transcribe/", ai_speech_transcribe, name="ai-speech-transcribe"),
     path("speaking/ai-review/", ai_speech_review, name="ai-speech-review"),
     path("writing/ai-review/", ai_writing_review, name="ai-writing-review"),
+    path("writing/exam/b1/history/", writing_history_save, name="b1-writing-history-save"),
     path("writing/exam/b1/", exam_writing, name="b1-exam-writing"),
     path("writing/", writing_practice, name="writing-practice"),
     path("interaction/", interaction_practice, name="interaction-practice"),

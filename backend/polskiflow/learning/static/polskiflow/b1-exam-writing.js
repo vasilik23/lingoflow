@@ -12,6 +12,9 @@
   const start = root.querySelector('[data-exam-start]');
   const finish = root.querySelector('[data-exam-finish]');
   const dialog = root.querySelector('[data-exam-dialog]');
+  const historyStatus = root.querySelector('[data-exam-history-status]');
+  const historyRetry = root.querySelector('[data-exam-history-retry]');
+  const sending = new Set();
   let data = {};
   let restartPending = false;
   let storageAvailable = true;
@@ -32,6 +35,19 @@
             !Number.isFinite(item.deadline) || !Array.isArray(item.texts) ||
             item.texts.length !== 2 || !item.texts.every(text => typeof text === 'string')) continue;
         clean[id] = {...item, deadline: Math.min(item.deadline, Date.now() + 75 * 60000), texts: item.texts.map(text => text.slice(0, 20000))};
+        // Persisted browser data is untrusted: never forward arbitrary keys or texts.
+        const payload = item.historyPayload;
+        delete clean[id].historyPayload;
+        if (item.status === 'finished' && payload && payload.attempt_id === item.attemptId &&
+            /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(item.attemptId) &&
+            payload.set_id === id && payload.content_version === 1 &&
+            typeof payload.started_at === 'string' && Number.isFinite(Date.parse(payload.started_at)) &&
+            typeof payload.finished_at === 'string' && Number.isFinite(Date.parse(payload.finished_at)) &&
+            typeof payload.timed_out === 'boolean' &&
+            Number.isInteger(payload.remaining_seconds) && payload.remaining_seconds >= 0 && payload.remaining_seconds <= 4500 &&
+            [payload.words_a, payload.words_b].every(value => Number.isInteger(value) && value >= 0 && value <= 20000)) {
+          clean[id].historyPayload = Object.fromEntries(['attempt_id', 'set_id', 'content_version', 'started_at', 'finished_at', 'timed_out', 'remaining_seconds', 'words_a', 'words_b'].map(name => [name, payload[name]]));
+        }
       }
       return clean;
     } catch (_) { storageAvailable = false; return {}; }
@@ -40,10 +56,47 @@
     try { localStorage.setItem(key, JSON.stringify(data)); }
     catch (_) { storageAvailable = false; }
     root.querySelector('[data-exam-storage]').textContent = storageAvailable
-      ? ui('Тексты и таймер хранятся только в этом браузере. В историю аккаунта этот отдельный режим не записывается.')
+      ? ui('Тексты и таймер хранятся в этом браузере. В аккаунт отправляется только сводка завершённой попытки, без текстов.')
       : ui('Сохранение в браузере недоступно. Перед уходом скопируй оба текста; refresh потеряет попытку.');
   }
   const words = text => (text.trim().match(/\S+/gu) || []).length;
+  function historyRender() {
+    const attempt = data[set];
+    if (!historyStatus || !historyRetry || attempt?.status !== 'finished') return;
+    historyRetry.hidden = !attempt.historyPayload || attempt.historySaved === true;
+    historyRetry.disabled = sending.has(attempt.attemptId);
+    historyStatus.textContent = !attempt.historyPayload
+      ? ui('Эта старая попытка доступна только в браузере; сводка в аккаунт не отправляется.')
+      : attempt.historySaved ? ui('Сводка попытки сохранена в аккаунте. Тексты не отправлялись.')
+      : sending.has(attempt.attemptId) ? ui('Сохраняем сводку попытки в аккаунт…')
+      : ui('Сводка пока не сохранена в аккаунте. Проверь соединение и повтори отправку; тексты остаются в браузере.');
+  }
+  async function syncHistory() {
+    const attempt = data[set];
+    if (!attempt?.historyPayload || attempt.historySaved || sending.has(attempt.attemptId)) return;
+    const id = attempt.attemptId;
+    const payload = JSON.stringify(attempt.historyPayload);
+    sending.add(id); historyRender();
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 15000);
+    try {
+      const response = await fetch(root.dataset.historyUrl || '/writing/exam/b1/history/', {
+        method: 'POST', credentials: 'same-origin',
+        headers: {'Content-Type': 'application/json', 'X-CSRFToken': document.querySelector('[name="csrfmiddlewaretoken"]')?.value || ''},
+        body: payload,
+        signal: controller.signal,
+      });
+      const result = await response.json();
+      if (!response.ok || result.saved !== true || result.attempt_id !== id) throw Error('Not saved');
+      // A response for an old attempt cannot mark a replacement as saved.
+      const latest = storageAvailable ? read() : data;
+      if (latest[set]?.attemptId === id && JSON.stringify(latest[set].historyPayload) === payload) {
+        latest[set].historySaved = true;
+        data = latest; save();
+      }
+    } catch (_) { /* Drafts and immutable request remain available for retry. */ }
+    finally { window.clearTimeout(timeout); sending.delete(id); historyRender(); }
+  }
   function counts() {
     editors.forEach(editor => {
       const task = editor.closest('[data-exam-task]');
@@ -76,6 +129,7 @@
       status.textContent = (attempt.timedOut ? ui('Время истекло. Текущие тексты сохранены для самопроверки.') : ui('Попытка завершена. Тексты доступны для самопроверки.')) + ' ' + ui('Без ответа: ') + empty;
     }
     counts();
+    historyRender();
   }
   function end(timedOut) {
     if (data[set]?.status !== 'running') return;
@@ -83,8 +137,19 @@
     data[set].status = 'finished';
     data[set].timedOut = timedOut || Date.now() >= data[set].deadline;
     data[set].remaining = Math.max(0, Math.ceil((data[set].deadline - Date.now()) / 1000));
+    const attempt = data[set];
+    if (attempt.attemptId && Number.isFinite(attempt.startedAt)) {
+      attempt.historyPayload = {
+        attempt_id: attempt.attemptId, set_id: set, content_version: 1,
+        started_at: new Date(attempt.startedAt).toISOString(),
+        finished_at: new Date(Math.min(Date.now(), attempt.deadline)).toISOString(),
+        timed_out: attempt.timedOut, remaining_seconds: Math.min(4500, attempt.remaining),
+        words_a: Math.min(20000, words(attempt.texts[0])), words_b: Math.min(20000, words(attempt.texts[1])),
+      };
+    }
     if (dialog.open) dialog.close();
     save(); render();
+    syncHistory();
   }
   function tick() {
     if (restartPending) { clock.textContent = '75:00'; return; }
@@ -98,11 +163,14 @@
   if (activeRedirect()) return;
   if (data[set]) replaceDrafts(data[set].texts);
   save(); render(); tick();
+  syncHistory();
+  historyRetry?.addEventListener('click', syncHistory);
   start.addEventListener('click', () => {
     if (storageAvailable) data = read();
     if (activeRedirect()) return;
     restartPending = false;
-    data[set] = {status: 'running', deadline: Date.now() + 75 * 60000, texts: ['', ''], timedOut: false};
+    const startedAt = Date.now();
+    data[set] = {status: 'running', deadline: startedAt + 75 * 60000, texts: ['', ''], timedOut: false, startedAt, attemptId: window.crypto?.randomUUID?.()};
     replaceDrafts(['', '']);
     status.textContent = ui('Попытка идёт. Напиши оба текста одного комплекта.');
     save(); render(); tick(); editors[0].focus();
@@ -124,12 +192,17 @@
   window.addEventListener('storage', event => {
     if (event.key !== key && event.key !== null) return;
     const previous = JSON.stringify(data[set]);
+    const draftIdentity = item => JSON.stringify(item && [item.attemptId, item.startedAt, item.deadline, item.status, item.texts]);
+    const previousDraft = draftIdentity(data[set]);
     data = read();
     if (activeRedirect()) return;
     if (previous === JSON.stringify(data[set]) && event.key !== null) return;
-    restartPending = false;
-    replaceDrafts(data[set]?.texts);
+    if (previousDraft !== draftIdentity(data[set]) || event.key === null) {
+      restartPending = false;
+      replaceDrafts(data[set]?.texts);
+    }
     render(); tick();
+    syncHistory();
   });
   document.addEventListener('visibilitychange', tick);
   window.addEventListener('pageshow', tick);

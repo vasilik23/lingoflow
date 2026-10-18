@@ -17535,3 +17535,72 @@ msgstr "Marked “I know” · self-assessment"
 
 msgid "Правильных ответов"
 msgstr "Correct answers"
+
+msgid "Один комплект, два текста, 75 минут. Отдельная попытка письма."
+msgstr "One set, two texts, 75 minutes. A separate writing attempt."
+
+msgid "Сравни ответы и прочитай объяснения."
+msgstr "Compare your answers and read the explanations."
+
+msgid "Теория открывается в новой вкладке, прогон остаётся здесь."
+msgstr "Theory opens in a new tab; your practice run stays here."
+
+msgid "Показать ответы"
+msgstr "Show answers"
+
+msgid "Все"
+msgstr "All"
+
+msgid "Пропуски"
+msgstr "Unanswered"
+
+msgid "В этой категории нет ответов."
+msgstr "There are no answers in this category."
+
+msgid "Вернуться к тексту"
+msgstr "Return to the text"
+
+msgid "Прочитать расшифровку"
+msgstr "Read the transcript"
+
+msgid "Тексты и таймер хранятся в этом браузере. В аккаунт отправляется только сводка завершённой попытки, без текстов."
+msgstr "Texts and timer data are stored in this browser. Only a summary of the completed attempt is sent to your account, without the texts."
+
+msgid "Эта старая попытка доступна только в браузере; сводка в аккаунт не отправляется."
+msgstr "This older attempt is available only in the browser; its summary is not sent to your account."
+
+msgid "Сводка попытки сохранена в аккаунте. Тексты не отправлялись."
+msgstr "The attempt summary is saved in your account. The texts were not sent."
+
+msgid "Сохраняем сводку попытки в аккаунт…"
+msgstr "Saving the attempt summary to your account…"
+
+msgid "Сводка пока не сохранена в аккаунте. Проверь соединение и повтори отправку; тексты остаются в браузере."
+msgstr "The summary is not saved in your account yet. Check your connection and try sending it again; the texts remain in the browser."
+
+msgid "Повторить сохранение сводки"
+msgstr "Retry saving the summary"
+
+msgid "История экзаменационного письма B1"
+msgstr "B1 exam writing history"
+
+msgid "Последние 12 письменных попыток за выбранный период. Данные таймера и число слов переданы браузером; это не экзаменационная оценка. Тексты не сохраняются в аккаунте."
+msgstr "The latest 12 writing attempts in the selected period. Timer data and word counts are reported by the browser; they are not an exam grade. Texts are not saved in your account."
+
+msgid "История письма временно недоступна."
+msgstr "Writing history is temporarily unavailable."
+
+msgid "Завершено до истечения времени"
+msgstr "Finished before time ran out"
+
+msgid "Без автоматического балла"
+msgstr "No automated score"
+
+msgid "Открыть комплект"
+msgstr "Open the set"
+
+msgid "В этом периоде ещё нет сохранённых письменных попыток."
+msgstr "There are no saved writing attempts in this period yet."
+
+msgid "Отдельное экзаменационное письмо B1 сохраняет в аккаунте дату, комплект, число слов и данные таймера. Тексты остаются в браузере; история не содержит экзаменационного балла. Эти итоги входят в экспорт и удаляются вместе с аккаунтом."
+msgstr "The separate B1 exam writing mode saves the date, set, word counts and timer data in your account. Texts remain in the browser; the history does not contain an exam score. These summaries are included in your export and deleted with your account."

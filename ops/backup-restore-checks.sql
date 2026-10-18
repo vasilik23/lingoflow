@@ -16,6 +16,7 @@ UNION ALL SELECT 'user_feedback', count(*) FROM public.user_feedback
 UNION ALL SELECT 'reminder_preferences', count(*) FROM public.reminder_preferences
 UNION ALL SELECT 'b1_mock_attempts', count(*) FROM public.b1_mock_attempts
 UNION ALL SELECT 'b1_section_attempts', count(*) FROM public.b1_section_attempts
+UNION ALL SELECT 'b1_writing_attempts', count(*) FROM public.b1_writing_attempts
 UNION ALL SELECT 'b1_run_attempts', count(*) FROM public.b1_run_attempts
 ORDER BY dataset;
 
