@@ -30,7 +30,7 @@ def run_next_step(reviews):
 def theory_lesson(question):
     """Link to existing theory, using the item's editorial explanation only."""
     if question.module != "grammar":
-        return "b1media-grammar"
+        return None
     explanation = question.explanation.casefold()
     rules = (
         (("gdyby", "przypuszcz", "warunkow"), "b1work-grammar"),
@@ -59,15 +59,29 @@ def run_review(state, variant, part):
     answers = state.get("review_answers", {}).get(part["id"])
     if result["status"] == "scored" and answers is not None:
         score = score_training_part(variant, part["id"], answers, version, allow_missing=True)
-        review["details"] = tuple({**detail, "theory_lesson": theory_lesson(detail["question"])} for detail in score["details"])
+        source_questions = ()
         if part["id"] == "listening":
             if version >= 10:
                 from polskiflow.domain.b1_training_listening_draft import LISTENING_DRAFTS
                 review["sources"] = tuple({"title": block.id, "text": block.transcript} for block in LISTENING_DRAFTS)
+                source_questions = tuple(block.questions for block in LISTENING_DRAFTS)
             else:
                 review["sources"] = ({"title": "Transkrypcja", "text": variant.listening_transcript},)
         elif part["id"] == "reading":
-            review["sources"] = tuple({"title": block.title, "text": block.text} for block in training_reading_blocks(variant, version)) if version >= 3 else ({"title": "Tekst", "text": variant.reading_text},)
+            blocks = training_reading_blocks(variant, version) if version >= 3 else ()
+            review["sources"] = tuple({"title": block.title, "text": block.text} for block in blocks) if blocks else ({"title": "Tekst", "text": variant.reading_text},)
+            source_questions = tuple(block.questions for block in blocks)
+        review["sources"] = tuple({**source, "anchor": f"run-review-{part['id']}-source-{index}"}
+                                  for index, source in enumerate(review["sources"]))
+        details = []
+        for detail in score["details"]:
+            question = detail["question"]
+            source_index = next((index for index, questions in enumerate(source_questions)
+                                 if any(item.id == question.id for item in questions)), 0)
+            source = review["sources"][source_index] if review["sources"] else None
+            details.append({**detail, "theory_lesson": theory_lesson(question),
+                            "source_anchor": source["anchor"] if source else None})
+        review["details"] = tuple(details)
     elif result["status"] == "self_review":
         review["tasks"] = training_writing_tasks(variant, version) if part["id"] == "writing" else training_speaking_tasks(variant, version, interactive=state.get("speaking_version") == 2)
         review["theory_lesson"] = "b1work-grammar" if part["id"] == "writing" else "b1media-grammar"

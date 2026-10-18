@@ -1,0 +1,13 @@
+{% load i18n %}
+<section class="card mock-section" id="b1-writing-history" aria-labelledby="b1-writing-history-title">
+<h2 id="b1-writing-history-title">{% translate "История экзаменационного письма B1" %}</h2>
+<p class="muted">{% translate "Последние 12 письменных попыток за выбранный период. Данные таймера и число слов переданы браузером; это не экзаменационная оценка. Тексты не сохраняются в аккаунте." %}</p>
+{% if b1_writings == None %}<p role="status">{% translate "История письма временно недоступна." %}</p>
+{% elif b1_writings %}<ul>{% for attempt in b1_writings %}<li>
+<strong>{{ attempt.date_display }} · {% translate "Комплект" %} {{ attempt.set_id }}</strong>
+<p>{% translate "Задание" %} a: {{ attempt.words_a }} · {% translate "Задание" %} b: {{ attempt.words_b }} {% translate "слов" %} · {% translate "Без ответа:" %} {{ attempt.unanswered }}</p>
+<p>{% if attempt.timed_out %}{% translate "Время истекло" %}{% else %}{% translate "Завершено до истечения времени" %}{% endif %} · {% translate "Без автоматического балла" %}</p>
+<a href="{% url 'b1-exam-writing' %}?set={{ attempt.set_id }}">{% translate "Открыть комплект" %}</a>
+</li>{% endfor %}</ul>
+{% else %}<p class="muted">{% translate "В этом периоде ещё нет сохранённых письменных попыток." %}</p>{% endif %}
+</section>

@@ -14,6 +14,10 @@ nodes.again.dispatchEvent(new Event('click'));assert.equal(editors[0].value,'Old
 nodes.start.dispatchEvent(new Event('click'));assert.deepEqual(editors.map(e=>e.value),['','']);assert.equal(resets,before+2);assert(checks.every(c=>!c.checked));
 function storage(k){const e=new Event('storage');Object.defineProperty(e,'key',{value:k});win.dispatchEvent(e);}
 before=resets;const current=JSON.parse(store.get(key));store.set(key,JSON.stringify({...current,'2':item}));storage(key);assert.equal(resets,before,'unrelated completed set preserves current review');
+checks.forEach(c=>c.checked=true);
+const metadata=JSON.parse(store.get(key));metadata['1'].historySaved=true;store.set(key,JSON.stringify(metadata));storage(key);
+assert.equal(resets,before,'history acknowledgement alone preserves AI state and does not dispatch reset');
+assert(checks.every(c=>c.checked),'history acknowledgement alone preserves selfchecks');
 store.set(key,JSON.stringify({'1':{...item,texts:['Same text','Same text']}}));storage(key);assert.equal(resets,before+2);assert.equal(editors[0].value,'Same text');
 checks.forEach(c=>c.checked=true);before=resets;store.set(key,JSON.stringify({'1':{...item,deadline:item.deadline+1,texts:['Same text','Same text']}}));storage(key);assert.equal(resets,before+2,'identical text in a different attempt still invalidates');assert(checks.every(c=>!c.checked));
 store.delete(key);storage(null);assert.deepEqual(editors.map(e=>e.value),['','']);assert(editors.every(e=>e.disabled));assert.equal(nodes.status.textContent,'idle');assert.equal(nodes.clock.textContent,'75:00');console.log('Exam writing: new attempt, cross-tab draft, identical-text replacement and storage clear reset PASS');

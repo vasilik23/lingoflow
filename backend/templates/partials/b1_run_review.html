@@ -1,19 +1,25 @@
 {% load i18n ui %}
 {% get_current_language as study_ui_language %}
-<details class="card mock-section run-review"{% if latest_review %} open{% endif %}>
+<details class="card mock-section run-review" data-run-review{% if latest_review %} open{% endif %}>
   <summary><strong>{% translate "Разбор" %} · {{ review.title|ui_text }}</strong></summary>
   {% if review.status == 'scored' and review.details %}
-    <p class="muted">{% translate "Сравни ответы и прочитай объяснения. Теория открывается в новой вкладке, прогон остаётся здесь." %}</p>
-    {% if review.sources %}<details class="run-review-source"><summary>{% translate "Текст задания / расшифровка" %}</summary>{% for source in review.sources %}<h3 lang="pl">{{ source.title|ui_text }}</h3><p class="mock-source-text" lang="pl">{{ source.text|ui_text }}</p>{% endfor %}</details>{% endif %}
+    <p class="muted">{% translate "Сравни ответы и прочитай объяснения." %} {% if review.id == 'grammar' %}{% translate "Теория открывается в новой вкладке, прогон остаётся здесь." %}{% endif %}</p>
+    {% if review.sources %}{% for source in review.sources %}<details class="run-review-source" id="{{ source.anchor }}"><summary>{% translate "Текст задания / расшифровка" %} · <span lang="pl">{{ source.title|ui_text }}</span></summary><p class="mock-source-text" lang="pl">{{ source.text|ui_text }}</p></details>{% endfor %}{% endif %}
+    <div class="run-review-filters" data-review-filters role="group" aria-label="{% translate 'Показать ответы' %}" hidden>
+      <button type="button" class="compact-button" data-review-filter="all" aria-pressed="true">{% translate "Все" %}</button>
+      <button type="button" class="compact-button" data-review-filter="incorrect" aria-pressed="false">{% translate "Ошибки" %}</button>
+      <button type="button" class="compact-button" data-review-filter="unanswered" aria-pressed="false">{% translate "Пропуски" %}</button>
+    </div>
+    <p class="muted" data-review-empty role="status" hidden>{% translate "В этой категории нет ответов." %}</p>
     <ol class="run-review-list">
     {% for detail in review.details %}
-      <li class="run-review-answer{% if detail.unanswered %} is-unanswered{% elif detail.is_correct %} is-correct{% else %} is-incorrect{% endif %}">
+      <li value="{{ forloop.counter }}" data-review-answer="{% if detail.unanswered %}unanswered{% elif detail.is_correct %}correct{% else %}incorrect{% endif %}" class="run-review-answer{% if detail.unanswered %} is-unanswered{% elif detail.is_correct %} is-correct{% else %} is-incorrect{% endif %}">
         <p><strong lang="{{ detail.question.prompt|learning_language:study_ui_language }}">{{ detail.question.prompt|learning_markup }}</strong></p>
         <p>{% if detail.unanswered %}<strong>{% translate "Без ответа" %}</strong>{% elif detail.is_correct %}<strong>{% translate "Верно" %}</strong>{% else %}<strong>{% translate "Неверно" %}</strong>{% endif %}</p>
         {% if not detail.unanswered %}<p>{% translate "Твой ответ:" %} <span lang="pl">{% if detail.question.written %}{{ detail.selected_text }}{% else %}{{ detail.selected_text|ui_text }}{% endif %}</span></p>{% endif %}
         <p>{% translate "Правильный ответ:" %} <strong lang="pl">{{ detail.correct_text|ui_text }}</strong></p>
         <p lang="{{ detail.question.explanation|learning_language:study_ui_language }}">{{ detail.question.explanation|learning_markup }}</p>
-        <a href="{% url 'lesson' detail.theory_lesson %}" target="_blank" rel="noopener">{% translate "Повторить теорию" %} ↗</a>
+        {% if detail.theory_lesson %}<a href="{% url 'lesson' detail.theory_lesson %}" target="_blank" rel="noopener">{% translate "Повторить теорию" %} ↗</a>{% elif detail.source_anchor %}<a href="#{{ detail.source_anchor }}" data-review-source-link>{% if review.id == 'reading' %}{% translate "Вернуться к тексту" %}{% else %}{% translate "Прочитать расшифровку" %}{% endif %} ↑</a>{% endif %}
       </li>
     {% endfor %}
     </ol>

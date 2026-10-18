@@ -455,3 +455,21 @@ class B1RunAttempt(models.Model):
     class Meta:
         db_table = "b1_run_attempts"
         managed = False
+
+
+class B1WritingAttempt(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user_id = models.UUIDField()
+    attempt_id = models.UUIDField()
+    set_id = models.CharField(max_length=1)
+    content_version = models.PositiveSmallIntegerField()
+    started_at = models.DateTimeField()
+    finished_at = models.DateTimeField()
+    timed_out = models.BooleanField()
+    remaining_seconds = models.PositiveSmallIntegerField()
+    words_a = models.PositiveIntegerField()
+    words_b = models.PositiveIntegerField()
+
+    class Meta:
+        db_table = 'b1_writing_attempts'
+        managed = False

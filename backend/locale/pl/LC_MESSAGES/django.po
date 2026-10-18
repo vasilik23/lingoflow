@@ -18416,3 +18416,72 @@ msgstr "Oznaczone jako „Znam” · samoocena"
 
 msgid "Правильных ответов"
 msgstr "Poprawne odpowiedzi"
+
+msgid "Один комплект, два текста, 75 минут. Отдельная попытка письма."
+msgstr "Jeden zestaw, dwa teksty, 75 minut. Osobna próba pisania."
+
+msgid "Сравни ответы и прочитай объяснения."
+msgstr "Porównaj odpowiedzi i przeczytaj wyjaśnienia."
+
+msgid "Теория открывается в новой вкладке, прогон остаётся здесь."
+msgstr "Teoria otwiera się w nowej karcie; próba pozostaje tutaj."
+
+msgid "Показать ответы"
+msgstr "Pokaż odpowiedzi"
+
+msgid "Все"
+msgstr "Wszystkie"
+
+msgid "Пропуски"
+msgstr "Brak odpowiedzi"
+
+msgid "В этой категории нет ответов."
+msgstr "W tej kategorii nie ma odpowiedzi."
+
+msgid "Вернуться к тексту"
+msgstr "Wróć do tekstu"
+
+msgid "Прочитать расшифровку"
+msgstr "Przeczytaj transkrypcję"
+
+msgid "Тексты и таймер хранятся в этом браузере. В аккаунт отправляется только сводка завершённой попытки, без текстов."
+msgstr "Teksty i dane minutnika są przechowywane w tej przeglądarce. Na konto wysyłane jest tylko podsumowanie zakończonej próby, bez tekstów."
+
+msgid "Эта старая попытка доступна только в браузере; сводка в аккаунт не отправляется."
+msgstr "Ta starsza próba jest dostępna tylko w przeglądarce; podsumowanie nie jest wysyłane na konto."
+
+msgid "Сводка попытки сохранена в аккаунте. Тексты не отправлялись."
+msgstr "Podsumowanie próby zostało zapisane na koncie. Teksty nie zostały wysłane."
+
+msgid "Сохраняем сводку попытки в аккаунт…"
+msgstr "Zapisywanie podsumowania próby na koncie…"
+
+msgid "Сводка пока не сохранена в аккаунте. Проверь соединение и повтори отправку; тексты остаются в браузере."
+msgstr "Podsumowanie nie zostało jeszcze zapisane na koncie. Sprawdź połączenie i wyślij je ponownie; teksty pozostają w przeglądarce."
+
+msgid "Повторить сохранение сводки"
+msgstr "Ponów zapis podsumowania"
+
+msgid "История экзаменационного письма B1"
+msgstr "Historia prób pisania egzaminacyjnego B1"
+
+msgid "Последние 12 письменных попыток за выбранный период. Данные таймера и число слов переданы браузером; это не экзаменационная оценка. Тексты не сохраняются в аккаунте."
+msgstr "Ostatnie 12 prób pisania z wybranego okresu. Dane minutnika i liczba słów pochodzą z przeglądarki; nie jest to ocena egzaminacyjna. Teksty nie są zapisywane na koncie."
+
+msgid "История письма временно недоступна."
+msgstr "Historia pisania jest chwilowo niedostępna."
+
+msgid "Завершено до истечения времени"
+msgstr "Zakończono przed upływem czasu"
+
+msgid "Без автоматического балла"
+msgstr "Bez automatycznej oceny punktowej"
+
+msgid "Открыть комплект"
+msgstr "Otwórz zestaw"
+
+msgid "В этом периоде ещё нет сохранённых письменных попыток."
+msgstr "W tym okresie nie ma jeszcze zapisanych prób pisania."
+
+msgid "Отдельное экзаменационное письмо B1 сохраняет в аккаунте дату, комплект, число слов и данные таймера. Тексты остаются в браузере; история не содержит экзаменационного балла. Эти итоги входят в экспорт и удаляются вместе с аккаунтом."
+msgstr "Osobny tryb pisania egzaminacyjnego B1 zapisuje na koncie datę, zestaw, liczbę słów i dane minutnika. Teksty pozostają w przeglądarce; historia nie zawiera oceny egzaminacyjnej. Te wyniki są uwzględniane w eksporcie i usuwane wraz z kontem."

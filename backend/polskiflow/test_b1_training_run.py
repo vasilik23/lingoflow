@@ -205,7 +205,8 @@ class B1TrainingRunTests(TestCase):
         self.assertEqual(details[1]['selected_text'], finished.context['reviews'][0]['details'][1]['selected_text'])
         self.assertContains(resumed, questions[1].explanation)
         self.assertContains(resumed, 'Текст задания / расшифровка')
-        self.assertContains(resumed, 'target="_blank" rel="noopener"')
+        self.assertContains(resumed, 'data-review-source-link')
+        self.assertNotContains(resumed, '/lesson/b1media-grammar/')
         self.assertLess(len(resumed.context['run_token']), 16384)
         self.now += BREAK_SECONDS
         next_part = self.advance(resumed, 'start')
@@ -239,6 +240,9 @@ class B1TrainingRunTests(TestCase):
         for variant in VARIANTS:
             for part in ('listening', 'reading', 'grammar'):
                 for question in training_questions(variant, part):
+                    if part != 'grammar':
+                        self.assertIsNone(theory_lesson(question))
+                        continue
                     lesson = Lesson.objects.get(id=theory_lesson(question))
                     self.assertTrue(lesson.is_active)
                     self.assertTrue(lesson.theory_sections)

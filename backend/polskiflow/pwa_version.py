@@ -26,6 +26,7 @@ def current_shell_version() -> str:
         "polskiflow/learning/static/polskiflow/visible-focus.js",
         "polskiflow/learning/static/polskiflow/ai-writing.js",
         "polskiflow/learning/static/polskiflow/b1-exam-writing.js",
+        "polskiflow/learning/static/polskiflow/b1-run-review.js",
         "templates/base.html", "templates/offline.html", "polskiflow/pwa_views.py",
         "polskiflow/learning/static/polskiflow/app.css",
         "polskiflow/learning/static/polskiflow/favicon.svg",
