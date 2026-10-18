@@ -77,8 +77,9 @@ uses normal GitHub Actions notifications as the initial alert channel.
 
 The authenticated half uses the fresh-session schedule described below.
 It was enabled on 16 October 2026 with a separate permanent monitoring account;
-the first manual GitHub run passed both jobs. The first actual scheduled run
-still needs observation. External paging remains a launch gap.
+the first manual GitHub run passed both jobs. Actual scheduled execution was
+confirmed on 17 October; see the receipt below. Alert recipient delivery and
+external paging remain launch gaps.
 
 ## Authenticated schedule (enabled)
 
@@ -187,3 +188,12 @@ then-existing probes; five scheduled runs through 17 October are confirmed succe
 also checks practice/reminder preferences (eight probes total), including strict types
 and private/no-store headers. This does not prove alert recipient delivery, background
 reminders, two-user RLS isolation or database restore.
+
+### Alert delivery acceptance · 18 October 2026
+
+A separate, manual [Alert Delivery Test](alert-delivery-test.md) is prepared.
+It can generate one intentional failed workflow only after explicit operator
+authorization, on `main`, with `SEND_TEST_ALERT`; it does not access production
+or secrets. Its failure status alone does not prove notification delivery.
+The operator must confirm receipt/channel/time; external paging is separate.
+No test dispatch or receipt is claimed by this preparation.

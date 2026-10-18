@@ -1,0 +1,46 @@
+name: Alert Delivery Test
+run-name: "Intentional alert delivery test · ${{ github.run_number }}"
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: "Explicitly authorize one intentional failure notification"
+        required: true
+        type: choice
+        default: DO_NOT_SEND
+        options:
+          - DO_NOT_SEND
+          - SEND_TEST_ALERT
+
+permissions: {}
+
+concurrency:
+  group: alert-delivery-test
+  cancel-in-progress: false
+
+jobs:
+  intentional-failure:
+    name: Intentional failure · no production requests
+    if: github.ref == 'refs/heads/main' && inputs.confirmation == 'SEND_TEST_ALERT'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 1
+    steps:
+      - name: Record test receipt and trigger the normal failure channel
+        env:
+          RUN_ID: ${{ github.run_id }}
+          RUN_ATTEMPT: ${{ github.run_attempt }}
+          SOURCE_SHA: ${{ github.sha }}
+          REPOSITORY: ${{ github.repository }}
+          SERVER_URL: ${{ github.server_url }}
+        run: |
+          {
+            echo '### Intentional notification delivery test'
+            echo 'This failure is expected. No application, database or external provider was contacted.'
+            printf '\nRun: %s/%s/actions/runs/%s/attempts/%s\n' "$SERVER_URL" "$REPOSITORY" "$RUN_ID" "$RUN_ATTEMPT"
+            printf '\nSource commit: `%s`\n' "$SOURCE_SHA"
+            echo 'The red run proves the test executed; it does not prove that a recipient received an alert.'
+            echo 'Record the recipient-confirmed channel and receipt time separately. Do not publish email addresses.'
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo 'Expected failure for an explicitly authorized, manual alert delivery test.'
+          exit 1

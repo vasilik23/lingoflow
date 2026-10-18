@@ -89,7 +89,7 @@ unset LINGOFLOW_RESTORE_PASSWORD
 ## 3. Принять восстановление
 
 1. Выполнить [агрегатные SQL-проверки](../ops/backup-restore-checks.sql) на источнике
-   около capture и на цели. Сравнить Auth и 16 learner tables, RLS, policies,
+   около capture и на цели. Сравнить Auth и 17 learner tables, RLS, policies,
    grants и extensions. Разобрать расхождения; production writes после snapshot
    не объявлять потерей данных без выяснения времени. Одни row counts не доказывают
    идентичность данных.
@@ -109,3 +109,17 @@ SMTP/OAuth/redirect settings или DNS. Проверить эти компон�
 Источники, проверенные 15 октября 2026:
 [Supabase CLI backup/restore](https://supabase.com/docs/guides/platform/migrating-within-supabase/backup-restore),
 [восстановление на self-hosted](https://supabase.com/docs/guides/self-hosting/restore-from-platform).
+
+## Открытые зависимости · 18.10.2026
+
+На текущей машине macOS 12.7.6 / Intel нет Docker, Colima, psql или pg_dump.
+Homebrew доступен; установка и запуск disposable Supabase ещё не выполнены.
+Секрет источника требуется отдельно: заполнить игнорируемый
+`backend/.env.backup.local` (`SUPABASE_DB_PASSWORD`, права 0600).
+Файл не загружается приложением и не должен попадать в shell tracing, argv
+или отчёт. Не выполнять shell source недоверенного файла.
+MCP-доступ к SQL не заменяет пароль для CLI dump.
+
+Текущий checklist содержит 17 learner tables, включая агрегаты отдельного
+письма B1. Старые отчёты о проверке 16 таблиц относятся к прежней схеме
+и не считаются приёмкой нового backup. Реального capture/restore пока нет.
