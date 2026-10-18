@@ -18,7 +18,7 @@
 
   <div class="dashboard-grid home-plan-grid">
     <section class="card daily-card" id="daily-plan">
-      <div class="progress-ring" style="--value: {{ progress_percent }}" role="progressbar" aria-label="{% translate "Выполнение плана по оценочной длительности" %}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ progress_percent }}"><strong>{{ progress_percent|ui_text }}%</strong></div>
+      <div class="progress-ring" style="--value: {{ progress_percent }}" role="progressbar" aria-label="{% translate "Выполнение плана по оценочной длительности" %}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ progress_percent }}"><svg viewBox="0 0 100 100" aria-hidden="true" focusable="false"><circle cx="50" cy="50" r="45"/><circle class="progress-ring-value" cx="50" cy="50" r="45" pathLength="100"/></svg><strong>{{ progress_percent|ui_text }}%</strong></div>
       <div class="daily-copy">
         <p class="eyebrow">{% translate "План на сегодня" %}</p>
         <h2 id="daily-start-title">{% if resume_lesson %}{{ resume_lesson.title|ui_text }}{% elif daily_start_task %}{{ daily_start_task.title|ui_text }}{% else %}{% translate "Курс" %}{% endif %}</h2>
