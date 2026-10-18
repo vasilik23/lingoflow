@@ -1,4 +1,6 @@
 import json
+import subprocess
+from pathlib import Path
 
 from django.test import SimpleTestCase
 from django.urls import reverse
@@ -7,6 +9,13 @@ from polskiflow.pwa_version import PWA_SHELL_VERSION, build_shell_version
 
 
 class PwaPrototypeTests(SimpleTestCase):
+    def test_theme_metadata_follows_saved_preference_and_system_fallback(self):
+        result = subprocess.run(
+            ['node', str(Path(__file__).with_name('test_shell_theme.cjs'))],
+            capture_output=True, text=True, timeout=15,
+        )
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
     def test_release_and_asset_changes_invalidate_the_shell(self):
         self.assertEqual(build_shell_version("commit-a"), build_shell_version("commit-a"))
         self.assertNotEqual(build_shell_version("commit-a"), build_shell_version("commit-b"))
@@ -26,6 +35,8 @@ class PwaPrototypeTests(SimpleTestCase):
         self.assertEqual(manifest["start_url"], "/")
         self.assertEqual(manifest["scope"], "/")
         self.assertEqual(manifest["display"], "standalone")
+        self.assertEqual(manifest["background_color"], "#F7F8F5")
+        self.assertEqual(manifest["theme_color"], "#F7F8F5")
         self.assertTrue(all(icon["src"].endswith(f"?shell={PWA_SHELL_VERSION}") for icon in manifest["icons"]))
         self.assertEqual({icon["purpose"] for icon in manifest["icons"]}, {"any", "maskable"})
         self.assertTrue(all(icon["type"] == "image/svg+xml" for icon in manifest["icons"]))

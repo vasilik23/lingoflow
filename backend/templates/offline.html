@@ -4,18 +4,50 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#6d4aff">
+    <meta name="theme-color" content="#F7F8F5">
+    <script>
+      (function () {
+        const storageKey = "polskiflow-theme";
+        const root = document.documentElement;
+        const media = window.matchMedia("(prefers-color-scheme: dark)");
+
+        function storedTheme() {
+          try {
+            const value = localStorage.getItem(storageKey);
+            return value === "light" || value === "dark" ? value : "system";
+          } catch (error) {
+            return "system";
+          }
+        }
+
+        function applyTheme(value) {
+          const resolved = value === "system" ? (media.matches ? "dark" : "light") : value;
+          root.dataset.theme = resolved;
+          root.style.colorScheme = resolved;
+          document.querySelector('meta[name="theme-color"]')?.setAttribute(
+            "content", resolved === "dark" ? "#141A17" : "#F7F8F5"
+          );
+        }
+
+        applyTheme(storedTheme());
+        media.addEventListener?.("change", function () {
+          if (storedTheme() === "system") applyTheme("system");
+        });
+        window.PolskiFlowTheme = { applyTheme, storedTheme, storageKey, media };
+      }());
+    </script>
     <title>{% translate "Нет подключения — LingoFlow" %}</title>
     <link rel="icon" href="{% static 'polskiflow/favicon.svg' %}?shell={{ pwa_shell_version }}" type="image/svg+xml">
     <style>
-      :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
-      body { min-height: 100vh; margin: 0; display: grid; place-items: center; background: #f7f6fb; color: #24212f; }
-      main { width: min(34rem, calc(100% - 2rem)); box-sizing: border-box; padding: 2rem; border: 1px solid #ded9ee; border-radius: 1.5rem; background: #fff; box-shadow: 0 1rem 3rem rgb(35 25 65 / 10%); }
+      :root { color-scheme: light; font-family: system-ui, sans-serif; --bg: #F7F8F5; --surface: #FFFFFF; --text: #202923; --muted: #626E66; --primary-soft: #EAF3EE; --red: #B33D49; --line: #DFE5DF; --primary: #25634F; --on-action: #FFFFFF; }
+      :root[data-theme="dark"] { color-scheme: dark; --bg: #141A17; --surface: #1D2621; --text: #EDF2EE; --muted: #ACB9AF; --primary-soft: #283F32; --red: #FFABB3; --line: #39483E; --primary: #8ED5B2; --on-action: #14251C; }
+      body { min-height: 100vh; margin: 0; display: grid; place-items: center; background: var(--bg); color: var(--text); }
+      main { width: min(34rem, calc(100% - 2rem)); box-sizing: border-box; padding: 2rem; border: 1px solid var(--line); border-radius: 1rem; background: var(--surface); box-shadow: none; }
       img { width: 3.5rem; height: 3.5rem; }
       h1 { margin: 1rem 0 .5rem; font-size: clamp(1.6rem, 6vw, 2.25rem); }
       p { line-height: 1.6; }
-      button { border: 0; border-radius: .8rem; padding: .8rem 1rem; background: #6d4aff; color: #fff; font: inherit; font-weight: 700; cursor: pointer; }
-      @media (prefers-color-scheme: dark) { body { background: #151421; color: #f2efff; } main { background: #211f30; border-color: #3b3752; } }
+      button { border: 0; border-radius: .8rem; padding: .8rem 1rem; background: var(--primary); color: var(--on-action); font: inherit; font-weight: 700; cursor: pointer; }
+      button:focus-visible { outline: 3px solid var(--primary); outline-offset: 3px; }
     </style>
   </head>
   <body>

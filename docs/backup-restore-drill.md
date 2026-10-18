@@ -123,3 +123,20 @@ MCP-доступ к SQL не заменяет пароль для CLI dump.
 Текущий checklist содержит 17 learner tables, включая агрегаты отдельного
 письма B1. Старые отчёты о проверке 16 таблиц относятся к прежней схеме
 и не считаются приёмкой нового backup. Реального capture/restore пока нет.
+
+## Где взять пароль БД
+
+Это пароль PostgreSQL проекта, заданный при создании Supabase-проекта,
+а не пароль входа в LingoFlow, не пароль Dashboard и не API key. Он нужен
+нативным PostgreSQL-инструментам для настоящего backup/restore.
+
+1. Проверить сохранённый пароль проекта в своём менеджере паролей.
+2. Открыть нужный проект в Supabase → **Database → Settings**. Если пароль
+   утрачен, здесь есть **Reset database password**. Новый пароль потребует
+   обновления существующих прямых PostgreSQL-подключений; сначала согласовать
+   эту замену. Сброса пароля этим этапом не выполнялось.
+3. Сохранить действующий пароль только локально в `backend/.env.backup.local`:
+   `SUPABASE_DB_PASSWORD=...`, права файла `0600`. Значение не присылать в чат.
+
+[Подключения, включая pg_dump](https://supabase.com/docs/guides/database/connecting-to-postgres),
+[официальная инструкция сброса](https://supabase.com/docs/guides/troubleshooting/how-do-i-reset-my-supabase-database-password-oTs5sB).
