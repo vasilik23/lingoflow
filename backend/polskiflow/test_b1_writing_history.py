@@ -111,6 +111,15 @@ class WritingMetadataEndpointTests(TestCase):
             self.assertEqual(save.call_args.args[0], 'owner-token')
 
     @patch('polskiflow.b1_writing_views.save_writing_attempt')
+    def test_old_tab_cannot_save_another_owners_queue_into_current_session(self, save):
+        response = self.post(HTTP_X_LINGOFLOW_WRITING_OWNER='previous-owner')
+        self.assertEqual(response.status_code, 409)
+        self.assertEqual(response.json()['error'], 'owner_session_changed')
+        save.assert_not_called()
+        save.return_value = 'saved'
+        self.assertEqual(self.post(HTTP_X_LINGOFLOW_WRITING_OWNER='writer').status_code, 200)
+
+    @patch('polskiflow.b1_writing_views.save_writing_attempt')
     def test_invalid_payload_and_auth_never_persist(self, save):
         self.assertEqual(self.post(attempt(essay='PRIVATE')).status_code, 400)
         self.assertEqual(self.post(HTTP_AUTHORIZATION='Bearer other').status_code, 401)

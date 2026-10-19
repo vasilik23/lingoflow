@@ -891,7 +891,7 @@ button.secondary { background: var(--surface); border-color: var(--line); }
 .complete-icon .ui-icon { width: 2.5rem; height: 2.5rem; }
 .score { margin: .3rem 0 1rem; font-size: 3rem; font-weight: 800; color: var(--primary); }
 
-.auth-layout { width: min(100%, 62rem); display: grid; overflow: hidden; border-radius: var(--radius); background: var(--surface); box-shadow: none; }
+.auth-layout { width: min(100%, 30rem); display: grid; overflow: hidden; border-radius: var(--radius); background: var(--surface); box-shadow: none; }
 .auth-brand { display: none; padding: 3rem; background: var(--surface); color: var(--text); }
 .auth-brand .brand-mark { background: var(--surface); color: var(--primary); }
 .auth-brand h2 { margin-top: auto; font-size: 2rem; line-height: 1.2; }
@@ -934,10 +934,10 @@ button.secondary { background: var(--surface); border-color: var(--line); }
   .diagnostic-callout .compact-button { grid-column: auto; }
   .writing-workspace { padding: 1.5rem; }
   .interaction-list { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
-  .auth-layout { grid-template-columns: 1fr 1fr; min-height: 38rem; }
+  .auth-layout { grid-template-columns: minmax(0, 1fr); }
   .auth-brand { display: flex; flex-direction: column; }
   .auth-panel { padding: 3rem; }
-  .auth-panel .brand { display: none; }
+  .auth-panel .brand { display: flex; }
 }
 
 @media (max-width: 699px) {
@@ -1537,3 +1537,13 @@ input::placeholder, textarea::placeholder { color: var(--muted); opacity: 1; }
 .run-review-filters button { margin: 0; background: var(--surface); border: 1px solid var(--control-border); color: var(--muted); }
 .run-review-filters button:hover { background: var(--surface-soft); color: var(--primary); }
 .run-review-filters button[aria-pressed="true"] { background: var(--primary-soft); border-color: var(--primary); color: var(--primary); }
+
+/* Public controls stay in normal header flow, including narrow phones. */
+.public-heading-actions { min-width: 0; flex-wrap: wrap; }
+.public-theme-control { margin: 0; }
+.public-theme-control select { width: auto; max-width: 100%; min-height: 44px; margin: 0; font-size: .8rem; }
+@media (max-width: 480px) {
+  .public-heading-actions { width: 100%; justify-content: space-between; gap: .5rem; }
+  .public-heading { gap: .75rem; }
+  .public-theme-control select { max-width: 9rem; }
+}
