@@ -6,9 +6,9 @@ for (const template of ['base.html', 'offline.html']) {
     const context = {document: {documentElement: root, querySelector: () => ({setAttribute: (name, value) => meta[name] = value})}, window: {matchMedia: () => media}, localStorage: {getItem: key => {assert.equal(key, 'polskiflow-theme'); return stored;}}};
     vm.runInNewContext(source, context);
     assert.equal(root.dataset.theme, expected, template + ' respects saved preference');
-    assert.equal(meta.content, expected === 'dark' ? '#141A17' : '#F7F8F5');
+    assert.equal(meta.content, expected === 'dark' ? '#151518' : '#F7F7F9');
     context.window.PolskiFlowTheme.applyTheme(expected === 'dark' ? 'light' : 'dark');
-    assert.equal(meta.content, expected === 'dark' ? '#F7F8F5' : '#141A17', 'browser chrome follows theme switch');
+    assert.equal(meta.content, expected === 'dark' ? '#F7F7F9' : '#151518', 'browser chrome follows theme switch');
   }
   const root = {dataset: {}, style: {}};
   vm.runInNewContext(source, {document: {documentElement: root, querySelector: () => null}, window: {matchMedia: () => ({matches: true, addEventListener() {}})}, localStorage: {getItem() {throw Error('blocked');}}});

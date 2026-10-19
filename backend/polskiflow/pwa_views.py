@@ -28,8 +28,8 @@ def web_app_manifest(request):
         "start_url": "/",
         "scope": "/",
         "display": "standalone",
-        "background_color": "#F7F8F5",
-        "theme_color": "#F7F8F5",
+        "background_color": "#F7F7F9",
+        "theme_color": "#F7F7F9",
         "icons": [
             {
                 "src": icon_url,

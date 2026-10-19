@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#F7F8F5">
+    <meta name="theme-color" content="#F7F7F9">
     <script>
       (function () {
         const storageKey = "polskiflow-theme";
@@ -25,7 +25,7 @@
           root.dataset.theme = resolved;
           root.style.colorScheme = resolved;
           document.querySelector('meta[name="theme-color"]')?.setAttribute(
-            "content", resolved === "dark" ? "#141A17" : "#F7F8F5"
+            "content", resolved === "dark" ? "#151518" : "#F7F7F9"
           );
         }
 
@@ -39,8 +39,8 @@
     <title>{% translate "Нет подключения — LingoFlow" %}</title>
     <link rel="icon" href="{% static 'polskiflow/favicon.svg' %}?shell={{ pwa_shell_version }}" type="image/svg+xml">
     <style>
-      :root { color-scheme: light; font-family: system-ui, sans-serif; --bg: #F7F8F5; --surface: #FFFFFF; --text: #202923; --muted: #626E66; --primary-soft: #EAF3EE; --red: #B33D49; --line: #DFE5DF; --primary: #25634F; --on-action: #FFFFFF; }
-      :root[data-theme="dark"] { color-scheme: dark; --bg: #141A17; --surface: #1D2621; --text: #EDF2EE; --muted: #ACB9AF; --primary-soft: #283F32; --red: #FFABB3; --line: #39483E; --primary: #8ED5B2; --on-action: #14251C; }
+      :root { color-scheme: light; font-family: system-ui, sans-serif; --bg: #F7F7F9; --surface: #FFFFFF; --text: #202024; --muted: #62626E; --primary-soft: #EEF2FF; --red: #B33D49; --line: #E2E2E8; --primary: #4F46E5; --on-action: #FFFFFF; }
+      :root[data-theme="dark"] { color-scheme: dark; --bg: #151518; --surface: #202024; --text: #F1F1F4; --muted: #B0B0BD; --primary-soft: #2B2C48; --red: #FFABB3; --line: #393940; --primary: #A5B4FC; --on-action: #1B1740; }
       body { min-height: 100vh; margin: 0; display: grid; place-items: center; background: var(--bg); color: var(--text); }
       main { width: min(34rem, calc(100% - 2rem)); box-sizing: border-box; padding: 2rem; border: 1px solid var(--line); border-radius: 1rem; background: var(--surface); box-shadow: none; }
       img { width: 3.5rem; height: 3.5rem; }
