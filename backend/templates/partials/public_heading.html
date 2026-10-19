@@ -9,6 +9,14 @@
       <button type="submit" name="language" value="pl" lang="pl" aria-label="Polski" aria-pressed="{% if current_language == 'pl' %}true{% else %}false{% endif %}">PL</button>
       <button type="submit" name="language" value="en" lang="en" aria-label="English" aria-pressed="{% if current_language == 'en' %}true{% else %}false{% endif %}">EN</button>
     </form>
+    <label class="public-theme-control">
+      <span class="visually-hidden">{% translate "Цветовая тема" %}</span>
+      <select data-theme-select aria-label="{% translate 'Цветовая тема' %}">
+        <option value="system">{% translate "Системная тема" %}</option>
+        <option value="light">{% translate "Светлая тема" %}</option>
+        <option value="dark">{% translate "Тёмная тема" %}</option>
+      </select>
+    </label>
     <a href="{% url 'login' %}">{% translate "Войти" %}</a>
   </div>
 </header>

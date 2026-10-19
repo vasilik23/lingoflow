@@ -239,7 +239,8 @@ class BrowserAuthTests(SimpleTestCase):
         response = self.client.get("/login/")
 
         self.assertContains(response, "Рады видеть!")
-        self.assertContains(response, "Польский становится привычкой.")
+        self.assertContains(response, 'class="auth-panel"')
+        self.assertNotContains(response, 'class="auth-brand"')
         self.assertContains(response, "/static/polskiflow/app.css")
         self.assertContains(response, 'href="/forgot-password/"')
 

@@ -39,6 +39,10 @@ def writing_history_save(request):
         return response
     if request.headers.get('Authorization'):
         return reply({'error': 'cookie_session_required'}, 401)
+    # An old tab must not replay its owner's queue into a newly signed-in account.
+    expected_owner = request.headers.get('X-LingoFlow-Writing-Owner')
+    if expected_owner is not None and expected_owner != str(request.supabase_user.id):
+        return reply({'error': 'owner_session_changed'}, 409)
     if request.content_type != 'application/json':
         return reply({'error': 'unsupported_media_type'}, 415)
     if len(request.body) > 2048:

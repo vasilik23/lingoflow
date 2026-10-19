@@ -4,11 +4,6 @@
 {% block body_class %}auth-page{% endblock %}
 {% block content %}
   <div class="auth-layout">
-    <aside class="auth-brand">
-      <span class="brand-mark">L</span>
-      <h2>{% translate "Польский становится привычкой." %}</h2>
-      <p>{% translate "Короткие уроки, живые фразы и понятный прогресс каждый день." %}</p>
-    </aside>
     <section class="auth-panel">
       <a class="brand" href="{% url 'login' %}"><span class="brand-mark">L</span> LingoFlow</a>
       <p class="eyebrow" lang="{% if LANGUAGE_CODE == 'en' %}en{% else %}pl{% endif %}">{% if mode == 'login' %}{% if LANGUAGE_CODE == 'en' %}Welcome back{% else %}Witaj ponownie{% endif %}{% else %}{% if LANGUAGE_CODE == 'en' %}Create an account{% else %}Załóż konto{% endif %}{% endif %}</p>
