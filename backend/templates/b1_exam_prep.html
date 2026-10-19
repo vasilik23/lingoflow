@@ -49,17 +49,17 @@
       {% for module in exam_prep.modules %}<a class="card b1-skill-link" href="{{ module.href }}"><h3>{{ module.title|ui_text }}</h3><span>{{ module.action|ui_text }} →</span></a>{% endfor %}
     </div>
     <p><a class="compact-button" href="{% url 'b1-exam-writing' %}">{% translate "Экзаменационное письмо B1" %} →</a> <span class="muted">{% translate "Один комплект, два текста, 75 минут. Отдельная попытка письма." %}</span></p>
-    <details class="card b1-entry-details"><summary>{% translate "Практика с таймером" %}</summary><p>{% translate "Выбери одну часть: короткий учебный таймер или полный лимит части." %}</p><a class="compact-button" href="{% url 'b1-exam-simulation' %}">{% translate "Выбрать часть" %} →</a></details>
+    <section class="card b1-entry-details"><h2>{% translate "Практика с таймером" %}</h2><p>{% translate "Выбери одну часть: короткий учебный таймер или полный лимит части." %}</p><a class="compact-button" href="{% url 'b1-exam-simulation' %}">{% translate "Выбрать часть" %} →</a></section>
   </section>
   {% endif %}
-  <details class="card b1-entry-details">
-    <summary>{% translate "О пробном прогоне и коротком варианте" %}</summary>
+  <section class="card b1-entry-details">
+    <h2>{% translate "О пробном прогоне и коротком варианте" %}</h2>
     <p class="muted">{% translate "Пятичастный прогон проверяет текущие ответы по таймеру и сохраняет итог. Для короткой репетиции есть мини-модуль на 15 минут с меньшим числом вопросов." %}</p>
     <p>{% translate "15 минут: 3 проверяемых блока + 2 блока самопроверки. Аудирование и чтение — по 2 вопроса, грамматика — 3; письмо и речь без автоматического балла." %}</p>
     <a class="compact-button secondary-link" href="{% url 'b1-weekly-mock' %}">{% translate "Пробный мини‑модуль" %} →</a>
-  </details>
-  <details class="card b1-entry-details">
-    <summary>{% translate "Структура экзамена и официальные материалы" %}</summary>
+  </section>
+  <section class="card b1-entry-details">
+    <h2>{% translate "Структура экзамена и официальные материалы" %}</h2>
     <p>{% translate "минимум" %} {{ exam_prep.pass_percent|ui_text }}{{ "% в каждом модуле"|ui_text }} · {{ exam_prep.written_minutes|ui_text }} {% translate "минут письменной части" %}</p>
   <section aria-labelledby="exam-modules-title">
     <div class="section-heading exam-section-heading">
@@ -87,8 +87,8 @@
       <a class="compact-button secondary-link" href="https://certyfikatpolski.pl/o-egzaminie/zbiory-zadan/" target="_blank" rel="noopener noreferrer">{% translate "Задания B1" %}</a>
     </div>
   </aside>
-  </details>
-  <details class="card b1-entry-details"><summary>{% translate "Результаты по модулям" %}</summary>
+  </section>
+  <section class="card b1-entry-details"><h2>{% translate "Результаты по модулям" %}</h2>
   <section class="exam-results" aria-labelledby="exam-results-title">
     <div class="section-heading exam-section-heading">
       <div><p class="eyebrow">{% translate "Последние 30 дней" %}</p><h2 id="exam-results-title">{% translate "Результаты по модулям" %}</h2></div>
@@ -120,5 +120,5 @@
   </section>
 
     <p><a href="{% url 'learning-history' %}#b1-run-history">{% translate "История прогонов B1" %} →</a></p>
-  </details>
+  </section>
 {% endblock %}

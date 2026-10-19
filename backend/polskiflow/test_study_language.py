@@ -120,7 +120,7 @@ class StudyLanguageTests(SimpleTestCase):
                     {'instruction': {'polish': 'Proszę odpowiedzieć.', 'russian': source}})
                 self.assertIn('<p lang="pl">Proszę odpowiedzieć.</p>', instruction)
                 self.assertIn(f'<p lang="{lang}">', instruction)
-                self.assertIn(f'<details lang="{lang}">', instruction)
+                self.assertIn(f'<section lang="{lang}">', instruction)
                 question = {'id': 'one', 'prompt': source, 'options': ['Cześć'],
                             'explanation': 'Личная заметка, которой нет в каталоге'}
                 html = render_to_string('partials/b1_mock_question.html', {

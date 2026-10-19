@@ -5,5 +5,5 @@
   {% if state %}<strong data-run-timer role="timer" aria-live="off"></strong>{% else %}<strong id="simulation-timer" role="timer" aria-live="off">{{ timer_minutes|ui_text }}:00</strong>{% endif %}
 </div>
 {% if state %}<p data-run-timer-status role="status" aria-live="polite"></p>{% else %}<p class="visually-hidden" id="simulation-timer-status" role="status" aria-live="polite" aria-atomic="true"></p>{% endif %}
-{% if part.mode == 'objective' %}<details class="exam-question-navigation"><summary>{% translate "Без ответа" %}: <span data-exam-missing-count>—</span></summary><nav data-exam-missing aria-label="{% translate 'Вопросы без ответа' %}"></nav></details>{% endif %}
+{% if part.mode == 'objective' %}<section class="exam-question-navigation"><h2>{% translate "Без ответа" %}: <span data-exam-missing-count>—</span></h2><nav data-exam-missing aria-label="{% translate 'Вопросы без ответа' %}"></nav></section>{% endif %}
 {% include 'partials/b1_finish_dialog.html' %}

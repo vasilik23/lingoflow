@@ -62,9 +62,10 @@ class LessonNoteViewTests(TestCase):
     @patch("polskiflow.lesson_views.load_lesson_note", return_value=LessonNote(True, ""))
     @patch("polskiflow.lesson_views.load_lesson_bookmarks", return_value=set())
     @patch("polskiflow.lesson_views.load_lesson_draft", return_value=None)
-    def test_lesson_tools_open_after_note_action(self, _draft, _bookmarks, _note):
+    def test_lesson_tools_remain_visible_after_note_action(self, _draft, _bookmarks, _note):
         response = self.client.get("/lesson/words/?note=saved")
-        self.assertContains(response, 'class="card content-tools" open')
+        self.assertContains(response, '<section class="card content-tools"')
+        self.assertNotContains(response, '<details class="card content-tools"')
         self.assertContains(response, "Заметка сохранена")
 
     @patch("polskiflow.lesson_views.save_lesson_note", return_value=True)

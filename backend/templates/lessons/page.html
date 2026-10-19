@@ -24,8 +24,8 @@
         {% include "lessons/_question.html" %}
       {% endif %}
     </section>
-    <details class="card content-tools" {% if request.GET.collection or request.GET.note %}open{% endif %}>
-      <summary><span><strong>{% translate "Инструменты урока" %}</strong><small>{% translate "Подборки и личная заметка" %}</small></span><span class="content-tools-toggle" aria-hidden="true">⌄</span></summary>
+    <section class="card content-tools">
+      <h2><span><strong>{% translate "Инструменты урока" %}</strong><small>{% translate "Подборки и личная заметка" %}</small></span></h2>
       <div class="content-tools-grid">
     <section class="inline-collection content-tool-panel" id="lesson-collection" aria-labelledby="lesson-collection-title"><div><p class="eyebrow">{% translate "Личный маршрут" %}</p><h2 id="lesson-collection-title">{% translate "Добавить в подборку" %}</h2></div>{% if request.GET.collection == "added" %}<p class="form-success" role="status">{% translate "Урок добавлен в подборку." %}</p>{% elif request.GET.collection == "error" %}<p class="form-error" role="alert">{% translate "Не удалось добавить урок." %}</p>{% endif %}{% if collection_choices %}<form method="post" action="{% url 'add-material-to-collection' 'lesson' lesson_id %}">{% csrf_token %}<label for="lesson-collection-select">{% translate "Подборка" %}</label><div class="filter-search-row"><select id="lesson-collection-select" name="collection_id" required><option value="">{% translate "Выбери список" %}</option>{% for collection in collection_choices %}<option value="{{ collection.id }}">{{ collection.name }}</option>{% endfor %}</select><button type="submit">{% translate "Добавить" %}</button></div></form>{% elif collections_available %}<p class="muted">{% translate "Сначала" %} <a href="{% url 'collections' %}">{% translate "создай подборку" %}</a>.</p>{% else %}<p class="muted">{% translate "Подборки временно недоступны." %}</p>{% endif %}</section>
     <section class="lesson-note-card content-tool-panel" id="lesson-note" aria-labelledby="lesson-note-title">
@@ -43,7 +43,7 @@
       {% endif %}
     </section>
       </div>
-    </details>
+    </section>
   </div>
   {% endwith %}
 {% endblock %}

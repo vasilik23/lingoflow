@@ -246,15 +246,15 @@ class LessonViewsTests(TestCase):
         for href in ("/exam/b1/", "/dictionary/practice/", "/listening/", "/writing/", "/interaction/", "/diagnostic/"):
             self.assertContains(hub, f'href="{href}"')
 
-    def test_course_marks_one_topic_for_compact_mobile_catalog(self):
+    def test_course_keeps_all_topic_lessons_visible(self):
         response = self.client.get("/course/?level=A1")
         topic_count = len(response.context["course_topics"])
 
         self.assertGreater(topic_count, 0)
-        self.assertContains(response, '<details class="topic-card"', count=topic_count)
+        self.assertContains(response, '<section class="topic-card"', count=topic_count)
         self.assertContains(response, 'data-course-topic-primary="true"', count=1)
-        self.assertContains(response, ' open data-course-topic', count=1)
-        self.assertContains(response, "Показать уроки", count=topic_count)
+        self.assertNotContains(response, '<details class="topic-card"')
+        self.assertNotContains(response, "Показать уроки")
 
     def test_home_keeps_daily_plan_focused_and_course_page_lists_topics(self):
         course = Course.objects.create(id="catalog-test", title="A1", level="A1")

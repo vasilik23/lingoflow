@@ -18,9 +18,9 @@
       <a class="compact-button" href="{% url 'onboarding' %}?suggested_level={{ result.level }}">{% translate "Продолжить с рекомендацией" %}</a>
       <p class="muted">{% translate "Профиль ещё не изменён. На следующем шаге можно выбрать любой уровень." %}</p>
     </section>
-    <details class="card"><summary>{% translate "Ответы и объяснения" %}</summary>
+    <section class="card"><h2>{% translate "Ответы и объяснения" %}</h2>
       {% for question in reviews %}<div class="placement-review"><p>{{ forloop.counter }}. {{ question.prompt|ui_text }} {% if question.passed %}✓{% else %}—{% endif %}</p><p>{{ question.correct_text|ui_text }}</p><p class="muted">{{ question.explanation|ui_text }}</p></div>{% endfor %}
-    </details>
+    </section>
     <p><a href="{% url 'placement-check' %}">{% translate "Начать заново" %}</a></p>
   {% else %}
     <form class="card onboarding-form" method="post" action="{% url 'placement-check' %}#placement-step">

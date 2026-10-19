@@ -37,8 +37,7 @@
       {% endif %}
       </div>
     </section>
-    <details class="card daily-tasks-panel" id="daily-tasks">
-      <summary>{% translate "Посмотреть план" %} · {{ completed_count|ui_text }}/{{ tasks|length|ui_text }}</summary>
+    <section class="card daily-tasks-panel" id="daily-tasks">
     <section aria-labelledby="daily-tasks-title">
       <div class="section-heading daily-tasks-heading">
         <div>
@@ -60,7 +59,7 @@
         {% endfor %}
       </div>
     </section>
-    </details>
+    </section>
   </div>
   {% if b1_exam_prep %}<p class="muted today-exam-link"><a href="{% url 'b1-exam-prep' %}">{% translate "Подготовка к B1" %}</a> · {{ b1_exam_prep.countdown.label|ui_text }}</p>{% endif %}
 
@@ -68,12 +67,4 @@
 
 {% block scripts %}
 <script defer src="{% static 'polskiflow/browser-reminders.js' %}?shell={{ pwa_shell_version }}"></script>
-<script>
-(() => {
-  const plan = document.getElementById('daily-tasks');
-  const openLinkedPlan = () => { if (window.location.hash === '#daily-tasks') plan.open = true; };
-  openLinkedPlan();
-  window.addEventListener('hashchange', openLinkedPlan);
-})();
-</script>
 {% endblock %}

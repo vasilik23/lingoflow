@@ -168,14 +168,15 @@ class B1ExamPrepDomainTests(SimpleTestCase):
 class B1ExamPrepViewTests(TestCase):
     @patch("polskiflow.auth_views.load_b1_mock_attempts", return_value=[])
     @patch("polskiflow.auth_views.load_dashboard_progress")
-    def test_entry_has_three_choices_and_no_open_support_sections(self, progress, attempts):
+    def test_entry_has_three_choices_and_visible_support_sections(self, progress, attempts):
         progress.return_value = DashboardProgress("Learner", "B1", 0, frozenset(), True)
         response = self.client.get("/exam/b1/")
         self.assertContains(response, 'class="card b1-entry-action"', count=3)
         self.assertContains(response, 'href="?mode=today#exam-today-title"')
         self.assertContains(response, 'href="?mode=skill#exam-skills-title"')
         self.assertContains(response, 'href="/exam/b1/run/"')
-        self.assertNotContains(response, '<details class="card b1-entry-details" open')
+        self.assertNotContains(response, '<details class="card b1-entry-details"')
+        self.assertContains(response, '<section class="card b1-entry-details"')
         self.assertNotContains(response, 'class="exam-daily-list"')
         self.assertNotContains(response, 'class="b1-skill-grid"')
         self.assertContains(response, 'href="/exam/b1/mock/"')

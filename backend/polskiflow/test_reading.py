@@ -387,7 +387,8 @@ class ReadingViewsTests(TestCase):
         )
 
         open_response = self.client.get("/reading/test-story/?collection=added")
-        self.assertContains(open_response, 'class="card content-tools reader-tools" open')
+        self.assertContains(open_response, '<section class="card content-tools reader-tools"')
+        self.assertNotContains(open_response, '<details class="card content-tools reader-tools"')
         self.assertContains(response, 'data-lemma="kot"')
         self.assertContains(response, 'data-translation="кот"')
         self.assertContains(response, 'data-part-of-speech="существительное"')
