@@ -61,8 +61,55 @@ test('imports in one transaction with stop-on-error; reports pending acceptance'
   assert.equal(calls.length,2);
   assert.ok(calls[1].args.includes('--single-transaction'));
   assert.ok(calls[1].args.includes('--variable=ON_ERROR_STOP=1'));
+  const importFiles = calls[1].args.filter((_arg, index, all) => all[index - 1] === '--file');
+  assert.deepEqual(importFiles.map(file => file.split('/').at(-1)),
+    ['backup-restore-defaults.sql', 'roles.sql', 'schema.sql', 'data.sql']);
   assert.equal(result.acceptance_required,true);
   await assert.rejects(restoreLocal(d,'54322','secret',true,(_exe,args)=>({status:args.includes('--single-transaction')?1:0,stdout:'t\n'})), /local_psql_failed/);
+});
+test('official self-hosted admin is used for both checks and import without changing the target', async t => {
+  const d = await fixture(t); await seal(d); const calls = [];
+  const result = await restoreLocal(d, '54322', 'secret', true, (_exe, args, options) => {
+    calls.push({ args, options }); return { status: 0, stdout: 't\n' };
+  }, 'supabase_admin');
+  assert.equal(calls.length, 2);
+  for (const { args, options } of calls) {
+    assert.ok(args.includes('--username=supabase_admin'));
+    assert.ok(args.includes('--host=127.0.0.1'));
+    assert.ok(args.includes('--dbname=postgres'));
+    assert.equal(args.some(arg => arg.includes('secret')), false);
+    assert.equal(options.env.PGPASSWORD, 'secret');
+  }
+  assert.ok(calls[1].args.includes('--single-transaction'));
+  assert.equal(result.acceptance_required, true);
+});
+test('arbitrary roles and connection parameters are refused before any connection', async t => {
+  const d = await fixture(t); await seal(d); let called = false;
+  for (const user of ['service_role', 'postgres@remote', 'postgres --host=remote', '', null, ['postgres']]) {
+    await assert.rejects(restoreLocal(d, '54322', 'secret', true, () => { called = true; }, user), /local_restore_user_required/);
+  }
+  assert.equal(called, false);
+  assert.ok(restoreConfig('54322', 'secret').args.includes('--username=postgres'));
+});
+test('CLI accepts the explicit self-hosted admin and preserves the fixed local connection', async t => {
+  const d = await fixture(t); await seal(d);
+  const bin = await mkdtemp(join(tmpdir(), 'lf-backup-psql-'));
+  t.after(() => rm(bin, { recursive: true, force: true }));
+  await writeFile(join(bin, 'psql'), `#!/bin/sh
+case " $* " in *" --username=supabase_admin "*) ;; *) exit 7 ;; esac
+case " $* " in *" --host=127.0.0.1 "*) ;; *) exit 8 ;; esac
+case " $* " in *" --single-transaction "*) exit 0 ;; *) printf 't\\n' ;; esac
+`, { mode: 0o700 });
+  const args = ['ops/backup-drill.mjs', 'restore-local', d, '--port', '54322', '--user', 'supabase_admin', '--execute'];
+  const env = { PATH: bin + ':' + process.env.PATH, LINGOFLOW_RESTORE_PASSWORD: 'sensitive-password' };
+  const result = spawnSync(process.execPath, args, { encoding: 'utf8', env });
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(JSON.parse(result.stdout).status, 'local_import_completed');
+  const rejected = spawnSync(process.execPath, args.map(arg => arg === 'supabase_admin' ? 'postgres --host=remote' : arg), { encoding: 'utf8', env });
+  assert.equal(rejected.status, 2);
+  assert.equal(JSON.parse(rejected.stderr).code, 'local_restore_user_required');
+  assert.equal(rejected.stderr.includes('sensitive-password'), false);
+  assert.equal(rejected.stderr.includes(d), false);
 });
 test('malformed or wrong-project manifest cannot be verified', async t => {
   const d = await fixture(t); await seal(d);
