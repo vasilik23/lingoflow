@@ -60,11 +60,12 @@ export async function verify(directory) {
   }
   return { status: 'verified', files: FILES.length, restored: false };
 }
-export function restoreConfig(port, password) {
+export function restoreConfig(port, password, user = 'postgres') {
   if (!/^[0-9]{4,5}$/.test(String(port)) || Number(port) < 1024 || Number(port) > 65535) fail('explicit_local_port_required');
   if (typeof password !== 'string' || !password || password.includes('\0')) fail('local_restore_password_required');
+  if (user !== 'postgres' && user !== 'supabase_admin') fail('local_restore_user_required');
   return {
-    args: ['-X', '--no-password', '--host=127.0.0.1', `--port=${port}`, '--username=postgres', '--dbname=postgres'],
+    args: ['-X', '--no-password', '--host=127.0.0.1', `--port=${port}`, `--username=${user}`, '--dbname=postgres'],
     // No inherited PGHOSTADDR, PGSERVICE, PGOPTIONS, .psqlrc or .pgpass overrides.
     env: { PATH: process.env.PATH, PGPASSWORD: password, PGPASSFILE: '/dev/null', PGCONNECT_TIMEOUT: '5' },
   };
@@ -77,14 +78,15 @@ function psql(config, args, run, output = false) {
   if (result.error || result.status !== 0) fail('local_psql_failed');
   return output ? result.stdout.trim() : null;
 }
-export async function restoreLocal(directory, port, password, execute, run = spawnSync) {
+export async function restoreLocal(directory, port, password, execute, run = spawnSync, user = 'postgres') {
   if (execute !== true) fail('explicit_execute_required');
-  const config = restoreConfig(port, password);
+  const config = restoreConfig(port, password, user);
   await verify(directory);
   if (psql(config, ['--tuples-only', '--no-align', '--command', EMPTY_TARGET], run, true) !== 't') fail('empty_local_supabase_required');
   const path = await privateDirectory(directory);
   // Each archive is fixed by name. No user-supplied SQL, host, database or flags.
   psql(config, ['--single-transaction', '--variable=ON_ERROR_STOP=1',
+    '--file', resolve(ROOT, 'ops/backup-restore-defaults.sql'),
     '--file', resolve(path, 'roles.sql'), '--file', resolve(path, 'schema.sql'),
     '--command', 'SET session_replication_role = replica', '--file', resolve(path, 'data.sql')], run);
   return { status: 'local_import_completed', files: FILES.length, restored: true, acceptance_required: true };
@@ -97,8 +99,11 @@ async function main(args) {
     if (extra.length) fail('unexpected_arguments');
     return action === 'seal' ? seal(directory) : verify(directory);
   }
-  if (extra.length !== 3 || extra[0] !== '--port' || extra[2] !== '--execute') fail('usage_restore_local_port_execute');
-  return restoreLocal(directory, extra[1], process.env.LINGOFLOW_RESTORE_PASSWORD, true);
+  const defaultUser = extra.length === 3 && extra[0] === '--port' && extra[2] === '--execute';
+  const explicitUser = extra.length === 5 && extra[0] === '--port' && extra[2] === '--user' && extra[4] === '--execute';
+  if (!defaultUser && !explicitUser) fail('usage_restore_local_port_user_execute');
+  return restoreLocal(directory, extra[1], process.env.LINGOFLOW_RESTORE_PASSWORD, true, spawnSync,
+    explicitUser ? extra[3] : 'postgres');
 }
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   main(process.argv.slice(2)).then(result => console.log(JSON.stringify(result))).catch(error => {

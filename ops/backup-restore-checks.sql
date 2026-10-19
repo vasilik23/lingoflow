@@ -23,7 +23,7 @@ ORDER BY dataset;
 -- Review security definitions, not only learner row counts.
 SELECT n.nspname AS schema, c.relname AS table_name,
        c.relrowsecurity AS rls_enabled, c.relforcerowsecurity AS rls_forced,
-       c.relacl::text AS grants
+       COALESCE(c.relacl, acldefault('r', c.relowner))::text AS grants
 FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace
 WHERE n.nspname IN ('public', 'private') AND c.relkind IN ('r', 'p')
 ORDER BY 1, 2;
