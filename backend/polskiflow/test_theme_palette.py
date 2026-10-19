@@ -33,13 +33,15 @@ class ThemePaletteTests(SimpleTestCase):
     def test_exact_agreed_light_and_dark_semantic_colors(self):
         names = ('--bg', '--surface', '--text', '--muted', '--primary', '--on-action', '--primary-soft', '--line', '--red')
         colors = (
-            ('#F7F8F5', '#FFFFFF', '#202923', '#626E66', '#25634F', '#FFFFFF', '#EAF3EE', '#DFE5DF', '#B33D49'),
-            ('#141A17', '#1D2621', '#EDF2EE', '#ACB9AF', '#8ED5B2', '#14251C', '#283F32', '#39483E', '#FFABB3'),
+            ('#F7F7F9', '#FFFFFF', '#202024', '#62626E', '#4F46E5', '#FFFFFF', '#EEF2FF', '#E2E2E8', '#B33D49'),
+            ('#151518', '#202024', '#F1F1F4', '#B0B0BD', '#A5B4FC', '#1B1740', '#2B2C48', '#393940', '#FFABB3'),
         )
         for dark, expected in enumerate(colors):
             with self.subTest(dark=bool(dark)):
                 actual = palette(bool(dark))
                 self.assertEqual(tuple(actual[name] for name in names), expected)
+                self.assertNotEqual(actual['--green'], actual['--primary'])
+                self.assertNotEqual(actual['--green-soft'], actual['--primary-soft'])
 
     def test_body_muted_action_selected_error_and_focus_contrast(self):
         for dark in (False, True):
@@ -47,7 +49,8 @@ class ThemePaletteTests(SimpleTestCase):
             pairs = [(foreground, background) for foreground in ('--text', '--muted')
                      for background in ('--bg', '--surface', '--primary-soft')]
             pairs += [('--on-action', '--primary'), ('--on-action', '--action-hover'),
-                      ('--red', '--red-soft'), ('--on-danger', '--red')]
+                      ('--red', '--red-soft'), ('--on-danger', '--red'),
+                      ('--green', '--green-soft'), ('--on-success', '--green')]
             for foreground, background in pairs:
                 with self.subTest(dark=dark, foreground=foreground, background=background):
                     self.assertGreaterEqual(contrast(values[foreground], values[background]), 4.5)

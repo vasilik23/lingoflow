@@ -24,7 +24,7 @@ export function LoginScreen({ colors, booting }: { colors: Colors; booting: bool
       <TextInput accessibilityLabel="Пароль" autoCapitalize="none" autoComplete="current-password" secureTextEntry value={password} onChangeText={setPassword} onSubmitEditing={signIn} style={[styles.input, { color: colors.text, borderColor: colors.border }]} />
       {!!error && <Text accessibilityRole="alert" style={[styles.error, { color: colors.danger }]}>{error}</Text>}
       <Pressable accessibilityRole="button" disabled={booting || submitting} onPress={signIn} style={({ pressed }) => [styles.button, { backgroundColor: colors.primary, opacity: pressed || booting || submitting ? 0.65 : 1 }]}>
-        {booting || submitting ? <ActivityIndicator color="#fff" /> : <Text style={styles.buttonText}>Войти</Text>}
+        {booting || submitting ? <ActivityIndicator color={colors.onPrimary} /> : <Text style={[styles.buttonText, { color: colors.onPrimary }]}>Войти</Text>}
       </Pressable>
       <Text style={[styles.note, { color: colors.muted }]}>Сессия хранится в защищённом хранилище устройства. Service-role ключ приложению не нужен.</Text>
     </View>
@@ -35,5 +35,5 @@ const styles = StyleSheet.create({
   center: { flex: 1, justifyContent: 'center', padding: 20 }, card: { borderWidth: 1, borderRadius: 24, padding: 24, gap: 10 }, brand: { fontSize: 16, fontWeight: '800' },
   title: { fontSize: 30, fontWeight: '800', marginTop: 4 }, copy: { fontSize: 16, lineHeight: 23, marginBottom: 12 }, label: { fontSize: 14, fontWeight: '700', marginTop: 4 },
   input: { borderWidth: 1, borderRadius: 12, minHeight: 48, paddingHorizontal: 14, fontSize: 16 }, error: { lineHeight: 20 },
-  button: { minHeight: 50, borderRadius: 14, alignItems: 'center', justifyContent: 'center', marginTop: 8 }, buttonText: { color: '#fff', fontSize: 16, fontWeight: '800' }, note: { fontSize: 12, lineHeight: 18, marginTop: 8 },
+  button: { minHeight: 50, borderRadius: 14, alignItems: 'center', justifyContent: 'center', marginTop: 8 }, buttonText: { fontSize: 16, fontWeight: '800' }, note: { fontSize: 12, lineHeight: 18, marginTop: 8 },
 });
