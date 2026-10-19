@@ -21,18 +21,17 @@
     <a href="{% url 'interaction-practice' %}"><span aria-hidden="true">{% include 'components/icon.html' with name='speak' %}</span>{% translate "Говорение" %}</a>
   </nav>
   <section class="practice-catalog">
-    <h2>{% translate "Подготовка к B1" %} · {% translate "Карта навыков" %}</h2>
   <section class="practice-hub-grid" aria-label="{% translate "Тренажёры" %}">
     <a class="practice-hub-card practice-card--exam" href="{% url 'b1-exam-prep' %}">
       <span class="practice-card-icon" aria-hidden="true">B1</span>
       <span class="practice-card-badge">{% translate "Экзамен · 5 модулей" %}</span>
-      <div><h3>{% translate "Подготовка к B1" %}</h3><p>{% translate "Короткий план на сегодня, практика навыка или пробный прогон пяти частей." %}</p></div>
+      <div><h2>{% translate "Подготовка к B1" %}</h2><p>{% translate "Короткий план на сегодня, практика навыка или пробный прогон пяти частей." %}</p></div>
       <span class="practice-card-action">{% translate "Открыть подготовку" %} <b aria-hidden="true">→</b></span>
     </a>
     <a class="practice-hub-card practice-card--amber" href="{% url 'diagnostic' %}">
       <span class="practice-card-icon" aria-hidden="true">◎</span>
       <span class="practice-card-badge">{% translate "Ориентир · без оценки" %}</span>
-      <div><h3>{% translate "Карта навыков" %}</h3><p>{% translate "Осторожная самооценка и короткая проба без записи результата и заявлений о CEFR." %}</p></div>
+      <div><h2>{% translate "Карта навыков" %}</h2><p>{% translate "Осторожная самооценка и короткая проба без записи результата и заявлений о CEFR." %}</p></div>
       <span class="practice-card-action">{% translate "Оценить навыки" %} <b aria-hidden="true">→</b></span>
     </a>
   </section>
