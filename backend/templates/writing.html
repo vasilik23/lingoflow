@@ -37,7 +37,7 @@
             <ul>{% for requirement in prompt.requirements %}<li><span lang="{{ requirement|learning_language }}">{{ requirement|learning_markup }}</span></li>{% endfor %}</ul>
           </section>
         {% endif %}
-        <details class="writing-hint"><summary>{% translate "Ориентир:" %}</summary><p> <span lang="{{ prompt.hint|learning_language }}">{{ prompt.hint|learning_markup }}</span></p></details>
+        <section class="writing-hint"><h2>{% translate "Ориентир:" %}</h2><p> <span lang="{{ prompt.hint|learning_language }}">{{ prompt.hint|learning_markup }}</span></p></section>
         </section>
         <div class="writing-editor">
         <label for="draft-{{ prompt.id }}">{% translate "Твой черновик" %}</label>
@@ -53,7 +53,7 @@
         <div class="writing-check-help"><p class="muted">{% translate "Напиши черновик и проверь наблюдаемые признаки текста. Подсказка не оценивает грамотность, уровень или качество ответа." %}</p></div>
         <div class="writing-feedback" data-writing-feedback role="status" tabindex="-1" aria-live="polite" hidden></div>
         <section data-writing-self-check hidden>
-        <details class="writing-self-check"><summary id="revision-{{ prompt.id }}">{% translate "Разбор после черновика" %}</summary>
+        <section class="writing-self-check"><h2 id="revision-{{ prompt.id }}">{% translate "Разбор после черновика" %}</h2>
         <fieldset class="writing-checklist">
           <legend>{% translate "Самопроверка для этого жанра" %}</legend>
           {% for criterion in prompt.checklist %}<label><input type="checkbox"> <span lang="{{ criterion|learning_language }}">{{ criterion|learning_markup }}</span></label>{% endfor %}
@@ -74,10 +74,10 @@
             <details class="writing-sample"><summary>{% translate "Показать пример ответа после своей попытки" %}</summary><p lang="pl">{{ prompt.sample_answer|ui_text }}</p><p class="muted">{% translate "Это один возможный ответ. Сравни структуру и выполнение пунктов, а не копируй текст." %}</p></details>
           </section>
         {% endif %}
-        </details>
+        </section>
         </section>
         {% include "partials/ai_writing_review.html" with ai_token=prompt.ai_token ai_editor="draft-"|add:prompt.id %}
-        <details class="writing-tools"><summary>{% translate "Дополнительные действия" %}</summary><button class="secondary writing-reset" type="button" data-reset-draft>{% translate "Удалить этот черновик" %}</button></details>
+        <section class="writing-tools"><h2>{% translate "Дополнительные действия" %}</h2><button class="secondary writing-reset" type="button" data-reset-draft>{% translate "Удалить этот черновик" %}</button></section>
         </div>
       </div>
     {% endfor %}

@@ -27,19 +27,19 @@
         {% endfor %}
       </div>
       {% if glossary_words %}
-        <details class="card reading-glossary">
-          <summary>{% translate "Слова из текста" %} · {{ glossary_words|length }}</summary>
+        <section class="card reading-glossary">
+          <h2>{% translate "Слова из текста" %} · {{ glossary_words|length }}</h2>
           <div lang="pl">
             {% for token in glossary_words %}<p><button type="button" class="reader-word" data-word="{{ token.word }}" data-lemma="{{ token.lemma }}" data-translation="{{ token.translation|learning_text }}" data-translation-lang="{{ token.translation|learning_language:'ru' }}" data-source-translation="{{ token.translation }}" data-part-of-speech="{{ token.part_of_speech }}" data-glossary-entry>{{ token.text }}</button></p>{% endfor %}
           </div>
-        </details>
+        </section>
       {% endif %}
       {% with english_paragraphs=text.paragraphs|english_reading %}
         {% if english_paragraphs %}
-          <details class="card reading-translation">
-            <summary>English translation</summary>
+          <section class="card reading-translation">
+            <h2>English translation</h2>
             {% for paragraph in english_paragraphs %}<p lang="en">{{ paragraph }}</p>{% endfor %}
-          </details>
+          </section>
         {% endif %}
       {% endwith %}
       {% if comprehension_task %}
@@ -62,13 +62,13 @@
         </div>
         <a class="compact-button{% if comprehension_task %} secondary-link{% endif %}" href="{% url 'dictionary-practice' %}?source={{ text.id|urlencode }}&amp;mode=lemma">{% translate "Повторить слова текста →" %}</a>
       </section>
-      <details class="card content-tools reader-tools" {% if request.GET.collection %}open{% endif %}>
-        <summary><span><strong>{% translate "Сохранить и организовать" %}</strong><small>{% translate "Сохранённое и личные подборки" %}</small></span><span class="content-tools-toggle" aria-hidden="true">⌄</span></summary>
+      <section class="card content-tools reader-tools">
+        <h2><span><strong>{% translate "Сохранить и организовать" %}</strong><small>{% translate "Сохранённое и личные подборки" %}</small></span><span class="content-tools-toggle" aria-hidden="true">⌄</span></h2>
         <div class="content-tools-grid">
           {% if bookmarks_available %}<section class="content-tool-panel"><p class="eyebrow">{% translate "Быстрый доступ" %}</p><h2>{% translate "Сохранённое" %}</h2><form method="post" action="{% url 'toggle-reading-bookmark' text.id %}">{% csrf_token %}<input type="hidden" name="saved" value="{% if is_bookmarked %}0{% else %}1{% endif %}"><button class="compact-button secondary-link" type="submit">{% if is_bookmarked %}{% translate "★ Убрать из сохранённых" %}{% else %}{% translate "☆ Сохранить текст" %}{% endif %}</button></form></section>{% endif %}
           <section class="inline-collection content-tool-panel" id="reading-collection" aria-labelledby="reading-collection-title"><div><p class="eyebrow">{% translate "Личный маршрут" %}</p><h2 id="reading-collection-title">{% translate "Добавить в подборку" %}</h2></div>{% if request.GET.collection == "added" %}<p class="form-success" role="status">{% translate "Текст добавлен в подборку." %}</p>{% elif request.GET.collection == "error" %}<p class="form-error" role="alert">{% translate "Не удалось добавить текст." %}</p>{% endif %}{% if collection_choices %}<form method="post" action="{% url 'add-material-to-collection' 'reading' text.id %}">{% csrf_token %}<label for="reading-collection-select">{% translate "Подборка" %}</label><div class="filter-search-row"><select id="reading-collection-select" name="collection_id" required><option value="">{% translate "Выбери список" %}</option>{% for collection in collection_choices %}<option value="{{ collection.id }}">{{ collection.name }}</option>{% endfor %}</select><button type="submit">{% translate "Добавить" %}</button></div></form>{% elif collections_available %}<p class="muted">{% translate "Сначала" %} <a href="{% url 'collections' %}">{% translate "создай подборку" %}</a>.</p>{% else %}<p class="muted">{% translate "Подборки временно недоступны." %}</p>{% endif %}</section>
         </div>
-      </details>
+      </section>
     </article>
     <aside class="word-panel" id="word-panel">
       <button type="button" class="word-panel-close secondary" data-word-close aria-label="{% translate 'Закрыть перевод' %}">×</button>

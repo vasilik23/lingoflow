@@ -23,7 +23,8 @@ class TodayStartTaskTests(TestCase):
         self.assertEqual(page.context['daily_start_task']['id'],'next')
         self.assertContains(page,'class="compact-button daily-action" href="/lesson/next/"')
         self.assertContains(page,'Продолжить занятия')
-        self.assertContains(page,'<summary>Посмотреть план · 1/3</summary>')
+        self.assertContains(page, '<section class="card daily-tasks-panel" id="daily-tasks">')
+        self.assertNotContains(page, '<details class="card daily-tasks-panel"')
         self.assertNotContains(page,'class="compact-button daily-action" href="#daily-tasks"')
 
     def test_dictionary_recommendation_uses_its_actual_practice_route(self):
@@ -60,4 +61,4 @@ class TodayStartTaskTests(TestCase):
         self.assertContains(page, 'href="/exam/b1/"')
         self.assertNotContains(page, 'exam-home-card')
         self.assertNotContains(page, 'минут по трём экзаменационным навыкам')
-        self.assertContains(page, '<details class="card daily-tasks-panel" id="daily-tasks">')
+        self.assertContains(page, '<section class="card daily-tasks-panel" id="daily-tasks">')

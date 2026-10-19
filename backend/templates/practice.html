@@ -20,8 +20,8 @@
     <a href="{% url 'writing-practice' %}"><span aria-hidden="true">{% include 'components/icon.html' with name='write' %}</span>{% translate "Письменная практика" %}</a>
     <a href="{% url 'interaction-practice' %}"><span aria-hidden="true">{% include 'components/icon.html' with name='speak' %}</span>{% translate "Говорение" %}</a>
   </nav>
-  <details class="practice-catalog">
-    <summary>{% translate "Подготовка к B1" %} · {% translate "Карта навыков" %}</summary>
+  <section class="practice-catalog">
+    <h2>{% translate "Подготовка к B1" %} · {% translate "Карта навыков" %}</h2>
   <section class="practice-hub-grid" aria-label="{% translate "Тренажёры" %}">
     <a class="practice-hub-card practice-card--exam" href="{% url 'b1-exam-prep' %}">
       <span class="practice-card-icon" aria-hidden="true">B1</span>
@@ -36,5 +36,5 @@
       <span class="practice-card-action">{% translate "Оценить навыки" %} <b aria-hidden="true">→</b></span>
     </a>
   </section>
-  </details>
+  </section>
 {% endblock %}

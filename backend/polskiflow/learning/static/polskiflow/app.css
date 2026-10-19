@@ -1465,7 +1465,7 @@ nav.listening-level-nav a { margin: 0; padding: .65rem .75rem; min-height: 44px;
 .listening-options label:has(input:checked) { border-color: var(--primary); background: var(--primary-soft); }
 @media (min-width: 1000px) { nav.listening-level-nav { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 
-.listening-enhanced:has([data-listening-level][open]) > [data-listening-level]:not([open]) { display: none; }
+
 
 /* One visual system for B1 entry, parts, mock, run and writing. */
 .exam-page .mock-shell { width: min(100%, 64rem); max-width: none; margin-inline: auto; }
@@ -1552,3 +1552,14 @@ input::placeholder, textarea::placeholder { color: var(--muted); opacity: 1; }
   .public-heading { gap: .75rem; }
   .public-theme-control select { max-width: 9rem; }
 }
+
+/* Essential learning content uses headings, never disclosure controls. */
+.daily-tasks-panel .daily-tasks-heading { margin-top: 0; }
+.practice-catalog > h2, .b1-entry-details > h2 { margin-bottom: 1rem; }
+.topic-summary { cursor: default; }
+.topic-summary .topic-progress { margin-bottom: 1rem; }
+section.lesson-reference { margin-top: 1.25rem; }
+section.lesson-reference > h2, .writing-hint > h2, .writing-self-check > h2, .writing-tools > h2, .followup-mistake > h2 { font-size: 1rem; }
+.listening-level-summary { cursor: default; }
+[data-listening-level] > .listening-level-summary { margin-bottom: 1rem; }
+section.run-review > h2, .run-review-source > h2 { font-size: 1.1rem; }

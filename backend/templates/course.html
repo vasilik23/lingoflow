@@ -68,8 +68,8 @@
   </div>
   <div class="topic-list" aria-label="{% translate "Темы курса" %}">
     {% for topic in course_topics %}
-      <details class="topic-card" id="topic-{{ topic.id }}"{% if topic.id == primary_topic_id %} open{% endif %} data-course-topic{% if topic.id == primary_topic_id %} data-course-topic-primary="true"{% endif %}>
-        <summary class="topic-summary">
+      <section class="topic-card" id="topic-{{ topic.id }}" data-course-topic{% if topic.id == primary_topic_id %} data-course-topic-primary="true"{% endif %}>
+        <header class="topic-summary">
           <span class="topic-header">
             <span class="topic-emoji" aria-hidden="true">{{ forloop.counter|stringformat:"02d" }}</span>
             <span><small>{{ selected_level|ui_text }} {% translate "· Тема" %} {{ forloop.counter|ui_text }}</small><strong>{{ topic.title|ui_text }}</strong><span>{% if topic.journey %}{{ topic.journey.goal }}{% else %}{{ topic.description|ui_text }}{% endif %}</span></span>
@@ -81,10 +81,8 @@
           <span class="topic-progress" role="progressbar" aria-label="{% translate "Прогресс темы «" %}{{ topic.title|ui_text }}»" aria-valuemin="0" aria-valuemax="{{ topic.lesson_count }}" aria-valuenow="{{ topic.completed_count }}">
             <span style="--value: {{ topic.progress_percent }}%"></span>
           </span>
-          <span class="topic-summary-action">{% translate "Показать уроки" %} <span aria-hidden="true">⌄</span></span>
-        </summary>
+        </header>
         <div class="topic-lessons">
-          {% if topic.journey %}<details><summary>{% translate "Показать уроки" %}</summary>{% endif %}
           <div class="task-list">
             {% for task in topic.lessons %}
               <div class="task-card-row"><a class="task-card" href="{% url 'lesson' task.id %}">
@@ -94,7 +92,6 @@
               </a>{% if lesson_bookmarks_available %}<form method="post" action="{% url 'toggle-lesson-bookmark' task.id %}">{% csrf_token %}<input type="hidden" name="saved" value="{% if task.saved %}0{% else %}1{% endif %}"><input type="hidden" name="next" value="{{ request.get_full_path }}#topic-{{ topic.id }}"><button class="bookmark-icon-button{% if task.saved %} is-saved{% endif %}" type="submit" aria-label="{% if task.saved %}{% translate "Убрать урок «" %}{{ task.title|ui_text }}{% translate "» из сохранённого" %}{% else %}{% translate "Сохранить урок «" %}{{ task.title|ui_text }}»{% endif %}">{% if task.saved %}★{% else %}☆{% endif %}</button></form>{% endif %}</div>
             {% endfor %}
           </div>
-          {% if topic.journey %}</details>{% endif %}
           {% if topic.journey %}
             <a class="topic-action" href="{% url 'topic-journey' topic.id %}">{% translate "Продолжить" %} <span aria-hidden="true">→</span></a>
           {% elif topic.next_lesson %}
@@ -103,22 +100,9 @@
             <p class="topic-complete-status"><span aria-hidden="true">✓</span> {% translate "Все уроки пройдены" %}</p>
           {% endif %}
         </div>
-      </details>
+      </section>
     {% empty %}
       <div class="card empty-state"><span>🔎</span><h2>{% translate "Ничего не найдено" %}</h2><p>{% translate "Попробуй изменить запрос или сбросить фильтры." %}</p><a class="compact-button" href="?level={{ selected_level }}">{% translate "Сбросить фильтры" %}</a></div>
     {% endfor %}
   </div>
-{% endblock %}
-{% block scripts %}
-  <script>
-    (function () {
-      function openLinkedTopic() {
-        const id = window.location.hash.slice(1);
-        const topic = document.getElementById(id);
-        if (topic?.matches('[data-course-topic]')) topic.open = true;
-      }
-      openLinkedTopic();
-      window.addEventListener('hashchange', openLinkedTopic);
-    }());
-  </script>
 {% endblock %}

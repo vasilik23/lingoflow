@@ -1,10 +1,10 @@
 {% load i18n ui %}
 {% get_current_language as study_ui_language %}
-<details class="card mock-section run-review" data-run-review{% if latest_review %} open{% endif %}>
-  <summary><strong>{% translate "Разбор" %} · {{ review.title|ui_text }}</strong></summary>
+<section class="card mock-section run-review" data-run-review>
+  <h2><strong>{% translate "Разбор" %} · {{ review.title|ui_text }}</strong></h2>
   {% if review.status == 'scored' and review.details %}
     <p class="muted">{% translate "Сравни ответы и прочитай объяснения." %} {% if review.id == 'grammar' %}{% translate "Теория открывается в новой вкладке, прогон остаётся здесь." %}{% endif %}</p>
-    {% if review.sources %}{% for source in review.sources %}<details class="run-review-source" id="{{ source.anchor }}"><summary>{% translate "Текст задания / расшифровка" %} · <span lang="pl">{{ source.title|ui_text }}</span></summary><p class="mock-source-text" lang="pl">{{ source.text|ui_text }}</p></details>{% endfor %}{% endif %}
+    {% if review.sources %}{% for source in review.sources %}<section class="run-review-source" id="{{ source.anchor }}"><h2>{% translate "Текст задания / расшифровка" %} · <span lang="pl">{{ source.title|ui_text }}</span></h2><p class="mock-source-text" lang="pl">{{ source.text|ui_text }}</p></section>{% endfor %}{% endif %}
     <div class="run-review-filters" data-review-filters role="group" aria-label="{% translate 'Показать ответы' %}" hidden>
       <button type="button" class="compact-button" data-review-filter="all" aria-pressed="true">{% translate "Все" %}</button>
       <button type="button" class="compact-button" data-review-filter="incorrect" aria-pressed="false">{% translate "Ошибки" %}</button>
@@ -33,4 +33,4 @@
   {% else %}
     <p>{% translate "В этом старом прогоне сохранён только итог. Ответы для разбора недоступны." %}</p>
   {% endif %}
-</details>
+</section>

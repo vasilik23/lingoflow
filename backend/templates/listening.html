@@ -19,8 +19,8 @@
   <form method="post" class="listening-list">
     {% csrf_token %}
     <input type="hidden" name="active_section" data-listening-active value="{{ listening_active_section }}">
-    <details class="card listening-dialogue" name="listening-level" data-listening-level id="a1-a2-listening" tabindex="-1" aria-labelledby="dialogue-title"{% if listening_active_section == "a1-a2-listening" %} open{% endif %}>
-      <summary class="listening-level-summary"><h2 id="dialogue-title"><span class="level-badge">{{ dialogue.level|ui_text }}</span> {{ dialogue.title|ui_text }} <span aria-hidden="true">⌄</span></h2></summary>
+    <section class="card listening-dialogue" data-listening-level id="a1-a2-listening" tabindex="-1" aria-labelledby="dialogue-title">
+      <header class="listening-level-summary"><h2 id="dialogue-title"><span class="level-badge">{{ dialogue.level|ui_text }}</span> {{ dialogue.title|ui_text }}</h2></header>
       {{ dialogue.media|json_script:"dialogue-listening-media" }}
       {{ dialogue.lines|json_script:"listening-dialogue-lines" }}
       <div class="listening-dialogue-player" data-dialogue-player data-media-id="dialogue-listening-media" hidden>
@@ -30,10 +30,10 @@
           <button type="button" class="secondary" data-dialogue-repeat disabled>{% translate "↻ Повторить фрагмент" %}</button>
           <button type="button" class="secondary" data-listening-stop disabled>{% translate "Остановить" %}</button>
         </div>
-        <details class="listening-fragment-tools"><summary>{% translate "Фрагменты диалога" %}</summary>
+        <section class="listening-fragment-tools"><h2>{% translate "Фрагменты диалога" %}</h2>
         <div class="listening-fragments" aria-label="{% translate "Фрагменты диалога" %}">
           {% for line in dialogue.lines %}<button type="button" class="compact-button" data-dialogue-fragment="{{ forloop.counter0 }}">{% translate "Фрагмент" %} {{ forloop.counter|ui_text }}</button>{% endfor %}
-        </div></details>
+        </div></section>
       </div>
       <noscript><p class="muted">{% translate "Для воспроизведения нужен JavaScript; полный текст доступен ниже." %}</p></noscript>
       <details class="audio-transcript">
@@ -51,9 +51,9 @@
         </fieldset>
       {% endfor %}
       <p class="muted listening-audio-note">{% translate "Нейросетевая польская озвучка Piper. Это учебный аудиофайл, не запись диктора." %}</p>
-    </details>
-    <details class="card listening-dialogue" name="listening-level" data-listening-level id="b1-listening" tabindex="-1" aria-labelledby="b1-listening-title"{% if listening_active_section == "b1-listening" %} open{% endif %}>
-      <summary class="listening-level-summary"><h2 id="b1-listening-title"><span class="level-badge">{{ b1_listening.level|ui_text }}</span> {{ b1_listening.title|ui_text }} <span aria-hidden="true">⌄</span></h2></summary>
+    </section>
+    <section class="card listening-dialogue" data-listening-level id="b1-listening" tabindex="-1" aria-labelledby="b1-listening-title">
+      <header class="listening-level-summary"><h2 id="b1-listening-title"><span class="level-badge">{{ b1_listening.level|ui_text }}</span> {{ b1_listening.title|ui_text }}</h2></header>
       {{ b1_listening.media|json_script:"b1-listening-media" }}
       {{ b1_listening.lines|json_script:"b1-listening-lines" }}
       <div class="listening-dialogue-player" data-b1-player data-media-id="b1-listening-media" hidden>
@@ -80,9 +80,9 @@
         </fieldset>
       {% endfor %}
       <p class="muted listening-audio-note">{% translate "Нейросетевая польская озвучка Piper. Это учебный аудиофайл, не запись диктора." %}</p>
-    </details>
-    <details class="card listening-dialogue" name="listening-level" data-listening-level id="b2-listening" tabindex="-1" aria-labelledby="b2-listening-title"{% if listening_active_section == "b2-listening" %} open{% endif %}>
-      <summary class="listening-level-summary"><h2 id="b2-listening-title"><span class="level-badge">{{ b2_listening.level|ui_text }}</span> {{ b2_listening.title|ui_text }} <span aria-hidden="true">⌄</span></h2></summary>
+    </section>
+    <section class="card listening-dialogue" data-listening-level id="b2-listening" tabindex="-1" aria-labelledby="b2-listening-title">
+      <header class="listening-level-summary"><h2 id="b2-listening-title"><span class="level-badge">{{ b2_listening.level|ui_text }}</span> {{ b2_listening.title|ui_text }}</h2></header>
       {{ b2_listening.media|json_script:"b2-listening-media" }}
       {{ b2_listening.lines|json_script:"b2-listening-lines" }}
       <div class="listening-dialogue-player" data-b2-player data-media-id="b2-listening-media" hidden>
@@ -109,8 +109,8 @@
         </fieldset>
       {% endfor %}
       <p class="muted listening-audio-note">{% translate "Нейросетевая польская озвучка Piper. Это учебный аудиофайл, не запись диктора." %}</p>
-    </details>
-    <details class="card listening-word-level" name="listening-level" data-listening-level id="listening-words"{% if listening_active_section == "listening-words" %} open{% endif %}><summary class="listening-level-summary"><h2>{% translate "Отдельные слова · A1" %} <span aria-hidden="true">⌄</span></h2></summary>
+    </section>
+    <section class="card listening-word-level" data-listening-level id="listening-words"><header class="listening-level-summary"><h2>{% translate "Отдельные слова · A1" %}</h2></header>
     {% for item in listening_items %}
       <fieldset class="card listening-card">
         <legend>{% translate "Запись" %} {{ forloop.counter|ui_text }}</legend>
@@ -131,7 +131,7 @@
         {% endif %}
       </fieldset>
     {% endfor %}
-    </details>
+    </section>
     <button class="primary-button" data-listening-check type="submit">{% translate "Проверить ответы" %}</button>
   </form>
   <aside class="card audio-attribution" aria-labelledby="audio-sources-title">

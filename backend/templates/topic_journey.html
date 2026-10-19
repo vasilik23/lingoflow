@@ -16,7 +16,7 @@
     <h2 id="own-answer-title">{% translate 'Самостоятельный ответ' %}</h2><p>{{ journey.prompt }}</p>
     <label for="journey-answer">{% translate 'Твой черновик' %}</label><textarea id="journey-answer" lang="pl" rows="5" maxlength="2000" aria-describedby="journey-privacy"></textarea>
     <p class="muted" id="journey-privacy">{% translate 'Ответ не отправляется и не начисляет прогресс. Для сохранения скопируй текст.' %}</p>
-    <details><summary>{% translate 'Самопроверка' %}</summary><fieldset><legend>{% translate 'Что проверить' %}</legend>{% for check in journey.checks %}<label><input type="checkbox"> {{ check }}</label>{% endfor %}</fieldset><details><summary>{% translate 'Показать пример ответа после своей попытки' %}</summary><p lang="pl">{{ journey.sample }}</p><p class="muted">{% translate 'Это один возможный ответ. Сравни структуру и выполнение пунктов, а не копируй текст.' %}</p></details></details>
+    <section><h2>{% translate 'Самопроверка' %}</h2><fieldset><legend>{% translate 'Что проверить' %}</legend>{% for check in journey.checks %}<label><input type="checkbox"> {{ check }}</label>{% endfor %}</fieldset><details><summary>{% translate 'Показать пример ответа после своей попытки' %}</summary><p lang="pl">{{ journey.sample }}</p><p class="muted">{% translate 'Это один возможный ответ. Сравни структуру и выполнение пунктов, а не копируй текст.' %}</p></details></section>
   </section>
 </div>
 {% endblock %}

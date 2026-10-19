@@ -3,8 +3,8 @@
 <div class="mock-instructions">
   <h3 lang="pl">Polecenie</h3>
   <p lang="pl">{{ instruction.polish|ui_text }}</p>
-  <details lang="{{ instruction.russian|learning_language:study_ui_language }}">
-    <summary lang="{{ study_ui_language }}">{% translate "Пояснение задания" %}</summary>
+  <section lang="{{ instruction.russian|learning_language:study_ui_language }}">
+    <h2 lang="{{ study_ui_language }}">{% translate "Пояснение задания" %}</h2>
     <p lang="{{ instruction.russian|learning_language:study_ui_language }}">{{ instruction.russian|learning_markup }}</p>
-  </details>
+  </section>
 </div>

@@ -1,6 +1,6 @@
 {% load i18n %}
-<details class="ai-writing-review" data-ai-writing data-ai-token="{{ ai_token }}" data-ai-editor="{{ ai_editor }}" data-ai-url="{% url 'ai-writing-review' %}">
-  <summary>{% translate "Проверка письма с ИИ" %}</summary>
+<section class="ai-writing-review" data-ai-writing data-ai-token="{{ ai_token }}" data-ai-editor="{{ ai_editor }}" data-ai-url="{% url 'ai-writing-review' %}">
+  <h2>{% translate "Проверка письма с ИИ" %}</h2>
   <p class="muted">{% translate "Учебная оценка ИИ может ошибаться и не заменяет экзаменатора. Текст и задание отправляются в Groq только по твоему выбору. LingoFlow не сохраняет текст или разбор в аккаунте." %} <a href="{% url 'privacy' %}#privacy-ai">{% translate "Обработка данных" %}</a></p>
   {% if writing_ai_available %}
     <label class="ai-writing-consent"><input type="checkbox" data-ai-consent> {% translate "Разрешаю отправить этот текст и задание в Groq для проверки." %}</label>
@@ -11,4 +11,4 @@
   {% endif %}
   <p role="status" aria-live="polite" data-ai-status></p>
   <div class="writing-feedback" data-ai-result hidden></div>
-</details>
+</section>

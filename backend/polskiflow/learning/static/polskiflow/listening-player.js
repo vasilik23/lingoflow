@@ -21,10 +21,10 @@
     const selected = document.querySelector('[data-listening-active]');
     const check = document.querySelector('[data-listening-check]');
     const sync = () => {
-      const opened = levels.find(section => section.open);
+      const opened = levels.find(section => !section.hidden);
       levels.forEach(section => {
-        section.querySelectorAll('input[type="radio"]').forEach(input => { input.disabled = !section.open; });
-        if (!section.open) {
+        section.querySelectorAll('input[type="radio"]').forEach(input => { input.disabled = section.hidden; });
+        if (section.hidden) {
           if (active && section.contains(active.audio)) cancel(ui('Воспроизведение остановлено'));
           section.querySelectorAll('audio').forEach(audio => audio.pause());
         }
@@ -36,13 +36,11 @@
         else link.removeAttribute('aria-current');
       });
     };
-    levels.forEach(section => section.addEventListener('toggle', () => {
-      if (section.open) levels.forEach(other => { if (other !== section) other.open = false; });
-      sync();
-    }));
+    const initial = levels.find(section => section.id === selected.value) || levels[0];
+    levels.forEach(section => { section.hidden = section !== initial; });
     const openLinked = () => {
       const target = levels.find(section => '#' + section.id === window.location.hash);
-      if (target) { levels.forEach(section => { section.open = section === target; }); }
+      if (target) { levels.forEach(section => { section.hidden = section !== target; }); }
       sync();
     };
     selected.form.classList.add('listening-enhanced');
@@ -50,7 +48,7 @@
       link.addEventListener('click', () => {
         const target = levels.find(section => link.getAttribute('href') === '#' + section.id);
         if (!target) return;
-        levels.forEach(section => { section.open = section === target; });
+        levels.forEach(section => { section.hidden = section !== target; });
         sync();
       });
     });
