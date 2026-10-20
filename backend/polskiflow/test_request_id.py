@@ -8,6 +8,12 @@ from polskiflow.request_id import RequestIdMiddleware
 
 
 class RequestIdMiddlewareTests(SimpleTestCase):
+    def test_server_timing_preserves_existing_metrics_without_identifiers(self):
+        request = RequestFactory().get('/health/')
+        response = RequestIdMiddleware(lambda _: HttpResponse(headers={'Server-Timing': 'db;dur=2'}))(request)
+        self.assertRegex(response['Server-Timing'], r'^db;dur=2, app;dur=\d+$')
+        self.assertNotIn(response['X-Request-ID'], response['Server-Timing'])
+
     def test_response_gets_generated_uuid_request_id(self):
         response = self.client.get("/health/")
         self.assertEqual(response.status_code, 200)
