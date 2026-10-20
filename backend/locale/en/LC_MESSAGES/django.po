@@ -2512,10 +2512,10 @@ msgid "Воспроизведение"
 msgstr "Playing"
 
 msgid "Воспроизведение записи B1"
-msgstr "Reproduction of the recording B1"
+msgstr "Playing B1 recording"
 
 msgid "Воспроизведение записи B2"
-msgstr "Reproduction of the recording B2"
+msgstr "Playing B2 recording"
 
 msgid "Воспроизведение остановлено"
 msgstr "Playback stopped"
@@ -2524,10 +2524,10 @@ msgid "Воспроизведение остановлено. Начатое п�
 msgstr "Playback stopped. Listening started counted; 30 seconds pause before replay."
 
 msgid "Воспроизведение прервано; начатое прослушивание учтено."
-msgstr "Reproduction interrupted; started listening accounted for."
+msgstr "Playback interrupted; this listen has been counted."
 
 msgid "Воспроизведение: "
-msgstr "Reproduction: "
+msgstr "Playing: "
 
 msgid "Воспроизводится…"
 msgstr "Reproduced.."
@@ -3604,10 +3604,10 @@ msgid "Запись"
 msgstr "Recording"
 
 msgid "Запись B1 прослушана"
-msgstr "Recording. B1 wiretapped"
+msgstr "B1 recording finished"
 
 msgid "Запись B2 прослушана"
-msgstr "Recording. B2 wiretapped"
+msgstr "B2 recording finished"
 
 msgid "Запись готова только в этой вкладке. Прослушай её и отметь чек-лист."
 msgstr "It's only in this tab, so listen to it and check the checklist."
@@ -4843,7 +4843,7 @@ msgid "Минимальный инвариант включает тезис, о
 msgstr "The minimum invariant includes the thesis, the basis and the boundaries of the inference."
 
 msgid "Минимум "
-msgstr "Minimum. "
+msgstr "Minimum "
 
 msgid "Минимум 10 символов, строчные и заглавные буквы и цифра."
 msgstr "A minimum of 10 characters, lowercase and capital letters and a number."
@@ -5020,7 +5020,7 @@ msgid "На чём будет основано окончательное реш
 msgstr "What will the final decision of the leadership be based on?"
 
 msgid "На этом устройстве системное воспроизведение недоступно."
-msgstr "System reproduction is not available on this device."
+msgstr "System audio playback is unavailable on this device."
 
 msgid "Набираю темп"
 msgstr "Gaining pace"
@@ -5689,7 +5689,7 @@ msgid "Нужно оценить все четыре режима."
 msgstr "We need to evaluate all four regimes."
 
 msgid "Нужно проверить: "
-msgstr "We need to check. "
+msgstr "Needs checking: "
 
 msgid "О времени спрашиваем o której?"
 msgstr "We're asking about time. o której?"
@@ -8410,10 +8410,10 @@ msgid "Риторическая стратегия"
 msgstr "Rhetorical strategy"
 
 msgid "Род"
-msgstr "Rod"
+msgstr "Gender"
 
 msgid "Род и прилагательные"
-msgstr "Genus and adjectives"
+msgstr "Gender and adjectives"
 
 msgid "Родительный"
 msgstr "Genitive"
@@ -17604,3 +17604,12 @@ msgstr "There are no saved writing attempts in this period yet."
 
 msgid "Отдельное экзаменационное письмо B1 сохраняет в аккаунте дату, комплект, число слов и данные таймера. Тексты остаются в браузере; история не содержит экзаменационного балла. Эти итоги входят в экспорт и удаляются вместе с аккаунтом."
 msgstr "The separate B1 exam writing mode saves the date, set, word counts and timer data in your account. Texts remain in the browser; the history does not contain an exam score. These summaries are included in your export and deleted with your account."
+
+msgid "Слов: %(v0)s"
+msgstr "Words: %(v0)s"
+
+msgid "Минимум слов: %(v0)s"
+msgstr "Minimum words: %(v0)s"
+
+msgid "Минимум абзацев: %(v0)s"
+msgstr "Minimum paragraphs: %(v0)s"

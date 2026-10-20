@@ -18485,3 +18485,12 @@ msgstr "W tym okresie nie ma jeszcze zapisanych prób pisania."
 
 msgid "Отдельное экзаменационное письмо B1 сохраняет в аккаунте дату, комплект, число слов и данные таймера. Тексты остаются в браузере; история не содержит экзаменационного балла. Эти итоги входят в экспорт и удаляются вместе с аккаунтом."
 msgstr "Osobny tryb pisania egzaminacyjnego B1 zapisuje na koncie datę, zestaw, liczbę słów i dane minutnika. Teksty pozostają w przeglądarce; historia nie zawiera oceny egzaminacyjnej. Te wyniki są uwzględniane w eksporcie i usuwane wraz z kontem."
+
+msgid "Слов: %(v0)s"
+msgstr "Słów: %(v0)s"
+
+msgid "Минимум слов: %(v0)s"
+msgstr "Minimum słów: %(v0)s"
+
+msgid "Минимум абзацев: %(v0)s"
+msgstr "Minimum akapitów: %(v0)s"
