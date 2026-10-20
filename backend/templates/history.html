@@ -14,8 +14,9 @@
       <div class="weekly-review-summary">
         <article class="card insight-stat"><span>{% translate "Активных дней" %}</span><strong>{{ weekly_review.active_days|ui_text }}</strong><small>{% translate "из последних 7" %}</small></article>
         <article class="card insight-stat"><span>{% translate "Завершено" %}</span><strong>{{ weekly_review.completed_lessons|ui_text }}</strong><small>{% if weekly_review.completed_delta > 0 %}{% translate "на" %} {{ weekly_review.completed_delta|ui_text }} {% translate "больше прошлой недели" %}{% elif weekly_review.completed_delta < 0 %}{% translate "на" %} {{ weekly_review.completed_delta|stringformat:"d"|slice:"1:" }} {% translate "меньше прошлой недели" %}{% else %}{% translate "как на прошлой неделе" %}{% endif %}</small></article>
-        <article class="card insight-stat"><span>{% translate "Точность" %}</span><strong>{% if weekly_review.accuracy != None %}{{ weekly_review.accuracy|ui_text }}%{% else %}—{% endif %}</strong><small>{% translate "по последнему результату каждого урока" %}</small></article>
+        <article class="card insight-stat"><span>{% translate "Точность" %}</span><strong>{% if weekly_review.accuracy != None %}{{ weekly_review.accuracy|ui_text }}%{% else %}—{% endif %}</strong><small>{% translate "Проверяемые ответы" %}: {{ weekly_review.answer_count|ui_text }}</small></article>
       </div>
+      <p class="muted">{% translate "Самооценка карточек" %}: {{ weekly_review.self_known|ui_text }} / {{ weekly_review.self_total|ui_text }} · {% translate "Не входит в точность ответов." %}</p>
       {% if weekly_review.has_results %}
         <div class="weekly-review-columns">
           <article class="card weekly-review-card">
@@ -37,7 +38,7 @@
     <section class="insights-summary" aria-label="{% translate "Итоги за 28 дней" %}">
       <article class="card insight-stat"><span>{% translate "Занятий" %}</span><strong>{{ insights.completed_28_days|ui_text }}</strong><small>{% translate "завершено за 28 дней" %}</small></article>
       <article class="card insight-stat"><span>{% translate "Активных дней" %}</span><strong>{{ insights.active_28_days|ui_text }}</strong><small>{% translate "из последних 28" %}</small></article>
-      <article class="card insight-stat"><span>{% translate "Точность" %}</span><strong>{% if insights.accuracy != None %}{{ insights.accuracy|ui_text }}%{% else %}—{% endif %}</strong><small>{% translate "по заданиям с результатом" %}</small></article>
+      <article class="card insight-stat"><span>{% translate "Точность" %}</span><strong>{% if insights.accuracy != None %}{{ insights.accuracy|ui_text }}%{% else %}—{% endif %}</strong><small>{% translate "Проверяемые ответы" %}: {{ insights.answer_count|ui_text }}</small></article>
     </section>
     <section class="insights-grid">
       <article class="card activity-panel" aria-labelledby="activity-title">
@@ -53,7 +54,8 @@
     </section>
     <section class="skill-breakdown" aria-labelledby="skill-breakdown-title">
       <div class="section-heading"><div><p class="eyebrow">{% translate "Последние 30 дней" %}</p><h2 id="skill-breakdown-title">{% translate "По типам практики" %}</h2></div></div>
-      {% if insights.breakdown %}<div class="skill-breakdown-list">{% for item in insights.breakdown %}<article class="card skill-breakdown-item"><div><strong>{{ item.label|ui_text }}</strong><small>{{ item.attempts|ui_text }} {% translate "заверш." %}</small></div><div class="skill-meter" role="progressbar" aria-label="{{ item.label|ui_text }}: {{ item.accuracy|ui_text }}%" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ item.accuracy }}"><span style="--value: {{ item.accuracy }}%"></span></div><strong>{{ item.accuracy|ui_text }}%</strong></article>{% endfor %}</div>{% else %}<p class="card muted">{% translate "Заверши несколько уроков, чтобы увидеть распределение результатов." %}</p>{% endif %}
+      <p class="muted">{% translate "Самооценка карточек" %}: {{ insights.self_known|ui_text }} / {{ insights.self_total|ui_text }} · {% translate "Не входит в точность ответов." %}</p>
+      {% if insights.breakdown %}<div class="skill-breakdown-list">{% for item in insights.breakdown %}<article class="card skill-breakdown-item"><div><strong>{{ item.label|ui_text }}</strong><small>{% translate "Проверяемые ответы" %}: {{ item.answers|ui_text }}</small></div><div class="skill-meter" role="progressbar" aria-label="{{ item.label|ui_text }}: {{ item.accuracy|ui_text }}%" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ item.accuracy }}"><span style="--value: {{ item.accuracy }}%"></span></div><strong>{{ item.accuracy|ui_text }}%</strong></article>{% endfor %}</div>{% else %}<p class="card muted">{% translate "Заверши несколько уроков, чтобы увидеть распределение результатов." %}</p>{% endif %}
     </section>
   {% else %}
     <p class="data-notice">{% translate "Аналитика временно недоступна. История ниже может оставаться доступной." %}</p>
@@ -75,7 +77,7 @@
         <li class="card history-item">
           <span class="history-icon" aria-hidden="true">{{ item.emoji|ui_text }}</span>
           <div><strong>{{ item.title|ui_text }}</strong><small>{{ item.level|ui_text }} · {{ item.plan_date|ui_text }}</small></div>
-          <span class="history-score">{{ item.score|ui_text }}</span>
+          <span class="history-score">{{ item.score|ui_text }}{% if item.source %}<small>{{ item.source|ui_text }}</small>{% endif %}</span>
         </li>
       {% endfor %}
     </ol>

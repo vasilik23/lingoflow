@@ -48,7 +48,7 @@ const settle = () => new Promise(resolve => setImmediate(resolve));
     p.pending.at(-1).resolve({ok: false, status, json: async () => ({saved: false})}); await settle();
     assert.equal(p.nodes['history-retry'].hidden, false);
     assert.equal(p.editors[0].value, 'Private essay one');
-    assert.match(p.nodes['history-status'].textContent, /пока не сохранена/);
+    assert.match(p.nodes['history-status'].textContent, /Ожидают отправки: 1/);
   }
   click(p.nodes['history-retry']);
   p.pending.at(-1).resolve({ok: true, json: async () => ({saved: true, attempt_id: payload.attempt_id})}); await settle();
@@ -84,6 +84,17 @@ const settle = () => new Promise(resolve => setImmediate(resolve));
   assert.notEqual(a.attempt_id, b.attempt_id);
   const other = page('another-owner'); assert.equal(other.requests.length, 0, 'owner isolation');
   p = page(); assert.equal(p.requests.length, 2, 'both immutable summaries survive replacement and refresh');
+  // B is acknowledged first; A must remain visible and independently retryable.
+  const bIndex = p.requests.findIndex(r => JSON.parse(r.options.body).attempt_id === b.attempt_id);
+  p.pending[bIndex].resolve({ok: true, json: async () => ({saved: true, attempt_id: b.attempt_id})});
+  await settle();
+  assert.match(p.nodes['history-status'].textContent, /Ожидают отправки: 1/);
+  assert.equal(p.nodes['history-retry'].hidden, false);
+  const aIndex = bIndex === 0 ? 1 : 0;
+  p.pending[aIndex].reject(Error('offline')); await settle();
+  assert.equal(p.nodes['history-retry'].disabled, false);
+  click(p.nodes['history-retry']);
+  assert.equal(JSON.parse(p.requests.at(-1).options.body).attempt_id, a.attempt_id);
   const savedIds = new Set();
   p.requests.forEach((r, i) => {
     const payload = JSON.parse(r.options.body);

@@ -1564,3 +1564,14 @@ section.lesson-reference > h2, .writing-hint > h2, .writing-self-check > h2, .wr
 .listening-level-summary { cursor: default; }
 [data-listening-level] > .listening-level-summary { margin-bottom: 1rem; }
 section.run-review > h2, .run-review-source > h2 { font-size: 1.1rem; }
+
+/* Keep the result and its next action together, ahead of detailed feedback. */
+.public-demo-result { gap: .85rem; }
+.public-demo-result > p, .public-demo-result > h1, .public-demo-result .public-demo-steps { margin-block: 0; }
+.public-demo-outcome { display: grid; gap: .75rem; align-items: center; }
+.public-demo-outcome .public-demo-score, .public-demo-outcome .complete-next { margin: 0; }
+@media (min-width: 600px) {
+  .public-demo-outcome { grid-template-columns: minmax(7rem, .4fr) minmax(0, 1fr); }
+}
+
+.history-score small { display: block; margin-top: .25rem; color: var(--muted); font-size: .75rem; font-weight: 400; }

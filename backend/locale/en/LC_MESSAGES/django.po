@@ -17619,3 +17619,15 @@ msgstr "The previous review has been kept."
 
 msgid "Расшифровка прервана. Твой текст сохранён."
 msgstr "Transcription cancelled. Your text has been kept."
+
+msgid "Проверяемые ответы"
+msgstr "Checked answers"
+
+msgid "Самооценка карточек"
+msgstr "Flashcard self-assessment"
+
+msgid "Не входит в точность ответов."
+msgstr "Excluded from answer accuracy."
+
+msgid "Ожидают отправки: "
+msgstr "Pending upload: "

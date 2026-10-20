@@ -80,6 +80,17 @@ class PublicDemoTests(TestCase):
         profile.assert_not_called()
         completion.assert_not_called()
 
+    def test_result_groups_next_action_with_score_before_detailed_feedback(self):
+        lesson = load_demo_lesson('B1')
+        response = self.answer(str(lesson['question']['correct']), level='B1')
+        # Follow the real explanation page link so signed review state is retained.
+        link = re.search(r'href="([^"]*step=result[^"]*)"', response.content.decode())[1]
+        result = self.client.get(link.replace('&amp;', '&'))
+        html = result.content.decode()
+        self.assertContains(result, 'public-demo-outcome')
+        self.assertLess(html.index('class="complete-next"'), html.index('<section><h2>Разбор'))
+        self.assertContains(result, 'Мини-урок завершён', count=1)
+
     def test_invalid_duplicate_and_missing_values_are_rejected(self):
         for value in ('-1', '100', 'true', '01', ['0', '1']):
             self.assertEqual(self.answer(value).status_code, 400)

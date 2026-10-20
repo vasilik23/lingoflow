@@ -97,9 +97,15 @@
   const words = text => (text.trim().match(/\S+/gu) || []).length;
   function historyRender() {
     const attempt = data[set];
-    if (!historyStatus || !historyRetry || attempt?.status !== 'finished') return;
-    historyRetry.hidden = !attempt.historyPayload || attempt.historySaved === true;
-    historyRetry.disabled = sending.has(attempt.attemptId);
+    if (!historyStatus || !historyRetry) return;
+    const pending = queued();
+    historyRetry.hidden = pending.length === 0;
+    historyRetry.disabled = pending.length > 0 && pending.every(item => sending.has(item.attempt_id));
+    if (pending.length) {
+      historyStatus.textContent = ui('Ожидают отправки: ') + pending.length;
+      return;
+    }
+    if (attempt?.status !== 'finished') { historyStatus.textContent = ''; return; }
     historyStatus.textContent = !attempt.historyPayload
       ? ui('Эта старая попытка доступна только в браузере; сводка в аккаунт не отправляется.')
       : attempt.historySaved ? ui('Сводка попытки сохранена в аккаунте. Тексты не отправлялись.')
@@ -134,6 +140,7 @@
     finally { window.clearTimeout(timeout); sending.delete(id); historyRender(); }
   }
   function syncHistory() {
+    historyRender();
     return Promise.all(queued().map(sendSummary));
   }
   function counts() {
