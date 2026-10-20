@@ -18,23 +18,22 @@ import { WritingScreen } from './src/components/WritingScreen';
 import { InteractionScreen } from './src/components/InteractionScreen';
 import { PracticeScreen } from './src/components/PracticeScreen';
 import { supabase } from './src/lib/supabase';
-import { palette } from './src/theme';
+import { palette, type Colors } from './src/theme';
 
 export default function App() {
   const dark = useColorScheme() === 'dark';
   const colors = palette(dark);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
-  const [lessonLaunch, setLessonLaunch] = useState<{ lessonId: string; stepIndex: number; score: number } | null>(null);
-  const [screen, setScreen] = useState<'today' | 'practice' | 'feedback' | 'review' | 'reading' | 'listening' | 'profile' | 'achievements' | 'history' | 'diagnostic' | 'writing' | 'interaction'>('today');
 
   useEffect(() => {
-    let mounted = true;
+    let mounted = true, authChanged = false;
     void supabase.auth.getSession().then(({ data }) => {
-      if (mounted) { setSession(data.session); setLoading(false); }
-    });
+      if (mounted && !authChanged) { setSession(data.session); setLoading(false); }
+    }).catch(() => { if (mounted && !authChanged) setLoading(false); });
     const { data: listener } = supabase.auth.onAuthStateChange((_event, next) => {
-      setSession(next); setLoading(false);
+      authChanged = true;
+      if (mounted) { setSession(next); setLoading(false); }
     });
     const appState = AppState.addEventListener('change', (state) => {
       if (state === 'active') supabase.auth.startAutoRefresh();
@@ -49,8 +48,18 @@ export default function App() {
   return (
     <SafeAreaView style={[styles.shell, { backgroundColor: colors.background }]}>
       <StatusBar style={dark ? 'light' : 'dark'} />
-      {session ? (lessonLaunch
-        ? <LessonScreen {...lessonLaunch} session={session} colors={colors} onClose={() => setLessonLaunch(null)} />
+      {session ? <LearnerScreens key={session.user.id} session={session} colors={colors} /> : <LoginScreen colors={colors} booting={loading} />}
+    </SafeAreaView>
+  );
+}
+
+// Owner-bound state survives token refresh, and is destroyed on logout/account change.
+function LearnerScreens({ session, colors }: { session: Session; colors: Colors }) {
+  const [lessonLaunch, setLessonLaunch] = useState<{ lessonId: string; stepIndex: number; score: number } | null>(null);
+  const [screen, setScreen] = useState<'today' | 'practice' | 'feedback' | 'review' | 'reading' | 'listening' | 'profile' | 'achievements' | 'history' | 'diagnostic' | 'writing' | 'interaction'>('today');
+
+  return (lessonLaunch
+        ? <LessonScreen key={lessonLaunch.lessonId} {...lessonLaunch} session={session} colors={colors} onClose={() => setLessonLaunch(null)} />
         : screen === 'feedback'
           ? <FeedbackScreen session={session} colors={colors} onClose={() => setScreen('today')} />
           : screen === 'practice'
@@ -74,8 +83,7 @@ export default function App() {
                           : screen === 'interaction'
                             ? <InteractionScreen session={session} colors={colors} onClose={() => setScreen('today')} />
                             : <TodayScreen session={session} colors={colors} onOpenLesson={(lessonId) => setLessonLaunch({ lessonId, stepIndex: 0, score: 0 })} onResumeLesson={setLessonLaunch} onOpenFeedback={() => setScreen('feedback')} onOpenReview={() => setScreen('review')} onOpenProfile={() => setScreen('profile')} onOpenPractice={() => setScreen('practice')} />
-      ) : <LoginScreen colors={colors} booting={loading} />}
-    </SafeAreaView>
+
   );
 }
 

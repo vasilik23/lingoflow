@@ -24,10 +24,11 @@
     "web": "expo start --web",
     "typecheck": "tsc --noEmit",
     "config:check": "node scripts/validate-beta-config.mjs",
-    "verify": "npm run config:check && npm run test:build-readiness && npm run typecheck",
+    "verify": "npm run config:check && npm run test:build-readiness && npm run test:learning && npm run typecheck",
     "eas": "npx --yes eas-cli@24.14.0",
     "build:check": "node scripts/check-build-readiness.mjs",
-    "test:build-readiness": "node --test scripts/build-readiness.test.mjs"
+    "test:build-readiness": "node --test scripts/build-readiness.test.mjs",
+    "test:learning": "node --test scripts/lesson-recovery.test.cjs scripts/session-isolation.test.cjs scripts/lesson-result-api.test.cjs"
   },
   "private": true
 }
