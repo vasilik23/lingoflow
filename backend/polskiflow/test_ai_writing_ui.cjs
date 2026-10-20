@@ -1,7 +1,7 @@
 const fs = require('node:fs'), vm = require('node:vm'), assert = require('node:assert/strict'), path = require('node:path');
 class Element extends EventTarget {
   constructor() {super(); this.value = ''; this.dataset = {}; this.checked = false; this.hidden = false; this.children = []; this.textContent = '';}
-  replaceChildren() {this.children = [];}
+  replaceChildren(...nodes) {this.children = nodes;}
   append(node) {this.children.push(node);}
 }
 const source = fs.readFileSync(path.join(__dirname, 'learning/static/polskiflow/ai-writing.js'), 'utf8');
@@ -11,13 +11,14 @@ function setup(language, speech = false) {
   nodes.panel.dataset = {aiEditor: 'editor', aiUrl: '/review/', aiToken: 'fixture', ...(speech ? {aiSpeech: '1'} : {})};
   nodes.panel.querySelector = selector => ({'[data-ai-submit]': nodes.button, '[data-ai-consent]': nodes.consent, '[data-ai-confirmed]': nodes.consent, '[data-ai-status]': nodes.status, '[data-ai-result]': nodes.result})[selector];
   nodes.panel.closest = () => ({querySelectorAll: () => []});
-  const requests = [];
+  const requests = [], timers = new Map(); let timerId = 0;
   vm.runInNewContext(source, {
     document: {documentElement: {lang: language}, querySelectorAll: () => [nodes.panel], querySelector: () => ({value: 'csrf'}), getElementById: () => nodes.editor, createElement: () => new Element()},
-    window: nodes.window, AbortController, setTimeout, clearTimeout,
-    fetch(url, options) {return new Promise(resolve => requests.push({url, options, deliver(payload) {resolve({ok: true, json: async () => payload});}}));},
+    window: nodes.window, AbortController,
+    setTimeout(fn) {const id = ++timerId; timers.set(id, fn); return id;}, clearTimeout(id) {timers.delete(id);},
+    fetch(url, options) {return new Promise((resolve, reject) => requests.push({url, options, fail: reject, deliver(payload, ok = true) {resolve({ok, json: async () => payload});}}));},
   });
-  return {nodes, requests};
+  return {nodes, requests, timers};
 }
 const result = {score: 12, maximum: 20, criteria: Object.fromEntries(['content', 'structure', 'grammar', 'vocabulary'].map(key => [key, {score: 3, feedback: 'fixture feedback'}])), errors: [{quote: '<img src=x>', correction: 'Mam pytanie', explanation: 'fixture explanation'}], next_step: 'fixture next step'};
 const flush = () => new Promise(resolve => setImmediate(resolve));
@@ -54,6 +55,35 @@ const flush = () => new Promise(resolve => setImmediate(resolve));
     assert.equal(requests[5].options.signal.aborted, true);
     n.consent.checked = true; // A fresh permission must not revive a previous request with identical text.
     requests[5].deliver({result}); await flush(); assert.equal(n.result.hidden, true);
+  }
+  for (const speech of [false, true]) {
+    const {nodes: n, requests, timers} = setup('en', speech);
+    n.consent.checked = true;
+    n.button.dispatchEvent(new Event('click')); requests[0].deliver({result}); await flush();
+    const previous = n.result.children;
+    n.button.dispatchEvent(new Event('click')); n.button.dispatchEvent(new Event('click'));
+    assert.equal(requests.length, 2, 'double click cannot submit twice');
+    requests[1].deliver({error: 'Quota reached'}, false); await flush();
+    assert.equal(n.result.hidden, false, 'a failed retry preserves the previous report');
+    assert.equal(n.result.children, previous);
+    assert.equal(n.editor.value, 'Mam problem');
+    n.button.dispatchEvent(new Event('click')); requests[2].fail(new TypeError('Load failed')); await flush();
+    assert.equal(n.result.hidden, false);
+    assert(!n.status.textContent.includes('Load failed'), 'browser-specific errors are localized');
+    n.button.dispatchEvent(new Event('click')); requests[3].deliver({result: {score: 10}}); await flush();
+    assert.equal(n.result.children, previous, 'an incomplete success cannot erase a good report');
+    assert.equal(n.result.hidden, false);
+    n.button.dispatchEvent(new Event('click')); [...timers.values()][0]();
+    assert.equal(requests[4].options.signal.aborted, true);
+    requests[4].fail(Object.assign(new Error(), {name: 'AbortError'})); await flush();
+    assert.equal(n.result.hidden, false, 'timeout preserves the previous report');
+    n.button.dispatchEvent(new Event('click'));
+    n.editor.value = 'New draft'; n.editor.dispatchEvent(new Event('input'));
+    requests[5].deliver({error: 'Old error'}, false); await flush();
+    assert.equal(n.result.hidden, true); assert.equal(n.status.textContent, '');
+    n.button.dispatchEvent(new Event('click')); requests[6].deliver({result}); await flush();
+    assert.equal(n.result.hidden, false); assert.equal(n.button.disabled, false);
+    assert.equal(timers.size, 0);
   }
   console.log('AI writing/transcript: consent revocation, stale response, pagehide, language and escaped correction PASS');
 })().catch(error => {console.error(error); process.exitCode = 1;});

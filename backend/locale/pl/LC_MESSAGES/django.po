@@ -18494,3 +18494,9 @@ msgstr "Minimum słów: %(v0)s"
 
 msgid "Минимум абзацев: %(v0)s"
 msgstr "Minimum akapitów: %(v0)s"
+
+msgid "Предыдущий разбор сохранён."
+msgstr "Poprzednia analiza została zachowana."
+
+msgid "Расшифровка прервана. Твой текст сохранён."
+msgstr "Transkrypcja została przerwana. Twój tekst został zachowany."
