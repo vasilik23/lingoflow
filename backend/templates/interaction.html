@@ -233,7 +233,7 @@
             const url = URL.createObjectURL(recording.blob);
             historyUrls.push(url);
             title.textContent = recording.title;
-            date.textContent = new Date(recording.createdAt).toLocaleString("ru-RU");
+            date.textContent = new Date(recording.createdAt).toLocaleString(document.documentElement.lang || "ru");
             audio.controls = true;
             audio.src = url;
             audio.setAttribute("aria-label", ui("Прослушать сохранённый ответ: ") + recording.title);
@@ -272,7 +272,7 @@
         const status = card.querySelector("[data-save-status]");
         function updateCount() {
           const value = textarea.value.trim();
-          count.textContent = (value ? value.split(/\s+/u).length : 0) + ui(" слов");
+          count.textContent = ui`Слов: ${value ? value.split(/\s+/u).length : 0}`;
         }
         try { textarea.value = localStorage.getItem(key) || ""; }
         catch (error) { status.textContent = ui("Локальное сохранение недоступно"); }

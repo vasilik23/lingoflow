@@ -143,7 +143,7 @@
       }
 
       function updateCount(panel, value) {
-        panel.querySelector("[data-word-count]").textContent = words(value) + ui(" слов");
+        panel.querySelector("[data-word-count]").textContent = ui`Слов: ${words(value)}`;
       }
 
       function paragraphs(value) {
@@ -157,14 +157,23 @@
         const markers = panel.dataset.markers.split("|").filter(Boolean);
         const foundMarkers = markers.filter(function (marker) { return normalized.includes(marker.toLocaleLowerCase("pl-PL")); });
         const checks = [
-          { passed: words(value) >= minimumWords, text: ui("Минимум ") + minimumWords + ui(" слов") },
-          { passed: paragraphs(value) >= minimumParagraphs, text: ui("Минимум ") + minimumParagraphs + ui(" абзаца") },
+          { passed: words(value) >= minimumWords, text: ui`Минимум слов: ${minimumWords}` },
+          { passed: paragraphs(value) >= minimumParagraphs, text: ui`Минимум абзацев: ${minimumParagraphs}` },
           { passed: foundMarkers.length === markers.length, text: ui("Слова и выражения: ") + markers.join(", ") }
         ];
         const result = panel.querySelector("[data-writing-feedback]");
-        result.innerHTML = ui("<strong>Объём и структура</strong><ul>") + checks.map(function (check) {
-          return "<li class=\"" + (check.passed ? "passed" : "missing") + "\">" + (check.passed ? "✓ " : ui("Нужно проверить: ")) + check.text + "</li>";
-        }).join("") + ui("</ul><p>Проверены только объём, абзацы и указанные выражения. Грамматику, смысл и стиль нужно проверить отдельно.</p>");
+        const heading = document.createElement('strong');
+        heading.textContent = ui('Объём и структура');
+        const list = document.createElement('ul');
+        checks.forEach(function (check) {
+          const item = document.createElement('li');
+          item.className = check.passed ? 'passed' : 'missing';
+          item.textContent = (check.passed ? '✓ ' : ui('Нужно проверить: ')) + check.text;
+          list.append(item);
+        });
+        const scope = document.createElement('p');
+        scope.textContent = ui('Проверены только объём, абзацы и указанные выражения. Грамматику, смысл и стиль нужно проверить отдельно.');
+        result.replaceChildren(heading, list, scope);
         const next = document.createElement('p');
         next.dataset.writingNextStep = '';
         next.textContent = !checks[0].passed ? ui('Допиши текст до нужного объёма.') : !checks[1].passed ? ui('Раздели текст на абзацы.') : !checks[2].passed ? ui('Проверь, раскрыты ли все пункты задания.') : ui('Перечитай ответ и проверь смысл и грамматику.');

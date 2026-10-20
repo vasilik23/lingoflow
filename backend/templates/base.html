@@ -65,7 +65,7 @@
       <details class="user-menu app-user-menu">
         <summary aria-label="{% translate "Открыть меню пользователя" %}"><span class="avatar">{{ request.supabase_user.email|first|upper|default:"U" }}</span></summary>
         <div class="user-menu-popover">
-          <span class="user-email">{{ request.supabase_user.email|default:"Пользователь" }}</span>
+          <span class="user-email">{{ request.supabase_user.email|default:_("Пользователь") }}</span>
           <a class="user-menu-link" href="{% url 'profile' %}">{% translate "Профиль" %}</a>
           <a class="user-menu-link" href="{% url 'learning-history' %}">{% translate "Прогресс и история" %}</a>
           <a class="user-menu-link" href="{% url 'learning-space' %}">{% translate "Мои материалы" %}</a>
