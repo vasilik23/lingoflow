@@ -1,4 +1,5 @@
 import { config } from './config';
+import type { LessonResultPayload } from './lesson-result';
 
 export type TodayTask = { id: string; title: string; description: string; minutes: number; emoji: string; completed: boolean; plan_type: string; reinforcement_reason: string | null };
 export type LessonStep = { position: number; type: 'flashcard' | 'choice' | 'sentence_builder'; polish?: string; translation?: string; example?: string; prompt?: string; options?: string[]; tokens?: string[] };
@@ -114,12 +115,12 @@ export function checkAnswer(lessonId: string, position: number, answer: { select
   return apiRequest(`/api/v1/lessons/${encodeURIComponent(lessonId)}/answer/`, accessToken, { position, ...answer }, 'POST');
 }
 
-export function saveLessonResult(lessonId: string, cardsTotal: number, cardsKnown: number, eventId: string, accessToken: string) {
-  const completedAt = new Date().toISOString();
-  return apiRequest('/api/v1/me/lesson-results/', accessToken, {
-    event_id: eventId, lesson_id: lessonId, plan_date: completedAt.slice(0, 10), completed_at: completedAt,
-    cards_total: cardsTotal, cards_known: cardsKnown, contract_version: '1.0', client_instance_id: 'polskiflow-mobile-v1',
-  }, 'POST');
+export async function saveLessonResult(event: LessonResultPayload, accessToken: string) {
+  const receipt = await apiRequest<{ event_id: string; status: string }>('/api/v1/me/lesson-results/', accessToken, event, 'POST');
+  if (receipt?.event_id !== event.event_id || !['created', 'duplicate'].includes(receipt.status)) {
+    throw new Error('Сервер не подтвердил сохранение результата. Повторите отправку.');
+  }
+  return receipt;
 }
 
 export type PracticePreferences = {
