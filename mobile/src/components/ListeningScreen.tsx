@@ -4,6 +4,7 @@ import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from
 import type { Session } from '@supabase/supabase-js';
 
 import { checkListeningAnswer, loadListening, type ListeningAnswer, type ListeningExercise } from '../lib/api';
+import { RequestGate } from '../lib/request-gate';
 import type { Colors } from '../theme';
 
 const speeds = [0.75, 1, 1.15] as const;
@@ -12,17 +13,28 @@ export function ListeningScreen({ session, colors, onClose }: { session: Session
   const [items, setItems] = useState<ListeningExercise[]>([]); const [exercise, setExercise] = useState<ListeningExercise | null>(null);
   const [speed, setSpeed] = useState<number>(1); const [speaking, setSpeaking] = useState(false);
   const [answers, setAnswers] = useState<Record<string, ListeningAnswer>>({}); const [loading, setLoading] = useState(true); const [error, setError] = useState('');
-  const load = useCallback(async () => { setLoading(true); setError(''); try { const rows = await loadListening(session.access_token); setItems(rows.filter((item) => item.delivery === 'device_tts')); } catch { setError('Не удалось загрузить аудирование.'); } finally { setLoading(false); } }, [session.access_token]);
-  useEffect(() => { void load(); return () => { void Speech.stop(); }; }, [load]);
+  const [requests] = useState(() => new RequestGate());
+  const load = useCallback(async () => { requests.invalidate(); setLoading(true); setError(''); try { const rows = await loadListening(session.access_token); setItems(rows.filter((item) => item.delivery === 'device_tts')); } catch { setError('Не удалось загрузить аудирование.'); } finally { setLoading(false); } }, [session.access_token, requests]);
+  useEffect(() => { void load(); return () => { requests.invalidate(); void Speech.stop(); }; }, [load, requests]);
 
   function speak(text: string) { void Speech.stop().then(() => { setSpeaking(true); Speech.speak(text, { language: 'pl-PL', rate: speed, onDone: () => setSpeaking(false), onStopped: () => setSpeaking(false), onError: () => { setSpeaking(false); setError('Системный голос недоступен на этом устройстве.'); } }); }); }
-  async function answer(questionId: string, selectedIndex: number) { if (!exercise || answers[questionId]) return; setLoading(true); setError(''); try { const result = await checkListeningAnswer(exercise.id, questionId, selectedIndex, session.access_token); setAnswers((current) => ({ ...current, [questionId]: result })); } catch { setError('Ответ не проверился. Попробуйте снова.'); } finally { setLoading(false); } }
-  function choose(item: ListeningExercise) { void Speech.stop(); setExercise(item); setAnswers({}); setError(''); setSpeaking(false); }
+  async function answer(questionId: string, selectedIndex: number) {
+    if (!exercise || answers[questionId]) return;
+    const ticket = requests.begin(); if (ticket === null) return;
+    setLoading(true); setError('');
+    try {
+      const result = await checkListeningAnswer(exercise.id, questionId, selectedIndex, session.access_token);
+      if (requests.isCurrent(ticket)) setAnswers((current) => ({ ...current, [questionId]: result }));
+    } catch { if (requests.isCurrent(ticket)) setError('Ответ не проверился. Попробуйте снова.'); }
+    finally { if (requests.finish(ticket)) setLoading(false); }
+  }
+  function leaveExercise() { requests.invalidate(); void Speech.stop(); setExercise(null); setAnswers({}); setError(''); setLoading(false); setSpeaking(false); }
+  function choose(item: ListeningExercise) { requests.invalidate(); setLoading(false); void Speech.stop(); setExercise(item); setAnswers({}); setError(''); setSpeaking(false); }
 
   if (!exercise) return <ScrollView contentContainerStyle={styles.page}><Pressable accessibilityRole="button" onPress={onClose}><Text style={[styles.back, { color: colors.primary }]}>‹ Сегодня</Text></Pressable><Text style={[styles.title, { color: colors.text }]}>Аудирование</Text><Text style={[styles.copy, { color: colors.muted }]}>Связные оригинальные записи через системный польский голос. Это не студийное аудио.</Text>{loading ? <ActivityIndicator color={colors.primary} /> : items.map((item) => <Pressable accessibilityRole="button" key={item.id} onPress={() => choose(item)} style={[styles.item, { backgroundColor: colors.surface, borderColor: colors.border }]}><Text style={[styles.itemTitle, { color: colors.text }]}>{item.title}</Text><Text style={[styles.level, { color: colors.primary }]}>{item.level} · {item.questions.length} задания</Text></Pressable>)}{!loading && !items.length && !error && <Text style={{ color: colors.muted }}>Упражнения пока недоступны.</Text>}{!!error && <Text accessibilityRole="alert" style={{ color: colors.danger }}>{error}</Text>}</ScrollView>;
 
   return <ScrollView contentContainerStyle={styles.page}>
-    <Pressable accessibilityRole="button" onPress={() => { void Speech.stop(); setExercise(null); }}><Text style={[styles.back, { color: colors.primary }]}>‹ Все упражнения</Text></Pressable><Text style={[styles.level, { color: colors.primary }]}>{exercise.level} · SYSTEMOWY GŁOS PL‑PL</Text><Text style={[styles.title, { color: colors.text }]}>{exercise.title}</Text>
+    <Pressable accessibilityRole="button" onPress={leaveExercise}><Text style={[styles.back, { color: colors.primary }]}>‹ Все упражнения</Text></Pressable><Text style={[styles.level, { color: colors.primary }]}>{exercise.level} · SYSTEMOWY GŁOS PL‑PL</Text><Text style={[styles.title, { color: colors.text }]}>{exercise.title}</Text>
     <View style={styles.controls}><Pressable accessibilityRole="button" onPress={() => speaking ? void Speech.stop() : speak(exercise.transcript)} style={[styles.play, { backgroundColor: colors.primary }]}><Text style={[styles.playText, { color: colors.onPrimary }]}>{speaking ? '■ Стоп' : '▶ Весь текст'}</Text></Pressable>{speeds.map((rate) => <Pressable key={rate} accessibilityRole="button" accessibilityState={{ selected: speed === rate }} onPress={() => setSpeed(rate)} style={[styles.speed, { borderColor: speed === rate ? colors.primary : colors.border }]}><Text style={{ color: speed === rate ? colors.primary : colors.text, fontWeight: '800' }}>{rate}×</Text></Pressable>)}</View>
     <Text style={[styles.section, { color: colors.text }]}>Фрагменты</Text>{exercise.fragments.map((fragment, index) => <Pressable accessibilityRole="button" key={fragment.id} onPress={() => speak(fragment.transcript)} style={[styles.fragment, { borderColor: colors.border }]}><Text style={{ color: colors.primary, fontWeight: '900' }}>▶ {index + 1}</Text><Text style={{ color: colors.text, flex: 1 }}>{fragment.transcript}</Text></Pressable>)}
     <View style={[styles.transcript, { backgroundColor: colors.surface, borderColor: colors.border }]}><Text style={[styles.section, { color: colors.text }]}>Транскрипт</Text><Text style={[styles.transcriptText, { color: colors.text }]}>{exercise.transcript}</Text></View>
