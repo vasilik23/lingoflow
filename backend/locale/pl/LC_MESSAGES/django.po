@@ -18500,3 +18500,15 @@ msgstr "Poprzednia analiza została zachowana."
 
 msgid "Расшифровка прервана. Твой текст сохранён."
 msgstr "Transkrypcja została przerwana. Twój tekst został zachowany."
+
+msgid "Проверяемые ответы"
+msgstr "Sprawdzane odpowiedzi"
+
+msgid "Самооценка карточек"
+msgstr "Samoocena fiszek"
+
+msgid "Не входит в точность ответов."
+msgstr "Nie jest uwzględniana w trafności odpowiedzi."
+
+msgid "Ожидают отправки: "
+msgstr "Oczekują na wysłanie: "

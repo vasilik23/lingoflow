@@ -23,14 +23,28 @@ class WeeklyReviewTests(SimpleTestCase):
             ),
         )
         review = build_weekly_review(dashboard, [
-            {"id": "strong", "title": "Сильный урок", "level": "A2"},
-            {"id": "focus", "title": "Повторить тему", "level": "A2"},
+            {"id": "strong", "kind": "quiz", "title": "Сильный урок", "level": "A2"},
+            {"id": "focus", "kind": "grammar", "title": "Повторить тему", "level": "A2"},
         ], today=datetime.date(2026, 9, 25))
 
         self.assertEqual(review["accuracy"], 75)
         self.assertEqual(review["completed_delta"], 1)
         self.assertEqual([item["id"] for item in review["strongest"]], ["strong"])
         self.assertEqual([item["id"] for item in review["reinforcement"]], ["focus"])
+
+    def test_flashcard_self_assessment_is_not_a_strong_verified_result(self):
+        dashboard = DashboardProgress("Learner", "B1", 2, frozenset(), True,
+            recent_completion_results=(
+                {"lesson_id": "cards", "plan_date": "2026-10-20", "cards_total": 10, "cards_known": 10},
+                {"lesson_id": "quiz", "plan_date": "2026-10-20", "cards_total": 2, "cards_known": 0},
+            ))
+        review = build_weekly_review(dashboard, [{"id": "cards", "kind": "words"},
+            {"id": "quiz", "kind": "quiz"}], today=datetime.date(2026, 10, 20))
+        self.assertEqual(review["accuracy"], 0)
+        self.assertEqual(review["answer_count"], 2)
+        self.assertEqual(review["self_total"], 10)
+        self.assertEqual(review["strongest"], [])
+        self.assertEqual([row["id"] for row in review["reinforcement"]], ["quiz"])
 
     def test_ignores_stale_unknown_and_invalid_results(self):
         dashboard = DashboardProgress(
@@ -147,10 +161,11 @@ class LearningHistoryViewTests(TestCase):
 
         self.assertContains(response, "Прогресс и история")
         self.assertContains(response, "Итог недели")
-        self.assertContains(response, "Сильные результаты")
+        self.assertContains(response, "Самооценка карточек")
         self.assertContains(response, "Ритм занятий")
-        self.assertContains(response, "Новые слова")
-        self.assertContains(response, "88%", count=6)
+        self.assertNotContains(response, "88%")
+        self.assertIsNone(response.context["insights"]["accuracy"])
+        self.assertEqual(response.context["insights"]["self_total"], 8)
         self.assertContains(response, "Первые слова")
         self.assertContains(response, "7 / 8")
         self.assertContains(response, "Старее")

@@ -48,6 +48,7 @@ def learning_history(request: HttpRequest) -> HttpResponse:
             "title": lesson.get("title") or completion.get("lesson_id") or "Урок",
             "emoji": lesson.get("emoji") or "✓",
             "level": lesson.get("level") or "—",
+            "source": "Самооценка карточек" if lesson.get("kind") in {"words", "review"} or completion.get("lesson_id") == "dictionary-practice" else "Проверяемые ответы" if lesson.get("kind") in {"grammar", "quiz", "reading-check"} else "",
             "score": f"{known} / {total}" if total else "завершён",
         })
     fallback_name = (request.supabase_user.email or "ученик").split("@", 1)[0]

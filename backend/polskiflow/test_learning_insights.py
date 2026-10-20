@@ -34,10 +34,20 @@ class LearningInsightsTests(SimpleTestCase):
 
         self.assertEqual(result["completed_28_days"], 3)
         self.assertEqual(result["active_28_days"], 2)
-        self.assertEqual(result["accuracy"], 60)
+        self.assertEqual(result["accuracy"], 30)
         self.assertEqual(result["activity"][-1]["date"], "24.09")
         self.assertEqual(result["recommendation"]["href"], "/course/?level=B1&kind=grammar")
-        self.assertEqual({item["kind"] for item in result["breakdown"]}, {"grammar", "words"})
+        self.assertEqual({item["kind"] for item in result["breakdown"]}, {"grammar"})
+
+    def test_self_assessment_does_not_inflate_verified_accuracy(self):
+        result = build_learning_insights(self.dashboard(recent_completion_results=(
+            {"lesson_id": "cards", "cards_known": 10, "cards_total": 10},
+            {"lesson_id": "quiz", "cards_known": 0, "cards_total": 2},
+        )), [{"id": "cards", "kind": "words"}, {"id": "quiz", "kind": "quiz"}])
+        self.assertEqual(result["accuracy"], 0)
+        self.assertEqual(result["answer_count"], 2)
+        self.assertEqual((result["self_known"], result["self_total"]), (10, 10))
+        self.assertEqual([row["kind"] for row in result["breakdown"]], ["quiz"])
 
     def test_empty_results_are_honest_and_keep_linear_plan(self):
         result = build_learning_insights(
