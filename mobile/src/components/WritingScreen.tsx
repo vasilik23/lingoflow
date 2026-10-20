@@ -3,6 +3,7 @@ import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, TextInput, 
 import type { Session } from '@supabase/supabase-js';
 
 import { checkWritingDraft, loadWritingPrompts, type WritingCheck, type WritingCheckResult, type WritingPrompt } from '../lib/writing-api';
+import { RequestGate } from '../lib/request-gate';
 import type { Colors } from '../theme';
 
 export function WritingScreen({ session, colors, onClose }: { session: Session; colors: Colors; onClose: () => void }) {
@@ -13,12 +14,13 @@ export function WritingScreen({ session, colors, onClose }: { session: Session; 
   const [loading, setLoading] = useState(true);
   const [checking, setChecking] = useState(false);
   const [error, setError] = useState('');
+  const [requests] = useState(() => new RequestGate());
   const selected = prompts.find((prompt) => prompt.id === selectedId) ?? prompts[0];
   const draft = selected ? drafts[selected.id] ?? '' : '';
   const wordCount = useMemo(() => draft.trim().match(/\S+/gu)?.length ?? 0, [draft]);
 
   const load = useCallback(async () => {
-    setLoading(true); setError('');
+    requests.invalidate(); setChecking(false); setLoading(true); setError('');
     try {
       const catalog = await loadWritingPrompts(session.access_token);
       setPrompts(catalog.prompts);
@@ -26,21 +28,24 @@ export function WritingScreen({ session, colors, onClose }: { session: Session; 
     } catch (loadError) {
       setError(loadError instanceof Error ? loadError.message : 'Не удалось загрузить задания.');
     } finally { setLoading(false); }
-  }, [session.access_token]);
-  useEffect(() => { void load(); }, [load]);
+  }, [session.access_token, requests]);
+  useEffect(() => { void load(); return () => requests.invalidate(); }, [load, requests]);
 
-  function choosePrompt(promptId: string) { setSelectedId(promptId); setResult(null); setError(''); }
+  function choosePrompt(promptId: string) { requests.invalidate(); setChecking(false); setSelectedId(promptId); setResult(null); setError(''); }
   function changeDraft(text: string) {
     if (!selected) return;
+    requests.invalidate(); setChecking(false); setError('');
     setDrafts((current) => ({ ...current, [selected.id]: text }));
     setResult(null);
   }
   async function check() {
     if (!selected || !draft.trim()) return;
+    const ticket = requests.begin();
+    if (ticket === null) return;
     setChecking(true); setError(''); setResult(null);
-    try { setResult(await checkWritingDraft(selected.id, draft, session.access_token)); }
-    catch (checkError) { setError(checkError instanceof Error ? checkError.message : 'Не удалось проверить структуру.'); }
-    finally { setChecking(false); }
+    try { const checked = await checkWritingDraft(selected.id, draft, session.access_token); if (requests.isCurrent(ticket)) setResult(checked); }
+    catch (checkError) { if (requests.isCurrent(ticket)) setError(checkError instanceof Error ? checkError.message : 'Не удалось проверить структуру.'); }
+    finally { if (requests.finish(ticket)) setChecking(false); }
   }
 
   return <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={styles.page}>

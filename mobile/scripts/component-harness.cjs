@@ -7,12 +7,13 @@ function harness(filename, mocks = {}) {
   const hooks = {
     useState(initial) {const f = frame, i = f.cursor++; if (!f.slots[i]) f.slots[i] = {value: typeof initial === 'function' ? initial() : initial}; return [f.slots[i].value, next => {f.slots[i].value = typeof next === 'function' ? next(f.slots[i].value) : next;}];},
     useRef(initial) {const f = frame, i = f.cursor++; if (!f.slots[i]) f.slots[i] = {current: initial}; return f.slots[i];},
+    useMemo(fn, deps) {const f = frame, i = f.cursor++; if (!f.slots[i] || !same(f.slots[i].deps, deps)) f.slots[i] = {value: fn(), deps}; return f.slots[i].value;},
     useCallback(fn, deps) {const f = frame, i = f.cursor++; if (!f.slots[i] || !same(f.slots[i].deps, deps)) f.slots[i] = {fn, deps}; return f.slots[i].fn;},
     useEffect(fn, deps) {const f = frame, i = f.cursor++; if (!f.slots[i] || !same(f.slots[i].deps, deps)) {f.slots[i] = {deps}; f.effects.push(() => {f.cleanups[i]?.(); f.cleanups[i] = fn();});}},
   };
   const jsx = (type, props, key) => ({type, props: props || {}, key});
   const native = {StyleSheet: {create: x => x}, useColorScheme: () => 'light'};
-  for (const name of ['View', 'Text', 'ScrollView', 'Pressable', 'ActivityIndicator', 'SafeAreaView']) native[name] = name;
+  for (const name of ['View', 'Text', 'ScrollView', 'Pressable', 'ActivityIndicator', 'SafeAreaView', 'TextInput']) native[name] = name;
   let uuid = 0;
   const module = {exports: {}};
   vm.runInNewContext(ts.transpileModule(fs.readFileSync(filename, 'utf8'), {compilerOptions: {module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX}}).outputText, {
