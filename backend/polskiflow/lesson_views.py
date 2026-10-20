@@ -3,6 +3,7 @@
 import json
 import random
 import uuid
+from functools import partial
 from datetime import datetime, timezone
 
 from django.http import Http404, HttpRequest, HttpResponse, HttpResponseBadRequest
@@ -23,6 +24,7 @@ from polskiflow.domain.topic_journeys import journey, next_target, PILOT_LESSON_
 from polskiflow.domain.lesson_state import InvalidLessonState, load_lesson_state, sign_lesson_state
 from polskiflow.mistake_store import load_mistakes, set_mistake
 from polskiflow.collection_store import load_collection_summaries
+from polskiflow.parallel_reads import parallel_reads
 
 
 # Expansion is release-gated by a successful offline -> online recovery smoke
@@ -203,14 +205,11 @@ def _lesson_page_context(request, lesson_task, lesson_id, lesson_kind, context):
     """Build the full page shell for initial and non-HTMX lesson requests."""
     navigation = context.get('lesson_navigation') or (lesson_navigation(lesson_id) if lesson_id in PILOT_LESSON_IDS else None)
     pilot = journey((navigation or {}).get('topic_id'))
-    bookmarks = load_lesson_bookmarks(
-        request.supabase_access_token, request.supabase_user.id
-    )
-    note = load_lesson_note(
-        request.supabase_access_token, request.supabase_user.id, lesson_id
-    )
-    collections = load_collection_summaries(
-        request.supabase_access_token, request.supabase_user.id
+    token, owner = request.supabase_access_token, request.supabase_user.id
+    bookmarks, note, collections = parallel_reads(
+        partial(load_lesson_bookmarks, token, owner),
+        partial(load_lesson_note, token, owner, lesson_id),
+        partial(load_collection_summaries, token, owner),
     )
     return {
         "task": lesson_task,

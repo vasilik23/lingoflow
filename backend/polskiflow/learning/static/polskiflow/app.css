@@ -803,8 +803,9 @@ button.secondary { background: var(--surface); border-color: var(--line); }
 .content-tools { margin-top: 1rem; padding: 0; overflow: hidden; }
 .content-tools > summary { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 4.5rem; padding: 1rem 1.15rem; cursor: pointer; list-style: none; }
 .content-tools > summary::-webkit-details-marker { display: none; }
-.content-tools > summary > span:first-child { display: grid; gap: .18rem; }
-.content-tools > summary small { color: var(--muted); font-weight: 500; }
+.content-tools > summary > span:first-child, .content-tools > h2 > span { display: grid; gap: .3rem; min-width: 0; }
+.content-tools > summary small, .content-tools > h2 small { color: var(--muted); font-size: .875rem; font-weight: 500; line-height: 1.5; }
+.content-tools > h2 { margin: 0; padding: 1rem 1.15rem; font-size: 1rem; line-height: 1.5; }
 .content-tools-toggle { color: var(--muted); font-size: 1.2rem; transition: transform .16s ease; }
 .content-tools[open] .content-tools-toggle { transform: rotate(180deg); }
 .content-tools-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--line); }

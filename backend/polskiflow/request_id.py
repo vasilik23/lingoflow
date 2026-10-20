@@ -32,6 +32,8 @@ class RequestIdMiddleware:
             raise
         response["X-Request-ID"] = request_id
         duration_ms = _duration_ms(started_at)
+        timing = f"app;dur={duration_ms}"
+        response["Server-Timing"] = ", ".join(filter(None, (response.get("Server-Timing"), timing)))
         if response.status_code >= 500:
             logger.warning(
                 "request_failed request_id=%s method=%s path=%s status=%s duration_ms=%s",

@@ -2,7 +2,7 @@
 
 from dataclasses import replace
 from datetime import datetime
-from functools import wraps
+from functools import partial, wraps
 from urllib.parse import urlencode
 
 from django.http import HttpRequest, HttpResponse, HttpResponseNotAllowed, JsonResponse
@@ -13,6 +13,7 @@ from django.utils.cache import patch_vary_headers
 from django.utils.translation import gettext, get_language
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.views.decorators.http import require_http_methods, require_POST
+from polskiflow.parallel_reads import parallel_reads
 
 from polskiflow.auth import (
     SupabaseAuthError,
@@ -511,12 +512,13 @@ def home(request: HttpRequest) -> HttpResponse:
         from polskiflow.public_views import public_intro
 
         return public_intro(request)
-    dashboard, lesson_tasks, completed_count, progress_percent, plan_minutes = _daily_plan(request)
+    catalog = tasks()
+    dashboard, lesson_tasks, completed_count, progress_percent, plan_minutes = _daily_plan(request, catalog)
     b1_module_results = build_b1_module_results(
-        dashboard.recent_completion_results, tasks()
+        dashboard.recent_completion_results, catalog
     ) if dashboard.level == "B1" and dashboard.available else ()
     draft = load_latest_lesson_draft(request.supabase_access_token, request.supabase_user.id)
-    lesson_map = {item["id"]: item for item in tasks()}
+    lesson_map = {item["id"]: item for item in catalog}
     draft_lesson = lesson_map.get(draft.get("lesson_id")) if isinstance(draft, dict) else None
     resume_lesson = None
     if draft_lesson and draft_lesson["id"] not in dashboard.all_completed_lesson_ids:
@@ -968,7 +970,7 @@ def listening_practice(request: HttpRequest) -> HttpResponse:
     )
 
 
-def _daily_plan(request: HttpRequest):
+def _daily_plan(request: HttpRequest, catalog):
     try:
         plan_minutes = int(request.GET.get("minutes", "15"))
     except (TypeError, ValueError):
@@ -976,16 +978,13 @@ def _daily_plan(request: HttpRequest):
     if plan_minutes not in DAILY_TIME_MODES:
         plan_minutes = 15
     fallback_name = (request.supabase_user.email or "ученик").split("@", 1)[0]
-    dashboard = load_dashboard_progress(
-        request.supabase_access_token,
-        request.supabase_user.id,
-        fallback_name,
-    )
-    personal_words = load_personal_words(
-        request.supabase_access_token, request.supabase_user.id
+    token, owner = request.supabase_access_token, request.supabase_user.id
+    dashboard, personal_words = parallel_reads(
+        partial(load_dashboard_progress, token, owner, fallback_name),
+        partial(load_personal_words, token, owner),
     )
     lesson_tasks = build_daily_plan(
-        tasks(),
+        catalog,
         level=dashboard.level,
         completed_all_time=dashboard.all_completed_lesson_ids,
         completed_today=dashboard.completed_lesson_ids,
@@ -1015,17 +1014,14 @@ def _auth_rate_limit_response(request, context, template, retry_after):
 @require_browser_user
 def course(request: HttpRequest) -> HttpResponse:
     fallback_name = (request.supabase_user.email or "ученик").split("@", 1)[0]
-    dashboard = load_dashboard_progress(
-        request.supabase_access_token,
-        request.supabase_user.id,
-        fallback_name,
+    token, owner = request.supabase_access_token, request.supabase_user.id
+    dashboard, lesson_bookmarks = parallel_reads(
+        partial(load_dashboard_progress, token, owner, fallback_name),
+        partial(load_lesson_bookmarks, token, owner),
     )
     levels = PROFILE_LEVELS
     selected_level = select_cefr_level(request, dashboard.level)
     all_topics = course_topics()
-    lesson_bookmarks = load_lesson_bookmarks(
-        request.supabase_access_token, request.supabase_user.id
-    )
     level_counts = {
         level: sum(topic["level"] == level for topic in all_topics) for level in levels
     }
