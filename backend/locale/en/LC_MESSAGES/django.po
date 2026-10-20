@@ -17613,3 +17613,9 @@ msgstr "Minimum words: %(v0)s"
 
 msgid "Минимум абзацев: %(v0)s"
 msgstr "Minimum paragraphs: %(v0)s"
+
+msgid "Предыдущий разбор сохранён."
+msgstr "The previous review has been kept."
+
+msgid "Расшифровка прервана. Твой текст сохранён."
+msgstr "Transcription cancelled. Your text has been kept."

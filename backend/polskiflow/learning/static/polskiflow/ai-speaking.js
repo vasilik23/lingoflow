@@ -12,7 +12,7 @@
   let clip = null, controller = null;
   const resetText = () => {
     panel.dataset.aiToken = ''; editor.value = ''; confirmed.checked = false;
-    editor.dispatchEvent(new Event('input', {bubbles: true})); textPanel.hidden = true;
+    editor.dispatchEvent(new Event('lingoflow:writing-reset')); textPanel.hidden = true;
   };
   const cancel = () => { controller?.abort(); controller = null; button.disabled = !clip; };
   recorder.addEventListener('b1-recording-cleared', () => {
@@ -23,7 +23,13 @@
     cancel(); resetText(); consent.checked = false; clip = event.detail.blob;
     button.disabled = false; status.textContent = ui('Запись готова. Расшифровка начнётся только по твоему выбору.');
   });
-  editor.addEventListener('input', () => { confirmed.checked = false; });
+  editor.addEventListener('input', () => {
+    confirmed.checked = false;
+    if (controller) {
+      cancel();
+      status.textContent = ui('Расшифровка прервана. Твой текст сохранён.');
+    }
+  });
   consent.addEventListener('change', () => { if (!consent.checked) { cancel(); status.textContent = ''; } });
   button.addEventListener('click', async () => {
     if (controller || !clip) return;
@@ -31,7 +37,7 @@
     if (!clip.size || clip.size > 2 * 1024 * 1024) { status.textContent = ui('Для расшифровки нужна запись MP4, WebM или Ogg размером до 2 МБ.'); return; }
     const csrf = document.querySelector('[name="csrfmiddlewaretoken"]')?.value;
     if (!csrf) { status.textContent = ui('Обнови страницу перед проверкой текста.'); return; }
-    resetText(); controller = new AbortController(); const current = controller;
+    controller = new AbortController(); const current = controller;
     button.disabled = true; status.textContent = ui('Распознаём польскую речь…');
     const timeout = setTimeout(() => current.abort(), 30000);
     const data = new FormData(); data.append('token', panel.dataset.aiRecordingToken); data.append('consent', 'true'); data.append('audio', clip, 'answer');
@@ -40,7 +46,9 @@
       const response = await fetch(panel.dataset.transcribeUrl, {method: 'POST', credentials: 'same-origin', redirect: 'error', headers: {'X-CSRFToken': csrf}, body: data, signal: current.signal});
       const payload = await response.json();
       if (controller !== current) return;
-      if (!response.ok) { serviceError = payload.error || ui('ИИ речи временно недоступен. Запись и самопроверка доступны без отправки.'); throw new Error('service'); }
+      if (!response.ok) { serviceError = typeof payload?.error === 'string' ? payload.error : ui('ИИ речи временно недоступен. Запись и самопроверка доступны без отправки.'); throw new Error('service'); }
+      if (typeof payload?.text !== 'string' || !payload.text.trim() || payload.text.length > 6000 || typeof payload.token !== 'string' || !payload.token) throw new Error('invalid_response');
+      resetText();
       editor.value = payload.text; panel.dataset.aiToken = payload.token; textPanel.hidden = false;
       confirmed.checked = false; status.textContent = ui('Расшифровка готова. Проверь её перед разбором.'); editor.focus();
     } catch (error) {

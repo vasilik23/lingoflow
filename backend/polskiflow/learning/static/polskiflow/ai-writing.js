@@ -35,11 +35,13 @@
       if (!text.trim() || text.length > 6000) { status.textContent = ui('Для проверки напиши от 1 до 6000 символов.'); return; }
       const token = csrf();
       if (!token) { status.textContent = ui('Обнови страницу перед проверкой текста.'); return; }
+      const previousVisible = !result.hidden;
       pending = true; button.disabled = true; result.hidden = true;
       controller = new AbortController();
       const current = controller;
       status.textContent = ui('ИИ проверяет текст…');
       const timeout = setTimeout(() => current.abort(), 30000);
+      let serviceError = '';
       try {
         const response = await fetch(panel.dataset.aiUrl, {
           method: 'POST', credentials: 'same-origin', redirect: 'error', signal: current.signal,
@@ -48,11 +50,14 @@
         });
         const payload = await response.json();
         if (current !== controller || editor.value !== text || !consent.checked) return;
-        if (!response.ok) throw new Error(payload.error || ui('ИИ временно недоступен или квота исчерпана. Черновик остался в редакторе; продолжи самопроверку.'));
+        if (!response.ok) {
+          serviceError = typeof payload?.error === 'string' ? payload.error : ui('ИИ временно недоступен или квота исчерпана. Черновик остался в редакторе; продолжи самопроверку.');
+          throw new Error('service');
+        }
         const review = payload.result;
-        result.replaceChildren();
-        result.lang = document.documentElement.lang;
-        const append = (tag, content, target = result) => {
+        // Build separately: an incomplete response must not destroy a good report.
+        const output = document.createElement('div');
+        const append = (tag, content, target = output) => {
           const node = document.createElement(tag); node.textContent = content; target.append(node); return node;
         };
         append('h3', ui('Учебная оценка ИИ') + ` · ${review.score}/${review.maximum}`);
@@ -70,12 +75,17 @@
           append('p', error.explanation, item);
         });
         append('h4', ui('Следующий шаг')); append('p', review.next_step);
+        result.replaceChildren(...output.children);
+        result.lang = document.documentElement.lang;
         result.hidden = false; status.textContent = ui('Разбор готов. Он исчезнет при изменении текста или уходе со страницы.');
       } catch (error) {
-        if (current === controller) status.textContent = error.name === 'AbortError'
-          ? ui('Проверка прервана. Черновик остался в редакторе.')
-          : error.message === 'Failed to fetch' || error instanceof SyntaxError
-            ? ui('Не удалось проверить текст. Черновик остался в редакторе; попробуй позже.') : error.message;
+        if (current === controller) {
+          result.hidden = !previousVisible;
+          status.textContent = serviceError || (error.name === 'AbortError'
+            ? ui('Проверка прервана. Черновик остался в редакторе.')
+            : ui('Не удалось проверить текст. Черновик остался в редакторе; попробуй позже.'));
+          if (previousVisible) status.textContent += ' ' + ui('Предыдущий разбор сохранён.');
+        }
       } finally {
         clearTimeout(timeout);
         if (current === controller) { pending = false; button.disabled = false; }
