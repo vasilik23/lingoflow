@@ -29,6 +29,7 @@ DATASETS = {
     "b1_mock_attempts": ("b1_mock_attempts", "id,attempt_id,attempted_at,attempt_version,listening_correct,reading_correct,grammar_correct", "attempted_at.asc,id.asc"),
     "b1_section_attempts": ("b1_section_attempts", "id,attempt_id,attempted_at,attempt_version,section_id,correct,total", "attempted_at.asc,id.asc"),
     "b1_writing_attempts": ("b1_writing_attempts", "attempt_id,set_id,content_version,started_at,finished_at,timed_out,remaining_seconds,words_a,words_b", "finished_at.asc,attempt_id.asc"),
+    "b2_listening_attempts": ("b2_listening_attempts", "attempt_id,material_id,content_version,correct,missed_mask,completed_at", "completed_at.asc,attempt_id.asc"),
     "b1_run_attempts": ("b1_run_attempts", "run_id,variant_id,content_version,started_at,finished_at,results", "finished_at.asc,run_id.asc"),
 }
 

@@ -21,7 +21,9 @@
 
   document.addEventListener('focusin', function (event) {
     const target = event.target;
-    if (!main.contains(target)) return;
+    // Pointer focus must not move a link between pointerdown and pointerup.
+    // Text fields still match :focus-visible when focused for typing.
+    if (!main.contains(target) || !target.matches(':focus-visible')) return;
     requestAnimationFrame(function () { reveal(target); });
   });
 }());

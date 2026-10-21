@@ -1,0 +1,19 @@
+{% load i18n ui %}
+{% if b2_followup %}
+<section class="card b2-listening-followup" aria-label="{% translate 'Аудирование B2' %}">
+  <p class="eyebrow">{% translate "Аудирование B2" %} · {{ b2_followup.correct }} / {{ b2_followup.total }} · {% translate "Проверяемые ответы" %}</p>
+  {% if b2_followup.passed %}
+    <p>{% translate "Все ответы верны. Предыдущее повторение больше не требуется." %}</p>
+  {% else %}
+    {% if b2_followup.due %}
+      <p>{% translate "Пора повторить аудирование B2 после разбора ошибок." %}</p>
+      <a class="compact-button" href="{{ b2_followup.repeat_href }}">{% translate "Повторить аудирование B2" %} →</a>
+    {% else %}
+      <p>{% translate "Следующий шаг" %}: {{ b2_followup.title|ui_text }}</p>
+      <a class="compact-button" href="{{ b2_followup.href }}">{% translate "К упражнению" %} →</a>
+      <p class="muted">{% translate "Повтор аудирования назначен на" %} {{ b2_followup.due_date|date:"SHORT_DATE_FORMAT" }}</p>
+    {% endif %}
+    <p><a href="{{ b2_followup.review_href }}">{% translate "Разбор" %}</a></p>
+  {% endif %}
+</section>
+{% endif %}

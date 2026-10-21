@@ -17631,3 +17631,39 @@ msgstr "Excluded from answer accuracy."
 
 msgid "Ожидают отправки: "
 msgstr "Pending upload: "
+
+msgid "Выбери уровень: короткий диалог A1–A2 или связная речь B1/B2. Результат B2 сохраняется отдельно от уроков и самооценки карточек."
+msgstr "Choose a level: a short A1–A2 dialogue or connected speech at B1/B2. B2 results are saved separately from lessons and flashcard self-assessment."
+
+msgid "Результат B2 не сохранён. Повтори проверку ответов; при обновлении страницы ответы могут потеряться."
+msgstr "Your B2 result has not been saved. Check your answers again; refreshing may lose them."
+
+msgid "Результат аудирования B2 сохранён в аккаунте."
+msgstr "Your B2 listening result has been saved to your account."
+
+msgid "Все ответы верны. Предыдущее повторение больше не требуется."
+msgstr "All answers are correct. The previously scheduled review is no longer needed."
+
+msgid "Пора повторить аудирование B2 после разбора ошибок."
+msgstr "It is time to retry B2 listening after reviewing your mistakes."
+
+msgid "Повторить аудирование B2"
+msgstr "Retry B2 listening"
+
+msgid "Повтор аудирования назначен на"
+msgstr "Listening review scheduled for"
+
+msgid "Различить уступку и основной вывод"
+msgstr "Distinguish concession from the main conclusion"
+
+msgid "Проверить понимание делового сообщения"
+msgstr "Check your understanding of a workplace message"
+
+msgid "Закрепить решения и результаты встречи"
+msgstr "Review meeting decisions and outcomes"
+
+msgid "Последние 12 попыток аудирования, отдельно от уроков и самооценки."
+msgstr "Your latest 12 listening attempts, separate from lessons and self-assessment."
+
+msgid "Аудирование B2"
+msgstr "B2 listening"

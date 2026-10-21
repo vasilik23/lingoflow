@@ -473,3 +473,18 @@ class B1WritingAttempt(models.Model):
     class Meta:
         db_table = 'b1_writing_attempts'
         managed = False
+
+
+class B2ListeningAttempt(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    user_id = models.UUIDField()
+    attempt_id = models.UUIDField()
+    material_id = models.CharField(max_length=40)
+    content_version = models.PositiveSmallIntegerField()
+    correct = models.PositiveSmallIntegerField()
+    missed_mask = models.PositiveSmallIntegerField()
+    completed_at = models.DateTimeField()
+
+    class Meta:
+        db_table = 'b2_listening_attempts'
+        managed = False

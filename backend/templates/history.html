@@ -8,6 +8,15 @@
     <div><p class="eyebrow">{% translate "Твой прогресс" %}</p><p class="muted">{% translate "Динамика за последние 28 дней и завершённые уроки доступны только тебе." %}</p></div>
   </header>
   {% include "partials/progress_overview.html" %}
+  {% if b2_listening_results %}
+    <section class="card b2-listening-history">
+      <h2>{% translate "Аудирование B2" %}</h2>
+      <p class="muted">{% translate "Последние 12 попыток аудирования, отдельно от уроков и самооценки." %}</p>
+      <ul>{% for result in b2_listening_results %}
+        <li><a href="{% url 'listening-practice' %}?result={{ result.attempt_id }}#b2-listening">{{ result.date_display }} · {{ result.correct }} / 3 · {% translate "Разбор" %}</a></li>
+      {% endfor %}</ul>
+    </section>
+  {% endif %}
   {% if weekly_review.available %}
     <section class="weekly-review" aria-labelledby="weekly-review-title">
       <div class="section-heading"><div><p class="eyebrow">{% translate "Последние 7 дней" %}</p><h2 id="weekly-review-title">{% translate "Итог недели" %}</h2></div></div>

@@ -61,6 +61,7 @@
     </section>
     </section>
   </div>
+  {% include 'partials/b2_listening_followup.html' %}
   {% if b1_exam_prep %}<p class="muted today-exam-link"><a href="{% url 'b1-exam-prep' %}">{% translate "Подготовка к B1" %}</a> · {{ b1_exam_prep.countdown.label|ui_text }}</p>{% endif %}
 
 {% endblock %}

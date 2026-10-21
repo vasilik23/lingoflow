@@ -4,7 +4,7 @@
 {% block toolbar_title %}<h1 class="study-title">{% translate "Аудирование" %}</h1>{% endblock %}
 {% block content %}
   <header class="content-header listening-header">
-    <div><p class="eyebrow">{% translate "Аудирование · A1–B2" %}</p><p class="muted">{% translate "Выбери уровень: короткий диалог A1–A2 или связная речь B1/B2. Результат не влияет на прогресс." %}</p></div>
+    <div><p class="eyebrow">{% translate "Аудирование · A1–B2" %}</p><p class="muted">{% translate "Выбери уровень: короткий диалог A1–A2 или связная речь B1/B2. Результат B2 сохраняется отдельно от уроков и самооценки карточек." %}</p></div>
     <a class="compact-button secondary-link" href="{% url 'course' %}">{% translate "К курсу →" %}</a>
   </header>
   <nav class="reading-audio-actions listening-level-nav" aria-label="{% translate "Уровни аудирования" %}">
@@ -18,6 +18,7 @@
   {% endif %}
   <form method="post" class="listening-list">
     {% csrf_token %}
+    <input type="hidden" name="b2_attempt" value="{{ b2_state }}">
     <input type="hidden" name="active_section" data-listening-active value="{{ listening_active_section }}">
     <section class="card listening-dialogue" data-listening-level id="a1-a2-listening" tabindex="-1" aria-labelledby="dialogue-title">
       <header class="listening-level-summary"><h2 id="dialogue-title"><span class="level-badge">{{ dialogue.level|ui_text }}</span> {{ dialogue.title|ui_text }}</h2></header>
@@ -98,6 +99,10 @@
         <summary>{% translate "Транскрипт" %}</summary>
         {% for line in b2_listening.lines %}<p lang="pl">{{ line|ui_text }}</p>{% endfor %}
       </details>
+      {% if b2_error %}<p role="alert" class="save-error">{% translate "Результат B2 не сохранён. Повтори проверку ответов; при обновлении страницы ответы могут потеряться." %}</p>{% endif %}
+      {% if b2_saved %}<p class="save-success" role="status">{% translate "Результат аудирования B2 сохранён в аккаунте." %}</p>{% endif %}
+      {% include 'partials/b2_listening_followup.html' %}
+      {% if b2_submitted %}<p><a href="{% url 'listening-practice' %}#b2-listening">{% translate 'Новая попытка' %}</a></p>{% endif %}
       {% if b2_submitted %}<section class="listening-result" aria-live="polite"><strong>{{ b2_score|ui_text }} / {{ b2_listening.questions|length|ui_text }}</strong><span>{% translate "Ответы по записи B2" %}</span></section>{% endif %}
       {% for question in b2_listening.questions %}
         <fieldset class="listening-card">

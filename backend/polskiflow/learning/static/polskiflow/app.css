@@ -1575,3 +1575,8 @@ section.run-review > h2, .run-review-source > h2 { font-size: 1.1rem; }
 }
 
 .history-score small { display: block; margin-top: .25rem; color: var(--muted); font-size: .75rem; font-weight: 400; }
+
+.b2-listening-followup { padding: 1rem; margin-block: 1rem; }
+.b2-listening-followup > :first-child { margin-top: 0; }
+.b2-listening-history { padding: 1rem; margin-block: 1rem; }
+.b2-listening-history li { margin-block: .5rem; }

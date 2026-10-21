@@ -18512,3 +18512,39 @@ msgstr "Nie jest uwzględniana w trafności odpowiedzi."
 
 msgid "Ожидают отправки: "
 msgstr "Oczekują na wysłanie: "
+
+msgid "Выбери уровень: короткий диалог A1–A2 или связная речь B1/B2. Результат B2 сохраняется отдельно от уроков и самооценки карточек."
+msgstr "Wybierz poziom: krótki dialog A1–A2 lub dłuższa wypowiedź B1/B2. Wynik B2 jest zapisywany oddzielnie od lekcji i samooceny fiszek."
+
+msgid "Результат B2 не сохранён. Повтори проверку ответов; при обновлении страницы ответы могут потеряться."
+msgstr "Wynik B2 nie został zapisany. Sprawdź odpowiedzi ponownie; odświeżenie strony może je usunąć."
+
+msgid "Результат аудирования B2 сохранён в аккаунте."
+msgstr "Wynik słuchania B2 został zapisany na koncie."
+
+msgid "Все ответы верны. Предыдущее повторение больше не требуется."
+msgstr "Wszystkie odpowiedzi są poprawne. Wcześniej wyznaczona powtórka nie jest już potrzebna."
+
+msgid "Пора повторить аудирование B2 после разбора ошибок."
+msgstr "Czas powtórzyć słuchanie B2 po analizie błędów."
+
+msgid "Повторить аудирование B2"
+msgstr "Powtórz słuchanie B2"
+
+msgid "Повтор аудирования назначен на"
+msgstr "Powtórka słuchania zaplanowana na"
+
+msgid "Различить уступку и основной вывод"
+msgstr "Rozróżnij ustępstwo i główny wniosek"
+
+msgid "Проверить понимание делового сообщения"
+msgstr "Sprawdź rozumienie komunikatu służbowego"
+
+msgid "Закрепить решения и результаты встречи"
+msgstr "Utrwal decyzje i wyniki spotkania"
+
+msgid "Последние 12 попыток аудирования, отдельно от уроков и самооценки."
+msgstr "Ostatnie 12 prób słuchania, oddzielnie od lekcji i samooceny."
+
+msgid "Аудирование B2"
+msgstr "Słuchanie B2"

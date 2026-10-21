@@ -14,6 +14,9 @@ from django.utils.translation import gettext, get_language
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.views.decorators.http import require_http_methods, require_POST
 from polskiflow.parallel_reads import parallel_reads
+from django.core import signing
+from polskiflow.b2_listening_store import load_listening_results, save_listening_result
+from polskiflow.domain.b2_listening_followup import attempt_state, grade as grade_b2_listening, followup as b2_listening_followup
 
 from polskiflow.auth import (
     SupabaseAuthError,
@@ -517,7 +520,19 @@ def home(request: HttpRequest) -> HttpResponse:
     b1_module_results = build_b1_module_results(
         dashboard.recent_completion_results, catalog
     ) if dashboard.level == "B1" and dashboard.available else ()
-    draft = load_latest_lesson_draft(request.supabase_access_token, request.supabase_user.id)
+    b2_followup = None
+    if dashboard.level == 'B2':
+        draft, listening_results, excluded = parallel_reads(
+            partial(load_latest_lesson_draft, request.supabase_access_token, request.supabase_user.id),
+            partial(load_listening_results, request.supabase_access_token, request.supabase_user.id),
+            partial(excluded_practice_topics, request),
+        )
+        if listening_results and 'remote-work' not in excluded:
+            b2_followup = b2_listening_followup(listening_results[0])
+            if b2_followup and b2_followup["passed"]:
+                b2_followup = None
+    else:
+        draft = load_latest_lesson_draft(request.supabase_access_token, request.supabase_user.id)
     lesson_map = {item["id"]: item for item in catalog}
     draft_lesson = lesson_map.get(draft.get("lesson_id")) if isinstance(draft, dict) else None
     resume_lesson = None
@@ -542,6 +557,7 @@ def home(request: HttpRequest) -> HttpResponse:
             "completed_estimated_minutes": daily_plan_progress(lesson_tasks)["completed_estimated_minutes"],
             "plan_time_modes": DAILY_TIME_MODES,
             "resume_lesson": resume_lesson,
+            "b2_followup": b2_followup,
             "b1_exam_prep": build_b1_exam_prep(
                 timezone.localdate(), b1_module_results
             )
@@ -575,9 +591,16 @@ def practice_hub(request: HttpRequest) -> HttpResponse:
         request.supabase_access_token, request.supabase_user.id,
         (request.supabase_user.email or "ученик").split("@", 1)[0],
     )
+    recommendation = practice_recommendation(dashboard.level, timezone.localdate(), excluded_topics)
+    if dashboard.level == 'B2' and 'remote-work' not in excluded_topics:
+        results = load_listening_results(request.supabase_access_token, request.supabase_user.id)
+        followup = b2_listening_followup(results[0]) if results else None
+        if followup and not followup['passed']:
+            recommendation = {'title': 'Повторить аудирование B2' if followup['due'] else followup['title'],
+                              'href': followup['repeat_href'] if followup['due'] else followup['href']}
     return _no_store(render(request, "practice.html", {
         "exclude_remote_work": "remote-work" in excluded_topics,
-        "recommendation": practice_recommendation(dashboard.level, timezone.localdate(), excluded_topics),
+        "recommendation": recommendation,
     }))
 
 
@@ -868,7 +891,28 @@ def writing_practice(request: HttpRequest) -> HttpResponse:
 @require_browser_user
 @require_http_methods(["GET", "POST"])
 def listening_practice(request: HttpRequest) -> HttpResponse:
-    """Small listening pilot; results stay in this response only."""
+    """Listening practice with an owner-scoped B2 result and follow-up."""
+    b2_state = request.POST.get('b2_attempt') or attempt_state(request.supabase_user.id)
+    b2_saved = None
+    b2_result = None
+    b2_error = False
+    if request.method == 'POST' and (request.POST.get('active_section') == 'b2-listening' or any(question['id'] in request.POST for question in LISTENING_B2['questions'])):
+        if request.POST.get('b2_attempt'):
+            try:
+                b2_result = grade_b2_listening(request.supabase_user.id, b2_state, request.POST, LISTENING_B2['questions'])
+            except (signing.BadSignature, ValueError, TypeError, KeyError):
+                return HttpResponse('Invalid listening attempt', status=400)
+            b2_saved = save_listening_result(request.supabase_access_token, request.supabase_user.id, b2_result)
+            if b2_saved:
+                return _no_store(redirect('/listening/?result=' + b2_result['attempt_id'] + '#b2-listening'))
+        b2_error = True
+    elif request.GET.get('result'):
+        rows = load_listening_results(request.supabase_access_token, request.supabase_user.id, request.GET['result'])
+        if rows:
+            b2_result, b2_saved = rows[0], True
+        else:
+            b2_error = True
+    b2_followup = b2_listening_followup(b2_result) if b2_saved else None
     submitted = request.method == "POST"
     answers = {item["id"]: request.POST.get(item["id"], "") for item in LISTENING_ITEMS}
     display_items = tuple(
@@ -938,14 +982,17 @@ def listening_practice(request: HttpRequest) -> HttpResponse:
         }
         for question in LISTENING_B2["questions"]
     )
-    b2_submitted = submitted and any(b2_answers.values())
+    b2_submitted = (submitted and any(b2_answers.values())) or b2_saved is True
+    if b2_saved:
+        b2_questions = tuple({**question, 'is_correct': not bool(b2_result['missed_mask'] & (1 << index))}
+                             for index, question in enumerate(b2_questions))
     b2_listening = {**LISTENING_B2, "questions": b2_questions, "media": media_urls("b2", LISTENING_B2)}
     word_submitted = submitted and any(answers.values())
     active_section = request.POST.get("active_section", "")
     if active_section not in {"a1-a2-listening", "b1-listening", "b2-listening", "listening-words"}:
         active_section = ("b2-listening" if b2_submitted else "b1-listening" if b1_submitted
                           else "listening-words" if word_submitted else "a1-a2-listening")
-    return render(
+    response = render(
         request,
         "listening.html",
         {
@@ -961,6 +1008,8 @@ def listening_practice(request: HttpRequest) -> HttpResponse:
             "b1_score": sum(question["is_correct"] for question in b1_questions)
             if b1_submitted
             else None,
+            "b2_state": b2_state, "b2_saved": b2_saved, "b2_error": b2_error,
+            "b2_followup": b2_followup,
             "b2_listening": b2_listening,
             "b2_submitted": b2_submitted,
             "b2_score": sum(question["is_correct"] for question in b2_questions)
@@ -968,6 +1017,8 @@ def listening_practice(request: HttpRequest) -> HttpResponse:
             else None,
         },
     )
+
+    return _no_store(response)
 
 
 def _daily_plan(request: HttpRequest, catalog):
