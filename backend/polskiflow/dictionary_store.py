@@ -137,3 +137,31 @@ def _send(request: Request) -> bool:
 
 def _configured(access_token: str | None) -> bool:
     return bool(settings.SUPABASE_URL and settings.SUPABASE_ANON_KEY and access_token)
+
+
+def compare_and_save_personal_word_review(access_token, user_id, word_id, result, reviewed_at, expected_reviewed_at):
+    """One conditional PATCH: competing/retried snapshots cannot both advance SM-2."""
+    from polskiflow.domain.sm2 import parse_reviewed_at
+    if not _configured(access_token):
+        return 'unavailable'
+    query = urlencode({
+        'id': f'eq.{word_id}', 'user_id': f'eq.{user_id}',
+        'last_reviewed_at': 'is.null' if expected_reviewed_at is None else 'eq.' + expected_reviewed_at,
+        'select': 'id,last_reviewed_at',
+    })
+    payload = {'ease_factor': result.ease_factor, 'interval_days': result.interval_days,
+               'repetitions': result.repetitions, 'next_review_date': result.next_review_date.isoformat(),
+               'last_reviewed_at': reviewed_at}
+    try:
+        with urlopen(_request('personal_words?' + query, access_token, method='PATCH', payload=payload,
+                             prefer='return=representation'), timeout=settings.SUPABASE_AUTH_TIMEOUT) as response:
+            rows = json.load(response)
+        if rows == []:
+            return 'stale'
+        if (isinstance(rows, list) and len(rows) == 1 and isinstance(rows[0], dict)
+                and str(rows[0].get('id')) == word_id
+                and parse_reviewed_at(rows[0].get('last_reviewed_at')) == parse_reviewed_at(reviewed_at)):
+            return 'saved'
+        return 'unavailable'
+    except (HTTPError, URLError, TimeoutError, ValueError, TypeError):
+        return 'unavailable'

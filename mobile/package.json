@@ -28,7 +28,7 @@
     "eas": "npx --yes eas-cli@24.14.0",
     "build:check": "node scripts/check-build-readiness.mjs",
     "test:build-readiness": "node --test scripts/build-readiness.test.mjs",
-    "test:learning": "node --test scripts/lesson-recovery.test.cjs scripts/session-isolation.test.cjs scripts/lesson-result-api.test.cjs scripts/practice-responses.test.cjs"
+    "test:learning": "node --test scripts/lesson-recovery.test.cjs scripts/session-isolation.test.cjs scripts/lesson-result-api.test.cjs scripts/practice-responses.test.cjs scripts/review-reliability.test.cjs"
   },
   "private": true
 }

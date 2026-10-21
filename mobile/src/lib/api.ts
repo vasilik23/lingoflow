@@ -74,12 +74,20 @@ export function sendFeedback(category: FeedbackCategory, message: string, access
 }
 
 export type Sm2Quality = 'again' | 'hard' | 'good' | 'easy';
-export type Sm2Review = { id: string; word: string; translation: string; context: string; source_text_id: string; next_review_date: string | null; due: boolean };
+export type Sm2Review = { id: string; word: string; translation: string; context: string; source_text_id: string; next_review_date: string | null; last_reviewed_at: string | null; due: boolean };
 export async function loadSm2Reviews(accessToken: string): Promise<{ as_of: string; due_count: number; reviews: Sm2Review[] }> {
-  return apiRequest('/api/v1/me/sm2/', accessToken);
+  const data = await apiRequest<{ as_of: string; due_count: number; reviews: Sm2Review[] }>('/api/v1/me/sm2/', accessToken);
+  if (!Array.isArray(data.reviews) || data.reviews.some(item => !item ||
+      !(item.last_reviewed_at === null || (typeof item.last_reviewed_at === 'string' && Number.isFinite(Date.parse(item.last_reviewed_at)))))) {
+    throw new Error('Invalid review snapshot');
+  }
+  return data;
 }
-export function gradeSm2Review(wordId: string, quality: Sm2Quality, accessToken: string) {
-  return apiRequest<{ word_id: string; quality: Sm2Quality; next_review_date: string }>(`/api/v1/me/sm2/${encodeURIComponent(wordId)}/review/`, accessToken, { quality }, 'POST');
+export async function gradeSm2Review(wordId: string, quality: Sm2Quality, accessToken: string, expectedReviewedAt: string | null) {
+  if (!(expectedReviewedAt === null || (typeof expectedReviewedAt === 'string' && Number.isFinite(Date.parse(expectedReviewedAt))))) throw new Error('Missing review snapshot');
+  const result = await apiRequest<{ word_id: string; quality: Sm2Quality; next_review_date: string }>(`/api/v1/me/sm2/${encodeURIComponent(wordId)}/review/`, accessToken, { quality, expected_reviewed_at: expectedReviewedAt }, 'POST');
+  if (result.word_id !== wordId || result.quality !== quality || !/^\d{4}-\d{2}-\d{2}$/.test(result.next_review_date)) throw new Error('Invalid review acknowledgement');
+  return result;
 }
 
 export type ReadingSummary = { id: string; title: string; description: string; level: string; minutes: number; emoji: string; saved: boolean };

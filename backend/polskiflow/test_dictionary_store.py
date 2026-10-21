@@ -85,3 +85,40 @@ class DictionaryStoreTests(SimpleTestCase):
         request = mocked_urlopen.call_args.args[0]
         self.assertIn("user_id=eq.user-123", request.full_url)
         self.assertEqual(request.headers["Authorization"], "Bearer access")
+
+
+@override_settings(SUPABASE_URL='https://project.supabase.co', SUPABASE_ANON_KEY='public-key')
+class ConditionalReviewStoreTests(SimpleTestCase):
+    @patch('polskiflow.dictionary_store.urlopen')
+    def test_conditional_patch_requires_owned_snapshot_and_representation_ack(self, urlopen):
+        from urllib.parse import parse_qs, urlsplit
+        from polskiflow.dictionary_store import compare_and_save_personal_word_review
+        result = Sm2Result(2.5, 6, 2, date(2026, 10, 27))
+        now = '2026-10-21T12:00:00+00:00'
+        for previous in (None, '2026-10-20T12:00:00Z'):
+            response = MagicMock()
+            response.read.return_value = json.dumps([{'id': 'word-1', 'last_reviewed_at': now}]).encode()
+            urlopen.return_value.__enter__.return_value = response
+            self.assertEqual(compare_and_save_personal_word_review('access', 'owner', 'word-1', result, now, previous), 'saved')
+            request = urlopen.call_args.args[0]
+            query = parse_qs(urlsplit(request.full_url).query)
+            self.assertEqual(query['user_id'], ['eq.owner'])
+            self.assertEqual(query['id'], ['eq.word-1'])
+            self.assertEqual(query['last_reviewed_at'], ['is.null' if previous is None else 'eq.' + previous])
+            self.assertEqual(request.get_header('Prefer'), 'return=representation')
+            self.assertEqual(request.get_header('Authorization'), 'Bearer access')
+            self.assertEqual(json.loads(request.data)['repetitions'], 2)
+
+    @patch('polskiflow.dictionary_store.urlopen')
+    def test_empty_patch_is_stale_and_malformed_or_failed_ack_is_unavailable(self, urlopen):
+        from urllib.error import URLError
+        from polskiflow.dictionary_store import compare_and_save_personal_word_review
+        result = Sm2Result(2.5, 6, 2, date(2026, 10, 27))
+        now = '2026-10-21T12:00:00+00:00'
+        for payload, expected in (([], 'stale'), ({}, 'unavailable'), ([{'id': 'other', 'last_reviewed_at': now}], 'unavailable'), ([{'id': 'word-1', 'last_reviewed_at': None}], 'unavailable')):
+            response = MagicMock()
+            response.read.return_value = json.dumps(payload).encode()
+            urlopen.return_value.__enter__.return_value = response
+            self.assertEqual(compare_and_save_personal_word_review('access', 'owner', 'word-1', result, now, None), expected)
+        urlopen.side_effect = URLError('lost ACK')
+        self.assertEqual(compare_and_save_personal_word_review('access', 'owner', 'word-1', result, now, None), 'unavailable')
