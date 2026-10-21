@@ -18548,3 +18548,18 @@ msgstr "Ostatnie 12 prób słuchania, oddzielnie od lekcji i samooceny."
 
 msgid "Аудирование B2"
 msgstr "Słuchanie B2"
+
+msgid "Расписание уже изменилось. Обнови тренировку перед следующей оценкой."
+msgstr "Harmonogram już się zmienił. Odśwież ćwiczenie przed kolejną oceną."
+
+msgid "Не удалось подтвердить сохранение. Ответ остаётся здесь; повтори оценку или обнови тренировку."
+msgstr "Nie udało się potwierdzić zapisu. Odpowiedź pozostaje tutaj; ponów ocenę lub odśwież ćwiczenie."
+
+msgid "Обновить тренировку"
+msgstr "Odśwież ćwiczenie"
+
+msgid "Не удалось загрузить тренировку"
+msgstr "Nie udało się wczytać ćwiczenia"
+
+msgid "Эта форма устарела. Открой тренировку заново; повторная оценка не отправлена."
+msgstr "Ten formularz wygasł. Otwórz ćwiczenie ponownie; kolejna ocena nie została wysłana."

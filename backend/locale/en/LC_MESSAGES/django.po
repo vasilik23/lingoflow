@@ -17667,3 +17667,18 @@ msgstr "Your latest 12 listening attempts, separate from lessons and self-assess
 
 msgid "Аудирование B2"
 msgstr "B2 listening"
+
+msgid "Расписание уже изменилось. Обнови тренировку перед следующей оценкой."
+msgstr "The schedule has already changed. Refresh the practice before grading again."
+
+msgid "Не удалось подтвердить сохранение. Ответ остаётся здесь; повтори оценку или обнови тренировку."
+msgstr "The save could not be confirmed. Your answer remains here; retry the grade or refresh the practice."
+
+msgid "Обновить тренировку"
+msgstr "Refresh practice"
+
+msgid "Не удалось загрузить тренировку"
+msgstr "Practice could not be loaded"
+
+msgid "Эта форма устарела. Открой тренировку заново; повторная оценка не отправлена."
+msgstr "This form is out of date. Reopen the practice; no repeated grade was sent."

@@ -1,0 +1,6 @@
+{% load i18n %}
+<section class="card empty-state" role="alert">
+  <h2>{% translate "Не удалось загрузить тренировку" %}</h2>
+  <p>{% if practice_expired %}{% translate "Эта форма устарела. Открой тренировку заново; повторная оценка не отправлена." %}{% else %}{% translate "Словарь временно недоступен." %}{% endif %}</p>
+  <a class="compact-button" href="{{ repeat_url }}">{% translate "Обновить тренировку" %}</a>
+</section>

@@ -11,7 +11,7 @@
       <a href="{{ mode_urls.context }}"{% if mode == "context" %} aria-current="page"{% endif %}>{% translate "В контексте" %}</a>
     </nav>
     <div id="practice-flow">
-      {% if practice_complete %}{% include "reading/_practice_complete.html" %}{% else %}{% include "reading/_practice_question.html" %}{% endif %}
+      {% if practice_unavailable %}{% include 'reading/_practice_unavailable.html' %}{% elif practice_complete %}{% include "reading/_practice_complete.html" %}{% else %}{% include "reading/_practice_question.html" %}{% endif %}
     </div>
   </div>
 {% endblock %}

@@ -2,7 +2,8 @@
 
 import re
 import unicodedata
-from datetime import date
+from datetime import date, timedelta
+from django.core import signing
 from urllib.parse import urlencode
 
 from django.http import Http404, HttpRequest, HttpResponse, HttpResponseBadRequest
@@ -17,9 +18,10 @@ from polskiflow.dictionary_store import (
     delete_personal_word,
     load_personal_words,
     save_personal_word,
-    save_personal_word_review,
+    compare_and_save_personal_word_review,
 )
-from polskiflow.domain.sm2 import DEFAULT_SM2_STATE, Sm2State, sm2_next
+from polskiflow.domain.sm2 import DEFAULT_SM2_STATE, Sm2State, sm2_next, parse_reviewed_at
+from polskiflow.domain.dictionary_review import sign_review, read_review
 from polskiflow.domain.reading_catalog import (
     READING_DURATION_FILTERS,
     filter_reading_texts,
@@ -251,11 +253,14 @@ def dictionary_practice(request: HttpRequest) -> HttpResponse:
         if source_text_id
         else len(words or [])
     )
-    return render(
+    initial = {"question": questions[0], "index": 0, "score": 0} if questions else None
+    review_state = sign_review(request.supabase_user.id, initial, mode, source_text_id) if initial else ""
+    response = render(
         request,
         "reading/practice.html",
         {
             "available": words is not None,
+            "review_state": review_state,
             "word_count": len(words or []),
             "source_text_id": source_text_id,
             "source_word_count": source_word_count,
@@ -272,6 +277,8 @@ def dictionary_practice(request: HttpRequest) -> HttpResponse:
             "selected": None,
         },
     )
+    response["Cache-Control"] = "private, no-store"
+    return response
 
 
 @require_POST
@@ -287,6 +294,9 @@ def dictionary_practice_step(request: HttpRequest) -> HttpResponse:
     source_text_id = request.session.get(PRACTICE_SOURCE_SESSION_KEY, "")
     if not isinstance(source_text_id, str):
         source_text_id = ""
+    if words is None:
+        return _render_practice_step(request, 'reading/_practice_unavailable.html',
+            {'practice_unavailable': True, 'repeat_url': _practice_url(source_text_id, mode)}, mode, source_text_id)
     questions = _practice_questions(
         words or [],
         word_ids=session_word_ids if isinstance(session_word_ids, list) else None,
@@ -301,6 +311,15 @@ def dictionary_practice_step(request: HttpRequest) -> HttpResponse:
         return HttpResponseBadRequest(gettext("Некорректное состояние тренировки"))
     action = request.POST.get("action", "")
     question = questions[index]
+    try:
+        snapshot = read_review(request.POST.get('review_state', ''), request.supabase_user.id,
+            question, index, score, mode, source_text_id, action == 'next')
+    except (signing.BadSignature, ValueError, TypeError):
+        return _render_practice_step(request, 'reading/_practice_unavailable.html',
+            {'practice_unavailable': True, 'practice_expired': True, 'repeat_url': _practice_url(source_text_id, mode)}, mode, source_text_id)
+    # Keep the snapshot from the displayed form, even if a concurrent review finished.
+    question = {**question, 'last_reviewed_at': snapshot['reviewed_at']}
+    questions[index] = question
     if action == "answer":
         if mode == "context":
             submitted_answer = request.POST.get("answer", "")
@@ -334,25 +353,8 @@ def dictionary_practice_step(request: HttpRequest) -> HttpResponse:
                 questions, index, score, selected, answered=True
             )
     elif action == "next":
-        if mode == "context":
-            answer_state = request.session.get(PRACTICE_ANSWER_SESSION_KEY)
-            if (
-                not isinstance(answer_state, dict)
-                or answer_state.get("index") != index
-                or answer_state.get("word_id") != question["id"]
-                or not isinstance(answer_state.get("correct"), bool)
-            ):
-                return HttpResponseBadRequest(gettext("Сначала ответьте"))
-            answer_correct = answer_state["correct"]
-            request.session.pop(PRACTICE_ANSWER_SESSION_KEY, None)
-        else:
-            try:
-                selected = int(request.POST["selected"])
-            except (KeyError, ValueError):
-                return HttpResponseBadRequest(gettext("Сначала ответьте"))
-            if not 0 <= selected < len(question["options"]):
-                return HttpResponseBadRequest(gettext("Некорректный ответ"))
-            answer_correct = selected == question["correct"]
+        answer_correct = snapshot['correct']
+        selected = snapshot['selected']
         quality = request.POST.get("quality", "")
         if quality not in REVIEW_QUALITIES:
             return HttpResponseBadRequest(gettext("Оцените, насколько легко вспомнилось слово"))
@@ -365,13 +367,22 @@ def dictionary_practice_step(request: HttpRequest) -> HttpResponse:
             repetitions=int(question.get("repetitions", 0)),
         )
         review = sm2_next(state, quality, now.date())
-        review_saved = save_personal_word_review(
-            request.supabase_access_token,
-            request.supabase_user.id,
-            question["id"],
-            review,
-            now.isoformat(),
-        )
+        try:
+            previous = parse_reviewed_at(snapshot['reviewed_at'])
+            reviewed_at = max(now, previous + timedelta(microseconds=1)) if previous else now
+            outcome = compare_and_save_personal_word_review(
+                request.supabase_access_token, request.supabase_user.id, question['id'],
+                review, reviewed_at.isoformat(), snapshot['reviewed_at'])
+        except (ValueError, TypeError, OverflowError):
+            outcome = 'unavailable'
+        if outcome != 'saved':
+            context = _practice_context(questions, index, score, selected, answered=True,
+                answer_correct=answer_correct, submitted_answer=snapshot['answer'])
+            context.update(review_saved=False, review_stale=outcome == 'stale',
+                review_state=request.POST['review_state'], repeat_url=_practice_url(source_text_id, mode))
+            return _render_practice_step(request, 'reading/_practice_question.html', context, mode, source_text_id)
+        review_saved = True
+        request.session.pop(PRACTICE_ANSWER_SESSION_KEY, None)
         next_score = score + answer_correct
         if index + 1 >= len(questions):
             request.session.pop(PRACTICE_WORD_IDS_SESSION_KEY, None)
@@ -413,8 +424,12 @@ def dictionary_practice_step(request: HttpRequest) -> HttpResponse:
 
 
 def _render_practice_step(request, partial_template, context, mode, source_text_id):
+    if context.get('question'):
+        context.setdefault('review_state', sign_review(request.supabase_user.id, context, mode, source_text_id))
     if request.headers.get("HX-Request") == "true":
-        return render(request, partial_template, context)
+        response = render(request, partial_template, context)
+        response["Cache-Control"] = "private, no-store"
+        return response
     page_context = {
         **context,
         "mode": mode,
@@ -424,7 +439,9 @@ def _render_practice_step(request, partial_template, context, mode, source_text_
             for item in ("translation", "lemma", "context")
         },
     }
-    return render(request, "reading/practice_step_page.html", page_context)
+    response = render(request, "reading/practice_step_page.html", page_context)
+    response["Cache-Control"] = "private, no-store"
+    return response
 
 
 @require_POST
@@ -608,6 +625,7 @@ def _practice_questions(
                 "ease_factor": word.get("ease_factor", DEFAULT_SM2_STATE.ease_factor),
                 "interval_days": word.get("interval_days", DEFAULT_SM2_STATE.interval_days),
                 "repetitions": word.get("repetitions", DEFAULT_SM2_STATE.repetitions),
+                "last_reviewed_at": word.get("last_reviewed_at"),
             }
         )
     return questions
