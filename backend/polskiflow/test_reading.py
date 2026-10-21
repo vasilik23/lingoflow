@@ -750,7 +750,7 @@ class ReadingViewsTests(TestCase):
 
         self.assertEqual(response.status_code, 404)
 
-    @patch("polskiflow.reading_views.save_personal_word_review", return_value=True)
+    @patch("polskiflow.reading_views.compare_and_save_personal_word_review", return_value="saved")
     @patch("polskiflow.reading_views.save_lesson_completion", return_value=True)
     @patch("polskiflow.reading_views.load_personal_words")
     def test_reader_practice_preserves_scoped_mode_and_updates_sm2(
@@ -765,7 +765,7 @@ class ReadingViewsTests(TestCase):
         session["dictionary_practice_source"] = "test-story"
         session.save()
 
-        response = self.client.post(
+        response = self._post_practice(
             "/dictionary/practice/step/",
             {
                 "action": "next",
@@ -796,7 +796,7 @@ class ReadingViewsTests(TestCase):
     def test_practice_answer_shows_feedback(self, load_words):
         load_words.return_value = self._practice_words()
 
-        response = self.client.post(
+        response = self._post_practice(
             "/dictionary/practice/step/",
             {"action": "answer", "index": 0, "score": 0, "choice": 0},
         )
@@ -811,7 +811,7 @@ class ReadingViewsTests(TestCase):
     def test_htmx_practice_step_still_returns_only_fragment(self, load_words):
         load_words.return_value = self._practice_words()
 
-        response = self.client.post(
+        response = self._post_practice(
             "/dictionary/practice/step/",
             {"action": "answer", "index": 0, "score": 0, "choice": 0},
             headers={"HX-Request": "true"},
@@ -829,23 +829,23 @@ class ReadingViewsTests(TestCase):
         self.assertContains(start, "To jest _____")
         self.assertContains(start, 'name="answer"')
 
-        response = self.client.post(
+        response = self._post_practice(
             "/dictionary/practice/step/",
             {"action": "answer", "index": 0, "score": 0, "answer": " DOM "},
         )
         self.assertContains(response, "Верно!")
         self.assertContains(response, "Насколько легко вспомнилось слово?")
 
-    @patch("polskiflow.reading_views.save_personal_word_review", return_value=True)
+    @patch("polskiflow.reading_views.compare_and_save_personal_word_review", return_value="saved")
     @patch("polskiflow.reading_views.load_personal_words")
     def test_wrong_typed_answer_forces_again_schedule(self, load_words, save_review):
         load_words.return_value = self._practice_words()
         self.client.get("/dictionary/practice/?mode=context")
-        self.client.post(
+        self._post_practice(
             "/dictionary/practice/step/",
             {"action": "answer", "index": 0, "score": 0, "answer": "okno"},
         )
-        response = self.client.post(
+        response = self._post_practice(
             "/dictionary/practice/step/",
             {"action": "next", "index": 0, "score": 0, "quality": "easy"},
         )
@@ -863,7 +863,7 @@ class ReadingViewsTests(TestCase):
         response = self.client.get("/dictionary/practice/?mode=context")
         self.assertContains(response, "Слово 1 из 1")
 
-    @patch("polskiflow.reading_views.save_personal_word_review", return_value=True)
+    @patch("polskiflow.reading_views.compare_and_save_personal_word_review", return_value="saved")
     @patch("polskiflow.reading_views.save_lesson_completion", return_value=True)
     @patch("polskiflow.reading_views.load_personal_words")
     def test_practice_completion_is_saved(
@@ -871,7 +871,7 @@ class ReadingViewsTests(TestCase):
     ):
         load_words.return_value = self._practice_words()
 
-        response = self.client.post(
+        response = self._post_practice(
             "/dictionary/practice/step/",
             {
                 "action": "next",
@@ -895,12 +895,12 @@ class ReadingViewsTests(TestCase):
         self.assertEqual(save_review.call_args.args[3].repetitions, 1)
         self.assertEqual(save_review.call_args.args[3].ease_factor, 2.6)
 
-    @patch("polskiflow.reading_views.save_personal_word_review", return_value=True)
+    @patch("polskiflow.reading_views.compare_and_save_personal_word_review", return_value="saved")
     @patch("polskiflow.reading_views.load_personal_words")
     def test_wrong_answer_forces_again_schedule(self, load_words, save_review):
         load_words.return_value = self._practice_words()
 
-        response = self.client.post(
+        response = self._post_practice(
             "/dictionary/practice/step/",
             {
                 "action": "next",
@@ -938,6 +938,22 @@ class ReadingViewsTests(TestCase):
         response = self.client.get("/dictionary/practice/")
 
         self.assertContains(response, "На сегодня всё")
+
+    def _post_practice(self, path, payload, **kwargs):
+        # Older unit fixtures target an individual phase; build its signed snapshot.
+        from polskiflow.reading_views import _practice_questions, _practice_context
+        from polskiflow.domain.dictionary_review import sign_review
+        session = self.client.session
+        mode = session.get('dictionary_practice_mode', 'translation')
+        source = session.get('dictionary_practice_source', '')
+        questions = _practice_questions(self._practice_words(), word_ids=session.get('dictionary_practice_word_ids'), mode=mode)
+        index, score = payload.get('index', 0), payload.get('score', 0)
+        selected = payload.get('selected') if payload['action'] == 'next' else None
+        correct = session.get('dictionary_practice_answer', {}).get('correct')
+        context = _practice_context(questions, index, score, selected,
+            answered=payload['action'] == 'next', answer_correct=correct)
+        state = sign_review('00000000-0000-0000-0000-000000000123', context, mode, source)
+        return self.client.post(path, {**payload, 'review_state': state}, **kwargs)
 
     @staticmethod
     def _practice_words():
