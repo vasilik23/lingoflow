@@ -325,7 +325,7 @@ def build_openapi_v1():
                     "summary": "Schedule one owned dictionary word with SM-2",
                     "security": [{"supabaseBearer": []}],
                     "requestBody": {"required": True, "content": {"application/json": {"schema": {"$ref": "#/components/schemas/Sm2ReviewRequest"}}}},
-                    "responses": {"200": _json_response("Updated owner-scoped review schedule"), **{str(code): error_response for code in (400, 401, 404, 413, 415, 429, 503)}},
+                    "responses": {"200": _json_response("Updated owner-scoped review schedule"), **{str(code): error_response for code in (400, 401, 404, 409, 413, 415, 429, 503)}},
                 },
             },
             "/api/v1/me/reading-bookmarks/": {"get": {"operationId": "getReadingBookmarks", "summary": "Get saved reading text IDs", "security": [{"supabaseBearer": []}, {"browserSession": []}], "responses": {"200": _json_response("Owner-scoped reading bookmarks"), **private_errors}}},
@@ -425,7 +425,8 @@ def build_openapi_v1():
                 "Sm2ReviewRequest": {
                     "type": "object", "additionalProperties": False,
                     "required": ["quality"],
-                    "properties": {"quality": {"type": "string", "enum": ["again", "hard", "good", "easy"]}},
+                    "properties": {"quality": {"type": "string", "enum": ["again", "hard", "good", "easy"]},
+                                   "expected_reviewed_at": {"type": ["string", "null"], "format": "date-time", "description": "Snapshot last_reviewed_at from the queue; opt into conditional grading. Stale versions return 409. Omit only for legacy clients."}},
                 },
                 "LessonAnswerRequest": {
                     "oneOf": [

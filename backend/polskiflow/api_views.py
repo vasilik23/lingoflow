@@ -1,6 +1,6 @@
 """Versioned API contracts for separate clients."""
 
-from datetime import date
+from datetime import date, timedelta
 from functools import wraps
 
 import json
@@ -13,7 +13,7 @@ from django.views.decorators.http import require_http_methods, require_POST, req
 
 from polskiflow.auth import SupabaseAuthError, delete_account, require_supabase_user as require_authenticated_user
 from polskiflow.content import flashcards, grammar, public_course_catalog, quiz, reading_text, reading_texts, task, tasks
-from polskiflow.dictionary_store import delete_personal_word, load_personal_words, save_personal_word, save_personal_word_review
+from polskiflow.dictionary_store import delete_personal_word, load_personal_words, save_personal_word, save_personal_word_review, compare_and_save_personal_word_review
 from polskiflow.feedback_store import load_feedback, save_feedback
 from polskiflow.domain.lesson_results import (
     MAX_REQUEST_BYTES,
@@ -844,8 +844,15 @@ def learner_sm2_review_v1(request, word_id):
         payload = json.loads(request.body)
     except (json.JSONDecodeError, UnicodeDecodeError):
         return _error_response("invalid_json", "Request body must be valid JSON", 400)
-    if not isinstance(payload, dict) or set(payload) != {"quality"} or payload["quality"] not in {"again", "hard", "good", "easy"}:
+    if (not isinstance(payload, dict) or set(payload) not in ({"quality"}, {"quality", "expected_reviewed_at"})
+            or not isinstance(payload.get("quality"), str) or payload["quality"] not in {"again", "hard", "good", "easy"}):
         return _error_response("validation_error", "quality must be again, hard, good, or easy", 400)
+    from polskiflow.domain.sm2 import parse_reviewed_at
+    versioned = 'expected_reviewed_at' in payload
+    try:
+        expected = parse_reviewed_at(payload.get('expected_reviewed_at')) if versioned else None
+    except (ValueError, TypeError):
+        return _error_response('validation_error', 'expected_reviewed_at must be an aware timestamp or null', 400)
     words = load_personal_words(request.supabase_access_token, request.supabase_user.id)
     if words is None:
         return _unavailable_response("learner-sm2-review")
@@ -861,8 +868,26 @@ def learner_sm2_review_v1(request, word_id):
     except (TypeError, ValueError):
         return _error_response("upstream_invalid", "Stored review state is invalid", 503)
     now = timezone.now()
+    reviewed_at = now
+    if versioned:
+        try:
+            previous = parse_reviewed_at(word.get('last_reviewed_at'))
+        except (ValueError, TypeError):
+            return _error_response('upstream_invalid', 'Stored review version is invalid', 503)
+        if previous != expected:
+            return _error_response('review_stale', 'Refresh the queue before grading this word again', 409)
+        if previous is not None:
+            reviewed_at = max(now, previous + timedelta(microseconds=1))
     review = sm2_next(state, payload["quality"], now.date())
-    if not save_personal_word_review(
+    if versioned:
+        outcome = compare_and_save_personal_word_review(
+            request.supabase_access_token, request.supabase_user.id, str(word_id), review,
+            reviewed_at.isoformat(), word.get('last_reviewed_at'))
+        if outcome == 'stale':
+            return _error_response('review_stale', 'Refresh the queue before grading this word again', 409)
+        if outcome != 'saved':
+            return _unavailable_response('learner-sm2-review')
+    elif not save_personal_word_review(
         request.supabase_access_token, request.supabase_user.id, str(word_id), review, now.isoformat()
     ):
         return _unavailable_response("learner-sm2-review")

@@ -72,3 +72,16 @@ def sm2_next(state: Sm2State, quality: ReviewQuality, today: date) -> Sm2Result:
         repetitions=repetitions,
         next_review_date=today + timedelta(days=interval_days),
     )
+
+
+def parse_reviewed_at(value):
+    """Normalize an opaque review timestamp without accepting filter syntax."""
+    from datetime import datetime, timezone
+    if value is None:
+        return None
+    if not isinstance(value, str) or len(value) > 64:
+        raise ValueError('Invalid review timestamp')
+    parsed = datetime.fromisoformat(value.replace('Z', '+00:00'))
+    if parsed.tzinfo is None:
+        raise ValueError('Review timestamp requires timezone')
+    return parsed.astimezone(timezone.utc)
