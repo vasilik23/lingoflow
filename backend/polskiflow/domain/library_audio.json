@@ -11,7 +11,7 @@
     "codec": "AAC",
     "bitrate": 64000
   },
-  "created_at": "2026-10-13",
+  "created_at": "2026-10-21",
   "origin": "original",
   "created_for": "LingoFlow",
   "verification": "exact transcript input and media decode; independent pronunciation review pending",
@@ -408,9 +408,9 @@
     },
     "reading-usterka-w-mieszkaniu-full": {
       "path": "polskiflow/audio/library/reading-usterka-w-mieszkaniu-full.m4a",
-      "transcript_sha256": "c88c6fdb01d42a0a3cd54f9cd868ab16320361bf571008c5db9ba6b64d96612d",
-      "sha256": "8e412477c8fdf885631fc695752754bd382acbb0e9c3ef89490ddd13c1bf0e52",
-      "duration_seconds": 52.291337868480724
+      "transcript_sha256": "086af683b1f236c8936f11c7ae8a0d867e3a9356e8e95823d5642fc4098b63de",
+      "sha256": "c875fcebbf8429416d9a73b451ea16cd23a7bf3eab5d2450fd9587b726034fa3",
+      "duration_seconds": 52.30294784580499
     },
     "reading-weather-wycieczka-przed-burza-full": {
       "path": "polskiflow/audio/library/reading-weather-wycieczka-przed-burza-full.m4a",

@@ -3610,3 +3610,27 @@ LEARNING_MESSAGES = (
     gettext_noop("„wynikać z kontekstu” oznacza tutaj: следовать из контекста."),
     gettext_noop("„zasugerować mimochodem” oznacza tutaj: намекнуть вскользь."),
 )
+
+# Original pilot editorial corrections, 2026-10-21.
+LEARNING_MESSAGES += (
+    gettext_noop("Проверь понимание прочитанного текста"),
+    gettext_noop("Выбери форму совершенного вида, подчёркивающую завершение курса: W 2020 roku Marta ___ kurs i dostała certyfikat."),
+    gettext_noop("Ukończyła подчёркивает завершённый курс и результат. Kończyła описывает процесс завершения: это другая точка зрения, а не ошибка сама по себе."),
+    gettext_noop("Выбери форму совершенного вида: учёба завершилась до переезда. Kiedy ___ studia, przeprowadził się do Gdańska."),
+    gettext_noop("Ukończył обозначает завершение учёбы до переезда. Kończył тоже грамматично, но описывает переезд во время завершения учёбы и не выполняет условие задания."),
+    gettext_noop("В конструкции rozmawiać z kimś («разговаривать с кем-то») z требует творительного падежа: z hydraulikiem."),
+    gettext_noop("Выбери глагол со значением «начала»: Po studiach Anna ___ karierę w mediach."),
+    gettext_noop("Выбери завершённый результат «достиг цели»: Po roku pracy wreszcie ___."),
+    gettext_noop("Osiągnął cel означает достигнутый результат. Zbliżył się do celu — приблизился, pracował nad celem — работал над целью; они не обозначают её достижения."),
+    gettext_noop("Выбери слово, которое вводит начальный этап истории: ___ było trudno, lecz z czasem wszystko się zmieniło."),
+    gettext_noop("Какая последовательность обозначает начало, следующий этап, постепенное изменение и завершение?"),
+    gettext_noop("Вежливая просьба и время визита"),
+    gettext_noop("Proszę o pomoc w naprawie ogrzewania. Czy fachowiec może przyjść we wtorek po szesnastej? Czy ten termin Panu odpowiada? / Czy ten termin Pani odpowiada? Panu — владельцу, Pani — владелице."),
+    gettext_noop("Выбери вежливую просьбу помочь с ремонтом отопления."),
+    gettext_noop("Proszę o pomoc w naprawie ogrzewania — просьба помочь с ремонтом. Dziękuję — благодарность, Potwierdzam — подтверждение."),
+    gettext_noop("Предложи визит во вторник после 16:00 и спроси владелицу, подходит ли время."),
+    gettext_noop("We wtorek — во вторник; po szesnastej — после 16:00. Pani odpowiada — вежливое обращение к владелице; владельцу пишем Panu odpowiada."),
+    gettext_noop("Перед чтением: слова о классе"),
+    gettext_noop("Сначала повтори базовые слова о классе: sala — аудитория; nauczyciel — преподаватель; obok — рядом; na początku — в начале; przedstawiać się — представляться; znajomy — знакомый. В тексте był означает «был»."),
+    gettext_noop("7 заданий · A2"),
+)

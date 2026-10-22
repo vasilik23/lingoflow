@@ -1,7 +1,7 @@
 """Editorial pilots reuse published lessons; no new assessment or progress writes."""
 from copy import deepcopy
 
-SOURCE_METADATA = {'origin': 'original', 'created_for': 'LingoFlow', 'verified_at': '2026-10-13',
+SOURCE_METADATA = {'origin': 'original', 'created_for': 'LingoFlow', 'verified_at': '2026-10-21',
                    'verification': 'internal link/content review; independent Polish review pending'}
 
 PILOTS = {
@@ -37,7 +37,7 @@ PILOTS = {
                'scenario': 'The heating in your rented flat is not working. Write to the landlord.',
                'prompt': 'Write a short message: describe the problem, ask for help and suggest a time for the repair visit.',
                'checks': ('I described the specific problem.', 'I politely asked for help.', 'I suggested a visit time.')},
-        'sample': 'Dzień dobry, w mieszkaniu nie działa ogrzewanie. Czy może Pan umówić wizytę fachowca? Jestem w domu w piątek po godzinie piętnastej. Czy ten termin Panu odpowiada?',
+        'sample': 'Dzień dobry, w mieszkaniu nie działa ogrzewanie. Proszę o pomoc w naprawie ogrzewania. Czy fachowiec może przyjść we wtorek po szesnastej? Czy ten termin Panu odpowiada?',
     },
     'b1-biography': {
         'level': 'B1', 'reading_id': 'bio-droga-joanny',
