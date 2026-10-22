@@ -11,7 +11,7 @@ class ALevelQuestionOptionTests(TestCase):
     def test_correct_answers_are_balanced_per_level_and_lesson(self):
         expected = {
             "A1": (203, {0: 68, 1: 68, 2: 67}),
-            "A2": (224, {0: 75, 1: 75, 2: 74}),
+            "A2": (226, {0: 76, 1: 75, 2: 75}),
         }
         for level, (total, distribution) in expected.items():
             questions = Question.objects.filter(

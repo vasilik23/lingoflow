@@ -820,7 +820,7 @@ msgid "My ___ na kursie. Вставьте форму być."
 msgstr "My ___ na kursie. Insert the form być."
 
 msgid "My jesteśmy — «мы являемся / мы находимся»."
-msgstr "My jesteśmy — «we are/we are”."
+msgstr "Use jesteśmy with my: My jesteśmy na kursie — We are on the course."
 
 msgid "My możemy / musimy, wy możecie / musicie. После модального глагола форма действия не меняется."
 msgstr "My możemy / musimy, wy możecie / musicie. After the modal verb, the form of action does not change."
@@ -970,7 +970,7 @@ msgid "Oni ___ z Polski. Вставьте форму być."
 msgstr "Oni ___ z Polski. Insert the form być."
 
 msgid "Oni są — «они являются»."
-msgstr "Oni są — «they are”."
+msgstr "Use są with oni: Oni są z Polski — They are from Poland."
 
 msgid "Owoce — фрукты."
 msgstr "Owoce — fruit."
@@ -979,7 +979,7 @@ msgid "Pani — вежливое обращение к женщине."
 msgstr "Pani — polite treatment of a woman."
 
 msgid "Pani — вежливое обращение к женщине; используется форма jest."
-msgstr "Pani is a polite treatment for a woman; the form jest is used."
+msgstr "Pani is a polite form of address for a woman and takes the third-person form jest."
 
 msgid "Pasować в договорённостях означает «подходить, быть удобным»."
 msgstr "Pasować means “to approach, to be comfortable.”"
@@ -1303,7 +1303,7 @@ msgid "Szlak — обозначенный туристический маршр�
 msgstr "Szlak — The designated tourist route."
 
 msgid "Szukać и potrzebować требуют родительного: szukam mieszkania, potrzebuję hydraulika."
-msgstr "Szukać and potrzebować require genitive: szukam mieszkania, potrzebuję hydraulika."
+msgstr "Szukać and potrzebować take the genitive: szukam mieszkania, potrzebuję hydraulika."
 
 msgid "Szukać управляет родительным падежом: nowego mieszkania."
 msgstr "Szukać takes the genitive case: nowego mieszkania."
@@ -2941,7 +2941,7 @@ msgid "Глаголы речи и ясный пересказ"
 msgstr "Verbs of speech and clear retelling"
 
 msgid "Глагольное управление"
-msgstr "Voice management"
+msgstr "Verb government"
 
 msgid "Говорение"
 msgstr "Speaking"
@@ -3112,7 +3112,7 @@ msgid "Для ty глагол jeść имеет форму jesz."
 msgstr "For ty verb jeść shape jesz."
 
 msgid "Для «я» используется форма jestem: Jestem Anna."
-msgstr "For \"I,\" a form is used. jestem: Jestem Anna."
+msgstr "Use jestem with ja: Jestem Anna."
 
 msgid "Для «я» нужна форма jestem: Jestem z Ukrainy."
 msgstr "Use jestem with “I”: Jestem z Ukrainy."
@@ -3175,7 +3175,7 @@ msgid "Для обучения правилам безопасности"
 msgstr "To teach safety rules"
 
 msgid "Для он/она/оно используется форма jest."
-msgstr "For him/her/it a form is used. jest."
+msgstr "Marek is third-person singular, so use jest."
 
 msgid "Для письма и говорения числовая динамика не создаётся. Результат не подтверждает уровень CEFR и не заменяет официальный пробный экзамен."
 msgstr "No numerical dynamics are created for writing and speaking, and the result does not confirm the CEFR level, nor does it replace the official trial exam."
@@ -4093,7 +4093,7 @@ msgid "Как вежливо не согласиться на рабочей в�
 msgstr "How politely do you disagree at a work meeting and leave room for discussion?"
 
 msgid "Как вежливо обратиться к незнакомой женщине?"
-msgstr "How to be polite to a stranger?"
+msgstr "Which polite form would you use to address a woman you do not know?"
 
 msgid "Как вежливо ответить на возражение?"
 msgstr "How to respond politely to an objection?"
@@ -4225,7 +4225,7 @@ msgid "Как сказать «Пожалуйста, подпишите форм
 msgstr "How do you say, “Please sign the form here?”"
 
 msgid "Как сказать «Я Анна»?"
-msgstr "How do you say \"I'm Anna\"?"
+msgstr "Choose the form of być for ja: ___ Anna."
 
 msgid "Как сказать «Я говорю по-польски»?"
 msgstr "How do you say \"I speak Polish\"?"
@@ -4396,7 +4396,7 @@ msgid "Ключевые слова A1"
 msgstr "Keywords A1"
 
 msgid "Когда z означает «с»: problem z ogrzewaniem, rozmowa z właścicielem."
-msgstr "When z means \"c\": problem z ogrzewaniem, rozmowa z właścicielem."
+msgstr "When z means with, use the instrumental: problem z ogrzewaniem, rozmowa z właścicielem."
 
 msgid "Количество"
 msgstr "Number of"
@@ -8422,7 +8422,7 @@ msgid "Родительный падеж"
 msgstr "Genitive case"
 
 msgid "Родительный после отрицания"
-msgstr "genitive after denial"
+msgstr "Genitive after negation"
 
 msgid "Родство и возраст"
 msgstr "Relation and age"
@@ -8458,7 +8458,7 @@ msgid "С какого уровня начать?"
 msgstr "What level to start with?"
 
 msgid "С местоимением ty используется jesteś."
-msgstr "With a pronoun ty used jesteś."
+msgstr "Use jesteś with ty."
 
 msgid "С несколькими предметами употребляется są."
 msgstr "It is used with several objects są."
@@ -8911,7 +8911,7 @@ msgid "Совершенный вид"
 msgstr "Perfective aspect"
 
 msgid "Совершенный вид выделяет завершённый этап: ukończyła, podjął, osiągnęli."
-msgstr "The perfect view highlights the completed stage: ukończyła, podjął, osiągnęli."
+msgstr "The perfective aspect highlights a completed event: ukończyła, podjął, osiągnęli."
 
 msgid "Совершенный вид подчёркивает достигнутую границу: wykonać plan, zrezygnować z napojów."
 msgstr "The perfect appearance emphasizes the reached boundary: wykonać plan, zrezygnować z napojów."
@@ -9175,7 +9175,7 @@ msgid "Составьте: Сначала мы осмотрели замок, а
 msgstr "Compose: First we inspected the castle, and then we went to the market."
 
 msgid "Составьте: Сначала она работала в школе, а потом открыла фирму."
-msgstr "Make it up: First she worked at school, and then she opened a company."
+msgstr "Choose the sentence: first a job at a school, then her own business."
 
 msgid "Составьте: Сначала я проверил источник, а затем кратко пересказал публикацию."
 msgstr "Compose: First, I checked the source, and then briefly recounted the publication."
@@ -9229,7 +9229,7 @@ msgid "Составьте: Этот образ можно истолковать
 msgstr "This image can be interpreted as a symbol of lost intimacy."
 
 msgid "Составьте: Этот опыт сильно повлиял на мою жизнь."
-msgstr "Say, This experience has had a huge impact on my life."
+msgstr "Choose the correct sentence about the effect of this experience on my life."
 
 msgid "Составьте: Я принимаю исходные данные, но оспариваю способ их интерпретации."
 msgstr "Compose: I accept the original data, but I contest the way it is interpreted."
@@ -9538,7 +9538,7 @@ msgid "Творительный падеж"
 msgstr "Instrumental case"
 
 msgid "Творительный после z"
-msgstr "instrumental case after z"
+msgstr "Instrumental after z"
 
 msgid "Твоя карта навыков"
 msgstr "Your skill map"
@@ -10495,7 +10495,7 @@ msgid "Что означает «Mam jednego brata»?"
 msgstr "What does it mean?Mam jednego brata»?"
 
 msgid "Что означает «Miło mi» при знакомстве?"
-msgstr "What does it mean?Miło mi» When I met you?"
+msgstr "What does Miło mi mean when meeting someone?"
 
 msgid "Что означает «Skąd pochodzisz?»"
 msgstr "What does it mean?Skąd pochodzisz?»"
@@ -10855,7 +10855,7 @@ msgid "атмосфера"
 msgstr "atmosphere"
 
 msgid "аудитории"
-msgstr "audience"
+msgstr "classroom"
 
 msgid "бабушка"
 msgstr "grandmother"
@@ -10981,7 +10981,7 @@ msgid "быть должным"
 msgstr "due"
 
 msgid "быть родом"
-msgstr "childish"
+msgstr "come from / be originally from"
 
 msgid "в день. Изменения цели за прошлые дни не сохраняются, поэтому это ориентир, а не оценка."
 msgstr "Changes in goal from past days don't persist, so it's a benchmark, not an estimate."
@@ -11275,7 +11275,7 @@ msgid "вход"
 msgstr "entrance"
 
 msgid "входит"
-msgstr "enter"
+msgstr "enters"
 
 msgid "вчера"
 msgstr "yesterday"
@@ -11461,13 +11461,13 @@ msgid "горы"
 msgstr "mountainous"
 
 msgid "горячая вода"
-msgstr "hot-water"
+msgstr "hot water"
 
 msgid "господин / Вы"
-msgstr "Sir / You"
+msgstr "polite form of address for a man"
 
 msgid "госпожа / Вы"
-msgstr "Madame/You"
+msgstr "polite form of address for a woman"
 
 msgid "гостиная"
 msgstr "living-room"
@@ -11578,7 +11578,7 @@ msgid "дело"
 msgstr "case"
 
 msgid "день"
-msgstr "daylight"
+msgstr "day"
 
 msgid "детектив"
 msgstr "detective"
@@ -11644,7 +11644,7 @@ msgid "доброжелательный"
 msgstr "friendly"
 
 msgid "добрый день"
-msgstr "good-day"
+msgstr "good morning / good afternoon"
 
 msgid "доверие"
 msgstr "trustworthiness"
@@ -11920,7 +11920,7 @@ msgid "закрыть встречу"
 msgstr "close up"
 
 msgid "залог"
-msgstr "pledge"
+msgstr "security deposit"
 
 msgid "заменить"
 msgstr "replace"
@@ -12010,7 +12010,7 @@ msgid "знакомый / одногруппник"
 msgstr "classmate"
 
 msgid "знакомым"
-msgstr "familiar"
+msgstr "acquaintance / classmate"
 
 msgid "знать"
 msgstr "know"
@@ -12079,7 +12079,7 @@ msgid "из 5. Отдохни: таймер новой части начнётс
 msgstr "of 5. Take a break: the next timer starts when you press the button."
 
 msgid "из Польши"
-msgstr "Poland"
+msgstr "from Poland"
 
 msgid "из оригинального текста LingoFlow. Голос, тембр и доступность зависят от браузера и устройства; это не студийная запись."
 msgstr "original LingoFlow. Voice, timbre, and availability are browser- and device-dependent; it is not a studio recording."
@@ -12307,7 +12307,7 @@ msgid "квалификация"
 msgstr "qualification"
 
 msgid "квартира"
-msgstr "flat-room"
+msgstr "flat / apartment"
 
 msgid "килограмм"
 msgstr "kilogram"
@@ -13198,7 +13198,7 @@ msgid "ожидания"
 msgstr "expectation"
 
 msgid "оказаться"
-msgstr "appear to"
+msgstr "turn out (to be)"
 
 msgid "окно"
 msgstr "window"
@@ -13240,7 +13240,7 @@ msgid "опоздание"
 msgstr "lateness"
 
 msgid "опоздать"
-msgstr "late"
+msgstr "be late"
 
 msgid "определила"
 msgstr "defined"
@@ -13369,7 +13369,7 @@ msgid "ответственную"
 msgstr "responsible"
 
 msgid "отвечает"
-msgstr "respondent"
+msgstr "answers / replies"
 
 msgid "отвечать"
 msgstr "respond"
@@ -13663,7 +13663,7 @@ msgid "платить"
 msgstr "pay off"
 
 msgid "платный"
-msgstr "paid"
+msgstr "subject to a charge"
 
 msgid "платформа"
 msgstr "platform"
@@ -13735,7 +13735,7 @@ msgid "повтор одного мнения"
 msgstr "repeating"
 
 msgid "повторно"
-msgstr "repeatedly"
+msgstr "again"
 
 msgid "повторять"
 msgstr "repeat"
@@ -14182,7 +14182,7 @@ msgid "преобразовать жанр"
 msgstr "genre-transform"
 
 msgid "преподаватель"
-msgstr "lecturer"
+msgstr "teacher"
 
 msgid "преподаватель; ведущий"
 msgstr "lecturer; lead"
@@ -14323,7 +14323,7 @@ msgid "приобрести"
 msgstr "acquire"
 
 msgid "приобрести опыт"
-msgstr "acquire"
+msgstr "gain experience"
 
 msgid "приписывала"
 msgstr "attributed"
@@ -14971,7 +14971,7 @@ msgid "сигнализирует"
 msgstr "signal"
 
 msgid "сидит"
-msgstr "sitter"
+msgstr "sits / is sitting"
 
 msgid "сила воли"
 msgstr "willpower"
@@ -15124,7 +15124,7 @@ msgid "снимать"
 msgstr "rent"
 
 msgid "снимать; сдавать"
-msgstr "drop off"
+msgstr "rent / rent out"
 
 msgid "сноска"
 msgstr "footnote"
@@ -15136,7 +15136,7 @@ msgid "снять напряжение"
 msgstr "strain"
 
 msgid "со временем"
-msgstr "timelessly"
+msgstr "over time / as time went by"
 
 msgid "собеседник"
 msgstr "speaker"
@@ -15385,7 +15385,7 @@ msgid "справляться со стрессом"
 msgstr "coping"
 
 msgid "спрашивает"
-msgstr "questioner"
+msgstr "asks"
 
 msgid "спрашивать"
 msgstr "ask"
@@ -15430,7 +15430,7 @@ msgid "срок действия"
 msgstr "period"
 
 msgid "срок; назначенное время"
-msgstr "term; appointed time"
+msgstr "appointment / scheduled time"
 
 msgid "ссора"
 msgstr "quarrel"
@@ -15565,7 +15565,7 @@ msgid "считывание намерения"
 msgstr "read-out"
 
 msgid "счётчик"
-msgstr "counter"
+msgstr "meter"
 
 msgid "сын"
 msgstr "son"
@@ -15724,7 +15724,7 @@ msgid "туристический приют"
 msgstr "tourist shelter"
 
 msgid "ты являешься / ты есть"
-msgstr "You are / You are / You are"
+msgstr "you are (singular, informal)"
 
 msgid "тётя"
 msgstr "aunt"
@@ -15811,7 +15811,7 @@ msgid "улучшиться"
 msgstr "improve"
 
 msgid "улыбается"
-msgstr "smile"
+msgstr "smiles"
 
 msgid "умение"
 msgstr "skill"
@@ -15838,7 +15838,7 @@ msgid "управление после связок"
 msgstr "post-ligament"
 
 msgid "управляющая компания"
-msgstr "management"
+msgstr "building management"
 
 msgid "упростила"
 msgstr "simplify"
@@ -16222,7 +16222,7 @@ msgid "эффективность"
 msgstr "efficiency"
 
 msgid "я являюсь / я есть"
-msgstr "I am / I am / I am"
+msgstr "I am"
 
 msgid "яблоки"
 msgstr "apples"
@@ -17682,3 +17682,87 @@ msgstr "Practice could not be loaded"
 
 msgid "Эта форма устарела. Открой тренировку заново; повторная оценка не отправлена."
 msgstr "This form is out of date. Reopen the practice; no repeated grade was sent."
+
+msgid "Joanna dorastała w Białymstoku; ta informacja pojawia się na początku jej biografii."
+msgstr "Joanna grew up in Białystok; this information appears at the beginning of her biography."
+
+msgid "Joanna studiowała architekturę w Warszawie, zanim zaczęła rozwijać własną drogę zawodową."
+msgstr "Joanna studied architecture in Warsaw before developing her career."
+
+msgid "Joanna postanowiła projektować przestrzenie publiczne, więc ukierunkowała pracę na potrzeby mieszkańców."
+msgstr "Joanna decided to design public spaces, focusing her work on residents’ needs."
+
+msgid "Czasownik dorastać opisuje stopniowe dojrzewanie i przechodzenie od dzieciństwa do dorosłości."
+msgstr "Dorastać means to grow up: to gradually develop from childhood into adulthood."
+
+msgid "Niedokonana forma jeździłem opisuje czynność wielokrotną, ponieważ podróże powtarzały się w przeszłości."
+msgstr "The imperfective jeździłem describes repeated trips in the past."
+
+msgid "Forma ukończyłem wskazuje zakończony etap edukacji, a data precyzuje moment jego zamknięcia."
+msgstr "Ukończyłem presents the studies as completed; the date specifies when they ended."
+
+msgid "Проверь понимание прочитанного текста"
+msgstr "Check your understanding of the text."
+
+msgid "Выбери форму совершенного вида, подчёркивающую завершение курса: W 2020 roku Marta ___ kurs i dostała certyfikat."
+msgstr "Choose the perfective form emphasising course completion: W 2020 roku Marta ___ kurs i dostała certyfikat."
+
+msgid "Ukończyła подчёркивает завершённый курс и результат. Kończyła описывает процесс завершения: это другая точка зрения, а не ошибка сама по себе."
+msgstr "Ukończyła presents the course as completed, with a result. Kończyła focuses on the process of finishing; it is a different viewpoint, not an error in itself."
+
+msgid "Выбери форму совершенного вида: учёба завершилась до переезда. Kiedy ___ studia, przeprowadził się do Gdańska."
+msgstr "Choose the perfective form: the studies ended before the move. Kiedy ___ studia, przeprowadził się do Gdańska."
+
+msgid "Ukończył обозначает завершение учёбы до переезда. Kończył тоже грамматично, но описывает переезд во время завершения учёбы и не выполняет условие задания."
+msgstr "Ukończył means the studies ended before the move. Kończył is also grammatical, but places the move during the finishing process and does not meet this task’s requirement."
+
+msgid "В конструкции rozmawiać z kimś («разговаривать с кем-то») z требует творительного падежа: z hydraulikiem."
+msgstr "In rozmawiać z kimś, z means with and takes the instrumental: z hydraulikiem."
+
+msgid "Выбери глагол со значением «начала»: Po studiach Anna ___ karierę w mediach."
+msgstr "Choose the verb meaning started: Po studiach Anna ___ karierę w mediach."
+
+msgid "Выбери завершённый результат «достиг цели»: Po roku pracy wreszcie ___."
+msgstr "Choose the completed result, achieved the goal: Po roku pracy wreszcie ___."
+
+msgid "Osiągnął cel означает достигнутый результат. Zbliżył się do celu — приблизился, pracował nad celem — работал над целью; они не обозначают её достижения."
+msgstr "Osiągnął cel means he achieved his goal. Zbliżył się do celu means he got closer, and pracował nad celem means he worked towards it; neither states that the goal was achieved."
+
+msgid "Выбери слово, которое вводит начальный этап истории: ___ było trudno, lecz z czasem wszystko się zmieniło."
+msgstr "Choose the word introducing the initial stage: ___ było trudno, lecz z czasem wszystko się zmieniło."
+
+msgid "Słowo początkowo wprowadza pierwszy etap historii i zapowiada późniejszą zmianę sytuacji."
+msgstr "Początkowo introduces the initial stage and prepares the reader for a later change."
+
+msgid "Какая последовательность обозначает начало, следующий этап, постепенное изменение и завершение?"
+msgstr "Which sequence marks the beginning, next stage, gradual change and conclusion?"
+
+msgid "Markery najpierw, następnie, z czasem i w końcu porządkują kolejne etapy biografii."
+msgstr "Najpierw, następnie, z czasem and w końcu put the stages of a biography in chronological order."
+
+msgid "Вежливая просьба и время визита"
+msgstr "A polite request and a visit time"
+
+msgid "Proszę o pomoc w naprawie ogrzewania. Czy fachowiec może przyjść we wtorek po szesnastej? Czy ten termin Panu odpowiada? / Czy ten termin Pani odpowiada? Panu — владельцу, Pani — владелице."
+msgstr "Proszę o pomoc w naprawie ogrzewania. — Please help with repairing the heating. Czy fachowiec może przyjść we wtorek po szesnastej? — Can the repair technician come on Tuesday after four? Czy ten termin Panu odpowiada? / Czy ten termin Pani odpowiada? — Does this time suit you? Use Panu for a male landlord and Pani for a female landlord."
+
+msgid "Выбери вежливую просьбу помочь с ремонтом отопления."
+msgstr "Choose a polite request for help with repairing the heating."
+
+msgid "Proszę o pomoc w naprawie ogrzewania — просьба помочь с ремонтом. Dziękuję — благодарность, Potwierdzam — подтверждение."
+msgstr "Proszę o pomoc w naprawie ogrzewania asks for help with repairs. Dziękuję expresses thanks; Potwierdzam confirms something."
+
+msgid "Предложи визит во вторник после 16:00 и спроси владелицу, подходит ли время."
+msgstr "Suggest a visit on Tuesday after 16:00 and ask the female landlord whether the time suits her."
+
+msgid "We wtorek — во вторник; po szesnastej — после 16:00. Pani odpowiada — вежливое обращение к владелице; владельцу пишем Panu odpowiada."
+msgstr "We wtorek means on Tuesday; po szesnastej means after 16:00. Use Pani odpowiada when writing politely to a female landlord, and Panu odpowiada to a male landlord."
+
+msgid "Перед чтением: слова о классе"
+msgstr "Before reading: classroom vocabulary"
+
+msgid "Сначала повтори базовые слова о классе: sala — аудитория; nauczyciel — преподаватель; obok — рядом; na początku — в начале; przedstawiać się — представляться; znajomy — знакомый. В тексте był означает «был»."
+msgstr "First review these classroom words: sala — classroom; nauczyciel — teacher; obok — next to; na początku — at the beginning; przedstawiać się — introduce oneself; znajomy — acquaintance. In the text, był means was."
+
+msgid "7 заданий · A2"
+msgstr "7 exercises · A2"

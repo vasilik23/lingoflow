@@ -7529,7 +7529,7 @@ msgid "Формы настоящего времени"
 msgstr "Formy czasu teraźniejszego"
 
 msgid "Как сказать «Я Анна»?"
-msgstr "Jak powiedzieć „Jestem Anna”?"
+msgstr "Wybierz formę czasownika być dla osoby ja: ___ Anna."
 
 msgid "Для «я» используется форма jestem: Jestem Anna."
 msgstr "Dla osoby ja używamy formy jestem: Jestem Anna."
@@ -11927,7 +11927,7 @@ msgid "вечерний"
 msgstr "wieczorowy"
 
 msgid "взрослеть"
-msgstr "dorastać"
+msgstr "stawać się dorosłym"
 
 msgid "влияние"
 msgstr "wpływ"
@@ -12437,10 +12437,10 @@ msgid "Совершенный вид выделяет завершённый э�
 msgstr "Aspekt dokonany podkreśla zakończony etap: ukończyła, podjął, osiągnęli."
 
 msgid "Составьте: Сначала она работала в школе, а потом открыла фирму."
-msgstr "Ułóż zdanie: najpierw pracowała w szkole, a potem założyła firmę."
+msgstr "Wybierz zdanie: najpierw praca w szkole, potem własna firma."
 
 msgid "Составьте: Этот опыт сильно повлиял на мою жизнь."
-msgstr "Ułóż zdanie: to doświadczenie mocno wpłynęło na moje życie."
+msgstr "Wybierz poprawne zdanie o wpływie doświadczenia na moje życie."
 
 msgid "Фон и процесс"
 msgstr "Tło i proces"
@@ -18563,3 +18563,63 @@ msgstr "Nie udało się wczytać ćwiczenia"
 
 msgid "Эта форма устарела. Открой тренировку заново; повторная оценка не отправлена."
 msgstr "Ten formularz wygasł. Otwórz ćwiczenie ponownie; kolejna ocena nie została wysłana."
+
+msgid "Проверь понимание прочитанного текста"
+msgstr "Sprawdź, czy rozumiesz tekst."
+
+msgid "Выбери форму совершенного вида, подчёркивающую завершение курса: W 2020 roku Marta ___ kurs i dostała certyfikat."
+msgstr "Wybierz formę dokonaną podkreślającą zakończenie kursu: W 2020 roku Marta ___ kurs i dostała certyfikat."
+
+msgid "Ukończyła подчёркивает завершённый курс и результат. Kończyła описывает процесс завершения: это другая точка зрения, а не ошибка сама по себе."
+msgstr "Ukończyła podkreśla zakończenie kursu i rezultat. Kończyła opisuje proces kończenia: to inna perspektywa, a nie błąd sam w sobie."
+
+msgid "Выбери форму совершенного вида: учёба завершилась до переезда. Kiedy ___ studia, przeprowadził się do Gdańska."
+msgstr "Wybierz formę dokonaną: studia zakończyły się przed przeprowadzką. Kiedy ___ studia, przeprowadził się do Gdańska."
+
+msgid "Ukończył обозначает завершение учёбы до переезда. Kończył тоже грамматично, но описывает переезд во время завершения учёбы и не выполняет условие задания."
+msgstr "Ukończył oznacza zakończenie studiów przed przeprowadzką. Kończył też jest gramatyczne, ale opisuje przeprowadzkę w trakcie kończenia studiów i nie spełnia warunku zadania."
+
+msgid "В конструкции rozmawiać z kimś («разговаривать с кем-то») z требует творительного падежа: z hydraulikiem."
+msgstr "W konstrukcji rozmawiać z kimś przyimek z łączy się z narzędnikiem: z hydraulikiem."
+
+msgid "Выбери глагол со значением «начала»: Po studiach Anna ___ karierę w mediach."
+msgstr "Wybierz czasownik oznaczający początek kariery: Po studiach Anna ___ karierę w mediach."
+
+msgid "Выбери завершённый результат «достиг цели»: Po roku pracy wreszcie ___."
+msgstr "Wybierz wyrażenie oznaczające osiągnięty rezultat: Po roku pracy wreszcie ___."
+
+msgid "Osiągnął cel означает достигнутый результат. Zbliżył się do celu — приблизился, pracował nad celem — работал над целью; они не обозначают её достижения."
+msgstr "Osiągnął cel oznacza uzyskany rezultat. Zbliżył się do celu oznacza tylko postęp, a pracował nad celem — pracę nad celem, bez potwierdzenia jego osiągnięcia."
+
+msgid "Выбери слово, которое вводит начальный этап истории: ___ było trudno, lecz z czasem wszystko się zmieniło."
+msgstr "Wybierz słowo wprowadzające początkowy etap historii: ___ było trudno, lecz z czasem wszystko się zmieniło."
+
+msgid "Какая последовательность обозначает начало, следующий этап, постепенное изменение и завершение?"
+msgstr "Który ciąg wyrażeń oznacza początek, następny etap, stopniową zmianę i zakończenie?"
+
+msgid "Вежливая просьба и время визита"
+msgstr "Uprzejma prośba i termin wizyty"
+
+msgid "Proszę o pomoc w naprawie ogrzewania. Czy fachowiec może przyjść we wtorek po szesnastej? Czy ten termin Panu odpowiada? / Czy ten termin Pani odpowiada? Panu — владельцу, Pani — владелице."
+msgstr "Proszę o pomoc w naprawie ogrzewania. Czy fachowiec może przyjść we wtorek po szesnastej? Czy ten termin Panu odpowiada? / Czy ten termin Pani odpowiada? Panu — gdy piszemy do właściciela; Pani — gdy piszemy do właścicielki."
+
+msgid "Выбери вежливую просьбу помочь с ремонтом отопления."
+msgstr "Wybierz uprzejmą prośbę o pomoc w naprawie ogrzewania."
+
+msgid "Proszę o pomoc w naprawie ogrzewania — просьба помочь с ремонтом. Dziękuję — благодарность, Potwierdzam — подтверждение."
+msgstr "Proszę o pomoc w naprawie ogrzewania to prośba o pomoc. Dziękuję wyraża podziękowanie, a Potwierdzam — potwierdzenie."
+
+msgid "Предложи визит во вторник после 16:00 и спроси владелицу, подходит ли время."
+msgstr "Zaproponuj wizytę we wtorek po 16:00 i zapytaj właścicielkę, czy termin jej odpowiada."
+
+msgid "We wtorek — во вторник; po szesnastej — после 16:00. Pani odpowiada — вежливое обращение к владелице; владельцу пишем Panu odpowiada."
+msgstr "We wtorek wskazuje dzień, a po szesnastej — godzinę po 16:00. Do właścicielki piszemy Pani odpowiada, a do właściciela — Panu odpowiada."
+
+msgid "Перед чтением: слова о классе"
+msgstr "Przed czytaniem: słownictwo związane z salą lekcyjną"
+
+msgid "Сначала повтори базовые слова о классе: sala — аудитория; nauczyciel — преподаватель; obok — рядом; na początku — в начале; przedstawiać się — представляться; znajomy — знакомый. В тексте był означает «был»."
+msgstr "Najpierw powtórz podstawowe słowa: sala — pomieszczenie, w którym odbywają się zajęcia; nauczyciel — osoba prowadząca zajęcia; obok — tuż przy; na początku — w pierwszej części; przedstawiać się — mówić swoje imię; znajomy — osoba, którą znamy. Był to forma przeszła czasownika być."
+
+msgid "7 заданий · A2"
+msgstr "7 zadań · A2"

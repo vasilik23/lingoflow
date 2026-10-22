@@ -420,7 +420,7 @@ class A2HousingServicesContentTests(TestCase):
         self.assertEqual(topic.course_id, "a2-independence")
         self.assertEqual(topic.position, 2)
         self.assertEqual(Lesson.objects.filter(topic=topic).count(), 5)
-        self.assertEqual(Question.objects.filter(lesson_id="housing-grammar").count(), 5)
+        self.assertEqual(Question.objects.filter(lesson_id="housing-grammar").count(), 7)
         self.assertEqual(Question.objects.filter(lesson_id="housing-quiz").count(), 8)
         self.assertEqual(Question.objects.filter(lesson_id="housing-reading-check").count(), 5)
         self.assertEqual(LessonFlashcard.objects.filter(lesson_id="housing-words").count(), 8)
@@ -432,7 +432,7 @@ class A2HousingServicesContentTests(TestCase):
         self.assertEqual(reading.source_metadata["origin"], "original")
         self.assertEqual(reading.source_metadata["comprehension_lesson_id"], "housing-reading-check")
         self.assertEqual(len(reading.paragraphs), 3)
-        self.assertEqual(reading.glossary["kaloryferów"]["lemma"], "kaloryfer")
+        self.assertEqual(reading.glossary["kaloryfery"]["lemma"], "kaloryfer")
         self.assertEqual(reading.glossary["usterki"]["lemma"], "usterka")
         self.assertEqual(reading.glossary["spóźni"]["lemma"], "spóźnić się")
 
@@ -718,7 +718,7 @@ class B1BiographyContentTests(TestCase):
         self.assertEqual(reading.source_metadata["comprehension_lesson_id"], "bio-reading-check")
         self.assertEqual(len(reading.paragraphs), 4)
         self.assertEqual(reading.glossary["dorastała"]["lemma"], "dorastać")
-        self.assertEqual(reading.glossary["punktem"]["lemma"], "punkt zwrotny")
+        self.assertEqual(reading.glossary["punktem zwrotnym"]["lemma"], "punkt zwrotny")
 
     def test_catalog_starts_b1_with_biography(self):
         topics = [topic for topic in course_topics() if topic["level"] == "B1"]
