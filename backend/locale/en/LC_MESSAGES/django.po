@@ -17775,3 +17775,42 @@ msgstr "money paid as security when renting"
 
 msgid "прибор для измерения расхода электричества"
 msgstr "a device measuring electricity consumption"
+
+msgid "Jestem — форма для «я», jesteś — для «ты». Говоря о себе, выбираем jestem: Jestem Anna."
+msgstr "Jestem is the form for I; jesteś is the form for you. Use jestem when talking about yourself: Jestem Anna."
+
+msgid "Ponieważ — «потому что»: здесь объясняется причина регулярных занятий. Chociaż — «хотя»: это уступка, а не причина."
+msgstr "Ponieważ means because: it explains the reason for studying regularly. Chociaż means although: it introduces a concession, not a reason."
+
+msgid "Это самооценка: «Знаю» означает, что ты вспомнил значение сам. Ответ не проверяется автоматически."
+msgstr "This is a self-assessment: “I know” means you recalled the meaning yourself. Your answer is not checked automatically."
+
+msgid "Повторить ошибки урока"
+msgstr "Review this lesson’s mistakes"
+
+msgid "Отдельная тренировка сохранённых вопросов, в которых была ошибка. Балл урока не изменится."
+msgstr "Practise the saved questions you got wrong. Your lesson score will stay the same."
+
+msgid "Исправить ошибки"
+msgstr "Correct mistakes"
+
+msgid "Общее закрепление"
+msgstr "General topic practice"
+
+msgid "Ошибок этого урока нет"
+msgstr "No mistakes for this lesson"
+
+msgid "Для этого урока нет доступных сохранённых ошибок."
+msgstr "There are no available saved mistakes for this lesson."
+
+msgid "Верно, но сохранение не подтверждено"
+msgstr "Correct, but saving is not confirmed"
+
+msgid "Не удалось подтвердить сохранение. Обнови тренировку, чтобы проверить очередь."
+msgstr "Saving could not be confirmed. Refresh the practice to check the queue."
+
+msgid "Некорректная тренировка урока"
+msgstr "Invalid lesson practice"
+
+msgid "Вернуться к уроку"
+msgstr "Back to the lesson"

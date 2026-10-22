@@ -3,4 +3,5 @@
   {% if not preview %}<p>{% translate "Твой ответ:" %} <span lang="{{ selected_text|learning_language }}">{{ selected_text|learning_markup }}</span></p>{% endif %}
   <p><strong>{% translate "Правильный ответ:" %}</strong> {% if preview %}{% for option in lesson.question.options %}{% if forloop.counter0 == lesson.question.correct %}<span lang="{{ option|learning_language }}">{{ option|learning_markup }}</span>{% endif %}{% endfor %}{% else %}<span lang="{{ correct_text|learning_language }}">{{ correct_text|learning_markup }}</span>{% endif %}</p>
   <p lang="{{ lesson.question.explanation|learning_language }}">{{ lesson.question.explanation|learning_markup }}</p>
+{% include "lessons/_feedback_hint.html" %}
 </div>

@@ -12,6 +12,9 @@
       <button class="button button-secondary" type="button" data-sync-retry hidden>{% translate "Повторить отправку" %}</button>
     </div>
   {% endif %}
+  {% if followup.mistake_practice_url %}
+    <section class="followup-mistake" data-lesson-mistakes><h2>{% translate "Повторить ошибки урока" %}</h2><p>{% translate "Отдельная тренировка сохранённых вопросов, в которых была ошибка. Балл урока не изменится." %}</p><a class="button" href="{{ followup.mistake_practice_url }}">{% translate "Исправить ошибки" %} →</a></section>
+  {% endif %}
   {% if followup.kind == "repeat" %}
     {% if followup.mistake %}<section class="followup-mistake"><h2>{% translate "Что закрепить" %}</h2><p><strong lang="{{ followup.mistake.prompt|learning_language }}">{{ followup.mistake.prompt|learning_markup }}</strong></p><p lang="{{ followup.mistake.explanation|explanation_language }}">{{ followup.mistake.explanation|explanation_markup }}</p></section>{% endif %}
     <a class="complete-next" href="{% url 'lesson' followup.lesson.id %}">
@@ -26,7 +29,7 @@
   {% elif followup.lesson %}
     <a class="complete-next" href="{% url 'lesson' followup.lesson.id %}">
       <span class="complete-next-icon" aria-hidden="true">{% include 'components/icon.html' with name='book' %}</span>
-      <span class="complete-next-copy"><small>{% translate "Следующий урок темы" %}</small><strong>{{ followup.lesson.title|ui_text }}</strong><small>{{ followup.lesson.description|ui_text }} · ~{{ followup.lesson.minutes|ui_text }} {% translate "мин" %}</small></span>
+      <span class="complete-next-copy"><small>{% translate "Следующий урок темы" %} · {% translate "Общее закрепление" %}</small><strong>{{ followup.lesson.title|ui_text }}</strong><small>{{ followup.lesson.description|ui_text }} · ~{{ followup.lesson.minutes|ui_text }} {% translate "мин" %}</small></span>
       <span aria-hidden="true">→</span>
     </a>
   {% else %}

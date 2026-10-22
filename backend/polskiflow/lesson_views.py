@@ -4,6 +4,7 @@ import json
 import random
 import uuid
 from functools import partial
+from urllib.parse import urlencode
 from datetime import datetime, timezone
 
 from django.http import Http404, HttpRequest, HttpResponse, HttpResponseBadRequest
@@ -19,6 +20,7 @@ from polskiflow.progress_store import save_lesson_completion_result
 from polskiflow.lesson_draft_store import delete_lesson_draft, load_lesson_draft, save_lesson_draft
 from polskiflow.lesson_bookmark_store import load_lesson_bookmarks
 from polskiflow.lesson_note_store import load_lesson_note, save_lesson_note
+from polskiflow.domain.lesson_feedback_hint import feedback_hint
 from polskiflow.domain.lesson_followup import lesson_followup
 from polskiflow.domain.topic_journeys import journey, next_target, PILOT_LESSON_IDS
 from polskiflow.domain.lesson_state import InvalidLessonState, load_lesson_state, sign_lesson_state
@@ -270,6 +272,7 @@ def _question_context(
         "lesson_id": lesson_id,
         "lesson_kind": lesson_kind,
         "question": questions[index],
+        "feedback_hint": feedback_hint(lesson_id, index, questions[index]),
         "index": index,
         "score": score,
         "selected": selected,
@@ -374,13 +377,15 @@ def _complete(request: HttpRequest, lesson_id: str, score: int, total: int) -> H
     followup = lesson_followup(lesson_task, navigation, score, total, datetime.now(timezone.utc).date())
     if followup['kind'] == 'next':
         followup['target'] = next_target((navigation or {}).get('topic_id'), lesson_id)
-    if followup["kind"] == "repeat" and lesson_task["kind"] in {"grammar", "quiz"}:
+    if score < total and lesson_task["kind"] in {"grammar", "quiz"}:
         questions = (grammar(lesson_id) or {}).get("questions", []) if lesson_task["kind"] == "grammar" else quiz(lesson_id)
         mistakes = load_mistakes(request.supabase_access_token, request.supabase_user.id) or []
         positions = [row.get("question_position") for row in mistakes if isinstance(row, dict) and row.get("lesson_id") == lesson_id]
-        positions = [index for index in positions if type(index) is int and 0 <= index < len(questions)]
+        positions = sorted({index for index in positions if type(index) is int and 0 <= index < len(questions)})
         if positions:
-            followup["mistake"] = questions[min(positions)]
+            followup["mistake"] = questions[positions[0]]
+            followup["mistake_practice_url"] = "/mistakes/practice/?" + urlencode({"lesson": lesson_id})
+            followup["mistake_count"] = len(positions)
     context = {
         "followup": followup,
         "score": score,
