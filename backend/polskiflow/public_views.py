@@ -7,6 +7,7 @@ from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
 from polskiflow.content import lesson_navigation
+from polskiflow.domain.lesson_feedback_hint import feedback_hint
 from polskiflow.domain.public_demo import DEMO_SALT, checked_answer, demo_version
 from polskiflow.public_demo_store import DEMO_LESSONS, load_demo_lesson
 
@@ -48,7 +49,7 @@ def public_demo(request):
                 if len(reviews) != 1:
                     raise ValueError('Repeated review')
                 result = checked_answer(lesson, signing.loads(reviews[0], salt=DEMO_SALT, max_age=1800))
-                context.update(result, review=reviews[0])
+                context.update(result, review=reviews[0], feedback_hint=feedback_hint(lesson['id'], 0, lesson['question']))
                 step = 'result' if request.GET.get('step') == 'result' else 'explanation'
         except (signing.BadSignature, ValueError, TypeError):
             context['demo_error'] = 'Не удалось проверить ответ. Попробуй ещё раз.'

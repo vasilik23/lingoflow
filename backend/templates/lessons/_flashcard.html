@@ -8,6 +8,7 @@
   {% if revealed %}<p class="translation" lang="{{ card.translation|learning_language:study_ui_language }}">{{ card.translation|learning_markup }}</p><p class="example" lang="{{ card.example|learning_language }}">{{ card.example|learning_markup }}</p>{% else %}<p class="muted">{% translate "Сначала вспомни значение, затем открой перевод." %}</p>{% endif %}
 </div>
 {% if revealed %}
+  <p class="field-hint" data-self-assessment>{% translate "Это самооценка: «Знаю» означает, что ты вспомнил значение сам. Ответ не проверяется автоматически." %}</p>
   <div class="actions">
     <form method="post" action="{% url 'lesson-step' lesson_id %}">{% csrf_token %}<input type="hidden" name="action" value="again"><input type="hidden" name="state" value="{{ lesson_state }}"><button class="secondary">{% translate "Повторить" %}</button></form>
     <form method="post" action="{% url 'lesson-step' lesson_id %}">{% csrf_token %}<input type="hidden" name="action" value="know"><input type="hidden" name="state" value="{{ lesson_state }}"><button>{% translate "Знаю →" %}</button></form>
