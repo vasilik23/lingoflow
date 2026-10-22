@@ -111,3 +111,46 @@ class PilotEditorialCorrectionsTests(TestCase):
             self.assertIn('housing-grammar:q:6', artifacts[f'review-{lang}.html'].decode())
         self.assertIn('from Poland', artifacts['review-en.html'].decode())
         self.assertNotIn('timelessly', artifacts['review-en.html'].decode())
+
+
+class PilotEditorialRecheckTests(TestCase):
+    def test_intro_sentence_instruction_matches_full_sentence_options(self):
+        question = Question.objects.get(lesson_id='grammar', position=0)
+        self.assertEqual(question.options[question.correct], 'Jestem Anna.')
+        for lang in ('pl', 'en'):
+            with override(lang):
+                prompt = learning_text(question.prompt)
+                self.assertNotIn('___ Anna', prompt)
+                self.assertNotIn('Jestem Anna', prompt)
+                self.assertIn('zdanie' if lang == 'pl' else 'sentence', prompt)
+
+    def test_zapraszam_keeps_context_and_has_an_infinitive(self):
+        reading = ReadingText.objects.get(pk='pierwszy-dzien-na-kursie')
+        self.assertEqual(reading.glossary['zapraszam']['lemma'], 'zapraszać')
+        self.assertEqual(reading.glossary['zapraszam']['translation'], 'прошу / проходите')
+        tokens = _tokenize(reading.paragraphs, reading.glossary, reading.id)
+        self.assertTrue(any(t.get('lemma') == 'zapraszać' for p in tokens for t in p))
+
+    def test_deposit_quiz_tests_meaning_without_global_label_changes(self):
+        question = Question.objects.get(lesson_id='housing-quiz', position=0)
+        self.assertEqual(question.correct, 1)
+        self.assertEqual(len(set(question.options)), 3)
+        with override('pl'):
+            self.assertEqual(learning_text(question.options[1]), 'kwota wpłacana jako zabezpieczenie przy wynajmie')
+            self.assertNotEqual(learning_text(question.options[1]), learning_text('залог'))
+            self.assertEqual(learning_text('отопление'), 'ogrzewanie')
+        with override('en'):
+            self.assertEqual(learning_text(question.options[1]), 'money paid as security when renting')
+            self.assertEqual(learning_text('Что означает dorastać?'), 'What does dorastać mean?')
+            self.assertEqual(learning_text('переезжать'), 'move house')
+
+    def test_recheck_migration_is_rerunnable_without_extra_questions(self):
+        migration = importlib.import_module('polskiflow.learning.migrations.0127_pilot_editorial_recheck')
+        ids = list(Question.objects.values_list('id', flat=True))
+        editor = SimpleNamespace(connection=connection)
+        migration.seed(apps, editor)
+        migration.seed(apps, editor)
+        self.assertEqual(ids, list(Question.objects.values_list('id', flat=True)))
+        question = Question.objects.get(lesson_id='housing-quiz', position=0)
+        self.assertEqual(question.options, migration.OPTIONS)
+        self.assertEqual(ReadingText.objects.get(pk='pierwszy-dzien-na-kursie').glossary['zapraszam'], migration.ENTRY)

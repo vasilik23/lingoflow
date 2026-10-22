@@ -694,7 +694,7 @@ msgid "Jak dojść do…? — естественный вопрос о пути 
 msgstr "Jak dojść do...? is a natural question about the way to a place."
 
 msgid "Jak masz na imię? — «Как тебя зовут?»"
-msgstr "Jak masz na imię? — «What's your name?"
+msgstr "Jak masz na imię? means “What is your name?”"
 
 msgid "Jak się pan czuje? — вежливый вопрос «Как вы себя чувствуете?»."
 msgstr "Jak się pan czuje? - polite question \"How are you feeling?\""
@@ -730,7 +730,7 @@ msgid "Jeździć na rowerze — регулярно ездить на велос�
 msgstr "Jeździć na rowerze — Riding a bicycle regularly."
 
 msgid "Jeździł описывает повторение, został — единичный завершённый выбор."
-msgstr "Jeździł Describes repetition, został — It's a single completed choice."
+msgstr "Jeździł describes repeated trips; został describes a single completed choice."
 
 msgid "Jutro указывает на будущее: kupimy."
 msgstr "Jutro pointing to the future: kupimy."
@@ -742,7 +742,7 @@ msgid "Kaszlę — «я кашляю»."
 msgstr "Kaszlę — «I'm coughing."
 
 msgid "Kaucja — залог, который обычно возвращают после окончания аренды."
-msgstr "Kaucja is a collateral that is usually returned after the end of the lease."
+msgstr "A security deposit is a sum of money held as security and usually returned at the end of the tenancy."
 
 msgid "Kiedy связывает действие или момент с последующим событием."
 msgstr "Kiedy associates an action or moment with a subsequent event."
@@ -952,7 +952,7 @@ msgid "Oficjalny называют регистр с установленными
 msgstr "Oficjalny is a register with established formulas, precise formulations and a greater distance between the author and the addressee."
 
 msgid "Okazać się сообщает, каким что-либо оказалось."
-msgstr "Okazać się It tells you what it's like."
+msgstr "Okazać się means to turn out to be: the job turned out to be more interesting than he had expected."
 
 msgid "Ola ma 4 ___. Вставьте форму."
 msgstr "Ola ma 4 ___. Insert the form."
@@ -976,7 +976,7 @@ msgid "Owoce — фрукты."
 msgstr "Owoce — fruit."
 
 msgid "Pani — вежливое обращение к женщине."
-msgstr "Pani — polite treatment of a woman."
+msgstr "Pani is a polite form of address for a woman."
 
 msgid "Pani — вежливое обращение к женщине; используется форма jest."
 msgstr "Pani is a polite form of address for a woman and takes the third-person form jest."
@@ -1078,7 +1078,7 @@ msgid "Potoczny описывает непринуждённую разговор
 msgstr "Potoczny describes casual spoken language; such forms are appropriate among acquaintances, but do not always fit an official letter."
 
 msgid "Potrzebować требует родительного падежа: potrzebujemy hydraulika."
-msgstr "Potrzebować requires a genitive case: potrzebujemy hydraulika."
+msgstr "Potrzebować takes the genitive: potrzebujemy hydraulika."
 
 msgid "Powiedział, że… и przekazała, że… передают содержание без дословной цитаты."
 msgstr "Powiedział, że... and przekazała, że... convey the content without a verbatim quote."
@@ -1126,7 +1126,7 @@ msgid "Przystanek — остановка общественного трансп
 msgstr "Przystanek — public transport stop."
 
 msgid "Punkt zwrotny меняет дальнейшее развитие событий."
-msgstr "Punkt zwrotny It changes the way things are going."
+msgstr "A punkt zwrotny is a turning point that changes the course of events."
 
 msgid "Pójść na kompromis — найти решение через взаимные уступки."
 msgstr "Pójść na kompromis – to find a solution through mutual concessions."
@@ -1405,7 +1405,7 @@ msgid "Wprawdzie… ale, mimo że и niemniej jednak признают огран
 msgstr "Wprawdzie... ale, mimo że and niemniej jednak recognize the limitation without abolishing the main idea."
 
 msgid "Wpłynąć na — оказать влияние на что-либо."
-msgstr "Wpłynąć na — Impact something."
+msgstr "Wpłynąć na means to influence or have an effect on something."
 
 msgid "Wpłynąć требует na + винительный падеж: na moje życie."
 msgstr "Wpłynąć takes na + accusative case: na moje życie."
@@ -2779,7 +2779,7 @@ msgid "Выберите правильное описание."
 msgstr "Choose the correct description."
 
 msgid "Выберите правильное про Марека: Marek ___ z Polski."
-msgstr "Select the correct Marek: Marek ___ z Polski."
+msgstr "Choose the correct form: Marek ___ z Polski."
 
 msgid "Выберите правильную пару."
 msgstr "Pick the right pair."
@@ -2923,7 +2923,7 @@ msgid "Глагол nagrodzić требует винительного паде�
 msgstr "The verb nagrodzić takes the accusative case; use którego for a masculine person."
 
 msgid "Глагол szukać требует родительного падежа: szukamy mieszkania."
-msgstr "The verb szukać requires a genitive case: szukamy mieszkania."
+msgstr "Szukać takes the genitive: szukamy mieszkania."
 
 msgid "Глагол zaufać требует дательного падежа; форма женского относительного местоимения — której."
 msgstr "The verb zaufać takes the dative case; the feminine relative pronoun is której."
@@ -3514,7 +3514,7 @@ msgid "Заказ и покупка"
 msgstr "Ordering and buying"
 
 msgid "Закрепи вопросы и вежливые обращения"
-msgstr "Consolidate questions and polite treatments"
+msgstr "Practise questions and polite forms of address"
 
 msgid "Закрепи действия для реальных задач"
 msgstr "Consolidate action for real tasks"
@@ -4105,7 +4105,7 @@ msgid "Как вежливо сказать «Я хотел бы подать з
 msgstr "How do you say, “I would like to apply”?"
 
 msgid "Как вежливо спросить женщину: «Вы из Варшавы?»"
-msgstr "How politely to ask a woman, \"Are you from Warsaw?\""
+msgstr "How do you politely ask a woman, “Are you from Warsaw?”"
 
 msgid "Как вежливо спросить цену?"
 msgstr "How politely to ask the price?"
@@ -4225,7 +4225,7 @@ msgid "Как сказать «Пожалуйста, подпишите форм
 msgstr "How do you say, “Please sign the form here?”"
 
 msgid "Как сказать «Я Анна»?"
-msgstr "Choose the form of być for ja: ___ Anna."
+msgstr "Choose the sentence using the form of być for ja."
 
 msgid "Как сказать «Я говорю по-польски»?"
 msgstr "How do you say \"I speak Polish\"?"
@@ -5626,7 +5626,7 @@ msgid "Новая попытка"
 msgstr "New attempt"
 
 msgid "Нового коллегу зовут Марек."
-msgstr "The new colleague's name is Marek."
+msgstr "The new classmate is called Marek."
 
 msgid "Новости"
 msgstr "News"
@@ -7150,7 +7150,7 @@ msgid "После nie ma используется родительный пад�
 msgstr "After nie ma, the genitive case is used: ciepłej wody."
 
 msgid "После nie ma употребляется родительный падеж: ciepłej wody."
-msgstr "After nie ma is used genitive case: ciepłej wody."
+msgstr "Use the genitive after nie ma: ciepłej wody."
 
 msgid "После nie ma: nie ma prądu, ciepłej wody, ogrzewania."
 msgstr "After nie ma: nie ma prądu, ciepłej wody, ogrzewania."
@@ -7189,10 +7189,10 @@ msgid "После wyjaśnił утверждение вводится że; буд
 msgstr "After wyjaśnił, the statement is entered że; the future action is expressed otrzymamy."
 
 msgid "После z в значении «с чем?» нужен творительный падеж: z ogrzewaniem."
-msgstr "After z in the meaning of \"with what?\" we need a instrumental case: z ogrzewaniem."
+msgstr "In problem z, use the instrumental: z ogrzewaniem."
 
 msgid "После z в значении совместности употребляется творительный: z właścicielem."
-msgstr "After z, the instrumental case is used in the meaning of jointness: z właścicielem."
+msgstr "In rozmawiać z kimś, use the instrumental after z: z właścicielem."
 
 msgid "После z в конструкции problem z нужен творительный: kranem."
 msgstr "In problem z, use the instrumental after z: kranem."
@@ -7630,7 +7630,7 @@ msgid "Проверь детали короткой записи"
 msgstr "Check the details of the short recording"
 
 msgid "Проверь детали обращения Лены"
-msgstr "Check the details of Lena's appeal"
+msgstr "Check the details of Lena’s repair request."
 
 msgid "Проверь детали первой недели Майи"
 msgstr "Check out the details of Maya's first week"
@@ -7798,7 +7798,7 @@ msgid "Проверь собранное сообщение"
 msgstr "Check the message"
 
 msgid "Проверь тему «Знакомство»"
-msgstr "Check out the \"Acquaintance\" subject"
+msgstr "Review introductions"
 
 msgid "Проверь формы прошедшего времени"
 msgstr "Check the past tense forms"
@@ -8125,7 +8125,7 @@ msgid "Развитие и результаты"
 msgstr "Development and results"
 
 msgid "Разговариваю с владельцем."
-msgstr "Talking to the owner."
+msgstr "Choose the Polish sentence meaning “I am talking to the landlord.”"
 
 msgid "Разделы личных материалов"
 msgstr "Personal materials sections"
@@ -10390,7 +10390,7 @@ msgid "Что означает dawkowanie?"
 msgstr "What does it mean? dawkowanie?"
 
 msgid "Что означает dorastać?"
-msgstr "What does it mean? dorastać?"
+msgstr "What does dorastać mean?"
 
 msgid "Что означает dziedzictwo?"
 msgstr "What does it mean? dziedzictwo?"
@@ -10411,7 +10411,7 @@ msgid "Что означает jutro?"
 msgstr "What does it mean? jutro?"
 
 msgid "Что означает kaucja?"
-msgstr "What does it mean? kaucja?"
+msgstr "What does kaucja mean?"
 
 msgid "Что означает kształcenie?"
 msgstr "What does it mean? kształcenie?"
@@ -13576,7 +13576,7 @@ msgid "передача смысла другим"
 msgstr "passing on"
 
 msgid "переезжать"
-msgstr "move over"
+msgstr "move house"
 
 msgid "переехать"
 msgstr "move (to a new home)"
@@ -17766,3 +17766,12 @@ msgstr "First review these classroom words: sala — classroom; nauczyciel — t
 
 msgid "7 заданий · A2"
 msgstr "7 exercises · A2"
+
+msgid "плата за отопление"
+msgstr "a heating charge"
+
+msgid "сумма, внесённая как обеспечение при аренде"
+msgstr "money paid as security when renting"
+
+msgid "прибор для измерения расхода электричества"
+msgstr "a device measuring electricity consumption"

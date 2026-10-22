@@ -7529,7 +7529,7 @@ msgid "Формы настоящего времени"
 msgstr "Formy czasu teraźniejszego"
 
 msgid "Как сказать «Я Анна»?"
-msgstr "Wybierz formę czasownika być dla osoby ja: ___ Anna."
+msgstr "Wybierz zdanie z formą czasownika być dla osoby ja."
 
 msgid "Для «я» используется форма jestem: Jestem Anna."
 msgstr "Dla osoby ja używamy formy jestem: Jestem Anna."
@@ -18623,3 +18623,12 @@ msgstr "Najpierw powtórz podstawowe słowa: sala — pomieszczenie, w którym o
 
 msgid "7 заданий · A2"
 msgstr "7 zadań · A2"
+
+msgid "плата за отопление"
+msgstr "opłata za ogrzewanie"
+
+msgid "сумма, внесённая как обеспечение при аренде"
+msgstr "kwota wpłacana jako zabezpieczenie przy wynajmie"
+
+msgid "прибор для измерения расхода электричества"
+msgstr "urządzenie mierzące zużycie prądu"
