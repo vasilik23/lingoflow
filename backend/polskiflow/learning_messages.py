@@ -3634,3 +3634,10 @@ LEARNING_MESSAGES += (
     gettext_noop("Сначала повтори базовые слова о классе: sala — аудитория; nauczyciel — преподаватель; obok — рядом; na początku — в начале; przedstawiać się — представляться; znajomy — знакомый. В тексте był означает «был»."),
     gettext_noop("7 заданий · A2"),
 )
+
+# Original pilot recheck labels, 2026-10-22.
+LEARNING_MESSAGES += (
+    gettext_noop("плата за отопление"),
+    gettext_noop("сумма, внесённая как обеспечение при аренде"),
+    gettext_noop("прибор для измерения расхода электричества"),
+)
