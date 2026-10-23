@@ -17,6 +17,7 @@ function instant(value) {
   const maxDay = new Date(Date.UTC(year, month, 0)).getUTCDate();
   return month >= 1 && month <= 12 && day >= 1 && day <= maxDay && Number.isFinite(date.valueOf()) ? date : null;
 }
+export { instant as retentionInstant };
 function monthsLater(date, months) {
   const result = new Date(date);
   result.setUTCDate(1);
