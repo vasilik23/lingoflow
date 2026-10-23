@@ -1580,3 +1580,7 @@ section.run-review > h2, .run-review-source > h2 { font-size: 1.1rem; }
 .b2-listening-followup > :first-child { margin-top: 0; }
 .b2-listening-history { padding: 1rem; margin-block: 1rem; }
 .b2-listening-history li { margin-block: .5rem; }
+
+/* Adult beta declaration: one readable label at narrow widths. */
+.auth-panel .registration-adult { display: flex; align-items: flex-start; gap: .65rem; margin-block: 1rem .5rem; font-weight: 400; }
+.auth-panel .registration-adult input[type="checkbox"] { flex: 0 0 1.1rem; width: 1.1rem; height: 1.1rem; margin: .15rem 0 0; padding: 0; }
