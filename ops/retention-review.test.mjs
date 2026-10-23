@@ -86,3 +86,7 @@ test('private report is exclusive, mode 0600; symlinks and public input rejected
     await assert.rejects(reviewFile(input, join(dir, 'other.json'), now));
   } finally { await rm(dir, { recursive: true, force: true }); }
 });
+test('recent known use is active even if historical coverage is incomplete', () => {
+  assert.equal(account({ activity_complete: false, last_activity_at: '2026-10-22T08:00:00Z' }).action, 'active');
+  assert.equal(account({ activity_complete: false }).action, 'manual_review');
+});

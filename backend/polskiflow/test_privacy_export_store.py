@@ -60,3 +60,15 @@ class PrivacyExportStoreTests(SimpleTestCase):
     def test_missing_configuration_is_unavailable(self):
         with override_settings(SUPABASE_URL=""):
             self.assertFalse(load_privacy_export("access", "user-123").available)
+
+    @patch('polskiflow.privacy_export_store.urlopen')
+    def test_retention_metadata_is_in_existing_owner_scoped_datasets(self, urlopen):
+        from urllib.parse import parse_qs, urlsplit
+        urlopen.side_effect = [_response([]) for _ in DATASETS]
+        self.assertTrue(load_privacy_export('access', 'user-123').available)
+        queries = {urlsplit(call.args[0].full_url).path.split('/')[-1]: parse_qs(urlsplit(call.args[0].full_url).query) for call in urlopen.call_args_list}
+        self.assertIn('last_request_at', queries['profiles']['select'][0])
+        self.assertIn('activity_tracking_started_at', queries['profiles']['select'][0])
+        self.assertIn('closed_at', queries['user_feedback']['select'][0])
+        self.assertEqual(queries['profiles']['id'], ['eq.user-123'])
+        self.assertEqual(queries['user_feedback']['user_id'], ['eq.user-123'])

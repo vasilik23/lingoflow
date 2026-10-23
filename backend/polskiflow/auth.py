@@ -83,6 +83,8 @@ class SupabaseAuthMiddleware:
                 request.supabase_user = refreshed_session.user
                 request.supabase_access_token = refreshed_session.access_token
 
+        from polskiflow.account_activity import record_if_due
+        record_if_due(request)
         response = self.get_response(request)
         if refreshed_session is not None:
             set_auth_cookies(response, refreshed_session)

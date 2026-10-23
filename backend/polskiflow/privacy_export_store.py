@@ -13,7 +13,7 @@ PAGE_SIZE = 500
 MAX_PAGES = 100
 
 DATASETS = {
-    "profile": ("profiles", "display_name,level,daily_goal_lessons,daily_goal_minutes,practice_exclude_remote_work,streak_days,last_active_date,created_at", "created_at.asc"),
+    "profile": ("profiles", "display_name,level,daily_goal_lessons,daily_goal_minutes,practice_exclude_remote_work,streak_days,last_active_date,last_request_at,activity_tracking_started_at,created_at", "created_at.asc"),
     "lesson_completions": ("lesson_completions", "lesson_id,plan_date,cards_total,cards_known,completed_at", "plan_date.asc,lesson_id.asc"),
     "lesson_result_events": ("lesson_result_events", "event_id,lesson_id,plan_date,completed_at,cards_total,cards_known,contract_version,client_instance_id,created_at", "created_at.asc,event_id.asc"),
     "lesson_drafts": ("lesson_drafts", "lesson_id,lesson_kind,step_index,score,updated_at", "updated_at.asc,lesson_id.asc"),
@@ -24,7 +24,7 @@ DATASETS = {
     "lesson_notes": ("lesson_notes", "lesson_id,body,updated_at", "updated_at.asc,lesson_id.asc"),
     "learning_collections": ("learning_collections", "id,name,created_at", "created_at.asc,id.asc"),
     "learning_collection_items": ("learning_collection_items", "id,collection_id,content_type,content_id,created_at", "created_at.asc,id.asc"),
-    "feedback": ("user_feedback", "id,category,message,page_url,priority,status,created_at", "created_at.asc,id.asc"),
+    "feedback": ("user_feedback", "id,category,message,page_url,priority,status,closed_at,created_at", "created_at.asc,id.asc"),
     "reminder_preferences": ("reminder_preferences", "daily_reminder_enabled,reminder_time,timezone,updated_at", "updated_at.asc"),
     "b1_mock_attempts": ("b1_mock_attempts", "id,attempt_id,attempted_at,attempt_version,listening_correct,reading_correct,grammar_correct", "attempted_at.asc,id.asc"),
     "b1_section_attempts": ("b1_section_attempts", "id,attempt_id,attempted_at,attempt_version,section_id,correct,total", "attempted_at.asc,id.asc"),
