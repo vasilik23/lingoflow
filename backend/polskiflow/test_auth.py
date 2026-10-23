@@ -364,7 +364,7 @@ class BrowserAuthTests(SimpleTestCase):
     def test_registration_waits_for_email_confirmation(self, signup):
         signup.return_value = None
         response = self.client.post(
-            "/register/", {"email": "new@example.com", "password": "Bezpieczne2026"}
+            "/register/", {"email": "new@example.com", "password": "Bezpieczne2026", "adult_confirmation": "on"}
         )
         self.assertContains(response, "Подтвердите email")
         signup.assert_called_once_with(
@@ -379,7 +379,7 @@ class BrowserAuthTests(SimpleTestCase):
             "access", "refresh", 3600, SupabaseUser("user-123", "new@example.com")
         )
         response = self.client.post(
-            "/register/", {"email": "new@example.com", "password": "Bezpieczne2026"}
+            "/register/", {"email": "new@example.com", "password": "Bezpieczne2026", "adult_confirmation": "on"}
         )
         self.assertRedirects(response, "/welcome/", fetch_redirect_response=False)
         self.assertTrue(response.cookies[ACCESS_COOKIE]["httponly"])

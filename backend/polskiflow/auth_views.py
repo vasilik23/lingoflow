@@ -405,6 +405,8 @@ def register_view(request: HttpRequest) -> HttpResponse:
             context["error"] = "Укажите email и пароль"
         elif error := password_error(password):
             context["error"] = error
+        elif request.POST.getlist("adult_confirmation") != ["on"]:
+            context["error"] = "Beta LingoFlow доступна только с 18 лет. Подтверди возраст, чтобы создать аккаунт."
         elif not (rate := consume_auth_attempt(request, "register", email))[0]:
             return _auth_rate_limit_response(request, context, "auth/form.html", rate[1])
         else:

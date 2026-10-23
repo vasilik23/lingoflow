@@ -19,6 +19,13 @@
         <label for="password">{% translate "Пароль" %}</label>
         <input id="password" name="password" type="password" autocomplete="{% if mode == 'login' %}current-password{% else %}new-password{% endif %}"{% if mode == 'register' %} minlength="10" aria-describedby="password-hint"{% endif %} placeholder="{% if mode == 'login' %}{% translate "Ваш пароль" %}{% else %}{% translate "Не менее 10 символов" %}{% endif %}" required>
         {% if mode == 'register' %}<p class="field-hint" id="password-hint">{% translate "Используйте строчные и заглавные буквы и хотя бы одну цифру." %}</p>{% endif %}
+        {% if mode == 'register' %}
+          <label class="registration-adult" for="adult-confirmation">
+            <input id="adult-confirmation" type="checkbox" name="adult_confirmation" required aria-describedby="registration-privacy">
+            <span>{% translate "Мне исполнилось 18 лет. Я участвую во взрослой beta LingoFlow." %}</span>
+          </label>
+          <p class="field-hint" id="registration-privacy"><a href="{% url 'privacy' %}">{% translate "Как обрабатываются мои данные" %}</a></p>
+        {% endif %}
         <button type="submit">{% if mode == "login" %}{% translate "Войти в LingoFlow" %}{% else %}{% translate "Создать аккаунт" %}{% endif %}</button>
       </form>
       {% if mode == "login" %}

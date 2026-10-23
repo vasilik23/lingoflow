@@ -16,7 +16,9 @@ class PrivacyPageTests(SimpleTestCase):
         self.assertContains(response, "Vercel")
         self.assertContains(response, "Черновики письма")
         self.assertContains(response, "самостоятельно удалить аккаунт")
-        self.assertContains(response, "юридическое имя контролёра")
+        self.assertContains(response, "Vasili Kamisarau")
+        self.assertContains(response, "mailto:lingoflow.privacy@gmail.com")
+        self.assertContains(response, "Автоматическое предупреждение и удаление пока не включены")
         self.assertContains(response, "https://commission.europa.eu/")
         self.assertContains(response, "https://uodo.gov.pl/")
         self.assertEqual(response["Cache-Control"], "private, no-store")
@@ -62,3 +64,23 @@ class PrivacyPageTests(SimpleTestCase):
         self.assertContains(response, 'href="/account/security/#account-delete-title"')
         self.assertEqual(response['Cache-Control'], 'private, no-store')
         self.assertIn('Cookie', response['Vary'])
+
+    def test_owner_contact_age_and_retention_are_translated_in_all_languages(self):
+        for language, expected in (
+            ('ru', ('Кто отвечает за данные', 'Хранение и удаление', 'Автоматическое предупреждение и удаление пока не включены')),
+            ('pl', ('Administrator danych', 'Przechowywanie i usuwanie', 'Automatyczne ostrzeganie i usuwanie nie są jeszcze włączone')),
+            ('en', ('Who is responsible for your data', 'Retention and deletion', 'Automatic warnings and deletion are not yet enabled')),
+        ):
+            self.client.cookies['django_language'] = language
+            response = self.client.get('/privacy/')
+            for text in (*expected, 'Vasili Kamisarau', 'mailto:lingoflow.privacy@gmail.com'):
+                self.assertContains(response, text)
+            if language != 'ru':
+                self.assertNotContains(response, 'Кто отвечает за данные')
+                self.assertNotContains(response, 'Перед широким публичным запуском владелец')
+
+    def test_published_limits_distinguish_build_logs_and_manual_backups(self):
+        response = self.client.get('/privacy/')
+        for text in ('Build-журналы Vercel', 'Google Drive', 'Apple «Пароли»', '180 дней после закрытия', 'автоматическое расписание пока не настроено'):
+            self.assertContains(response, text)
+        self.assertNotContains(response, 'v.kamisarau@gmail.com')

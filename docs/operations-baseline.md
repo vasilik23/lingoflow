@@ -197,3 +197,14 @@ authorization, on `main`, with `SEND_TEST_ALERT`; it does not access production
 or secrets. Its failure status alone does not prove notification delivery.
 The operator must confirm receipt/channel/time; external paging is separate.
 No test dispatch or receipt is claimed by this preparation.
+
+### Current acceptance — 23 October 2026
+
+[Alert delivery](alert-delivery-test.md) is confirmed by the operator for one
+intentional failure: sent and received at 10:11 Europe/Warsaw.
+[External backup](backup-external-acceptance-2026-10-23.md) is accepted: the
+Google Drive download was restored into a new isolated database, with all
+69 tables and security metadata matching. The key is separately stored in
+Apple Passwords, per owner confirmation; retention is 30 days. These receipts
+supersede the earlier preparation-only status above. Regular fresh captures,
+automatic expiry and an external paging channel are not configured.

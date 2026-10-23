@@ -18671,3 +18671,69 @@ msgstr "Nieprawidłowy trening lekcji"
 
 msgid "Вернуться к уроку"
 msgstr "Wróć do lekcji"
+
+msgid "Кто отвечает за данные"
+msgstr "Administrator danych"
+
+msgid "Vasili Kamisarau, физическое лицо, Польша. Контакт по вопросам приватности, поддержки и реализации прав:"
+msgstr "Vasili Kamisarau, osoba fizyczna, Polska. Kontakt w sprawach prywatności, wsparcia i realizacji praw:"
+
+msgid "Beta предназначена для участников от 18 лет. При регистрации мы просим подтвердить совершеннолетие, не собирая дату рождения или документы."
+msgstr "Beta jest przeznaczona dla osób pełnoletnich (18+). Przy rejestracji prosimy o potwierdzenie pełnoletności, bez zbierania daty urodzenia ani dokumentów."
+
+msgid "Для чего и на каком основании"
+msgstr "Cele i podstawy przetwarzania"
+
+msgid "Аккаунт, занятия, синхронизация и сохранение результатов нужны для предоставления запрошенного учебного сервиса — исполнение соглашения с пользователем, статья 6(1)(b) GDPR. Без email и необходимых данных аккаунта зарегистрированный режим недоступен; гостевое демо остаётся доступным."
+msgstr "Konto, nauka, synchronizacja i zapisywanie wyników służą świadczeniu zamówionej usługi edukacyjnej — wykonanie umowy z użytkownikiem, art. 6 ust. 1 lit. b RODO. Bez adresu e-mail i niezbędnych danych konta tryb zalogowany jest niedostępny; demo dla gości pozostaje dostępne."
+
+msgid "Защита сервиса, диагностика ошибок, резервное копирование и обработка обращений основаны на законном интересе поддерживать безопасный и работающий сервис, статья 6(1)(f) GDPR. На такую обработку можно возразить, написав по указанному контакту."
+msgstr "Ochrona usługi, diagnostyka błędów, kopie zapasowe i obsługa zgłoszeń opierają się na prawnie uzasadnionym interesie zapewnienia bezpiecznej i sprawnej usługi, art. 6 ust. 1 lit. f RODO. Sprzeciw można zgłosić na podany adres kontaktowy."
+
+msgid "Добровольная передача учебного текста или аудио внешнему ИИ требует отдельного согласия, статья 6(1)(a) GDPR. Сейчас живой ИИ-пилот выключен. Отказ не мешает обычным занятиям. Включение потребует отдельного уведомления об условиях провайдера и способе отзыва согласия."
+msgstr "Dobrowolne przekazanie tekstu lub nagrania z ćwiczenia zewnętrznej AI wymaga odrębnej zgody, art. 6 ust. 1 lit. a RODO. Pilotaż z działającą AI jest obecnie wyłączony. Odmowa nie ogranicza zwykłej nauki. Uruchomienie wymaga osobnej informacji o warunkach dostawcy i wycofaniu zgody."
+
+msgid "Хранение и удаление"
+msgstr "Przechowywanie i usuwanie"
+
+msgid "Аккаунт и прогресс сохраняются для продолжения занятий. Подтверждённое удаление аккаунта удаляет связанные данные из рабочей базы. Экспорт и удаление доступны в разделе безопасности; обратиться можно и напрямую по email, без входа."
+msgstr "Konto i postępy są przechowywane, aby umożliwić kontynuowanie nauki. Potwierdzone usunięcie konta usuwa powiązane dane z aktywnej bazy. Eksport i usuwanie są dostępne w sekcji bezpieczeństwa; można też napisać bezpośrednio, bez logowania."
+
+msgid "Согласованное правило неактивности: 12 месяцев без использования, затем предупреждение и ещё 30 дней до удаления. Автоматическое предупреждение и удаление пока не включены; перед удалением нужна подтверждённая доставка предупреждения и повторная проверка активности. Одного старого результата урока недостаточно для удаления аккаунта."
+msgstr "Uzgodniona zasada nieaktywności: 12 miesięcy bez korzystania, następnie ostrzeżenie i kolejne 30 dni do usunięcia. Automatyczne ostrzeganie i usuwanie nie są jeszcze włączone; wymagane są potwierdzone doręczenie ostrzeżenia i ponowna kontrola aktywności. Sam stary wynik lekcji nie wystarcza do usunięcia konta."
+
+msgid "Для обратной связи согласован срок 180 дней после закрытия обращения. Автоматическая очистка ещё не включена: старые записи без подтверждённой даты закрытия нельзя считать просроченными только по дате создания."
+msgstr "Dla zgłoszeń uzgodniono 180 dni od ich zamknięcia. Automatyczne usuwanie nie jest jeszcze włączone: starych wpisów bez potwierdzonej daty zamknięcia nie uznaje się za przeterminowane wyłącznie na podstawie daty utworzenia."
+
+msgid "Зашифрованные SQL-копии хранятся отдельно в Google Drive до 30 дней; пароль хранится отдельно в Apple «Пароли». Удаление копий выполняет оператор, автоматическое расписание пока не настроено. После удаления аккаунта данные могут оставаться в изолированной копии до истечения этого срока; восстановление требует повторного применения подтверждённых удалений."
+msgstr "Zaszyfrowane kopie SQL są przechowywane oddzielnie w Google Drive do 30 dni; hasło jest zapisane oddzielnie w aplikacji Hasła Apple. Kopie usuwa operator, automatyczny harmonogram nie jest jeszcze skonfigurowany. Po usunięciu konta dane mogą pozostać w odizolowanej kopii do końca tego okresu; przywrócenie wymaga ponownego zastosowania potwierdzonych usunięć."
+
+msgid "Черновики остаются в браузере до ручного удаления или очистки данных сайта; автоматический срок пока не установлен. Копия базы не содержит локальные черновики и записи речи."
+msgstr "Szkice pozostają w przeglądarce do ręcznego usunięcia lub wyczyszczenia danych witryny; automatyczny termin nie został jeszcze ustalony. Kopia bazy nie zawiera lokalnych szkiców ani nagrań."
+
+msgid "Для runtime-журналов целевой предел — до 30 дней, фактический доступный срок зависит от тарифа Vercel и Supabase. Build-журналы Vercel могут храниться весь срок существования deployment; учебные тексты, аудио и пароли в них не должны попадать. Это не обещание удаления всех журналов через 30 дней."
+msgstr "Dla logów runtime docelowy limit wynosi do 30 dni; rzeczywisty dostępny okres zależy od planu Vercel i Supabase. Logi budowania Vercel mogą istnieć tak długo jak deployment; teksty ćwiczeń, nagrania i hasła nie powinny do nich trafiać. Nie jest to obietnica usunięcia wszystkich logów po 30 dniach."
+
+msgid "Провайдеры и передача данных"
+msgstr "Dostawcy i przekazywanie danych"
+
+msgid "Основная база Supabase и сервер Django в Vercel размещены в Ирландии. Это не исключает обработки служебных данных и поддержки за пределами ЕЭЗ. Условия провайдеров описывают обработчиков и механизмы передачи, включая стандартные договорные положения; размещение в ЕС само по себе не означает, что все данные обрабатываются только в ЕС."
+msgstr "Główna baza Supabase i serwer Django na Vercel znajdują się w Irlandii. Nie wyklucza to przetwarzania danych technicznych i obsługi poza EOG. Warunki dostawców opisują podmioty przetwarzające i mechanizmy przekazywania, w tym standardowe klauzule umowne; lokalizacja w UE nie oznacza, że wszystkie dane są przetwarzane wyłącznie w UE."
+
+msgid "Google используется для почты поддержки и хранения зашифрованных копий; Apple — для отдельного хранения ключа. Использование личных аккаунтов провайдеров не подменяет проверку применимых договорных условий перед широким запуском."
+msgstr "Google służy do poczty wsparcia i przechowywania zaszyfrowanych kopii; Apple — do oddzielnego przechowywania klucza. Korzystanie z prywatnych kont dostawców nie zastępuje sprawdzenia obowiązujących warunków umownych przed szerszym uruchomieniem."
+
+msgid "Запросы по данным можно отправлять напрямую на email выше. Мы отвечаем без неоправданной задержки, обычно в течение одного месяца; при допустимом продлении сообщаем причину в течение первого месяца. При необходимости уточним личность соразмерным способом. Можно подать жалобу в польский UODO или другой компетентный надзорный орган."
+msgstr "Wnioski dotyczące danych można kierować bezpośrednio na powyższy adres. Odpowiadamy bez zbędnej zwłoki, zwykle w ciągu miesiąca; o dopuszczalnym przedłużeniu i jego przyczynie informujemy w pierwszym miesiącu. W razie potrzeby proporcjonalnie weryfikujemy tożsamość. Skargę można złożyć do polskiego UODO lub innego właściwego organu nadzorczego."
+
+msgid "Обновлено 23 октября 2026 года. Описанные ограничения автоматизации сохраняются до её отдельного включения и проверки."
+msgstr "Aktualizacja: 23 października 2026 r. Opisane ograniczenia automatyzacji obowiązują do jej oddzielnego uruchomienia i weryfikacji."
+
+msgid "Мне исполнилось 18 лет. Я участвую во взрослой beta LingoFlow."
+msgstr "Mam ukończone 18 lat. Uczestniczę w becie LingoFlow dla dorosłych."
+
+msgid "Как обрабатываются мои данные"
+msgstr "Jak są przetwarzane moje dane"
+
+msgid "Beta LingoFlow доступна только с 18 лет. Подтверди возраст, чтобы создать аккаунт."
+msgstr "Beta LingoFlow jest dostępna od 18 lat. Potwierdź pełnoletność, aby utworzyć konto."

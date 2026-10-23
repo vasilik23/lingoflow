@@ -58,7 +58,7 @@ class AuthCacheViewTests(TestCase):
             with self.subTest(path=path), patch(
                 f"polskiflow.auth_views.{function}", side_effect=SupabaseAuthError("Ошибка входа")
             ):
-                payload = {"email": "learner@example.com", "password": "StrongPassword2026!"}
+                payload = {"email": "learner@example.com", "password": "StrongPassword2026!", "adult_confirmation": "on"}
                 self.assert_private(self.client.post(path, payload), 200)
                 self.assert_private(self.client.post(path, payload), 429)
 
