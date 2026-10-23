@@ -100,6 +100,8 @@ DATABASE_ROUTERS = ["polskiflow.learning.router.SupabaseSchemaRouter"]
 SUPABASE_URL = os.environ.get("SUPABASE_URL", "")
 SUPABASE_ANON_KEY = os.environ.get("SUPABASE_ANON_KEY", "")
 SUPABASE_AUTH_TIMEOUT = float(os.environ.get("SUPABASE_AUTH_TIMEOUT", "5"))
+# Enable only after the compatible Supabase migration has been verified.
+ACCOUNT_ACTIVITY_ENABLED = os.environ.get("ACCOUNT_ACTIVITY_ENABLED", "false").lower() == "true"
 SUPABASE_AUTH_NETWORK_ATTEMPTS = int(
     os.environ.get("SUPABASE_AUTH_NETWORK_ATTEMPTS", "3")
 )

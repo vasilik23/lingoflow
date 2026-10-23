@@ -29,9 +29,12 @@ const iso = date => date.toISOString();
 function accountReview(row, now, captured) {
   const created = instant(row.created_at), activity = instant(row.last_activity_at);
   const base = { user_id: row.user_id, action: 'manual_review' };
-  if (!created || !activity || created > activity || activity > captured || row.activity_complete !== true) return { ...base, reason: 'activity_not_proven' };
+  if (!created || !activity || created > activity || activity > captured) return { ...base, reason: 'activity_not_proven' };
   const warningAfter = monthsLater(activity, 12);
   if (now < warningAfter) return { ...base, action: 'active' };
+  // Recent known use proves an account is active; missing coverage only blocks
+  // an assertion of inactivity, never protects a deletion candidate.
+  if (row.activity_complete !== true) return { ...base, reason: 'activity_not_proven' };
   if (!row.warning) return { ...base, action: 'warning_required', warning_not_before: iso(warningAfter) };
   const delivered = instant(row.warning.delivered_at), observedActivity = instant(row.warning.activity_at_delivery);
   if (!delivered || !observedActivity || delivered > captured || delivered < warningAfter || observedActivity.valueOf() !== activity.valueOf()) return { ...base, reason: 'warning_receipt_or_activity_invalid' };

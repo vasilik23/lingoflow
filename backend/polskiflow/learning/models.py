@@ -188,6 +188,8 @@ class Profile(models.Model):
     practice_exclude_remote_work = models.BooleanField(null=True, blank=True)
     streak_days = models.PositiveIntegerField(default=0)
     last_active_date = models.DateField(blank=True, null=True)
+    last_request_at = models.DateTimeField(blank=True, null=True)
+    activity_tracking_started_at = models.DateTimeField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -382,6 +384,7 @@ class UserFeedback(models.Model):
     priority = models.CharField(max_length=16, default="normal")
     status = models.CharField(max_length=16, default="new")
     created_at = models.DateTimeField(auto_now_add=True)
+    closed_at = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         db_table = "user_feedback"

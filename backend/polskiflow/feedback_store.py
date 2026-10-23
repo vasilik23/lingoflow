@@ -7,7 +7,7 @@ from django.conf import settings
 
 def load_feedback(token, user_id):
     if not _configured(token): return []
-    query = urlencode({"select": "id,category,message,page_url,priority,status,created_at", "user_id": f"eq.{user_id}", "order": "created_at.desc", "limit": "50"})
+    query = urlencode({"select": "id,category,message,page_url,priority,status,closed_at,created_at", "user_id": f"eq.{user_id}", "order": "created_at.desc", "limit": "50"})
     try:
         with urlopen(_request(f"user_feedback?{query}", token), timeout=settings.SUPABASE_AUTH_TIMEOUT) as response: rows = json.load(response)
         return rows if isinstance(rows, list) else None

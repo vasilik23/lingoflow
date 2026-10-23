@@ -17880,3 +17880,9 @@ msgstr "How my data is processed"
 
 msgid "Beta LingoFlow доступна только с 18 лет. Подтверди возраст, чтобы создать аккаунт."
 msgstr "The LingoFlow beta is for ages 18 and over. Confirm that you are an adult to create an account."
+
+msgid "Для проверки сроков хранения в профиле сохраняются время последнего обращения к приложению и начало наблюдения. Запросы объединяются в пределах 15 минут; пути страниц, тексты и токены не записываются. Это не полный журнал использования: сбои и прежняя активность не объявляются подтверждённой историей."
+msgstr "For retention review, the profile stores the last request time and when observation began. Requests are coalesced within 15-minute windows; page paths, text and tokens are not recorded. This is not a complete usage log: outages and earlier activity are not treated as verified history."
+
+msgid "Дата закрытия обращения фиксируется при переходе в статус «Исправлено» и сбрасывается при повторном открытии. У старых обращений неизвестная дата остаётся неизвестной. Эти даты и сведения об активности входят в экспорт данных и удаляются вместе с аккаунтом."
+msgstr "The closure date is recorded when a request changes to “Fixed” and cleared when it is reopened. Unknown dates on older requests remain unknown. These dates and activity metadata are included in data exports and deleted with the account."
