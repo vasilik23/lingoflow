@@ -109,6 +109,7 @@
           panel.querySelectorAll("[data-writing-error]:checked").forEach(function (input) {
             const current = counts.get(input.value) || {
               count: 0,
+              label: input.closest("label").querySelector("span").textContent,
               href: input.dataset.writingHref,
               lessonTitle: input.dataset.writingLessonTitle
             };
@@ -126,7 +127,7 @@
           const item = document.createElement("li");
           const title = document.createElement("strong");
           const action = document.createElement("a");
-          title.textContent = ui(priority[0]);
+          title.textContent = priority[1].label;
           action.href = priority[1].href;
           action.textContent = ui("Открыть урок: ") + priority[1].lessonTitle + " →";
           item.append(title, action);
