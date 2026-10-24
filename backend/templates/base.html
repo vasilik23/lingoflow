@@ -34,8 +34,8 @@
       }());
     </script>
     {% block browser_catalog %}
-    {% if LANGUAGE_CODE == 'pl' %}<script src="{% static 'polskiflow/i18n-pl.js' %}?shell={{ pwa_shell_version }}"></script>{% endif %}
-    {% if LANGUAGE_CODE == 'en' %}<script src="{% static 'polskiflow/i18n-en.js' %}?shell={{ pwa_shell_version }}"></script>{% endif %}
+    {% if LANGUAGE_CODE == 'pl' %}<script src="{% static 'polskiflow/i18n-runtime-pl.js' %}?shell={{ pwa_shell_version }}"></script>{% endif %}
+    {% if LANGUAGE_CODE == 'en' %}<script src="{% static 'polskiflow/i18n-runtime-en.js' %}?shell={{ pwa_shell_version }}"></script>{% endif %}
     {% endblock %}
     <script src="{% static 'polskiflow/i18n.js' %}?shell={{ pwa_shell_version }}"></script>
     <script src="{% static 'polskiflow/audio-session.js' %}?shell={{ pwa_shell_version }}"></script>

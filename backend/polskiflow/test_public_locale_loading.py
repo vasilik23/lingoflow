@@ -12,6 +12,8 @@ class PublicLocaleLoadingTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertNotContains(response, 'polskiflow/i18n-pl.js')
         self.assertNotContains(response, 'polskiflow/i18n-en.js')
+        self.assertNotContains(response, 'polskiflow/i18n-runtime-pl.js')
+        self.assertNotContains(response, 'polskiflow/i18n-runtime-en.js')
         self.assertContains(response, 'polskiflow/i18n.js')
         self.assertContains(response, 'polskiflow/audio-session.js')
 
@@ -53,8 +55,9 @@ class PublicLocaleLoadingTests(TestCase):
         for language in ('pl', 'en'):
             with override(language):
                 html = render_to_string('base.html', {'request': request, 'LANGUAGE_CODE': language})
-                dictionary = html.index(f'polskiflow/i18n-{language}.js')
+                dictionary = html.index(f'polskiflow/i18n-runtime-{language}.js')
                 bootstrap = html.index('polskiflow/i18n.js')
                 self.assertLess(dictionary, bootstrap)
                 other = 'en' if language == 'pl' else 'pl'
-                self.assertNotIn(f'polskiflow/i18n-{other}.js', html)
+                self.assertNotIn(f'polskiflow/i18n-runtime-{other}.js', html)
+                self.assertNotIn(f'polskiflow/i18n-{language}.js', html)
