@@ -1,0 +1,90 @@
+{
+  "attempts": {
+    "cohort": "operator-lab",
+    "finish_requested": 20,
+    "pending_confirmation": 0,
+    "release_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "saved": 20,
+    "started": 20
+  },
+  "attempts_expected": 20,
+  "kind": "local_django_client_http_postgres_lab",
+  "not_production_latency": true,
+  "requests_expected": 80,
+  "requests_received": 80,
+  "rpc_calls": 132,
+  "timings": [
+    {
+      "action": "/",
+      "delay_ms": 0,
+      "n_per_mode": 10,
+      "off_p50_ms": 11.477,
+      "off_p95_ms": 12.421,
+      "on_p50_ms": 22.698,
+      "on_p95_ms": 25.862
+    },
+    {
+      "action": "/lesson/words/",
+      "delay_ms": 0,
+      "n_per_mode": 10,
+      "off_p50_ms": 9.947,
+      "off_p95_ms": 10.969,
+      "on_p50_ms": 37.934,
+      "on_p95_ms": 39.74
+    },
+    {
+      "action": "reveal",
+      "delay_ms": 0,
+      "n_per_mode": 10,
+      "off_p50_ms": 12.728,
+      "off_p95_ms": 14.244,
+      "on_p50_ms": 27.621,
+      "on_p95_ms": 30.928
+    },
+    {
+      "action": "finish",
+      "delay_ms": 0,
+      "n_per_mode": 10,
+      "off_p50_ms": 19.469,
+      "off_p95_ms": 23.369,
+      "on_p50_ms": 48.335,
+      "on_p95_ms": 51.693
+    },
+    {
+      "action": "/",
+      "delay_ms": 50,
+      "n_per_mode": 10,
+      "off_p50_ms": 12.567,
+      "off_p95_ms": 25.524,
+      "on_p50_ms": 88.779,
+      "on_p95_ms": 122.04
+    },
+    {
+      "action": "/lesson/words/",
+      "delay_ms": 50,
+      "n_per_mode": 10,
+      "off_p50_ms": 12.019,
+      "off_p95_ms": 33,
+      "on_p50_ms": 163.744,
+      "on_p95_ms": 213.954
+    },
+    {
+      "action": "reveal",
+      "delay_ms": 50,
+      "n_per_mode": 10,
+      "off_p50_ms": 14.016,
+      "off_p95_ms": 27.688,
+      "on_p50_ms": 91.466,
+      "on_p95_ms": 110.527
+    },
+    {
+      "action": "finish",
+      "delay_ms": 50,
+      "n_per_mode": 10,
+      "off_p50_ms": 22.104,
+      "off_p95_ms": 51.518,
+      "on_p50_ms": 177.031,
+      "on_p95_ms": 260.459
+    }
+  ]
+}
