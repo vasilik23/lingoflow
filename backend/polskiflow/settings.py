@@ -32,6 +32,7 @@ MIDDLEWARE = [
     "polskiflow.auth_cache.AuthFormCacheMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "polskiflow.request_id.RequestIdMiddleware",
+    "polskiflow.beta_metrics.BetaMetricsMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -43,6 +44,9 @@ MIDDLEWARE = [
     "polskiflow.auth.SupabaseAuthMiddleware",
 ]
 ROOT_URLCONF = "polskiflow.urls"
+BETA_METRICS_ENABLED = os.environ.get("BETA_METRICS_ENABLED", "false").lower() == "true"
+BETA_METRICS_SERVICE_KEY = os.environ.get("BETA_METRICS_SERVICE_KEY", "")
+BETA_METRICS_RELEASE = os.environ.get("VERCEL_GIT_COMMIT_SHA", "")
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
