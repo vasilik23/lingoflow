@@ -20,15 +20,22 @@ def configured():
                 and re.fullmatch(r"[0-9a-f]{40}", settings.BETA_METRICS_RELEASE))
 
 
+def service_headers(key):
+    headers = {"apikey": key, "Content-Type": "application/json"}
+    # New secret keys are opaque API keys, not JWTs. Legacy service-role JWTs
+    # still need the Authorization header; fixture transports use that path too.
+    if not key.startswith("sb_secret_"):
+        headers["Authorization"] = "Bearer " + key
+    return headers
+
+
 def rpc(name, payload):
     if not configured():
         return None
     request = Request(
         settings.SUPABASE_URL.rstrip("/") + "/rest/v1/rpc/" + name,
         data=json.dumps(payload).encode(), method="POST",
-        headers={"apikey": settings.BETA_METRICS_SERVICE_KEY,
-                 "Authorization": "Bearer " + settings.BETA_METRICS_SERVICE_KEY,
-                 "Content-Type": "application/json"},
+        headers=service_headers(settings.BETA_METRICS_SERVICE_KEY),
     )
     try:
         with urlopen(request, timeout=1) as response:
