@@ -1,9 +1,11 @@
 from datetime import date, timedelta, datetime, timezone
 import json
+import re
+from html import unescape
 from uuid import uuid4
 from unittest.mock import patch
 
-from django.test import TestCase
+from django.test import TestCase, Client, override_settings
 
 from polskiflow.auth import ACCESS_COOKIE, SupabaseUser
 from polskiflow.domain.lesson_state import sign_lesson_state, load_lesson_state
@@ -96,17 +98,65 @@ class LessonViewsTests(TestCase):
         token = response.context['lesson_state']
         self.assertEqual(load_lesson_state(token,'user-123','words','words').attempt_id,attempt_id)
 
-    @patch('polskiflow.lesson_views.finish_attempt')
+    @override_settings(BETA_METRICS_ENABLED=True,BETA_METRICS_SERVICE_KEY='fixture',BETA_METRICS_RELEASE='a'*40,SUPABASE_URL='https://fixture.test')
+    @patch('polskiflow.beta_metrics.rpc')
     @patch('polskiflow.lesson_views.save_lesson_completion_result')
-    def test_diagnostic_final_retry_keeps_identical_offline_result_payload(self, save, finish):
+    def test_diagnostic_final_retry_keeps_identical_offline_result_payload(self, save, collect):
         attempt_id = str(uuid4())
-        finish.return_value = datetime.now(timezone.utc)
+        collect.return_value = {'attempt_id':attempt_id,'finished_at':datetime.now(timezone.utc).isoformat()}
         save.return_value = CompletionSaveResult(saved=False,retryable=True)
         token = sign_lesson_state('user-123','words','words',4,4,attempt_id=attempt_id)
         results = [self.client.post('/lesson/words/step/',{'action':'know','state':token}) for _ in range(2)]
-        payloads = [json.loads(response.context['offline_result_json']) for response in results]
+        payloads = [json.loads(unescape(re.search(r'data-result-payload="([^"]+)"',response.content.decode())[1])) for response in results]
         self.assertEqual(payloads[0],payloads[1])
         self.assertEqual(payloads[0]['event_id'],attempt_id)
+        self.assertEqual(collect.call_count,2)
+        self.assertTrue(all(call.args[0]=='beta_collect_request' for call in collect.call_args_list))
+
+    @override_settings(BETA_METRICS_ENABLED=True,BETA_METRICS_SERVICE_KEY='fixture',BETA_METRICS_RELEASE='a'*40,SUPABASE_URL='https://fixture.test')
+    @patch('polskiflow.beta_metrics.rpc')
+    def test_collected_reservation_preserves_real_csrf_and_content_length(self, collect):
+        attempt_id = str(uuid4())
+        collect.return_value = {'attempt_id':attempt_id,'finished_at':None}
+        client = Client(enforce_csrf_checks=True)
+        client.cookies[ACCESS_COOKIE]='access'
+        response = client.get('/lesson/words/')
+        html = response.content.decode()
+        token = unescape(re.search(r'name="state" value="([^"]+)"',html)[1])
+        csrf = unescape(re.search(r'name="csrfmiddlewaretoken" value="([^"]+)"',html)[1])
+        self.assertEqual(load_lesson_state(token,'user-123','words','words').attempt_id,attempt_id)
+        self.assertEqual(int(response['Content-Length']),len(response.content))
+        self.assertIn('csrftoken',client.cookies)
+        self.assertEqual(collect.call_count,1)
+        self.assertEqual(collect.call_args.args[1]['p_reserve_lesson'],'words')
+        response = client.post('/lesson/words/step/',{'action':'reveal','state':token,'csrfmiddlewaretoken':csrf},HTTP_HX_REQUEST='true')
+        self.assertEqual(response.status_code,200)
+        self.assertEqual(collect.call_count,2)
+
+    @override_settings(BETA_METRICS_ENABLED=True,BETA_METRICS_SERVICE_KEY='fixture',BETA_METRICS_RELEASE='a'*40,SUPABASE_URL='https://fixture.test')
+    @patch('polskiflow.beta_metrics.rpc')
+    def test_invalid_collect_response_keeps_working_uninstrumented_lesson(self, collect):
+        for value in [None,{}, {'attempt_id':'bad-uuid'},'unexpected']:
+            collect.return_value=value
+            response=self.client.get('/lesson/words/')
+            token=unescape(re.search(r'name="state" value="([^"]+)"',response.content.decode())[1])
+            self.assertIsNone(load_lesson_state(token,'user-123','words','words').attempt_id)
+
+    @override_settings(BETA_METRICS_ENABLED=True,BETA_METRICS_SERVICE_KEY='fixture',BETA_METRICS_RELEASE='a'*40,SUPABASE_URL='https://fixture.test')
+    @patch('polskiflow.beta_metrics.rpc')
+    def test_collected_grammar_reservation_and_utc_queue_date(self, collect):
+        attempt_id=str(uuid4())
+        collect.return_value={'attempt_id':attempt_id,'finished_at':None}
+        response=self.client.get('/lesson/grammar/')
+        token=unescape(re.search(r'name="state" value="([^"]+)"',response.content.decode())[1])
+        self.assertEqual(load_lesson_state(token,'user-123','grammar','grammar').attempt_id,attempt_id)
+        collect.return_value={'attempt_id':attempt_id,'finished_at':'2026-10-25T00:30:00+02:00'}
+        final=sign_lesson_state('user-123','words','words',4,4,attempt_id=attempt_id)
+        with patch('polskiflow.lesson_views.save_lesson_completion_result',return_value=CompletionSaveResult(False,True)):
+            response=self.client.post('/lesson/words/step/',{'action':'know','state':final})
+        payload=json.loads(unescape(re.search(r'data-result-payload="([^"]+)"',response.content.decode())[1]))
+        self.assertEqual(payload['plan_date'],'2026-10-24')
+        self.assertEqual(payload['completed_at'],'2026-10-24T22:30:00Z')
 
     def test_home_combines_daily_goal_with_default_fifteen_minute_plan(self):
         response = self.client.get("/")

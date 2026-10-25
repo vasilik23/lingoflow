@@ -38,6 +38,8 @@ from polskiflow.beta_metrics_report import summarize
 
 DSN = 'host=127.0.0.1 port=55440 user=postgres dbname=postgres connect_timeout=3'
 CALLS = {
+    'beta_collect_request': ['p_owner','p_request','p_release','p_route','p_method','p_status',
+                            'p_duration','p_attempt','p_finished','p_saved','p_total','p_known','p_reserve_lesson'],
     'beta_reserve_attempt': ['p_owner','p_lesson','p_release'],
     'beta_finish_attempt': ['p_owner','p_attempt','p_release'],
     'beta_observe_request': ['p_owner','p_request','p_release','p_route','p_method','p_status',

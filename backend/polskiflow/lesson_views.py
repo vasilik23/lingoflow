@@ -27,7 +27,7 @@ from polskiflow.domain.lesson_state import InvalidLessonState, load_lesson_state
 from polskiflow.mistake_store import load_mistakes, set_mistake
 from polskiflow.collection_store import load_collection_summaries
 from polskiflow.parallel_reads import parallel_reads
-from polskiflow.beta_metrics import reserve_attempt, finish_attempt
+from polskiflow.beta_metrics import reserve_attempt, render_for_metrics
 
 
 # Expansion is release-gated by a successful offline -> online recovery smoke
@@ -65,7 +65,8 @@ def lesson(request: HttpRequest, lesson_id: str) -> HttpResponse:
         request.supabase_user.id, lesson_id, lesson_kind, index, score,
         attempt_id=reserve_attempt(request, lesson_id),
     )
-    return render(request, "lessons/page.html", context)
+    return render_for_metrics(request, "lessons/page.html", context,
+                              state=(lesson_id, lesson_kind, index, score))
 
 
 @require_POST
@@ -368,7 +369,6 @@ def _builder_is_correct(
 
 
 def _complete(request: HttpRequest, lesson_id: str, score: int, total: int) -> HttpResponse:
-    diagnostic_finished_at = finish_attempt(request)
     save_result = save_lesson_completion_result(
         request.supabase_access_token,
         request.supabase_user.id,
@@ -405,7 +405,7 @@ def _complete(request: HttpRequest, lesson_id: str, score: int, total: int) -> H
     # Start with one narrowly scoped flow. The browser receives an opaque,
     # stable namespace and an immutable result, never identity or auth tokens.
     if lesson_id in OFFLINE_RESULT_QUEUE_LESSON_IDS and save_result.retryable:
-        completed_at = diagnostic_finished_at or datetime.now(timezone.utc)
+        completed_at = datetime.now(timezone.utc)
         context.update(
             {
                 "offline_queue_namespace": salted_hmac(
@@ -413,7 +413,7 @@ def _complete(request: HttpRequest, lesson_id: str, score: int, total: int) -> H
                 ).hexdigest()[:32],
                 "offline_result_json": json.dumps(
                     {
-                        "event_id": request.beta_attempt_id if diagnostic_finished_at else str(uuid.uuid4()),
+                        "event_id": str(uuid.uuid4()),
                         "lesson_id": lesson_id,
                         "plan_date": completed_at.date().isoformat(),
                         "completed_at": completed_at.isoformat().replace("+00:00", "Z"),
@@ -430,4 +430,4 @@ def _complete(request: HttpRequest, lesson_id: str, score: int, total: int) -> H
         if request.headers.get("HX-Request") == "true"
         else "lessons/complete_page.html"
     )
-    return render(request, template, context)
+    return render_for_metrics(request, template, context)

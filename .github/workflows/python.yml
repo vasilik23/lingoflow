@@ -46,8 +46,10 @@ jobs:
           -f supabase/tests/beta_metrics_fixture.sql
           -f supabase/migrations/20261025083448_beta_metrics.sql
           -f supabase/migrations/20261025084642_beta_purge_retention_margin.sql
+          -f supabase/migrations/20261025091554_beta_collect_request.sql
           -f supabase/tests/beta_metrics.sql
           -f supabase/tests/beta_metrics_retention.sql
+          -f supabase/tests/beta_metrics_collect.sql
   test:
     runs-on: ubuntu-24.04
     defaults:
