@@ -94,3 +94,11 @@ migration drift — PASS; **62 Node ops tests — PASS**. Дополнитель
 фокусных Django-теста — PASS. Два параллельных локальных PostgreSQL-клиента
 получили один ID резервации; сценарий SQL завершён rollback без следов fixture.
 В CI добавлен отдельный PostgreSQL 17 job, не подключающийся к production.
+
+Совместимая production-миграция применена **до публикации кода**:
+`20261025083448_beta_metrics.sql` (имя файла синхронизировано с migration ledger).
+Read-only проверка: members/attempts/requests = 0/0/0; learner RPC и anon read
+запрещены. Security advisors: новых WARN/ERROR нет; три новых INFO об RLS без
+политик ожидаемы для закрытых service-only таблиц (learner grants отсутствуют,
+service_role использует свой BYPASSRLS). Прежние предупреждения проекта
+не переоткрывались этим срезом.
