@@ -27,6 +27,7 @@ from polskiflow.domain.lesson_state import InvalidLessonState, load_lesson_state
 from polskiflow.mistake_store import load_mistakes, set_mistake
 from polskiflow.collection_store import load_collection_summaries
 from polskiflow.parallel_reads import parallel_reads
+from polskiflow.beta_metrics import reserve_attempt, finish_attempt
 
 
 # Expansion is release-gated by a successful offline -> online recovery smoke
@@ -61,7 +62,8 @@ def lesson(request: HttpRequest, lesson_id: str) -> HttpResponse:
     else:
         context.update(_question_context(lesson_id, lesson_kind, index, score, None))
     context["lesson_state"] = sign_lesson_state(
-        request.supabase_user.id, lesson_id, lesson_kind, index, score
+        request.supabase_user.id, lesson_id, lesson_kind, index, score,
+        attempt_id=reserve_attempt(request, lesson_id),
     )
     return render(request, "lessons/page.html", context)
 
@@ -95,6 +97,7 @@ def lesson_step(request: HttpRequest, lesson_id: str) -> HttpResponse:
     except InvalidLessonState:
         return HttpResponseBadRequest(gettext("Некорректное состояние урока"))
     index, score = state.index, state.score
+    request.beta_attempt_id = state.attempt_id
     action = request.POST.get("action", "")
 
     if lesson_kind in {"words", "review"}:
@@ -189,6 +192,7 @@ def _render_step(request, template, context, lesson_id, lesson_kind):
     context["lesson_state"] = sign_lesson_state(
         request.supabase_user.id, lesson_id, lesson_kind, context["index"], context["score"],
         context.get("state_phase", "ready"),
+        attempt_id=getattr(request, "beta_attempt_id", None),
     )
     if request.headers.get("HX-Request") == "true":
         return render(request, template, context)
@@ -364,6 +368,7 @@ def _builder_is_correct(
 
 
 def _complete(request: HttpRequest, lesson_id: str, score: int, total: int) -> HttpResponse:
+    diagnostic_finished_at = finish_attempt(request)
     save_result = save_lesson_completion_result(
         request.supabase_access_token,
         request.supabase_user.id,
@@ -372,6 +377,9 @@ def _complete(request: HttpRequest, lesson_id: str, score: int, total: int) -> H
         score,
     )
     delete_lesson_draft(request.supabase_access_token, request.supabase_user.id, lesson_id)
+    request.beta_finished = True
+    request.beta_saved = save_result.saved
+    request.beta_total, request.beta_known = total, score
     navigation = lesson_navigation(lesson_id)
     lesson_task = task(lesson_id)
     followup = lesson_followup(lesson_task, navigation, score, total, datetime.now(timezone.utc).date())
@@ -397,7 +405,7 @@ def _complete(request: HttpRequest, lesson_id: str, score: int, total: int) -> H
     # Start with one narrowly scoped flow. The browser receives an opaque,
     # stable namespace and an immutable result, never identity or auth tokens.
     if lesson_id in OFFLINE_RESULT_QUEUE_LESSON_IDS and save_result.retryable:
-        completed_at = datetime.now(timezone.utc)
+        completed_at = diagnostic_finished_at or datetime.now(timezone.utc)
         context.update(
             {
                 "offline_queue_namespace": salted_hmac(
@@ -405,7 +413,7 @@ def _complete(request: HttpRequest, lesson_id: str, score: int, total: int) -> H
                 ).hexdigest()[:32],
                 "offline_result_json": json.dumps(
                     {
-                        "event_id": str(uuid.uuid4()),
+                        "event_id": request.beta_attempt_id if diagnostic_finished_at else str(uuid.uuid4()),
                         "lesson_id": lesson_id,
                         "plan_date": completed_at.date().isoformat(),
                         "completed_at": completed_at.isoformat().replace("+00:00", "Z"),

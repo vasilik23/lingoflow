@@ -1,10 +1,12 @@
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime, timezone
+import json
+from uuid import uuid4
 from unittest.mock import patch
 
 from django.test import TestCase
 
 from polskiflow.auth import ACCESS_COOKIE, SupabaseUser
-from polskiflow.domain.lesson_state import sign_lesson_state
+from polskiflow.domain.lesson_state import sign_lesson_state, load_lesson_state
 from polskiflow.learning.models import Course, Flashcard, Lesson, LessonFlashcard, Question, Topic
 from polskiflow.progress_store import CompletionSaveResult, DashboardProgress
 
@@ -82,6 +84,29 @@ class LessonViewsTests(TestCase):
 
     def lesson_state(self, lesson_id, index=0, score=0, phase="ready"):
         return sign_lesson_state("user-123", lesson_id, lesson_id, index, score, phase)
+
+    @patch('polskiflow.lesson_views.reserve_attempt')
+    def test_diagnostic_identity_survives_real_lesson_render_and_step(self, reserve):
+        attempt_id = str(uuid4())
+        reserve.return_value = attempt_id
+        response = self.client.get('/lesson/words/')
+        token = response.context['lesson_state']
+        self.assertEqual(load_lesson_state(token,'user-123','words','words').attempt_id,attempt_id)
+        response = self.client.post('/lesson/words/step/', {'action':'reveal','state':token}, HTTP_HX_REQUEST='true')
+        token = response.context['lesson_state']
+        self.assertEqual(load_lesson_state(token,'user-123','words','words').attempt_id,attempt_id)
+
+    @patch('polskiflow.lesson_views.finish_attempt')
+    @patch('polskiflow.lesson_views.save_lesson_completion_result')
+    def test_diagnostic_final_retry_keeps_identical_offline_result_payload(self, save, finish):
+        attempt_id = str(uuid4())
+        finish.return_value = datetime.now(timezone.utc)
+        save.return_value = CompletionSaveResult(saved=False,retryable=True)
+        token = sign_lesson_state('user-123','words','words',4,4,attempt_id=attempt_id)
+        results = [self.client.post('/lesson/words/step/',{'action':'know','state':token}) for _ in range(2)]
+        payloads = [json.loads(response.context['offline_result_json']) for response in results]
+        self.assertEqual(payloads[0],payloads[1])
+        self.assertEqual(payloads[0]['event_id'],attempt_id)
 
     def test_home_combines_daily_goal_with_default_fifteen_minute_plan(self):
         response = self.client.get("/")

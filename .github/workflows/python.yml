@@ -4,11 +4,13 @@ on:
   pull_request:
     paths:
       - "backend/**"
+      - "supabase/**"
       - ".github/workflows/python.yml"
   push:
     branches: [main]
     paths:
       - "backend/**"
+      - "supabase/**"
       - ".github/workflows/python.yml"
 
 permissions:
@@ -19,6 +21,31 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  beta-metrics-database:
+    runs-on: ubuntu-24.04
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_PASSWORD: disposable-ci-fixture
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready --health-interval 5s
+          --health-timeout 5s --health-retries 10
+    env:
+      PGHOST: localhost
+      PGPORT: 5432
+      PGUSER: postgres
+      PGPASSWORD: disposable-ci-fixture
+    steps:
+      - uses: actions/checkout@v6
+      - name: Verify isolated diagnostics schema and integrity
+        run: >-
+          psql -v ON_ERROR_STOP=1
+          -f supabase/tests/beta_metrics_fixture.sql
+          -f supabase/migrations/20261025082145_beta_metrics.sql
+          -f supabase/tests/beta_metrics.sql
   test:
     runs-on: ubuntu-24.04
     defaults:
