@@ -1,0 +1,185 @@
+{
+  "kind": "isolated_lab_not_production",
+  "baseline_sha": "23337e7e1c94316c349fa6b0db1d803d5f0e44aa",
+  "field_metrics": false,
+  "before": {
+    "attempts": {
+      "cohort": "operator-lab",
+      "finish_requested": 20,
+      "pending_confirmation": 0,
+      "release_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "saved": 20,
+      "started": 20
+    },
+    "attempts_expected": 20,
+    "kind": "local_django_client_http_postgres_lab",
+    "not_production_latency": true,
+    "requests_expected": 80,
+    "requests_received": 80,
+    "rpc_calls": 132,
+    "timings": [
+      {
+        "action": "/",
+        "delay_ms": 0,
+        "n_per_mode": 10,
+        "off_p50_ms": 10.113,
+        "off_p95_ms": 12.75,
+        "on_p50_ms": 23.665,
+        "on_p95_ms": 28.621
+      },
+      {
+        "action": "/lesson/words/",
+        "delay_ms": 0,
+        "n_per_mode": 10,
+        "off_p50_ms": 10.141,
+        "off_p95_ms": 12.915,
+        "on_p50_ms": 39.414,
+        "on_p95_ms": 41.122
+      },
+      {
+        "action": "reveal",
+        "delay_ms": 0,
+        "n_per_mode": 10,
+        "off_p50_ms": 13.599,
+        "off_p95_ms": 16.196,
+        "on_p50_ms": 28.754,
+        "on_p95_ms": 30.274
+      },
+      {
+        "action": "finish",
+        "delay_ms": 0,
+        "n_per_mode": 10,
+        "off_p50_ms": 19.058,
+        "off_p95_ms": 21.945,
+        "on_p50_ms": 49.348,
+        "on_p95_ms": 57.154
+      },
+      {
+        "action": "/",
+        "delay_ms": 50,
+        "n_per_mode": 10,
+        "off_p50_ms": 10.402,
+        "off_p95_ms": 12.56,
+        "on_p50_ms": 83.532,
+        "on_p95_ms": 89.221
+      },
+      {
+        "action": "/lesson/words/",
+        "delay_ms": 50,
+        "n_per_mode": 10,
+        "off_p50_ms": 10.526,
+        "off_p95_ms": 12.664,
+        "on_p50_ms": 159.195,
+        "on_p95_ms": 171.432
+      },
+      {
+        "action": "reveal",
+        "delay_ms": 50,
+        "n_per_mode": 10,
+        "off_p50_ms": 13.333,
+        "off_p95_ms": 18.808,
+        "on_p50_ms": 88.705,
+        "on_p95_ms": 95.114
+      },
+      {
+        "action": "finish",
+        "delay_ms": 50,
+        "n_per_mode": 10,
+        "off_p50_ms": 19.778,
+        "off_p95_ms": 49.879,
+        "on_p50_ms": 168.19,
+        "on_p95_ms": 176.243
+      }
+    ]
+  },
+  "after": {
+    "attempts": {
+      "cohort": "operator-lab",
+      "finish_requested": 20,
+      "pending_confirmation": 0,
+      "release_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "saved": 20,
+      "started": 20
+    },
+    "attempts_expected": 20,
+    "kind": "local_django_client_http_postgres_lab",
+    "not_production_latency": true,
+    "requests_expected": 80,
+    "requests_received": 80,
+    "rpc_calls": 88,
+    "timings": [
+      {
+        "action": "/",
+        "delay_ms": 0,
+        "n_per_mode": 10,
+        "off_p50_ms": 10.968,
+        "off_p95_ms": 12.229,
+        "on_p50_ms": 24.072,
+        "on_p95_ms": 26.478
+      },
+      {
+        "action": "/lesson/words/",
+        "delay_ms": 0,
+        "n_per_mode": 10,
+        "off_p50_ms": 10.559,
+        "off_p95_ms": 13.689,
+        "on_p50_ms": 30.756,
+        "on_p95_ms": 33.73
+      },
+      {
+        "action": "reveal",
+        "delay_ms": 0,
+        "n_per_mode": 10,
+        "off_p50_ms": 13.026,
+        "off_p95_ms": 14.574,
+        "on_p50_ms": 28.695,
+        "on_p95_ms": 30.297
+      },
+      {
+        "action": "finish",
+        "delay_ms": 0,
+        "n_per_mode": 10,
+        "off_p50_ms": 19.8,
+        "off_p95_ms": 22.292,
+        "on_p50_ms": 36.394,
+        "on_p95_ms": 41.323
+      },
+      {
+        "action": "/",
+        "delay_ms": 50,
+        "n_per_mode": 10,
+        "off_p50_ms": 10.392,
+        "off_p95_ms": 15.641,
+        "on_p50_ms": 86,
+        "on_p95_ms": 88.756
+      },
+      {
+        "action": "/lesson/words/",
+        "delay_ms": 50,
+        "n_per_mode": 10,
+        "off_p50_ms": 10.847,
+        "off_p95_ms": 14.417,
+        "on_p50_ms": 92.566,
+        "on_p95_ms": 98.536
+      },
+      {
+        "action": "reveal",
+        "delay_ms": 50,
+        "n_per_mode": 10,
+        "off_p50_ms": 13.517,
+        "off_p95_ms": 15.015,
+        "on_p50_ms": 90.005,
+        "on_p95_ms": 95.031
+      },
+      {
+        "action": "finish",
+        "delay_ms": 50,
+        "n_per_mode": 10,
+        "off_p50_ms": 19.664,
+        "off_p95_ms": 52.248,
+        "on_p50_ms": 98.174,
+        "on_p95_ms": 107.805
+      }
+    ]
+  }
+}

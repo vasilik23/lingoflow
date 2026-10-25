@@ -85,11 +85,11 @@ class BetaMetricsTests(SimpleTestCase):
         self.assertEqual(opened.call_args.kwargs['timeout'], 1)
 
     @patch('polskiflow.beta_metrics.rpc')
-    def test_reservation_validates_uuid(self, call):
-        call.return_value = 'not-a-uuid'
-        self.assertIsNone(reserve_attempt(self.request(), 'quiz'))
-        call.return_value = str(uuid4())
-        self.assertEqual(reserve_attempt(self.request(), 'quiz'), call.return_value)
+    def test_reservation_is_deferred_without_an_early_rpc(self, call):
+        request = self.request()
+        self.assertIsNone(reserve_attempt(request, 'quiz'))
+        self.assertEqual(request.beta_reserve_lesson,'quiz')
+        call.assert_not_called()
 
     def test_signed_identity_survives_steps_and_old_tokens_remain_valid(self):
         attempt = str(uuid4())
