@@ -1,0 +1,77 @@
+{
+  "date": "2026-10-26",
+  "production_sha": "c33fb78e3c0d2cd1866fe34f8a7e1f8114e744f7",
+  "shared_qa_account": true,
+  "human_beta_evidence": false,
+  "rows": [
+    {
+      "level": "A1",
+      "width": 320,
+      "start": "2026-10-26T19:54:32.368Z",
+      "end": "2026-10-26T19:54:39.991Z",
+      "previous_day": "2026-10-25",
+      "previous_lesson": "review",
+      "previous_result": [
+        {
+          "cards_total": 7,
+          "cards_known": 7,
+          "plan_date": "2026-10-25"
+        }
+      ],
+      "history_after_refresh": true,
+      "today_opened": true,
+      "next_path": "/reading/pierwszy-dzien-na-kursie/",
+      "next_opened": true,
+      "first_interaction": true,
+      "completed_new_lesson": false,
+      "errors": 0,
+      "overflow": false
+    },
+    {
+      "level": "A2",
+      "width": 1440,
+      "start": "2026-10-26T19:54:40.338Z",
+      "end": "2026-10-26T19:54:45.928Z",
+      "previous_day": "2026-10-25",
+      "previous_lesson": "past-grammar",
+      "previous_result": [
+        {
+          "cards_total": 5,
+          "cards_known": 5,
+          "plan_date": "2026-10-25"
+        }
+      ],
+      "history_after_refresh": true,
+      "today_opened": true,
+      "next_path": "/lesson/past-review/",
+      "next_opened": true,
+      "first_interaction": true,
+      "completed_new_lesson": false,
+      "errors": 0,
+      "overflow": false
+    },
+    {
+      "level": "B1",
+      "width": 390,
+      "start": "2026-10-26T19:54:46.175Z",
+      "end": "2026-10-26T19:54:51.346Z",
+      "previous_day": "2026-10-25",
+      "previous_lesson": "bio-review",
+      "previous_result": [
+        {
+          "cards_total": 7,
+          "cards_known": 7,
+          "plan_date": "2026-10-25"
+        }
+      ],
+      "history_after_refresh": true,
+      "today_opened": true,
+      "next_path": "/reading/bio-droga-joanny/",
+      "next_opened": true,
+      "first_interaction": true,
+      "completed_new_lesson": false,
+      "errors": 0,
+      "overflow": false
+    }
+  ]
+}
