@@ -1,7 +1,7 @@
 import io
 import json
 from unittest.mock import patch
-from urllib.error import URLError
+from urllib.error import HTTPError, URLError
 
 from django.test import SimpleTestCase, override_settings
 
@@ -16,6 +16,7 @@ from polskiflow.auth import (
     request_password_reset,
     resend_signup_confirmation,
     sign_in,
+    sign_out,
     sign_up,
     update_password,
 )
@@ -39,6 +40,22 @@ class _Response(io.BytesIO):
     SUPABASE_AUTH_RETRY_BACKOFF=0.01,
 )
 class SupabaseAuthTests(SimpleTestCase):
+    @patch("polskiflow.auth.urlopen")
+    def test_sign_out_revokes_only_the_callers_session(self, urlopen):
+        response = _Response(b"")
+        response.status = 204
+        urlopen.return_value = response
+
+        sign_out("user-access")
+
+        urlopen.assert_called_once()
+        request = urlopen.call_args.args[0]
+        self.assertEqual(request.full_url, "https://project.supabase.co/auth/v1/logout?scope=local")
+        self.assertEqual(request.method, "POST")
+        self.assertEqual(request.get_header("Authorization"), "Bearer user-access")
+        self.assertEqual(request.get_header("Apikey"), "public-anon-key")
+        self.assertEqual(json.loads(request.data), {})
+
     @patch("polskiflow.auth.urlopen")
     def test_account_deletion_uses_user_jwt_and_password_only(self, urlopen):
         urlopen.return_value = _Response(b'{"deleted_user_id":"user-123"}')
@@ -413,3 +430,30 @@ class BrowserAuthTests(SimpleTestCase):
         logout.assert_called_once_with("access")
         self.assertRedirects(response, "/login/", fetch_redirect_response=False)
         self.assertEqual(response.cookies[ACCESS_COOKIE]["max-age"], 0)
+        self.assertEqual(response.cookies[REFRESH_COOKIE]["max-age"], 0)
+
+    @override_settings(SUPABASE_URL="https://project.supabase.co", SUPABASE_ANON_KEY="public-anon-key")
+    @patch("polskiflow.auth.urlopen")
+    @patch("polskiflow.auth.authenticate_access_token")
+    def test_logout_clears_local_cookies_on_provider_failure_without_global_fallback(self, authenticate, urlopen):
+        authenticate.return_value = SupabaseUser("user-123", "learner@example.com")
+        self.client.cookies[ACCESS_COOKIE] = "access"
+        self.client.cookies[REFRESH_COOKIE] = "refresh"
+        urlopen.side_effect = HTTPError("https://project.supabase.co/auth/v1/logout?scope=local", 503,
+                                       "unavailable", {}, io.BytesIO(b"{}"))
+
+        response = self.client.post("/logout/")
+
+        self.assertRedirects(response, "/login/", fetch_redirect_response=False)
+        self.assertEqual(response.cookies[ACCESS_COOKIE]["max-age"], 0)
+        self.assertEqual(response.cookies[REFRESH_COOKIE]["max-age"], 0)
+        urlopen.assert_called_once()
+        self.assertTrue(urlopen.call_args.args[0].full_url.endswith("/logout?scope=local"))
+
+    @patch("polskiflow.auth_views.sign_out")
+    def test_logout_still_requires_post_and_csrf(self, logout):
+        from django.test import Client
+        client = Client(enforce_csrf_checks=True)
+        self.assertEqual(client.get("/logout/").status_code, 405)
+        self.assertEqual(client.post("/logout/").status_code, 403)
+        logout.assert_not_called()

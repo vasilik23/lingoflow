@@ -188,7 +188,8 @@ def refresh_session(refresh_token: str) -> SupabaseSession:
 
 
 def sign_out(access_token: str) -> None:
-    _auth_request("/auth/v1/logout", {}, access_token=access_token)
+    """End this browser session without revoking the user's other sessions."""
+    _auth_request("/auth/v1/logout?scope=local", {}, access_token=access_token)
 
 
 def delete_account(access_token: str, user_id: str, password: str) -> None:
