@@ -1,0 +1,130 @@
+{
+  "date": "2026-10-26",
+  "base_release": "beb136e2a2027a6d42f134121811e935c63fb412",
+  "preview_release": "12b943c7c9f13888a27c6fae288784094fd21491",
+  "preview_deployment": "dpl_Azc7zS2XZ8e4uUpTaLDa2E1GXJ4U",
+  "region": "dub1",
+  "nonmember": {
+    "schema_version": 1,
+    "kind": "operator_https_rpc_preflight",
+    "origin": "vercel_preview",
+    "release": "beb136e2a2027a6d42f134121811e935c63fb412",
+    "latency_scope": "vercel_https_nonmember_short_circuit",
+    "diagnostic_writes_expected": false,
+    "vercel_to_supabase_ms": {
+      "p50": 87,
+      "p95": 586
+    },
+    "lesson_reserve_finish_cost_ms": null,
+    "beta_readiness_evidence": false,
+    "enrollment_performed": false,
+    "requested_runs": 5,
+    "samples": [
+      {
+        "status": 200,
+        "error": null,
+        "elapsed_ms": 586
+      },
+      {
+        "status": 200,
+        "error": null,
+        "elapsed_ms": 80
+      },
+      {
+        "status": 200,
+        "error": null,
+        "elapsed_ms": 87
+      },
+      {
+        "status": 200,
+        "error": null,
+        "elapsed_ms": 86
+      },
+      {
+        "status": 200,
+        "error": null,
+        "elapsed_ms": 101
+      }
+    ],
+    "successful": 5,
+    "p50_ms": 87,
+    "p95_ms": 586,
+    "region": "dub1",
+    "runtime": "python",
+    "base_release": "beb136e2a2027a6d42f134121811e935c63fb412",
+    "preview_release": "12b943c7c9f13888a27c6fae288784094fd21491"
+  },
+  "qa": {
+    "schema_version": 1,
+    "kind": "operator_https_rpc_preflight",
+    "origin": "vercel_preview",
+    "release": "beb136e2a2027a6d42f134121811e935c63fb412",
+    "latency_scope": "vercel_https_qa_observation",
+    "diagnostic_writes_expected": true,
+    "vercel_to_supabase_ms": {
+      "p50": 52,
+      "p95": 58
+    },
+    "lesson_reserve_finish_cost_ms": null,
+    "beta_readiness_evidence": false,
+    "enrollment_performed": false,
+    "requested_runs": 5,
+    "samples": [
+      {
+        "status": 200,
+        "error": null,
+        "elapsed_ms": 58
+      },
+      {
+        "status": 200,
+        "error": null,
+        "elapsed_ms": 49
+      },
+      {
+        "status": 200,
+        "error": null,
+        "elapsed_ms": 50
+      },
+      {
+        "status": 200,
+        "error": null,
+        "elapsed_ms": 52
+      },
+      {
+        "status": 200,
+        "error": null,
+        "elapsed_ms": 56
+      }
+    ],
+    "successful": 5,
+    "p50_ms": 52,
+    "p95_ms": 58,
+    "region": "dub1",
+    "runtime": "python",
+    "base_release": "beb136e2a2027a6d42f134121811e935c63fb412",
+    "preview_release": "12b943c7c9f13888a27c6fae288784094fd21491"
+  },
+  "verification": {
+    "anonymous_http": 403,
+    "post_without_csrf_http": 403,
+    "caller_supplied_key_http": 400,
+    "qa_login_http": 302,
+    "qa_logout_http": 302,
+    "expected_observations": 5,
+    "attempts_created": 0,
+    "remaining_members": 0,
+    "remaining_requests": 0,
+    "remaining_attempts": 0,
+    "preview_deployments_deleted": 2,
+    "preview_envs_deleted": 3,
+    "remaining_probe_envs": 0,
+    "global_collection_enabled": false
+  },
+  "limits": {
+    "samples_per_context": 5,
+    "qa_series_after_nonmember": true,
+    "full_lesson_measured": false,
+    "cold_start_isolated": false,
+    "human_beta_evidence": false
+  }
+}
