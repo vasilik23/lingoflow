@@ -1,0 +1,1613 @@
+{
+  "date": "2026-10-26",
+  "base_release": "c33fb78e3c0d2cd1866fe34f8a7e1f8114e744f7",
+  "preview_release": "388c9728d6ba421bff88fbc466159a8932a8bcc1",
+  "deployment": "dpl_HvZYhaRQT8nnDVBAuBn8KqrXP866",
+  "region": "dub1",
+  "origin": "operator_https_client",
+  "scope": "full_response_download_excluding_cli_startup_and_browser_render",
+  "lesson": "words",
+  "self_assessment": true,
+  "warmup_pairs": 1,
+  "measured_pairs": 5,
+  "samples": [
+    {
+      "mode": "off",
+      "pair": -1,
+      "warmup": true,
+      "started": "2026-10-26T20:02:32.983Z",
+      "requests": [
+        {
+          "action": "today_get",
+          "ms": 960.533,
+          "bytes": 11666,
+          "status": 200
+        },
+        {
+          "action": "lesson_get",
+          "ms": 380.94899999999996,
+          "bytes": 13263,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 342.385,
+          "bytes": 14018,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 548.501,
+          "bytes": 13251,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 323.077,
+          "bytes": 14017,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 345.252,
+          "bytes": 13251,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 322.864,
+          "bytes": 14015,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 548.5790000000001,
+          "bytes": 13254,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 569.987,
+          "bytes": 14014,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 407.937,
+          "bytes": 13258,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 335.429,
+          "bytes": 14033,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 369.418,
+          "bytes": 13250,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 317.662,
+          "bytes": 14035,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 388.459,
+          "bytes": 13254,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 329.431,
+          "bytes": 14017,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 338.416,
+          "bytes": 13247,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 304.525,
+          "bytes": 13999,
+          "status": 200
+        },
+        {
+          "action": "finish_post",
+          "ms": 324.151,
+          "bytes": 8946,
+          "status": 200
+        }
+      ],
+      "cards": 8,
+      "saved_ui": true,
+      "sum_http_ms": 7457.5549999999985,
+      "ended": "2026-10-26T20:03:20.520Z"
+    },
+    {
+      "mode": "on",
+      "pair": -1,
+      "warmup": true,
+      "started": "2026-10-26T20:03:23.237Z",
+      "requests": [
+        {
+          "action": "today_get",
+          "ms": 590.3850000000001,
+          "bytes": 11666,
+          "status": 200
+        },
+        {
+          "action": "lesson_get",
+          "ms": 499.366,
+          "bytes": 13311,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 360.011,
+          "bytes": 14114,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 402.813,
+          "bytes": 13300,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 361.206,
+          "bytes": 14115,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 408.93,
+          "bytes": 13301,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 390.663,
+          "bytes": 14115,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 410.21999999999997,
+          "bytes": 13300,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 383.44,
+          "bytes": 14106,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 365.841,
+          "bytes": 13308,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 364.30600000000004,
+          "bytes": 14133,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 410.57500000000005,
+          "bytes": 13298,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 345.297,
+          "bytes": 14131,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 484.696,
+          "bytes": 13304,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 337.76099999999997,
+          "bytes": 14117,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 378.64599999999996,
+          "bytes": 13297,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 538.408,
+          "bytes": 14099,
+          "status": 200
+        },
+        {
+          "action": "finish_post",
+          "ms": 505.221,
+          "bytes": 8946,
+          "status": 200
+        }
+      ],
+      "cards": 8,
+      "saved_ui": true,
+      "sum_http_ms": 7537.785,
+      "ended": "2026-10-26T20:04:07.781Z"
+    },
+    {
+      "mode": "on",
+      "pair": 0,
+      "warmup": false,
+      "started": "2026-10-26T20:04:10.753Z",
+      "requests": [
+        {
+          "action": "today_get",
+          "ms": 592.215,
+          "bytes": 11666,
+          "status": 200
+        },
+        {
+          "action": "lesson_get",
+          "ms": 486.896,
+          "bytes": 13310,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 370.47200000000004,
+          "bytes": 14112,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 398.582,
+          "bytes": 13298,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 340.173,
+          "bytes": 14111,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 384.79,
+          "bytes": 13298,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 419.12100000000004,
+          "bytes": 14109,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 430.65,
+          "bytes": 13299,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 392.836,
+          "bytes": 14104,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 396.498,
+          "bytes": 13305,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 364.968,
+          "bytes": 14127,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 361.97400000000005,
+          "bytes": 13295,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 338.536,
+          "bytes": 14125,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 611.07,
+          "bytes": 13301,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 340.267,
+          "bytes": 14111,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 483.394,
+          "bytes": 13294,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 409.68100000000004,
+          "bytes": 14093,
+          "status": 200
+        },
+        {
+          "action": "finish_post",
+          "ms": 601.682,
+          "bytes": 8946,
+          "status": 200
+        }
+      ],
+      "cards": 8,
+      "saved_ui": true,
+      "sum_http_ms": 7723.804999999999,
+      "ended": "2026-10-26T20:05:03.728Z"
+    },
+    {
+      "mode": "off",
+      "pair": 0,
+      "warmup": false,
+      "started": "2026-10-26T20:05:06.787Z",
+      "requests": [
+        {
+          "action": "today_get",
+          "ms": 427.53400000000005,
+          "bytes": 11666,
+          "status": 200
+        },
+        {
+          "action": "lesson_get",
+          "ms": 349.31,
+          "bytes": 13263,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 351.794,
+          "bytes": 14018,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 375.947,
+          "bytes": 13251,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 344.463,
+          "bytes": 14017,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 352.685,
+          "bytes": 13251,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 327.43899999999996,
+          "bytes": 14015,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 364.314,
+          "bytes": 13254,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 507.69399999999996,
+          "bytes": 14014,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 386.55699999999996,
+          "bytes": 13258,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 339.90999999999997,
+          "bytes": 14033,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 347.599,
+          "bytes": 13250,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 809.99,
+          "bytes": 14035,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 389.399,
+          "bytes": 13254,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 328.163,
+          "bytes": 14017,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 361.313,
+          "bytes": 13247,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 299.451,
+          "bytes": 13999,
+          "status": 200
+        },
+        {
+          "action": "finish_post",
+          "ms": 434.399,
+          "bytes": 8946,
+          "status": 200
+        }
+      ],
+      "cards": 8,
+      "saved_ui": true,
+      "sum_http_ms": 7097.961000000001,
+      "ended": "2026-10-26T20:05:52.495Z"
+    },
+    {
+      "mode": "off",
+      "pair": 1,
+      "warmup": false,
+      "started": "2026-10-26T20:05:54.835Z",
+      "requests": [
+        {
+          "action": "today_get",
+          "ms": 366.303,
+          "bytes": 11666,
+          "status": 200
+        },
+        {
+          "action": "lesson_get",
+          "ms": 310.959,
+          "bytes": 13263,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 412.26,
+          "bytes": 14018,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 341.188,
+          "bytes": 13251,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 321.473,
+          "bytes": 14017,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 390.307,
+          "bytes": 13251,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 314.258,
+          "bytes": 14015,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 381.82,
+          "bytes": 13254,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 327.389,
+          "bytes": 14014,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 347.447,
+          "bytes": 13258,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 310.34299999999996,
+          "bytes": 14033,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 396.089,
+          "bytes": 13250,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 321.828,
+          "bytes": 14035,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 335.75,
+          "bytes": 13254,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 307.665,
+          "bytes": 14017,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 324.55699999999996,
+          "bytes": 13247,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 308.255,
+          "bytes": 13999,
+          "status": 200
+        },
+        {
+          "action": "finish_post",
+          "ms": 330.81899999999996,
+          "bytes": 8946,
+          "status": 200
+        }
+      ],
+      "cards": 8,
+      "saved_ui": true,
+      "sum_http_ms": 6148.710000000001,
+      "ended": "2026-10-26T20:06:37.451Z"
+    },
+    {
+      "mode": "on",
+      "pair": 1,
+      "warmup": false,
+      "started": "2026-10-26T20:06:43.055Z",
+      "requests": [
+        {
+          "action": "today_get",
+          "ms": 452.296,
+          "bytes": 11666,
+          "status": 200
+        },
+        {
+          "action": "lesson_get",
+          "ms": 394.731,
+          "bytes": 13310,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 354.539,
+          "bytes": 14112,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 381.25399999999996,
+          "bytes": 13298,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 366.119,
+          "bytes": 14111,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 396.02700000000004,
+          "bytes": 13298,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 347.664,
+          "bytes": 14109,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 402.647,
+          "bytes": 13296,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 339.977,
+          "bytes": 14098,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 599.7829999999999,
+          "bytes": 13305,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 345.225,
+          "bytes": 14127,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 620.408,
+          "bytes": 13294,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 388.37300000000005,
+          "bytes": 14123,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 394.829,
+          "bytes": 13301,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 398.192,
+          "bytes": 14111,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 408.397,
+          "bytes": 13294,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 350.648,
+          "bytes": 14093,
+          "status": 200
+        },
+        {
+          "action": "finish_post",
+          "ms": 593.069,
+          "bytes": 8946,
+          "status": 200
+        }
+      ],
+      "cards": 8,
+      "saved_ui": true,
+      "sum_http_ms": 7534.178,
+      "ended": "2026-10-26T20:07:21.007Z"
+    },
+    {
+      "mode": "on",
+      "pair": 2,
+      "warmup": false,
+      "started": "2026-10-26T20:07:23.471Z",
+      "requests": [
+        {
+          "action": "today_get",
+          "ms": 588.842,
+          "bytes": 11666,
+          "status": 200
+        },
+        {
+          "action": "lesson_get",
+          "ms": 482.868,
+          "bytes": 13313,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 605.6080000000001,
+          "bytes": 14118,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 404.279,
+          "bytes": 13300,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 590.114,
+          "bytes": 14115,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 392.23900000000003,
+          "bytes": 13301,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 421.506,
+          "bytes": 14115,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 456.926,
+          "bytes": 13302,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 385.042,
+          "bytes": 14110,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 411.83599999999996,
+          "bytes": 13308,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 511.224,
+          "bytes": 14133,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 536.2470000000001,
+          "bytes": 13298,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 347.291,
+          "bytes": 14131,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 602.3929999999999,
+          "bytes": 13304,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 528.027,
+          "bytes": 14117,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 364.82,
+          "bytes": 13297,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 374.771,
+          "bytes": 14099,
+          "status": 200
+        },
+        {
+          "action": "finish_post",
+          "ms": 592.463,
+          "bytes": 8946,
+          "status": 200
+        }
+      ],
+      "cards": 8,
+      "saved_ui": true,
+      "sum_http_ms": 8596.496000000001,
+      "ended": "2026-10-26T20:08:05.588Z"
+    },
+    {
+      "mode": "off",
+      "pair": 2,
+      "warmup": false,
+      "started": "2026-10-26T20:08:08.215Z",
+      "requests": [
+        {
+          "action": "today_get",
+          "ms": 550.874,
+          "bytes": 11666,
+          "status": 200
+        },
+        {
+          "action": "lesson_get",
+          "ms": 308.145,
+          "bytes": 13263,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 582.933,
+          "bytes": 14018,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 370.114,
+          "bytes": 13251,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 315.29200000000003,
+          "bytes": 14017,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 380.52599999999995,
+          "bytes": 13251,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 330.26,
+          "bytes": 14015,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 390.535,
+          "bytes": 13254,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 305.29,
+          "bytes": 14014,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 337.914,
+          "bytes": 13258,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 336.981,
+          "bytes": 14033,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 515.81,
+          "bytes": 13250,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 351.193,
+          "bytes": 14035,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 371.716,
+          "bytes": 13254,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 324.595,
+          "bytes": 14017,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 586.774,
+          "bytes": 13247,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 346.56100000000004,
+          "bytes": 13999,
+          "status": 200
+        },
+        {
+          "action": "finish_post",
+          "ms": 327.77299999999997,
+          "bytes": 8946,
+          "status": 200
+        }
+      ],
+      "cards": 8,
+      "saved_ui": true,
+      "sum_http_ms": 7033.286,
+      "ended": "2026-10-26T20:08:49.833Z"
+    },
+    {
+      "mode": "off",
+      "pair": 3,
+      "warmup": false,
+      "started": "2026-10-26T20:08:52.117Z",
+      "requests": [
+        {
+          "action": "today_get",
+          "ms": 358.212,
+          "bytes": 11666,
+          "status": 200
+        },
+        {
+          "action": "lesson_get",
+          "ms": 591.799,
+          "bytes": 13263,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 308.692,
+          "bytes": 14018,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 321.834,
+          "bytes": 13251,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 319.93899999999996,
+          "bytes": 14017,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 333.594,
+          "bytes": 13251,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 327.416,
+          "bytes": 14015,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 370.516,
+          "bytes": 13254,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 333.982,
+          "bytes": 14014,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 354.95500000000004,
+          "bytes": 13258,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 374.336,
+          "bytes": 14033,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 319.341,
+          "bytes": 13250,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 333.209,
+          "bytes": 14035,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 372.824,
+          "bytes": 13254,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 304.60900000000004,
+          "bytes": 14017,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 318.613,
+          "bytes": 13247,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 326.898,
+          "bytes": 13999,
+          "status": 200
+        },
+        {
+          "action": "finish_post",
+          "ms": 392.61,
+          "bytes": 8946,
+          "status": 200
+        }
+      ],
+      "cards": 8,
+      "saved_ui": true,
+      "sum_http_ms": 6363.379000000001,
+      "ended": "2026-10-26T20:09:30.963Z"
+    },
+    {
+      "mode": "on",
+      "pair": 3,
+      "warmup": false,
+      "started": "2026-10-26T20:09:33.136Z",
+      "requests": [
+        {
+          "action": "today_get",
+          "ms": 368.981,
+          "bytes": 11666,
+          "status": 200
+        },
+        {
+          "action": "lesson_get",
+          "ms": 598.5859999999999,
+          "bytes": 13313,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 362.037,
+          "bytes": 14118,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 392.972,
+          "bytes": 13298,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 348.906,
+          "bytes": 14111,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 356.125,
+          "bytes": 13301,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 338.262,
+          "bytes": 14115,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 364.944,
+          "bytes": 13302,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 322.204,
+          "bytes": 14110,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 587.68,
+          "bytes": 13308,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 397.65099999999995,
+          "bytes": 14133,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 385.768,
+          "bytes": 13298,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 546.0350000000001,
+          "bytes": 14131,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 465.42,
+          "bytes": 13304,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 370.389,
+          "bytes": 14117,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 611.3,
+          "bytes": 13297,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 380.004,
+          "bytes": 14099,
+          "status": 200
+        },
+        {
+          "action": "finish_post",
+          "ms": 381.775,
+          "bytes": 8946,
+          "status": 200
+        }
+      ],
+      "cards": 8,
+      "saved_ui": true,
+      "sum_http_ms": 7579.039,
+      "ended": "2026-10-26T20:10:11.502Z"
+    },
+    {
+      "mode": "on",
+      "pair": 4,
+      "warmup": false,
+      "started": "2026-10-26T20:10:13.704Z",
+      "requests": [
+        {
+          "action": "today_get",
+          "ms": 436.332,
+          "bytes": 11666,
+          "status": 200
+        },
+        {
+          "action": "lesson_get",
+          "ms": 472.57500000000005,
+          "bytes": 13314,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 354.165,
+          "bytes": 14120,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 353.63,
+          "bytes": 13300,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 377.756,
+          "bytes": 14115,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 382.132,
+          "bytes": 13302,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 349.511,
+          "bytes": 14117,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 587.761,
+          "bytes": 13303,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 365.05199999999996,
+          "bytes": 14112,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 593.399,
+          "bytes": 13309,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 489.359,
+          "bytes": 14135,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 570.9,
+          "bytes": 13299,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 360.653,
+          "bytes": 14133,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 536.685,
+          "bytes": 13304,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 382.56,
+          "bytes": 14117,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 509.738,
+          "bytes": 13298,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 319.79600000000005,
+          "bytes": 14101,
+          "status": 200
+        },
+        {
+          "action": "finish_post",
+          "ms": 368.55,
+          "bytes": 8946,
+          "status": 200
+        }
+      ],
+      "cards": 8,
+      "saved_ui": true,
+      "sum_http_ms": 7810.554000000001,
+      "ended": "2026-10-26T20:10:52.029Z"
+    },
+    {
+      "mode": "off",
+      "pair": 4,
+      "warmup": false,
+      "started": "2026-10-26T20:10:54.366Z",
+      "requests": [
+        {
+          "action": "today_get",
+          "ms": 349.637,
+          "bytes": 11666,
+          "status": 200
+        },
+        {
+          "action": "lesson_get",
+          "ms": 330.746,
+          "bytes": 13263,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 485.526,
+          "bytes": 14018,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 396.354,
+          "bytes": 13251,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 309.663,
+          "bytes": 14017,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 382.102,
+          "bytes": 13251,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 312.728,
+          "bytes": 14015,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 358.28,
+          "bytes": 13254,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 514.714,
+          "bytes": 14014,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 356.283,
+          "bytes": 13258,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 312.044,
+          "bytes": 14033,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 325.789,
+          "bytes": 13250,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 304.39,
+          "bytes": 14035,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 330.90500000000003,
+          "bytes": 13254,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 302.39500000000004,
+          "bytes": 14017,
+          "status": 200
+        },
+        {
+          "action": "advance_post",
+          "ms": 352.614,
+          "bytes": 13247,
+          "status": 200
+        },
+        {
+          "action": "reveal_post",
+          "ms": 350.45300000000003,
+          "bytes": 13999,
+          "status": 200
+        },
+        {
+          "action": "finish_post",
+          "ms": 320.496,
+          "bytes": 8946,
+          "status": 200
+        }
+      ],
+      "cards": 8,
+      "saved_ui": true,
+      "sum_http_ms": 6395.119000000001,
+      "ended": "2026-10-26T20:11:35.748Z"
+    }
+  ],
+  "completed": true,
+  "summary": {
+    "groups": [
+      {
+        "action": "today_get",
+        "off": {
+          "n": 5,
+          "p50_ms": 366.303,
+          "p95_ms": 550.874,
+          "min_ms": 349.637,
+          "max_ms": 550.874
+        },
+        "on": {
+          "n": 5,
+          "p50_ms": 452.296,
+          "p95_ms": 592.215,
+          "min_ms": 368.981,
+          "max_ms": 592.215
+        },
+        "paired_delta": {
+          "n": 5,
+          "p50_ms": 85.993,
+          "p95_ms": 164.681
+        }
+      },
+      {
+        "action": "lesson_get",
+        "off": {
+          "n": 5,
+          "p50_ms": 330.746,
+          "p95_ms": 591.799,
+          "min_ms": 308.145,
+          "max_ms": 591.799
+        },
+        "on": {
+          "n": 5,
+          "p50_ms": 482.868,
+          "p95_ms": 598.586,
+          "min_ms": 394.731,
+          "max_ms": 598.586
+        },
+        "paired_delta": {
+          "n": 5,
+          "p50_ms": 137.586,
+          "p95_ms": 174.723
+        }
+      },
+      {
+        "action": "reveal_post",
+        "off": {
+          "n": 40,
+          "p50_ms": 327.389,
+          "p95_ms": 514.714,
+          "min_ms": 299.451,
+          "max_ms": 809.99
+        },
+        "on": {
+          "n": 40,
+          "p50_ms": 366.119,
+          "p95_ms": 546.035,
+          "min_ms": 319.796,
+          "max_ms": 605.608
+        },
+        "paired_delta": {
+          "n": 40,
+          "p50_ms": 34.882,
+          "p95_ms": 203.432
+        }
+      },
+      {
+        "action": "advance_post",
+        "off": {
+          "n": 35,
+          "p50_ms": 361.313,
+          "p95_ms": 515.81,
+          "min_ms": 318.613,
+          "max_ms": 586.774
+        },
+        "on": {
+          "n": 35,
+          "p50_ms": 408.397,
+          "p95_ms": 611.3,
+          "min_ms": 353.63,
+          "max_ms": 620.408
+        },
+        "paired_delta": {
+          "n": 35,
+          "p50_ms": 66.391,
+          "p95_ms": 252.336
+        }
+      },
+      {
+        "action": "finish_post",
+        "off": {
+          "n": 5,
+          "p50_ms": 330.819,
+          "p95_ms": 434.399,
+          "min_ms": 320.496,
+          "max_ms": 434.399
+        },
+        "on": {
+          "n": 5,
+          "p50_ms": 592.463,
+          "p95_ms": 601.682,
+          "min_ms": 368.55,
+          "max_ms": 601.682
+        },
+        "paired_delta": {
+          "n": 5,
+          "p50_ms": 167.283,
+          "p95_ms": 264.69
+        }
+      }
+    ],
+    "lesson_http_sums": {
+      "off": {
+        "n": 5,
+        "p50_ms": 6395.119,
+        "p95_ms": 7097.961
+      },
+      "on": {
+        "n": 5,
+        "p50_ms": 7723.805,
+        "p95_ms": 8596.496
+      }
+    },
+    "paired_observations_not_causal": true
+  },
+  "validation": {
+    "http_responses": 216,
+    "status_200": 216,
+    "full_lesson_completions_ui": 12,
+    "on_attempts_including_warmup": 6,
+    "on_requests_including_warmup": 108,
+    "on_started": 6,
+    "on_finished": 6,
+    "on_projection_confirmed": 6,
+    "final_projection_rows": 1,
+    "final_projection_cards_total": 8,
+    "final_projection_cards_known": 8,
+    "immutable_events_matched": 0,
+    "normal_save_path": "lesson_completions_upsert",
+    "individual_off_attempt_durability_proven": false,
+    "human_beta_evidence": false
+  },
+  "cleanup": {
+    "qa_logout": 302,
+    "diagnostic_requests_removed": 108,
+    "temporary_membership_removed": 1,
+    "temporary_preview_deployments_removed": 2,
+    "temporary_env_variables_removed": 3,
+    "remaining_probe_envs": 0,
+    "remaining_members": 0,
+    "remaining_requests": 0,
+    "remaining_attempts": 0,
+    "production_metrics_enabled": false,
+    "qa_learning_projection_preserved": true
+  }
+}
