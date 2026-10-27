@@ -1,0 +1,183 @@
+{
+  "version": 1,
+  "origin": "original LingoFlow synthetic texts",
+  "verified_at": "2026-10-27",
+  "review_status": "agent_checked_against_primary_references_not_independent_editorial_acceptance",
+  "languages": [
+    "ru",
+    "pl",
+    "en"
+  ],
+  "sources": {
+    "lesson": {
+      "url": "https://wsjp.pl/haslo/podglad/2573/lekcja/5220991/matematyki",
+      "note": "Locative singular lekcji; context is presence at class, not movement."
+    },
+    "participate": {
+      "url": "https://wsjp.pl/haslo/podglad/16056/uczestniczyc/4779526/w-zebraniu",
+      "note": "uczestniczyć w CZYM; dictionary lists w zajęciach."
+    },
+    "interested": {
+      "url": "https://wsjp.pl/haslo/podglad/34470/zainteresowany/4693045/ksiazka",
+      "note": "zainteresowany KIM/CZYM."
+    },
+    "request": {
+      "url": "https://wsjp.pl/index.php/haslo/podglad/7573/poprosic/4606437/o-przysluge",
+      "note": "Aspectual partner of prosić; construction o CO."
+    }
+  },
+  "manual_advice_flags": [
+    "być zainteresowanym w"
+  ],
+  "cases": [
+    {
+      "id": "class-error",
+      "pair": "class",
+      "split": "regression",
+      "level": "B1",
+      "assignment_id": "formal-request",
+      "draft": "Szanowna Pani, jutro nie mogę być na lekcja, ponieważ mam wizytę u lekarza. Proszę przesłać materiały. Oddam zadanie w poniedziałek. Z poważaniem, Uczeń",
+      "expected_edits": [
+        {
+          "id": "class-locative",
+          "quote": "na lekcja",
+          "accepted": [
+            "na lekcji"
+          ],
+          "forbidden": [
+            "na lekcję"
+          ]
+        }
+      ],
+      "sources": [
+        "lesson"
+      ],
+      "expect_no_errors": false
+    },
+    {
+      "id": "class-correct",
+      "pair": "class",
+      "split": "regression",
+      "level": "B1",
+      "assignment_id": "formal-request",
+      "draft": "Szanowna Pani, jutro nie mogę być na lekcji, ponieważ mam wizytę u lekarza. Proszę przesłać materiały. Oddam zadanie w poniedziałek. Z poważaniem, Uczeń",
+      "expected_edits": [],
+      "sources": [
+        "lesson"
+      ],
+      "expect_no_errors": true
+    },
+    {
+      "id": "participation-error",
+      "pair": "participation",
+      "split": "regression",
+      "level": "B1",
+      "assignment_id": "formal-request",
+      "draft": "Szanowna Pani,\n\nniestety w najbliższą środę nie mogę uczestniczyć w zajęcia, ponieważ mam zaplanowaną wizytę u lekarza. Termin został ustalony kilka tygodni temu i nie mogę go już zmienić. Bardzo proszę o przesłanie materiałów z lekcji oraz informacji o pracy domowej. Chciałbym samodzielnie przeczytać tekst i wykonać wszystkie ćwiczenia, żeby dobrze przygotować się do następnego spotkania.\n\nCzy mógłbym oddać zadanie w przyszły poniedziałek zamiast w piątek? W weekend będę miał więcej czasu na spokojną pracę. Proszę o potwierdzenie, czy ten termin jest odpowiedni. Dziękuję za pomoc.\n\nZ poważaniem,\nUczeń",
+      "expected_edits": [
+        {
+          "id": "participation-locative",
+          "quote": "w zajęcia",
+          "accepted": [
+            "w zajęciach"
+          ],
+          "forbidden": [
+            "w zajęcia"
+          ]
+        }
+      ],
+      "sources": [
+        "participate"
+      ],
+      "expect_no_errors": false
+    },
+    {
+      "id": "participation-correct",
+      "pair": "participation",
+      "split": "regression",
+      "level": "B1",
+      "assignment_id": "formal-request",
+      "draft": "Szanowna Pani,\n\nniestety w najbliższą środę nie mogę uczestniczyć w zajęciach, ponieważ mam zaplanowaną wizytę u lekarza. Termin został ustalony kilka tygodni temu i nie mogę go już zmienić. Bardzo proszę o przesłanie materiałów z lekcji oraz informacji o pracy domowej. Chciałbym samodzielnie przeczytać tekst i wykonać wszystkie ćwiczenia, żeby dobrze przygotować się do następnego spotkania.\n\nCzy mógłbym oddać zadanie w przyszły poniedziałek zamiast w piątek? W weekend będę miał więcej czasu na spokojną pracę. Proszę o potwierdzenie, czy ten termin jest odpowiedni. Dziękuję za pomoc.\n\nZ poważaniem,\nUczeń",
+      "expected_edits": [],
+      "sources": [
+        "participate"
+      ],
+      "expect_no_errors": true
+    },
+    {
+      "id": "interest-error",
+      "pair": "interest",
+      "split": "transfer",
+      "level": "B1",
+      "assignment_id": "formal-request",
+      "draft": "Szanowna Pani,\n\nniestety w najbliższą środę nie mogę uczestniczyć w zajęciach, ponieważ mam zaplanowaną wizytę u lekarza. Termin został ustalony kilka tygodni temu i nie mogę go już zmienić. Bardzo proszę o przesłanie materiałów z lekcji oraz informacji o pracy domowej. Jestem zainteresowany w kursie. Chciałbym samodzielnie przeczytać tekst i wykonać wszystkie ćwiczenia, żeby dobrze przygotować się do następnego spotkania.\n\nCzy mógłbym oddać zadanie w przyszły poniedziałek zamiast w piątek? W weekend będę miał więcej czasu na spokojną pracę. Proszę o potwierdzenie, czy ten termin jest odpowiedni. Dziękuję za pomoc.\n\nZ poważaniem,\nUczeń",
+      "expected_edits": [
+        {
+          "id": "interest-instrumental",
+          "quote": "zainteresowany w kursie",
+          "accepted": [
+            "zainteresowany kursem"
+          ],
+          "forbidden": [
+            "zainteresowany w kursie"
+          ]
+        }
+      ],
+      "sources": [
+        "interested"
+      ],
+      "expect_no_errors": false
+    },
+    {
+      "id": "interest-correct",
+      "pair": "interest",
+      "split": "transfer",
+      "level": "B1",
+      "assignment_id": "formal-request",
+      "draft": "Szanowna Pani,\n\nniestety w najbliższą środę nie mogę uczestniczyć w zajęciach, ponieważ mam zaplanowaną wizytę u lekarza. Termin został ustalony kilka tygodni temu i nie mogę go już zmienić. Bardzo proszę o przesłanie materiałów z lekcji oraz informacji o pracy domowej. Jestem zainteresowany kursem. Chciałbym samodzielnie przeczytać tekst i wykonać wszystkie ćwiczenia, żeby dobrze przygotować się do następnego spotkania.\n\nCzy mógłbym oddać zadanie w przyszły poniedziałek zamiast w piątek? W weekend będę miał więcej czasu na spokojną pracę. Proszę o potwierdzenie, czy ten termin jest odpowiedni. Dziękuję za pomoc.\n\nZ poważaniem,\nUczeń",
+      "expected_edits": [],
+      "sources": [
+        "interested"
+      ],
+      "expect_no_errors": true
+    },
+    {
+      "id": "request-error",
+      "pair": "request",
+      "split": "holdout",
+      "level": "B1",
+      "assignment_id": "formal-request",
+      "draft": "Szanowna Pani,\n\nniestety w najbliższą środę nie mogę uczestniczyć w zajęciach, ponieważ mam zaplanowaną wizytę u lekarza. Termin został ustalony kilka tygodni temu i nie mogę go już zmienić. Bardzo proszę o materiałów z lekcji oraz informacje o pracy domowej. Chciałbym samodzielnie przeczytać tekst i wykonać wszystkie ćwiczenia, żeby dobrze przygotować się do następnego spotkania.\n\nCzy mógłbym oddać zadanie w przyszły poniedziałek zamiast w piątek? W weekend będę miał więcej czasu na spokojną pracę. Proszę o potwierdzenie, czy ten termin jest odpowiedni. Dziękuję za pomoc.\n\nZ poważaniem,\nUczeń",
+      "expected_edits": [
+        {
+          "id": "request-accusative",
+          "quote": "proszę o materiałów",
+          "accepted": [
+            "proszę o materiały",
+            "proszę o przesłanie materiałów"
+          ],
+          "forbidden": [
+            "proszę o materiałów"
+          ]
+        }
+      ],
+      "sources": [
+        "request"
+      ],
+      "expect_no_errors": false
+    },
+    {
+      "id": "request-correct",
+      "pair": "request",
+      "split": "holdout",
+      "level": "B1",
+      "assignment_id": "formal-request",
+      "draft": "Szanowna Pani,\n\nniestety w najbliższą środę nie mogę uczestniczyć w zajęciach, ponieważ mam zaplanowaną wizytę u lekarza. Termin został ustalony kilka tygodni temu i nie mogę go już zmienić. Bardzo proszę o materiały z lekcji oraz informacje o pracy domowej. Chciałbym samodzielnie przeczytać tekst i wykonać wszystkie ćwiczenia, żeby dobrze przygotować się do następnego spotkania.\n\nCzy mógłbym oddać zadanie w przyszły poniedziałek zamiast w piątek? W weekend będę miał więcej czasu na spokojną pracę. Proszę o potwierdzenie, czy ten termin jest odpowiedni. Dziękuję za pomoc.\n\nZ poważaniem,\nUczeń",
+      "expected_edits": [],
+      "sources": [
+        "request"
+      ],
+      "expect_no_errors": true
+    }
+  ]
+}
