@@ -1,6 +1,7 @@
 """Optional, bounded Groq writing feedback; learner texts are never persisted."""
 
 import json
+import logging
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
@@ -9,6 +10,7 @@ from django.core import signing
 
 SALT = "lingoflow.ai-writing.v1"
 CRITERIA = ("content", "structure", "grammar", "vocabulary")
+logger = logging.getLogger(__name__)
 
 
 class WritingAIUnavailable(Exception):
@@ -114,6 +116,13 @@ def review_text(assignment, text, instruction):
         if choice.get("finish_reason") != "stop":
             raise WritingAIUnavailable
         return _validate_result(json.loads(choice["message"]["content"]), text)
-    except (HTTPError, URLError, TimeoutError, OSError, ValueError, KeyError, IndexError, TypeError):
-        # Never include provider errors, request bodies or credentials in logs/UI.
+    except HTTPError as error:
+        # Only the numeric status is safe: bodies/messages may echo submitted data.
+        logger.warning("writing_ai_provider_failed kind=http status=%d", error.code)
+        raise WritingAIUnavailable from None
+    except (URLError, TimeoutError, OSError):
+        logger.warning("writing_ai_provider_failed kind=transport")
+        raise WritingAIUnavailable from None
+    except (ValueError, KeyError, IndexError, TypeError, WritingAIUnavailable):
+        logger.warning("writing_ai_provider_failed kind=invalid_response")
         raise WritingAIUnavailable from None
