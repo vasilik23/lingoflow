@@ -105,7 +105,7 @@ def review_text(assignment, text, instruction):
                    {"role": "user", "content": json.dumps({"assignment": assignment, "draft": text}, ensure_ascii=False)}],
                "response_format": {"type": "json_schema", "json_schema": {"name": "writing_feedback", "strict": True, "schema": SCHEMA}}}
     request = Request("https://api.groq.com/openai/v1/chat/completions", method="POST",
-                      data=json.dumps(payload).encode(), headers={"Authorization": f"Bearer {settings.GROQ_API_KEY}", "Content-Type": "application/json"})
+                      data=json.dumps(payload).encode(), headers={"Authorization": f"Bearer {settings.GROQ_API_KEY}", "Content-Type": "application/json", "User-Agent": "LingoFlow/1.0"})
     try:
         with urlopen(request, timeout=25) as response:
             raw = response.read(65537)
