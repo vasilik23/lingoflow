@@ -587,3 +587,19 @@ created_for: LingoFlow; verified_at: 2026-10-17, внутренняя терми
 [agreement](https://www.merriam-webster.com/dictionary/agreement).
 Определения, статьи и примеры не импортировались. Русские ключи и польские
 примеры сохранены; независимая редакторская приёмка всё ещё не проведена.
+
+### Контрольный набор ИИ-письма — 27.10.2026
+
+`ops/fixtures/writing-quality-v1.json`: восемь оригинальных синтетических писем
+LingoFlow, включая ранее использованные тестовые тексты и новые парные контроли.
+Origin: original; автор/created_for: LingoFlow; verified_at: 2026-10-27,
+внутренняя агентная сверка, без независимой редакторской приёмки.
+Справочные источники — издатель Instytut Języka Polskiego PAN, WSJP:
+[lekcja](https://wsjp.pl/haslo/podglad/2573/lekcja/5220991/matematyki),
+[uczestniczyć](https://wsjp.pl/haslo/podglad/16056/uczestniczyc/4779526/w-zebraniu),
+[zainteresowany](https://wsjp.pl/haslo/podglad/34470/zainteresowany/4693045/ksiazka),
+[poprosić](https://wsjp.pl/index.php/haslo/podglad/7573/poprosic/4606437/o-przysluge).
+Использованы для проверки форм и управления, получены 27.10.2026; определения,
+статьи и корпусные цитаты не импортируются. Публичный доступ не трактуется как
+лицензия на перепубликацию словаря. Публикуются собственные примеры, метаданные
+и ссылки. [Объём контроля и ограничения](ai-writing-quality-evaluation-2026-10-27.md).
