@@ -105,6 +105,7 @@ class AIWritingTests(SimpleTestCase):
         result = review_writing(self.assignment, "Mam problem", "en")
         self.assertEqual((result["score"], result["maximum"], result["words"]), (12, 20, 2))
         request = transport.call_args.args[0]
+        self.assertEqual(request.get_header("User-agent"), "LingoFlow/1.0")
         data = json.loads(request.data)
         self.assertEqual(data["response_format"]["json_schema"]["strict"], True)
         self.assertIn("English", data["messages"][0]["content"])
