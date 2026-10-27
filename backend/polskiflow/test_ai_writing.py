@@ -108,10 +108,23 @@ class AIWritingTests(SimpleTestCase):
         self.assertEqual(request.get_header("User-agent"), "LingoFlow/1.0")
         data = json.loads(request.data)
         self.assertEqual(data["response_format"]["json_schema"]["strict"], True)
+        self.assertEqual(data["reasoning_effort"], "medium")
         self.assertIn("English", data["messages"][0]["content"])
         self.assertNotIn("private@example", str(data))
         self.assertEqual(data["messages"][1]["content"], json.dumps({"assignment": self.assignment, "draft": "Mam problem"}, ensure_ascii=False))
         self.assertEqual(transport.call_args.kwargs["timeout"], 25)
+
+    @patch("polskiflow.ai_writing.urlopen")
+    def test_unchanged_quotes_are_not_presented_as_errors(self, transport):
+        result = feedback()
+        result["errors"].append({"quote": "Mam problem", "correction": " Mam problem ",
+                                 "explanation": "This is already correct."})
+        body = {"choices": [{"finish_reason": "stop", "message": {"content": json.dumps(result)}}]}
+        transport.return_value.__enter__.return_value = BytesIO(json.dumps(body).encode())
+        reviewed = review_writing(self.assignment, "Mam problem", "en")
+        self.assertEqual(len(reviewed["errors"]), 1)
+        self.assertEqual(reviewed["errors"][0]["correction"], "Mam pytanie")
+        self.assertEqual(reviewed["score"], 12)
 
     @patch("polskiflow.ai_writing.urlopen")
     def test_refusal_bad_json_invalid_scores_and_invented_quotes_are_not_grades(self, transport):
