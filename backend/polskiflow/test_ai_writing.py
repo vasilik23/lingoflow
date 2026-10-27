@@ -1,6 +1,7 @@
 import json
 from unittest.mock import patch
 from io import BytesIO
+from urllib.error import HTTPError, URLError
 
 from django.core import signing
 from django.test import Client, SimpleTestCase, override_settings
@@ -124,6 +125,30 @@ class AIWritingTests(SimpleTestCase):
         transport.return_value.__enter__.return_value = BytesIO(b"not json")
         with self.assertRaises(WritingAIUnavailable):
             review_writing(self.assignment, "Mam problem", "pl")
+
+    @patch("polskiflow.ai_writing.urlopen")
+    def test_diagnostics_never_log_provider_messages_bodies_or_drafts(self, transport):
+        private = "private-draft-and-key"
+        for failure, expected in (
+            (HTTPError("https://api.groq.com/" + private, 403, private, {}, BytesIO(private.encode())), "kind=http status=403"),
+            (URLError(private), "kind=transport"),
+        ):
+            with self.subTest(expected=expected):
+                transport.side_effect = failure
+                with self.assertLogs("polskiflow.ai_writing", level="WARNING") as logs:
+                    with self.assertRaises(WritingAIUnavailable):
+                        review_writing(self.assignment, private, "pl")
+                self.assertEqual(len(logs.output), 1)
+                self.assertIn(expected, logs.output[0])
+                self.assertNotIn(private, logs.output[0])
+                self.assertNotIn("test-only", logs.output[0])
+        transport.side_effect = None
+        transport.return_value.__enter__.return_value = BytesIO(private.encode())
+        with self.assertLogs("polskiflow.ai_writing", level="WARNING") as logs:
+            with self.assertRaises(WritingAIUnavailable):
+                review_writing(self.assignment, private, "pl")
+        self.assertIn("kind=invalid_response", logs.output[0])
+        self.assertNotIn(private, logs.output[0])
 
     def test_writing_page_has_opt_in_without_sending_any_draft(self):
         page = self.client.get("/writing/")
