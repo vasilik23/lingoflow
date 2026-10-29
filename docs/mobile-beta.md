@@ -207,3 +207,39 @@ LingoFlow, bundle identifier и Android package сохранены.
 Мобильные проверки: 6 build-readiness + 26 learning-тестов, TypeScript и
 config check прошли. Подпись, облачная сборка и установка проверяются отдельно;
 сама привязка проекта не является нативной приёмкой.
+
+## Первый подписанный Android APK · 29.10.2026
+
+EAS завершил внутреннюю Android-сборку со статусом **FINISHED**:
+
+- [Страница установки и сборки](https://expo.dev/accounts/vasilik23s-team/projects/vasilik23/builds/822569eb-f7f7-43f8-94c5-be233ba9c829).
+- [Скачать APK](https://expo.dev/artifacts/eas/txSkY7TZXzIgntQWyXKnkrFdUmMToxLhtbtittAzOVk.apk).
+- Build ID: `822569eb-f7f7-43f8-94c5-be233ba9c829`, профиль `preview`, internal.
+- Версия `1.0.0`, Android versionCode `1`, package `com.lingoflow.mobile`.
+- Исходники: commit `34bf771fa6d822b720ee76f426b8be1fee84ba67`.
+  Последующее дополнение документации не входит в этот build.
+- Создан 29 октября 09:34:56 UTC, завершён 09:40:47 UTC.
+- Ключ Android создан и хранится в EAS; приватный keystore не скачивался и
+  в репозиторий не добавлялся. Google Play submission не запускался.
+
+APK скачан оператором, ZIP integrity проверен: ошибок сжатых данных нет.
+SHA-256: `37b16cfa39e7cf1933ac5448e02bf0b96e30c4adf16146d4e5f17fe6ae634d4b`.
+Локальный файл `/private/tmp/lingoflow-android-1.0.0-1.apk`, около 66 MiB,
+не включён в Git. Проверка ZIP и checksum не заменяет запуск приложения,
+проверку Android-подписи отдельным инструментом или device acceptance.
+
+Проверки исходников: 32 мобильных теста, TypeScript, config check,
+1223 Django-теста, system check, migration drift и diff check прошли;
+GitHub mobile CI и Vercel Preview прошли. `build:check --platform android
+--check-session` перед сборкой успешен. EAS загрузил preview env и выполнил
+нативную сборку. Web runtime, Supabase и ИИ-флаги не менялись.
+
+### Установка владельцем
+
+Открыть страницу сборки на Android и установить APK. Если Android запросит,
+разрешить установку из используемого браузера. После установки пройти список
+«Приёмка нового build» выше, начиная со входа, Today, урока и перезапуска.
+Передать модель телефона, Android version и конкретный результат/ошибку.
+Установка на физический Android в этом отчёте **не выполнена**.
+Для iPhone этот APK не подходит: iOS build, Apple Developer/UDID и нативная
+приёмка остаются отдельным направлением.
