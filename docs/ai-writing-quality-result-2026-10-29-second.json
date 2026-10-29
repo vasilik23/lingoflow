@@ -1,0 +1,154 @@
+{
+  "evaluated_at": "2026-10-29",
+  "runtime_code": "a9a5660a1baa0452f042f5f1ec118ac4cd7e5918",
+  "evaluator_revision": "consistency-and-criteria-v2",
+  "dataset_version": 1,
+  "model": "openai/gpt-oss-120b",
+  "reasoning_effort": "medium",
+  "runs": [
+    {
+      "case_id": "class-error",
+      "language": "ru",
+      "trial": 0,
+      "checks_passed": false,
+      "issues": [
+        {
+          "kind": "required_edit_not_demonstrated",
+          "check": "class-locative"
+        },
+        {
+          "kind": "forbidden_edit",
+          "check": "class-locative"
+        }
+      ]
+    },
+    {
+      "case_id": "participation-error",
+      "language": "pl",
+      "trial": 0,
+      "checks_passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "participation-error",
+      "language": "en",
+      "trial": 0,
+      "checks_passed": false,
+      "issues": [
+        {
+          "kind": "advice_requires_manual_review"
+        }
+      ]
+    },
+    {
+      "case_id": "request-correct",
+      "language": "ru",
+      "trial": 0,
+      "checks_passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "class-error",
+      "language": "pl",
+      "trial": 0,
+      "checks_passed": false,
+      "issues": [
+        {
+          "kind": "overlapping_edits_require_manual_review"
+        },
+        {
+          "kind": "forbidden_edit",
+          "check": "class-locative"
+        }
+      ]
+    },
+    {
+      "case_id": "class-error",
+      "language": "en",
+      "trial": 0,
+      "checks_passed": false,
+      "issues": [
+        {
+          "kind": "required_edit_not_demonstrated",
+          "check": "class-locative"
+        },
+        {
+          "kind": "forbidden_edit",
+          "check": "class-locative"
+        }
+      ]
+    },
+    {
+      "case_id": "class-correct",
+      "language": "ru",
+      "trial": 0,
+      "checks_passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "class-correct",
+      "language": "pl",
+      "trial": 0,
+      "checks_passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "class-correct",
+      "language": "en",
+      "trial": 0,
+      "checks_passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "participation-error",
+      "language": "ru",
+      "trial": 0,
+      "checks_passed": false,
+      "issues": [
+        {
+          "kind": "mixed_script_token_requires_manual_review"
+        }
+      ]
+    },
+    {
+      "case_id": "participation-correct",
+      "language": "ru",
+      "trial": 0,
+      "checks_passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "participation-correct",
+      "language": "pl",
+      "trial": 0,
+      "checks_passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "participation-correct",
+      "language": "en",
+      "trial": 0,
+      "checks_passed": true,
+      "issues": []
+    }
+  ],
+  "coverage": {
+    "covered": 13,
+    "expected": 24,
+    "missing": [
+      "interest-error:ru",
+      "interest-error:pl",
+      "interest-error:en",
+      "interest-correct:ru",
+      "interest-correct:pl",
+      "interest-correct:en",
+      "request-error:ru",
+      "request-error:pl",
+      "request-error:en",
+      "request-correct:pl",
+      "request-correct:en"
+    ]
+  },
+  "status": "findings",
+  "quality_accepted": false
+}

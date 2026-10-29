@@ -10,6 +10,29 @@ function contains(text, phrase) {
 }
 function requireValue(ok) { if (!ok) throw new Error('Invalid evaluation input'); }
 
+// A review flag, not a grammatical verdict: overlapping rewrites may be valid
+// alternatives. Only compare quotes with an unambiguous location in the draft.
+function conflictingEdits(draft, errors) {
+  const changes = errors.flatMap(error => {
+    const offset = draft.indexOf(error.quote);
+    if (offset < 0 || draft.indexOf(error.quote, offset + 1) >= 0) return [];
+    const {quote, correction} = error;
+    let prefix = 0, suffix = 0;
+    while (prefix < Math.min(quote.length, correction.length) && quote[prefix] === correction[prefix]) prefix++;
+    while (suffix < Math.min(quote.length, correction.length) - prefix &&
+      quote[quote.length - 1 - suffix] === correction[correction.length - 1 - suffix]) suffix++;
+    if (prefix === quote.length && prefix === correction.length) return [];
+    return [{start: offset + prefix, end: offset + quote.length - suffix,
+      replacement: correction.slice(prefix, correction.length - suffix)}];
+  });
+  return changes.some((a, i) => changes.slice(i + 1).some(b => {
+    if (a.start === b.start && a.end === b.end && a.replacement === b.replacement) return false;
+    if (a.start === a.end || b.start === b.end)
+      return a.start === b.start || (a.start < b.end && b.start < a.end);
+    return a.start < b.end && b.start < a.end;
+  }));
+}
+
 export function evaluate(input, dataset = JSON.parse(fs.readFileSync(fixturePath, 'utf8'))) {
   requireValue(input?.dataset_version === dataset.version && typeof input.model === 'string' &&
     input.model.length > 0 && input.model.length <= 100 && ['low', 'medium', 'high'].includes(input.reasoning_effort) &&
@@ -32,6 +55,7 @@ export function evaluate(input, dataset = JSON.parse(fs.readFileSync(fixturePath
       if (!item.draft.includes(error.quote)) issues.push({kind: 'quote_not_in_draft'});
       if (normalize(error.quote) === normalize(error.correction)) issues.push({kind: 'unchanged_correction'});
     }
+    if (conflictingEdits(item.draft, review.errors)) issues.push({kind: 'overlapping_edits_require_manual_review'});
     for (const expected of item.expected_edits) {
       const matches = review.errors.filter(error => item.draft.includes(error.quote) && contains(error.quote, expected.quote));
       if (!matches.some(error => expected.accepted.some(value => contains(error.correction, value))))
@@ -40,9 +64,21 @@ export function evaluate(input, dataset = JSON.parse(fs.readFileSync(fixturePath
         issues.push({kind: 'forbidden_edit', check: expected.id});
     }
     if (item.expect_no_errors && review.errors.length) issues.push({kind: 'clean_control_flagged_for_review'});
-    const advice = [review.next_step, ...review.errors.map(error => error.explanation)].join('\n');
+    const criteriaFeedback = [];
+    if (review.criteria !== undefined) {
+      requireValue(review.criteria && typeof review.criteria === 'object' && !Array.isArray(review.criteria) &&
+        Object.keys(review.criteria).length === 4);
+      for (const key of ['content', 'structure', 'grammar', 'vocabulary']) {
+        const feedback = review.criteria[key]?.feedback;
+        requireValue(typeof feedback === 'string' && feedback.length > 0 && feedback.length <= 600);
+        criteriaFeedback.push(feedback);
+      }
+    }
+    const advice = [review.next_step, ...review.errors.map(error => error.explanation), ...criteriaFeedback].join('\n');
     if (dataset.manual_advice_flags.some(value => contains(advice, value))) issues.push({kind: 'advice_requires_manual_review'});
     if (run.language !== 'ru' && /[А-Яа-яЁё]/u.test(advice)) issues.push({kind: 'unexpected_cyrillic_in_explanation'});
+    if ((advice.match(/[\p{L}\p{M}]+/gu) ?? []).some(word => /\p{Script=Latin}/u.test(word) && /\p{Script=Cyrillic}/u.test(word)))
+      issues.push({kind: 'mixed_script_token_requires_manual_review'});
     return {case_id: item.id, language: run.language, trial, checks_passed: issues.length === 0, issues};
   });
   const required = dataset.cases.flatMap(item => dataset.languages.map(language => `${item.id}:${language}`));
