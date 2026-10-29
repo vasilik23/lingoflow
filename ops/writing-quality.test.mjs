@@ -52,3 +52,47 @@ test('rejects malformed reports rather than assigning a quality score', () => {
   for (const value of [{}, {...input([])}, input([run('unknown', [])]), {...input([run('class-correct', [])]), reasoning_effort: 'unbounded'}])
     assert.throws(() => evaluate(value), /Invalid evaluation input/);
 });
+
+test('flags observed incompatible nested corrections without disclosing review text', () => {
+  const report = evaluate(input([run('class-error', [
+    edit('na lekcja', 'na lekcję'),
+    edit('jutro nie mogę być na lekcja', 'jutro nie będę na lekcji'),
+  ])]));
+  assert(report.runs[0].issues.some(issue => issue.kind === 'overlapping_edits_require_manual_review'));
+  assert(!JSON.stringify(report).includes('jutro'));
+});
+test('equivalent narrow and broad corrections and separate changes do not conflict', () => {
+  const report = evaluate(input([run('class-error', [
+    edit('na lekcja', 'na lekcji'),
+    edit('jutro nie mogę być na lekcja', 'jutro nie mogę być na lekcji'),
+    edit('jutro', 'dzisiaj'),
+  ])]));
+  assert.equal(report.runs[0].checks_passed, true);
+});
+test('flags competing insertions and skips ambiguous repeated quotations', () => {
+  const local = {...dataset, cases: [{id: 'local', draft: 'ab ab cd', expected_edits: [], expect_no_errors: false}]};
+  const check = errors => evaluate(input([run('local', errors)]), local).runs[0].issues;
+  assert(check([edit('cd', 'cXd'), edit('cd', 'cYd')]).some(issue => issue.kind === 'overlapping_edits_require_manual_review'));
+  assert.equal(check([edit('ab', 'ax'), edit('ab', 'ay')]).length, 0);
+});
+
+test('inspects criterion feedback for mixed alphabets without flagging separate quoted Polish words', () => {
+  const candidate = run('class-correct', []);
+  candidate.language = 'ru';
+  candidate.review.criteria = Object.fromEntries(['content', 'structure', 'grammar', 'vocabulary'].map(key =>
+    [key, {feedback: 'Правильная форма: zajęciach.'}]));
+  assert.equal(evaluate(input([candidate])).runs[0].checks_passed, true);
+  candidate.review.criteria.grammar.feedback = 'Правильная форма: zajęciaх.';
+  assert(evaluate(input([candidate])).runs[0].issues.some(issue => issue.kind === 'mixed_script_token_requires_manual_review'));
+});
+test('criterion advice participates in language and known advice checks', () => {
+  const candidate = run('class-correct', []);
+  candidate.review.criteria = Object.fromEntries(['content', 'structure', 'grammar', 'vocabulary'].map(key =>
+    [key, {feedback: 'Practice again.'}]));
+  candidate.review.criteria.grammar.feedback = 'Совет: być zainteresowanym w.';
+  const kinds = evaluate(input([candidate])).runs[0].issues.map(issue => issue.kind);
+  assert(kinds.includes('unexpected_cyrillic_in_explanation'));
+  assert(kinds.includes('advice_requires_manual_review'));
+  candidate.review.criteria = {grammar: {feedback: 'Incomplete'}};
+  assert.throws(() => evaluate(input([candidate])), /Invalid evaluation input/);
+});
