@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "LingoFlow",
-    "slug": "lingoflow",
+    "slug": "vasilik23",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -32,6 +32,12 @@
     },
     "plugins": [
       "expo-secure-store"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "3f652615-6b1a-4fc5-9429-4accb932ff60"
+      }
+    },
+    "owner": "vasilik23s-team"
   }
 }
