@@ -1,0 +1,502 @@
+{
+  "dataset_version": 1,
+  "model": "openai/gpt-oss-120b",
+  "reasoning_effort": "medium",
+  "provenance": {
+    "synthetic_only": true,
+    "dataset": "writing-quality-v1.json",
+    "task_id": "formal-request",
+    "description": "Existing production responses to original synthetic controls. No learner submissions, account details, credentials or browser state.",
+    "normalization": "Transport wrappers removed; first three full criteria restored from original capture. Feedback text is unchanged."
+  },
+  "runs": [
+    {
+      "case_id": "class-error",
+      "language": "ru",
+      "trial": 0,
+      "captured_on": "2026-10-27",
+      "runtime_commit": "caa1e7a8c741f5ba686930ecab9ed693fa12941f",
+      "source_report": "docs/ai-writing-live-2026-10-27.md",
+      "review": {
+        "criteria": {
+          "content": {
+            "score": 2,
+            "feedback": "Все три требования выполнены: указана причина отсутствия, просьба о материалах и предложен новый срок сдачи. Однако текст слишком короткий (≈30 слов) и не достигает требуемых 80–100 слов, поэтому содержание считается неполным."
+          },
+          "structure": {
+            "score": 3,
+            "feedback": "Текст построен логично, соблюдён официальный стиль обращения и прощания. Недостаток – отсутствие развернутых предложений, что делает письмо слишком лаконичным для формального запроса."
+          },
+          "grammar": {
+            "score": 2,
+            "feedback": "Есть несколько грамматических неточностей: неверный падеж и форма глагола будущего времени. Ошибки не критичны, но снижают уровень B1."
+          },
+          "vocabulary": {
+            "score": 3,
+            "feedback": "Использована базовая лексика, соответствующая уровню B1, но ограничена. Для более убедительного письма стоит добавить разнообразные выражения и вежливые обороты."
+          }
+        },
+        "errors": [
+          {
+            "quote": "na lekcja",
+            "correction": "na lekcję",
+            "explanation": "Нужен винительный падеж; существительное \"lekcja\" должно стоять в форме \"lekcję\"."
+          },
+          {
+            "quote": "jutro nie mogę być",
+            "correction": "jutro nie będę mógł być",
+            "explanation": "Для выражения будущей невозможности лучше использовать форму будущего времени \"będę mógł\"."
+          }
+        ],
+        "next_step": "Составьте более развернутый вариант письма (80‑100 слов), включив объяснение причины, вежливую просьбу о материалах и конкретный новый срок сдачи; исправьте указанные грамматические ошибки.",
+        "score": 10,
+        "maximum": 20,
+        "words": 23,
+        "persisted": false
+      }
+    },
+    {
+      "case_id": "participation-error",
+      "language": "pl",
+      "trial": 0,
+      "captured_on": "2026-10-27",
+      "runtime_commit": "caa1e7a8c741f5ba686930ecab9ed693fa12941f",
+      "source_report": "docs/ai-writing-live-2026-10-27.md",
+      "review": {
+        "criteria": {
+          "content": {
+            "score": 5,
+            "feedback": "Tekst spełnia wszystkie wymagania: wyjaśnia przyczynę nieobecności, prosi o materiały i proponuje nowy termin oddania zadania. Liczba słów mieści się w przedziale 80‑100."
+          },
+          "structure": {
+            "score": 5,
+            "feedback": "List ma odpowiednią formę formalną: nagłówek, wstęp, rozwinięcie i zakończenie. Styl jest uprzejmy i spójny."
+          },
+          "grammar": {
+            "score": 4,
+            "feedback": "Jedyny istotny błąd to użycie przyimka z rzeczownikiem „zajęcia” – wymaga formy miejscownika liczby mnogiej. Poza tym zdania są poprawne."
+          },
+          "vocabulary": {
+            "score": 5,
+            "feedback": "Użyto słownictwa adekwatnego do poziomu B1, w tym zwroty grzecznościowe i wyrażenia związane z prośbą i wyjaśnieniem."
+          }
+        },
+        "errors": [
+          {
+            "quote": "uczestniczyć w zajęcia",
+            "correction": "uczestniczyć w zajęciach",
+            "explanation": "Po przyimku „w” potrzebny jest miejscownik liczby mnogiej – „zajęciach”."
+          }
+        ],
+        "next_step": "Sprawdź, które rzeczowniki wymagają miejscownika po przyimku „w” i ćwicz odmianę liczby mnogiej (np. w zajęciach, w lekcjach).",
+        "score": 19,
+        "maximum": 20,
+        "words": 89,
+        "persisted": false
+      }
+    },
+    {
+      "case_id": "participation-error",
+      "language": "en",
+      "trial": 0,
+      "captured_on": "2026-10-27",
+      "runtime_commit": "caa1e7a8c741f5ba686930ecab9ed693fa12941f",
+      "source_report": "docs/ai-writing-live-2026-10-27.md",
+      "review": {
+        "criteria": {
+          "content": {
+            "score": 5,
+            "feedback": "All three required elements are present: reason for absence, request for materials, and proposal of a new deadline. Word count fits the 80‑100 range."
+          },
+          "structure": {
+            "score": 5,
+            "feedback": "The text follows a clear formal format with greeting, body, and closing. Coherence and register are appropriate for a B1 formal request."
+          },
+          "grammar": {
+            "score": 4,
+            "feedback": "Mostly correct, but there is a case error with the preposition after \"uczestniczyć\". Otherwise sentences are well‑formed."
+          },
+          "vocabulary": {
+            "score": 5,
+            "feedback": "Vocabulary is suitable for B1 level, with varied but accurate word choice for a formal request."
+          }
+        },
+        "errors": [
+          {
+            "quote": "uczestniczyć w zajęcia, ponieważ",
+            "correction": "uczestniczyć w zajęciach, ponieważ",
+            "explanation": "After \"uczestniczyć w\" the noun must be in the locative case (zajęciach)."
+          }
+        ],
+        "next_step": "Review the use of prepositions that require the locative case (e.g., \"uczestniczyć w\", \"być zainteresowanym w\"). Practice sentences with \"w\" + locative to avoid similar errors.",
+        "score": 19,
+        "maximum": 20,
+        "words": 89,
+        "persisted": false
+      }
+    },
+    {
+      "case_id": "request-correct",
+      "language": "ru",
+      "trial": 0,
+      "captured_on": "2026-10-27",
+      "runtime_commit": "958210d",
+      "source_report": "docs/ai-writing-quality-evaluation-2026-10-27.md",
+      "review": {
+        "criteria": {
+          "content": {
+            "score": 5,
+            "feedback": "Все требования задания выполнены: объяснена причина отсутствия, запрошены материалы и предложен новый срок сдачи."
+          },
+          "structure": {
+            "score": 5,
+            "feedback": "Письмо оформлено как формальное обращение: приветствие, основной текст, прощание. Последовательность логична."
+          },
+          "grammar": {
+            "score": 5,
+            "feedback": "Грамматических ошибок не обнаружено; формы глаголов, падежи и согласования использованы правильно."
+          },
+          "vocabulary": {
+            "score": 4,
+            "feedback": "Словарный запас соответствует уровню B1, но можно добавить более разнообразные синонимы и формальные обороты для усиления стиля."
+          }
+        },
+        "errors": [],
+        "next_step": "Попробуйте расширить лексику, используя более формальные выражения (например, «uprzejmie proszę», «zwracam się z prośbą»), чтобы письмо звучало ещё более профессионально.",
+        "score": 19,
+        "maximum": 20,
+        "words": 88,
+        "persisted": false
+      }
+    },
+    {
+      "case_id": "class-error",
+      "language": "pl",
+      "trial": 0,
+      "captured_on": "2026-10-29",
+      "runtime_commit": "5c400a5",
+      "source_report": "docs/ai-writing-quality-followup-2026-10-29.md",
+      "review": {
+        "criteria": {
+          "content": {
+            "score": 2,
+            "feedback": "Tekst zawiera wszystkie wymagane elementy (wyjaśnienie przyczyny, prośbę o materiały, nowy termin), ale jest znacznie krótszy niż 80 słów – wymaga rozbudowy, aby spełnić minimalną liczbę słów."
+          },
+          "structure": {
+            "score": 3,
+            "feedback": "Zachowano właściwy format listu (zwrot grzecznościowy, treść, zakończenie), jednak bardzo krótka forma i brak rozwiniętych zdań wpływa na spójność i pełnię wypowiedzi."
+          },
+          "grammar": {
+            "score": 3,
+            "feedback": "Występują błędy fleksyjne (przypadek, forma czasownika) oraz nieoptymalna konstrukcja czasowa, co obniża poprawność językową."
+          },
+          "vocabulary": {
+            "score": 3,
+            "feedback": "Użyto prostego, adekwatnego do poziomu B1 słownictwa, ale zakres jest ograniczony; warto wprowadzić nieco bardziej zróżnicowane wyrażenia."
+          }
+        },
+        "errors": [
+          {
+            "quote": "na lekcja",
+            "correction": "na lekcję",
+            "explanation": "Po przyimku 'na' wymaga się biernika; rzeczownik 'lekcja' w bierniku przyjmuje formę 'lekcję'."
+          },
+          {
+            "quote": "jutro nie mogę być na lekcja",
+            "correction": "jutro nie będę na lekcji",
+            "explanation": "Lepsza konstrukcja przyszła oraz poprawny przypadek: 'na lekcji' wymaga miejscownika, a 'nie będę' wyraża przyszłość."
+          }
+        ],
+        "next_step": "Rozbuduj tekst do 80‑100 słów, dodaj więcej szczegółów o przyczynie nieobecności i użyj uprzejmych zwrotów, pamiętając o poprawnych formach przyimków i czasowników.",
+        "score": 11,
+        "maximum": 20,
+        "words": 23,
+        "persisted": false
+      }
+    },
+    {
+      "case_id": "class-error",
+      "language": "en",
+      "trial": 0,
+      "captured_on": "2026-10-29",
+      "runtime_commit": "5c400a5",
+      "source_report": "docs/ai-writing-quality-followup-2026-10-29.md",
+      "review": {
+        "criteria": {
+          "content": {
+            "score": 2,
+            "feedback": "The draft includes all three required elements (reason for absence, request for materials, new deadline) but is far below the required 80‑100 word length, so it does not fully meet the task."
+          },
+          "structure": {
+            "score": 4,
+            "feedback": "The text is logically ordered and uses a polite register appropriate for a formal request. Paragraphing could be improved, but overall coherence is good."
+          },
+          "grammar": {
+            "score": 3,
+            "feedback": "Most sentences are grammatical, but there are case errors and a slightly awkward verb construction."
+          },
+          "vocabulary": {
+            "score": 4,
+            "feedback": "Vocabulary is adequate for a B1 level formal request; it could be enriched with more varied expressions."
+          }
+        },
+        "errors": [
+          {
+            "quote": "na lekcja",
+            "correction": "na lekcję",
+            "explanation": "The noun \"lekcja\" requires the accusative case after the preposition \"na\"."
+          }
+        ],
+        "next_step": "Expand the message to 80‑100 words: add a brief explanation of the medical appointment, thank the administrator for the materials, and suggest a realistic new deadline. Use varied sentence structures and check case endings (e.g., \"na lekcję\").",
+        "score": 13,
+        "maximum": 20,
+        "words": 23,
+        "persisted": false
+      }
+    },
+    {
+      "case_id": "class-correct",
+      "language": "ru",
+      "trial": 0,
+      "captured_on": "2026-10-29",
+      "runtime_commit": "5c400a5",
+      "source_report": "docs/ai-writing-quality-followup-2026-10-29.md",
+      "review": {
+        "criteria": {
+          "content": {
+            "score": 2,
+            "feedback": "Текст содержит все требуемые элементы (причина, просьба о материалах, новый срок), но значительно короче требуемых 80‑100 слов, поэтому не полностью удовлетворяет заданию."
+          },
+          "structure": {
+            "score": 3,
+            "feedback": "Письмо имеет логичную последовательность и вежливый регистр, однако из‑за очень короткой длины отсутствует более развернутое обоснование и детали, что снижает связность."
+          },
+          "grammar": {
+            "score": 5,
+            "feedback": "Грамматически предложения построены правильно, ошибок в согласовании, падежах или орфографии нет."
+          },
+          "vocabulary": {
+            "score": 4,
+            "feedback": "Используется базовый словарный запас, соответствующий уровню B1, но отсутствие разнообразия и более точных формулировок ограничивает выразительность."
+          }
+        },
+        "errors": [],
+        "next_step": "Увеличьте текст до 80‑100 слов, добавив более подробное объяснение причины отсутствия, вежливую просьбу о присылке материалов (например, «Proszę o przesłanie materiałów»), уточните новый срок сдачи и завершите письмо формальным прощанием.",
+        "score": 14,
+        "maximum": 20,
+        "words": 23,
+        "persisted": false
+      }
+    },
+    {
+      "case_id": "class-correct",
+      "language": "pl",
+      "trial": 0,
+      "captured_on": "2026-10-29",
+      "runtime_commit": "5c400a5",
+      "source_report": "docs/ai-writing-quality-followup-2026-10-29.md",
+      "review": {
+        "criteria": {
+          "content": {
+            "score": 1,
+            "feedback": "Tekst zawiera wszystkie wymagane elementy (wyjaśnienie przyczyny, prośbę o materiały, nowy termin), ale jest znacznie krótszy niż wymagane 80–100 słów, co nie spełnia wymogu objętości."
+          },
+          "structure": {
+            "score": 2,
+            "feedback": "List ma logiczny układ i odpowiedni rejestr (formalny), jednak ze względu na bardzo małą długość brakuje rozwinięcia i płynnych przejść między zdaniami."
+          },
+          "grammar": {
+            "score": 5,
+            "feedback": "Zdania są gramatycznie poprawne, nie ma błędów fleksyjnych ani składniowych."
+          },
+          "vocabulary": {
+            "score": 4,
+            "feedback": "Użyto prostego, ale adekwatnego słownictwa. Brakuje jednak bardziej zróżnicowanych wyrażeń, które podniosłyby formalny charakter wiadomości."
+          }
+        },
+        "errors": [],
+        "next_step": "Napisz pełny list liczący 80‑100 słów, zachowując formalny ton. Rozwiń przyczynę nieobecności (np. \"mam zaplanowaną wizytę u lekarza, której nie mogę przełożyć\"), poproś o konkretne materiały (np. \"proszę o przesłanie notatek i prezentacji z zajęć\"), oraz zaproponuj nowy termin oddania zadania, podając datę i wyrażając gotowość do nadrobienia zaległości.",
+        "score": 12,
+        "maximum": 20,
+        "words": 23,
+        "persisted": false
+      }
+    },
+    {
+      "case_id": "class-correct",
+      "language": "en",
+      "trial": 0,
+      "captured_on": "2026-10-29",
+      "runtime_commit": "5c400a5",
+      "source_report": "docs/ai-writing-quality-followup-2026-10-29.md",
+      "review": {
+        "criteria": {
+          "content": {
+            "score": 1,
+            "feedback": "The draft touches all three required points (reason, request for materials, new deadline) but it is far below the required 80‑100 words. It therefore does not satisfy the length criterion and lacks sufficient detail."
+          },
+          "structure": {
+            "score": 2,
+            "feedback": "The text is coherent and uses a polite opening and closing, which is appropriate for a formal request. However, the extreme brevity makes the overall structure feel incomplete."
+          },
+          "grammar": {
+            "score": 4,
+            "feedback": "The sentences are grammatically correct; verb forms, case endings and punctuation are used properly."
+          },
+          "vocabulary": {
+            "score": 3,
+            "feedback": "The vocabulary is simple but adequate for a B1 level. Adding a few more varied expressions would improve the register."
+          }
+        },
+        "errors": [],
+        "next_step": "Expand the message to 80‑100 words: give a brief but clear explanation of why you will miss the lesson, politely ask the administrator to send the class materials, and propose a realistic new deadline. Use additional courteous phrases (e.g., \"Bardzo proszę o przesłanie\", \"Z góry dziękuję\") to reach the required length while keeping a formal tone.",
+        "score": 10,
+        "maximum": 20,
+        "words": 23,
+        "persisted": false
+      }
+    },
+    {
+      "case_id": "participation-error",
+      "language": "ru",
+      "trial": 0,
+      "captured_on": "2026-10-29",
+      "runtime_commit": "a9a5660",
+      "source_report": "docs/ai-writing-quality-followup-2026-10-29.md",
+      "review": {
+        "criteria": {
+          "content": {
+            "score": 5,
+            "feedback": "Текст полностью соответствует заданию: объяснена причина отсутствия, запрошены материалы и предложена новая дата сдачи. Объём – 89 слов, что находится в требуемом диапазоне."
+          },
+          "structure": {
+            "score": 5,
+            "feedback": "Письмо оформлено как официальное обращение: есть приветствие, основная часть и прощание. Текст логично построен, соблюдён деловой стиль."
+          },
+          "grammar": {
+            "score": 4,
+            "feedback": "В целом грамматика на уровне B1, однако есть небольшая ошибка с падежом в сочетании «участвовать в zajęcia». Нужно использовать форму «zajęciaх»."
+          },
+          "vocabulary": {
+            "score": 4,
+            "feedback": "Словарный запас соответствует уровню B1, использованы подходящие формулы вежливости и терминология курса."
+          }
+        },
+        "errors": [
+          {
+            "quote": "uczestniczyć w zajęcia,",
+            "correction": "uczestniczyć w zajęciach,",
+            "explanation": "Po przyimku „w” wymaga miejscownika liczby mnogiej – „zajęciach”, a nie „zajęcia”."
+          }
+        ],
+        "next_step": "Обратите внимание на правильное употребление падежей после предлогов, особенно в сочетаниях с существительными во множественном числе.",
+        "score": 18,
+        "maximum": 20,
+        "words": 89,
+        "persisted": false
+      }
+    },
+    {
+      "case_id": "participation-correct",
+      "language": "ru",
+      "trial": 0,
+      "captured_on": "2026-10-29",
+      "runtime_commit": "a9a5660",
+      "source_report": "docs/ai-writing-quality-followup-2026-10-29.md",
+      "review": {
+        "criteria": {
+          "content": {
+            "score": 5,
+            "feedback": "Все требуемые элементы присутствуют: объяснена причина отсутствия, запрошены материалы и предложен новый срок сдачи. Объём текста 87 слов, соответствует диапазону 80–100."
+          },
+          "structure": {
+            "score": 5,
+            "feedback": "Письмо оформлено в формальном стиле: приветствие, основной текст, прощание и подпись. Последовательность мыслей логична."
+          },
+          "grammar": {
+            "score": 5,
+            "feedback": "Грамматически текст без ошибок; предложения построены корректно, согласования и падежи соблюдены."
+          },
+          "vocabulary": {
+            "score": 5,
+            "feedback": "Лексика соответствует уровню B1, использованы уместные формальные выражения и глагольные конструкции."
+          }
+        },
+        "errors": [],
+        "next_step": "Продолжайте практиковать написание официальных писем, уделяя внимание точности формулировок даты и времени. Попробуйте варьировать вводные фразы (np. „Szanowny Panie…“, „Zwracam się z prośbą…“) и добавлять небольшие детали, чтобы развивать гибкость речи.",
+        "score": 20,
+        "maximum": 20,
+        "words": 89,
+        "persisted": false
+      }
+    },
+    {
+      "case_id": "participation-correct",
+      "language": "pl",
+      "trial": 0,
+      "captured_on": "2026-10-29",
+      "runtime_commit": "a9a5660",
+      "source_report": "docs/ai-writing-quality-followup-2026-10-29.md",
+      "review": {
+        "criteria": {
+          "content": {
+            "score": 5,
+            "feedback": "Tekst spełnia wszystkie wymagania zadania: wyjaśnia przyczynę nieobecności (wizyta u lekarza), prosi o materiały i informacje o pracy domowej oraz proponuje nowy termin oddania zadania (poniedziałek). Liczba słów mieści się w przedziale 80‑100."
+          },
+          "structure": {
+            "score": 5,
+            "feedback": "List ma odpowiednią formę formalną: nagłówek, wstęp, rozwinięcie, zakończenie i podpis. Przejścia między częściami są płynne, a rejestr jest odpowiedni dla korespondencji z administratorem kursu."
+          },
+          "grammar": {
+            "score": 5,
+            "feedback": "Zdania są poprawne pod względem gramatycznym i interpunkcyjnym. Nie ma zauważalnych błędów fleksyjnych ani składniowych."
+          },
+          "vocabulary": {
+            "score": 5,
+            "feedback": "Użyto adekwatnego słownictwa na poziomie B1: zwroty grzecznościowe, wyrażenia opisujące przyczynę, prośbę i propozycję terminu. Słownictwo jest zróżnicowane i odpowiednie do formalnego kontekstu."
+          }
+        },
+        "errors": [],
+        "next_step": "Dodaj w nagłówku krótką informację o temacie wiadomości (np. „Prośba o materiały i nowy termin oddania zadania”) – zwiększy to przejrzystość i ułatwi odbiorcy szybkie zorientowanie się w treści listu.",
+        "score": 20,
+        "maximum": 20,
+        "words": 89,
+        "persisted": false
+      }
+    },
+    {
+      "case_id": "participation-correct",
+      "language": "en",
+      "trial": 0,
+      "captured_on": "2026-10-29",
+      "runtime_commit": "a9a5660",
+      "source_report": "docs/ai-writing-quality-followup-2026-10-29.md",
+      "review": {
+        "criteria": {
+          "content": {
+            "score": 5,
+            "feedback": "All required elements are present: you explain the reason for missing the class, request the lesson materials, and propose a new deadline. The word count (89) fits the 80–100 range."
+          },
+          "structure": {
+            "score": 5,
+            "feedback": "The letter follows a clear formal structure with greeting, body, and closing, using an appropriate polite register."
+          },
+          "grammar": {
+            "score": 5,
+            "feedback": "The draft is grammatically correct; verb forms, agreement, and word order are appropriate for the B1 level."
+          },
+          "vocabulary": {
+            "score": 5,
+            "feedback": "Vocabulary is suitable for a formal request at B1, with varied but clear expressions and no inappropriate colloquialisms."
+          }
+        },
+        "errors": [],
+        "next_step": "Add a brief opening apology (e.g., \"Przepraszam za niedogodność\") to make the tone even more courteous and reinforce the formal style.",
+        "score": 20,
+        "maximum": 20,
+        "words": 89,
+        "persisted": false
+      }
+    }
+  ]
+}

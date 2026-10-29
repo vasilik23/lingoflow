@@ -4,6 +4,8 @@ import path from 'node:path';
 
 export const fixturePath = fileURLToPath(new URL('./fixtures/writing-quality-v1.json', import.meta.url));
 const normalize = value => value.normalize('NFC').replace(/\s+/gu, ' ').trim().toLocaleLowerCase('pl');
+// Django validates Python string length in Unicode code points, not UTF-16 units.
+const characterCount = value => Array.from(value).length;
 function contains(text, phrase) {
   const escaped = normalize(phrase).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   return new RegExp(`(?<![\\p{L}\\p{N}_])${escaped}(?![\\p{L}\\p{N}_])`, 'u').test(normalize(text));
@@ -47,11 +49,11 @@ export function evaluate(input, dataset = JSON.parse(fs.readFileSync(fixturePath
     seen.add(`${item.id}:${run.language}:${trial}`);
     covered.add(`${item.id}:${run.language}`);
     requireValue(review && Array.isArray(review.errors) && review.errors.length <= 6 && typeof review.next_step === 'string' &&
-      review.next_step.length > 0 && review.next_step.length <= 600);
+      review.next_step.length > 0 && characterCount(review.next_step) <= 600);
     const issues = [];
     for (const error of review.errors) {
       requireValue(error && ['quote', 'correction', 'explanation'].every(key =>
-        typeof error[key] === 'string' && error[key].length > 0 && error[key].length <= 600));
+        typeof error[key] === 'string' && error[key].length > 0 && characterCount(error[key]) <= 600));
       if (!item.draft.includes(error.quote)) issues.push({kind: 'quote_not_in_draft'});
       if (normalize(error.quote) === normalize(error.correction)) issues.push({kind: 'unchanged_correction'});
     }
@@ -70,7 +72,7 @@ export function evaluate(input, dataset = JSON.parse(fs.readFileSync(fixturePath
         Object.keys(review.criteria).length === 4);
       for (const key of ['content', 'structure', 'grammar', 'vocabulary']) {
         const feedback = review.criteria[key]?.feedback;
-        requireValue(typeof feedback === 'string' && feedback.length > 0 && feedback.length <= 600);
+        requireValue(typeof feedback === 'string' && feedback.length > 0 && characterCount(feedback) <= 1500);
         criteriaFeedback.push(feedback);
       }
     }
