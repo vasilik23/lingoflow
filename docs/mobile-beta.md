@@ -189,3 +189,21 @@ npm run eas -- build --platform ios --profile preview
 [EAS configuration](https://docs.expo.dev/eas/json/),
 [Node.js parseEnv](https://nodejs.org/docs/latest-v24.x/api/util.html#utilparseenvcontent).
 Синтаксис `whoami`, `env:set` и deprecated `env:create` проверен на CLI 24.14.0.
+
+## Привязка Expo · 29.10.2026
+
+Владелец предоставил проект `3f652615-6b1a-4fc5-9429-4accb932ff60`.
+Браузерный вход EAS завершён; `project:info` подтвердил
+`@vasilik23s-team/vasilik23`. В `app.json` записаны owner, projectId и
+соответствующий удалённому проекту slug `vasilik23`. Отображаемое имя
+LingoFlow, bundle identifier и Android package сохранены.
+
+В удалённом окружении `preview` настроены и read-only проверкой сверены три
+публичных значения API URL, Supabase URL и publishable key. В Git ключ не
+попадает; серверные секреты в Expo не передавались. Окружение `production`
+для магазинной сборки не активировано. Создание нового Expo-приложения и
+дополнительный плагин не требуются.
+
+Мобильные проверки: 6 build-readiness + 26 learning-тестов, TypeScript и
+config check прошли. Подпись, облачная сборка и установка проверяются отдельно;
+сама привязка проекта не является нативной приёмкой.
