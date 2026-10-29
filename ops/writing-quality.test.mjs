@@ -96,3 +96,33 @@ test('criterion advice participates in language and known advice checks', () => 
   candidate.review.criteria = {grammar: {feedback: 'Incomplete'}};
   assert.throws(() => evaluate(input([candidate])), /Invalid evaluation input/);
 });
+
+test('replays captured synthetic baseline and reproduces the published findings without network access', () => {
+  const baseline = JSON.parse(fs.readFileSync(new URL('./fixtures/writing-quality-medium-baseline-v1.json', import.meta.url), 'utf8'));
+  const {evaluated_at, runtime_code, evaluator_revision, ...expected} = JSON.parse(fs.readFileSync(
+    new URL('../docs/ai-writing-quality-result-2026-10-29-second.json', import.meta.url), 'utf8'));
+  assert.equal(baseline.provenance.synthetic_only, true);
+  assert(baseline.runs.every(item => item.review.criteria && item.runtime_commit && item.source_report));
+  assert.deepEqual(evaluate(baseline), expected);
+});
+
+test('feedback bounds match Django Unicode character counts at 1500 and 600 characters', () => {
+  const candidate = run('class-correct', []);
+  candidate.review.criteria = Object.fromEntries(['content', 'structure', 'grammar', 'vocabulary'].map(key =>
+    [key, {feedback: '🙂'.repeat(1500)}]));
+  candidate.review.next_step = '🙂'.repeat(600);
+  assert.equal(evaluate(input([candidate])).runs[0].checks_passed, true);
+  candidate.review.criteria.grammar.feedback += 'x';
+  assert.throws(() => evaluate(input([candidate])), /Invalid evaluation input/);
+  candidate.review.criteria.grammar.feedback = 'Valid.';
+  candidate.review.next_step += 'x';
+  assert.throws(() => evaluate(input([candidate])), /Invalid evaluation input/);
+});
+
+test('error fields accept 600 Unicode characters and reject the 601st', () => {
+  const candidate = run('class-error', [edit('na lekcja', 'na lekcji')]);
+  candidate.review.errors[0].explanation = '🙂'.repeat(600);
+  assert.equal(evaluate(input([candidate])).runs[0].checks_passed, true);
+  candidate.review.errors[0].explanation += 'x';
+  assert.throws(() => evaluate(input([candidate])), /Invalid evaluation input/);
+});
