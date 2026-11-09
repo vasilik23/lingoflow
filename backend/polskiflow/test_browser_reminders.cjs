@@ -7,15 +7,20 @@ function fixture(options = {}) {
   const events = {}, documentEvents = {}, panel = {hidden: true}, storage = options.storage || new Map();
   const key = 'lingoflow-reminder:owner';
   if (!storage.has(key)) storage.set(key, JSON.stringify({enabled: options.enabled !== false}));
-  let fetches = 0, permissions = 0, clock = 0;
+  let fetches = 0, permissions = 0, clock = 0, lockDepth = 0;
+  const writes = [];
   const data = {namespace: 'owner', day: '2026-10-16', due: true, channel: 'today_foreground', ...options.data};
   let interval;
   const dismiss = {addEventListener: (_, fn) => events.dismiss = fn};
-  const root = {dataset: {namespace: 'owner', endpoint: '/session/reminder/'}, querySelector: s => s === '[data-reminder-panel]' ? panel : s === '[data-reminder-dismiss]' ? dismiss : null};
+  const toggle = options.toggle ? {addEventListener: (_, fn) => events.toggle = fn} : null;
+  const status = {textContent: ''};
+  const root = {dataset: {namespace: 'owner', endpoint: '/session/reminder/'}, querySelector: s => s === '[data-reminder-panel]' ? panel : s === '[data-reminder-dismiss]' ? dismiss : s === '[data-reminder-toggle]' ? toggle : s === '[data-reminder-status]' ? status : null};
   const document = {visibilityState: options.hidden ? 'hidden' : 'visible', querySelector: () => root, addEventListener: (e, fn) => documentEvents[e] = fn};
   const context = {
-    document, navigator: {locks: options.noLocks ? undefined : {request: async (_, __, fn) => fn({})}},
-    localStorage: {getItem: k => {if (options.storageError) throw Error(); return storage.get(k) || null;}, setItem: (k, v) => {if(options.writeError) throw Error(); storage.set(k,v);}},
+    document, navigator: {locks: options.noLocks ? undefined : {request: async (_, options, fn) => {
+      lockDepth++; try { return await (fn || options)({}); } finally { lockDepth--; }
+    }}},
+    localStorage: {getItem: k => {if (options.storageError) throw Error(); const value = storage.get(k) || null; options.afterRead?.(k, storage); return value;}, setItem: (k, v) => {writes.push({key:k, locked:lockDepth>0}); if(options.writeError) throw Error(); storage.set(k,v);}},
     window: {addEventListener: (e, fn) => events[e] = fn},
     performance: {now: () => clock}, AbortController,
     setTimeout: () => 1, clearTimeout() {}, setInterval: fn => interval = fn,
@@ -23,7 +28,7 @@ function fixture(options = {}) {
     Notification: {requestPermission: () => permissions++},
   };
   vm.runInNewContext(source, context);
-  return {panel, storage, events, documentEvents, document, tick: () => interval(), fetches: () => fetches, permissions: () => permissions};
+  return {panel, storage, writes, events, documentEvents, document, tick: () => interval(), fetches: () => fetches, permissions: () => permissions};
 }
 const settle = () => new Promise(resolve => setImmediate(resolve));
 (async () => {
@@ -38,5 +43,20 @@ const settle = () => new Promise(resolve => setImmediate(resolve));
   }
   f=fixture(); await settle(); f.document.visibilityState='hidden'; f.documentEvents.visibilitychange(); assert.equal(f.panel.hidden,true);
   f=fixture(); await settle(); f.events.storage({key:null}); assert.equal(f.panel.hidden,true);
+  // Another tab may write between a capability read and its subsequent write.
+  for (const updated of [{enabled: false}, {enabled: true, day: '2026-10-16'}]) {
+    let reads = 0;
+    f = fixture({toggle: true, afterRead(key, storage) {
+      if (key === 'lingoflow-reminder:owner' && ++reads === 2) storage.set(key, JSON.stringify(updated));
+    }});
+    await settle();
+    assert.equal(f.panel.hidden, true, 'capability checks must not erase another tab opt-out/day claim');
+    assert.deepEqual(JSON.parse(f.storage.get('lingoflow-reminder:owner')), updated);
+    assert(f.writes.every(write => write.locked), 'all preference writes use the cross-tab lock');
+  }
+  f = fixture({toggle: true}); await settle();
+  await f.events.toggle();
+  assert.equal(JSON.parse(f.storage.get('lingoflow-reminder:owner')).enabled, false);
+  f = fixture({toggle: true, writeError: true}); await settle(); assert.equal(f.panel.hidden, true);
   console.log('Browser reminder consent, owner, deduplication, lifecycle and failure checks passed');
 })().catch(e=>{console.error(e);process.exitCode=1;});
