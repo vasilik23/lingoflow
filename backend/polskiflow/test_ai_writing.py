@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 from unittest.mock import patch
 from io import BytesIO
 from urllib.error import HTTPError, URLError
@@ -125,6 +126,66 @@ class AIWritingTests(SimpleTestCase):
         self.assertEqual(len(reviewed["errors"]), 1)
         self.assertEqual(reviewed["errors"][0]["correction"], "Mam pytanie")
         self.assertEqual(reviewed["score"], 12)
+
+    @patch("polskiflow.ai_writing.urlopen")
+    def test_saved_baseline_rejects_two_broken_reviews_without_treating_other_reviews_as_accepted_quality(self, transport):
+        root = Path(__file__).resolve().parents[2]
+        baseline = json.loads((root / "ops/fixtures/writing-quality-medium-baseline-v2.json").read_text())
+        drafts = {item["id"]: item["draft"] for item in json.loads(
+            (root / "ops/fixtures/writing-quality-v1.json").read_text())["cases"]}
+        rejected = {("participation-error", "ru"), ("request-error", "ru")}
+        for run in baseline["runs"]:
+            key = (run["case_id"], run["language"])
+            with self.subTest(case=key):
+                value = {name: run["review"][name] for name in ("criteria", "errors", "next_step")}
+                body = {"choices": [{"finish_reason": "stop", "message": {"content": json.dumps(value)}}]}
+                transport.return_value.__enter__.return_value = BytesIO(json.dumps(body).encode())
+                if key in rejected:
+                    with self.assertRaises(WritingAIUnavailable):
+                        review_writing(self.assignment, drafts[run["case_id"]], run["language"])
+                else:
+                    result = review_writing(self.assignment, drafts[run["case_id"]], run["language"])
+                    self.assertEqual(result["score"], run["review"]["score"])
+
+    @patch("polskiflow.ai_writing.urlopen")
+    def test_mixed_script_feedback_fails_safely_but_original_names_and_polish_quotes_are_allowed(self, transport):
+        def load(value):
+            body = {"choices": [{"finish_reason": "stop", "message": {"content": json.dumps(value)}}]}
+            transport.return_value.__enter__.return_value = BytesIO(json.dumps(body).encode())
+
+        value = feedback()
+        for item in value["criteria"].values():
+            item["feedback"] = "Проверьте форму zajęciach."
+        value["next_step"] = "Повторите форму zajęciach."
+        value["errors"][0]["explanation"] = "Проверьте выражение."
+        load(value)
+        self.assertEqual(review_writing(self.assignment, "Mam problem", "ru")["score"], 12)
+        value["next_step"] = "Проверьте имя Mariа."  # Final letter is Cyrillic.
+        load(value)
+        self.assertEqual(review_writing(self.assignment, "Mam problem. Mariа", "ru")["score"], 12)
+        for language in ("ru", "pl", "en"):
+            load(value)
+            with self.assertLogs("polskiflow.ai_writing", level="WARNING") as logs:
+                with self.assertRaises(WritingAIUnavailable):
+                    review_writing(self.assignment, "Mam problem", language)
+            self.assertIn("kind=mixed_script", logs.output[0])
+            self.assertNotIn("Mari", str(logs.output))
+            self.assertNotIn("test-only", str(logs.output))
+
+    @patch("polskiflow.ai_writing.urlopen")
+    def test_ru_review_with_only_latin_criterion_feedback_is_a_recoverable_api_failure(self, transport):
+        body = {"choices": [{"finish_reason": "stop", "message": {"content": json.dumps(feedback())}}]}
+        transport.return_value.__enter__.return_value = BytesIO(json.dumps(body).encode())
+        with self.assertLogs("polskiflow.ai_writing", level="WARNING") as logs:
+            response = self.post()
+        self.assertEqual(response.status_code, 503)
+        self.assertEqual(response["Cache-Control"], "private, no-store")
+        self.assertNotIn("result", response.json())
+        self.assertIn("Черновик", response.json()["error"])
+        self.assertIn("kind=wrong_language", logs.output[0])
+        self.assertNotIn("Sprawdź", str(logs.output))
+        self.consume.assert_called_once_with("access", "ai_writing")
+        self.assertEqual(transport.call_count, 1)
 
     @patch("polskiflow.ai_writing.urlopen")
     def test_refusal_bad_json_invalid_scores_and_invented_quotes_are_not_grades(self, transport):
