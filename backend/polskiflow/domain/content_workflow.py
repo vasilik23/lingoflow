@@ -112,6 +112,18 @@ def _valid_iso_date(value: str) -> bool:
     return True
 
 
+def _validate_original_metadata(value: Any, source: dict[str, Any], location: str) -> None:
+    # Per-object provenance preserves legacy original content, never overrides
+    # the separate approval/licensing contract for external sources.
+    if (source.get("origin") != "original" or not isinstance(value, dict)
+            or value.get("origin") != "original"):
+        raise ManifestError(f"{location}: допускается metadata собственного оригинального контента.")
+    if _require_text(value, "created_for", location) not in {"LingoFlow", "PolskiFlow"}:
+        raise ManifestError(f"{location}: допускается metadata собственного оригинального контента.")
+    if not _valid_iso_date(_require_text(value, "verified_at", location)):
+        raise ManifestError(f"{location}.verified_at: ожидается дата YYYY-MM-DD.")
+
+
 def validate_manifest(manifest: dict[str, Any]) -> ValidationResult:
     _reject_unknown_keys(
         manifest,
@@ -178,10 +190,20 @@ def validate_manifest(manifest: dict[str, Any]) -> ValidationResult:
     reading = content.get("reading")
     if not isinstance(grammar, dict) or not grammar.get("summary"):
         raise ManifestError("content.grammar.summary: требуется грамматическое объяснение.")
-    _reject_unknown_keys(grammar, {"summary"}, "content.grammar")
+    _reject_unknown_keys(grammar, {"summary", "sections"}, "content.grammar")
+    if "sections" in grammar:
+        sections = grammar["sections"]
+        if not isinstance(sections, list) or not sections or any(
+            not isinstance(section, list) or len(section) != 2
+            or any(not isinstance(part, str) or not part.strip() for part in section)
+            for section in sections
+        ):
+            raise ManifestError("content.grammar.sections: требуются пары заголовок/текст.")
     if not isinstance(reading, dict):
         raise ManifestError("content.reading: требуется объект чтения.")
-    _reject_unknown_keys(reading, {"paragraphs", "glossary"}, "content.reading")
+    _reject_unknown_keys(reading, {"paragraphs", "glossary", "source_glossary", "source_metadata"}, "content.reading")
+    if "source_metadata" in reading:
+        _validate_original_metadata(reading["source_metadata"], source, "content.reading.source_metadata")
     paragraphs = _require_list(reading, "paragraphs", "content.reading")
     if any(not isinstance(paragraph, str) or not paragraph.strip() for paragraph in paragraphs):
         raise ManifestError("content.reading.paragraphs: требуются непустые строки.")
@@ -195,6 +217,18 @@ def validate_manifest(manifest: dict[str, Any]) -> ValidationResult:
         _reject_unknown_keys(entry, {"lemma", "translation", "part_of_speech"}, location)
         _require_text(entry, "lemma", location)
         _require_text(entry, "translation", location)
+    if "source_glossary" in reading:
+        original = reading["source_glossary"]
+        if not isinstance(original, dict) or set(original) != set(glossary):
+            raise ManifestError("content.reading.source_glossary: формы должны совпадать с glossary.")
+        for form, value in original.items():
+            entry = {"lemma": form, "translation": value} if isinstance(value, str) else value
+            if not isinstance(entry, dict):
+                raise ManifestError("content.reading.source_glossary: ожидается строка или объект.")
+            _reject_unknown_keys(entry, {"lemma", "translation", "part_of_speech"}, "source_glossary")
+            if any(entry.get(key, form if key == "lemma" else "") != glossary[form].get(key, "")
+                   for key in ("lemma", "translation", "part_of_speech")):
+                raise ManifestError("content.reading.source_glossary: значение отличается от glossary.")
     if any(not isinstance(item, list) for item in card_sets):
         raise ManifestError("content.card_sets: каждый набор должен быть списком карточек.")
 
@@ -206,7 +240,11 @@ def validate_manifest(manifest: dict[str, Any]) -> ValidationResult:
         _validate_identified_items(card_set, f"content.card_sets[{index}]", stable_ids)
         for card_index, card in enumerate(card_set):
             location = f"content.card_sets[{index}][{card_index}]"
-            _reject_unknown_keys(card, {"id", "polish", "translation", "example"}, location)
+            _reject_unknown_keys(card, {"id", "polish", "translation", "example", "source_metadata", "position"}, location)
+            if "source_metadata" in card:
+                _validate_original_metadata(card["source_metadata"], source, location + ".source_metadata")
+            if "position" in card and (type(card["position"]) is not int or card["position"] < 0):
+                raise ManifestError(f"{location}.position: требуется целое число не меньше нуля.")
             for key in ("polish", "translation", "example"):
                 _require_text(card, key, location)
     _validate_questions(exercises, "content.exercises", stable_ids)
@@ -639,34 +677,42 @@ def forwards(apps, schema_editor):
         "subtitle": grammar_data["subtitle"], "description": grammar_data["description"],
         "minutes": grammar_data["minutes"], "emoji": grammar_data["emoji"],
         "theory_title": grammar_data["theory_title"],
-        "theory_sections": [{{"text": MANIFEST["content"]["grammar"]["summary"]}}],
+        "theory_sections": MANIFEST["content"]["grammar"].get("sections",
+            [[grammar_data["theory_title"], MANIFEST["content"]["grammar"]["summary"]]]),
         "position": grammar_data["position"], "is_active": True}}
     )
     source = MANIFEST["source"]
     for set_position, cards in enumerate(MANIFEST["content"]["card_sets"]):
         lesson = Lesson.objects.get(pk=RESOLUTIONS["card_set_lesson_ids"][set_position])
-        LessonFlashcard.objects.filter(lesson=lesson).delete()
+        existing_links = list(LessonFlashcard.objects.filter(lesson=lesson).order_by("position").values_list("flashcard_id", "position"))
+        replace_links = existing_links != [(card["id"], position) for position, card in enumerate(cards)]
+        if replace_links:
+            LessonFlashcard.objects.filter(lesson=lesson).delete()
         for position, card in enumerate(cards):
             flashcard, _ = Flashcard.objects.update_or_create(
                 pk=card["id"], defaults={{"polish": card["polish"],
                 "translation": card["translation"], "example": card["example"],
-                "source_metadata": source, "position": position, "is_active": True}}
+                "source_metadata": card.get("source_metadata", source),
+                "position": card.get("position", position), "is_active": True}}
             )
-            LessonFlashcard.objects.create(lesson=lesson, flashcard=flashcard, position=position)
+            if replace_links:
+                LessonFlashcard.objects.create(lesson=lesson, flashcard=flashcard, position=position)
     for group in ("exercises", "final_quiz"):
         lesson = Lesson.objects.get(pk=RESOLUTIONS["question_lesson_ids"][group])
-        Question.objects.filter(lesson=lesson).delete()
+        Question.objects.filter(lesson=lesson, position__gte=len(MANIFEST["content"][group])).update(is_active=False)
         for position, item in enumerate(MANIFEST["content"][group]):
-            Question.objects.create(lesson=lesson, prompt=item["prompt"],
-                options=item["options"], correct=item["options"].index(item["answer"]),
-                explanation=item["explanation"], position=position, is_active=True)
+            Question.objects.update_or_create(lesson=lesson, position=position, defaults={{
+                "prompt": item["prompt"], "options": item["options"],
+                "correct": item["options"].index(item["answer"]),
+                "explanation": item["explanation"], "is_active": True}})
     reading = RESOLUTIONS["reading"]
     ReadingText.objects.update_or_create(pk=reading["id"], defaults={{"topic": topic,
         "title": reading["title"], "description": reading["description"],
         "level": MANIFEST["level"], "minutes": reading["minutes"], "emoji": reading["emoji"],
         "paragraphs": MANIFEST["content"]["reading"]["paragraphs"],
-        "glossary": MANIFEST["content"]["reading"]["glossary"],
-        "source_metadata": source, "position": reading["position"], "is_active": True}})
+        "glossary": MANIFEST["content"]["reading"].get("source_glossary", MANIFEST["content"]["reading"]["glossary"]),
+        "source_metadata": MANIFEST["content"]["reading"].get("source_metadata", source),
+        "position": reading["position"], "is_active": True}})
 
 
 def reverse_noop(apps, schema_editor):
@@ -697,6 +743,7 @@ declare
   lesson_slug text;
   set_index integer;
   item_index integer;
+  replace_links boolean;
 begin
   if not exists (select 1 from courses where id = resolutions->>'course_id') then
     raise exception 'Resolved course does not exist';
@@ -715,7 +762,9 @@ begin
     resolutions#>>'{{grammar_lesson,subtitle}}', resolutions#>>'{{grammar_lesson,description}}',
     (resolutions#>>'{{grammar_lesson,minutes}}')::integer,
     resolutions#>>'{{grammar_lesson,emoji}}', resolutions#>>'{{grammar_lesson,theory_title}}',
-    jsonb_build_array(jsonb_build_object('text', manifest#>>'{{content,grammar,summary}}')),
+    coalesce(manifest#>'{{content,grammar,sections}}',
+      jsonb_build_array(jsonb_build_array(resolutions#>>'{{grammar_lesson,theory_title}}',
+        manifest#>>'{{content,grammar,summary}}'))),
     (resolutions#>>'{{grammar_lesson,position}}')::integer, true, '{{}}'::jsonb)
   on conflict (id) do update set topic_id=excluded.topic_id, kind=excluded.kind,
     title=excluded.title, plan_title=excluded.plan_title, subtitle=excluded.subtitle,
@@ -729,17 +778,26 @@ begin
     if not exists (select 1 from lessons where id=lesson_slug) then
       raise exception 'Resolved card-set lesson does not exist: %', lesson_slug;
     end if;
-    delete from lesson_flashcards where lesson_id=lesson_slug;
+    select coalesce(jsonb_agg(jsonb_build_array(flashcard_id, position) order by position), '[]'::jsonb)
+      is distinct from (select coalesce(jsonb_agg(jsonb_build_array(value->>'id', ordinality-1) order by ordinality), '[]'::jsonb)
+        from jsonb_array_elements(cards) with ordinality)
+      into replace_links from lesson_flashcards where lesson_id=lesson_slug;
+    if replace_links then
+      delete from lesson_flashcards where lesson_id=lesson_slug;
+    end if;
     for item, item_index in select value, ordinality - 1 from
       jsonb_array_elements(cards) with ordinality loop
       insert into flashcards (id, polish, translation, example, source_metadata, position, is_active)
       values (item->>'id', item->>'polish', item->>'translation', item->>'example',
-        manifest->'source', item_index, true)
+        coalesce(item->'source_metadata', manifest->'source'),
+        coalesce((item->>'position')::integer, item_index), true)
       on conflict (id) do update set polish=excluded.polish, translation=excluded.translation,
         example=excluded.example, source_metadata=excluded.source_metadata,
         position=excluded.position, is_active=true;
-      insert into lesson_flashcards (lesson_id, flashcard_id, position)
-      values (lesson_slug, item->>'id', item_index);
+      if replace_links then
+        insert into lesson_flashcards (lesson_id, flashcard_id, position)
+        values (lesson_slug, item->>'id', item_index);
+      end if;
     end loop;
   end loop;
 
@@ -752,14 +810,18 @@ begin
   for lesson_slug, cards in select resolutions#>>'{{question_lesson_ids,exercises}}',
     manifest#>'{{content,exercises}}' union all select
     resolutions#>>'{{question_lesson_ids,final_quiz}}', manifest#>'{{content,final_quiz}}' loop
-    delete from questions where lesson_id=lesson_slug;
+    update questions set is_active=false where lesson_id=lesson_slug
+      and position >= jsonb_array_length(cards);
     for item, item_index in select value, ordinality - 1 from
       jsonb_array_elements(cards) with ordinality loop
       insert into questions (lesson_id, prompt, options, correct, explanation, position, is_active)
       select lesson_slug, item->>'prompt', item->'options', answer.ordinality - 1,
         item->>'explanation', item_index, true from
         jsonb_array_elements_text(item->'options') with ordinality answer(value, ordinality)
-        where answer.value=item->>'answer';
+        where answer.value=item->>'answer'
+      on conflict (lesson_id, position) do update set prompt=excluded.prompt,
+        options=excluded.options, correct=excluded.correct,
+        explanation=excluded.explanation, is_active=true;
     end loop;
   end loop;
 
@@ -768,8 +830,10 @@ begin
   values (resolutions#>>'{{reading,id}}', manifest->>'id', resolutions#>>'{{reading,title}}',
     resolutions#>>'{{reading,description}}', manifest->>'level',
     (resolutions#>>'{{reading,minutes}}')::integer, resolutions#>>'{{reading,emoji}}',
-    manifest#>'{{content,reading,paragraphs}}', manifest#>'{{content,reading,glossary}}',
-    manifest->'source', (resolutions#>>'{{reading,position}}')::integer, true)
+    manifest#>'{{content,reading,paragraphs}}',
+    coalesce(manifest#>'{{content,reading,source_glossary}}', manifest#>'{{content,reading,glossary}}'),
+    coalesce(manifest#>'{{content,reading,source_metadata}}', manifest->'source'),
+    (resolutions#>>'{{reading,position}}')::integer, true)
   on conflict (id) do update set topic_id=excluded.topic_id, title=excluded.title,
     description=excluded.description, level=excluded.level, minutes=excluded.minutes,
     emoji=excluded.emoji, paragraphs=excluded.paragraphs, glossary=excluded.glossary,
