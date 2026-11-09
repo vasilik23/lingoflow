@@ -18743,3 +18743,6 @@ msgstr "Na potrzeby kontroli okresów przechowywania profil zapisuje czas ostatn
 
 msgid "Дата закрытия обращения фиксируется при переходе в статус «Исправлено» и сбрасывается при повторном открытии. У старых обращений неизвестная дата остаётся неизвестной. Эти даты и сведения об активности входят в экспорт данных и удаляются вместе с аккаунтом."
 msgstr "Data zamknięcia zgłoszenia jest zapisywana przy przejściu do statusu „Naprawiono” i zerowana przy ponownym otwarciu. Nieznane daty starszych zgłoszeń pozostają nieznane. Te daty i informacje o aktywności są uwzględniane w eksporcie danych i usuwane wraz z kontem."
+
+msgid "Некоторые локальные записи не удалось открыть. Они сохранены в браузере."
+msgstr "Nie udało się otworzyć niektórych lokalnych nagrań. Nadal są zapisane w przeglądarce."

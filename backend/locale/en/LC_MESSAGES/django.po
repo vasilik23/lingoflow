@@ -17886,3 +17886,6 @@ msgstr "For retention review, the profile stores the last request time and when 
 
 msgid "Дата закрытия обращения фиксируется при переходе в статус «Исправлено» и сбрасывается при повторном открытии. У старых обращений неизвестная дата остаётся неизвестной. Эти даты и сведения об активности входят в экспорт данных и удаляются вместе с аккаунтом."
 msgstr "The closure date is recorded when a request changes to “Fixed” and cleared when it is reopened. Unknown dates on older requests remain unknown. These dates and activity metadata are included in data exports and deleted with the account."
+
+msgid "Некоторые локальные записи не удалось открыть. Они сохранены в браузере."
+msgstr "Some local recordings could not be opened. They remain saved in this browser."

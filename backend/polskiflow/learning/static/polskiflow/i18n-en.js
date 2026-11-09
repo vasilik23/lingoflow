@@ -2083,6 +2083,7 @@ window.PolskiFlowEnglishMessages = {
   "Некорректный ответ": "Incorrect answer",
   "Некорректный ответ сервиса авторизации": "Incorrect response of the authorization service",
   "Некорректный рекомендованный уровень. Пройди диагностику заново.": "Incorrect recommended level, re-diagnose.",
+  "Некоторые локальные записи не удалось открыть. Они сохранены в браузере.": "Some local recordings could not be opened. They remain saved in this browser.",
   "Немотивированный разговорный фрагмент ломает регистр отчёта.": "Unmotivated conversational fragment breaks the register of the report.",
   "Необходимость": "Necessity",
   "Необходимость и возможность": "Necessity and opportunity",
