@@ -126,3 +126,30 @@ test('error fields accept 600 Unicode characters and reject the 601st', () => {
   candidate.review.errors[0].explanation += 'x';
   assert.throws(() => evaluate(input([candidate])), /Invalid evaluation input/);
 });
+
+
+test('flags wholly Latin RU criteria even when the next step contains Russian', () => {
+  const candidate = run('class-correct', []);
+  candidate.language = 'ru';
+  candidate.review.next_step = 'Повтори задание.';
+  candidate.review.criteria = Object.fromEntries(['content', 'structure', 'grammar', 'vocabulary'].map(key =>
+    [key, {feedback: 'Tekst spełnia wymagania.'}]));
+  const result = evaluate(input([candidate])).runs[0];
+  assert(result.issues.some(issue => issue.kind === 'russian_criterion_language_requires_manual_review'));
+  assert(!JSON.stringify(result).includes('Tekst'));
+  candidate.language = 'pl';
+  candidate.review.next_step = 'Powtórz zadanie.';
+  assert.equal(evaluate(input([candidate])).runs[0].checks_passed, true);
+});
+
+test('replays the observed RU language failure without changing captured responses', () => {
+  const baseline = JSON.parse(fs.readFileSync(new URL('./fixtures/writing-quality-medium-baseline-v2.json', import.meta.url), 'utf8'));
+  const snapshot = JSON.stringify(baseline);
+  const result = evaluate(baseline);
+  const affected = result.runs.filter(item => item.issues.some(issue =>
+    issue.kind === 'russian_criterion_language_requires_manual_review'));
+  assert.deepEqual(affected.map(item => [item.case_id, item.language]), [['request-error', 'ru']]);
+  assert.equal(result.coverage.covered, 23);
+  assert.equal(result.quality_accepted, false);
+  assert.equal(JSON.stringify(baseline), snapshot);
+});
