@@ -76,6 +76,11 @@ export function evaluate(input, dataset = JSON.parse(fs.readFileSync(fixturePath
         criteriaFeedback.push(feedback);
       }
     }
+    // Mirror the narrow production guard: this detects an entirely non-Russian
+    // criterion block, not general language correctness or grammar quality.
+    const criterionText = criteriaFeedback.join('\n');
+    if (run.language === 'ru' && /[A-Za-z]/u.test(criterionText) && !/[А-Яа-яЁё]/u.test(criterionText))
+      issues.push({kind: 'russian_criterion_language_requires_manual_review'});
     const advice = [review.next_step, ...review.errors.map(error => error.explanation), ...criteriaFeedback].join('\n');
     if (dataset.manual_advice_flags.some(value => contains(advice, value))) issues.push({kind: 'advice_requires_manual_review'});
     if (run.language !== 'ru' && /[А-Яа-яЁё]/u.test(advice)) issues.push({kind: 'unexpected_cyrillic_in_explanation'});
