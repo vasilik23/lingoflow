@@ -18,12 +18,17 @@
   }
   function write(data) { localStorage.setItem(key, JSON.stringify(data)); }
   function hide() { if (panel) panel.hidden = true; }
-  function controls() {
+  async function controls() {
     if (!toggle) return;
     try {
-      const enabled = read().enabled;
-      // Verify storage is writable before presenting this device as available.
-      write(read());
+      // Capability checks must use the same lock as consent and day claims.
+      // Re-read inside it so another tab's opt-out/claim cannot be overwritten.
+      const data = supported ? await navigator.locks.request(key, () => {
+        const current = read();
+        write(current);
+        return current;
+      }) : read();
+      const enabled = data.enabled;
       toggle.disabled = !supported;
       toggle.textContent = enabled ? root.dataset.disable : root.dataset.enable;
       status.textContent = !supported ? root.dataset.unavailable : enabled ? root.dataset.on : root.dataset.off;
