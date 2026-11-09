@@ -243,3 +243,11 @@ GitHub mobile CI и Vercel Preview прошли. `build:check --platform android
 Установка на физический Android в этом отчёте **не выполнена**.
 Для iPhone этот APK не подходит: iOS build, Apple Developer/UDID и нативная
 приёмка остаются отдельным направлением.
+
+## iOS Simulator build · 09.11.2026
+
+Первая внутренняя сборка `preview-simulator` 1.0.0 (1) завершена в EAS.
+[Архив, checksum и точные ограничения проверки](ios-simulator-build-2026-11-09.md).
+Подтверждены bundle ID, платформа iphonesimulator и arm64/x86_64. Запуск не
+выполнен: локально отсутствует simctl, cloud simulator аккаунту недоступен.
+Это не сборка для установки на физический iPhone и не device acceptance.
