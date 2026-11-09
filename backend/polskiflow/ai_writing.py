@@ -2,6 +2,8 @@
 
 import json
 import logging
+import re
+import unicodedata
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
@@ -82,6 +84,30 @@ def _validate_result(value, text):
             "words": len(text.split()), "assessment": "ai_practice", "persisted": False}
 
 
+def _mixed_script_words(text):
+    words = re.findall(r"[^\W\d_]+", unicodedata.normalize("NFC", text))
+    return {word.casefold() for word in words
+            if any("LATIN" in unicodedata.name(char, "") for char in word)
+            and any("CYRILLIC" in unicodedata.name(char, "") for char in word)}
+
+
+def _validate_writing_feedback(result, text, language):
+    """Reject obvious language corruption; this does not certify grammar quality."""
+    criteria = [item["feedback"] for item in result["criteria"].values()]
+    explanations = "\n".join([*criteria, result["next_step"],
+                              *(item["explanation"] for item in result["errors"])])
+    # A learner's original mixed-script name may legitimately be quoted.
+    if _mixed_script_words(explanations) - _mixed_script_words(text):
+        logger.warning("writing_ai_feedback_rejected kind=mixed_script")
+        raise WritingAIUnavailable
+    criterion_text = "\n".join(criteria)
+    if (language == "Russian" and re.search(r"[A-Za-z]", criterion_text)
+            and not re.search(r"[А-Яа-яЁё]", criterion_text)):
+        logger.warning("writing_ai_feedback_rejected kind=wrong_language")
+        raise WritingAIUnavailable
+    return result
+
+
 def review_writing(assignment, text, language):
     if not writing_ai_available():
         raise WritingAIUnavailable
@@ -104,7 +130,8 @@ def review_writing(assignment, text, language):
         "Keep each feedback under 1500 characters and each error field and next_step under 600 characters. "
         "Respond only using the supplied JSON schema."
     )
-    return review_text(assignment, text, instruction)
+    result = review_text(assignment, text, instruction)
+    return _validate_writing_feedback(result, text, language)
 
 
 def review_text(assignment, text, instruction):
