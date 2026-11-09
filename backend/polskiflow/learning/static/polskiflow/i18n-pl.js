@@ -2122,6 +2122,7 @@ window.PolskiFlowPolishMessages = {
   "Некорректный ответ": "Nieprawidłowa odpowiedź",
   "Некорректный ответ сервиса авторизации": "Nieprawidłowa odpowiedź usługi uwierzytelniania",
   "Некорректный рекомендованный уровень. Пройди диагностику заново.": "Nieprawidłowy rekomendowany poziom. Wykonaj diagnozę ponownie.",
+  "Некоторые локальные записи не удалось открыть. Они сохранены в браузере.": "Nie udało się otworzyć niektórych lokalnych nagrań. Nadal są zapisane w przeglądarce.",
   "Немотивированный разговорный фрагмент ломает регистр отчёта.": "Nieuzasadniony fragment potoczny narusza rejestr raportu.",
   "Необходимость": "Konieczność",
   "Необходимость и возможность": "Konieczność i możliwość",

@@ -16,6 +16,11 @@ from polskiflow.domain.interaction_scenarios import (
 
 
 class InteractionScenarioTests(TestCase):
+    def test_local_recording_history_survives_malformed_entries(self):
+        result = subprocess.run(["node", str(Path(__file__).with_name("test_local_recording_recovery.cjs"))],
+                                capture_output=True, text=True, timeout=15)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
     def test_audio_session_compatibility(self):
         result = subprocess.run(["node", str(Path(__file__).with_name("test_audio_session.cjs"))], capture_output=True, text=True, timeout=15)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)

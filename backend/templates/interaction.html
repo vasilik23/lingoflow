@@ -50,6 +50,7 @@
     <section class="card speaking-history" aria-labelledby="speaking-history-title">
       <div><p class="eyebrow">{% translate "Только на этом устройстве" %}</p><h3 id="speaking-history-title">{% translate "История устных ответов" %}</h3><p class="muted">{% translate "До 10 записей в браузере. Они не синхронизируются и удаляются вместе с данными сайта." %}</p></div>
       <p class="muted" data-speaking-history-empty>{% translate "Сохранённых записей пока нет." %}</p>
+      <p class="muted" data-speaking-history-warning role="status" hidden>{% translate "Некоторые локальные записи не удалось открыть. Они сохранены в браузере." %}</p>
       <div data-speaking-history-list></div>
     </section>
   </section>
@@ -181,6 +182,7 @@
       const recordingOwner = "{{ request.supabase_user.id|escapejs }}";
       const historyList = document.querySelector("[data-speaking-history-list]");
       const historyEmpty = document.querySelector("[data-speaking-history-empty]");
+      const historyWarning = document.querySelector("[data-speaking-history-warning]");
       const historyUrls = [];
 
       function recordingDatabase() {
@@ -203,7 +205,14 @@
           const transaction = database.transaction("recordings", "readonly");
           const request = transaction.objectStore("recordings").getAll();
           request.addEventListener("success", function () {
-            resolve(request.result.filter(function (item) { return item.owner === recordingOwner; }).sort(function (a, b) { return b.createdAt - a.createdAt; }));
+            const owned = request.result.filter(function (item) { return item && item.owner === recordingOwner; });
+            const recordings = owned.filter(function (item) {
+              return typeof item.id === "string" && item.id.length > 0 &&
+                typeof item.title === "string" && item.title.trim().length > 0 &&
+                typeof item.createdAt === "number" && Number.isFinite(new Date(item.createdAt).getTime()) &&
+                item.blob instanceof Blob && item.blob.size > 0;
+            }).sort(function (a, b) { return b.createdAt - a.createdAt; });
+            resolve({recordings, unreadable: owned.length - recordings.length});
           });
           request.addEventListener("error", function () { reject(request.error); });
         });
@@ -221,8 +230,10 @@
       async function renderRecordingHistory() {
         historyUrls.splice(0).forEach(function (url) { URL.revokeObjectURL(url); });
         historyList.replaceChildren();
+        historyWarning.hidden = true;
         try {
-          const recordings = await storedRecordings();
+          const {recordings, unreadable} = await storedRecordings();
+          historyWarning.hidden = unreadable === 0;
           historyEmpty.hidden = recordings.length > 0;
           recordings.forEach(function (recording) {
             const row = document.createElement("article");
@@ -256,7 +267,7 @@
 
       async function saveRecording(recording) {
         const database = await recordingDatabase();
-        const existing = await storedRecordings();
+        const {recordings: existing} = await storedRecordings();
         await new Promise(function (resolve, reject) {
           const store = database.transaction("recordings", "readwrite").objectStore("recordings");
           store.put(recording);
