@@ -1,0 +1,213 @@
+{
+  "evaluated_at": "2026-11-09",
+  "runtime_code": "d1b43c29cc764e9a0bc349e1c5da9f0d750aae73",
+  "dataset_version": 1,
+  "model": "openai/gpt-oss-120b",
+  "reasoning_effort": "medium",
+  "runs": [
+    {
+      "case_id": "class-error",
+      "language": "ru",
+      "trial": 0,
+      "checks_passed": false,
+      "issues": [
+        {
+          "kind": "required_edit_not_demonstrated",
+          "check": "class-locative"
+        },
+        {
+          "kind": "forbidden_edit",
+          "check": "class-locative"
+        }
+      ]
+    },
+    {
+      "case_id": "participation-error",
+      "language": "pl",
+      "trial": 0,
+      "checks_passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "participation-error",
+      "language": "en",
+      "trial": 0,
+      "checks_passed": false,
+      "issues": [
+        {
+          "kind": "advice_requires_manual_review"
+        }
+      ]
+    },
+    {
+      "case_id": "request-correct",
+      "language": "ru",
+      "trial": 0,
+      "checks_passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "class-error",
+      "language": "pl",
+      "trial": 0,
+      "checks_passed": false,
+      "issues": [
+        {
+          "kind": "overlapping_edits_require_manual_review"
+        },
+        {
+          "kind": "forbidden_edit",
+          "check": "class-locative"
+        }
+      ]
+    },
+    {
+      "case_id": "class-error",
+      "language": "en",
+      "trial": 0,
+      "checks_passed": false,
+      "issues": [
+        {
+          "kind": "required_edit_not_demonstrated",
+          "check": "class-locative"
+        },
+        {
+          "kind": "forbidden_edit",
+          "check": "class-locative"
+        }
+      ]
+    },
+    {
+      "case_id": "class-correct",
+      "language": "ru",
+      "trial": 0,
+      "checks_passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "class-correct",
+      "language": "pl",
+      "trial": 0,
+      "checks_passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "class-correct",
+      "language": "en",
+      "trial": 0,
+      "checks_passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "participation-error",
+      "language": "ru",
+      "trial": 0,
+      "checks_passed": false,
+      "issues": [
+        {
+          "kind": "mixed_script_token_requires_manual_review"
+        }
+      ]
+    },
+    {
+      "case_id": "participation-correct",
+      "language": "ru",
+      "trial": 0,
+      "checks_passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "participation-correct",
+      "language": "pl",
+      "trial": 0,
+      "checks_passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "participation-correct",
+      "language": "en",
+      "trial": 0,
+      "checks_passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "interest-error",
+      "language": "ru",
+      "trial": 0,
+      "checks_passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "interest-error",
+      "language": "pl",
+      "trial": 0,
+      "checks_passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "interest-error",
+      "language": "en",
+      "trial": 0,
+      "checks_passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "interest-correct",
+      "language": "ru",
+      "trial": 0,
+      "checks_passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "interest-correct",
+      "language": "pl",
+      "trial": 0,
+      "checks_passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "interest-correct",
+      "language": "en",
+      "trial": 0,
+      "checks_passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "request-error",
+      "language": "ru",
+      "trial": 0,
+      "checks_passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "request-error",
+      "language": "pl",
+      "trial": 0,
+      "checks_passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "request-error",
+      "language": "en",
+      "trial": 0,
+      "checks_passed": true,
+      "issues": []
+    },
+    {
+      "case_id": "request-correct",
+      "language": "pl",
+      "trial": 0,
+      "checks_passed": true,
+      "issues": []
+    }
+  ],
+  "coverage": {
+    "covered": 23,
+    "expected": 24,
+    "missing": [
+      "request-correct:en"
+    ]
+  },
+  "status": "findings",
+  "quality_accepted": false
+}

@@ -161,3 +161,11 @@ node ops/writing-quality.mjs ops/fixtures/writing-quality-medium-baseline-v1.jso
 Проверки публикации baseline: **77 ops-тестов**, **1223 Django-теста**,
 system check, migration drift и diff check прошли. После восстановления
 квоты следующий шаг — 11 оставшихся пар; baseline не увеличивает покрытие.
+
+## Продолжение 9 ноября
+
+[Десять новых разборов и содержательные замечания](ai-writing-quality-followup-2026-11-09.md):
+покрытие 23/24, автоматические правила проходят у 18 пар, качество не принято.
+[Baseline v2](../ops/fixtures/writing-quality-medium-baseline-v2.json) позволяет
+воспроизвести новый отчёт, сохраняя v1 неизменным. Для завершения baseline
+осталась request-correct/EN после восстановления квоты.
