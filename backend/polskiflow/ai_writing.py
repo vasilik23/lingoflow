@@ -128,6 +128,13 @@ def review_writing(assignment, text, language):
         f"Write feedback, explanations and one actionable next_step in {language}. "
         "Use Polish only for quoted words, corrections and necessary language terms; do not switch explanation language. "
         "Keep each feedback under 1500 characters and each error field and next_step under 600 characters. "
+        "Before returning the JSON, check every criterion feedback, explanation and next_step for consistency "
+        "with the actual correction and the requested feedback language. Base the next step on the learner "
+        "draft and the task; do not introduce other grammatical constructions as analogies or invent a "
+        "general rule from a single correction. State a grammatical category only when you can support it "
+        "in this context; otherwise explain the concrete change in plain language. Keep feedback sentences "
+        "in the requested language, with Polish limited to necessary quotations and terms. This final check "
+        "must not appear as an extra output field. "
         "Respond only using the supplied JSON schema."
     )
     result = review_text(assignment, text, instruction)
