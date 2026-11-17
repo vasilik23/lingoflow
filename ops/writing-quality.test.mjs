@@ -153,3 +153,17 @@ test('replays the observed RU language failure without changing captured respons
   assert.equal(result.quality_accepted, false);
   assert.equal(JSON.stringify(baseline), snapshot);
 });
+
+
+test('complete baseline keeps prior captures and still requires quality acceptance', () => {
+  const old = JSON.parse(fs.readFileSync(new URL('./fixtures/writing-quality-medium-baseline-v2.json', import.meta.url), 'utf8'));
+  const full = JSON.parse(fs.readFileSync(new URL('./fixtures/writing-quality-medium-baseline-v3.json', import.meta.url), 'utf8'));
+  assert.deepEqual(full.runs.slice(0, -1), old.runs);
+  assert.deepEqual([full.runs.at(-1).case_id, full.runs.at(-1).language], ['request-correct', 'en']);
+  const report = evaluate(full);
+  const saved = JSON.parse(fs.readFileSync(new URL('../docs/ai-writing-quality-result-2026-11-17.json', import.meta.url), 'utf8'));
+  assert.deepEqual(report, saved);
+  assert.equal(report.coverage.covered, 24);
+  assert.equal(report.runs.filter(run => run.checks_passed).length, 18);
+  assert.equal(report.quality_accepted, false);
+});
