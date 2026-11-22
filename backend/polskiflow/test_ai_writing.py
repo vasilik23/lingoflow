@@ -111,6 +111,8 @@ class AIWritingTests(SimpleTestCase):
         self.assertEqual(data["response_format"]["json_schema"]["strict"], True)
         self.assertEqual(data["reasoning_effort"], "medium")
         self.assertIn("English", data["messages"][0]["content"])
+        self.assertIn("na with the locative can express presence", data["messages"][0]["content"])
+        self.assertIn("Never infer the ending from the preposition alone", data["messages"][0]["content"])
         self.assertNotIn("private@example", str(data))
         self.assertEqual(data["messages"][1]["content"], json.dumps({"assignment": self.assignment, "draft": "Mam problem"}, ensure_ascii=False))
         self.assertEqual(transport.call_args.kwargs["timeout"], 25)
