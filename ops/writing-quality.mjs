@@ -58,6 +58,11 @@ export function evaluate(input, dataset = JSON.parse(fs.readFileSync(fixturePath
       if (normalize(error.quote) === normalize(error.correction)) issues.push({kind: 'unchanged_correction'});
     }
     if (conflictingEdits(item.draft, review.errors)) issues.push({kind: 'overlapping_edits_require_manual_review'});
+    for (const phrase of item.protected_phrases ?? []) {
+      requireValue(typeof phrase === 'string' && phrase.length > 0 && item.draft.includes(phrase));
+      if (review.errors.some(error => error.quote.includes(phrase)))
+        issues.push({kind: 'known_correct_phrase_edited_requires_manual_review'});
+    }
     for (const expected of item.expected_edits) {
       const matches = review.errors.filter(error => item.draft.includes(error.quote) && contains(error.quote, expected.quote));
       if (!matches.some(error => expected.accepted.some(value => contains(error.correction, value))))

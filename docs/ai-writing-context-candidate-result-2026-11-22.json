@@ -1,0 +1,51 @@
+{
+  "candidate_commit": "8e7d6d03aa410013868da2ea4bc09b4d1b51c74b",
+  "source": "synthetic_preview_one_successful_response",
+  "dataset_version": 1,
+  "model": "openai/gpt-oss-120b",
+  "reasoning_effort": "medium",
+  "runs": [
+    {
+      "case_id": "class-error",
+      "language": "ru",
+      "trial": 0,
+      "checks_passed": false,
+      "issues": [
+        {
+          "kind": "known_correct_phrase_edited_requires_manual_review"
+        }
+      ]
+    }
+  ],
+  "coverage": {
+    "covered": 1,
+    "expected": 24,
+    "missing": [
+      "class-error:pl",
+      "class-error:en",
+      "class-correct:ru",
+      "class-correct:pl",
+      "class-correct:en",
+      "participation-error:ru",
+      "participation-error:pl",
+      "participation-error:en",
+      "participation-correct:ru",
+      "participation-correct:pl",
+      "participation-correct:en",
+      "interest-error:ru",
+      "interest-error:pl",
+      "interest-error:en",
+      "interest-correct:ru",
+      "interest-correct:pl",
+      "interest-correct:en",
+      "request-error:ru",
+      "request-error:pl",
+      "request-error:en",
+      "request-correct:ru",
+      "request-correct:pl",
+      "request-correct:en"
+    ]
+  },
+  "status": "findings",
+  "quality_accepted": false
+}

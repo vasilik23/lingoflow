@@ -167,3 +167,15 @@ test('complete baseline keeps prior captures and still requires quality acceptan
   assert.equal(report.runs.filter(run => run.checks_passed).length, 18);
   assert.equal(report.quality_accepted, false);
 });
+
+test('flags an unnecessary rewrite of a correct phrase inside an otherwise erroneous draft', () => {
+  const candidate = run('class-error', [
+    edit('na lekcja', 'na lekcji'),
+    edit('Proszę przesłać materiały.', 'Proszę o przesłanie materiałów.'),
+  ]);
+  const result = evaluate(input([candidate])).runs[0];
+  assert(result.issues.some(issue => issue.kind === 'known_correct_phrase_edited_requires_manual_review'));
+  assert(!JSON.stringify(result).includes('Proszę'));
+  candidate.review.errors.pop();
+  assert.equal(evaluate(input([candidate])).runs[0].checks_passed, true);
+});
