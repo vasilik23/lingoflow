@@ -128,12 +128,12 @@ class AIWritingTests(SimpleTestCase):
         self.assertEqual(reviewed["score"], 12)
 
     @patch("polskiflow.ai_writing.urlopen")
-    def test_saved_baseline_rejects_two_broken_reviews_without_treating_other_reviews_as_accepted_quality(self, transport):
+    def test_saved_baseline_rejects_known_broken_reviews_without_treating_other_reviews_as_accepted_quality(self, transport):
         root = Path(__file__).resolve().parents[2]
-        baseline = json.loads((root / "ops/fixtures/writing-quality-medium-baseline-v2.json").read_text())
+        baseline = json.loads((root / "ops/fixtures/writing-quality-medium-baseline-v3.json").read_text())
         drafts = {item["id"]: item["draft"] for item in json.loads(
             (root / "ops/fixtures/writing-quality-v1.json").read_text())["cases"]}
-        rejected = {("participation-error", "ru"), ("request-error", "ru")}
+        rejected = {("participation-error", "ru"), ("request-error", "ru"), ("class-error", "pl")}
         for run in baseline["runs"]:
             key = (run["case_id"], run["language"])
             with self.subTest(case=key):
@@ -252,3 +252,27 @@ class AIWritingTests(SimpleTestCase):
             self.assertEqual(signed["assignment"]["task"], task["prompt"])
         self.assertEqual(page.context["state"]["results"], state["results"])
         self.consume.assert_not_called()
+
+    @patch("polskiflow.ai_writing.urlopen")
+    def test_conflicting_writing_edits_fail_but_equivalent_edits_pass(self, transport):
+        self.client.cookies["django_language"] = "pl"
+        draft = "Jutro nie mogę być na lekcja."
+        value = feedback()
+        value["errors"] = [
+            {"quote": "na lekcja", "correction": "na lekcję", "explanation": "Sprawdź formę."},
+            {"quote": draft, "correction": "Jutro nie mogę być na lekcji.", "explanation": "Sprawdź formę."},
+        ]
+
+        def load_response():
+            body = {"choices": [{"finish_reason": "stop", "message": {"content": json.dumps(value)}}]}
+            transport.return_value.__enter__.return_value = BytesIO(json.dumps(body).encode())
+
+        load_response()
+        with self.assertLogs("polskiflow.ai_writing", level="WARNING") as logs:
+            self.assertEqual(self.post(text=draft).status_code, 503)
+        self.assertIn("kind=conflicting_edits", str(logs.output))
+        self.assertNotIn(draft, str(logs.output))
+
+        value["errors"][0]["correction"] = "na lekcji"
+        load_response()
+        self.assertEqual(self.post(text=draft).status_code, 200)

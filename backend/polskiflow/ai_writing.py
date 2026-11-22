@@ -91,6 +91,36 @@ def _mixed_script_words(text):
             and any("CYRILLIC" in unicodedata.name(char, "") for char in word)}
 
 
+def _has_conflicting_edits(text, errors):
+    # Compare changed spans only when the model's quote locates one occurrence.
+    changes = []
+    for error in errors:
+        quote, correction = error["quote"], error["correction"]
+        start = text.find(quote)
+        if start < 0 or text.find(quote, start + 1) >= 0:
+            continue
+        prefix = 0
+        limit = min(len(quote), len(correction))
+        while prefix < limit and quote[prefix] == correction[prefix]:
+            prefix += 1
+        old_end, new_end = len(quote), len(correction)
+        while min(old_end, new_end) > prefix and quote[old_end - 1] == correction[new_end - 1]:
+            old_end -= 1
+            new_end -= 1
+        change = (start + prefix, start + old_end, correction[prefix:new_end])
+        if change in changes:
+            continue
+        left, right, _ = change
+        for other_left, other_right, _ in changes:
+            if left == right or other_left == other_right:
+                if left == other_left or (left < other_right and other_left < right):
+                    return True
+            elif left < other_right and other_left < right:
+                return True
+        changes.append(change)
+    return False
+
+
 def _validate_writing_feedback(result, text, language):
     """Reject obvious language corruption; this does not certify grammar quality."""
     criteria = [item["feedback"] for item in result["criteria"].values()]
@@ -131,6 +161,9 @@ def review_writing(assignment, text, language):
         "Respond only using the supplied JSON schema."
     )
     result = review_text(assignment, text, instruction)
+    if _has_conflicting_edits(text, result["errors"]):
+        logger.warning("writing_ai_feedback_rejected kind=conflicting_edits")
+        raise WritingAIUnavailable
     return _validate_writing_feedback(result, text, language)
 
 
