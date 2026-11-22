@@ -34,6 +34,9 @@
       "id": "class-error",
       "pair": "class",
       "split": "regression",
+      "protected_phrases": [
+        "Proszę przesłać materiały."
+      ],
       "level": "B1",
       "assignment_id": "formal-request",
       "draft": "Szanowna Pani, jutro nie mogę być na lekcja, ponieważ mam wizytę u lekarza. Proszę przesłać materiały. Oddam zadanie w poniedziałek. Z poważaniem, Uczeń",
