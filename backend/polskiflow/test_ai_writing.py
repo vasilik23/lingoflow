@@ -128,12 +128,12 @@ class AIWritingTests(SimpleTestCase):
         self.assertEqual(reviewed["score"], 12)
 
     @patch("polskiflow.ai_writing.urlopen")
-    def test_saved_baseline_rejects_two_broken_reviews_without_treating_other_reviews_as_accepted_quality(self, transport):
+    def test_saved_baseline_rejects_known_broken_reviews_without_treating_other_reviews_as_accepted_quality(self, transport):
         root = Path(__file__).resolve().parents[2]
-        baseline = json.loads((root / "ops/fixtures/writing-quality-medium-baseline-v2.json").read_text())
+        baseline = json.loads((root / "ops/fixtures/writing-quality-medium-baseline-v3.json").read_text())
         drafts = {item["id"]: item["draft"] for item in json.loads(
             (root / "ops/fixtures/writing-quality-v1.json").read_text())["cases"]}
-        rejected = {("participation-error", "ru"), ("request-error", "ru")}
+        rejected = {("participation-error", "ru"), ("request-error", "ru"), ("class-error", "pl")}
         for run in baseline["runs"]:
             key = (run["case_id"], run["language"])
             with self.subTest(case=key):
