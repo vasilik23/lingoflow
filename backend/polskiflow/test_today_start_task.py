@@ -35,6 +35,7 @@ class TodayStartTaskTests(TestCase):
     def test_completed_plan_offers_explicit_repeat_and_empty_plan_course(self):
         completed = self.page([self.task('done',True)])
         self.assertContains(completed,'Повторить задание')
+        self.assertContains(completed, '<p class="eyebrow">На сегодня всё</p>', html=True)
         self.assertContains(completed,'class="compact-button daily-action" href="/lesson/done/"')
         empty = self.page([])
         self.assertIsNone(empty.context['daily_start_task'])
