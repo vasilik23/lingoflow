@@ -22,7 +22,7 @@
       <div class="daily-copy">
         <p class="eyebrow">{% translate "План на сегодня" %}</p>
         <h2 id="daily-start-title">{% if resume_lesson %}{{ resume_lesson.title|ui_text }}{% elif daily_start_task %}{{ daily_start_task.title|ui_text }}{% else %}{% translate "Курс" %}{% endif %}</h2>
-        {% if resume_lesson %}<p class="muted">{% translate "Незавершённый урок" %} · {% translate "· продолжим с шага" %} {{ resume_lesson.step|ui_text }}</p>{% endif %}
+        {% if resume_lesson %}<p class="muted">{% translate "Незавершённый урок" %} {% translate "· продолжим с шага" %} {{ resume_lesson.step|ui_text }}</p>{% endif %}
         <p class="daily-time">~{{ completed_estimated_minutes|ui_text }} {% translate "из" %} {{ plan_estimated_minutes|ui_text }} {% translate "мин" %}</p>
         <p class="muted">{% translate "Оценочная длительность выполненных заданий, не время по таймеру." %}</p>
       </div>
