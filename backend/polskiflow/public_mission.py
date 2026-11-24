@@ -7,6 +7,8 @@ from polskiflow.public_demo_store import load_demo_lesson
 COPY = {
     "ru": {
         "title": "Перенести встречу",
+        "intro_title": "Польский для жизни в Польше",
+        "intro_body": "Попробуй перенести встречу по-польски. Разбери ответ, а затем напиши своё сообщение. Аккаунт не нужен.",
         "situation": "Вы договорились встретиться во вторник, но теперь можете только в среду. Выберите сообщение, которое предлагает новый срок.",
         "retry": "Теперь перенесите встречу с четверга на пятницу.",
         "rule": "В конструкции przełożyć spotkanie na за предлогом na указываем новый день. Старый день можно назвать после z.",
@@ -19,6 +21,8 @@ COPY = {
     },
     "pl": {
         "title": "Przełóż spotkanie",
+        "intro_title": "Polski na co dzień w Polsce",
+        "intro_body": "Spróbuj przełożyć spotkanie po polsku. Sprawdź odpowiedź, a potem napisz własną wiadomość. Bez rejestracji.",
         "situation": "Spotkanie jest we wtorek, ale możesz dopiero w środę. Wybierz wiadomość, która proponuje nowy termin.",
         "retry": "Teraz przełóż spotkanie z czwartku na piątek.",
         "rule": "Po przyimku na podajemy nowy dzień spotkania, a po z możemy podać poprzedni dzień.",
@@ -31,6 +35,8 @@ COPY = {
     },
     "en": {
         "title": "Reschedule a meeting",
+        "intro_title": "Polish for everyday life in Poland",
+        "intro_body": "Try rescheduling a meeting in Polish. Check your answer, then write your own message. No account needed.",
         "situation": "You agreed to meet on Tuesday, but now you can only meet on Wednesday. Choose the message proposing the new date.",
         "retry": "Now move a meeting from Thursday to Friday.",
         "rule": "In przełożyć spotkanie na, the new day follows na. You can use z to name the original day.",
@@ -51,8 +57,12 @@ QUESTIONS = (
 )
 
 
+def meeting_mission_copy(request):
+    return COPY.get(getattr(request, "LANGUAGE_CODE", "ru"), COPY["ru"])
+
+
 def meeting_mission(request):
-    copy = COPY.get(getattr(request, "LANGUAGE_CODE", "ru"), COPY["ru"])
+    copy = meeting_mission_copy(request)
     step = 0
     feedback = None
     passed = False

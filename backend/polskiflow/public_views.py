@@ -10,7 +10,7 @@ from polskiflow.content import lesson_navigation
 from polskiflow.domain.lesson_feedback_hint import feedback_hint
 from polskiflow.domain.public_demo import DEMO_SALT, checked_answer, demo_version
 from polskiflow.public_demo_store import DEMO_LESSONS, load_demo_lesson
-from polskiflow.public_mission import meeting_mission
+from polskiflow.public_mission import meeting_mission, meeting_mission_copy
 
 
 def _private(response):
@@ -21,7 +21,9 @@ def _private(response):
 @require_http_methods(['GET', 'HEAD'])
 def public_intro(request):
     sample = load_demo_lesson('A2')
-    return _private(render(request, 'public_intro.html', {'sample': sample}))
+    return _private(render(request, 'public_intro.html', {
+        'sample': sample, 'mission': meeting_mission_copy(request),
+    }))
 
 
 @require_http_methods(['GET', 'HEAD', 'POST'])
