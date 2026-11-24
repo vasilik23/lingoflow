@@ -29,9 +29,9 @@
       {% if not dashboard.available %}<p class="data-notice">{% translate "Прогресс временно недоступен. Уроки по-прежнему можно проходить." %}</p>{% endif %}
       <div class="daily-actions">
       {% if resume_lesson %}
-        <a class="compact-button daily-action" href="{% url 'lesson' resume_lesson.id %}" aria-describedby="daily-start-title">{% translate "Продолжить →" %}</a>
+        <a class="compact-button daily-action" href="{% url 'lesson' resume_lesson.id %}" aria-describedby="daily-start-title">{% translate "Продолжить →" %}{% if resume_lesson.minutes %} <span class="daily-action-duration">(~{{ resume_lesson.minutes|ui_text }} {% translate "мин" %})</span>{% endif %}</a>
       {% elif daily_start_task %}
-        <a class="compact-button daily-action" href="{% if daily_start_task.kind == 'dictionary-review' %}{% url 'dictionary-practice' %}{% else %}{% url 'lesson' daily_start_task.id %}{% endif %}" aria-describedby="daily-start-title">{% if daily_start_task.completed %}{% translate "Повторить задание" %}{% elif completed_count %}{% translate "Продолжить занятия" %}{% else %}{% translate "Начать занятия" %}{% endif %} →</a>
+        <a class="compact-button daily-action" href="{% if daily_start_task.kind == 'dictionary-review' %}{% url 'dictionary-practice' %}{% else %}{% url 'lesson' daily_start_task.id %}{% endif %}" aria-describedby="daily-start-title">{% if daily_start_task.completed %}{% translate "Повторить задание" %}{% elif completed_count %}{% translate "Продолжить занятия" %}{% else %}{% translate "Начать занятия" %}{% endif %} →{% if daily_start_task.minutes %} <span class="daily-action-duration">(~{{ daily_start_task.minutes|ui_text }} {% translate "мин" %})</span>{% endif %}</a>
       {% else %}
         <a class="compact-button daily-action" href="{% url 'course' %}">{% translate "К курсу →" %}</a>
       {% endif %}
