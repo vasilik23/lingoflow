@@ -385,6 +385,25 @@ class BrowserAuthTests(SimpleTestCase):
         self.assertTrue(response.cookies[ACCESS_COOKIE]["httponly"])
 
     @patch("polskiflow.auth_views.sign_up")
+    def test_registration_keeps_the_requested_lesson_through_confirmation(self, signup):
+        target = "/lesson/review/"
+        page = self.client.get("/register/", {"next": target})
+        self.assertContains(page, 'name="next" value="/lesson/review/"')
+        self.assertContains(page, 'href="/login/?next=%2Flesson%2Freview%2F"')
+
+        data = {"email": "new@example.com", "password": "Bezpieczne2026",
+                "adult_confirmation": "on", "next": target}
+        signup.return_value = None
+        self.assertEqual(self.client.post("/register/", data).status_code, 200)
+        self.assertEqual(signup.call_args.kwargs["email_redirect_to"],
+                         "http://testserver/login/?next=%2Flesson%2Freview%2F")
+
+        signup.return_value = SupabaseSession(
+            "access", "refresh", 3600, SupabaseUser("user-123", "new@example.com")
+        )
+        self.assertRedirects(self.client.post("/register/", data), target, fetch_redirect_response=False)
+
+    @patch("polskiflow.auth_views.sign_up")
     def test_registration_rejects_weak_password_before_supabase(self, signup):
         response = self.client.post(
             "/register/", {"email": "new@example.com", "password": "Password123"}

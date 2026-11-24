@@ -74,7 +74,7 @@ class PublicDemoTests(TestCase):
                 result = self.client.get('/demo/', {'level': level, 'step': 'result', 'review': query['review'][0]})
                 self.assertEqual(result.context['step'], 'result')
                 self.assertContains(result, ('1' if passed else '0') + ' / 1')
-                self.assertContains(result, 'href="/register/"')
+                self.assertContains(result, 'href="/register/?next=')
                 self.assertContains(result, 'а не проверка уровня')
                 self.assertNotIn('sessionid', result.cookies)
         profile.assert_not_called()
@@ -151,3 +151,25 @@ class PublicDemoTests(TestCase):
                 self.assertEqual(self.answer('1', level).status_code, 200)
         for path in ('/login/', '/register/'):
             self.assertContains(self.client.get(path), 'href="/demo/"')
+
+
+class PublicMeetingMissionTests(TestCase):
+    url = "/demo/?level=B1&mission=meeting"
+
+    def test_wrong_choice_leads_to_new_example_and_then_local_writing(self):
+        start = self.client.get(self.url)
+        self.assertContains(start, "z wtorku na środę")
+        retry = self.client.post(self.url, {"step": "0", "answer": "1"})
+        self.assertContains(retry, "z czwartku na piątek")
+        self.assertContains(retry, "новый день указан неверно")
+        self.assertNotContains(retry, 'id="mission-draft"')
+        result = self.client.post(self.url, {"step": "1", "answer": "1"})
+        self.assertContains(result, 'id="mission-draft"')
+        self.assertContains(result, "przełożyć spotkanie na środę")
+        self.assertContains(result, 'href="/register/?next=%2Flesson%2Fb1edu-grammar%2F"')
+        self.assertEqual(result["Cache-Control"], "private, no-store")
+
+    def test_correct_first_choice_goes_directly_to_writing(self):
+        result = self.client.post(self.url, {"step": "0", "answer": "0"})
+        self.assertContains(result, 'id="mission-draft"')
+        self.assertNotContains(result, "z czwartku na piątek")

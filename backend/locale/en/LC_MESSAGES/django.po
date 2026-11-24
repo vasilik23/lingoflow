@@ -8815,7 +8815,7 @@ msgid "Сложная аргументация"
 msgstr "Complicated argumentation"
 
 msgid "Сложные союзы и косвенная речь"
-msgstr "Complex Alliances and Indirect Speech"
+msgstr "Complex Conjunctions and Indirect Speech"
 
 msgid "Слышны носовое ę и сочетание cz: tę-cza."
 msgstr "Hear the nose. ę combination cz: tę-cza."

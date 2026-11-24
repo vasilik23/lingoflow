@@ -3328,7 +3328,7 @@ window.PolskiFlowEnglishMessages = {
   "Слово по-польски": "Word in Polish",
   "Слово, перевод или контекст": "Word, translation or context",
   "Сложная аргументация": "Complicated argumentation",
-  "Сложные союзы и косвенная речь": "Complex Alliances and Indirect Speech",
+  "Сложные союзы и косвенная речь": "Complex Conjunctions and Indirect Speech",
   "Слышны носовое ę и сочетание cz: tę-cza.": "Hear the nose. ę combination cz: tę-cza.",
   "Смысл за пределами слов": "Meaning beyond words",
   "Смысловая точность": "Meaningful accuracy",

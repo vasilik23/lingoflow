@@ -10,6 +10,7 @@ from polskiflow.content import lesson_navigation
 from polskiflow.domain.lesson_feedback_hint import feedback_hint
 from polskiflow.domain.public_demo import DEMO_SALT, checked_answer, demo_version
 from polskiflow.public_demo_store import DEMO_LESSONS, load_demo_lesson
+from polskiflow.public_mission import meeting_mission
 
 
 def _private(response):
@@ -25,6 +26,8 @@ def public_intro(request):
 
 @require_http_methods(['GET', 'HEAD', 'POST'])
 def public_demo(request):
+    if request.GET.get("mission") == "meeting":
+        return _private(meeting_mission(request))
     level = request.GET.get('level', 'A1')
     if level not in DEMO_LESSONS:
         level = 'A1'
