@@ -6,10 +6,10 @@
 <div class="public-shell">
   {% include "partials/public_heading.html" %}
   <section class="hero">
-    <p class="eyebrow">{% translate "Сейчас учим польский" %}</p>
-    <h1>{% translate "Польский шаг за шагом" %}</h1>
-    <p>{% translate "Короткие задания, объяснения ответов и план под твою дневную цель. Посмотри, как это работает, прежде чем создавать аккаунт." %}</p>
-    <a class="compact-button" href="{% url 'public-demo' %}">{% translate "Попробовать без регистрации" %}</a>
+    <h1>{{ mission.intro_title }}</h1>
+    <p>{{ mission.intro_body }}</p>
+    <a class="compact-button" href="{% url 'public-demo' %}?level=B1&amp;mission=meeting">{{ mission.title }} · B1</a>
+    <p><a href="{% url 'public-demo' %}">{% translate "Попробовать без регистрации" %} · A1</a></p>
   </section>
   {% if sample %}
   <section class="public-product-example" aria-labelledby="product-example-title">
