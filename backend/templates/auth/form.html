@@ -32,10 +32,10 @@
         {% if request.GET.password_reset or request.GET.password_changed %}<p class="message" role="status">{% translate "Пароль обновлён. Теперь войдите с новым паролем." %}</p>{% endif %}
         {% if request.GET.account_deleted %}<p class="message" role="status">{% translate "Аккаунт и связанные учебные данные удалены." %}</p>{% endif %}
         <p class="auth-switch muted"><a href="{% url 'forgot-password' %}">{% translate "Не помню пароль" %}</a></p>
-        <p class="auth-switch muted">{% translate "Нет аккаунта?" %} <a href="{% url 'register' %}">{% translate "Зарегистрироваться" %}</a></p>
+        <p class="auth-switch muted">{% translate "Нет аккаунта?" %} <a href="{% url 'register' %}{% if next and next != "/" %}?next={{ next|urlencode:"" }}{% endif %}">{% translate "Зарегистрироваться" %}</a></p>
       {% else %}
-        <p class="auth-switch muted"><a href="{% url 'resend-confirmation' %}">{% translate "Отправить подтверждение ещё раз" %}</a></p>
-        <p class="auth-switch muted">{% translate "Уже есть аккаунт?" %} <a href="{% url 'login' %}">{% translate "Войти" %}</a></p>
+        <p class="auth-switch muted"><a href="{% url 'resend-confirmation' %}{% if next and next != "/" %}?next={{ next|urlencode:"" }}{% endif %}">{% translate "Отправить подтверждение ещё раз" %}</a></p>
+        <p class="auth-switch muted">{% translate "Уже есть аккаунт?" %} <a href="{% url 'login' %}{% if next and next != "/" %}?next={{ next|urlencode:"" }}{% endif %}">{% translate "Войти" %}</a></p>
       {% endif %}
       {% if mode == "login" %}{% include "partials/migration_notice.html" %}{% endif %}
       {% include "partials/language_settings.html" %}

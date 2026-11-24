@@ -396,7 +396,9 @@ def register_view(request: HttpRequest) -> HttpResponse:
     if request.supabase_user is not None:
         return redirect("home")
 
-    context = {"mode": "register", "next": "/"}
+    next_url = _safe_next(request)
+    destination = next_url if next_url != "/" else reverse("onboarding")
+    context = {"mode": "register", "next": next_url}
     if request.method == "POST":
         email = request.POST.get("email", "").strip()
         password = request.POST.get("password", "")
@@ -412,7 +414,7 @@ def register_view(request: HttpRequest) -> HttpResponse:
         else:
             try:
                 welcome_login = email_callback_url(request,
-                    f"{reverse('login')}?{urlencode({'next': reverse('onboarding')})}"
+                    f"{reverse('login')}?{urlencode({'next': destination})}"
                 )
                 session = sign_up(
                     email, password, email_redirect_to=welcome_login
@@ -425,7 +427,7 @@ def register_view(request: HttpRequest) -> HttpResponse:
                         "Аккаунт создан. Подтвердите email, затем войдите."
                     )
                 else:
-                    response = redirect("onboarding")
+                    response = redirect(destination)
                     set_auth_cookies(response, session)
                     return response
     return render(request, "auth/form.html", context)
@@ -479,7 +481,9 @@ def reset_password(request: HttpRequest) -> HttpResponse:
 
 @require_http_methods(["GET", "POST"])
 def resend_confirmation(request: HttpRequest) -> HttpResponse:
-    context = {"mode": "resend"}
+    next_url = _safe_next(request)
+    destination = next_url if next_url != "/" else reverse("onboarding")
+    context = {"mode": "resend", "next": next_url}
     if request.method == "POST":
         email = request.POST.get("email", "").strip()
         context["email"] = email
@@ -490,7 +494,7 @@ def resend_confirmation(request: HttpRequest) -> HttpResponse:
         else:
             try:
                 welcome_login = email_callback_url(request,
-                    f"{reverse('login')}?{urlencode({'next': reverse('onboarding')})}"
+                    f"{reverse('login')}?{urlencode({'next': destination})}"
                 )
                 resend_signup_confirmation(email, welcome_login)
             except SupabaseAuthError:

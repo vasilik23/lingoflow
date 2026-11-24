@@ -1,0 +1,50 @@
+{% extends "server_translated_base.html" %}
+{% load i18n ui %}
+{% block title %}{{ mission.title }} · LingoFlow{% endblock %}
+{% block body_class %}public-page{% endblock %}
+{% block content %}
+<div class="public-shell">
+  {% include "partials/public_heading.html" %}
+  <section class="card onboarding-form">
+    <p class="eyebrow">B1</p>
+    <h1>{{ mission.title }}</h1>
+    {% if feedback %}
+      <p role="status"><strong>{{ feedback }}</strong></p>
+      <p>{{ mission.rule }}</p>
+    {% endif %}
+    {% if step < 2 %}
+      <form method="post" class="public-demo-form">
+        {% csrf_token %}
+        <input type="hidden" name="step" value="{{ step }}">
+        <fieldset>
+          <legend>{% if step == 0 %}{{ mission.situation }}{% else %}{{ mission.retry }}{% endif %}</legend>
+          {% for option in options %}
+            <label lang="pl"><input type="radio" name="answer" value="{{ forloop.counter0 }}" required> {{ option }}</label>
+          {% endfor %}
+        </fieldset>
+        <button type="submit">{{ mission.check }}</button>
+      </form>
+    {% else %}
+      <label for="mission-draft">{{ mission.write }}</label>
+      <textarea id="mission-draft" rows="4" lang="pl" autocomplete="off"></textarea>
+      <details>
+        <summary>{{ mission.sample }}</summary>
+        <p lang="pl">Nie mogę spotkać się w poniedziałek. Czy możemy przełożyć spotkanie na środę?</p>
+        <p>{{ mission.checklist }}</p>
+      </details>
+      {% if next_lesson %}
+        {% url 'lesson' next_lesson.id as lesson_url %}
+        <a class="complete-next" href="{% if request.supabase_user %}{{ lesson_url }}{% else %}{% url 'register' %}?next={{ lesson_url|urlencode:"" }}{% endif %}">
+          <span class="complete-next-copy">
+            <small>{% if request.supabase_user %}{% translate "Следующий материал" %}{% else %}{% translate "Создать аккаунт" %}{% endif %}</small>
+            <strong lang="{{ next_lesson.title|learning_language }}">{{ next_lesson.title|ui_text }}</strong>
+            <small>~{{ next_lesson.minutes }} {% translate "мин" %}</small>
+          </span>
+        </a>
+        {% if not request.supabase_user %}<p><a href="{% url 'login' %}?next={{ lesson_url|urlencode:"" }}">{% translate "Войти" %}</a></p>{% endif %}
+      {% endif %}
+    {% endif %}
+    <p><a href="{% url 'public-demo' %}">{% translate "Пробное задание" %}</a></p>
+  </section>
+</div>
+{% endblock %}
