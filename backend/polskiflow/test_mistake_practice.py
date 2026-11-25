@@ -52,3 +52,23 @@ class MistakePracticeViewTests(TestCase):
     def test_rejects_state_for_item_no_longer_owned(self, _load):
         token = sign_mistake("user-1", "mistake-quiz", 0)
         self.assertEqual(self.client.post("/mistakes/practice/", {"state": token, "choice": "1"}).status_code, 400)
+
+    @patch("polskiflow.mistake_views.set_mistake", return_value=True)
+    @patch("polskiflow.mistake_views.load_mistakes", return_value=[{"lesson_id": "mistake-quiz", "question_position": 0}])
+    def test_notebook_back_link_survives_answer_in_lesson_scope(self, _load, _save):
+        path = "/mistakes/practice/?lesson=mistake-quiz&from=notebook"
+        from_lesson = self.client.get("/mistakes/practice/?lesson=mistake-quiz")
+        self.assertContains(from_lesson, 'class="back-button" href="/lesson/mistake-quiz/"')
+        page = self.client.get(path)
+        self.assertContains(page, 'class="back-button" href="/mistakes/"')
+        token = sign_mistake("user-1", "mistake-quiz", 0)
+        result = self.client.post(path, {"state": token, "choice": "1"})
+        self.assertContains(result, 'class="back-button" href="/mistakes/"')
+        self.assertContains(result, 'href="/mistakes/practice/?lesson=mistake-quiz&amp;from=notebook"')
+
+    @patch("polskiflow.mistake_views.load_mistakes", return_value=[])
+    def test_empty_lesson_queue_returns_to_notebook_when_started_there(self, _load):
+        page = self.client.get("/mistakes/practice/?lesson=mistake-quiz&from=notebook")
+        self.assertContains(page, "Ошибок этого урока нет")
+        self.assertContains(page, '<a class="compact-button" href="/mistakes/">Вернуться к списку ошибок</a>',
+                            html=True)
