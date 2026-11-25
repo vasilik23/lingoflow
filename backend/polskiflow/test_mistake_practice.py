@@ -65,3 +65,10 @@ class MistakePracticeViewTests(TestCase):
         result = self.client.post(path, {"state": token, "choice": "1"})
         self.assertContains(result, 'class="back-button" href="/mistakes/"')
         self.assertContains(result, 'href="/mistakes/practice/?lesson=mistake-quiz&amp;from=notebook"')
+
+    @patch("polskiflow.mistake_views.load_mistakes", return_value=[])
+    def test_empty_lesson_queue_returns_to_notebook_when_started_there(self, _load):
+        page = self.client.get("/mistakes/practice/?lesson=mistake-quiz&from=notebook")
+        self.assertContains(page, "Ошибок этого урока нет")
+        self.assertContains(page, '<a class="compact-button" href="/mistakes/">Вернуться к списку ошибок</a>',
+                            html=True)
