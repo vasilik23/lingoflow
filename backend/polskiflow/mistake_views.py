@@ -42,8 +42,14 @@ def mistake_practice(request: HttpRequest) -> HttpResponse:
     selected_lesson = request.GET.get('lesson', '')
     if len(request.GET.getlist('lesson')) > 1 or (selected_lesson and task(selected_lesson) is None):
         return HttpResponseBadRequest(gettext('Некорректная тренировка урока'))
-    repeat_url = reverse('mistake-practice') + ('?' + urlencode({'lesson': selected_lesson}) if selected_lesson else '')
-    scope = {'selected_lesson': selected_lesson, 'repeat_url': repeat_url}
+    from_notebook = request.GET.get('from') == 'notebook'
+    query = {'lesson': selected_lesson} if selected_lesson else {}
+    if from_notebook and selected_lesson:
+        query['from'] = 'notebook'
+    repeat_url = reverse('mistake-practice') + ('?' + urlencode(query) if query else '')
+    scope = {'selected_lesson': selected_lesson, 'repeat_url': repeat_url,
+             'return_to_lesson': bool(selected_lesson and not from_notebook),
+             'return_to_notebook': bool(selected_lesson and from_notebook)}
     rows = load_mistakes(request.supabase_access_token, request.supabase_user.id)
     if rows is None:
         return _practice_response(request, {**scope, "available": False}, status=503)
