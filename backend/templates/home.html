@@ -36,6 +36,9 @@
         <a class="compact-button daily-action" href="{% url 'course' %}">{% translate "К курсу →" %}</a>
       {% endif %}
       </div>
+      {% if mistake_count %}
+        <p class="muted"><a href="{% url 'mistake-practice' %}?from=today">{% translate "Работа над ошибками" %} · {{ mistake_count|ui_text }}</a></p>
+      {% endif %}
     </section>
     <section class="card daily-tasks-panel" id="daily-tasks">
     <section aria-labelledby="daily-tasks-title">
