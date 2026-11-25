@@ -1,6 +1,5 @@
 import re
 from unittest.mock import patch
-from urllib.parse import parse_qs, urlparse
 
 from django.core import signing
 from django.test import Client, TestCase
@@ -62,17 +61,15 @@ class PublicDemoTests(TestCase):
 
     @patch('polskiflow.auth_views.save_profile_settings')
     @patch('polskiflow.lesson_views.save_lesson_completion_result')
-    def test_correct_and_wrong_answers_explain_then_result_without_writes(self, completion, profile):
+    def test_correct_and_wrong_answers_show_feedback_and_result_without_writes(self, completion, profile):
         for level in ('A1', 'A2', 'B1'):
             question = load_demo_lesson(level)['question']
             for value, passed in ((question['correct'], True), ((question['correct'] + 1) % len(question['options']), False)):
-                response = self.answer(str(value), level, score='100')
-                self.assertEqual(response.context['step'], 'explanation')
-                self.assertEqual(response.context['correct'], passed)
-                self.assertContains(response, question['explanation'])
-                query = parse_qs(urlparse(response.redirect_chain[-1][0]).query)
-                result = self.client.get('/demo/', {'level': level, 'step': 'result', 'review': query['review'][0]})
+                result = self.answer(str(value), level, score='100')
+                self.assertEqual(len(result.redirect_chain), 1)
                 self.assertEqual(result.context['step'], 'result')
+                self.assertEqual(result.context['correct'], passed)
+                self.assertContains(result, question['explanation'], count=1)
                 self.assertContains(result, ('1' if passed else '0') + ' / 1')
                 self.assertContains(result, 'href="/register/?next=')
                 self.assertContains(result, 'а не проверка уровня')
@@ -80,15 +77,13 @@ class PublicDemoTests(TestCase):
         profile.assert_not_called()
         completion.assert_not_called()
 
-    def test_result_groups_next_action_with_score_before_detailed_feedback(self):
+    def test_result_shows_feedback_before_the_next_action(self):
         lesson = load_demo_lesson('B1')
-        response = self.answer(str(lesson['question']['correct']), level='B1')
-        # Follow the real explanation page link so signed review state is retained.
-        link = re.search(r'href="([^"]*step=result[^"]*)"', response.content.decode())[1]
-        result = self.client.get(link.replace('&amp;', '&'))
+        result = self.answer(str(lesson['question']['correct']), level='B1')
         html = result.content.decode()
         self.assertContains(result, 'public-demo-outcome')
-        self.assertLess(html.index('class="complete-next"'), html.index('<section><h2>Разбор'))
+        self.assertLess(html.index('id="demo-feedback-title"'), html.index('class="complete-next"'))
+        self.assertNotContains(result, 'К результату')
         self.assertContains(result, 'Мини-урок завершён', count=1)
 
     def test_invalid_duplicate_and_missing_values_are_rejected(self):
