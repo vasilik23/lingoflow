@@ -86,6 +86,19 @@ class PublicDemoTests(TestCase):
         self.assertNotContains(result, 'К результату')
         self.assertContains(result, 'Мини-урок завершён', count=1)
 
+    def test_english_b1_demo_heading_matches_the_question(self):
+        self.client.cookies['django_language'] = 'en'
+        theory = self.client.get('/demo/', {'level': 'B1'})
+        exercise = self.exercise('B1')
+        for page in (theory, exercise):
+            self.assertContains(page, 'Giving a reason with ponieważ')
+            self.assertNotContains(page, 'Indirect Speech')
+        self.assertContains(exercise, 'Uczę się regularnie, ___ chcę dobrze zdać egzamin.')
+        options = exercise.context['lesson']['question']['options']
+        result = self.answer(str(options.index('ponieważ')), 'B1')
+        self.assertTrue(result.context['correct'])
+        self.assertContains(result, 'ponieważ')
+
     def test_invalid_duplicate_and_missing_values_are_rejected(self):
         for value in ('-1', '100', 'true', '01', ['0', '1']):
             self.assertEqual(self.answer(value).status_code, 400)

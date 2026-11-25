@@ -12,6 +12,7 @@
     <p class="eyebrow">{{ level }} · {% translate "Мини-урок" %}</p>
     <h1>{% if step == 'result' %}{% translate "Мини-урок завершён" %}{% else %}{% translate "Пробное задание" %}{% endif %}</h1>
     {% if step != 'result' %}<p class="muted">{% translate "Материал из курса: теория, упражнение и разбор. Аккаунт не нужен; ответы не сохраняются в прогресс." %}</p>{% endif %}
+    {% if level == "B1" %}{% translate "Объясняем причину с ponieważ" as demo_title %}{% endif %}
     {% if unavailable %}<p role="alert">{% translate "Пробное задание временно недоступно. Можно вернуться к знакомству с приложением." %}</p>
     {% else %}
       <ol class="public-demo-steps" aria-label="{% translate 'Шаги мини-урока' %}">
@@ -21,10 +22,10 @@
       </ol>
       {% if demo_error %}<p role="alert" class="save-error">{{ demo_error|ui_text }}</p>{% endif %}
       {% if step == 'theory' %}
-        {% include "partials/public_lesson_theory.html" %}
+        {% include "partials/public_lesson_theory.html" with heading=demo_title %}
         <a class="compact-button" href="{% url 'public-demo' %}?level={{ level }}&amp;step=exercise">{% translate "К упражнению" %} →</a>
       {% elif step == 'exercise' %}
-        <h2 lang="{{ lesson.title|learning_language }}">{{ lesson.title|ui_text }}</h2>
+        <h2 lang="{{ demo_title|default:lesson.title|learning_language }}">{{ demo_title|default:lesson.title|ui_text }}</h2>
         <form method="post" class="public-demo-form" action="{% url 'public-demo' %}?level={{ level }}">
           {% csrf_token %}<input type="hidden" name="state" value="{{ state }}">
           {% include "partials/public_lesson_question.html" %}

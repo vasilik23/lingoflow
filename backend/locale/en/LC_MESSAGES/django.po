@@ -3886,7 +3886,7 @@ msgid "Используй связки «po pierwsze», «poza tym», «jednak»
 msgstr "Use the bundles of “po pierwsze”, “poza tym”, “jednak” and complete with a clear recommendation."
 
 msgid "Используй сложные союзы и передавай чужие слова"
-msgstr "Use complex alliances and pass on other people’s words"
+msgstr "Use complex conjunctions and report what others said"
 
 msgid "Используй степени сравнения и формы количества"
 msgstr "Use the degree of comparison and form of quantity"
@@ -7532,6 +7532,9 @@ msgstr "The reason and requests are divided into understandable paragraphs."
 
 msgid "Причина и решение"
 msgstr "Cause and solution"
+
+msgid "Объясняем причину с ponieważ"
+msgstr "Giving a reason with ponieważ"
 
 msgid "Причина и уступка"
 msgstr "Reason and concession"
