@@ -11,6 +11,7 @@ COPY = {
         "intro_body": "Попробуй перенести встречу по-польски. Разбери ответ, а затем напиши своё сообщение. Аккаунт не нужен.",
         "situation": "Вы договорились встретиться во вторник, но теперь можете только в среду. Выберите сообщение, которое предлагает новый срок.",
         "retry": "Теперь перенесите встречу с четверга на пятницу.",
+        "transfer": "Просмотр квартиры назначен на субботу. Попросите перенести его на понедельник.",
         "rule": "В конструкции przełożyć spotkanie na за предлогом na указываем новый день. Старый день можно назвать после z.",
         "correct": "Верно: так вы предлагаете новый день.",
         "incorrect": "В этом варианте новый день указан неверно.",
@@ -25,6 +26,7 @@ COPY = {
         "intro_body": "Spróbuj przełożyć spotkanie po polsku. Sprawdź odpowiedź, a potem napisz własną wiadomość. Bez rejestracji.",
         "situation": "Spotkanie jest we wtorek, ale możesz dopiero w środę. Wybierz wiadomość, która proponuje nowy termin.",
         "retry": "Teraz przełóż spotkanie z czwartku na piątek.",
+        "transfer": "Oglądanie mieszkania jest umówione na sobotę. Poproś o przełożenie go na poniedziałek.",
         "rule": "Po przyimku na podajemy nowy dzień spotkania, a po z możemy podać poprzedni dzień.",
         "correct": "Dobrze: ta wiadomość proponuje nowy dzień.",
         "incorrect": "W tej odpowiedzi nowy dzień jest podany nieprawidłowo.",
@@ -39,6 +41,7 @@ COPY = {
         "intro_body": "Try rescheduling a meeting in Polish. Check your answer, then write your own message. No account needed.",
         "situation": "You agreed to meet on Tuesday, but now you can only meet on Wednesday. Choose the message proposing the new date.",
         "retry": "Now move a meeting from Thursday to Friday.",
+        "transfer": "Your apartment viewing is on Saturday. Ask to move it to Monday.",
         "rule": "In przełożyć spotkanie na, the new day follows na. You can use z to name the original day.",
         "correct": "Correct: this message proposes the new day.",
         "incorrect": "This answer does not give the new day correctly.",
@@ -54,7 +57,10 @@ QUESTIONS = (
      "Czy możemy przełożyć spotkanie ze środy na wtorek?"),
     ("Czy możemy przełożyć spotkanie z piątku na czwartek?",
      "Czy możemy przełożyć spotkanie z czwartku na piątek?"),
+    ("Czy możemy przełożyć oglądanie mieszkania z soboty na poniedziałek?",
+     "Czy możemy przełożyć oglądanie mieszkania z poniedziałku na sobotę?"),
 )
+CORRECT_OPTIONS = (0, 1, 0)
 
 
 def meeting_mission_copy(request):
@@ -69,15 +75,18 @@ def meeting_mission(request):
     status = 200
     if request.method == "POST":
         steps, answers = request.POST.getlist("step"), request.POST.getlist("answer")
-        if steps in (["0"], ["1"]) and answers in (["0"], ["1"]):
+        if steps in (["0"], ["1"], ["2"]) and answers in (["0"], ["1"]):
             attempted = int(steps[0])
-            passed = int(answers[0]) == attempted
+            passed = int(answers[0]) == CORRECT_OPTIONS[attempted]
             feedback = copy["correct" if passed else "incorrect"]
-            step = 2 if passed else 1
+            if passed:
+                step = 3 if attempted == 2 else 2
+            else:
+                step = 1
         else:
             status = 400
     return render(request, "public_mission.html", {
         "mission": copy, "step": step, "feedback": feedback,
-        "next_lesson": load_demo_lesson("B1") if step == 2 else None,
-        "options": QUESTIONS[step] if step < 2 else (),
+        "next_lesson": load_demo_lesson("B1") if step == 3 else None,
+        "options": QUESTIONS[step] if step < len(QUESTIONS) else (),
     }, status=status)
