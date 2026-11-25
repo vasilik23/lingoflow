@@ -10,14 +10,14 @@
     <h1>{{ mission.title }}</h1>
     {% if feedback %}
       <p role="status"><strong>{{ feedback }}</strong></p>
-      <p>{{ mission.rule }}</p>
+      {% if step == 1 %}<p>{{ mission.rule }}</p>{% endif %}
     {% endif %}
-    {% if step < 2 %}
+    {% if step < 3 %}
       <form method="post" class="public-demo-form">
         {% csrf_token %}
         <input type="hidden" name="step" value="{{ step }}">
         <fieldset>
-          <legend>{% if step == 0 %}{{ mission.situation }}{% else %}{{ mission.retry }}{% endif %}</legend>
+          <legend>{% if step == 0 %}{{ mission.situation }}{% elif step == 1 %}{{ mission.retry }}{% else %}{{ mission.transfer }}{% endif %}</legend>
           {% for option in options %}
             <label lang="pl"><input type="radio" name="answer" value="{{ forloop.counter0 }}" required> {{ option }}</label>
           {% endfor %}

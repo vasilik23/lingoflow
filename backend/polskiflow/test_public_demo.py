@@ -156,20 +156,31 @@ class PublicDemoTests(TestCase):
 class PublicMeetingMissionTests(TestCase):
     url = "/demo/?level=B1&mission=meeting"
 
-    def test_wrong_choice_leads_to_new_example_and_then_local_writing(self):
+    def test_wrong_choice_leads_to_new_example_and_transfer_before_local_writing(self):
         start = self.client.get(self.url)
         self.assertContains(start, "z wtorku na środę")
         retry = self.client.post(self.url, {"step": "0", "answer": "1"})
         self.assertContains(retry, "z czwartku na piątek")
         self.assertContains(retry, "новый день указан неверно")
         self.assertNotContains(retry, 'id="mission-draft"')
-        result = self.client.post(self.url, {"step": "1", "answer": "1"})
+        transfer = self.client.post(self.url, {"step": "1", "answer": "1"})
+        self.assertContains(transfer, "Просмотр квартиры")
+        self.assertNotContains(transfer, "В конструкции")
+        self.assertNotContains(transfer, 'id="mission-draft"')
+        result = self.client.post(self.url, {"step": "2", "answer": "0"})
         self.assertContains(result, 'id="mission-draft"')
         self.assertContains(result, "przełożyć spotkanie na środę")
         self.assertContains(result, 'href="/register/?next=%2Flesson%2Fb1edu-grammar%2F"')
         self.assertEqual(result["Cache-Control"], "private, no-store")
 
-    def test_correct_first_choice_goes_directly_to_writing(self):
+    def test_correct_first_choice_goes_directly_to_transfer(self):
         result = self.client.post(self.url, {"step": "0", "answer": "0"})
-        self.assertContains(result, 'id="mission-draft"')
+        self.assertContains(result, "z soboty na poniedziałek")
+        self.assertNotContains(result, "В конструкции")
         self.assertNotContains(result, "z czwartku na piątek")
+
+    def test_wrong_transfer_answer_returns_to_guided_retry(self):
+        result = self.client.post(self.url, {"step": "2", "answer": "1"})
+        self.assertContains(result, "В конструкции")
+        self.assertContains(result, "z czwartku na piątek")
+        self.assertNotContains(result, 'id="mission-draft"')
