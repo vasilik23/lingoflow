@@ -23,17 +23,21 @@ def mistake_notebook(request: HttpRequest) -> HttpResponse:
         (row.lesson_id, row.position): row.prompt
         for row in Question.objects.filter(is_active=True).only("lesson_id", "position", "prompt")
     }
-    items = []
+    groups = {}
     for row in rows or []:
         lesson_id, position = row.get("lesson_id"), row.get("question_position")
         lesson = lesson_map.get(lesson_id)
         if lesson and type(position) is int and (lesson_id, position) in questions:
-            items.append({
+            group = groups.setdefault(lesson_id, {
                 "lesson_id": lesson_id, "title": lesson["plan_title"],
-                "emoji": lesson["emoji"], "level": lesson["level"],
-                "prompt": questions[(lesson_id, position)],
+                "emoji": lesson["emoji"], "level": lesson["level"], "prompts": [],
             })
-    return render(request, "mistakes.html", {"mistakes": items, "mistakes_available": rows is not None})
+            group["prompts"].append(questions[(lesson_id, position)])
+    return render(request, "mistakes.html", {
+        "mistake_groups": list(groups.values()),
+        "mistake_count": sum(len(group["prompts"]) for group in groups.values()),
+        "mistakes_available": rows is not None,
+    })
 
 
 @require_browser_user

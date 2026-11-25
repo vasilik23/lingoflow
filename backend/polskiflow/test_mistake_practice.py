@@ -72,3 +72,14 @@ class MistakePracticeViewTests(TestCase):
         self.assertContains(page, "Ошибок этого урока нет")
         self.assertContains(page, '<a class="compact-button" href="/mistakes/">Вернуться к списку ошибок</a>',
                             html=True)
+
+    @patch("polskiflow.mistake_views.load_mistakes")
+    def test_notebook_groups_two_questions_from_one_lesson_under_one_action(self, load):
+        Question.objects.create(lesson_id="mistake-quiz", position=1, prompt="Drugi przykład",
+                                options=["dobrze", "źle"], correct=0)
+        load.return_value = [{"lesson_id": "mistake-quiz", "question_position": n} for n in (0, 1)]
+        response = self.client.get("/mistakes/")
+        self.assertContains(response, "Wybierz odpowiedź")
+        self.assertContains(response, "Drugi przykład")
+        self.assertContains(response, 'href="/mistakes/practice/?lesson=mistake-quiz&amp;from=notebook"', count=1)
+        self.assertContains(response, "Повторить ошибки урока · 2")
