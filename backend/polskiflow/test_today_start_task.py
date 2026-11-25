@@ -63,3 +63,19 @@ class TodayStartTaskTests(TestCase):
         self.assertNotContains(page, 'exam-home-card')
         self.assertNotContains(page, 'минут по трём экзаменационным навыкам')
         self.assertContains(page, '<section class="card daily-tasks-panel" id="daily-tasks">')
+
+    @patch('polskiflow.auth_views.load_mistakes')
+    def test_today_only_suggests_available_mistake_questions(self, load):
+        from polskiflow.learning.models import Question
+
+        question = Question.objects.filter(is_active=True).first()
+        self.assertIsNotNone(question)
+        catalog = [self.task(question.lesson_id)]
+        valid = {'lesson_id': question.lesson_id, 'question_position': question.position}
+        load.return_value = [valid, valid, {**valid, 'question_position': 999999}]
+        result = self.page(catalog, catalog=catalog)
+        self.assertContains(result, 'href="/mistakes/practice/?from=today"')
+        self.assertEqual(result.context['mistake_count'], 1)
+        for rows in ([], None):
+            load.return_value = rows
+            self.assertNotContains(self.page(catalog, catalog=catalog), '/mistakes/practice/?from=today')

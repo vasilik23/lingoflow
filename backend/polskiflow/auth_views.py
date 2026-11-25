@@ -14,6 +14,8 @@ from django.utils.translation import gettext, get_language
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.views.decorators.http import require_http_methods, require_POST
 from polskiflow.parallel_reads import parallel_reads
+from polskiflow.mistake_store import load_mistakes
+from polskiflow.learning.models import Question
 from django.core import signing
 from polskiflow.b2_listening_store import load_listening_results, save_listening_result
 from polskiflow.domain.b2_listening_followup import attempt_state, grade as grade_b2_listening, followup as b2_listening_followup
@@ -528,8 +530,9 @@ def home(request: HttpRequest) -> HttpResponse:
     ) if dashboard.level == "B1" and dashboard.available else ()
     b2_followup = None
     if dashboard.level == 'B2':
-        draft, listening_results, excluded = parallel_reads(
+        draft, mistake_rows, listening_results, excluded = parallel_reads(
             partial(load_latest_lesson_draft, request.supabase_access_token, request.supabase_user.id),
+            partial(load_mistakes, request.supabase_access_token, request.supabase_user.id),
             partial(load_listening_results, request.supabase_access_token, request.supabase_user.id),
             partial(excluded_practice_topics, request),
         )
@@ -538,8 +541,23 @@ def home(request: HttpRequest) -> HttpResponse:
             if b2_followup and b2_followup["passed"]:
                 b2_followup = None
     else:
-        draft = load_latest_lesson_draft(request.supabase_access_token, request.supabase_user.id)
+        draft, mistake_rows = parallel_reads(
+            partial(load_latest_lesson_draft, request.supabase_access_token, request.supabase_user.id),
+            partial(load_mistakes, request.supabase_access_token, request.supabase_user.id),
+        )
     lesson_map = {item["id"]: item for item in catalog}
+    mistake_keys = {
+        (row["lesson_id"], row["question_position"])
+        for row in mistake_rows or ()
+        if isinstance(row, dict) and isinstance(row.get("lesson_id"), str)
+        and row["lesson_id"] in lesson_map and type(row.get("question_position")) is int
+    }
+    mistake_count = 0
+    if mistake_keys:
+        active_questions = Question.objects.filter(
+            lesson_id__in={lesson_id for lesson_id, _ in mistake_keys}, is_active=True,
+        ).values_list("lesson_id", "position")
+        mistake_count = len(mistake_keys.intersection(active_questions))
     draft_lesson = lesson_map.get(draft.get("lesson_id")) if isinstance(draft, dict) else None
     resume_lesson = None
     if draft_lesson and draft_lesson["id"] not in dashboard.all_completed_lesson_ids:
@@ -563,6 +581,7 @@ def home(request: HttpRequest) -> HttpResponse:
             "completed_estimated_minutes": daily_plan_progress(lesson_tasks)["completed_estimated_minutes"],
             "plan_time_modes": DAILY_TIME_MODES,
             "resume_lesson": resume_lesson,
+            "mistake_count": mistake_count,
             "b2_followup": b2_followup,
             "b1_exam_prep": build_b1_exam_prep(
                 timezone.localdate(), b1_module_results
