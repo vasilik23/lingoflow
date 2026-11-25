@@ -54,13 +54,13 @@ def public_demo(request):
                 if len(reviews) != 1:
                     raise ValueError('Repeated review')
                 result = checked_answer(lesson, signing.loads(reviews[0], salt=DEMO_SALT, max_age=1800))
-                context.update(result, review=reviews[0], feedback_hint=feedback_hint(lesson['id'], 0, lesson['question']))
-                step = 'result' if request.GET.get('step') == 'result' else 'explanation'
+                context.update(result, feedback_hint=feedback_hint(lesson['id'], 0, lesson['question']))
+                step = 'result'
         except (signing.BadSignature, ValueError, TypeError):
             context['demo_error'] = 'Не удалось проверить ответ. Попробуй ещё раз.'
             step, status = 'exercise', 400
         if step == 'result':
             next_lesson = (lesson_navigation(lesson['id']) or {}).get('next_lesson') if context['correct'] else None
             context['next_material'] = next_lesson or {**lesson, 'title': lesson['theory_title']}
-        context.update(step=step, step_number={'theory': 1, 'exercise': 2, 'explanation': 3, 'result': 4}[step])
+        context['step'] = step
     return _private(render(request, 'public_demo.html', context, status=status))

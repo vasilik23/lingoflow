@@ -17,7 +17,6 @@
       <ol class="public-demo-steps" aria-label="{% translate 'Шаги мини-урока' %}">
         <li{% if step == 'theory' %} aria-current="step"{% endif %}>{% translate "Теория" %}</li>
         <li{% if step == 'exercise' %} aria-current="step"{% endif %}>{% translate "Упражнение" %}</li>
-        <li{% if step == 'explanation' %} aria-current="step"{% endif %}>{% translate "Разбор" %}</li>
         <li{% if step == 'result' %} aria-current="step"{% endif %}>{% translate "Результат" %}</li>
       </ol>
       {% if demo_error %}<p role="alert" class="save-error">{{ demo_error|ui_text }}</p>{% endif %}
@@ -32,18 +31,17 @@
           <button type="submit">{% translate "Проверить ответ" %}</button>
         </form>
         <a href="{% url 'public-demo' %}?level={{ level }}">{% translate "Вернуться к теории" %}</a>
-      {% elif step == 'explanation' %}
-        <h2>{% if correct %}{% translate "Верно!" %}{% else %}{% translate "Попробуем разобраться" %}{% endif %}</h2>
-        <p lang="{{ lesson.question.prompt|learning_language }}">{{ lesson.question.prompt|ui_text }}</p>
-        {% include "partials/public_lesson_explanation.html" %}
-        <a class="compact-button" href="{% url 'public-demo' %}?level={{ level }}&amp;step=result&amp;review={{ review|urlencode }}">{% translate "К результату" %} →</a>
       {% else %}
+        <section aria-labelledby="demo-feedback-title">
+          <h2 id="demo-feedback-title">{% if correct %}{% translate "Верно!" %}{% else %}{% translate "Попробуем разобраться" %}{% endif %}</h2>
+          <p lang="{{ lesson.question.prompt|learning_language }}">{{ lesson.question.prompt|ui_text }}</p>
+          {% include "partials/public_lesson_explanation.html" %}
+        </section>
         <div class="public-demo-outcome">{% include "partials/public_lesson_result.html" with compact=True %}
         {% url 'lesson' next_material.id as next_lesson_url %}
         <a class="complete-next" href="{% if request.supabase_user %}{{ next_lesson_url }}{% else %}{% url 'register' %}?next={{ next_lesson_url|urlencode:"" }}{% endif %}"><span class="complete-next-icon" aria-hidden="true">{% include 'components/icon.html' with name='book' %}</span><span class="complete-next-copy"><small>{% if not request.supabase_user %}{% translate "Создать аккаунт" %}{% elif correct %}{% translate "Следующий материал" %}{% else %}{% translate "Закрепить в полном уроке" %}{% endif %}</small><strong lang="{{ next_material.title|learning_language }}">{{ next_material.title|ui_text }}</strong><small>~{{ next_material.minutes }} {% translate "мин" %}</small></span><span aria-hidden="true">→</span></a></div>
         {% if not request.supabase_user %}<p class="muted">{% translate "Для полного урока и сохранения повторений нужен аккаунт." %} <a href="{% url 'login' %}?next={{ next_lesson_url|urlencode:"" }}">{% translate "Войти" %}</a></p>{% endif %}
         <p class="muted">{% translate "Это знакомство с форматом обучения, а не проверка уровня." %}</p>
-        <section><h2>{% translate "Разбор" %}</h2>{% include "partials/public_lesson_explanation.html" %}</section>
         <a href="{% url 'public-demo' %}?level={{ level }}">{% translate "Попробовать ещё раз" %}</a>
       {% endif %}
     {% endif %}

@@ -30,7 +30,7 @@ class PublicLocaleLoadingTests(TestCase):
                 self.assertContains(self.client.get('/login/'), gettext('Вход'))
                 self.assertContains(self.client.get('/privacy/'), gettext('Хранение и удаление'))
 
-    def test_wrong_demo_answer_explanation_and_result_remain_localized(self):
+    def test_wrong_demo_result_remains_localized(self):
         for language in ('ru', 'pl', 'en'):
             self.client.cookies[settings.LANGUAGE_COOKIE_NAME] = language
             for level in ('A1', 'A2', 'B1'):
@@ -45,10 +45,10 @@ class PublicLocaleLoadingTests(TestCase):
                     }, follow=True)
                     self.assert_lightweight(response)
                     self.assertFalse(response.context['correct'])
-                    review = response.context['review']
-                    result = self.client.get('/demo/', {'level': level, 'step': 'result', 'review': review})
-                    self.assert_lightweight(result)
-                    self.assertEqual(result.context['step'], 'result')
+                    self.assertEqual(response.context['step'], 'result')
+                    self.assertContains(response, 'id="demo-feedback-title"')
+                    with override(language):
+                        self.assertContains(response, gettext('Попробуем разобраться'))
 
     def test_default_learning_shell_keeps_catalogue_before_bootstrap(self):
         request = RequestFactory().get('/')
