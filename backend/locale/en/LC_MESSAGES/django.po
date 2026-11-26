@@ -17913,3 +17913,15 @@ msgstr "Conjunctions of reason and concession"
 
 msgid "Что повторить"
 msgstr "What to review"
+
+msgid "Род глагола в прошедшем времени (единственное число)"
+msgstr "Gender in the past tense (singular)"
+
+msgid "Формы прошедшего времени для разных групп людей"
+msgstr "Past-tense forms for different groups of people"
+
+msgid "Утверждения в косвенной речи"
+msgstr "Reported statements"
+
+msgid "Общие вопросы в косвенной речи"
+msgstr "Reported yes–no questions"

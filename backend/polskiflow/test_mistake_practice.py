@@ -119,3 +119,13 @@ class MistakePracticeViewTests(TestCase):
                 self.assertContains(response, focus)
                 self.assertContains(response, 'class="mistake-review-focus"', count=1)
                 self.assertContains(response, "Wybierz odpowiedź")
+
+    @patch("polskiflow.mistake_views.load_mistakes", return_value=[
+        {"lesson_id": "past-grammar", "question_position": 0},
+        {"lesson_id": "b1edu-grammar", "question_position": 3},
+    ])
+    def test_notebook_shows_focus_for_past_tense_and_reported_questions(self, _load):
+        self.client.cookies["django_language"] = "en"
+        response = self.client.get("/mistakes/")
+        self.assertContains(response, "Gender in the past tense (singular)")
+        self.assertContains(response, "Reported yes–no questions")

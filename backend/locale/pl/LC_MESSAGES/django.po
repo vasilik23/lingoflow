@@ -18770,3 +18770,15 @@ msgstr "Spójniki przyczyny i przyzwolenia"
 
 msgid "Что повторить"
 msgstr "Co powtórzyć"
+
+msgid "Род глагола в прошедшем времени (единственное число)"
+msgstr "Rodzaj czasownika w czasie przeszłym (liczba pojedyncza)"
+
+msgid "Формы прошедшего времени для разных групп людей"
+msgstr "Formy męskoosobowe i niemęskoosobowe w czasie przeszłym"
+
+msgid "Утверждения в косвенной речи"
+msgstr "Zdania oznajmujące w mowie zależnej"
+
+msgid "Общие вопросы в косвенной речи"
+msgstr "Pytania rozstrzygnięcia w mowie zależnej"
