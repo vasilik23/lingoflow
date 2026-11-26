@@ -8,6 +8,7 @@ from django.views.decorators.http import require_GET, require_http_methods
 
 from polskiflow.auth_views import require_browser_user
 from polskiflow.content import tasks, task
+from polskiflow.domain.mistake_review_focus import REVIEW_FOCUS_BY_PROMPT
 from polskiflow.learning.models import Question
 from polskiflow.mistake_store import load_mistakes
 from polskiflow.mistake_store import set_mistake
@@ -30,12 +31,13 @@ def mistake_notebook(request: HttpRequest) -> HttpResponse:
         if lesson and type(position) is int and (lesson_id, position) in questions:
             group = groups.setdefault(lesson_id, {
                 "lesson_id": lesson_id, "title": lesson["plan_title"],
-                "emoji": lesson["emoji"], "level": lesson["level"], "prompts": [],
+                "emoji": lesson["emoji"], "level": lesson["level"], "questions": [],
             })
-            group["prompts"].append(questions[(lesson_id, position)])
+            prompt = questions[(lesson_id, position)]
+            group["questions"].append({"prompt": prompt, "focus": REVIEW_FOCUS_BY_PROMPT.get(prompt)})
     return render(request, "mistakes.html", {
         "mistake_groups": list(groups.values()),
-        "mistake_count": sum(len(group["prompts"]) for group in groups.values()),
+        "mistake_count": sum(len(group["questions"]) for group in groups.values()),
         "mistakes_available": rows is not None,
     })
 

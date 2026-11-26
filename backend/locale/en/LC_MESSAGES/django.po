@@ -17892,3 +17892,24 @@ msgstr "The closure date is recorded when a request changes to “Fixed” and c
 
 msgid "Некоторые локальные записи не удалось открыть. Они сохранены в браузере."
 msgstr "Some local recordings could not be opened. They remain saved in this browser."
+
+msgid "Формы глагола być в настоящем времени"
+msgstr "Present-tense forms of być"
+
+msgid "Родительный падеж после nie ma"
+msgstr "Genitive after nie ma"
+
+msgid "Родительный падеж после szukać"
+msgstr "Genitive after szukać"
+
+msgid "Творительный падеж после z в значении «с»"
+msgstr "Instrumental after z meaning “with”"
+
+msgid "Родительный падеж после potrzebować"
+msgstr "Genitive after potrzebować"
+
+msgid "Союзы причины и уступки"
+msgstr "Conjunctions of reason and concession"
+
+msgid "Что повторить"
+msgstr "What to review"
