@@ -89,7 +89,7 @@ class LearnerFeedbackTests(TestCase):
     def test_repeat_clears_only_mistake_and_keeps_lesson_score(self,load,save,completion):
         response=self.client.post('/mistakes/practice/?lesson=housing-grammar',{'state':sign_mistake('learner','housing-grammar',0),'choice':str(Question.objects.get(lesson_id='housing-grammar',position=0).correct)})
         self.assertContains(response,'ошибка убрана из очереди')
-        self.assertContains(response,'href="/mistakes/practice/?lesson=housing-grammar"')
+        self.assertContains(response, 'class="compact-button" href="/lesson/housing-grammar/"')
         self.assertEqual(response.context['remaining'],0)
         save.assert_called_once_with('access','learner','housing-grammar',0,False)
         completion.assert_not_called()

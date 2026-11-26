@@ -64,7 +64,26 @@ class MistakePracticeViewTests(TestCase):
         token = sign_mistake("user-1", "mistake-quiz", 0)
         result = self.client.post(path, {"state": token, "choice": "1"})
         self.assertContains(result, 'class="back-button" href="/mistakes/"')
-        self.assertContains(result, 'href="/mistakes/practice/?lesson=mistake-quiz&amp;from=notebook"')
+        self.assertContains(result, 'class="compact-button" href="/mistakes/"')
+        self.assertNotContains(result, "Следующая ошибка")
+
+    @patch("polskiflow.mistake_views.set_mistake", return_value=True)
+    @patch("polskiflow.mistake_views.load_mistakes", return_value=[{"lesson_id": "mistake-quiz", "question_position": 0}])
+    def test_last_correct_answer_returns_to_its_source(self, load, save):
+        token = sign_mistake("user-1", "mistake-quiz", 0)
+        for query, target in (("", "/mistakes/"), ("?from=today", "/"),
+                              ("?lesson=mistake-quiz", "/lesson/mistake-quiz/")):
+            with self.subTest(query=query):
+                response = self.client.post("/mistakes/practice/" + query, {"state": token, "choice": "1"})
+                self.assertContains(response, f'class="compact-button" href="{target}"')
+                self.assertNotContains(response, "Следующая ошибка")
+
+        load.return_value += [{"lesson_id": "mistake-quiz", "question_position": 1}]
+        response = self.client.post("/mistakes/practice/?from=today", {"state": token, "choice": "1"})
+        self.assertContains(response, "Следующая ошибка")
+        save.return_value = False
+        response = self.client.post("/mistakes/practice/?from=today", {"state": token, "choice": "1"})
+        self.assertContains(response, "Обновить тренировку")
 
     @patch("polskiflow.mistake_views.load_mistakes", return_value=[])
     def test_empty_lesson_queue_returns_to_notebook_when_started_there(self, _load):
