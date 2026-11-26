@@ -7546,6 +7546,9 @@ msgstr "W sobotę Marek pracował w domu."
 msgid "В мужском роде прошедшее время имеет окончание -ł: pracował."
 msgstr "W rodzaju męskim czas przeszły ma końcówkę -ł: pracował."
 
+msgid "Объясняем причину с ponieważ"
+msgstr "Podawanie przyczyny z ponieważ"
+
 msgid "Причина и уступка"
 msgstr "Przyczyna i przyzwolenie"
 

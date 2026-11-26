@@ -2244,6 +2244,7 @@ window.PolskiFlowPolishMessages = {
   "Объясни задержку и попроси решение": "Wyjaśnij opóźnienie i poproś o rozwiązanie",
   "Объясни маршрут вежливыми клише": "Wyjaśnij trasę uprzejmymi zwrotami",
   "Объяснить информацию проще": "Wyjaśnij informację prościej",
+  "Объясняем причину с ponieważ": "Podawanie przyczyny z ponieważ",
   "Объясняем причины, последствия и реалистичные экологические решения": "Wyjaśniamy przyczyny, skutki i realistyczne rozwiązania ekologiczne",
   "Объясняем сложную тему и ведём точные переговоры": "Wyjaśniamy złożony temat i prowadzimy precyzyjne negocjacje",
   "Объясняем, как учимся, и передаём слова другого человека": "Wyjaśniamy, jak się uczymy, i przekazujemy słowa innej osoby",
