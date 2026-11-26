@@ -18749,3 +18749,24 @@ msgstr "Data zamknięcia zgłoszenia jest zapisywana przy przejściu do statusu 
 
 msgid "Некоторые локальные записи не удалось открыть. Они сохранены в браузере."
 msgstr "Nie udało się otworzyć niektórych lokalnych nagrań. Nadal są zapisane w przeglądarce."
+
+msgid "Формы глагола być в настоящем времени"
+msgstr "Formy czasownika być w czasie teraźniejszym"
+
+msgid "Родительный падеж после nie ma"
+msgstr "Dopełniacz po nie ma"
+
+msgid "Родительный падеж после szukać"
+msgstr "Dopełniacz po szukać"
+
+msgid "Творительный падеж после z в значении «с»"
+msgstr "Narzędnik po z w znaczeniu „z kimś lub z czymś”"
+
+msgid "Родительный падеж после potrzebować"
+msgstr "Dopełniacz po potrzebować"
+
+msgid "Союзы причины и уступки"
+msgstr "Spójniki przyczyny i przyzwolenia"
+
+msgid "Что повторить"
+msgstr "Co powtórzyć"

@@ -102,3 +102,20 @@ class MistakePracticeViewTests(TestCase):
         self.assertContains(response, "Drugi przykład")
         self.assertContains(response, 'href="/mistakes/practice/?lesson=mistake-quiz&amp;from=notebook"', count=1)
         self.assertContains(response, "Повторить ошибки урока · 2")
+
+    @patch("polskiflow.mistake_views.load_mistakes", return_value=[
+        {"lesson_id": "b1edu-grammar", "question_position": 0},
+        {"lesson_id": "mistake-quiz", "question_position": 0},
+    ])
+    def test_notebook_shows_localized_focus_only_for_annotated_questions(self, _load):
+        for locale, focus in (
+            ("ru", "Что повторить · Союзы причины и уступки"),
+            ("en", "What to review · Conjunctions of reason and concession"),
+            ("pl", "Co powtórzyć · Spójniki przyczyny i przyzwolenia"),
+        ):
+            with self.subTest(locale=locale):
+                self.client.cookies["django_language"] = locale
+                response = self.client.get("/mistakes/")
+                self.assertContains(response, focus)
+                self.assertContains(response, 'class="mistake-review-focus"', count=1)
+                self.assertContains(response, "Wybierz odpowiedź")
