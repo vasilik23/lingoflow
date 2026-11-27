@@ -8,6 +8,7 @@ from django.views.decorators.http import require_GET, require_http_methods
 
 from polskiflow.auth_views import require_browser_user
 from polskiflow.content import tasks, task
+from polskiflow.domain.lesson_feedback_hint import feedback_hint
 from polskiflow.domain.mistake_review_focus import FOCUS_ID_BY_PROMPT, REVIEW_FOCUS
 from polskiflow.learning.models import Question
 from polskiflow.mistake_store import load_mistakes
@@ -117,6 +118,10 @@ def mistake_practice(request: HttpRequest) -> HttpResponse:
             if current:
                 break
     context = {**scope, "available": True, "question": current, "result": result, "remaining": len(owned) - int(bool(result and result["correct"] and result["saved"]))}
+    if result and not result["correct"]:
+        context["feedback_hint"] = feedback_hint(
+            current.lesson_id, current.position, {"options": current.options, "correct": current.correct},
+        )
     if current:
         context["state"] = sign_mistake(request.supabase_user.id, current.lesson_id, current.position)
         context["lesson_level"] = current.lesson.topic.course.level
