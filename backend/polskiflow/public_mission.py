@@ -25,6 +25,9 @@ COPY = {
         "listen_question": "Где договорились встретиться?",
         "listen_check": "Показать ответ и расшифровку",
         "listen_answer": "Перед кассой номер три.",
+        "listen_distractor": "В кафе на вокзале.",
+        "listen_correct": "Верно. Они встретятся перед кассой номер три.",
+        "listen_retry": "Послушайте ещё раз и обратите внимание на место встречи.",
     },
     "pl": {
         "title": "Przełóż spotkanie",
@@ -46,6 +49,9 @@ COPY = {
         "listen_question": "Gdzie mają się spotkać?",
         "listen_check": "Pokaż odpowiedź i transkrypcję",
         "listen_answer": "Przed kasą numer trzy.",
+        "listen_distractor": "W kawiarni na dworcu.",
+        "listen_correct": "Dobrze. Spotkają się przed kasą numer trzy.",
+        "listen_retry": "Posłuchaj jeszcze raz i zwróć uwagę na miejsce spotkania.",
     },
     "en": {
         "title": "Reschedule a meeting",
@@ -67,6 +73,9 @@ COPY = {
         "listen_question": "Where are they meeting?",
         "listen_check": "Show the answer and transcript",
         "listen_answer": "In front of ticket counter number three.",
+        "listen_distractor": "At the station café.",
+        "listen_correct": "Correct. They are meeting in front of ticket counter number three.",
+        "listen_retry": "Listen again and focus on the meeting place.",
     },
 }
 
