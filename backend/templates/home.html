@@ -69,7 +69,14 @@
     </section>
   </div>
   {% include 'partials/b2_listening_followup.html' %}
-  {% if b1_exam_prep %}<p class="muted today-exam-link"><a href="{% url 'b1-exam-prep' %}">{% translate "Подготовка к B1" %}</a> · {{ b1_exam_prep.countdown.label|ui_text }}</p>{% endif %}
+  {% if b1_exam_prep %}
+    <p class="muted today-exam-link">
+      <a href="{% url 'b1-exam-prep' %}">{% translate "Подготовка к B1" %}</a> · {{ b1_exam_prep.countdown.label|ui_text }}
+    </p>
+    <p class="muted today-exam-link">
+      <a href="{% url 'b1-weekly-mock' %}">{% translate "Пробный мини‑модуль" %}</a> · 15 {% translate "мин" %}
+    </p>
+  {% endif %}
 
 {% endblock %}
 

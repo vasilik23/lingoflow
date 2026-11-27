@@ -51,7 +51,7 @@
 
     {% if not result and not error %}<button class="primary-button mock-submit" type="submit" formnovalidate>{% translate "Завершить и проверить" %}</button>{% endif %}
   </form>
-  {% if result %}<a class="compact-button" href="{% url 'b1-weekly-mock' %}?restart=1">{% translate "Новая попытка" %}</a>{% else %}<a class="compact-button" href="{% url 'b1-weekly-mock' %}?restart=1">{% translate "Начать заново" %}</a>{% endif %}
+  {% if result %}<a class="compact-button" href="{% url 'b1-weekly-mock' %}?restart=1">{% translate "Новая попытка" %}</a> <a class="compact-button secondary-link" href="{% url 'home' %}">{% translate "К плану на сегодня" %}</a>{% else %}<a class="compact-button" href="{% url 'b1-weekly-mock' %}?restart=1">{% translate "Начать заново" %}</a>{% endif %}
 
   <section class="mock-history" aria-labelledby="mock-history-title">
     <div class="section-heading"><div><p class="eyebrow">{% translate "Последние попытки" %}</p><h2 id="mock-history-title">{% translate "Динамика мини‑модуля" %}</h2></div><span>{% translate "хранятся только три агрегированных балла" %}</span></div>
