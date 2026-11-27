@@ -43,6 +43,12 @@
         <audio controls preload="none" aria-labelledby="mission-listening-title" aria-describedby="mission-listening-question">
           <source src="{% static 'polskiflow/audio/practice/dialogue-fragment-1.m4a' %}" type="audio/mp4">
         </audio>
+        <fieldset hidden data-listening-check aria-labelledby="mission-listening-question"
+                  data-correct="{{ mission.listen_correct }}" data-retry="{{ mission.listen_retry }}">
+          <button type="button" class="secondary" data-listening-choice="correct">{{ mission.listen_answer }}</button>
+          <button type="button" class="secondary" data-listening-choice="retry">{{ mission.listen_distractor }}</button>
+          <p role="status" data-listening-result></p>
+        </fieldset>
         <details>
           <summary>{{ mission.listen_check }}</summary>
           <p>{{ mission.listen_answer }}</p>
@@ -64,4 +70,9 @@
     <p><a href="{% url 'public-demo' %}">{% translate "Пробное задание" %}</a></p>
   </section>
 </div>
+{% endblock %}
+
+{% block scripts %}
+  {{ block.super }}
+  {% if step == 3 %}<script src="{% static 'polskiflow/mission-listening-check.js' %}" defer></script>{% endif %}
 {% endblock %}

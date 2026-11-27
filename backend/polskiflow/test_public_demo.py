@@ -201,6 +201,9 @@ class PublicMeetingMissionTests(TestCase):
         self.client.cookies["django_language"] = "en"
         result = self.client.post(self.url, {"step": "2", "answer": "0"})
         self.assertContains(result, "Where are they meeting?")
+        self.assertContains(result, "At the station café.")
+        self.assertContains(result, "Listen again and focus on the meeting place.")
+        self.assertContains(result, "mission-listening-check.js")
         self.assertContains(result, "In front of ticket counter number three.")
         self.assertContains(result, "dialogue-fragment-1.m4a")
         self.assertContains(result, "Spotkajmy się o ósmej przed kasą numer trzy.")
