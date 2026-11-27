@@ -318,6 +318,9 @@ class B1ExamPrepViewTests(TestCase):
 
         self.assertContains(b1_response, "Подготовка к B1")
         self.assertContains(b1_response, 'href="/exam/b1/"')
+        self.assertContains(b1_response, 'href="/exam/b1/mock/"')
+        self.assertContains(b1_response, 'Пробный мини‑модуль')
+        self.assertNotContains(a2_response, 'href="/exam/b1/mock/"')
         self.assertNotContains(a2_response, 'class="muted today-exam-link"')
 
     @patch("polskiflow.auth_views.tasks", return_value=[
