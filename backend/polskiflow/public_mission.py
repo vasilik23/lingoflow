@@ -19,6 +19,10 @@ COPY = {
         "write": "Напишите коллеге: вы не можете встретиться в понедельник и предлагаете среду.",
         "sample": "Сравнить с образцом",
         "checklist": "Проверьте, ясно ли указаны прежний и новый дни.",
+        "listen_title": "Послушайте сообщение перед поездкой",
+        "listen_question": "Где договорились встретиться?",
+        "listen_check": "Показать ответ и расшифровку",
+        "listen_answer": "Перед кассой номер три.",
     },
     "pl": {
         "title": "Przełóż spotkanie",
@@ -34,6 +38,10 @@ COPY = {
         "write": "Napisz do kolegi: nie możesz spotkać się w poniedziałek i proponujesz środę.",
         "sample": "Porównaj z przykładem",
         "checklist": "Sprawdź, czy jasno podajesz poprzedni i nowy dzień.",
+        "listen_title": "Posłuchaj wiadomości przed podróżą",
+        "listen_question": "Gdzie mają się spotkać?",
+        "listen_check": "Pokaż odpowiedź i transkrypcję",
+        "listen_answer": "Przed kasą numer trzy.",
     },
     "en": {
         "title": "Reschedule a meeting",
@@ -49,6 +57,10 @@ COPY = {
         "write": "Write to a colleague: you cannot meet on Monday and propose Wednesday.",
         "sample": "Compare with the example",
         "checklist": "Check that the original and new days are clear.",
+        "listen_title": "Listen to a message about a meeting before a trip",
+        "listen_question": "Where are they meeting?",
+        "listen_check": "Show the answer and transcript",
+        "listen_answer": "In front of ticket counter number three.",
     },
 }
 
@@ -61,6 +73,9 @@ QUESTIONS = (
      "Czy możemy przełożyć oglądanie mieszkania z poniedziałku na sobotę?"),
 )
 CORRECT_OPTIONS = (0, 1, 0)
+LISTENING_TRANSCRIPT = (
+    "Pociąg odjeżdża o ósmej piętnaście. Spotkajmy się o ósmej przed kasą numer trzy."
+)
 
 
 def meeting_mission_copy(request):
@@ -88,5 +103,6 @@ def meeting_mission(request):
     return render(request, "public_mission.html", {
         "mission": copy, "step": step, "feedback": feedback,
         "next_lesson": load_demo_lesson("B1") if step == 3 else None,
+        "listening_transcript": LISTENING_TRANSCRIPT if step == 3 else None,
         "options": QUESTIONS[step] if step < len(QUESTIONS) else (),
     }, status=status)
