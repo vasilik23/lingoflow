@@ -28,9 +28,14 @@
       <label for="mission-draft">{{ mission.write }}</label>
       <textarea id="mission-draft" rows="4" lang="pl" autocomplete="off"></textarea>
       <details>
+        <summary>{{ mission.revise }}</summary>
+        <p id="mission-revision-check">{{ mission.checklist }}</p>
+        <label for="mission-revision">{{ mission.revision_label }}</label>
+        <textarea id="mission-revision" rows="4" lang="pl" autocomplete="off" aria-describedby="mission-revision-check"></textarea>
+      </details>
+      <details>
         <summary>{{ mission.sample }}</summary>
         <p lang="pl">Nie mogę spotkać się w poniedziałek. Czy możemy przełożyć spotkanie na środę?</p>
-        <p>{{ mission.checklist }}</p>
       </details>
       <section class="listening-card" aria-labelledby="mission-listening-title">
         <h2 id="mission-listening-title">{{ mission.listen_title }}</h2>

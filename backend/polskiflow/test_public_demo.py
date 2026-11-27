@@ -208,3 +208,14 @@ class PublicMeetingMissionTests(TestCase):
         clip = json.loads(manifest_path.read_text())["clips"]["dialogue-fragment-1"]
         transcript_hash = hashlib.sha256(result.context["listening_transcript"].encode()).hexdigest()
         self.assertEqual(transcript_hash, clip["transcript_sha256"])
+
+    def test_writing_screen_offers_a_separate_unsent_revision_before_the_sample(self):
+        self.client.cookies["django_language"] = "en"
+        result = self.client.post(self.url, {"step": "2", "answer": "0"})
+        self.assertContains(result, "Revise your answer")
+        self.assertContains(result, "Phrase the change as a polite request.")
+        self.assertContains(result, "Second version of your message")
+        html = result.content.decode()
+        self.assertLess(html.index('id="mission-draft"'), html.index('id="mission-revision"'))
+        self.assertLess(html.index('id="mission-revision"'), html.index("Compare with the example"))
+        self.assertNotContains(result, 'name="revision"')
