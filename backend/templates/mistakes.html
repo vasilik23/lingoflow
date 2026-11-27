@@ -5,7 +5,18 @@
 <header class="content-header"><div><p class="eyebrow">{% translate "Личная практика" %}</p><h1>{% translate "Работа над ошибками" %}</h1><p class="muted">{% translate "Здесь остаются задания, в которых последний ответ был неверным. Правильный ответ при следующем прохождении уберёт запись автоматически." %}</p></div><a class="compact-button secondary-link" href="{% url 'practice-hub' %}">{% translate "К тренажёрам" %}</a></header>
 {% include "partials/personal_learning_nav.html" %}
 {% if not mistakes_available %}<p class="data-notice" role="status">{% translate "Список временно недоступен. Уроки продолжают работать." %}</p>
-{% elif mistake_groups %}<p><a class="compact-button" href="{% url 'mistake-practice' %}">{% translate "Начать тренировку ·" %} {{ mistake_count|ui_text }}</a></p><ul class="mistake-list" aria-label="{% translate "Задания для повторения" %}">{% for item in mistake_groups %}<li class="card mistake-item"><span aria-hidden="true">{{ item.emoji|ui_text }}</span><div><strong>{{ item.title|ui_text }}</strong><small>{{ item.level|ui_text }}</small>{% for question in item.questions %}<p>{{ question.prompt|ui_text }}{% if question.focus %}<br><small class="mistake-review-focus">{% translate "Что повторить" %} · {{ question.focus|ui_text }}</small>{% endif %}</p>{% endfor %}</div><a class="compact-button secondary-link" href="{% url 'mistake-practice' %}?lesson={{ item.lesson_id|urlencode:"" }}&amp;from=notebook">{% translate "Повторить ошибки урока" %} · {{ item.questions|length|ui_text }}</a></li>{% endfor %}</ul>
+{% elif mistake_groups %}<p><a class="compact-button" href="{% url 'mistake-practice' %}">{% translate "Начать тренировку ·" %} {{ mistake_count|ui_text }}</a></p>
+{% if focus_groups %}
+<section class="card" aria-labelledby="mistake-focus-title">
+  <h2 id="mistake-focus-title">{% translate "Что повторить" %}</h2>
+  <ul>
+    {% for focus in focus_groups %}
+    <li><a href="{% url 'mistake-practice' %}?focus={{ focus.id|urlencode }}">{{ focus.title|ui_text }} · {{ focus.count|ui_text }}</a></li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+<ul class="mistake-list" aria-label="{% translate "Задания для повторения" %}">{% for item in mistake_groups %}<li class="card mistake-item"><span aria-hidden="true">{{ item.emoji|ui_text }}</span><div><strong>{{ item.title|ui_text }}</strong><small>{{ item.level|ui_text }}</small>{% for question in item.questions %}<p>{{ question.prompt|ui_text }}{% if question.focus %}<br><small class="mistake-review-focus">{% translate "Что повторить" %} · {{ question.focus|ui_text }}</small>{% endif %}</p>{% endfor %}</div><a class="compact-button secondary-link" href="{% url 'mistake-practice' %}?lesson={{ item.lesson_id|urlencode:"" }}&amp;from=notebook">{% translate "Повторить ошибки урока" %} · {{ item.questions|length|ui_text }}</a></li>{% endfor %}</ul>
 {% else %}<div class="card empty-state"><h2>{% translate "Ошибок для повторения пока нет" %}</h2><p>{% translate "Неверные ответы из грамматики и тестов появятся здесь автоматически." %}</p><a class="compact-button" href="{% url 'home' %}#daily-tasks">{% translate "К плану на сегодня" %}</a></div>{% endif %}
 <p class="profile-note">{% translate "Мы сохраняем только урок и номер задания — не выбранный тобой ответ." %}</p>
 {% endblock %}
