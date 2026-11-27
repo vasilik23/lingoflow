@@ -129,3 +129,39 @@ class MistakePracticeViewTests(TestCase):
         response = self.client.get("/mistakes/")
         self.assertContains(response, "Gender in the past tense (singular)")
         self.assertContains(response, "Reported yes–no questions")
+
+    @patch("polskiflow.mistake_views.set_mistake", return_value=True)
+    @patch("polskiflow.mistake_views.load_mistakes")
+    def test_construction_queue_spans_lessons_and_leaves_other_mistakes(self, load, save):
+        rows = [
+            {"lesson_id": "housing-grammar", "question_position": 0},
+            {"lesson_id": "housing-quiz", "question_position": 1},
+            {"lesson_id": "b1edu-grammar", "question_position": 0},
+        ]
+        load.return_value = rows
+        path = "/mistakes/practice/?focus=nie-ma-genitive"
+        notebook = self.client.get("/mistakes/")
+        self.assertContains(notebook, f'href="{path}"')
+        self.assertContains(notebook, "Родительный падеж после nie ma · 2")
+        self.assertEqual(self.client.get(path).context["question"].lesson_id, "housing-grammar")
+
+        other = sign_mistake("user-1", "b1edu-grammar", 0)
+        self.assertEqual(self.client.post(path, {"state": other, "choice": "0"}).status_code, 400)
+        save.assert_not_called()
+
+        for lesson_id, position, remaining in (("housing-grammar", 0, 1), ("housing-quiz", 1, 0)):
+            page = self.client.get(path)
+            self.assertEqual(page.context["question"].lesson_id, lesson_id)
+            question = page.context["question"]
+            answer = self.client.post(path, {"state": page.context["state"], "choice": question.correct})
+            self.assertEqual(answer.context["remaining"], remaining)
+            save.assert_called_with("access", "user-1", lesson_id, position, False)
+            rows.pop(0)
+        self.assertContains(answer, 'class="compact-button" href="/mistakes/"')
+        self.assertNotContains(self.client.get("/mistakes/"), f'href="{path}"')
+        self.assertContains(self.client.get("/mistakes/"), "Союзы причины и уступки")
+        self.assertContains(self.client.get(path), 'class="compact-button" href="/mistakes/"')
+
+        for query in ("?focus=unknown", "?focus=nie-ma-genitive&focus=z-instrumental",
+                      "?focus=nie-ma-genitive&lesson=housing-grammar"):
+            self.assertEqual(self.client.get("/mistakes/practice/" + query).status_code, 400)
