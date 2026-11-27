@@ -36,7 +36,11 @@
         <a class="compact-button daily-action" href="{% url 'course' %}">{% translate "К курсу →" %}</a>
       {% endif %}
       </div>
-      {% if mistake_count %}
+      {% if recommended_focus %}
+        <p class="muted">
+          {% translate "Что повторить" %} · <a href="{% url 'mistake-practice' %}?focus={{ recommended_focus.id|urlencode }}&amp;from=today">{{ recommended_focus.title|ui_text }} · {{ recommended_focus.count|ui_text }}</a>
+        </p>
+      {% elif mistake_count %}
         <p class="muted"><a href="{% url 'mistake-practice' %}?from=today">{% translate "Работа над ошибками" %} · {{ mistake_count|ui_text }}</a></p>
       {% endif %}
     </section>

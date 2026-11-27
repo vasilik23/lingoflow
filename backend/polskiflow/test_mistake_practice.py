@@ -165,3 +165,14 @@ class MistakePracticeViewTests(TestCase):
         for query in ("?focus=unknown", "?focus=nie-ma-genitive&focus=z-instrumental",
                       "?focus=nie-ma-genitive&lesson=housing-grammar"):
             self.assertEqual(self.client.get("/mistakes/practice/" + query).status_code, 400)
+
+    @patch("polskiflow.mistake_views.set_mistake", return_value=True)
+    @patch("polskiflow.mistake_views.load_mistakes", return_value=[
+        {"lesson_id": "housing-grammar", "question_position": 0},
+    ])
+    def test_construction_from_today_returns_to_today(self, _load, _save):
+        path = "/mistakes/practice/?focus=nie-ma-genitive&from=today"
+        page = self.client.get(path)
+        self.assertContains(page, 'action="/mistakes/practice/?focus=nie-ma-genitive&amp;from=today"')
+        answer = self.client.post(path, {"state": page.context["state"], "choice": page.context["question"].correct})
+        self.assertContains(answer, 'class="compact-button" href="/"')

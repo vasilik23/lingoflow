@@ -1,5 +1,6 @@
 """Browser views for the transitional Django authentication flow."""
 
+from collections import Counter
 from dataclasses import replace
 from datetime import datetime
 from functools import partial, wraps
@@ -14,6 +15,7 @@ from django.utils.translation import gettext, get_language
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.views.decorators.http import require_http_methods, require_POST
 from polskiflow.parallel_reads import parallel_reads
+from polskiflow.domain.mistake_review_focus import FOCUS_ID_BY_PROMPT, REVIEW_FOCUS
 from polskiflow.mistake_store import load_mistakes
 from polskiflow.learning.models import Question
 from django.core import signing
@@ -553,11 +555,23 @@ def home(request: HttpRequest) -> HttpResponse:
         and row["lesson_id"] in lesson_map and type(row.get("question_position")) is int
     }
     mistake_count = 0
+    recommended_focus = None
     if mistake_keys:
         active_questions = Question.objects.filter(
             lesson_id__in={lesson_id for lesson_id, _ in mistake_keys}, is_active=True,
-        ).values_list("lesson_id", "position")
-        mistake_count = len(mistake_keys.intersection(active_questions))
+        ).values_list("lesson_id", "position", "prompt")
+        focus_counts = Counter()
+        for lesson_id, position, prompt in active_questions:
+            if (lesson_id, position) in mistake_keys:
+                mistake_count += 1
+                focus_id = FOCUS_ID_BY_PROMPT.get(prompt)
+                if focus_id:
+                    focus_counts[focus_id] += 1
+        if focus_counts:
+            focus_id = min(focus_counts, key=lambda key: (-focus_counts[key], key))
+            recommended_focus = {
+                "id": focus_id, "title": REVIEW_FOCUS[focus_id][0], "count": focus_counts[focus_id],
+            }
     draft_lesson = lesson_map.get(draft.get("lesson_id")) if isinstance(draft, dict) else None
     resume_lesson = None
     if draft_lesson and draft_lesson["id"] not in dashboard.all_completed_lesson_ids:
@@ -582,6 +596,7 @@ def home(request: HttpRequest) -> HttpResponse:
             "plan_time_modes": DAILY_TIME_MODES,
             "resume_lesson": resume_lesson,
             "mistake_count": mistake_count,
+            "recommended_focus": recommended_focus,
             "b2_followup": b2_followup,
             "b1_exam_prep": build_b1_exam_prep(
                 timezone.localdate(), b1_module_results

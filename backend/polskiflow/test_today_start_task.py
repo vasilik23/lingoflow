@@ -68,7 +68,7 @@ class TodayStartTaskTests(TestCase):
     def test_today_only_suggests_available_mistake_questions(self, load):
         from polskiflow.learning.models import Question
 
-        question = Question.objects.filter(is_active=True).first()
+        question = Question.objects.get(lesson_id="bio-reading-check", position=0)
         self.assertIsNotNone(question)
         catalog = [self.task(question.lesson_id)]
         valid = {'lesson_id': question.lesson_id, 'question_position': question.position}
@@ -79,3 +79,20 @@ class TodayStartTaskTests(TestCase):
         for rows in ([], None):
             load.return_value = rows
             self.assertNotContains(self.page(catalog, catalog=catalog), '/mistakes/practice/?from=today')
+
+    @patch("polskiflow.auth_views.load_mistakes")
+    def test_today_recommends_the_largest_construction_with_a_stable_tie(self, load):
+        catalog = [self.task(key) for key in ("housing-grammar", "housing-quiz", "past-grammar")]
+        load.return_value = [
+            {"lesson_id": "housing-grammar", "question_position": 0},
+            {"lesson_id": "housing-quiz", "question_position": 1},
+            {"lesson_id": "past-grammar", "question_position": 0},
+            {"lesson_id": "past-grammar", "question_position": 0},
+        ]
+        result = self.page(catalog, catalog=catalog)
+        self.assertEqual(result.context["recommended_focus"]["count"], 2)
+        self.assertContains(result, 'href="/mistakes/practice/?focus=nie-ma-genitive&amp;from=today"')
+        self.assertContains(result, "Родительный падеж после nie ma · 2")
+        self.assertContains(result, 'class="compact-button daily-action"', count=1)
+        load.return_value.pop(0)
+        self.assertEqual(self.page(catalog, catalog=catalog).context["recommended_focus"]["id"], "nie-ma-genitive")
