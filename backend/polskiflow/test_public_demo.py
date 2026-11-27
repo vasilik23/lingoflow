@@ -1,4 +1,7 @@
+import hashlib
+import json
 import re
+from pathlib import Path
 from unittest.mock import patch
 
 from django.core import signing
@@ -175,6 +178,7 @@ class PublicMeetingMissionTests(TestCase):
         self.assertContains(transfer, "Просмотр квартиры")
         self.assertNotContains(transfer, "В конструкции")
         self.assertNotContains(transfer, 'id="mission-draft"')
+        self.assertNotContains(transfer, "dialogue-fragment-1.m4a")
         result = self.client.post(self.url, {"step": "2", "answer": "0"})
         self.assertContains(result, 'id="mission-draft"')
         self.assertContains(result, "przełożyć spotkanie na środę")
@@ -192,3 +196,15 @@ class PublicMeetingMissionTests(TestCase):
         self.assertContains(result, "В конструкции")
         self.assertContains(result, "z czwartku na piątek")
         self.assertNotContains(result, 'id="mission-draft"')
+
+    def test_writing_screen_offers_listening_with_a_matching_transcript(self):
+        self.client.cookies["django_language"] = "en"
+        result = self.client.post(self.url, {"step": "2", "answer": "0"})
+        self.assertContains(result, "Where are they meeting?")
+        self.assertContains(result, "In front of ticket counter number three.")
+        self.assertContains(result, "dialogue-fragment-1.m4a")
+        self.assertContains(result, "Spotkajmy się o ósmej przed kasą numer trzy.")
+        manifest_path = Path(__file__).parent / "domain" / "practice_listening_media.json"
+        clip = json.loads(manifest_path.read_text())["clips"]["dialogue-fragment-1"]
+        transcript_hash = hashlib.sha256(result.context["listening_transcript"].encode()).hexdigest()
+        self.assertEqual(transcript_hash, clip["transcript_sha256"])

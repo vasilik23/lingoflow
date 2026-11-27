@@ -1,5 +1,5 @@
 {% extends "server_translated_base.html" %}
-{% load i18n ui %}
+{% load i18n static ui %}
 {% block title %}{{ mission.title }} · LingoFlow{% endblock %}
 {% block body_class %}public-page{% endblock %}
 {% block content %}
@@ -32,6 +32,18 @@
         <p lang="pl">Nie mogę spotkać się w poniedziałek. Czy możemy przełożyć spotkanie na środę?</p>
         <p>{{ mission.checklist }}</p>
       </details>
+      <section class="listening-card" aria-labelledby="mission-listening-title">
+        <h2 id="mission-listening-title">{{ mission.listen_title }}</h2>
+        <p id="mission-listening-question">{{ mission.listen_question }}</p>
+        <audio controls preload="none" aria-labelledby="mission-listening-title" aria-describedby="mission-listening-question">
+          <source src="{% static 'polskiflow/audio/practice/dialogue-fragment-1.m4a' %}" type="audio/mp4">
+        </audio>
+        <details>
+          <summary>{{ mission.listen_check }}</summary>
+          <p>{{ mission.listen_answer }}</p>
+          <p lang="pl">{{ listening_transcript }}</p>
+        </details>
+      </section>
       {% if next_lesson %}
         {% url 'lesson' next_lesson.id as lesson_url %}
         <a class="complete-next" href="{% if request.supabase_user %}{{ lesson_url }}{% else %}{% url 'register' %}?next={{ lesson_url|urlencode:"" }}{% endif %}">
