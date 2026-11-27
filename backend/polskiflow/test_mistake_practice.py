@@ -176,3 +176,18 @@ class MistakePracticeViewTests(TestCase):
         self.assertContains(page, 'action="/mistakes/practice/?focus=nie-ma-genitive&amp;from=today"')
         answer = self.client.post(path, {"state": page.context["state"], "choice": page.context["question"].correct})
         self.assertContains(answer, 'class="compact-button" href="/"')
+
+    @patch("polskiflow.mistake_views.set_mistake", return_value=True)
+    @patch("polskiflow.mistake_views.load_mistakes", return_value=[
+        {"lesson_id": "b1edu-grammar", "question_position": 0},
+    ])
+    def test_contextual_hint_only_appears_after_wrong_retry(self, _load, _save):
+        path = "/mistakes/practice/?focus=reason-concession"
+        page = self.client.get(path)
+        self.assertNotContains(page, "data-feedback-hint")
+        correct = page.context["question"].correct
+        payload = {"state": page.context["state"], "choice": (correct + 1) % 3}
+        retry = self.client.post(path, payload)
+        self.assertContains(retry, "data-feedback-hint")
+        self.assertContains(retry, "Chociaż")
+        self.assertNotContains(self.client.post(path, {**payload, "choice": correct}), "data-feedback-hint")
